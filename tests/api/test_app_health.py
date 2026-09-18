@@ -208,8 +208,22 @@ def test_live_readiness_passes_against_the_frozen_graph(live_client: TestClient)
 #: the deleted metrics). The delta reconciles exactly against the 164,201/508,042
 #: baseline, and tests/api/test_adversarial.py imports both constants from here so the
 #: pin has one home.
-FROZEN_NODES = 164_597
-FROZEN_RELATIONSHIPS = 509_486
+#:
+#: R5 moved it again, by TWO steps rather than one, and both are receipted:
+#:
+#: *   the R5 migration, data/staging/release_blocker_r5/migration_receipt.json, with
+#:     actual == promised on every counter: +2 nodes (the RITUAL_CONTEXT_PRECISION and
+#:     MATERIAL_CULTURE_BY_RITUAL_CONTEXT DerivedMetric rows GAP-RITUAL-006 needed) and
+#:     +283 relationships -- 158 ASSERTION_AGENT and 119 ASSERTION_TARGET projected from
+#:     the RoleFiller resolution for GAP-SEMANTICS-003, plus 6 MENTIONS_ENTITY from the
+#:     phrase pass for GAP-ENTITY_COVERAGE-007. Nothing was deleted.
+#: *   the entity-coverage consumer rebuild that the dependency report required afterwards,
+#:     which recomputed its metric families and added 2 more DerivedMetric rows.
+#:
+#: 164,597 + 2 + 2 = 164,601 and 509,486 + 283 = 509,769. The four corpora did not move,
+#: which is the guard that actually matters and is asserted separately below.
+FROZEN_NODES = 164_601
+FROZEN_RELATIONSHIPS = 509_769
 
 #: The figures that must NEVER move, whatever an import does. The whole-graph census grows
 #: with every wave; the four corpora are closed sets, and a drift here is corruption rather

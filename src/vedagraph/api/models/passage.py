@@ -585,9 +585,13 @@ class AgentiveAssertionView(ApiModel):
     YV 1,543, SV 364. A Yajurvedic verse returning none of these is a verse the layer did
     not reach, not a corpus outside it, which is why the set carries a status.
 
-    What remains Rigveda-only is the *agentive* reading: 2,502 assertions over 2,254
-    Rigvedic passages carry an ``ASSERTION_AGENT``, because that reading is derived from a
-    morphological annotation covering the Rigveda alone.
+    The *agentive* reading was Rigveda-only and is not any more. 2,660 assertions carry
+    an ``ASSERTION_AGENT``: 2,406 Rigvedic, from a morphological annotation covering the
+    Rigveda alone, plus 124 Atharvavedic and 34 Yajurvedic projected from the DCS
+    dependency annotation's own role resolution by GAP-SEMANTICS-003. The Sāmaveda carries
+    no agent at all. The two derivations are separable on every edge -- the projected ones
+    carry ``derivation = TREEBANK_DEPREL_ROLE_PROJECTION`` and the morphological ones carry
+    none -- so a reader is never shown one tier as the other.
 
     **The layer is two layers and they do not share their vocabulary.** The 2,406
     deterministic assertions carry ``frame`` (ASSERTED or REQUESTED), ``verb_surface`` and

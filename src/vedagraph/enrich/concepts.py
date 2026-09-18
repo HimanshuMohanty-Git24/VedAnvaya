@@ -563,6 +563,14 @@ def load_concepts(
                 # lives at the point where the retype is known, and this layer keeps
                 # depending only on the semantic ontology.
                 condition_kind=str(entry.get("condition_kind", "") or "").strip(),
+                # Multi-word aliases, kept in registry order rather than sorted, then
+                # sorted once in build_index. A phrase that is a prefix of a longer phrase
+                # must not be able to win by where it sits in the YAML.
+                aliases_sa_phrases=tuple(
+                    str(a).strip()
+                    for a in (entry.get("aliases_sa_phrases") or ())
+                    if str(a).strip() and " " in str(a).strip()
+                ),
                 non_triggering_aliases_sa=tuple(sorted(withdrawn_sa)),
                 non_triggering_aliases_en=tuple(sorted(withdrawn_en)),
             )

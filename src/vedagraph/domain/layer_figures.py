@@ -118,14 +118,25 @@ PREDICATE_TOTALS: Final[dict[str, int]] = {
     "HAS_SEMANTIC_ASSERTION": 35_131,
     "PERFORMS_ACTION": 441,
     "IS_ASKED_TO": 224,
-    # 28,116 landed, against 28,227 rows in data/domain/vedagraph_domain_v2/
+    # 28,122 landed, against 28,227 rows in data/domain/vedagraph_domain_v2/
     # domain_mentions.jsonl. The earlier declaration was the ARTIFACT ROW COUNT and not the
     # landed edge count -- rows sent, not rows landed, which is the one diff this project
     # requires. Reconciles exactly: 28,227 artifact rows, MINUS 117 VG:CONCEPT:SOMA-PRESSING
     # rows withheld under OWNER_DECISIONS section 13 (its weak aliases lose assertion
     # authority), PLUS the 6 yupa- witnesses the alias fix added outside that artifact
-    # (RV 1.162.6, 4.33.3, 5.2.7, VSM 19.17, VSM 25.29, AVS 12.1.38) = 28,116.
-    "MENTIONS_ENTITY": 28_116,
+    # (RV 1.162.6, 4.33.3, 5.2.7, VSM 19.17, VSM 25.29, AVS 12.1.38) = 28,116, PLUS the 6
+    # R5 added.
+    #
+    # R5's 6 are the phrase pass closing GAP-ENTITY_COVERAGE-007 clause 1. The mention
+    # layer's token pass is keyed by ONE folded token, so a registered alias containing a
+    # space could never match: `tṛtīya savana`, the third soma pressing, is the only one of
+    # the three pressings the corpus never writes as one word, and its own registry entry
+    # recorded that all six of its loci had been read and none was reachable. The phrase
+    # pass matches a run of consecutive WHOLE tokens with both ends on a token boundary, and
+    # it reaches exactly those six -- RV 3.28.5, 4.34.4, 4.35.9, 8.57.1, AVS 6.47.3 and
+    # 9.1.13 -- and no seventh. The midday pressing gained 0: its single-token aliases
+    # already reached all seven of its mentions.
+    "MENTIONS_ENTITY": 28_122,
     # 24,861 landed, against 46,439 rows in data/enrichment/vedagraph_enrichment_v1/
     # concept_assertions.jsonl. The pre-R3 declaration cited "46,508 rows minus 21,539
     # english-only = 24,969" and neither operand matches the committed artifact any more.

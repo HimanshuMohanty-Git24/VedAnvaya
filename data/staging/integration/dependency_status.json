@@ -1,9 +1,9 @@
 {
   "artifact": "DEPENDENCY_STATUS",
-  "at": "2026-09-18T11:36:15.909155+00:00",
+  "at": "2026-09-18T15:25:06.933559+00:00",
   "graph_census": {
-    "nodes": 164597,
-    "relationships": 509486
+    "nodes": 164601,
+    "relationships": 509769
   },
   "consumers": [
     {
@@ -61,10 +61,10 @@
       "declared_outputs": [
         "data/domain/vedagraph_domain_v2/veda_coverage_v3.json"
       ],
-      "built_at": "2026-09-17T16:23:28.871060+00:00",
+      "built_at": "2026-09-18T15:14:06.017212+00:00",
       "rebuilt_by": "scripts/build_veda_coverage_and_metrics.py",
-      "current_input_digest": "214de5455a7f2cd2ebf4c27f22d9b9ea78dcd2a6268f5763963a55ff94dfb216",
-      "recorded_input_digest": "214de5455a7f2cd2ebf4c27f22d9b9ea78dcd2a6268f5763963a55ff94dfb216"
+      "current_input_digest": "4de106180a2e7c02489a92d46d84bb4f0a6de6d8fdb80e0ecca910fba3ce2233",
+      "recorded_input_digest": "4de106180a2e7c02489a92d46d84bb4f0a6de6d8fdb80e0ecca910fba3ce2233"
     },
     {
       "consumer": "ritual aggregates",
@@ -91,10 +91,10 @@
       "declared_outputs": [
         "docs/reports/GRAPH_QUALITY_V2_SCORECARD.md"
       ],
-      "built_at": "2026-09-18T11:35:28.505112+00:00",
+      "built_at": "2026-09-18T15:24:25.597849+00:00",
       "rebuilt_by": "scripts/graph_quality_scorecard.py",
-      "current_input_digest": "5ce81e42d00637ff6b5c332c9e0c037c849cd34ca15cfc5c523197e16db3061f",
-      "recorded_input_digest": "5ce81e42d00637ff6b5c332c9e0c037c849cd34ca15cfc5c523197e16db3061f"
+      "current_input_digest": "cc4d64f2bf6516361ecf0b059b80c58adf39a88438f0696007bd97b208c7a8d4",
+      "recorded_input_digest": "cc4d64f2bf6516361ecf0b059b80c58adf39a88438f0696007bd97b208c7a8d4"
     },
     {
       "consumer": "Ask retrieval",
@@ -107,7 +107,7 @@
       "declared_outputs": [],
       "built_at": "2026-09-16T10:32:50.832825+00:00",
       "rebuilt_by": "the search index build, then scripts/run_ask_benchmark.py to re-grade",
-      "current_input_digest": "b7b6260dfae34c34e102d4980e7b2eab5a0929243c8b2728c54d30403ce9595a",
+      "current_input_digest": "f07f0b0c30d3b8663c2caad8a2f00616acc8fd3a865b851a5bcc61b38aaab378",
       "recorded_input_digest": "1d6bd21c84f8ecca59befc49b655ac072219cc231651039e2ac659a5ad620eb4"
     },
     {
@@ -124,10 +124,10 @@
         "frontend/public/world/world.json",
         "frontend/public/world/world.labels.json"
       ],
-      "built_at": "2026-09-18T11:35:43.481574+00:00",
+      "built_at": "2026-09-18T15:14:29.791645+00:00",
       "rebuilt_by": "scripts/export_graph_world.py and the metrics build",
-      "current_input_digest": "1f51071792633a003673cbb30e91677eb62f262b0c43b13bb607524a28a088be",
-      "recorded_input_digest": "1f51071792633a003673cbb30e91677eb62f262b0c43b13bb607524a28a088be"
+      "current_input_digest": "f03408e047077e0ab8793d66bdffcdb082e3e71d520b3222045ca868ecfb5baa",
+      "recorded_input_digest": "f03408e047077e0ab8793d66bdffcdb082e3e71d520b3222045ca868ecfb5baa"
     },
     {
       "consumer": "Knowledge World public projection",
@@ -142,10 +142,10 @@
         "frontend/public/data/home-world.json",
         "frontend/public/world/world.predicates.json"
       ],
-      "built_at": "2026-09-18T11:35:35.547677+00:00",
+      "built_at": "2026-09-18T15:14:23.123853+00:00",
       "rebuilt_by": "scripts/export_graph_world.py",
-      "current_input_digest": "8a06772f5ae9601c63a3de97626c1691a1f7310a925c46c251b38591389b950e",
-      "recorded_input_digest": "8a06772f5ae9601c63a3de97626c1691a1f7310a925c46c251b38591389b950e"
+      "current_input_digest": "ac00202465b7dd1cfebcf28d291157e9fa84b7b4ae44e4f2b1207cd1d3dbf5e5",
+      "recorded_input_digest": "ac00202465b7dd1cfebcf28d291157e9fa84b7b4ae44e4f2b1207cd1d3dbf5e5"
     }
   ],
   "counts": {

@@ -27,7 +27,7 @@ replaced the question it asked, and M6′ below passes all five.
 **Domain blocked.** `semantic_roles`. Without it the role layer cannot be expressed.
 
 **Why the existing schema is insufficient, measured.** `ASSERTION_AGENT` and
-`ASSERTION_TARGET` point only at `:Devata` — verified live, 2,502 and 799 edges, all to
+`ASSERTION_TARGET` point only at `:Devata` — verified live, 2,502 and 799 edges **[SUPERSEDED BY R5: 2,660 and 918, with 58 and 103 non-deity — see the R5 correction to this card at the end of the file]**, all to
 `:Devata`. Of the restaged 2,052 asserted fillers only 142 are deities, so **93.1% are
 unrepresentable**. The graph already pays this cost silently: 1,364 patients, 366
 instruments, 356 beneficiaries and 225 locations sit on `:SemanticAssertion` as opaque
@@ -491,3 +491,17 @@ the executed receipt, and the readback refuses to report a verdict when no recei
 ADDITIVE = false (a withdrawal) · DETERMINISTIC_IDENTITY = true · BACKWARD_COMPATIBLE = true
 ROLLBACK_DEFINED = true · OLD_PREDICATE_MEANING_CHANGED = false
 ```
+
+
+## R5 correction to the M1 card
+
+The card's premise — "`ASSERTION_AGENT` and `ASSERTION_TARGET` point only at `:Devata` —
+verified live, 2,502 and 799 edges" — was a true measurement of the POPULATION and was never
+true of the DECLARED RANGE, which has admitted `{Devata, DomainEntity}` on both predicates
+throughout. `GAP-SEMANTICS-003` populated the second half in R5: `ASSERTION_AGENT` reads
+2,660 with 58 non-deity agents and `ASSERTION_TARGET` reads 918 with 103 non-deity targets.
+
+Nothing the M1 card promised was broken. No edge it wrote was altered, no endpoint was
+re-declared, and the added edges carry
+`derivation = TREEBANK_DEPREL_ROLE_PROJECTION` so the two populations stay separable by
+query rather than blending into one figure.

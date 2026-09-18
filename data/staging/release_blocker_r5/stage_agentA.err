@@ -1,0 +1,20 @@
+Traceback (most recent call last):
+  File "D:\VedaGraph\data\staging\release_blocker_r5\stage_agentA_gaps.py", line 287, in <module>
+    result = _q.run(go)
+             ^^^^^^^^^^
+  File "D:\VedaGraph\data\staging\release_blocker_r5\_q.py", line 26, in run
+    out = fn(s)
+          ^^^^^
+  File "D:\VedaGraph\data\staging\release_blocker_r5\stage_agentA_gaps.py", line 67, in go
+    qa = _rows(CANONICAL_SV / "qa_issues.jsonl")
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\VedaGraph\data\staging\release_blocker_r5\stage_agentA_gaps.py", line 55, in _rows
+    return [json.loads(line) for line in path.read_text(encoding="utf-8").splitlines() if line.strip()]
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HKM49\AppData\Local\Programs\Python\Python312\Lib\pathlib.py", line 1027, in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HKM49\AppData\Local\Programs\Python\Python312\Lib\pathlib.py", line 1013, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'D:\\data\\canonical\\samaveda_arcika_v1\\qa_issues.jsonl'

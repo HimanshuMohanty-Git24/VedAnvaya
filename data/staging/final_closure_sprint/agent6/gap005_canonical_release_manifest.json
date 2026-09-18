@@ -28,7 +28,7 @@
     },
     {
       "dataset": "atharvaveda_pilot_v1",
-      "mtime": "2026-09-07T05:52:25Z",
+      "mtime": "2026-09-16T17:39:23Z",
       "path": "data/canonical/atharvaveda_pilot_v1/manifest.json",
       "sha256": "0af8568cc8c5627e0912c652af20b35edf1caa733376ec182a1de13830faa2a6",
       "size": 6596,
@@ -140,7 +140,7 @@
     },
     {
       "dataset": "atharvaveda_saunaka_1856_provisional",
-      "mtime": "2026-09-08T17:06:53Z",
+      "mtime": "2026-09-16T17:39:23Z",
       "path": "data/canonical/atharvaveda_saunaka_1856_provisional/manifest.json",
       "sha256": "e67c8088a8de28735023521f0178fe69ef9f6123b45dd963fc598f637f2d8550",
       "size": 3346,
@@ -252,7 +252,7 @@
     },
     {
       "dataset": "atharvaveda_saunaka_1856_v1",
-      "mtime": "2026-09-08T05:10:00Z",
+      "mtime": "2026-09-16T17:39:23Z",
       "path": "data/canonical/atharvaveda_saunaka_1856_v1/manifest.json",
       "sha256": "467f4c9ce0ecec1e0c48e4a0cae52fde04ed85f1d018cb1dd771cf6a95037e84",
       "size": 3287,
@@ -364,7 +364,7 @@
     },
     {
       "dataset": "atharvaveda_saunaka_digital_working_v1",
-      "mtime": "2026-09-16T10:10:33Z",
+      "mtime": "2026-09-16T17:39:23Z",
       "path": "data/canonical/atharvaveda_saunaka_digital_working_v1/manifest.json",
       "sha256": "2212989d33b8f41b16f32b4f89ef04ded8f18f9f72e98b2f791cd28cf49e6434",
       "size": 78989,
@@ -500,7 +500,7 @@
     },
     {
       "dataset": "rigveda_full_v1",
-      "mtime": "2026-09-04T12:29:33Z",
+      "mtime": "2026-09-16T17:39:23Z",
       "path": "data/canonical/rigveda_full_v1/manifest.json",
       "sha256": "b67c3175cc35f1b6a1eb6766ed085a56785194cd731f8c05a2343e847df19736",
       "size": 330952,
@@ -612,7 +612,7 @@
     },
     {
       "dataset": "rv_1_1_pilot",
-      "mtime": "2026-09-04T06:15:33Z",
+      "mtime": "2026-09-16T17:39:23Z",
       "path": "data/canonical/rv_1_1_pilot/manifest.json",
       "sha256": "f66f0e8d141b6d1d241471ea691b1dbc6d63603fead74956327bc76d39a58ed2",
       "size": 3040,
@@ -724,7 +724,7 @@
     },
     {
       "dataset": "rv_mandala_10_full_v1",
-      "mtime": "2026-09-04T12:26:58Z",
+      "mtime": "2026-09-16T17:39:23Z",
       "path": "data/canonical/rv_mandala_10_full_v1/manifest.json",
       "sha256": "700caed9a676b19c73e0cf3e8431bb2fe64b6a4a8af6f445491fb72c480746ea",
       "size": 55350,
@@ -844,7 +844,7 @@
     },
     {
       "dataset": "rv_mandala_1_full_v1",
-      "mtime": "2026-09-04T12:25:44Z",
+      "mtime": "2026-09-16T17:39:23Z",
       "path": "data/canonical/rv_mandala_1_full_v1/manifest.json",
       "sha256": "c43c36028108593460880fcf91521652e43b68e50ca5527d4b7d3ab1ed1f86ed",
       "size": 104782,
@@ -964,7 +964,7 @@
     },
     {
       "dataset": "rv_mandala_1_sample_v2",
-      "mtime": "2026-09-04T07:59:32Z",
+      "mtime": "2026-09-16T17:39:23Z",
       "path": "data/canonical/rv_mandala_1_sample_v2/manifest.json",
       "sha256": "fdc2d60f531a70ead88752cfc1ce89a603fcfcabc6f1ce8838dfe7b4e2461988",
       "size": 8386,
@@ -1084,7 +1084,7 @@
     },
     {
       "dataset": "rv_mandala_2_full_v1",
-      "mtime": "2026-09-04T12:25:51Z",
+      "mtime": "2026-09-16T17:39:23Z",
       "path": "data/canonical/rv_mandala_2_full_v1/manifest.json",
       "sha256": "9db55eda4ff40d467c7112631e700e106b4d85dc4844df6610e7350c23742397",
       "size": 16349,
@@ -1204,7 +1204,7 @@
     },
     {
       "dataset": "rv_mandala_3_full_v1",
-      "mtime": "2026-09-04T12:25:58Z",
+      "mtime": "2026-09-16T17:39:23Z",
       "path": "data/canonical/rv_mandala_3_full_v1/manifest.json",
       "sha256": "d4ce738344fbdf7cb590d9712712707d9a91e7c5ad92362d19ec95a9c7e226aa",
       "size": 21515,
@@ -1324,7 +1324,7 @@
     },
     {
       "dataset": "rv_mandala_4_full_v1",
-      "mtime": "2026-09-04T12:26:05Z",
+      "mtime": "2026-09-16T17:39:23Z",
       "path": "data/canonical/rv_mandala_4_full_v1/manifest.json",
       "sha256": "b0bb6a3aa5236d8e6128dd0ad74391f5df1c59e849ad6a047af7c107c8b8f179",
       "size": 20483,
@@ -1444,7 +1444,7 @@
     },
     {
       "dataset": "rv_mandala_5_full_v1",
-      "mtime": "2026-09-04T12:26:13Z",
+      "mtime": "2026-09-16T17:39:23Z",
       "path": "data/canonical/rv_mandala_5_full_v1/manifest.json",
       "sha256": "b308c95d349bbac91bd5cb89618b5fb3c7afa994b6d4e8edf8c247a057a87c8e",
       "size": 27965,
@@ -1564,7 +1564,7 @@
     },
     {
       "dataset": "rv_mandala_6_full_v1",
-      "mtime": "2026-09-04T12:26:21Z",
+      "mtime": "2026-09-16T17:39:23Z",
       "path": "data/canonical/rv_mandala_6_full_v1/manifest.json",
       "sha256": "2ea908d39902d1ac71023d0dd0b66c940169ad2fd573e294e6face9b9a5dec8a",
       "size": 24869,
@@ -1684,7 +1684,7 @@
     },
     {
       "dataset": "rv_mandala_7_full_v1",
-      "mtime": "2026-09-04T12:26:29Z",
+      "mtime": "2026-09-16T17:39:23Z",
       "path": "data/canonical/rv_mandala_7_full_v1/manifest.json",
       "sha256": "8ccf9c6678c06394dbedc33e99b31c2872b30041caf4ee683dc4af5e2e47e49e",
       "size": 32609,
@@ -1804,7 +1804,7 @@
     },
     {
       "dataset": "rv_mandala_8_full_v1",
-      "mtime": "2026-09-04T12:26:38Z",
+      "mtime": "2026-09-16T17:39:23Z",
       "path": "data/canonical/rv_mandala_8_full_v1/manifest.json",
       "sha256": "71555b23dd8263ed30ee9bd8136d0204dbb229e5cf9d554bf44977e38654dfda",
       "size": 32360,
@@ -1924,7 +1924,7 @@
     },
     {
       "dataset": "rv_mandala_9_full_v1",
-      "mtime": "2026-09-04T12:26:46Z",
+      "mtime": "2026-09-16T17:39:23Z",
       "path": "data/canonical/rv_mandala_9_full_v1/manifest.json",
       "sha256": "16a0eb06ba5cb7fa517ae2639eca826a02d9d7cf7b854aaf56ba5bc43ccd7684",
       "size": 35196,
@@ -2028,9 +2028,9 @@
     },
     {
       "dataset": "samaveda_arcika_v1",
-      "mtime": "2026-09-07T15:45:09Z",
+      "mtime": "2026-09-18T13:04:01Z",
       "path": "data/canonical/samaveda_arcika_v1/manifest.json",
-      "sha256": "173dd473659a26e598b1d66daec205dfa34357af00cf7729a1cce77c664c7328",
+      "sha256": "152c03a8d3ee99b92d6cb6a61534ddd3b6c0d84c72dbec37e8a66ad0ec65388a",
       "size": 42879,
       "tier": "RELEASE"
     },
@@ -2052,10 +2052,10 @@
     },
     {
       "dataset": "samaveda_arcika_v1",
-      "mtime": "2026-09-07T15:45:09Z",
+      "mtime": "2026-09-18T13:04:01Z",
       "path": "data/canonical/samaveda_arcika_v1/referent_bindings.jsonl",
-      "sha256": "53df3ea417db66b8f2a5f66d6ae5f2ca6be16a87c0ebce8b4e9d81ce1e29d995",
-      "size": 1725516,
+      "sha256": "a3db269f75af09feb2aa9387fa61d56bf7ec70477a78869af53f012d78ae7b9d",
+      "size": 1726882,
       "tier": "RELEASE"
     },
     {
@@ -2084,10 +2084,10 @@
     },
     {
       "dataset": "samaveda_arcika_v1",
-      "mtime": "2026-09-07T15:45:09Z",
+      "mtime": "2026-09-18T13:04:01Z",
       "path": "data/canonical/samaveda_arcika_v1/text_versions.jsonl",
-      "sha256": "cc4c69223c559a05c3d6db9029e0618fe81dff4c280d3b55cf57007c6f4cedc5",
-      "size": 1793121,
+      "sha256": "5663a440184dc8b0b2f3b6a6dc3ac72f3945a6ae0706984d66bb17042a7b01b7",
+      "size": 1792861,
       "tier": "RELEASE"
     },
     {
@@ -2212,7 +2212,7 @@
     },
     {
       "dataset": "yajurveda_pilot_v1",
-      "mtime": "2026-09-07T06:20:56Z",
+      "mtime": "2026-09-16T17:39:23Z",
       "path": "data/canonical/yajurveda_pilot_v1/manifest.json",
       "sha256": "c7869eef9533f950b32656fca3470a01ff02c13b9eebd743a4b14cbeb16aa119",
       "size": 13295,
@@ -2316,7 +2316,7 @@
     },
     {
       "dataset": "yajurveda_vsm_v1",
-      "mtime": "2026-09-07T16:54:20Z",
+      "mtime": "2026-09-16T17:39:23Z",
       "path": "data/canonical/yajurveda_vsm_v1/manifest.json",
       "sha256": "e30603043dbe615bf87d4f956bdae3089df27385e94b5b6a0512cc27da5372a1",
       "size": 13454,
@@ -2428,14 +2428,14 @@
     }
   ],
   "file_count": 303,
-  "fingerprint_sha256": "d93bfde5b144d29e384b32771198a12655786466d39f92cb3715510a131a7856",
+  "fingerprint_sha256": "2d08506c99a96c8ede5bb7de31f0990e8a69230c3a57aae700296bb87cbddbf9",
   "gap_id": "GAP-PRODUCT_SURFACE-005",
-  "generated_at": "2026-09-16T17:24:40Z",
+  "generated_at": "2026-09-18T13:52:28Z",
   "gitignore_rule": "data/canonical/** (.gitignore line 17)",
   "manifest_version": "canonical-release-manifest-v1",
   "release_file_count": 62,
-  "release_fingerprint_sha256": "342d7eb957ec45cebfd75af9e727ab34b1ba7738073ba057d028548b16559f1f",
-  "release_total_bytes": 103722479,
+  "release_fingerprint_sha256": "e5603a3189d8c857746b5b3618fa0908b3768d8867ed99f1e58efec0fd68dd5f",
+  "release_total_bytes": 103723585,
   "released_datasets": {
     "AV": "atharvaveda_saunaka_digital_working_v1",
     "RV": "rigveda_full_v1",
@@ -2448,9 +2448,9 @@
       "files": 241
     },
     "RELEASE": {
-      "bytes": 103722479,
+      "bytes": 103723585,
       "files": 62
     }
   },
-  "total_bytes": 153007679
+  "total_bytes": 153008785
 }

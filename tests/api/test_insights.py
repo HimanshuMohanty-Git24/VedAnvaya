@@ -1183,7 +1183,9 @@ def test_g04_civilization_overrun_keeps_the_real_total_and_carries_the_paging_ca
     # danastuti gift-praise label. This assertion exists to prove the paging caveat reports
     # the REAL total rather than the page, so the figure is expected to track the metric
     # layer -- re-derived, not loosened.
-    assert sections[SectionKind.DERIVED_METRIC]["total_available"] == 1481
+    # 1,481 -> 1,485. R5 added 2 (GAP-RITUAL-006's precision and material-culture rows)
+    # and the entity-coverage rebuild the dependency report then required added 2 more.
+    assert sections[SectionKind.DERIVED_METRIC]["total_available"] == 1485
     assert sections[SectionKind.DERIVED_METRIC]["returned"] > 0
 
 

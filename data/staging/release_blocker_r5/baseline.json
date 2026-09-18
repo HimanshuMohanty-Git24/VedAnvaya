@@ -1,0 +1,60 @@
+{
+  "artifact": "RELEASE_BLOCKER_R5_BASELINE",
+  "at": "2026-09-18T00:00:00+00:00",
+  "head": "bba9e8ebdfebf7ec7f5d2be5093327576bb35919",
+  "branch": "phase-data-completeness-v2",
+  "tracked_tree": "clean",
+  "untracked_paths_measured": 67,
+  "untracked_paths_asserted_by_brief": 66,
+  "untracked_delta_note": "One path more than the brief's 66. Measured with `git status --porcelain | wc -l` at session start; no path was added by this session before the count was taken. Treated as baseline material and preserved.",
+  "census": {
+    "nodes": 164597,
+    "relationships": 509486,
+    "RV": 10552,
+    "SV": 1844,
+    "YV": 1975,
+    "AV": 5839,
+    "TOTAL": 20210,
+    "DerivedMetric": 1481
+  },
+  "census_matches_brief_prediction": true,
+  "registry": {
+    "entries": 85,
+    "STILL_IMPLEMENTATION_FIXABLE": 11,
+    "BLOCKED_OWNER_DECISION_REQUIRED": 3,
+    "BLOCKED_EXTERNAL_SOURCE_UNAVAILABLE": 7,
+    "ASK_FORMAL_REGRADE_BLOCKED_EXTERNAL_QUOTA": 1,
+    "NEEDS_AUDIBLE_REVIEW": 3,
+    "CLOSED_DERIVED": 40,
+    "CLOSED_SCOPE_DECISION": 13,
+    "CLOSED_VERIFIED_ZERO": 5,
+    "CLOSED_NOT_APPLICABLE": 2,
+    "measurement_disagreements": 0,
+    "registry_status_disagreements": 0,
+    "scope_citations_naming_no_file": 0,
+    "scope_citations_only_self_cited": 0,
+    "entries_without_a_ruling": 0,
+    "rulings_for_no_entry": 0
+  },
+  "implementation_fixable_measured": [
+    "GAP-ENTITY_COVERAGE-004",
+    "GAP-ENTITY_COVERAGE-006",
+    "GAP-ENTITY_COVERAGE-007",
+    "GAP-PRODUCT_SURFACE-005",
+    "GAP-QUALITY-003",
+    "GAP-RITUAL-003",
+    "GAP-RITUAL-005",
+    "GAP-RITUAL-006",
+    "GAP-SAMAVEDA_MUSIC-003",
+    "GAP-SEMANTICS-003",
+    "GAP-TRANSLATION-004"
+  ],
+  "implementation_fixable_matches_brief": true,
+  "owner_decision_required_measured": [
+    "GAP-COMMUNITIES-002",
+    "GAP-ENTITY_COVERAGE-001",
+    "GAP-SAMAVEDA_MUSIC-002"
+  ],
+  "owner_decision_note": "The brief supplies decisions for two of the three. GAP-SAMAVEDA_MUSIC-002 is blocked on OWNER_DECISION_E_AUDIO_GATE, which the R5 brief does not rule on. Carried into the report rather than absorbed.",
+  "registry_closure_audit_source": "data/staging/wave4/registry_closure_audit.json"
+}

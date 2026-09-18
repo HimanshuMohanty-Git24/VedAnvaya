@@ -52,93 +52,93 @@
       "type:HAS_DEVATA": "n=10558;unnamed=0;pairs=8e4eea692c244357e1b3bdd2106719549f5a37430fa668977c59636ac0fedde8",
       "type:HAS_TRANSLATION": "n=18427;unnamed=18427;pairs=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "type:MENTIONS_DEVATA": "n=17165;unnamed=0;pairs=bd51583b55154c393e05621ca50cb935896b3420a14061f530b27794519c22da",
-      "type:MENTIONS_ENTITY": "n=28116;unnamed=0;pairs=5cbd4bf1d73685337092796e0e6479559b11adecb5084c9b500e48b9b77bdd03",
-      "file:data/domain/vedagraph_domain_v2/veda_coverage_v3.json": "300d9abed73f11b85a4b764bad0b6a056668b781b1a1914703b10520dc1f5c66",
+      "type:MENTIONS_ENTITY": "n=28122;unnamed=0;pairs=7d20224a1d37805f2fbdb451488eb2877b53301424683bf3f74c04115ae01e6f",
+      "file:data/domain/vedagraph_domain_v2/veda_coverage_v3.json": "8f89dd32fac6dfcfc971327a79d994c34957cafdacfceba099051419408cd915",
       "builder:scripts/build_veda_coverage_and_metrics.py": "b4ddfc1b34ba1766b109881a1f6c07d5d68d5d742bb370fbc5061255ee72cee0"
     },
-    "built_at": "2026-09-17T16:23:28.871060+00:00",
+    "built_at": "2026-09-18T15:14:06.017212+00:00",
     "graph_census": {
-      "nodes": 164201,
-      "relationships": 508042
+      "nodes": 164601,
+      "relationships": 509769
     },
     "output_hashes": {
-      "data/domain/vedagraph_domain_v2/veda_coverage_v3.json": "300d9abed73f11b85a4b764bad0b6a056668b781b1a1914703b10520dc1f5c66"
+      "data/domain/vedagraph_domain_v2/veda_coverage_v3.json": "8f89dd32fac6dfcfc971327a79d994c34957cafdacfceba099051419408cd915"
     }
   },
   "quality evaluation": {
     "consumer": "quality evaluation",
     "input_hashes": {
-      "subgraph:whole-graph": "nodes=164597;keyless=79707;nodekeys=18c88c5a6d698c15f034801f4f59be94898545235ad4bf363ac76ef27a877abe;labels=e7209c8dc88bfbf2420330d51975d7bff5db2e77931aecefb23b1b47f1710f0e;edges=509486;unnamed=83862;edgekeys=0b177f6cfc2275686305bad88d1b533b36a079b58a71b0d7ea72faa5fc86822e",
+      "subgraph:whole-graph": "nodes=164601;keyless=79707;nodekeys=73e1d6b64b1ba8bb421b34dcdd249ab33ec8fd22efbdd5497ffe0f3b8c1dcc26;labels=67c51e1a04badc144f5a1472f844c140621fb66d9903e5362e0cb5507df8ce9f;edges=509769;unnamed=83862;edgekeys=cd2b92b2e78f23dc8b7e1939938003b3f6c8ca294e39151818a828a9fe1b53fe",
       "label:Passage": "n=22537;keyless=0;keys=39a13384921e22b23f9cd72bd9b4b26b462b22a089de2a09f6b2f6ecfb2eaaf7",
       "label:QAIssue": "n=915;keyless=915;keys=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "label:QualityVerdict": "n=2568;keyless=0;keys=a5c86f381d9a071f796af09129c4d1f378658c95df8c702345036780301a3b30",
       "type:QA_ISSUE_ON": "n=915;unnamed=915;pairs=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "type:QUALITY_VERDICT_ABOUT": "n=2568;unnamed=0;pairs=81b929c8b243d02d718fa8b26866b0a9a63b7aff37bd4bd8f47df6cb0b3b281c",
-      "builder:scripts/graph_quality_scorecard.py": "6a598bea93646c66ff950e5c03fc20d28fca35da85ca24c4b20a5a6e4085496f"
+      "builder:scripts/graph_quality_scorecard.py": "81c51a88557629fdd2aca7bf561b6e7e1a6e76045997c91fcff0bfd7e62b3758"
     },
-    "built_at": "2026-09-18T11:35:28.505112+00:00",
+    "built_at": "2026-09-18T15:24:25.597849+00:00",
     "graph_census": {
-      "nodes": 164597,
-      "relationships": 509486
+      "nodes": 164601,
+      "relationships": 509769
     },
     "output_hashes": {
-      "docs/reports/GRAPH_QUALITY_V2_SCORECARD.md": "16b92fe38fb8fa6113895912268cf757af9c0a1dcad63e74042d350e6e3c9412"
+      "docs/reports/GRAPH_QUALITY_V2_SCORECARD.md": "38f508765160d1dbb9223fb84013993629351d97a79fd79a57d2609686e8dcfa"
     }
   },
   "Visualization Lab aggregates": {
     "consumer": "Visualization Lab aggregates",
     "input_hashes": {
-      "subgraph:public": "nodes=71769;keyless=1558;nodekeys=764ab5a18385730fc3a6911bd75ae016b656e165cc2c006fcf0546faf3202f8d;labels=a3d63252986e1f1e8e6d362d4f206cf6b9214552f80800a4b53d611af3f5efc7;edges=272090;unnamed=5734;edgekeys=4cb5ce19368173b60beced8e93cc1c3b1ef45db85246609a40a3ac9a26dbd8d9",
+      "subgraph:public": "nodes=71773;keyless=1558;nodekeys=5cab304906bc11ef52e72fd15dd11222fd5e26b7c489c9b7a209b1854ebbfb1d;labels=3e4a2cf3c77337a90b8dda0f1fa012da67719236e8560619fec8968780d5db66;edges=272373;unnamed=5734;edgekeys=96e5f23eb6e28bf70e78aae53907dc4f1001ad7ae8bf8f37b4ac0f53d632c744",
       "label:Concept": "n=384;keyless=0;keys=400f2010abb625c2140a3ab58c8e62161d20998f0c6b63b03a195e512114ad87",
-      "label:DerivedMetric": "n=1481;keyless=0;keys=4b4480e5e1e901be13ee969fd17406cf12b06adef2f5da063a337b5e55b2af30",
+      "label:DerivedMetric": "n=1485;keyless=0;keys=d726599161922588ddf0c70bb9c69ec6095c9213e23a542217c02366d28c32e0",
       "label:Devata": "n=214;keyless=0;keys=2c4a14b6bf91f0806acbb0870661713c886928d869db02685e6f05dd38a2f8f4",
       "label:Passage": "n=22537;keyless=0;keys=39a13384921e22b23f9cd72bd9b4b26b462b22a089de2a09f6b2f6ecfb2eaaf7",
       "type:ABOUT_CONCEPT": "n=24861;unnamed=0;pairs=499c5d65713399051f8903e60791ef04e3c2bd911d799cd6eff0892d7bd89999",
       "type:CO_OCCURS_WITH": "n=306;unnamed=0;pairs=6f0e1863edc369837b53bb837d28c4b264c0c6142c7151f4b451e799c372c169",
       "type:HAS_DEVATA": "n=10558;unnamed=0;pairs=8e4eea692c244357e1b3bdd2106719549f5a37430fa668977c59636ac0fedde8",
-      "type:MENTIONS_ENTITY": "n=28116;unnamed=0;pairs=5cbd4bf1d73685337092796e0e6479559b11adecb5084c9b500e48b9b77bdd03",
-      "file:frontend/.world/world.raw.json": "f6e60d87d4ba4229a5b7fcaff2a67bb359118f1cd33144a391f0ba584267fafc",
+      "type:MENTIONS_ENTITY": "n=28122;unnamed=0;pairs=7d20224a1d37805f2fbdb451488eb2877b53301424683bf3f74c04115ae01e6f",
+      "file:frontend/.world/world.raw.json": "dee0876531490c48939d456b586b2cb0fd66dc487617a4cb44ad20a17326ae40",
       "builder:frontend/scripts/build-constellations.mjs": "202681694940d68dcb9ae0d9d893cd649dfcd07c94d600aaabfc6047a47fa9b4",
       "builder:frontend/scripts/build-world.mjs": "a0de0bd2952f6c843b6d57b0cd5e47031d08201a43b7da76308118690a9343d6",
       "builder:frontend/scripts/world-groups.json": "81080312834b9a0b04320b829e909c1fe20c2b593565593cc177f378d685b16d"
     },
-    "built_at": "2026-09-18T11:35:43.481574+00:00",
+    "built_at": "2026-09-18T15:14:29.791645+00:00",
     "graph_census": {
-      "nodes": 164597,
-      "relationships": 509486
+      "nodes": 164601,
+      "relationships": 509769
     },
     "output_hashes": {
-      "frontend/.world/constellations.json": "16a2e04ea3f16b1d3b12aba0f609521ae21a97d750a894bfeb34e9a325405b00",
-      "frontend/public/world/world.bin": "c1a79a00e5d7d9f410feda34d2a58d799af22f8dd6e789319bca5240357672aa",
-      "frontend/public/world/world.json": "08f6822bc44984abd4fce9b00aefa64db5acda45d19e0ebe359af037ec32b3f5",
-      "frontend/public/world/world.labels.json": "b937a7ab4f16a1e0bde00e4c5d7cda5deb7316f1a4b122888a2b26a08b3db64f"
+      "frontend/.world/constellations.json": "dc95068d9514886ba26d545f041274a06bb5439417391cdd7e9d7e936e45eff9",
+      "frontend/public/world/world.bin": "8c0375f6fb8e9cf1b59ad1aece576676118972c0477337e2b4fb90d0009471e6",
+      "frontend/public/world/world.json": "8aff232726d412f3dcb5786003c52e0247fded6451874c0c2203609195d70ec5",
+      "frontend/public/world/world.labels.json": "df6acf2be4a6ac0be0a9d861f06706facb0aa6676ccbe60d9475127802798ce6"
     }
   },
   "Knowledge World public projection": {
     "consumer": "Knowledge World public projection",
     "input_hashes": {
-      "subgraph:public": "nodes=71769;keyless=1558;nodekeys=764ab5a18385730fc3a6911bd75ae016b656e165cc2c006fcf0546faf3202f8d;labels=a3d63252986e1f1e8e6d362d4f206cf6b9214552f80800a4b53d611af3f5efc7;edges=272090;unnamed=5734;edgekeys=4cb5ce19368173b60beced8e93cc1c3b1ef45db85246609a40a3ac9a26dbd8d9",
+      "subgraph:public": "nodes=71773;keyless=1558;nodekeys=5cab304906bc11ef52e72fd15dd11222fd5e26b7c489c9b7a209b1854ebbfb1d;labels=3e4a2cf3c77337a90b8dda0f1fa012da67719236e8560619fec8968780d5db66;edges=272373;unnamed=5734;edgekeys=96e5f23eb6e28bf70e78aae53907dc4f1001ad7ae8bf8f37b4ac0f53d632c744",
       "label:Concept": "n=384;keyless=0;keys=400f2010abb625c2140a3ab58c8e62161d20998f0c6b63b03a195e512114ad87",
       "label:Devata": "n=214;keyless=0;keys=2c4a14b6bf91f0806acbb0870661713c886928d869db02685e6f05dd38a2f8f4",
       "label:DomainEntity": "n=384;keyless=0;keys=400f2010abb625c2140a3ab58c8e62161d20998f0c6b63b03a195e512114ad87",
       "label:Passage": "n=22537;keyless=0;keys=39a13384921e22b23f9cd72bd9b4b26b462b22a089de2a09f6b2f6ecfb2eaaf7",
       "type:ABOUT_CONCEPT": "n=24861;unnamed=0;pairs=499c5d65713399051f8903e60791ef04e3c2bd911d799cd6eff0892d7bd89999",
-      "type:MENTIONS_ENTITY": "n=28116;unnamed=0;pairs=5cbd4bf1d73685337092796e0e6479559b11adecb5084c9b500e48b9b77bdd03",
+      "type:MENTIONS_ENTITY": "n=28122;unnamed=0;pairs=7d20224a1d37805f2fbdb451488eb2877b53301424683bf3f74c04115ae01e6f",
       "type:SPECIALIZED_FORM_OF": "n=1;unnamed=0;pairs=312df33d6faee2051c8ae81913aa8f94d6e5cc63fb73b4cd7e8302b932dffea4",
       "builder:scripts/export_graph_world.py": "8f8fd4f41094c673df8e9a366a812752ad2454c0b417736ec11c7d445b65998c",
       "builder:scripts/export_predicate_semantics.py": "adf5fc1028fbaab5fc48fd1288ec06f1803cb0feed119590355d1889639607a4",
-      "builder:src/vedagraph/api/services/graph_service.py": "a6a2263bf17ff686d3b78837009dff257965eb2de67565e8aa7406e36fcc43ff",
+      "builder:src/vedagraph/api/services/graph_service.py": "40c65aca96b83f8bc09c051c81f1b8888ddaa6f95cae40a87b09f118be585a35",
       "builder:frontend/scripts/build-home-world.mjs": "a5109269ec36a54a6c850026a4617d626923ee35e6b801d859a8498a42c1a771"
     },
-    "built_at": "2026-09-18T11:35:35.547677+00:00",
+    "built_at": "2026-09-18T15:14:23.123853+00:00",
     "graph_census": {
-      "nodes": 164597,
-      "relationships": 509486
+      "nodes": 164601,
+      "relationships": 509769
     },
     "output_hashes": {
-      "frontend/.world/world.raw.json": "f6e60d87d4ba4229a5b7fcaff2a67bb359118f1cd33144a391f0ba584267fafc",
-      "frontend/public/world/world.predicates.json": "26be9b29e3b153e26048fc89ef477b0bfe25af3ce0a1d44cc50ef15e4d647f03",
-      "frontend/public/data/home-world.json": "d316ce12301eadc8fe5d730b3680bd186b7545afd16e4f7c122dd8e6a6852c28"
+      "frontend/.world/world.raw.json": "dee0876531490c48939d456b586b2cb0fd66dc487617a4cb44ad20a17326ae40",
+      "frontend/public/world/world.predicates.json": "d86af246a386a5ea845aed6fb230bc078e758166e3b3473fe5b579a6af196ab6",
+      "frontend/public/data/home-world.json": "bd0241cfb2f75d3f10deae06866df03c6359327613ed5b4aee26fa2f9984fe52"
     }
   },
   "ritual aggregates": {

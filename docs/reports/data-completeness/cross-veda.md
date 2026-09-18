@@ -854,3 +854,44 @@ understated by 74%. 2,240 of 6,271 edges are an identity, not 2,042. The recall 
    operating point. Importing them would loosen a boundary that is currently tight;
    discarding them loses a measured recall extension. Either is defensible; leaving them
    unlabelled is not.
+
+
+## R5 correction — one of the two `HEAD_TRUNCATION` rows was our own parser
+
+The transformation table above is a faithful reading of
+`data/staging/cross_veda/proofs/transformations.jsonl` as it stood. One cell in it is now
+known to be an artefact of this project rather than a fact about the corpus.
+
+`HEAD_TRUNCATION` occurs **twice** in all 6,596 rows, and one of the two is
+`VG:SV:KAU:CHANDA:P01:D08:V04` ↔ `VSM 12.51`. That Samavedic verse carried a Wikisource
+apparatus line — `द्र. `, a cross-reference annotation belonging to the PRECEDING verse,
+which the parser's unit boundary attached forward. The similarity measures and the published
+evidence quote were computed over it, and the difference classifier read the resulting
+extra head as a truncation: a claim about Vedic textual variation whose whole cause was our
+own segmentation.
+
+`GAP-PRODUCT_SURFACE-005` corrected the text in R5, in the canonical artifact and in the
+graph. The 13 affected cross-Veda edges were rescored from the corrected text by
+`vedagraph.enrich.crossveda.score_pair`, which reproduced every stored metric exactly on the
+contaminated text before being trusted on the corrected one. The transformation CLASS was
+**not** re-derived — its sixteen-value vocabulary lives in the cross-Veda staging build and
+not in `src`, so a value inferred here would have been a guess — and each affected edge
+instead carries `cross_veda_transformation_status =
+STALE_RECOMPUTE_REQUIRED_TEXT_CORRECTED` with the old value preserved beside it.
+
+**The live graph now reads 1.** The affected edge's `cross_veda_transformation` was set to
+`STALE_PENDING_REDERIVATION` with `HEAD_TRUNCATION` preserved in
+`cross_veda_transformation_superseded`, so no consumer reads a known-false class as
+current; a sentinel rather than a null, because a null would let a reader infer *no*
+transformation, which is a different false claim. Its similarity metrics were NOT
+recomputed and are labelled `UNVERIFIABLE_AGAINST_THE_CORRECTED_TEXT`: `score_pair`
+reproduces none of them from any of the six stored text versions, because this row came
+from the `FORMULA_RELATION_TYPOLOGY` path and carries
+`cross_veda_changed_by_anusvara_correction: true` where the other thirteen carry false.
+A wrong number replaced by a number nobody can reproduce is worse than a wrong number
+labelled unreproducible.
+
+**This table still reads 2, and is left that way deliberately.** Its value is that it
+matches `transformations.jsonl`, the artifact it was taken from, which the cross-Veda
+stage has not re-run. The table and the graph disagree by exactly this one row, and that
+is the disagreement this section exists to record.

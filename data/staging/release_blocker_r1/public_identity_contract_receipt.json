@@ -1,7 +1,7 @@
 {
   "graph_census": {
-    "nodes": 164597,
-    "relationships": 509486
+    "nodes": 164601,
+    "relationships": 509769
   },
   "diagnosis": {
     "A_existing_uuid": false,
@@ -157,7 +157,7 @@
       "group_key": 2
     },
     "DerivedMetric": {
-      "metric_id": 1481
+      "metric_id": 1485
     },
     "Devata": {
       "entity_key": 214
@@ -270,13 +270,13 @@
     }
   },
   "counts": {
-    "exported_nodes": 71769,
-    "distinct_public_ids": 71769,
+    "exported_nodes": 71773,
+    "distinct_public_ids": 71773,
     "duplicate_public_ids": 0,
     "cross_type_collisions": 0,
     "same_type_collisions": 0,
     "null_public_ids": 0,
-    "public_relationships": 272090,
+    "public_relationships": 272373,
     "passage_assertion_intersection": 0,
     "api_export_mismatches": 0,
     "missing_labels": 0,
@@ -293,7 +293,7 @@
       "data/staging/semantic_roles/rows.jsonl": "9ec93cae78c1d1d90bc6873fc1c28cfabb496601f5838e87dccb3e52c319ef35",
       "data/staging/semantic_roles/role_fillers.jsonl": "332d7733a3ddb81d631aada347b2899043605b18eaaa69c48aae82bb81c7ce2a"
     },
-    "sorted_public_ids_sha256": "74a45282d5f39ff9f3d159d3093c8de012f5c49614931d348268051eec398c60"
+    "sorted_public_ids_sha256": "6879035d9ff50c9dac9881f0d4237ee7ba741c98899642e1feb76a8c30da041c"
   },
   "examples": [
     {

@@ -128,3 +128,5 @@ declared relationship type with zero edges.
 Agent 1 counted every relationship type individually rather than reading the populated
 census, which is why that last one is trustworthy: a census built from what exists cannot
 report what is absent.
+
+> **R5 correction.** The `ASSERTION_AGENT` / `ASSERTION_TARGET` claim below measured the POPULATION and was never true of the declared RANGE, which has admitted `{Devata, DomainEntity}` throughout. `GAP-SEMANTICS-003` populated the second half in R5: 2,660 agents with 58 non-deity, 918 targets with 103 non-deity. See the R5 section of `quality.md`.

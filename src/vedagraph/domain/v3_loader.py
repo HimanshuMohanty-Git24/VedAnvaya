@@ -1048,6 +1048,11 @@ def _rebuild_action_aggregates(session: Session) -> dict[str, int]:
         counts[predicate] = _count(
             session,
             f"""
+            // :Devata here is REQUIRED, not a leftover narrowing. PERFORMS_ACTION and
+            // IS_ASKED_TO are declared `Devata -> {{ActionPredicate, Action}}`, so widening
+            // this match to the 58 DomainEntity agents GAP-SEMANTICS-003 added would write
+            // edges outside their own declared range -- a signature violation the graph
+            // scorecard fails on. The aggregate is deity-scoped because the predicate is.
             MATCH (d:Devata)<-[:ASSERTION_AGENT]-(s:{LABEL_SEMANTIC_ASSERTION})
                   -[:ASSERTION_PREDICATE]->(a:{LABEL_ACTION_PREDICATE})
             WHERE s.frame = $frame
@@ -1310,11 +1315,14 @@ def load_devata_ascriptions(
                 r.source_id = row.source_id,
                 r.source_label = row.source_label,
                 r.source_locator = row.source_locator,
-                r.confidence = row.confidence,
+                r.source_explicit_tier_marker = row.confidence,
+                r.confidence_field_withdrawn_because = $tier_note,
+                r.encoded_tier = 'L1_SOURCE_EXPLICIT',
                 r.build_pass = $build_pass
             """,
             rows=batch,
             build_pass=build_pass,
+            tier_note=SOURCE_EXPLICIT_TIER_NOTE,
         )
     report.landed = _count(
         session,
@@ -2789,7 +2797,8 @@ SET m.source_label = row.source_label,
     m.provenance_class = 'SOURCE_DERIVED_SCOPE',
     m.attribution_precision = 'NOT_AN_ATTRIBUTION',
     m.scope_origin = 'SUKTA_WIDE',
-    m.confidence = 1.0,
+    m.source_explicit_tier_marker = 1.0,
+    m.encoded_tier = 'L1_SOURCE_EXPLICIT',
     m.grade_basis = {_RISHI_MEMBER_BASIS_CASE},
     m.asserts = $member_asserts,
     m.build_pass = $build_pass

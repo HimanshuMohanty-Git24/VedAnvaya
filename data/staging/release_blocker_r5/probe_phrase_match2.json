@@ -1,0 +1,194 @@
+{
+  "mantras_searched": 20210,
+  "folded_phrases": {
+    "VG:CONCEPT:TRTIYA-SAVANA-THIRD-PRESSING": {
+      "tṛtīya savana": "tṛtīya savana",
+      "tṛtīye savane": "tṛtīye savane",
+      "tṛtīye savana": "tṛtīye savana",
+      "tṛtīyaṃ savanaṃ": "tṛtīyaṃ savanaṃ",
+      "tṛtīyaṃ savanam": "tṛtīyaṃ savanam",
+      "tṛtīyam savanam": "tṛtīyam savanam"
+    },
+    "VG:CONCEPT:MADHYANDINA-SAVANA-MIDDAY-PRESSING": {
+      "mādhyandina savana": "mādhyandina savana",
+      "mādhyandine savane": "mādhyandine savane",
+      "mādhyaṃdine savane": "mādhyaṃdine savane"
+    },
+    "__POSITIVE_CONTROL__": {
+      "agnim īḷe": "agnim īḷe",
+      "indra soma": "indra soma"
+    }
+  },
+  "hits": {
+    "VG:CONCEPT:TRTIYA-SAVANA-THIRD-PRESSING": {
+      "tṛtīye savane": {
+        "count": 1,
+        "rows": [
+          {
+            "canonical_key": "VG:RV:SAK:M03:S028:V005",
+            "veda": "RV",
+            "quote": "agne tṛtīye savane hi kāniṣaḥ puroḷāśaṃ sahasaḥ sūnav āhutam at"
+          }
+        ]
+      },
+      "tṛtīye savana": {
+        "count": 1,
+        "rows": [
+          {
+            "canonical_key": "VG:AV:SAU:K09:S001:V013",
+            "veda": "AV",
+            "quote": "yathā somas tṛtīye savana ṛbhūṇāṃ bhavati priyaḥ evā ma ṛbhavo varca ā"
+          }
+        ]
+      },
+      "tṛtīyaṃ savanaṃ": {
+        "count": 2,
+        "rows": [
+          {
+            "canonical_key": "VG:AV:SAU:K06:S047:V003",
+            "veda": "AV",
+            "quote": "idaṃ tṛtīyaṃ savanaṃ kavīnām ṛtena ye camasam airayanta te saudha"
+          },
+          {
+            "canonical_key": "VG:RV:SAK:M04:S035:V009",
+            "veda": "RV",
+            "quote": "yat tṛtīyaṃ savanaṃ ratnadheyam akṛṇudhvaṃ svapasyā suhastāḥ tad"
+          }
+        ]
+      },
+      "tṛtīyaṃ savanam": {
+        "count": 2,
+        "rows": [
+          {
+            "canonical_key": "VG:RV:SAK:M04:S034:V004",
+            "veda": "RV",
+            "quote": "uṣe martyāya pibata vājā ṛbhavo dade vo mahi tṛtīyaṃ savanam madāya"
+          },
+          {
+            "canonical_key": "VG:RV:SAK:M08:S057:V001",
+            "veda": "RV",
+            "quote": "iṣaṃ yajatrā āgachataṃ nāsatyā śacībhir idaṃ tṛtīyaṃ savanam pibāthaḥ"
+          }
+        ]
+      }
+    },
+    "VG:CONCEPT:MADHYANDINA-SAVANA-MIDDAY-PRESSING": {
+      "mādhyaṃdine savane": {
+        "count": 4,
+        "rows": [
+          {
+            "canonical_key": "VG:AV:SAU:K20:S012:V007",
+            "veda": "AV",
+            "quote": "hā somapāvā yuktvā haribhyām upa yāsad arvāṅ mādhyaṃdine savane matsad indraḥ"
+          },
+          {
+            "canonical_key": "VG:RV:SAK:M03:S028:V004",
+            "veda": "RV",
+            "quote": "mādhyaṃdine savane jātavedaḥ puroḷāśam iha kave juṣasva agne ya"
+          },
+          {
+            "canonical_key": "VG:RV:SAK:M03:S032:V003",
+            "veda": "RV",
+            "quote": "iṣīm avardhann arcanta indra marutas ta ojaḥ mādhyaṃdine savane vajrahasta pibā rudrebhiḥ sagaṇaḥ suśipra"
+          },
+          {
+            "canonical_key": "VG:RV:SAK:M05:S040:V004",
+            "veda": "RV",
+            "quote": "hā somapāvā yuktvā haribhyām upa yāsad arvāṅ mādhyaṃdine savane matsad indraḥ"
+          }
+        ]
+      }
+    },
+    "__POSITIVE_CONTROL__": {
+      "agnim īḷe": {
+        "count": 6,
+        "rows": [
+          {
+            "canonical_key": "VG:RV:SAK:M01:S001:V001",
+            "veda": "RV",
+            "quote": "agnim īḷe purohitaṃ yajñasya devam ṛtvijam hotāraṃ rat"
+          },
+          {
+            "canonical_key": "VG:RV:SAK:M01:S044:V004",
+            "veda": "RV",
+            "quote": " janāya dāśuṣe devāṃ achā yātave jātavedasam agnim īḷe vyuṣṭiṣu"
+          },
+          {
+            "canonical_key": "VG:RV:SAK:M03:S027:V012",
+            "veda": "RV",
+            "quote": "ūrjo napātam adhvare dīdivāṃsam upa dyavi agnim īḷe kavikratum"
+          },
+          {
+            "canonical_key": "VG:RV:SAK:M08:S043:V024",
+            "veda": "RV",
+            "quote": "āṃ rājānam adbhutam adhyakṣaṃ dharmaṇām imam agnim īḷe sa u śravat"
+          },
+          {
+            "canonical_key": "VG:RV:SAK:M08:S044:V006",
+            "veda": "RV",
+            "quote": "ndraṃ hotāram ṛtvijaṃ citrabhānuṃ vibhāvasum agnim īḷe sa u śravat"
+          },
+          {
+            "canonical_key": "VG:RV:SAK:M10:S020:V002",
+            "veda": "RV",
+            "quote": "agnim īḷe bhujāṃ yaviṣṭhaṃ śāsā mitraṃ durdharītum yas"
+          }
+        ]
+      },
+      "indra soma": {
+        "count": 1,
+        "rows": [
+          {
+            "canonical_key": "VG:RV:SAK:M06:S040:V003",
+            "veda": "RV",
+            "quote": "samiddhe agnau suta indra soma ā tvā vahantu harayo vahiṣṭhāḥ tvāyatā manas"
+          }
+        ]
+      }
+    }
+  },
+  "hit_counts": {
+    "VG:CONCEPT:TRTIYA-SAVANA-THIRD-PRESSING": {
+      "tṛtīya savana": 0,
+      "tṛtīye savane": 1,
+      "tṛtīye savana": 1,
+      "tṛtīyaṃ savanaṃ": 2,
+      "tṛtīyaṃ savanam": 2,
+      "tṛtīyam savanam": 0
+    },
+    "VG:CONCEPT:MADHYANDINA-SAVANA-MIDDAY-PRESSING": {
+      "mādhyandina savana": 0,
+      "mādhyandine savane": 0,
+      "mādhyaṃdine savane": 4
+    },
+    "__POSITIVE_CONTROL__": {
+      "agnim īḷe": 6,
+      "indra soma": 1
+    }
+  },
+  "host_run_audit_per_alias": {
+    "VG:CONCEPT:TRTIYA-SAVANA-THIRD-PRESSING|tṛtīye savane": {
+      "tṛtīye savane": 1
+    },
+    "VG:CONCEPT:TRTIYA-SAVANA-THIRD-PRESSING|tṛtīye savana": {
+      "tṛtīye savana": 1
+    },
+    "VG:CONCEPT:TRTIYA-SAVANA-THIRD-PRESSING|tṛtīyaṃ savanaṃ": {
+      "tṛtīyaṃ savanaṃ": 2
+    },
+    "VG:CONCEPT:TRTIYA-SAVANA-THIRD-PRESSING|tṛtīyaṃ savanam": {
+      "tṛtīyaṃ savanam": 2
+    },
+    "VG:CONCEPT:MADHYANDINA-SAVANA-MIDDAY-PRESSING|mādhyaṃdine savane": {
+      "mādhyaṃdine savane": 4
+    },
+    "__POSITIVE_CONTROL__|agnim īḷe": {
+      "agnim īḷe": 6
+    },
+    "__POSITIVE_CONTROL__|indra soma": {
+      "indra soma": 1
+    }
+  },
+  "positive_control_fires": true,
+  "verdict": "PHRASE_PASS_IS_SOUND_AND_THE_CANDIDATES_OCCUR"
+}

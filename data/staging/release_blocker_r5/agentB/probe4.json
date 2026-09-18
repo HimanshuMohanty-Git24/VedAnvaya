@@ -1,0 +1,816 @@
+{
+  "entity_mention_coverage": [
+    {
+      "v": "AV",
+      "covered": 5839,
+      "total": 5839,
+      "share": 1.0
+    },
+    {
+      "v": "RV",
+      "covered": 10552,
+      "total": 10552,
+      "share": 1.0
+    },
+    {
+      "v": "SV",
+      "covered": 1844,
+      "total": 1844,
+      "share": 1.0
+    },
+    {
+      "v": "YV",
+      "covered": 1975,
+      "total": 1975,
+      "share": 1.0
+    }
+  ],
+  "ritual_entity_density": 33,
+  "dm_by_name": [
+    {
+      "n": "ANIMAL_MENTION_DISTRIBUTION",
+      "c": 46
+    },
+    {
+      "n": "ATTRIBUTION_PRECISION_BY_VEDA",
+      "c": 10
+    },
+    {
+      "n": "ATTRIBUTION_PRECISION_CORPUS",
+      "c": 1
+    },
+    {
+      "n": "CONCEPT_LAYER_RANK_CORRELATION",
+      "c": 1
+    },
+    {
+      "n": "CONDITION_TREATMENT_DISTRIBUTION",
+      "c": 23
+    },
+    {
+      "n": "CROP_MENTION_DISTRIBUTION",
+      "c": 10
+    },
+    {
+      "n": "DEVATA_ACTION_DISTRIBUTION",
+      "c": 441
+    },
+    {
+      "n": "DEVATA_ATTRIBUTION_BY_VEDA",
+      "c": 157
+    },
+    {
+      "n": "DEVATA_ATTRIBUTION_PRECISION",
+      "c": 157
+    },
+    {
+      "n": "DEVATA_RELATIVE_FREQUENCY_BY_VEDA",
+      "c": 155
+    },
+    {
+      "n": "DEVATA_REQUESTED_ACTION_DISTRIBUTION",
+      "c": 224
+    },
+    {
+      "n": "DEVATA_STRUCTURAL_SPREAD",
+      "c": 157
+    },
+    {
+      "n": "DOMAIN_MENTION_COVERAGE",
+      "c": 1
+    },
+    {
+      "n": "EVIDENCE_BASIS_BY_VEDA",
+      "c": 18
+    },
+    {
+      "n": "HUMAN_CONCERN_DISTRIBUTION",
+      "c": 20
+    },
+    {
+      "n": "MATERIAL_CULTURE_BY_RITUAL_CONTEXT",
+      "c": 1
+    },
+    {
+      "n": "METAL_MENTION_DISTRIBUTION",
+      "c": 15
+    },
+    {
+      "n": "RITUAL_CONTEXT_PRECISION",
+      "c": 1
+    },
+    {
+      "n": "RITUAL_ENTITY_DENSITY",
+      "c": 33
+    },
+    {
+      "n": "SV_REUSE_OF_RV",
+      "c": 1
+    },
+    {
+      "n": "THEONYM_AMBIGUITY",
+      "c": 1
+    },
+    {
+      "n": "THEONYM_CERTAINTY_BY_VEDA",
+      "c": 12
+    }
+  ],
+  "natphen": [
+    {
+      "k": "VG:CONCEPT:AGNI-FIRE",
+      "st": "PERSONIFIED_AS_A_REGISTERED_DEVATA",
+      "basis": "DETERMINISTIC",
+      "contract": "VG:PERSONIFICATION_EVIDENCE:V1",
+      "pc": "VG:PERSONIFICATION_STATUS:V2",
+      "ev": null,
+      "ph": null,
+      "ps": null
+    },
+    {
+      "k": "VG:CONCEPT:AHAN-DAY",
+      "st": "REFUSED_NO_REGISTERED_DEITY_COUNTERPART",
+      "basis": "UNAVAILABLE",
+      "contract": "VG:PERSONIFICATION_EVIDENCE:V1",
+      "pc": "VG:PERSONIFICATION_STATUS:V2",
+      "ev": null,
+      "ph": null,
+      "ps": null
+    },
+    {
+      "k": "VG:CONCEPT:AP-WATERS",
+      "st": "PERSONIFIED_AS_A_REGISTERED_DEVATA",
+      "basis": "DETERMINISTIC",
+      "contract": "VG:PERSONIFICATION_EVIDENCE:V1",
+      "pc": "VG:PERSONIFICATION_STATUS:V2",
+      "ev": null,
+      "ph": null,
+      "ps": null
+    },
+    {
+      "k": "VG:CONCEPT:CANDRAMAS-MOON",
+      "st": "PERSONIFIED_AS_A_REGISTERED_DEVATA",
+      "basis": "DETERMINISTIC",
+      "contract": "VG:PERSONIFICATION_EVIDENCE:V1",
+      "pc": "VG:PERSONIFICATION_STATUS:V2",
+      "ev": null,
+      "ph": null,
+      "ps": null
+    },
+    {
+      "k": "VG:CONCEPT:JYOTIS-LIGHT",
+      "st": "REFUSED_NO_REGISTERED_DEITY_COUNTERPART",
+      "basis": "UNAVAILABLE",
+      "contract": "VG:PERSONIFICATION_EVIDENCE:V1",
+      "pc": "VG:PERSONIFICATION_STATUS:V2",
+      "ev": null,
+      "ph": null,
+      "ps": null
+    },
+    {
+      "k": "VG:CONCEPT:RATRI-NIGHT",
+      "st": "PERSONIFIED_AS_A_REGISTERED_DEVATA",
+      "basis": "DETERMINISTIC",
+      "contract": "VG:PERSONIFICATION_EVIDENCE:V1",
+      "pc": "VG:PERSONIFICATION_STATUS:V2",
+      "ev": null,
+      "ph": null,
+      "ps": null
+    },
+    {
+      "k": "VG:CONCEPT:SAMUDRA-OCEAN",
+      "st": "REFUSED_NO_REGISTERED_DEITY_COUNTERPART",
+      "basis": "UNAVAILABLE",
+      "contract": "VG:PERSONIFICATION_EVIDENCE:V1",
+      "pc": "VG:PERSONIFICATION_STATUS:V2",
+      "ev": null,
+      "ph": null,
+      "ps": null
+    },
+    {
+      "k": "VG:CONCEPT:SURYA-SUN",
+      "st": "PERSONIFIED_AS_A_REGISTERED_DEVATA",
+      "basis": "DETERMINISTIC",
+      "contract": "VG:PERSONIFICATION_EVIDENCE:V1",
+      "pc": "VG:PERSONIFICATION_STATUS:V2",
+      "ev": null,
+      "ph": null,
+      "ps": null
+    },
+    {
+      "k": "VG:CONCEPT:TAMAS-DARKNESS",
+      "st": "REFUSED_NO_REGISTERED_DEITY_COUNTERPART",
+      "basis": "UNAVAILABLE",
+      "contract": "VG:PERSONIFICATION_EVIDENCE:V1",
+      "pc": "VG:PERSONIFICATION_STATUS:V2",
+      "ev": null,
+      "ph": null,
+      "ps": null
+    },
+    {
+      "k": "VG:CONCEPT:USAS-DAWN",
+      "st": "PERSONIFIED_AS_A_REGISTERED_DEVATA",
+      "basis": "DETERMINISTIC",
+      "contract": "VG:PERSONIFICATION_EVIDENCE:V1",
+      "pc": "VG:PERSONIFICATION_STATUS:V2",
+      "ev": null,
+      "ph": null,
+      "ps": null
+    },
+    {
+      "k": "VG:CONCEPT:VATA-WIND",
+      "st": "REFUSED_ALIAS_REACHES_A_DIFFERENT_THEONYM",
+      "basis": "UNAVAILABLE",
+      "contract": "VG:PERSONIFICATION_EVIDENCE:V1",
+      "pc": "VG:PERSONIFICATION_STATUS:V2",
+      "ev": null,
+      "ph": null,
+      "ps": null
+    },
+    {
+      "k": "VG:CONCEPT:VIDYUT-LIGHTNING",
+      "st": "REFUSED_NO_REGISTERED_DEITY_COUNTERPART",
+      "basis": "UNAVAILABLE",
+      "contract": "VG:PERSONIFICATION_EVIDENCE:V1",
+      "pc": "VG:PERSONIFICATION_STATUS:V2",
+      "ev": null,
+      "ph": null,
+      "ps": null
+    },
+    {
+      "k": "VG:CONCEPT:VRSTI-RAIN",
+      "st": "REFUSED_NO_REGISTERED_DEITY_COUNTERPART",
+      "basis": "UNAVAILABLE",
+      "contract": "VG:PERSONIFICATION_EVIDENCE:V1",
+      "pc": "VG:PERSONIFICATION_STATUS:V2",
+      "ev": null,
+      "ph": null,
+      "ps": null
+    }
+  ],
+  "natphen_keys": [
+    {
+      "k": "VG:CONCEPT:AGNI-FIRE",
+      "ks": [
+        "personification_match_basis",
+        "personification_evidence_via",
+        "personification_match_tier",
+        "personification_evidence_contract",
+        "personification_evidence_reason",
+        "personification_evidence_passage",
+        "personification_evidence_quote",
+        "personification_evidence_witness_count",
+        "personification_status_reason",
+        "personification_contract",
+        "personification_status"
+      ]
+    },
+    {
+      "k": "VG:CONCEPT:AHAN-DAY",
+      "ks": [
+        "personification_match_basis",
+        "personification_evidence_witness_count",
+        "personification_evidence_contract",
+        "personification_evidence_reason",
+        "personification_status",
+        "personification_status_reason",
+        "personification_contract"
+      ]
+    },
+    {
+      "k": "VG:CONCEPT:AP-WATERS",
+      "ks": [
+        "personification_match_basis",
+        "personification_evidence_via",
+        "personification_match_tier",
+        "personification_evidence_reason",
+        "personification_evidence_passage",
+        "personification_evidence_witness_count",
+        "personification_evidence_quote",
+        "personification_evidence_contract",
+        "personification_contract",
+        "personification_status",
+        "personification_status_reason"
+      ]
+    },
+    {
+      "k": "VG:CONCEPT:CANDRAMAS-MOON",
+      "ks": [
+        "personification_match_tier",
+        "personification_match_basis",
+        "personification_evidence_reason",
+        "personification_evidence_contract",
+        "personification_evidence_witness_count",
+        "personification_status",
+        "personification_contract",
+        "personification_status_reason"
+      ]
+    },
+    {
+      "k": "VG:CONCEPT:JYOTIS-LIGHT",
+      "ks": [
+        "personification_match_basis",
+        "personification_evidence_witness_count",
+        "personification_evidence_contract",
+        "personification_evidence_reason",
+        "personification_contract",
+        "personification_status",
+        "personification_status_reason"
+      ]
+    },
+    {
+      "k": "VG:CONCEPT:RATRI-NIGHT",
+      "ks": [
+        "personification_match_basis",
+        "personification_evidence_via",
+        "personification_match_tier",
+        "personification_evidence_witness_count",
+        "personification_evidence_quote",
+        "personification_evidence_contract",
+        "personification_evidence_reason",
+        "personification_evidence_passage",
+        "personification_status",
+        "personification_contract",
+        "personification_status_reason"
+      ]
+    },
+    {
+      "k": "VG:CONCEPT:SAMUDRA-OCEAN",
+      "ks": [
+        "personification_evidence_reason",
+        "personification_match_basis",
+        "personification_evidence_contract",
+        "personification_evidence_witness_count",
+        "personification_status",
+        "personification_contract",
+        "personification_status_reason"
+      ]
+    },
+    {
+      "k": "VG:CONCEPT:SURYA-SUN",
+      "ks": [
+        "personification_evidence_via",
+        "personification_evidence_contract",
+        "personification_evidence_reason",
+        "personification_match_basis",
+        "personification_evidence_witness_count",
+        "personification_evidence_quote",
+        "personification_match_tier",
+        "personification_evidence_passage",
+        "personification_status",
+        "personification_contract",
+        "personification_status_reason"
+      ]
+    },
+    {
+      "k": "VG:CONCEPT:TAMAS-DARKNESS",
+      "ks": [
+        "personification_evidence_reason",
+        "personification_match_basis",
+        "personification_evidence_contract",
+        "personification_evidence_witness_count",
+        "personification_status",
+        "personification_contract",
+        "personification_status_reason"
+      ]
+    },
+    {
+      "k": "VG:CONCEPT:USAS-DAWN",
+      "ks": [
+        "personification_evidence_via",
+        "personification_evidence_contract",
+        "personification_evidence_reason",
+        "personification_match_basis",
+        "personification_evidence_witness_count",
+        "personification_evidence_quote",
+        "personification_match_tier",
+        "personification_evidence_passage",
+        "personification_status",
+        "personification_contract",
+        "personification_status_reason"
+      ]
+    },
+    {
+      "k": "VG:CONCEPT:VATA-WIND",
+      "ks": [
+        "personification_evidence_reason",
+        "personification_match_basis",
+        "personification_evidence_contract",
+        "personification_evidence_witness_count",
+        "personification_status",
+        "personification_contract",
+        "personification_status_reason"
+      ]
+    },
+    {
+      "k": "VG:CONCEPT:VIDYUT-LIGHTNING",
+      "ks": [
+        "personification_evidence_contract",
+        "personification_evidence_reason",
+        "personification_match_basis",
+        "personification_evidence_witness_count",
+        "personification_status",
+        "personification_contract",
+        "personification_status_reason"
+      ]
+    },
+    {
+      "k": "VG:CONCEPT:VRSTI-RAIN",
+      "ks": [
+        "personification_evidence_reason",
+        "personification_match_basis",
+        "personification_evidence_contract",
+        "personification_evidence_witness_count",
+        "personification_status",
+        "personification_contract",
+        "personification_status_reason"
+      ]
+    }
+  ],
+  "yupa": [
+    {
+      "k": "VG:CONCEPT:YUPA-SACRIFICIAL-POST",
+      "al": [
+        "svaravaḥ",
+        "yūpa",
+        "yūpavraskā",
+        "yūpavāhāś",
+        "yūpaḥ",
+        "yūpe",
+        "yūpena",
+        "yūpeva",
+        "yūpo",
+        "yūpād",
+        "yūpān"
+      ],
+      "vwm": 3,
+      "c": null
+    }
+  ],
+  "yupa_mentions": [
+    {
+      "v": "AV",
+      "keys": [
+        "VG:AV:SAU:K12:S001:V038",
+        "VG:AV:SAU:K13:S001:V047",
+        "VG:AV:SAU:K12:S001:V013",
+        "VG:AV:SAU:K09:S006:V022",
+        "VG:AV:SAU:K04:S024:V004"
+      ]
+    },
+    {
+      "v": "RV",
+      "keys": [
+        "VG:RV:SAK:M05:S002:V007",
+        "VG:RV:SAK:M04:S033:V003",
+        "VG:RV:SAK:M01:S162:V006",
+        "VG:RV:SAK:M03:S008:V010",
+        "VG:RV:SAK:M01:S051:V014"
+      ]
+    },
+    {
+      "v": "YV",
+      "keys": [
+        "VG:YV:VSM:A25:V029",
+        "VG:YV:VSM:A19:V017"
+      ]
+    }
+  ],
+  "uses_object": [
+    {
+      "rite": "VG:CONCEPT:AGNI-CITI-FIRE-PILING",
+      "obj": "VG:CONCEPT:ISTAKA-BRICK",
+      "c": 1
+    },
+    {
+      "rite": "VG:CONCEPT:AGNIHOTRA",
+      "obj": "VG:CONCEPT:SAMIDH-FUEL",
+      "c": 1
+    },
+    {
+      "rite": "VG:CONCEPT:ASVAMEDHA-HORSE-SACRIFICE",
+      "obj": "VG:CONCEPT:SVADHITI-AXE",
+      "c": 1
+    },
+    {
+      "rite": "VG:CONCEPT:ASVAMEDHA-HORSE-SACRIFICE",
+      "obj": "VG:CONCEPT:YUPA-SACRIFICIAL-POST",
+      "c": 1
+    },
+    {
+      "rite": "VG:CONCEPT:GRAHA-SOMA-DRAWING",
+      "obj": "VG:CONCEPT:ASMAN-PRESSING-STONE",
+      "c": 1
+    },
+    {
+      "rite": "VG:CONCEPT:GRAHA-SOMA-DRAWING",
+      "obj": "VG:CONCEPT:BARHIS-SACRED-GRASS",
+      "c": 1
+    },
+    {
+      "rite": "VG:CONCEPT:GRAHA-SOMA-DRAWING",
+      "obj": "VG:CONCEPT:CAMASA-CUP",
+      "c": 1
+    },
+    {
+      "rite": "VG:CONCEPT:GRAHA-SOMA-DRAWING",
+      "obj": "VG:CONCEPT:DRONAKALASA-WOODEN-TUB",
+      "c": 1
+    },
+    {
+      "rite": "VG:CONCEPT:GRAHA-SOMA-DRAWING",
+      "obj": "VG:CONCEPT:PAVITRA-STRAINER",
+      "c": 1
+    },
+    {
+      "rite": "VG:CONCEPT:GRAHA-SOMA-DRAWING",
+      "obj": "VG:CONCEPT:SRUC-LADLE",
+      "c": 1
+    },
+    {
+      "rite": "VG:CONCEPT:GRAHA-SOMA-DRAWING",
+      "obj": "VG:CONCEPT:VAYAVYA-VAYU-CUP",
+      "c": 1
+    },
+    {
+      "rite": "VG:CONCEPT:GRAHA-SOMA-DRAWING",
+      "obj": "VG:CONCEPT:VEDI-ALTAR",
+      "c": 1
+    },
+    {
+      "rite": "VG:CONCEPT:SAUTRAMANI",
+      "obj": "VG:CONCEPT:DRONAKALASA-WOODEN-TUB",
+      "c": 1
+    },
+    {
+      "rite": "VG:CONCEPT:SOMA-PRESSING",
+      "obj": "VG:CONCEPT:ASMAN-PRESSING-STONE",
+      "c": 1
+    },
+    {
+      "rite": "VG:CONCEPT:SOMA-PRESSING",
+      "obj": "VG:CONCEPT:CAMASA-CUP",
+      "c": 1
+    },
+    {
+      "rite": "VG:CONCEPT:SOMA-PRESSING",
+      "obj": "VG:CONCEPT:KALASA-JAR",
+      "c": 1
+    },
+    {
+      "rite": "VG:CONCEPT:SOMA-PRESSING",
+      "obj": "VG:CONCEPT:PAVITRA-STRAINER",
+      "c": 1
+    },
+    {
+      "rite": "VG:CONCEPT:SOMA-PRESSING",
+      "obj": "VG:CONCEPT:ULUKHALA-MORTAR",
+      "c": 1
+    },
+    {
+      "rite": "VG:CONCEPT:SVASTYAYANA",
+      "obj": "VG:CONCEPT:MANI-AMULET",
+      "c": 1
+    },
+    {
+      "rite": "VG:CONCEPT:YAJNA-SACRIFICE",
+      "obj": "VG:CONCEPT:BARHIS-SACRED-GRASS",
+      "c": 1
+    },
+    {
+      "rite": "VG:CONCEPT:YAJNA-SACRIFICE",
+      "obj": "VG:CONCEPT:SAMIDH-FUEL",
+      "c": 1
+    },
+    {
+      "rite": "VG:CONCEPT:YAJNA-SACRIFICE",
+      "obj": "VG:CONCEPT:SRUC-LADLE",
+      "c": 1
+    },
+    {
+      "rite": "VG:CONCEPT:YAJNA-SACRIFICE",
+      "obj": "VG:CONCEPT:VEDI-ALTAR",
+      "c": 1
+    },
+    {
+      "rite": "VG:CONCEPT:YAJNA-SACRIFICE",
+      "obj": "VG:CONCEPT:YUPA-SACRIFICIAL-POST",
+      "c": 1
+    }
+  ],
+  "named_objects": [
+    {
+      "k": "VG:CONCEPT:MANI-AMULET",
+      "st": "ASSERTED_SOURCE_STATES_USE",
+      "rf": null,
+      "ev": null,
+      "rl": "AGENT_ADJUDICATED_SINGLE_READER_NO_HUMAN_REVIEW",
+      "c": "VG:RITUAL_OBJECT_USE:V1",
+      "ks": [
+        "ritual_use_status",
+        "ritual_use_contract",
+        "ritual_use_candidate_citation",
+        "ritual_use_human_reviewed",
+        "ritual_use_independent_witness",
+        "ritual_use_candidate_quote",
+        "ritual_use_review_level"
+      ]
+    },
+    {
+      "k": "VG:CONCEPT:DUNDUBHI-DRUM",
+      "st": "REFUSED_SOURCE_DOES_NOT_STATE_A_RITE_USES_IT",
+      "rf": null,
+      "ev": null,
+      "rl": "AGENT_ADJUDICATED_SINGLE_READER_NO_HUMAN_REVIEW",
+      "c": "VG:RITUAL_OBJECT_USE:V1",
+      "ks": [
+        "ritual_use_status",
+        "ritual_use_human_reviewed",
+        "ritual_use_contract",
+        "ritual_use_refusal_code",
+        "ritual_use_candidate_citation",
+        "ritual_use_review_level",
+        "ritual_use_candidate_quote",
+        "ritual_use_refusal_reason"
+      ]
+    },
+    {
+      "k": "VG:CONCEPT:AUDUMBARA-AMULET",
+      "st": "REFUSED_SOURCE_DOES_NOT_STATE_A_RITE_USES_IT",
+      "rf": null,
+      "ev": null,
+      "rl": "AGENT_ADJUDICATED_SINGLE_READER_NO_HUMAN_REVIEW",
+      "c": "VG:RITUAL_OBJECT_USE:V1",
+      "ks": [
+        "ritual_use_status",
+        "ritual_use_human_reviewed",
+        "ritual_use_contract",
+        "ritual_use_candidate_citation",
+        "ritual_use_refusal_code",
+        "ritual_use_refusal_reason",
+        "ritual_use_review_level",
+        "ritual_use_candidate_quote"
+      ]
+    }
+  ],
+  "offering": [
+    {
+      "st": "OFFERING_CANDIDATE_REFUSED_AS_CO_OCCURRENCE",
+      "rl": null,
+      "c": 51
+    },
+    {
+      "st": "OFFERING_NOT_ATTESTED_IN_THE_HELD_APPARATUS",
+      "rl": null,
+      "c": 47
+    },
+    {
+      "st": "OFFERING_ASSERTED_FROM_SOURCE_EXPLICIT_EVIDENCE",
+      "rl": null,
+      "c": 5
+    }
+  ],
+  "offering_keys": [
+    {
+      "k": "VG:CONCEPT:SOMA-PRESSING",
+      "ev": null,
+      "ks": [
+        "offering_status",
+        "offering_status_reason",
+        "offering_status_contract",
+        "offering_status_denominator"
+      ]
+    },
+    {
+      "k": "VG:CONCEPT:YAJNA-SACRIFICE",
+      "ev": null,
+      "ks": [
+        "offering_status",
+        "offering_status_reason",
+        "offering_status_contract",
+        "offering_status_denominator"
+      ]
+    },
+    {
+      "k": "VG:CONCEPT:AGNIHOTRA",
+      "ev": null,
+      "ks": [
+        "offering_status_contract",
+        "offering_status_denominator",
+        "offering_status",
+        "offering_status_reason"
+      ]
+    },
+    {
+      "k": "VG:CONCEPT:GRAHA-SOMA-DRAWING",
+      "ev": null,
+      "ks": [
+        "offering_status_reason",
+        "offering_status_contract",
+        "offering_status",
+        "offering_status_denominator"
+      ]
+    },
+    {
+      "k": "VG:CONCEPT:SAUTRAMANI",
+      "ev": null,
+      "ks": [
+        "offering_status_reason",
+        "offering_status_contract",
+        "offering_status",
+        "offering_status_denominator"
+      ]
+    }
+  ],
+  "receives_offering": [
+    {
+      "a": "VG:DEVATA:AGNIH",
+      "b": "VG:CONCEPT:PURODASA-CAKE",
+      "eb": "SOURCE_METADATA",
+      "rl": null
+    },
+    {
+      "a": "VG:DEVATA:INDRAH",
+      "b": "VG:CONCEPT:PURODASA-CAKE",
+      "eb": "SOURCE_METADATA",
+      "rl": null
+    },
+    {
+      "a": "VG:DEVATA:PUSA",
+      "b": "VG:CONCEPT:CARU-GRUEL",
+      "eb": "SOURCE_METADATA",
+      "rl": null
+    },
+    {
+      "a": "VG:DEVATA:SARASVATI",
+      "b": "VG:CONCEPT:CARU-GRUEL",
+      "eb": "SOURCE_METADATA",
+      "rl": null
+    }
+  ],
+  "uses_offering": 4,
+  "rc_precision": [
+    {
+      "p": 0.95,
+      "rl": "AGENT_ADJUDICATED_SINGLE_READER_NO_HUMAN_REVIEW",
+      "ar": null,
+      "hr": null,
+      "me": "EXTERNAL_RITUAL_CITATION"
+    }
+  ],
+  "rc_keys": [
+    {
+      "ks": [
+        "ritual_context_precision_human_reviewed",
+        "ritual_context_precision_metric_key",
+        "ritual_context_precision_population",
+        "ritual_context_precision_all_reviewed_rows",
+        "ritual_context_precision",
+        "ritual_context_row_kind",
+        "ritual_context_method",
+        "ritual_context_precision_review_level",
+        "ritual_context_vocabulary",
+        "ritual_context_precision_sample_size",
+        "ritual_context",
+        "ritual_context_span_reproducible",
+        "ritual_context_evidence_source_type"
+      ]
+    },
+    {
+      "ks": [
+        "ritual_context_precision_all_reviewed_rows",
+        "ritual_context_precision",
+        "ritual_context_method",
+        "ritual_context_precision_population",
+        "ritual_context_vocabulary",
+        "ritual_context_precision_metric_key",
+        "ritual_context",
+        "ritual_context_precision_human_reviewed",
+        "ritual_context_precision_sample_size",
+        "ritual_context_precision_review_level"
+      ]
+    }
+  ],
+  "rc_dist": [
+    {
+      "c": "NO_RITUAL_CITATION_FOUND",
+      "n": 10538
+    },
+    {
+      "c": "UNRESOLVED_SHARED_OPENING",
+      "n": 7769
+    },
+    {
+      "c": "EMPLOYED_IN_RITE_PROBABLE",
+      "n": 1275
+    },
+    {
+      "c": "EMPLOYED_IN_RITE",
+      "n": 416
+    },
+    {
+      "c": "RITE_NAMED_IN_THIS_MANTRA",
+      "n": 212
+    }
+  ]
+}

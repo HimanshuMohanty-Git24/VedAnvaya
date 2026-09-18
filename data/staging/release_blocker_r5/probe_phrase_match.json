@@ -1,0 +1,31 @@
+{
+  "folded_labels": {
+    "VG:CONCEPT:MADHYANDINA-SAVANA-MIDDAY-PRESSING": {
+      "raw": "mādhyandina savana",
+      "folded": "mādhyandina savana",
+      "has_space": true
+    },
+    "VG:CONCEPT:TRTIYA-SAVANA-THIRD-PRESSING": {
+      "raw": "tṛtīya savana",
+      "folded": "ttīya savana",
+      "has_space": true
+    }
+  },
+  "search_normalized_text_versions": 20210,
+  "phrase_hits": {
+    "VG:CONCEPT:MADHYANDINA-SAVANA-MIDDAY-PRESSING": {
+      "count": 0,
+      "rows": []
+    },
+    "VG:CONCEPT:TRTIYA-SAVANA-THIRD-PRESSING": {
+      "count": 0,
+      "rows": []
+    }
+  },
+  "component_token_frequency": {
+    "savana": 4,
+    "ttīya": 1,
+    "mādhyandina": 0
+  },
+  "falsifier_result": "NO_PHRASE_OCCURS_IN_ANY_SAMHITA"
+}

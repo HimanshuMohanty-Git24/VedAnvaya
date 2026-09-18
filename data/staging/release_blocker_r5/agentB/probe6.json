@@ -1,0 +1,462 @@
+{
+  "rc_by_class": [
+    {
+      "ctx": "NO_RITUAL_CITATION_FOUND",
+      "p": 0.95,
+      "ar": 0.7917,
+      "pop": 769,
+      "n": 24,
+      "hr": 0,
+      "rl": "AGENT_ADJUDICATED_SINGLE_READER_NO_HUMAN_REVIEW",
+      "mk": "VG:METRIC:RITUAL_CONTEXT_PRECISION:V1",
+      "c": 10538
+    },
+    {
+      "ctx": "UNRESOLVED_SHARED_OPENING",
+      "p": 0.95,
+      "ar": 0.7917,
+      "pop": 769,
+      "n": 24,
+      "hr": 0,
+      "rl": "AGENT_ADJUDICATED_SINGLE_READER_NO_HUMAN_REVIEW",
+      "mk": "VG:METRIC:RITUAL_CONTEXT_PRECISION:V1",
+      "c": 7769
+    },
+    {
+      "ctx": "EMPLOYED_IN_RITE_PROBABLE",
+      "p": 0.95,
+      "ar": 0.7917,
+      "pop": 769,
+      "n": 24,
+      "hr": 0,
+      "rl": "AGENT_ADJUDICATED_SINGLE_READER_NO_HUMAN_REVIEW",
+      "mk": "VG:METRIC:RITUAL_CONTEXT_PRECISION:V1",
+      "c": 1275
+    },
+    {
+      "ctx": "EMPLOYED_IN_RITE",
+      "p": 0.95,
+      "ar": 0.7917,
+      "pop": 769,
+      "n": 24,
+      "hr": 0,
+      "rl": "AGENT_ADJUDICATED_SINGLE_READER_NO_HUMAN_REVIEW",
+      "mk": "VG:METRIC:RITUAL_CONTEXT_PRECISION:V1",
+      "c": 416
+    },
+    {
+      "ctx": "RITE_NAMED_IN_THIS_MANTRA",
+      "p": 0.95,
+      "ar": 0.7917,
+      "pop": 769,
+      "n": 24,
+      "hr": 0,
+      "rl": "AGENT_ADJUDICATED_SINGLE_READER_NO_HUMAN_REVIEW",
+      "mk": "VG:METRIC:RITUAL_CONTEXT_PRECISION:V1",
+      "c": 212
+    }
+  ],
+  "precision_distinct": [
+    {
+      "p": 0.95,
+      "pop": 769,
+      "n": 24,
+      "hr": 0
+    }
+  ],
+  "sv4": [
+    {
+      "k": "VG:SV:KAU:ARANYA:D01:V04",
+      "role": "PRIMARY_TEXT",
+      "txt": "उदुत्तमं वरुण पाशमस्मदवाधमं वि मध्यमं श्रथाय । अथादित्य व्रते वयं तवानागसो अदितये स्याम",
+      "sha": "aced94b37144c070c87e3061170abb78aba6e57183019fe7c73cb3bff51ed287",
+      "orig": null
+    },
+    {
+      "k": "VG:SV:KAU:ARANYA:D01:V04",
+      "role": "SEARCH_DERIVATIVE",
+      "txt": "uduttama varuṇa pāśamasmadavādhama vi madhyama śrathāya athāditya vrate vaya tavānāgaso aditaye syāma",
+      "sha": "354c1a4778d438ad1188e44b0f2d6cf3455618fbb7c8496f2fb6d74861bd2417",
+      "orig": "āraṇyakagānam dra ārṣeyabrāhmaṇam bhāṣyam uduttama varuṇa pāśamasmadavādhama vi madhyama śrathāya athāditya vrate vaya tavānāgaso aditaye syāma"
+    },
+    {
+      "k": "VG:SV:KAU:CHANDA:P01:D08:V04",
+      "role": "PRIMARY_TEXT",
+      "txt": "इडामग्ने पुरुदंसं सनिं गोः शश्वत्तमं हवमानाय साध । स्यान्नः सूनुस्तनयो विजावाग्ने सा ते सुमतिर्भूत्वस्मे",
+      "sha": "f9459f7dfdd606d011f6134189edd6eb2fc679dd3dd566d21dba441181b49d4e",
+      "orig": null
+    },
+    {
+      "k": "VG:SV:KAU:CHANDA:P01:D08:V04",
+      "role": "SEARCH_DERIVATIVE",
+      "txt": "iḍāmagne purudasa sani goḥ śaśvattama havamānāya sādha syānnaḥ sūnustanayo vijāvāgne sā te sumatirbhūtvasme",
+      "sha": "72a27adaff9068b55dfa3185167f345afc91e455eed6bb8a425d210d6e82ea7b",
+      "orig": "dra iḍāmagne purudasa sani goḥ śaśvattama havamānāya sādha syānnaḥ sūnustanayo vijāvāgne sā te sumatirbhūtvasme"
+    },
+    {
+      "k": "VG:SV:KAU:CHANDA:P02:D07:V07",
+      "role": "PRIMARY_TEXT",
+      "txt": "अभि त्वा वृषभा सुते सुतं सृजामि पीतये । तृम्पा व्यश्नुही मदं",
+      "sha": "b30f7f409718efb2db27a3b9136d421a5230b940a1de0591ba56f39fced49e93",
+      "orig": null
+    },
+    {
+      "k": "VG:SV:KAU:CHANDA:P02:D07:V07",
+      "role": "SEARCH_DERIVATIVE",
+      "txt": "abhi tvā vṣabhā sute suta sjāmi pītaye tmpā vyaśnuhī mada",
+      "sha": "21fd7ecee8ca281ea5e7a3e4430702ce9520eb7106f05cbdd89da25cb2f6a072",
+      "orig": "āraṇyakam abhi tvā vṣabhā sute suta sjāmi pītaye tmpā vyaśnuhī mada"
+    },
+    {
+      "k": "VG:SV:KAU:CHANDA:P04:D05:V06",
+      "role": "PRIMARY_TEXT",
+      "txt": "यं वृत्रेषु क्षितय स्पर्धमाना यं युक्तेषु तुरयन्तो हवन्ते । यं शूरसातौ यमपामुपज्मन्यं विप्रासो वाजयन्ते स इन्द्रः",
+      "sha": "8363fd84fed182056da27a1c523a4141f4fd75a10e327268fc872b6337c11003",
+      "orig": null
+    },
+    {
+      "k": "VG:SV:KAU:CHANDA:P04:D05:V06",
+      "role": "SEARCH_DERIVATIVE",
+      "txt": "ya vtreṣu kṣitaya spardhamānā ya yukteṣu turayanto havante ya śūrasātau yamapāmupajmanya viprāso vājayante sa indraḥ",
+      "sha": "2c27e5559eb9b9c1f17bd9decf5328f28b00611167fba42413ba338f3b6a77fb",
+      "orig": "āraṇyakagānam ya vtreṣu kṣitaya spardhamānā ya yukteṣu turayanto havante ya śūrasātau yamapāmupajmanya viprāso vājayante sa indraḥ"
+    }
+  ],
+  "apparatus_scan": 0,
+  "apparatus_scan_rows": [
+    {
+      "k": "VG:YV:VSM:A26:V026",
+      "r": "PARALLEL_TEXT",
+      "head": "रक्षोहा विश्वचर्षणिर् अभि योनिम् अयोहतम् । द्रुणा(द्रोणे) सध"
+    }
+  ],
+  "parallel_edges": [
+    {
+      "t": "NEAR_PARALLEL_OF",
+      "st": "STALE_RECOMPUTE_REQUIRED_TEXT_CORRECTED",
+      "c": 7
+    },
+    {
+      "t": "REUSES_TEXT_FROM",
+      "st": "STALE_RECOMPUTE_REQUIRED_TEXT_CORRECTED",
+      "c": 6
+    }
+  ],
+  "parallel_detail": [
+    {
+      "a": "VG:SV:KAU:CHANDA:P01:D08:V04",
+      "b": "VG:RV:SAK:M03:S001:V023",
+      "t": "REUSES_TEXT_FROM",
+      "st": "STALE_RECOMPUTE_REQUIRED_TEXT_CORRECTED",
+      "ks": [
+        "cross_veda_transformation_stale_reason",
+        "cross_veda_transformation_status",
+        "cross_veda_transformation_superseded_basis",
+        "cross_veda_transformation_superseded",
+        "cross_veda_transformation_uncorrected",
+        "cross_veda_stored_similarity",
+        "cross_veda_transformation",
+        "cross_veda_transformation_basis",
+        "cross_veda_transformation_scope",
+        "ngram_jaccard",
+        "token_jaccard",
+        "score",
+        "similarity"
+      ]
+    },
+    {
+      "a": "VG:SV:KAU:CHANDA:P01:D08:V04",
+      "b": "VG:RV:SAK:M03:S005:V011",
+      "t": "REUSES_TEXT_FROM",
+      "st": "STALE_RECOMPUTE_REQUIRED_TEXT_CORRECTED",
+      "ks": [
+        "cross_veda_transformation_stale_reason",
+        "cross_veda_transformation_status",
+        "cross_veda_transformation_superseded_basis",
+        "cross_veda_transformation_superseded",
+        "cross_veda_transformation_uncorrected",
+        "cross_veda_stored_similarity",
+        "cross_veda_transformation",
+        "cross_veda_transformation_basis",
+        "cross_veda_transformation_scope",
+        "ngram_jaccard",
+        "token_jaccard",
+        "score",
+        "similarity"
+      ]
+    },
+    {
+      "a": "VG:SV:KAU:CHANDA:P01:D08:V04",
+      "b": "VG:RV:SAK:M03:S006:V011",
+      "t": "REUSES_TEXT_FROM",
+      "st": "STALE_RECOMPUTE_REQUIRED_TEXT_CORRECTED",
+      "ks": [
+        "cross_veda_transformation_stale_reason",
+        "cross_veda_transformation_status",
+        "cross_veda_transformation_superseded_basis",
+        "cross_veda_transformation_superseded",
+        "cross_veda_transformation_uncorrected",
+        "cross_veda_stored_similarity",
+        "cross_veda_transformation",
+        "cross_veda_transformation_basis",
+        "cross_veda_transformation_scope",
+        "ngram_jaccard",
+        "token_jaccard",
+        "score",
+        "similarity"
+      ]
+    },
+    {
+      "a": "VG:SV:KAU:CHANDA:P01:D08:V04",
+      "b": "VG:RV:SAK:M03:S007:V011",
+      "t": "REUSES_TEXT_FROM",
+      "st": "STALE_RECOMPUTE_REQUIRED_TEXT_CORRECTED",
+      "ks": [
+        "cross_veda_transformation_stale_reason",
+        "cross_veda_transformation_status",
+        "cross_veda_transformation_superseded_basis",
+        "cross_veda_transformation_superseded",
+        "cross_veda_transformation_uncorrected",
+        "cross_veda_stored_similarity",
+        "cross_veda_transformation",
+        "cross_veda_transformation_basis",
+        "cross_veda_transformation_scope",
+        "ngram_jaccard",
+        "token_jaccard",
+        "score",
+        "similarity"
+      ]
+    },
+    {
+      "a": "VG:SV:KAU:CHANDA:P01:D08:V04",
+      "b": "VG:RV:SAK:M03:S015:V007",
+      "t": "REUSES_TEXT_FROM",
+      "st": "STALE_RECOMPUTE_REQUIRED_TEXT_CORRECTED",
+      "ks": [
+        "cross_veda_transformation_stale_reason",
+        "cross_veda_transformation_status",
+        "cross_veda_transformation_superseded_basis",
+        "cross_veda_transformation_superseded",
+        "cross_veda_transformation_uncorrected",
+        "cross_veda_stored_similarity",
+        "cross_veda_transformation",
+        "cross_veda_transformation_basis",
+        "cross_veda_transformation_scope",
+        "ngram_jaccard",
+        "token_jaccard",
+        "score",
+        "similarity"
+      ]
+    },
+    {
+      "a": "VG:SV:KAU:CHANDA:P02:D07:V07",
+      "b": "VG:RV:SAK:M08:S045:V022",
+      "t": "REUSES_TEXT_FROM",
+      "st": "STALE_RECOMPUTE_REQUIRED_TEXT_CORRECTED",
+      "ks": [
+        "cross_veda_transformation_stale_reason",
+        "cross_veda_transformation_status",
+        "cross_veda_transformation_superseded_basis",
+        "cross_veda_transformation_superseded",
+        "cross_veda_transformation_uncorrected",
+        "cross_veda_stored_similarity",
+        "cross_veda_transformation",
+        "cross_veda_transformation_basis",
+        "cross_veda_transformation_scope",
+        "ngram_jaccard",
+        "token_jaccard",
+        "score",
+        "similarity"
+      ]
+    },
+    {
+      "a": "VG:RV:SAK:M03:S015:V007",
+      "b": "VG:SV:KAU:CHANDA:P01:D08:V04",
+      "t": "NEAR_PARALLEL_OF",
+      "st": "STALE_RECOMPUTE_REQUIRED_TEXT_CORRECTED",
+      "ks": [
+        "cross_veda_transformation_status",
+        "cross_veda_transformation_superseded",
+        "cross_veda_transformation_superseded_basis",
+        "cross_veda_transformation_stale_reason",
+        "formula_transformation_surface",
+        "formula_token_jaccard",
+        "formula_transformation_type",
+        "formula_ngram_jaccard",
+        "formula_transformation_basis",
+        "formula_similarity",
+        "cross_veda_transformation_uncorrected",
+        "cross_veda_stored_similarity",
+        "cross_veda_transformation",
+        "cross_veda_transformation_basis",
+        "cross_veda_transformation_scope",
+        "ngram_jaccard",
+        "token_jaccard",
+        "score",
+        "similarity"
+      ]
+    },
+    {
+      "a": "VG:RV:SAK:M03:S007:V011",
+      "b": "VG:SV:KAU:CHANDA:P01:D08:V04",
+      "t": "NEAR_PARALLEL_OF",
+      "st": "STALE_RECOMPUTE_REQUIRED_TEXT_CORRECTED",
+      "ks": [
+        "cross_veda_transformation_status",
+        "cross_veda_transformation_superseded",
+        "cross_veda_transformation_superseded_basis",
+        "cross_veda_transformation_stale_reason",
+        "formula_transformation_surface",
+        "formula_token_jaccard",
+        "formula_transformation_type",
+        "formula_ngram_jaccard",
+        "formula_transformation_basis",
+        "formula_similarity",
+        "cross_veda_transformation_uncorrected",
+        "cross_veda_stored_similarity",
+        "cross_veda_transformation",
+        "cross_veda_transformation_basis",
+        "cross_veda_transformation_scope",
+        "ngram_jaccard",
+        "token_jaccard",
+        "score",
+        "similarity"
+      ]
+    },
+    {
+      "a": "VG:RV:SAK:M03:S006:V011",
+      "b": "VG:SV:KAU:CHANDA:P01:D08:V04",
+      "t": "NEAR_PARALLEL_OF",
+      "st": "STALE_RECOMPUTE_REQUIRED_TEXT_CORRECTED",
+      "ks": [
+        "cross_veda_transformation_status",
+        "cross_veda_transformation_superseded",
+        "cross_veda_transformation_superseded_basis",
+        "cross_veda_transformation_stale_reason",
+        "formula_transformation_surface",
+        "formula_token_jaccard",
+        "formula_transformation_type",
+        "formula_ngram_jaccard",
+        "formula_transformation_basis",
+        "formula_similarity",
+        "cross_veda_transformation_uncorrected",
+        "cross_veda_stored_similarity",
+        "cross_veda_transformation",
+        "cross_veda_transformation_basis",
+        "cross_veda_transformation_scope",
+        "ngram_jaccard",
+        "token_jaccard",
+        "score",
+        "similarity"
+      ]
+    },
+    {
+      "a": "VG:RV:SAK:M03:S001:V023",
+      "b": "VG:SV:KAU:CHANDA:P01:D08:V04",
+      "t": "NEAR_PARALLEL_OF",
+      "st": "STALE_RECOMPUTE_REQUIRED_TEXT_CORRECTED",
+      "ks": [
+        "cross_veda_transformation_status",
+        "cross_veda_transformation_superseded",
+        "cross_veda_transformation_superseded_basis",
+        "cross_veda_transformation_stale_reason",
+        "formula_transformation_surface",
+        "formula_token_jaccard",
+        "formula_transformation_type",
+        "formula_ngram_jaccard",
+        "formula_transformation_basis",
+        "formula_similarity",
+        "cross_veda_transformation_uncorrected",
+        "cross_veda_stored_similarity",
+        "cross_veda_transformation",
+        "cross_veda_transformation_basis",
+        "cross_veda_transformation_scope",
+        "ngram_jaccard",
+        "token_jaccard",
+        "score",
+        "similarity"
+      ]
+    },
+    {
+      "a": "VG:RV:SAK:M03:S005:V011",
+      "b": "VG:SV:KAU:CHANDA:P01:D08:V04",
+      "t": "NEAR_PARALLEL_OF",
+      "st": "STALE_RECOMPUTE_REQUIRED_TEXT_CORRECTED",
+      "ks": [
+        "cross_veda_transformation_status",
+        "cross_veda_transformation_superseded",
+        "cross_veda_transformation_superseded_basis",
+        "cross_veda_transformation_stale_reason",
+        "formula_transformation_surface",
+        "formula_token_jaccard",
+        "formula_transformation_type",
+        "formula_ngram_jaccard",
+        "formula_transformation_basis",
+        "formula_similarity",
+        "cross_veda_transformation_uncorrected",
+        "cross_veda_stored_similarity",
+        "cross_veda_transformation",
+        "cross_veda_transformation_basis",
+        "cross_veda_transformation_scope",
+        "ngram_jaccard",
+        "token_jaccard",
+        "score",
+        "similarity"
+      ]
+    },
+    {
+      "a": "VG:RV:SAK:M08:S045:V022",
+      "b": "VG:SV:KAU:CHANDA:P02:D07:V07",
+      "t": "NEAR_PARALLEL_OF",
+      "st": "STALE_RECOMPUTE_REQUIRED_TEXT_CORRECTED",
+      "ks": [
+        "cross_veda_transformation_stale_reason",
+        "cross_veda_transformation_status",
+        "cross_veda_transformation_superseded_basis",
+        "cross_veda_transformation_superseded",
+        "formula_transformation_surface",
+        "formula_transformation_basis",
+        "formula_ngram_jaccard",
+        "formula_token_jaccard",
+        "formula_transformation_type",
+        "formula_similarity",
+        "cross_veda_transformation_uncorrected",
+        "cross_veda_stored_similarity",
+        "cross_veda_transformation",
+        "cross_veda_transformation_basis",
+        "cross_veda_transformation_scope",
+        "ngram_jaccard",
+        "token_jaccard",
+        "score",
+        "similarity"
+      ]
+    },
+    {
+      "a": "VG:AV:SAU:K20:S022:V001",
+      "b": "VG:SV:KAU:CHANDA:P02:D07:V07",
+      "t": "NEAR_PARALLEL_OF",
+      "st": "STALE_RECOMPUTE_REQUIRED_TEXT_CORRECTED",
+      "ks": [
+        "cross_veda_transformation_stale_reason",
+        "cross_veda_transformation_status",
+        "cross_veda_transformation_superseded_basis",
+        "cross_veda_transformation_superseded",
+        "formula_transformation_surface",
+        "formula_transformation_basis",
+        "formula_ngram_jaccard",
+        "formula_token_jaccard",
+        "formula_transformation_type",
+        "formula_similarity",
+        "cross_veda_transformation_uncorrected",
+        "cross_veda_stored_similarity",
+        "cross_veda_transformation",
+        "cross_veda_transformation_basis",
+        "cross_veda_transformation_scope",
+        "ngram_jaccard",
+        "token_jaccard",
+        "score",
+        "similarity"
+      ]
+    }
+  ]
+}

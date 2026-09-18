@@ -443,3 +443,33 @@ reproduce against the live graph and I could not determine which is right:
 Neither changes the classification, and in both cases the live measurement is the more
 pessimistic one, so no gap is understated by the discrepancy.
 
+
+
+## R5 correction — three census claims here are superseded
+
+This file was the one document in this directory that R5's first stale-claim sweep missed.
+Three of its claims are now false, and two were false before R5 touched anything.
+
+**"the role slots can only point at deities"** (§ on the semantic layer). They can and do
+point elsewhere. The declared RANGE of `ASSERTION_AGENT` and `ASSERTION_TARGET` has admitted
+`{Devata, DomainEntity}` throughout; only the population was narrow, and
+`GAP-SEMANTICS-003` populated it in R5 by projecting the `:RoleFiller` `REFERS_TO`
+resolution that already existed one hop away. Measured now: **2,660** agents of which 58
+non-deity, **918** targets of which 103 non-deity.
+
+**"Not one of the 4,865 assertions carries a complete agent-predicate-target triple"** is
+wrong twice over. **10** assertions now carry all three slots, and the denominator was
+already wrong when written: `:SemanticAssertion` is **35,131** nodes, not 4,865. The 4,865
+was the population before R1's identity repair restored the other 30,266, and the same
+mis-denominator is recorded and corrected in `layer_figures.py`.
+
+**"The Samaveda has no translation at all: 0 of 1,844 mantras carry HAS_TRANSLATION"** is
+false as a statement about the edge and true as a statement about the thing that matters.
+**173** Samavedic mantras carry a `HAS_TRANSLATION` edge. Every one of the 173 is a
+`REUSED_RENDERING`: Griffith's Rigvedic English attached to a Samavedic verse whose Sanskrit
+is verified character-identical. So the Samaveda's INDEPENDENT English translation count is
+**0**, which is what this sentence was reaching for — and the corrected form of it is that
+0 of 1,844 Samavedic verses have been translated as Samavedic verses, while 173 display
+another corpus's rendering and say so. `GAP-TRANSLATION-004` types this per verse:
+`REUSED_RENDERING` is a terminal state of its own and is excluded from
+`INDEPENDENT_ENGLISH_STATES`, so no total can quietly report 173 as Samaveda English.

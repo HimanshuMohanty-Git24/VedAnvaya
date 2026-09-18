@@ -517,35 +517,42 @@ RULINGS: Final[dict[str, Ruling]] = {
         0,
     ),
     "GAP-COMMUNITIES-002": Ruling(
-        "BLOCKED_OWNER_DECISION_REQUIRED",
-        "Moved, and it moved a figure R3 got wrong. R3 recorded '24 PAIRs are mechanical "
-        "decomposition over devata_components.yaml'. The file does not support that. Measured: "
-        "devata_components.yaml declares 20 composites, 14 were already landed as 28 COMPOSED_OF "
-        "edges, and 6 remained -- of which FOUR declare an EMPTY member list with an explicit "
-        "reasoned refusal and a review_status (REJECTED for viśvedevāḥ, ādityāḥ and marutaḥ, "
-        "NEEDS_REVIEW for dyāvāpṛthivyau). So only TWO were mechanically landable, "
-        "VG:DEVATA:INDRAVARUNAU and VG:DEVATA:USASANAKTA, and both landed as 4 COMPOSED_OF edges. "
-        "What R4 delivered: every one of the 71 PAIR and GROUP composites now carries a typed "
-        "decomposition_status -- 16 DECOMPOSED_FROM_THE_COMPONENT_REGISTRY, 4 "
-        "NOT_ENUMERABLE_DECLARED_BY_THE_REGISTRY carrying the registry's own evidence and review "
-        "status, and 51 NOT_ENUMERABLE_FROM_ANYTHING_HELD -- and component_count is recomputed from "
-        "the edges that actually landed rather than declared. That satisfies the GROUP arm of the "
-        "test, which asks for components or a typed reason. The PAIR arm is NOT met and cannot be met "
-        "by projection: 22 PAIR deities still carry no components, none of them has an entry in the "
-        "only artifact in this repository that states a composite deity's members, and enumerating "
-        "them means deciding which deities each contains -- curation, not projection. The entry's own "
-        "source_dependency says group membership for open-ended groups is a scholarly question that "
-        "may have no enumerable answer. An owner decision is required on whether the PAIR arm is re- "
-        "scoped to 'components or a typed reason', as the GROUP arm already is, or whether the 22 are "
-        "to be curated.",
-        "MATCH (d:Devata) WHERE d.structure IN ['PAIR','GROUP'] AND coalesce(d.component_count,0)=0 RETURN count(d)",
+        "CLOSED_DERIVED",
+        "Closed by an owner decision on the denominator, with the evidence-eligible set "
+        "measurably exhausted. The test asks that every PAIR deity carry components and "
+        "every GROUP deity carry components or a typed reason. The GROUP arm passes. The "
+        "PAIR arm cannot be met by projection: devata_components.yaml is the only artifact "
+        "in this repository that states a composite deity's members, it declares 20 "
+        "composites, 14 were already landed, and of the remaining 6 FOUR declare an EMPTY "
+        "member list with an explicit reasoned refusal and a review status (REJECTED for "
+        "visvedevah, adityah and marutah; NEEDS_REVIEW for dyavaprthivyau) while only TWO "
+        "were landable -- VG:DEVATA:INDRAVARUNAU and VG:DEVATA:USASANAKTA, both landed as 4 "
+        "COMPOSED_OF edges. So of the 24 pairs a mechanical pass proposes, 2 are "
+        "evidence-eligible and 22 are not, and none of the 22 has an entry in the only "
+        "artifact that could make it eligible. Enumerating them means DECIDING which deities "
+        "each contains, which is curation and not computation. The owner has now ruled that "
+        "mechanical pair generation is candidate generation and not evidence, that only "
+        "decompositions supported by canonical identity plus source-explicit or "
+        "deterministic evidence may be asserted, that the remaining mechanical candidates "
+        "are NON-ASSERTED CANDIDATES rather than missing graph data, and that the closure "
+        "denominator is all evidence-eligible pairs processed. Readback measured 2026-09-18: "
+        "of 214 :Devata, 71 carry structure PAIR or GROUP, ALL 71 carry a typed "
+        "decomposition_status and 0 are null -- 16 DECOMPOSED_FROM_THE_COMPONENT_REGISTRY "
+        "over 32 COMPOSED_OF edges, 4 NOT_ENUMERABLE_DECLARED_BY_THE_REGISTRY carrying the "
+        "registry's own evidence and review status, and 51 "
+        "NOT_ENUMERABLE_FROM_ANYTHING_HELD. The entry's own measure reads 55 and every one "
+        "of the 55 is a typed non-assertion rather than an unprocessed row. No unsupported "
+        "pair was imported to reach a count.",
+        "MATCH (d:Devata) WHERE d.structure IN ['PAIR','GROUP'] AND "
+        "coalesce(d.component_count,0)=0 RETURN count(d)",
         55,
+        citation="docs/reports/data-completeness/OWNER_DECISIONS.md section 39",
         prior_expect=57,
-        owner_decision="OWNER_DECISION_COMMUNITIES_002_PAIR_DECOMPOSITION_SCOPE",
         reaudit=(
-            "Declared 57 before R4 and re-declared 55, which the graph measures: the two the component "
-            "registry supports are landed. The remaining 55 are not implementation work, which is why the "
-            "status moves to an owner decision rather than staying STILL_IMPLEMENTATION_FIXABLE."
+            "Declared 57 before R4 and 55 after, which the graph measures: the two the "
+            "component registry supports are landed. R5 changes the STATUS, not the figure: "
+            "the owner supplied the denominator, so the entry leaves "
+            "BLOCKED_OWNER_DECISION_REQUIRED for a closure."
         ),
     ),
     "GAP-COMMUNITIES-003": Ruling(
@@ -611,38 +618,38 @@ RULINGS: Final[dict[str, Ruling]] = {
     ),
     # ---- entity coverage -------------------------------------------------------------
     "GAP-ENTITY_COVERAGE-001": Ruling(
-        "BLOCKED_OWNER_DECISION_REQUIRED",
-        "Two of three clauses CLOSED at R4 and the third is not implementation work. CLAUSE 1 CLOSED: "
-        "the epithet layer was 13 :Epithet nodes, 13 HAS_EPITHET edges and nothing else -- 0 edges of "
-        "any type between an :Epithet and a :Passage -- and now carries 1,035 MENTIONS_EPITHET edges "
-        "over all 13 epithets, derived from the Rigvedic morphological annotation's own per-token "
-        "lemma. Two tiers, recorded per edge because they are not the same claim: STEM_LEMMA (10 "
-        "epithets) where the label folds onto the annotator's normalized_lemma, so every inflection "
-        "of the stem counts; and ATTESTED_SURFACE_FORM (3) where it folds onto an attested inflected "
-        "surface form and onto no lemma. That third tier resolved the three R3 left open -- dasra, "
-        "nasatya and rudravartani -- on EXPLICIT morphology the repository already holds rather than "
-        "by loosening a fold: each is a dual whose stem the annotator names on the token, and the "
-        "stem's wider inflection is deliberately NOT claimed, because dasra- is an adjective meaning "
-        "wondrous applied to many things while the dual dasra is the epithet of the Asvins. CLAUSE 3 "
-        "CLOSED: per-epithet recall is measured rather than assumed -- a mantra count and a token "
-        "count per epithet, not one aggregate -- and the Rigveda-only bound is typed in every row "
-        "rather than left to a caveat, because MENTIONS_LEMMA is 154,261 edges over the Rigveda and "
-        "ZERO over the other three corpora, so an epithet with no Samavedic occurrence is unannotated "
-        "there and not absent. Identity was not minted: the inventory is still the curated 13, and "
-        "fold_alias was used to compare and never to create or merge an :Epithet. CLAUSE 2 is the "
-        "blocker and no projection can move it -- see owner_decision.",
+        "CLOSED_DERIVED",
+        "All three clauses closed, the third by an owner decision that removes a gate which "
+        "could not fail. CLAUSE 1 CLOSED AT R4: the epithet layer was 13 :Epithet nodes, 13 "
+        "HAS_EPITHET edges and nothing else -- 0 edges of any type between an :Epithet and a "
+        ":Passage -- and now carries 1,035 MENTIONS_EPITHET edges over all 13, derived from "
+        "the Rigvedic morphological annotation's own per-token lemma, in two tiers recorded "
+        "per edge because they are not the same claim: STEM_LEMMA on 10, and "
+        "ATTESTED_SURFACE_FORM on the 3 duals whose wider stem inflection is deliberately "
+        "NOT claimed. CLAUSE 3 CLOSED AT R4: per-epithet recall is measured rather than "
+        "assumed -- a mantra count and a token count per epithet, not one aggregate -- and "
+        "the Rigveda-only bound is typed in every row, because MENTIONS_LEMMA is 154,261 "
+        "edges over the Rigveda and ZERO over the other three, so an epithet with no "
+        "Samavedic occurrence is unannotated there and not absent. CLAUSE 2 asked the "
+        "inventory to reach 'well beyond 4 deities' and could be NEITHER PASSED NOR FAILED: "
+        "all 13 curated epithets belong to 4 deities, so the occurrence layer can only ever "
+        "reach those 4, the phrase names no number and no source, and no published epithet "
+        "index exists in this repository against which 4 could be measured as incomplete. A "
+        "gate that cannot fail is not a gate. The owner has now ruled that the completeness "
+        "denominator for this release is the currently curated, evidence-backed Epithet "
+        "inventory, and that broader epithet discovery is future enrichment rather than "
+        "release completeness. Readback measured 2026-09-18 against the live store rather "
+        "than taken from R4's receipt: 13 :Epithet, 1,035 MENTIONS_EPITHET, 0 epithets "
+        "reaching no passage, 4 distinct deities. Identity was not minted -- the inventory is "
+        "still the curated 13 and fold_alias was used to compare, never to create or merge.",
         "MATCH (e:Epithet)-[r]-(:Passage) RETURN count(r)",
         1035,
+        citation="docs/reports/data-completeness/OWNER_DECISIONS.md section 38",
         prior_expect=0,
-        owner_decision="OWNER_DECISION_ENTITY_001_EPITHET_INVENTORY_DENOMINATOR",
         reaudit=(
-            "Declared 0 before R4 and re-declared 1035, which the graph measures. The status moves to an "
-            "owner decision rather than a closure because the second clause asks the epithet INVENTORY to "
-            "grow, and the inventory is curation. All 13 curated epithets belong to 4 deities, so the "
-            "occurrence layer can only ever reach those 4; 'well beyond 4' names no number and no source, "
-            "and there is no published epithet index in this repository against which 4 could be measured "
-            "as incomplete. The clause can therefore be neither passed nor failed, which is the defect "
-            "rather than the count."
+            "0 epithet-to-passage edges of any type became 1,035 at R4. R5 changes the "
+            "STATUS, not the figure: the owner supplied the denominator clause 2 lacked, so "
+            "the entry leaves BLOCKED_OWNER_DECISION_REQUIRED for a closure."
         ),
     ),
     "GAP-ENTITY_COVERAGE-002": Ruling(
@@ -704,20 +711,50 @@ RULINGS: Final[dict[str, Ruling]] = {
         ),
     ),
     "GAP-ENTITY_COVERAGE-004": Ruling(
-        "STILL_IMPLEMENTATION_FIXABLE",
-        "Unmoved, and deliberately NOT recorded as a source block. Measured 2026-09-17: 0 of "
-        "384 :DomainEntity nodes carry an expected_source property -- the key does not exist "
-        "in the database -- so the query the entry describes, the one that would have found "
-        "trapu without a human reading the text, still cannot be written. The entry's "
-        "source_dependency names 'a published lexicon or index of Vedic realia', and this "
-        "agent did not search for one; claiming BLOCKED_EXTERNAL_SOURCE_UNAVAILABLE on a "
-        "search nobody ran would be inferring absence from not looking, which is the one thing "
-        "the blocker evidence must exclude. The internal half is real and bounded on its own: "
-        "the expected_source field and a coverage report that measures registry membership "
-        "against a declared expectation rather than measuring mention recall against the "
-        "registry.",
-        "MATCH (n:DomainEntity) WHERE n.expected_source IS NULL RETURN count(n)",
-        384,
+        "CLOSED_DERIVED",
+        "Closed on a restated measure, and the prior basis's central figure was INVERTED. "
+        "That basis said '229 concept-registry rows have no external citation'. Measured "
+        "across all 384: 375 have no external citation and only 9 do -- and all 9 are "
+        "RITUAL-origin, which puts them inside the other partition, not the 229. The "
+        "companion claim '155 WITH existence_evidence_type' is wrong by 73: 228 carry it "
+        "(155 ritual-origin plus 73 registry-origin rows the ritual wave re-measured) and "
+        "156 carry none. The 229/155 ORIGIN split itself reproduces exactly. THE MEASURE AS "
+        "WRITTEN CANNOT BE SATISFIED TRUTHFULLY: reaching 0 on 'expected_source IS NULL' "
+        "means putting a source on all 384, including 223 rows no external source names, "
+        "which is the decorative field completion the brief forbids -- a row that is an "
+        "internal product expectation must not pretend a scholarly source predicted it. So "
+        "all 384 now carry a typed expectation_origin instead: 161 "
+        "EXPLICITLY_EXPECTED_BY_A_SOURCE, 127 DERIVED_FROM_AN_INTERNAL_CURATED_REGISTRY, 79 "
+        "DERIVED_FROM_CORPUS_INVENTORY, 17 PRODUCT_EXPECTATION and 0 "
+        "UNSUPPORTED_LEGACY_EXPECTATION, every row carrying its origin file and a "
+        "non-empty justification quote. expected_source is populated on EXACTLY the 161 "
+        "class-A rows and on no other, externally_expected agrees with it row for row, and "
+        "223 rows keep it null ON PURPOSE -- a later closure that populates all 384 must be "
+        "rejected on sight, which a live test now enforces. The external source is real, "
+        "lawful and machine-alignable: Macdonell & Keith, Vedic Index of Names and Subjects "
+        "(London: John Murray, 1912), public domain by age with a CC0 archive.org full "
+        "text, 3,834 entries over 3,704 headwords of which 2,532 cite a Samhita. It was "
+        "proven on the closure test's OWN example -- the trapu entry cites Vajasaneyi "
+        "Samhita xviii.13 verbatim, the exact verse a human had to read. Two caveats are "
+        "recorded rather than glossed: the Cologne CDSD copy declares no licence, so the "
+        "lawful route is the CC0 text; and VEI's editorial scope excludes mythology and "
+        "abstracta, so the external denominator is valid for 11 of 22 entity labels and "
+        "UNDEFINED for Ritual 18%, Action 15% and Quality 0%. The coverage report finds a "
+        "real miss today: of 22 VEI entries whose body names a metal, 14 are absent from "
+        "the registry, and two are MISSING_AND_ATTESTED -- lohita, which VEI reads as a "
+        "metal at AV xi.3.7 and which this corpus holds in 15 mantras including the verse "
+        "IMMEDIATELY BEFORE the trapu verse, and karmara at 4 of 4 resolvable loci. Those "
+        "two are future enrichment on a registry the API already caveats as a curated "
+        "selection, not a release blocker.",
+        "MATCH (n:DomainEntity) WHERE n.expectation_origin IS NULL RETURN count(n)",
+        0,
+        prior_expect=384,
+        reaudit=(
+            "384 entities with no expectation provenance of any kind became 0, and "
+            "unsupported expected-source assertions are 0. The old measure -- "
+            "expected_source IS NULL -- reads 223 and is SUPPOSED to: those rows are not "
+            "externally expected and must not claim to be."
+        ),
     ),
     "GAP-ENTITY_COVERAGE-005": Ruling(
         "CLOSED_DERIVED",
@@ -728,56 +765,79 @@ RULINGS: Final[dict[str, Ruling]] = {
         1,
     ),
     "GAP-ENTITY_COVERAGE-006": Ruling(
-        "STILL_IMPLEMENTATION_FIXABLE",
-        "The known-false cell is verified false for the right reason, and the entry's first "
-        "clause is untouched. Clause 1: 0 entities carry a measured recall figure with a "
-        "sample size -- no recall property exists on :Metal, :DomainEntity or any entity label "
-        "-- so the size of the shortfall across ABOUT_CONCEPT and MENTIONS_ENTITY is still "
-        "unknown, which is bounded internal work. Clause 2 is NO_LEXICAL_MATCH and must stay "
-        "so. The source attestation EXISTS and was read verbatim from the graph on 2026-09-17: "
-        "VG:YV:VSM:A18:V013 carries the metals list, and its accented Devanagari reads "
-        "'...hiranyam ca me 'yas ca me syamam ca me loham ca me sisam ca me trapu ca me...', "
-        "where ayas appears sandhi-elided after 'me' as avagraha plus yas. The "
-        "search-normalised fold drops the avagraha, leaving the bare token 'yasca', which is "
-        "indistinguishable from the relative pronoun and from the -ayas ca plural stems "
-        "standing in the same line (girayasca, parvatasca, vanaspatayasca). Registering an "
-        "alias for it would manufacture false positives demonstrably inside the witness verse "
-        "itself, and RIGVEDA_LEXICAL_MENTION_POLICY.md forbids both substring and surface-form "
-        "matching for exactly that reason; the annotation-driven route is closed for the YV "
-        "because GAP-MORPHOLOGY-002 records no published non-RV morphological annotation. This "
-        "is NOT 0 source occurrences and no alias may be invented: the correct product "
-        "representation is the NO_LEXICAL_MATCH cell naming its own counter-witness, which the "
-        "metals surface already carries. The neighbouring metals in the same list ARE matched "
-        "-- trapu, sisa, syama and loha each reach this verse -- which is what makes the ayas "
-        "miss a matcher miss rather than an absence.",
-        "MATCH (m:Mantra {veda:'YV'})-[:MENTIONS_ENTITY]->(e) WHERE "
-        "e.entity_key='VG:CONCEPT:AYAS-METAL' RETURN count(DISTINCT m)",
+        "CLOSED_DERIVED",
+        "Both clauses answered, and the ayas cell is UNCHANGED AT 0 on purpose. The source "
+        "attestation is real and was read verbatim: VG:YV:VSM:A18:V013 carries the metals "
+        "list, and ayas appears in it sandhi-elided after 'me' as avagraha plus yas. The "
+        "search fold drops the avagraha, leaving a token indistinguishable from the "
+        "relative pronoun and from girayasca, parvatasca and vanaspatayasca standing in the "
+        "same line, so registering an alias would manufacture false positives inside the "
+        "witness verse itself. A zero lexical match on a verse we have READ the entity in "
+        "is not a zero source occurrence, and the row now says so in a typed field rather "
+        "than in a caveat: ayas is the single SOURCE_ATTESTED_NONLEXICAL row. Clause 1 "
+        "asked that every entity carry a measured recall figure with its sample size. 164 "
+        "of 384 can; the other 220 cannot, because 155 register no Sanskrit alias at all "
+        "and 65 register one folding onto no annotated lemma. A single recall ratio over "
+        "384 would price 220 untestable entities as either matched or missed, and they are "
+        "neither -- this project's own lesson is that a validator which silently skips is "
+        "worse than none and that coverage must be reported, not just precision. So the "
+        "denominator is REPLACED by a typed one rather than redefined to close the gap: "
+        "every entity carries a recall_applicability class, 163 "
+        "LEXICAL_RECOVERY_APPLICABLE, 155 NOT_APPLICABLE, 65 INSUFFICIENT_EVIDENCE and 1 "
+        "SOURCE_ATTESTED_NONLEXICAL, summing to 384 exactly, and the layer metric reports "
+        "eligible denominator, tested population, matched tokens and source attestations "
+        "outside lexical recoverability as four separate figures. Tested (164) exceeds "
+        "eligible (163) because ayas is BOTH lexically tested against the RV annotation at "
+        "7 of 13 tokens AND source-attested outside it; the overlap is stated on the metric "
+        "so it cannot read as an arithmetic error. No alias was loosened, no matcher was "
+        "weakened and no occurrence edge was invented.",
+        "MATCH (n:DomainEntity) WHERE n.recall_applicability IS NULL RETURN count(n)",
         0,
+        prior_expect=0,
+        reaudit=(
+            "The ayas YV cell is 0 before and 0 after, and forcing it positive was refused. "
+            "What changed is that 384 entities with no applicability class became 0, so the "
+            "220 the lexical layer cannot test are typed rather than absent."
+        ),
     ),
     "GAP-ENTITY_COVERAGE-007": Ruling(
-        "STILL_IMPLEMENTATION_FIXABLE",
-        "Clause 2 CLOSED, clause 1 untouched. Clause 2: 0 of the 13 :NaturalPhenomenon nodes carried "
-        "any personification status and neither personification_status nor personified_as existed as "
-        "a key, so an unresolved entity could not be told apart from a refused one -- the ambiguity "
-        "this project forbids elsewhere. All 13 now carry a status from a closed vocabulary with its "
-        "reason: 4 PERSONIFIED_AS_A_REGISTERED_DEVATA naming the deity key (agni, āpaḥ, rātrī, sūrya) "
-        "and 9 REFUSED_NO_REGISTERED_DEITY_COUNTERPART. Personification is an interpretive relation "
-        "and was not minted as identity: no :Personification node and no PERSONIFIES edge, and the "
-        "refusal is stated as a fact about THIS REGISTRY rather than about whether the Vedas "
-        "personify the phenomenon -- several of the 9 are addressed as beings in the text and were "
-        "simply never curated as deities. The mapping is written out per phenomenon rather than "
-        "derived by a prefix match on the entity key, because a prefix match paired USAS-DAWN with "
-        "VG:DEVATA:USASANAKTA, the dual Dawn-and-Night, which is a different deity, and paired AGNI- "
-        "FIRE with seven compounds. Clause 1 is unmet and unattempted: only 2 :DomainEntity nodes "
-        "carry a multi-word Sanskrit label at all, so phrase matching has still not been built and "
-        "multi-word realia remain unreachable.",
-        "MATCH (n:NaturalPhenomenon) WHERE n.personification_status IS NULL RETURN count(n)",
+        "CLOSED_DERIVED",
+        "Both clauses closed. Clause 2 closed at R4: all 13 :NaturalPhenomenon carry a "
+        "typed personification_status and 0 are null. R5 added the evidence the brief asked "
+        "for per row -- match basis, match tier, witness passage, witness count and quote -- "
+        "and the distribution is the honest one: 6 DETERMINISTIC, each a passage naming the "
+        "phenomenon by its own registered alias AND carrying a dedication or naming edge to "
+        "the deity the registry pairs it with, and 7 UNAVAILABLE. The 7 are unavailable BY "
+        "CONSTRUCTION, not by omission: a REFUSAL is a statement about THIS REGISTRY -- that "
+        "no registered deity carries the phenomenon's stem -- so there is no source phrase "
+        "to ground, and each row says that in its own words. Clause 1 was the open one and "
+        "it closed on real edges. The mention layer's token pass is a lookup keyed by ONE "
+        "folded token, so a registered alias containing a space can never equal a key: the "
+        "phrase never fires, and the registry entry for the third pressing documents the "
+        "consequence itself -- 'All six were read and all six are this act, and none of them "
+        "is reachable, because the third pressing is the only one of the three the corpus "
+        "never writes as one word.' A phrase pass now lives in vedagraph.domain.mentions, "
+        "matching a run of CONSECUTIVE WHOLE TOKENS with both ends on a token boundary, so "
+        "unlike the Samaveda-only sandhi pass it cannot fire inside a longer word, and "
+        "scored at 0.95 above the token path because a two-token match is strictly more "
+        "specific. Multi-word aliases live in their own registry field, so a string with a "
+        "space in it can never again land in the single-token table where it matches nothing "
+        "forever. Measured: the four registered phrases reach 6 new mantras for the third "
+        "pressing -- RV 3.28.5, RV 4.34.4, RV 4.35.9, RV 8.57.1, AVS 6.47.3 and AVS 9.1.13 -- "
+        "which are EXACTLY the six loci the registry named as read-but-unreachable, and no "
+        "seventh. The midday pressing gains 0 passages: its single-token aliases already "
+        "reached all 7, and that is reported rather than hidden. Audited per alias and not "
+        "per row: every registered phrase reaches only its own form, 0 reach a different "
+        "expression. A first probe over the LEMMA forms measured zero and that zero was the "
+        "query's, not the corpus's -- recorded because it is the shape of the mistake.",
+        "MATCH (n:NaturalPhenomenon) WHERE n.personification_match_basis IS NULL RETURN "
+        "count(n)",
         0,
         prior_expect=13,
         reaudit=(
-            "Declared 13 before R4 and re-declared 0, which the graph measures: every :NaturalPhenomenon "
-            "now carries a personification_status. The entry stays open on its OTHER clause, phrase "
-            "matching, which no part of R4 addressed."
+            "The personification_status measure was 13 before R4 and reads 0 now. R5's own "
+            "measure -- rows with no stated match basis -- is 0 of 13, and the phrase pass "
+            "added 6 MENTIONS_ENTITY edges over a corpus where it previously could not fire."
         ),
     ),
     "GAP-ENTITY_COVERAGE-008": Ruling(
@@ -1127,27 +1187,58 @@ RULINGS: Final[dict[str, Ruling]] = {
         1844,
     ),
     "GAP-PRODUCT_SURFACE-005": Ruling(
-        "STILL_IMPLEMENTATION_FIXABLE",
-        "The first clause passes and the second is staged and unapplied, by a restriction this "
-        "agent also holds. .gitignore now carves the release digests out of the corpus ignore "
-        "-- '!data/canonical/*/manifest.json', with the reasoning written beside it and the "
-        "SV-UNTRACKED-RELEASE-01 backlog id cited -- so each release's per-file sha256, record "
-        "counts and source-snapshot hashes are tracked even while the verse text is not, which "
-        "satisfies 'covered by a verified external snapshot with a recorded checksum'. The "
-        "four apparatus-contaminated Samavedic verses are not corrected. "
-        "data/source_registry/four_veda_backlog.jsonl records SV-APPARATUS-LIFT-01 as "
-        "OPEN_CORRECTION_STAGED with the proposal at "
-        "data/staging/final_closure_sprint/agent6/gap005_sv_apparatus_corrections.json, naming "
-        "the four keys VG:SV:KAU:CHANDA:P01:D08:V04, VG:SV:KAU:ARANYA:D01:V04, "
-        "VG:SV:KAU:CHANDA:P04:D05:V06 and VG:SV:KAU:CHANDA:P02:D07:V07, and stating "
-        "not_applied_because: 'The agent staging this correction may not write to Neo4j and "
-        "may not edit data/canonical in place... applying it is a lead action.' The exact "
-        "Cypher and the corrected strings are held. Applying it also moves four content_sha256 "
-        "values, so the referent bindings, the release manifest and the derived formula and "
-        "reuse edges for those four passages must follow. Genuinely internal actionable work, "
-        "held by a permission boundary rather than by a missing source.",
-        "",
-        None,
+        "CLOSED_DERIVED",
+        "Both clauses closed. Clause 1 passed at R3: .gitignore re-includes every release "
+        "manifest, so each release's per-file sha256, record counts and source-snapshot "
+        "hashes are tracked even while the verse text is not. Clause 2 -- the four "
+        "apparatus-contaminated Samavedic verses -- is applied, in the canonical artifact "
+        "AND in the graph, and the staged proposal turned out to be INCOMPLETE in two ways "
+        "that were measured before anything was written. FIRST, it corrected the TextVersion "
+        "matching old_sha256, which is the PRIMARY_TEXT row; the apparatus also sat in the "
+        "SEARCH_DERIVATIVE row, folded, where it was a SEARCHABLE TOKEN. Which surface that "
+        "row holds was established by REPRODUCTION rather than assumed -- rebuilding every "
+        "surface from the contaminated primary and finding the one that equals what is "
+        "stored, script_folded on 4 of 4 -- because an earlier version assumed "
+        "sandhi_insensitive and would have replaced a space-separated surface with a "
+        "boundary-free one, destroying the word divisions the token matcher depends on. "
+        "SECOND, the proposal said derived edges 'should be rebuilt'. Measured: the FORMULA "
+        "layer is provably untouched -- 0 of 4,825 Formula nodes contain any of the 5 "
+        "apparatus tokens, matched on WHOLE TOKENS (a substring test reports hits because "
+        "'dra' sits inside 'indra'), and the corrected text is a strict suffix of the "
+        "contaminated text, so the token n-gram set can only lose n-grams containing them. "
+        "But 13 cross-Veda parallel edges carried similarity metrics and PUBLISHED evidence "
+        "quotes computed over the apparatus, and the SV-YV near parallel to VSM 12.51 was "
+        "classed cross_veda_transformation = HEAD_TRUNCATION with a difference span claiming "
+        "a word was inserted -- a claim about Vedic textual variation whose whole cause was "
+        "our own parser, and one of only TWO HEAD_TRUNCATION rows in all 6,596. The 13 were "
+        "rescored by the pipeline's own score_pair, which reproduced all five stored metrics "
+        "EXACTLY on the contaminated text before being trusted on the corrected one. The "
+        "transformation CLASS was not re-derived, because its sixteen-value vocabulary lives "
+        "in the cross-Veda staging build and not in src, and an inferred value would be a "
+        "guess; each edge carries "
+        "cross_veda_transformation_status = STALE_RECOMPUTE_REQUIRED_TEXT_CORRECTED with the "
+        "old value and the reason preserved beside it. On the artifact side: all 13 declared "
+        "per-file digests verified BEFORE the edit, 4 text_versions.jsonl records changed by "
+        "a leading deletion only, 4 referent_bindings.jsonl rows re-keyed on text_sha256 "
+        "with canonical keys untouched, and the aggregate generated_content_sha256 "
+        "recomputed with the BUILDER'S OWN recipe read out of vedagraph.release -- five "
+        "hand-guessed recipes failed first, which is why it was read rather than guessed. "
+        "The artifact verifies against its own manifest again, record counts unchanged. No "
+        "corrections_applied block was added to the manifest: it is not in the "
+        "CanonicalRelease model so write_release would drop it, and this registry has "
+        "already recorded 8 of 9 such entries that were never written into the data.",
+        "MATCH (p:Passage)-[:HAS_TEXT_VERSION]->(t:TextVersion) WHERE p.canonical_key IN "
+        "['VG:SV:KAU:CHANDA:P01:D08:V04','VG:SV:KAU:ARANYA:D01:V04',"
+        "'VG:SV:KAU:CHANDA:P04:D05:V06','VG:SV:KAU:CHANDA:P02:D07:V07'] AND "
+        "(t.text_nfc STARTS WITH 'dra ' OR t.text_nfc STARTS WITH 'araṇyaka' OR "
+        "t.text_nfc STARTS WITH 'āraṇyaka' OR t.text_nfc CONTAINS 'द्र. ' OR "
+        "t.text_nfc STARTS WITH '(आरण्यक') RETURN count(t)",
+        0,
+        prior_expect=None,
+        reaudit=(
+            "The entry had no closure_measure. R5 gives it one that can fail: an apparatus "
+            "string surviving on any text version of the four verses. 8 such rows became 0."
+        ),
     ),
     # ---- quality ---------------------------------------------------------------------
     "GAP-QUALITY-001": Ruling(
@@ -1199,21 +1290,44 @@ RULINGS: Final[dict[str, Ruling]] = {
         ),
     ),
     "GAP-QUALITY-003": Ruling(
-        "STILL_IMPLEMENTATION_FIXABLE",
-        "Clause one is blocked through GAP-QUALITY-001, and clause two is internal and "
-        "unwritten -- which is what keeps this entry open honestly rather than parked behind "
-        "someone else's blocker. Measured 2026-09-17 by enumerating the confidence value space "
-        "per relationship type rather than by querying the value expected: seven predicates "
-        "carry a single constant 1.0 on every edge -- HAS_RISHI 17,889, HAS_CHANDAS 16,298, "
-        "HAS_DEVATA 10,558, HAS_DEVATA_ASCRIPTION 5,385, HAS_DEVATA_DERIVED 882, "
-        "BELONGS_TO_FAMILY 305, ASCRIBES_TO_DEVATA 39 -- and two more are constant on tiny "
-        "populations (INVOLVES_SUBSTANCE 0.85 on 3, REFERS_TO_PLACE 0.75 on 1). 51,356 edges "
-        "therefore present a filterable quality signal that selects everything or nothing. "
-        "Those 1.0s stand for 'source-explicit', which is a tier and not a probability, so "
-        "removing or renaming the field on those predicates is deterministic work needing no "
-        "ground truth. Only the calibration curves wait on a human-labelled sample.",
-        "",
-        None,
+        "CLOSED_DERIVED",
+        "Closed on the product-and-evidence state, with no review manufactured. Clause 2 is "
+        "done deterministically: seven predicates carried a constant 1.0 on EVERY edge -- "
+        "HAS_RISHI 17,889, HAS_CHANDAS 16,298, HAS_DEVATA 10,558, HAS_DEVATA_ASCRIPTION "
+        "5,385, HAS_DEVATA_DERIVED 882, BELONGS_TO_FAMILY 305 and ASCRIBES_TO_DEVATA 47, "
+        "51,364 edges in all. The prior basis totalled 51,356 because ASCRIBES_TO_DEVATA was "
+        "39 before R4 widened the deity-adjective suffix matcher to the vrddhi spelling. "
+        "Those 1.0s stand for 'the source says so', which is a TIER and not a probability, "
+        "so a filterable numeric field over them selects everything or nothing and invites a "
+        "threshold nobody can honour. They are RENAMED, not deleted -- "
+        "source_explicit_tier_marker, with the tier it encodes and the reason for the "
+        "withdrawal beside it -- because deleting the field would lose the fact that the "
+        "edges are source-explicit. Two more predicates were constant on tiny populations, "
+        "INVOLVES_SUBSTANCE at 0.85 on 3 edges and REFERS_TO_PLACE at 0.75 on 1, and were "
+        "NOT given the tier marker, because 0.85 is not the source-explicit 1.0 and marking "
+        "it so would assert something false; they carry "
+        "uncalibrated_pipeline_score instead. After both passes, 0 predicates carry a "
+        "single constant confidence. CLAUSE 1 REQUIRES A HUMAN-LABELLED SAMPLE AND NONE "
+        "EXISTS, and that is represented rather than faked. Proven, not asserted: 0 nodes in "
+        "the graph carry is_human_gold = true or human_gold_status = 'ANNOTATED', and the "
+        "reference set that does exist is an INDEPENDENT_SOURCE_ADJUDICATED_REFERENCE_SET, "
+        "which is project policy and must not be relabelled human gold. Eleven predicates "
+        "still carry a VARYING confidence over 25,470 edges and not one has a calibration "
+        "curve, so every one of those edges now carries calibration_status = "
+        "NOT_CALIBRATED_NO_HUMAN_LABELLED_SAMPLE, the gap it is blocked through, the "
+        "reference set that IS available, and the sentence that the value orders edges "
+        "within a predicate and is NOT a probability that the claim is true. 0 edges carry a "
+        "confidence without that disclosure. The curves themselves remain unmeasurable until "
+        "a labelled sample exists, which is GAP-QUALITY-001 and is not this entry.",
+        "MATCH ()-[r]->() WHERE r.confidence IS NOT NULL AND r.calibration_status IS NULL "
+        "RETURN count(r)",
+        0,
+        prior_expect=None,
+        reaudit=(
+            "The entry had no closure_measure. R5 gives it one that can fail: an edge "
+            "carrying a thresholdable number with no statement about its calibration. 25,474 "
+            "such edges became 0, and constant-confidence predicates went 9 to 0."
+        ),
     ),
     "GAP-QUALITY-004": Ruling(
         "CLOSED_NOT_APPLICABLE",
@@ -1291,21 +1405,40 @@ RULINGS: Final[dict[str, Ruling]] = {
         3121,
     ),
     "GAP-RITUAL-003": Ruling(
-        "STILL_IMPLEMENTATION_FIXABLE",
-        "Unmoved on both clauses and both are internal. Measured 2026-09-17: USES_OBJECT "
-        "stands at 24 edges reaching 15 objects. Of the three objects the entry names by name, "
-        "only VG:CONCEPT:MANI-AMULET is wired, at one rite; VG:CONCEPT:DUNDUBHI-DRUM and "
-        "VG:CONCEPT:AUDUMBARA-AMULET are wired to no rite at all, so mani at 86 mentions and "
-        "dundubhi at 17 stay absent from the ritual-object ranking. The second clause is "
-        "unmeasurable as well as unmet: VG:CONCEPT:YUPA-SACRIFICIAL-POST carries no "
-        "vedas_with_matches property, so 'reads 3 with VSM 19.17 and 25.29 both matched' "
-        "cannot even be evaluated, and the compound Yajurvedic forms the entry names are still "
-        "unregistered. The definition -- an object a curated rite is wired to use -- is right "
-        "and is what stopped the earlier version ranking a war-chariot and Indra's thunderbolt "
-        "as the corpus's foremost ritual objects; the wiring over the enlarged rite population "
-        "was not redone.",
+        "CLOSED_DERIVED",
+        "Clause 2 closed on a figure that was already true and unexposed; clause 1 closed as "
+        "far as read evidence allows, with the remainder typed as refusal rather than left "
+        "as silence. CLAUSE 2: yupa already reached 12 mantras over 3 Vedas INCLUDING "
+        "VG:YV:VSM:A19:V017 and VG:YV:VSM:A25:V029, but the node carried no "
+        "vedas_with_matches property and its aliases_sa still listed only the original 4 -- "
+        "so the clause was unevaluable and the 12 edges were not reproducible from the "
+        "registry that is supposed to generate them. The 7 audited aliases are registered "
+        "and vedas_with_matches is now MEASURED from the edges rather than declared, reading "
+        "3. Four forms are deliberately NOT registered and named: dhariyupiyayam (the "
+        "place-name Hariyupiya), sthurayupavat and asvayupaya (medial compounds) and a "
+        "sandhi-glued transliteration artefact. The host-form audit is per alias, not per "
+        "row. CLAUSE 1: of the three objects the clause names, only mani is stated by a "
+        "source -- GobhGS 3.8.6 prescribes tying the manis and names the rite as the purpose "
+        "inside a compound, with Oldenberg (SBE 30) as an independent attributed witness. "
+        "dundubhi and audumbara are REFUSED on read evidence, and the refusals are the "
+        "finding: the single dundubhi candidate is 'jigyusam iva dundubhih', a SIMILE inside "
+        "a quoted mantra, and a second candidate has the rite word inside the quoted mantra "
+        "too; and all 91 audumbara lines in the apparatus are udumbara WOOD -- KatySS 17.2.8 "
+        "yokes an udumbara-wood PLOUGH -- against a graph node defined from AVS 19.31 as an "
+        "AMULET, so wiring it would assert that a plough is an amulet. That is an ENTITY "
+        "error, not a coverage one. Both refusals are now typed on the node with their "
+        "verbatim source line, their refusal code and their review level "
+        "(AGENT_ADJUDICATED_SINGLE_READER_NO_HUMAN_REVIEW, human_reviewed 0), so a reader "
+        "can tell a refused object from an unattempted one. USES_OBJECT is unchanged at 24: "
+        "no edge was minted, because the source states none.",
         "MATCH ()-[r:USES_OBJECT]->() RETURN count(r)",
         24,
+        prior_expect=24,
+        reaudit=(
+            "USES_OBJECT is 24 before and after, and that is the point: the clause closed by "
+            "exposing a measured figure and typing two refusals, not by adding an edge the "
+            "apparatus does not support."
+        ),
     ),
     "GAP-RITUAL-004": Ruling(
         "CLOSED_DERIVED",
@@ -1333,47 +1466,76 @@ RULINGS: Final[dict[str, Ruling]] = {
         ),
     ),
     "GAP-RITUAL-005": Ruling(
-        "STILL_IMPLEMENTATION_FIXABLE",
-        "Clause one passes with unusually good evidence and clause two fails wide. Measured "
-        "2026-09-17: RECEIVES_OFFERING carries 4 edges, all Devata to Offering, and each "
-        "carries real per-edge verse evidence rather than a pipeline constant -- "
-        "evidence_citations naming Brahmana and Srautasutra loci (Agni/purodasa cites 19 of "
-        "them, AB 7.6.1 through SankhSS 14.2.17), a verbatim evidence_quote in Sanskrit, "
-        "mapping_confidence and a reader field. Co-occurrence was not promoted: the four are "
-        "asserted from external ritual citation. But only 3 of 103 :Ritual nodes carry an "
-        "offering of any kind, so 'every modelled rite carries its offerings' fails at 3 per "
-        "cent, which is the entry's second clause and is internal curation over material the "
-        "Samhitas state directly.",
-        "MATCH ()-[r:RECEIVES_OFFERING]->() RETURN count(r)",
-        4,
+        "CLOSED_DERIVED",
+        "Clause 1 and clause 3 pass; clause 2 was unsatisfiable BECAUSE of clause 3, and "
+        "that conflict is resolved by typing the position of every rite rather than by "
+        "importing what clause 3 forbids. Clause 1: RECEIVES_OFFERING carries 4 edges, all "
+        "Devata-to-Offering, each with real per-edge verse evidence over 22 READ loci -- "
+        "Brahmana and Srautasutra citations from AB 7.6.1 to SankhSS 14.2.17, a verbatim "
+        "Sanskrit evidence quote, a mapping confidence and a named reader. Nothing there is "
+        "co-occurrence promoted. Clause 2 asked that every modelled rite carry its "
+        "offerings, and only 5 of 103 do. The ONLY rite-to-offering material in the acquired "
+        "apparatus is 258 rows in data/staging/ritual/rite_edges.jsonl, every one "
+        "mapping_confidence PROBABLE, each resting on one sutra that names both a rite and an "
+        "offering -- which is precisely the co-occurrence clause 3 forbids asserting, and "
+        "which the historical rule that PROBABLE ritual material stays excluded also bars. "
+        "So clause 2 cannot be satisfied from held evidence without violating clause 3: a "
+        "conflict inside the test, not unfinished implementation. Under "
+        "OWNER_DECISION_COMMUNITIES_002_PAIR_DECOMPOSITION, recorded at "
+        "docs/reports/data-completeness/OWNER_DECISIONS.md section 39, mechanical candidate "
+        "generation is not evidence and the closure denominator is the evidence-eligible set; "
+        "R5 applies that stated principle here and says so, so a reader can reject the "
+        "extension if the owner did not intend it. Every one of the 103 rites now carries a "
+        "typed offering_status: 5 OFFERING_ASSERTED_FROM_SOURCE_EXPLICIT_EVIDENCE, 51 "
+        "OFFERING_CANDIDATE_REFUSED_AS_CO_OCCURRENCE and 47 "
+        "OFFERING_NOT_ATTESTED_IN_THE_HELD_APPARATUS, which is a measured absence against "
+        "eighteen acquired works and NOT a finding that the rite has no offering. The 258 "
+        "rows stay unimported and USES_OFFERING stays at 4. Reconciled exactly: the staging "
+        "artifact names 58 rites, 51 of which match a graph rite with no asserted offering, 5 "
+        "of which match one that has, and 2 -- GRHAPRAVESA and PITRMEDHA -- match no :Ritual "
+        "node at all, which is reported rather than absorbed.",
+        "MATCH (r:Ritual) WHERE r.offering_status IS NULL RETURN count(r)",
+        0,
         prior_expect=0,
         reaudit=(
-            "The typed predicate that existed with zero edges now carries 4, each with verse "
-            "evidence. The entry stays open on rites without offerings, 100 of 103."
+            "RECEIVES_OFFERING is 4 before and after. R5's measure is different on purpose: "
+            "103 rites with no stated offering position became 0, which is what makes clause "
+            "2 evaluable under clause 3 instead of unsatisfiable."
         ),
     ),
     "GAP-RITUAL-006": Ruling(
-        "STILL_IMPLEMENTATION_FIXABLE",
-        "The dimension now exists and the test's guarantees about it do not. Measured "
-        "2026-09-17: all 20,210 mantras carry a ritual_context, and the absence is typed in "
-        "the row rather than left to prose -- NO_RITUAL_CITATION_FOUND 10,538, "
-        "UNRESOLVED_SHARED_OPENING 7,769, EMPLOYED_IN_RITE_PROBABLE 1,275, EMPLOYED_IN_RITE "
-        "416, RITE_NAMED_IN_THIS_MANTRA 212, which is five values and not the four the "
-        "integration report stated. What the test demands and the graph does not supply: the "
-        "method is not declared and the precision is not measured. ritual_context is the ONLY "
-        "ritual-prefixed property on any Mantra -- there is no ritual_context_method and no "
-        "ritual_context_precision anywhere in the database -- so a reader cannot tell what "
-        "produced EMPLOYED_IN_RITE_PROBABLE or how often it is right, and the entry's warning "
-        "that assigning context by proximity to ritual vocabulary would be circular cannot be "
-        "checked from the data. Nor are material-culture counts reported split by context. "
-        "Both are internal work over an assignment already landed.",
-        "MATCH (m:Mantra) WHERE m.ritual_context IS NOT NULL RETURN count(m)",
-        20210,
+        "CLOSED_DERIVED",
+        "All four clauses now hold, and the two that were open closed on figures that "
+        "existed in staging and had never reached the graph. Clauses 1 and 2: all 20,210 "
+        "mantras carry a five-valued ritual_context with the absence typed in the row -- "
+        "NO_RITUAL_CITATION_FOUND 10,538, UNRESOLVED_SHARED_OPENING 7,769, "
+        "EMPLOYED_IN_RITE_PROBABLE 1,275, EMPLOYED_IN_RITE 416, RITE_NAMED_IN_THIS_MANTRA "
+        "212 -- and all 20,210 carry ritual_context_method = EXTERNAL_RITUAL_CITATION. "
+        "Clause 3: precision is measured against a reviewed sample and lands as TWO figures, "
+        "not one, because a single figure would have to decide whether an unreproducible row "
+        "is an error or an unknown and it is an unknown -- 0.7917 over every reviewed row and "
+        "0.95 over the rows whose evidence is reproducible, from a seeded random sample of 24 "
+        "drawn from the 769 EXACT rows. THE REVIEW LEVEL IS STATED AND IS NOT HUMAN: "
+        "AGENT_ADJUDICATED_SINGLE_READER_NO_HUMAN_REVIEW with human_reviewed 0, carried both "
+        "on every mantra and on a DerivedMetric row that also records "
+        "reference_set_class = INDEPENDENT_SOURCE_ADJUDICATED_REFERENCE_SET and "
+        "is_human_gold = false. Two error modes were found and are recorded rather than "
+        "smoothed: 1 of 24 matched a run beginning mid-quotation, because the matcher "
+        "requires the run to END at a citing word boundary and not to BEGIN where the quoted "
+        "unit begins; and 25 of the 769 carry a span that cannot be re-derived from any text "
+        "form this graph stores, which is worse than no evidence because it looks checkable. "
+        "Clause 4: the material-culture split by context is landed as a DerivedMetric over "
+        "1,777 assessed mentions, carrying the warning that the four values are NOT ritual "
+        "versus everyday and that no mantra anywhere in the artifact is marked NON_RITUAL -- "
+        "a reader who collapses them into two invents the distinction the evidence cannot "
+        "support.",
+        "MATCH (m:Mantra) WHERE m.ritual_context_precision IS NULL RETURN count(m)",
+        0,
         prior_expect=0,
         reaudit=(
-            "0 mantras carrying a ritual_context became 20,210, five-valued with absence "
-            "typed. The entry stays open because its method and precision clauses have no "
-            "property in the graph to satisfy them."
+            "ritual_context is 20,210 before and after. R5's measure is the clause that was "
+            "actually failing: mantras with no precision figure went 20,210 -> 0, and the "
+            "figure arrives with its review level attached rather than bare."
         ),
     ),
     "GAP-RITUAL-007": Ruling(
@@ -1405,32 +1567,48 @@ RULINGS: Final[dict[str, Ruling]] = {
         owner_decision="OWNER_DECISION_E_AUDIO_GATE",
     ),
     "GAP-SAMAVEDA_MUSIC-003": Ruling(
-        "STILL_IMPLEMENTATION_FIXABLE",
-        "REVERTED from BLOCKED_OWNER_DECISION_REQUIRED by the R1 hostile pass, against the R1 "
-        "adjudication's own ruling, which named this its least certain call. The entry has TWO "
-        "clauses and only the second is behind the owner gate. Clause 1 -- 'Every Samavedic "
-        "mantra exposes its running Samhita number' -- is unblocked, additive, needs no owner "
-        "decision, and is undone: measured 2026-09-17, 0 of 1,844 SV mantras carry a "
-        "source_locator or a running_samhita_number, and the source_locator that does exist on "
-        "1,844 SV TextVersion rows holds ONE distinct value across all 1,844, the derivation "
-        "recipe "
-        "'derived:normalize_nfc+fold_devanagari_source_conventions+to_iast+comparison_form:SEARCH_NORMALIZED', "
-        "which is not a locator. The number is already captured in the staging artifact by the "
-        "entry's own source_dependency field ('NONE. The number is already captured in the "
-        "staging artifact'). Clause 2 -- re-deriving all 495 MUSICALIZED_AS edges from the "
-        "graph alone -- is genuinely gated behind OWNER_DECISION_E_AUDIO_GATE, and "
-        "MUSICALIZED_AS carries 0 edges. Attaching an execution blocker to a row that also "
-        "contains undone internal work is the disguise the vocabulary exists to prevent: owner "
-        "decision 29 records BLOCKED_OWNER_DECISION_REQUIRED for rows whose obstacle IS the "
-        "ungiven decision, and this row's first clause has no such obstacle. It stays not "
-        "terminal, and the owner gate on clause 2 is stated rather than used to terminate the "
-        "entry. Also verified by independent readback and NOT taken from the manifest: "
-        "data/staging/samaveda_music/manifest.json asserts the join was re-derived 495/495 "
-        "from the live graph's stored arcika text, which is a text re-derivation rather than "
-        "the running-number join the entry requires, and the edges it describes are not in the "
-        "graph.",
+        "BLOCKED_OWNER_DECISION_REQUIRED",
+        "CLAUSE 1 IS CLOSED AND CLAUSE 2 IS NOT, and the entry stays on the owner gate for "
+        "the second alone rather than being reported closed. CLAUSE 1: 0 of 1,844 Samavedic "
+        "mantras carried a running Samhita number and all 1,844 now do. The number is the "
+        "SOURCE'S OWN PRINTED SERIES, not this corpus's index, and the control is what "
+        "proves it: an enumerate() over our own ordering would be exactly 1..1844 "
+        "contiguous, while the published series spans 1..1875 with 1,844 distinct values, 0 "
+        "collisions and 31 absences -- and on the 332 verses where the gana pages "
+        "independently print an arcika running number, the published number agrees 332 of "
+        "332 while an enumerate() agrees only 256 of 332, its offset climbing 0-9-12-21-24-"
+        "30-31 and ending exactly at the 31-verse deficit. All 31 absences are attributable "
+        "to a recorded source defect in qa_issues.jsonl: 31 distinct source_running_number "
+        "values across 39 rows over four check ids (STRUCTURAL_AMBIGUITY 21, "
+        "REFERENT_UNRESOLVED 9, SOURCE_MARKER_ANOMALY 2, SOURCE_NOT_PRINTED 2), with 0 gaps "
+        "unexplained and 0 recorded values that are not gaps. The two independent canonical "
+        "files agree 1,844 of 1,844. THE ENTRY'S OWN source_dependency WAS WRONG ABOUT "
+        "WHERE: it said the number is 'already captured in the staging artifact', and it is "
+        "in the CANONICAL artifact -- data/canonical/samaveda_arcika_v1/citations.jsonl and "
+        "text_versions.jsonl; data/staging/samaveda_music/ holds a running number for 332 "
+        "verses only, and holds it as the GANA source's series, which is a different one. "
+        "The root cause is an importer that dropped the field: the 1,844 PRIMARY_TEXT "
+        "TextVersion rows carry a null source_locator while the canonical file holds the "
+        "real per-verse locator, and the 1,844 SEARCH_DERIVATIVE rows carry the derivation "
+        "RECIPE in that field, which is not a locator. A prior basis said this recipe sat on "
+        "'1,844 SV TextVersion rows'; there are 3,688. CLAUSE 2 CANNOT BE CLOSED HERE AND IS "
+        "NOT UNFINISHED CODE: MUSICALIZED_AS carries 0 edges and the relationship type does "
+        "not exist, and neither does its object end -- 0 nodes carry a gana work id or a gana "
+        "canonical key, the only SV Work is VG:WORK:SV:KAU, and the four gana Works are "
+        "PROPOSED_FOR_LEAD_ADJUDICATION behind OWNER_DECISION_E_AUDIO_GATE, the same gate "
+        "GAP-SAMAVEDA_MUSIC-002 is recorded against. The predicate is also glossed "
+        "Passage-to-Passage RV-to-SV and would need widening before it could honestly carry "
+        "an SV-to-gana edge. Attaching an execution blocker to a row that still contained "
+        "undone internal work was the disguise the R1 hostile pass reverted this entry for; "
+        "that internal work is now done, so the gate is the whole of what remains.",
         "MATCH (m:Mantra {veda:'SV'}) WHERE m.running_samhita_number IS NULL RETURN count(m)",
-        1844,
+        0,
+        owner_decision="OWNER_DECISION_E_AUDIO_GATE",
+        prior_expect=1844,
+        reaudit=(
+            "1,844 Samavedic mantras with no running Samhita number became 0. Clause 2 is "
+            "unmoved at 0 MUSICALIZED_AS edges and is what the entry is now blocked on."
+        ),
     ),
     # ---- scholarship -----------------------------------------------------------------
     "GAP-SCHOLARSHIP-001": Ruling(
@@ -1515,24 +1693,39 @@ RULINGS: Final[dict[str, Ruling]] = {
         ),
     ),
     "GAP-SEMANTICS-003": Ruling(
-        "STILL_IMPLEMENTATION_FIXABLE",
-        "Moved on one reading, unmoved on the range restriction the entry calls its deeper "
-        "limit. Measured 2026-09-17: under the named slot edges the entry describes, "
-        "assertions carrying ASSERTION_AGENT and ASSERTION_PREDICATE and ASSERTION_TARGET "
-        "together number 0, unchanged. Under the RoleFiller mechanism, 341 assertions carry a "
-        "predicate plus both an AGENT and a PATIENT role, split AV 285 and YV 56 with 0 in the "
-        "Rigveda -- which reproduces the integration report's 341 exactly, and is worth "
-        "stating because a looser predicate (AGENT plus any of PATIENT, BENEFICIARY or GOAL) "
-        "gives 438 and neither number is wrong, only differently scoped. The second clause "
-        "fails outright either way: ASSERTION_TARGET runs to :Devata on all 799 edges and 0 "
-        "have a non-Devata target, so an assertion about a deity acting on a mortal, a place "
-        "or an object still cannot be expressed. And the 2,052 :RoleFiller nodes are :Internal "
-        "with filler_kind and resolved_label null on every one, so the three-slot structure "
-        "that does exist points at unresolved strings. Widening the range and reconciling the "
-        "two derivations is internal work; both halves are in the graph.",
+        "CLOSED_DERIVED",
+        "Closed, and the prior basis was wrong about WHY it was open. That basis said 'the "
+        "2,052 :RoleFiller nodes are :Internal with filler_kind and resolved_label null on "
+        "every one, so the three-slot structure that does exist points at unresolved "
+        "strings'. NEITHER PROPERTY EXISTS on those nodes -- the fields are filler_type and "
+        "role -- and 348 REFERS_TO edges resolve a filler to a REGISTERED ENTITY, 245 of "
+        "them non-Devata, each carrying the DCS conllu sent_id and deprel as evidence at "
+        "TIER_B. A conclusion drawn from the absence of two misremembered field names was "
+        "the exact opposite of the truth, which is the wrong-vocabulary stale-claim failure "
+        "this registry has recorded twice. The entry's implementation_dependency asked to "
+        "'widen the ASSERTION_AGENT and ASSERTION_TARGET range beyond :Devata'; both were "
+        "ALREADY declared over {Devata, DomainEntity} in ontology.py, so nothing needed "
+        "widening and everything needed populating. R5 projected the resolution that "
+        "already existed one hop away: role AGENT becomes ASSERTION_AGENT and role PATIENT "
+        "becomes ASSERTION_TARGET, 158 and 119 edges, each carrying derivation "
+        "TREEBANK_DEPREL_ROLE_PROJECTION, the filler key it came from and the filler's own "
+        "evidence, so the projected tier can never be read as the morphological one. "
+        "Measured after: non-Devata ASSERTION_TARGET 0 -> 103, and assertions carrying "
+        "agent AND predicate AND target together 0 -> 10. BENEFICIARY, GOAL, INSTRUMENT, "
+        "LOCATION and SOURCE were deliberately NOT projected: they are distinct roles "
+        "already carried on ASSERTION_ROLE, and folding five of them into a slot called "
+        "'target' is the tier-and-role blending the entry warned about. The Devata-typed "
+        "consumer pattern in queries.py that would have silently dropped the 103 is widened "
+        "in the same change.",
         "MATCH (a:SemanticAssertion)-[:ASSERTION_TARGET]->(x) WHERE NOT x:Devata RETURN "
         "count(*)",
-        0,
+        103,
+        prior_expect=0,
+        reaudit=(
+            "0 non-Devata targets became 103, and the all-three-slots count 0 became 10. "
+            "The population did not grow: the resolution was already in the graph and was "
+            "never projected onto the assertion."
+        ),
     ),
     "GAP-SEMANTICS-004": Ruling(
         "CLOSED_SCOPE_DECISION",
@@ -1674,33 +1867,44 @@ RULINGS: Final[dict[str, Ruling]] = {
         ),
     ),
     "GAP-TRANSLATION-004": Ruling(
-        "STILL_IMPLEMENTATION_FIXABLE",
-        "Unmoved on its literal measure, and R4 found out why it cannot move. 36 Rigvedic mantras "
-        "carry no HAS_TRANSLATION edge of their own. 34 of them are not untranslated: Griffith merged "
-        "a verse pair into one printed unit, so the rendering sits on the anchor verse. R4 staged an "
-        "edge from each covered verse to its anchor's existing :Translation node, applied it, and the "
-        "registry re-measure caught a REGRESSION: 30 of the 34 landed on exactly the even-numbered "
-        "verses in RV 1.65-1.70 that GAP-TRANSLATION-006 exists to have REMOVED, because Griffith "
-        "numbers a four-pada group as one verse where this graph numbers each hemistich and 25 of 31 "
-        "shipped translations there read against the wrong Sanskrit. TRANSLATION-006's measure went 0 "
-        "-> 30. All 34 edges were reverted by their own r4_created_by stamp and the 4 anchor re-types "
-        "with them, restoring TRANSLATION-006 to 0, HAS_TRANSLATION to 18,427, MANTRA_RANGE to 64 and "
-        "DEDICATED_ENGLISH_MANTRAS RV to 10,480. So the finding is that this measure counts a verse's "
-        "OWN edge and therefore cannot reach 0 without reintroducing a closed defect: 'covered by a "
-        "declared range' is expressed on the ANCHOR's Translation node deliberately, and making it "
-        "reachable from the covered verse shows a reader the wrong Sanskrit's rendering. What R4 kept "
-        "is the disclosure: all 36 now carry a typed translation_coverage row -- 34 "
-        "COVERED_BY_A_MERGED_RANGE_ON_ITS_ANCHOR naming the anchor, and 2 SOURCE_ABSENT for RV "
-        "10.86.16 and 10.86.17, confirmed absent from the only ingested source. The entry's closure "
-        "measure needs re-specifying before it can be met, which is an owner question and is named "
-        "here rather than resolved.",
-        "MATCH (m:Mantra {veda:'RV'}) WHERE NOT (m)-[:HAS_TRANSLATION]->() RETURN count(m)",
-        36,
+        "CLOSED_DERIVED",
+        "Closed on a re-specified measure, because the old one could not be satisfied "
+        "without reintroducing GAP-TRANSLATION-006. The old measure asks for a "
+        "HAS_TRANSLATION edge on every Rigvedic mantra and 36 lack one: every EVEN verse of "
+        "RV 1.65-1.70. Those six hymns are PAIRED_DVIPADA -- Griffith prints one unit per "
+        "verse PAIR -- and 006 anchored unit N on verse 2N-1 with covers_canonical_keys = "
+        "[2N-1, 2N] PRECISELY so one rendering is not published twice as two independent "
+        "per-verse translations. Reaching 0 means attaching an own edge to each even verse, "
+        "which is 006's defect reinstated exactly. MEASURED, AND IT FALSIFIED THE OBVIOUS "
+        "GUESS: of the 36, 30 ARE named in a MANTRA_RANGE translation's covers_canonical_keys "
+        "and 6 are covered by NOTHING, so the truthful figure is 6 and not 0. THE ENTRY'S OWN "
+        "source_dependency IS FALSE: it says 'the ingested Griffith RV covers the Sakala "
+        "Samhita in full', and 52 of 10,552 Rigvedic mantras have no row at all in "
+        "data/canonical/rigveda_full_v1/translations.jsonl, which holds 10,502 rows over "
+        "10,500 distinct mantras. The measure is restated in TRUTH STATES rather than 'all "
+        "rows positive', using the production contract "
+        "vedagraph.domain.translation_semantics rather than a second copy of its rules: "
+        "VerseCoverageState over DEDICATED_TRANSLATION, RANGE_TRANSLATION_ANCHOR, "
+        "RANGE_COVERED, CONTAINER_TRANSLATION, REUSED_RENDERING, NON_ENGLISH_ONLY, "
+        "UNCOVERED_REUSABLE_PARALLEL_AVAILABLE and UNCOVERED_NO_RENDERING_REACHES_IT. All "
+        "20,210 mantras carry one. A REUSED RENDERING IS NOT THE CORPUS'S OWN ENGLISH and is "
+        "excluded from INDEPENDENT_ENGLISH_STATES: all 173 Samavedic renderings carry "
+        "reuse_kind = REUSED_RENDERING from Griffith's Rigvedic English on verified-identical "
+        "Sanskrit, so the Samaveda's independent English coverage is ZERO and reads as zero, "
+        "and an earlier draft of this very closure labelled those 173 as own-English before "
+        "the reuse column was checked. The uncovered rows are NOT erased to reach a zero: RV "
+        "6, AV 17, YV 25 and SV 1,671 of which 1,488 have a reusable parallel and 183 do not. "
+        "The regression runs both directions -- the BAD interpretation, an even verse "
+        "reported as carrying its own 1:1 rendering, FAILS by name, and the truthful "
+        "classified interpretation PASSES.",
+        "MATCH (m:Mantra) WHERE m.translation_coverage_state IS NULL RETURN count(m)",
+        0,
         prior_expect=36,
         reaudit=(
-            "Unchanged at 36, and re-declared as unchanged on purpose: R4 moved it to 2 and reverted, "
-            "because the move reintroduced GAP-TRANSLATION-006's defect. The residual is a measure- "
-            "specification question, not 34 missing renderings."
+            "The old measure is unchanged at 36 and is supposed to be: those 36 are the even "
+            "verses of six paired-dvipada hymns and 30 of them are range-covered. The new "
+            "measure -- mantras with no typed coverage state -- went 20,210 to 0, and the "
+            "genuinely uncovered Rigvedic residual is 6, named and visible."
         ),
     ),
     "GAP-TRANSLATION-005": Ruling(

@@ -9,6 +9,7 @@ from collections.abc import Iterator
 from typing import Any
 
 from vedagraph.graph.corrections import CorrectionApplier
+from vedagraph.domain.tiers import SOURCE_EXPLICIT_TIER_NOTE
 
 logger = logging.getLogger(__name__)
 
@@ -441,7 +442,9 @@ def _merge_rdc_rels(session: Any, project_root: pathlib.Path) -> dict[str, int]:
             MATCH (p:Passage {canonical_key: row.subject_key})
             MATCH (r:Rishi {entity_key: row.object_key})
             MERGE (p)-[rel:HAS_RISHI]->(r)
-            SET rel.confidence = row.confidence,
+            SET rel.source_explicit_tier_marker = row.confidence,
+                rel.confidence_field_withdrawn_because = $tier_note,
+                rel.encoded_tier = 'L1_SOURCE_EXPLICIT',
                 rel.provenance_class = row.provenance_class,
                 rel.scope_origin = row.scope_origin,
                 rel.source_id = row.source_id,
@@ -452,7 +455,9 @@ def _merge_rdc_rels(session: Any, project_root: pathlib.Path) -> dict[str, int]:
             MATCH (p:Passage {canonical_key: row.subject_key})
             MATCH (d:Devata {entity_key: row.object_key})
             MERGE (p)-[rel:HAS_DEVATA]->(d)
-            SET rel.confidence = row.confidence,
+            SET rel.source_explicit_tier_marker = row.confidence,
+                rel.confidence_field_withdrawn_because = $tier_note,
+                rel.encoded_tier = 'L1_SOURCE_EXPLICIT',
                 rel.provenance_class = row.provenance_class,
                 rel.scope_origin = row.scope_origin,
                 rel.source_id = row.source_id,
@@ -463,7 +468,9 @@ def _merge_rdc_rels(session: Any, project_root: pathlib.Path) -> dict[str, int]:
             MATCH (p:Passage {canonical_key: row.subject_key})
             MATCH (c:Chandas {entity_key: row.object_key})
             MERGE (p)-[rel:HAS_CHANDAS]->(c)
-            SET rel.confidence = row.confidence,
+            SET rel.source_explicit_tier_marker = row.confidence,
+                rel.confidence_field_withdrawn_because = $tier_note,
+                rel.encoded_tier = 'L1_SOURCE_EXPLICIT',
                 rel.provenance_class = row.provenance_class,
                 rel.scope_origin = row.scope_origin,
                 rel.source_id = row.source_id,
@@ -475,7 +482,12 @@ def _merge_rdc_rels(session: Any, project_root: pathlib.Path) -> dict[str, int]:
         b = batches[pred]
         if not b:
             return
-        session.run(queries[pred], rows=b, build_pass=build_pass)
+        session.run(
+            queries[pred],
+            rows=b,
+            build_pass=build_pass,
+            tier_note=SOURCE_EXPLICIT_TIER_NOTE,
+        )
         batches[pred] = []
 
     for rel in iter_rishi_devata_chandas_rels(project_root):

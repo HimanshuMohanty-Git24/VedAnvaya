@@ -601,3 +601,10 @@ output is accepted anywhere, and the type system is what guarantees it.
 7. **Human review** of the 736 semantic candidates, none of which may be accepted without
    it.
 8. **Exclude Griffith cross-reference stubs** from semantic packet selection.
+
+
+> **R5 correction.** The Samaveda now carries 173 `HAS_TRANSLATION` edges, every one a
+> `REUSED_RENDERING` of Griffith's Rigvedic English on verified character-identical
+> Sanskrit. Its count of INDEPENDENT Samavedic English translations is still 0, which is
+> what the sentence above was reaching for; `GAP-TRANSLATION-004` types the distinction per
+> verse so no total can report 173 as the Samaveda's own English.

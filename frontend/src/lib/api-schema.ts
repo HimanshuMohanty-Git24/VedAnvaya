@@ -471,9 +471,9 @@ export interface paths {
          * Deity profile
          * @description Identity, labels, aliases, structure, functional axes, epithets, mention counts by Veda with all three certainty tiers, strict versus inherited attribution, top seers, metres, concepts, actions, requested actions, objects and formulas, co-deities, and interpretive claims.
          *
-         *     **Read `dimension_status` before reading any empty list here.** It names every dimension whose emptiness is a missing layer or unestablished evidence rather than an absence in the corpus. It is empty for most deities and non-empty exactly where the build recorded a dimension it could not establish, so its presence is the signal -- no count is quoted here, because a figure describing the graph invites a client to skip the field on the deities where it carries the warning.
+         *     **Read `dimension_status` before reading any empty list here.** It names every dimension whose emptiness is a missing layer or unestablished evidence rather than an absence in the corpus. It is non-empty for MOST deities rather than a few: since the profile materialisation was widened from a top-25 union to the whole eligible population, the great majority are thin in at least one dimension, so an empty list here is the exception and not the default. Non-empty exactly where the build recorded a dimension it could not establish, so its presence is the signal -- no count is quoted here, because a figure describing the graph invites a client to skip the field on the deities where it carries the warning.
          *
-         *     **Mention and attribution totals are counted from the edges**, not read off materialised profile properties, which exist on only 30 of the 214 nodes. This is why `/devatas/{id}` and `/insights/devatas/{id}` agree.
+         *     **Mention and attribution totals are counted from the edges**, not read off materialised profile properties. Those exist on exactly the 157 deities the eligibility contract admits -- widened from 25 at R4, and removed from the one danastuti gift-praise label that had carried them. This is why `/devatas/{id}` and `/insights/devatas/{id}` agree.
          *
          *     **The population contract.** The Anukramani names a *devata* for every Rigvedic hymn and
          *     that slot is not a theological claim: 57 of the 214 `:Devata` nodes are not gods -- 22
@@ -825,7 +825,7 @@ export interface paths {
          *     a deity's prominence.
          *
          *     **`include_internal` cannot leak a QA finding.** Measured over the live graph, none of the
-         *     65 traversable predicates has an endpoint labelled `Internal`,
+         *     66 traversable predicates has an endpoint labelled `Internal`,
          *     `QAIssue`, `TextVersion`, `Translation`, `Source` or `SourceArtifact` -- so no value of any
          *     parameter can return one. What `include_internal=true` does, and the only thing it does, is
          *     add `MENTIONS_LEMMA` so that `:Lemma` nodes become reachable. That layer is marked internal
@@ -1343,9 +1343,13 @@ export interface components {
          *     YV 1,543, SV 364. A Yajurvedic verse returning none of these is a verse the layer did
          *     not reach, not a corpus outside it, which is why the set carries a status.
          *
-         *     What remains Rigveda-only is the *agentive* reading: 2,502 assertions over 2,254
-         *     Rigvedic passages carry an ``ASSERTION_AGENT``, because that reading is derived from a
-         *     morphological annotation covering the Rigveda alone.
+         *     The *agentive* reading was Rigveda-only and is not any more. 2,660 assertions carry
+         *     an ``ASSERTION_AGENT``: 2,406 Rigvedic, from a morphological annotation covering the
+         *     Rigveda alone, plus 124 Atharvavedic and 34 Yajurvedic projected from the DCS
+         *     dependency annotation's own role resolution by GAP-SEMANTICS-003. The Sāmaveda carries
+         *     no agent at all. The two derivations are separable on every edge -- the projected ones
+         *     carry ``derivation = TREEBANK_DEPREL_ROLE_PROJECTION`` and the morphological ones carry
+         *     none -- so a reader is never shown one tier as the other.
          *
          *     **The layer is two layers and they do not share their vocabulary.** The 2,406
          *     deterministic assertions carry ``frame`` (ASSERTED or REQUESTED), ``verb_surface`` and
@@ -1513,9 +1517,11 @@ export interface components {
             protection_and_treatment?: components["schemas"]["ConcernEvidenceRow"][];
             /** Social Rites */
             social_rites?: components["schemas"]["VedaCountRow"][];
+            /** Stated Remedy */
+            stated_remedy?: components["schemas"]["VedaCountRow"][];
             /**
              * Collections
-             * @description Bounds per collection, keyed by the field each one describes. Four collections travel here, so one shared block would describe three of them wrongly.
+             * @description Bounds per collection, keyed by the field each one describes. Five collections travel here, so one shared block would describe four of them wrongly.
              */
             collections: {
                 [key: string]: components["schemas"]["PaginationMeta"];
@@ -2691,6 +2697,52 @@ export interface components {
             reason: string;
         };
         /**
+         * DedicationRouteRow
+         * @description One resolved-dedication route, with the method that produced it.
+         *
+         *     ``ascribed_total`` sums two routes that are not the same kind of evidence:
+         *     ``HAS_DEVATA`` is the Anukramani naming a deity the registry already holds, and
+         *     ``HAS_DEVATA_DERIVED`` is that dedication recovered from a Sanskrit adjective by
+         *     morphology. A single total with a single method string would be wrong about one of
+         *     them, so the decomposition is published beside the total rather than folded into it,
+         *     and each row carries its own method. GAP-ATTRIBUTION-002 clause 2 -- *"returns AV in
+         *     ascribed_scope with its method stated"*.
+         */
+        DedicationRouteRow: {
+            /**
+             * Predicate
+             * @description The graph predicate this row counts.
+             */
+            predicate: string;
+            /**
+             * Method
+             * @description How the dedication was arrived at, as a stable code.
+             */
+            method: string;
+            /**
+             * Means
+             * @description What this route asserts, and what it does not.
+             */
+            means: string;
+            /**
+             * Vedas Reached
+             * @description Veda codes this route reaches for this deity.
+             */
+            vedas_reached?: string[];
+            /**
+             * Measured
+             * @description Passages per Veda on this route.
+             */
+            measured?: {
+                [key: string]: number;
+            };
+            /**
+             * Passages
+             * @description Passages this route reaches, summed over its own Vedas.
+             */
+            passages: number;
+        };
+        /**
          * DeityPopulation
          * @description Which slice of the Anukramani's devata slot a request wants.
          * @enum {string}
@@ -2916,10 +2968,16 @@ export interface components {
          * @description A deity's measured reach, with naming and ascription never added together.
          *
          *     ``named`` counts passages whose text says the deity's name and spans all four corpora.
-         *     ``ascribed`` counts the Anukramani's dedication and exists for the Rigveda only. They
-         *     diverge in both directions and neither is the corrected version of the other, so they
-         *     are separate fields with separate scopes, and the per-1,000 figures are what a
-         *     cross-corpus comparison should be read on.
+         *     ``ascribed`` counts the Anukramani's dedication and reaches the corpora an Anukramani
+         *     apparatus was ingested for -- the Rigveda directly, the Atharvaveda through the
+         *     morphological resolution of its descriptors. They diverge in both directions and
+         *     neither is the corrected version of the other, so they are separate fields with
+         *     separate scopes, and the per-1,000 figures are what a cross-corpus comparison should be
+         *     read on.
+         *
+         *     ``ascribed_total`` and ``ascribed_scope`` are computed from ONE pattern over both
+         *     dedication routes, so the figure and the scope label cannot disagree about which routes
+         *     they cover; ``ascription_routes`` decomposes the total by route and method.
          */
         DevataInsightResponse: {
             /**
@@ -2968,6 +3026,11 @@ export interface components {
             ascribed_total?: number | null;
             /** Ascribed Scope */
             ascribed_scope?: string[];
+            /**
+             * Ascription Routes
+             * @description The dedication total decomposed by route and method. Every route is present even where it reaches nothing, so a zero is distinguishable from a route the response omitted.
+             */
+            ascription_routes?: components["schemas"]["DedicationRouteRow"][];
             /** Ascription Note */
             ascription_note: string;
             /**

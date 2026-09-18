@@ -916,3 +916,11 @@ says so in `evidence_basis_axis`.
 8. **Section 22 remains the binding constraint on this domain**, as it does on every audio
    domain in Wave 1. 43,006 edges rest on 324 labels from one model and 26 from another,
    and the one label boundary the two disagree about is the boundary the layer sits on.
+
+
+> **R5 correction.** The 173 Samavedic renderings are no longer future tense: they are in
+> the live graph, and the table row reading "Samavedic translations in the live graph | 0"
+> is superseded. All 173 carry `reuse_kind = REUSED_RENDERING`, so the Samaveda's
+> independent English count remains 0 and the two figures are not in conflict -- they
+> measure different things, which is why `GAP-TRANSLATION-004` gives the verse-level state
+> its own terminal value.

@@ -1,0 +1,1514 @@
+{
+  "coverage_fixed": [
+    {
+      "v": "AV",
+      "covered": 4288,
+      "total": 5839,
+      "share": 0.7344
+    },
+    {
+      "v": "RV",
+      "covered": 8121,
+      "total": 10552,
+      "share": 0.7696
+    },
+    {
+      "v": "SV",
+      "covered": 1302,
+      "total": 1844,
+      "share": 0.7061
+    },
+    {
+      "v": "YV",
+      "covered": 1359,
+      "total": 1975,
+      "share": 0.6881
+    }
+  ],
+  "natphen_detail": [
+    {
+      "k": "VG:CONCEPT:AHAN-DAY",
+      "sa": "ahan",
+      "al": [
+        "ahabhiḥ",
+        "ahan",
+        "ahar",
+        "ahaḥ",
+        "ahnaḥ",
+        "ahāni",
+        "divā",
+        "dyubhiḥ"
+      ],
+      "st": "REFUSED_NO_REGISTERED_DEITY_COUNTERPART",
+      "reason": "No registered deity carries this phenomenon's stem or any of its alias forms. This is a statement about THIS REGISTRY and NOT about whether the Vedas personify the phenomenon -- several of these are addressed as beings in the text and were simply never curated as deities.",
+      "ereason": "This row is a REFUSAL, and the refusal is a statement about THIS REGISTRY -- that no registered deity carries the phenomenon's stem. There is no source phrase to ground, because no claim about the text is being made. Phrase evidence is unavailable BY CONSTRUCTION and not by omission.",
+      "wc": 0
+    },
+    {
+      "k": "VG:CONCEPT:JYOTIS-LIGHT",
+      "sa": "jyotis",
+      "al": [
+        "bhānum",
+        "bhānunā",
+        "bhānuḥ",
+        "jyotir",
+        "jyotiḥ",
+        "jyotiṣe",
+        "jyotiṣmantam",
+        "jyotiṣā",
+        "jyotīṃṣi",
+        "rocanam",
+        "rocane",
+        "rocanā"
+      ],
+      "st": "REFUSED_NO_REGISTERED_DEITY_COUNTERPART",
+      "reason": "No registered deity carries this phenomenon's stem or any of its alias forms. This is a statement about THIS REGISTRY and NOT about whether the Vedas personify the phenomenon -- several of these are addressed as beings in the text and were simply never curated as deities.",
+      "ereason": "This row is a REFUSAL, and the refusal is a statement about THIS REGISTRY -- that no registered deity carries the phenomenon's stem. There is no source phrase to ground, because no claim about the text is being made. Phrase evidence is unavailable BY CONSTRUCTION and not by omission.",
+      "wc": 0
+    },
+    {
+      "k": "VG:CONCEPT:SAMUDRA-OCEAN",
+      "sa": "samudra",
+      "al": [
+        "arṇavam",
+        "arṇavaḥ",
+        "samudram",
+        "samudrasya",
+        "samudraḥ",
+        "samudraṃ",
+        "samudre",
+        "samudro",
+        "samudrāt"
+      ],
+      "st": "REFUSED_NO_REGISTERED_DEITY_COUNTERPART",
+      "reason": "No registered deity carries this phenomenon's stem or any of its alias forms. This is a statement about THIS REGISTRY and NOT about whether the Vedas personify the phenomenon -- several of these are addressed as beings in the text and were simply never curated as deities.",
+      "ereason": "This row is a REFUSAL, and the refusal is a statement about THIS REGISTRY -- that no registered deity carries the phenomenon's stem. There is no source phrase to ground, because no claim about the text is being made. Phrase evidence is unavailable BY CONSTRUCTION and not by omission.",
+      "wc": 0
+    },
+    {
+      "k": "VG:CONCEPT:TAMAS-DARKNESS",
+      "sa": "tamas",
+      "al": [
+        "tamas",
+        "tamasaḥ",
+        "tamasi",
+        "tamasā",
+        "tamaḥ",
+        "tamo",
+        "tamāṃsi"
+      ],
+      "st": "REFUSED_NO_REGISTERED_DEITY_COUNTERPART",
+      "reason": "No registered deity carries this phenomenon's stem or any of its alias forms. This is a statement about THIS REGISTRY and NOT about whether the Vedas personify the phenomenon -- several of these are addressed as beings in the text and were simply never curated as deities.",
+      "ereason": "This row is a REFUSAL, and the refusal is a statement about THIS REGISTRY -- that no registered deity carries the phenomenon's stem. There is no source phrase to ground, because no claim about the text is being made. Phrase evidence is unavailable BY CONSTRUCTION and not by omission.",
+      "wc": 0
+    },
+    {
+      "k": "VG:CONCEPT:VATA-WIND",
+      "sa": "vāta",
+      "al": [
+        "vātam",
+        "vātasya",
+        "vātaḥ",
+        "vātaṃ",
+        "vāte",
+        "vātena",
+        "vāto",
+        "vātāḥ",
+        "vāyavaḥ",
+        "vāyave",
+        "vāyavo",
+        "vāyo",
+        "vāyum",
+        "vāyur",
+        "vāyuḥ",
+        "vāyuṃ"
+      ],
+      "st": "REFUSED_ALIAS_REACHES_A_DIFFERENT_THEONYM",
+      "reason": "No registered deity carries this phenomenon's own stem. A deity is reachable (VG:DEVATA:VAYUH) only because this concept registers that deity's forms among its own aliases, which is a curation choice about the concept's vocabulary and not evidence that the two are one being. The two are separately hymned in the Rigveda.",
+      "ereason": "This row is a REFUSAL, and the refusal is a statement about THIS REGISTRY -- that no registered deity carries the phenomenon's stem. There is no source phrase to ground, because no claim about the text is being made. Phrase evidence is unavailable BY CONSTRUCTION and not by omission.",
+      "wc": 0
+    },
+    {
+      "k": "VG:CONCEPT:VIDYUT-LIGHTNING",
+      "sa": "vidyut",
+      "al": [
+        "aśanim",
+        "aśaniḥ",
+        "stanayitnuḥ",
+        "vidyut",
+        "vidyutaḥ",
+        "vidyuto",
+        "vidyutā"
+      ],
+      "st": "REFUSED_NO_REGISTERED_DEITY_COUNTERPART",
+      "reason": "No registered deity carries this phenomenon's stem or any of its alias forms. This is a statement about THIS REGISTRY and NOT about whether the Vedas personify the phenomenon -- several of these are addressed as beings in the text and were simply never curated as deities.",
+      "ereason": "This row is a REFUSAL, and the refusal is a statement about THIS REGISTRY -- that no registered deity carries the phenomenon's stem. There is no source phrase to ground, because no claim about the text is being made. Phrase evidence is unavailable BY CONSTRUCTION and not by omission.",
+      "wc": 0
+    },
+    {
+      "k": "VG:CONCEPT:VRSTI-RAIN",
+      "sa": "vṛṣṭi",
+      "al": [
+        "abhram",
+        "abhrāṇi",
+        "varṣam",
+        "vṛṣṭibhiḥ",
+        "vṛṣṭim",
+        "vṛṣṭiḥ",
+        "vṛṣṭiṃ",
+        "vṛṣṭyā"
+      ],
+      "st": "REFUSED_NO_REGISTERED_DEITY_COUNTERPART",
+      "reason": "No registered deity carries this phenomenon's stem or any of its alias forms. This is a statement about THIS REGISTRY and NOT about whether the Vedas personify the phenomenon -- several of these are addressed as beings in the text and were simply never curated as deities.",
+      "ereason": "This row is a REFUSAL, and the refusal is a statement about THIS REGISTRY -- that no registered deity carries the phenomenon's stem. There is no source phrase to ground, because no claim about the text is being made. Phrase evidence is unavailable BY CONSTRUCTION and not by omission.",
+      "wc": 0
+    }
+  ],
+  "devata_labels": [
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    },
+    {
+      "id": null,
+      "sa": null,
+      "al": null
+    }
+  ],
+  "natphen_all_aliases": [
+    {
+      "k": "VG:CONCEPT:AGNI-FIRE",
+      "sa": "agni",
+      "al": [
+        "agnau",
+        "agnayaḥ",
+        "agnaye",
+        "agnibhiḥ",
+        "agnim",
+        "agninā",
+        "agnir",
+        "agniḥ",
+        "agniṃ",
+        "agniṣ",
+        "agnī",
+        "arcayaḥ",
+        "arciṣā",
+        "dhūma",
+        "śocis",
+        "śociṣe",
+        "śociṣā"
+      ]
+    },
+    {
+      "k": "VG:CONCEPT:AHAN-DAY",
+      "sa": "ahan",
+      "al": [
+        "ahabhiḥ",
+        "ahan",
+        "ahar",
+        "ahaḥ",
+        "ahnaḥ",
+        "ahāni",
+        "divā",
+        "dyubhiḥ"
+      ]
+    },
+    {
+      "k": "VG:CONCEPT:AP-WATERS",
+      "sa": "āpaḥ",
+      "al": [
+        "apaś",
+        "apaḥ",
+        "apo",
+        "apsu",
+        "apsv",
+        "apām",
+        "salilam",
+        "salile",
+        "udakam",
+        "udnaḥ",
+        "āpaḥ",
+        "āpo"
+      ]
+    },
+    {
+      "k": "VG:CONCEPT:CANDRAMAS-MOON",
+      "sa": "candramas",
+      "al": [
+        "candramasi",
+        "candramā",
+        "candramāḥ"
+      ]
+    },
+    {
+      "k": "VG:CONCEPT:JYOTIS-LIGHT",
+      "sa": "jyotis",
+      "al": [
+        "bhānum",
+        "bhānunā",
+        "bhānuḥ",
+        "jyotir",
+        "jyotiḥ",
+        "jyotiṣe",
+        "jyotiṣmantam",
+        "jyotiṣā",
+        "jyotīṃṣi",
+        "rocanam",
+        "rocane",
+        "rocanā"
+      ]
+    },
+    {
+      "k": "VG:CONCEPT:RATRI-NIGHT",
+      "sa": "rātri",
+      "al": [
+        "kṣapaḥ",
+        "kṣapā",
+        "naktam",
+        "naktā",
+        "rātryā",
+        "rātrī",
+        "rātrīm",
+        "rātrīḥ",
+        "rātrīṃ",
+        "rātrīṇām"
+      ]
+    },
+    {
+      "k": "VG:CONCEPT:SAMUDRA-OCEAN",
+      "sa": "samudra",
+      "al": [
+        "arṇavam",
+        "arṇavaḥ",
+        "samudram",
+        "samudrasya",
+        "samudraḥ",
+        "samudraṃ",
+        "samudre",
+        "samudro",
+        "samudrāt"
+      ]
+    },
+    {
+      "k": "VG:CONCEPT:SURYA-SUN",
+      "sa": "sūrya",
+      "al": [
+        "sūryam",
+        "sūryasya",
+        "sūryaḥ",
+        "sūryaṃ",
+        "sūrye",
+        "sūryeṇa",
+        "sūryo",
+        "sūryāt",
+        "sūryāya"
+      ]
+    },
+    {
+      "k": "VG:CONCEPT:TAMAS-DARKNESS",
+      "sa": "tamas",
+      "al": [
+        "tamas",
+        "tamasaḥ",
+        "tamasi",
+        "tamasā",
+        "tamaḥ",
+        "tamo",
+        "tamāṃsi"
+      ]
+    },
+    {
+      "k": "VG:CONCEPT:USAS-DAWN",
+      "sa": "uṣas",
+      "al": [
+        "uṣas",
+        "uṣasam",
+        "uṣasaḥ",
+        "uṣasi",
+        "uṣaso",
+        "uṣasā",
+        "uṣasām",
+        "uṣā",
+        "uṣāsā",
+        "uṣāḥ"
+      ]
+    },
+    {
+      "k": "VG:CONCEPT:VATA-WIND",
+      "sa": "vāta",
+      "al": [
+        "vātam",
+        "vātasya",
+        "vātaḥ",
+        "vātaṃ",
+        "vāte",
+        "vātena",
+        "vāto",
+        "vātāḥ",
+        "vāyavaḥ",
+        "vāyave",
+        "vāyavo",
+        "vāyo",
+        "vāyum",
+        "vāyur",
+        "vāyuḥ",
+        "vāyuṃ"
+      ]
+    },
+    {
+      "k": "VG:CONCEPT:VIDYUT-LIGHTNING",
+      "sa": "vidyut",
+      "al": [
+        "aśanim",
+        "aśaniḥ",
+        "stanayitnuḥ",
+        "vidyut",
+        "vidyutaḥ",
+        "vidyuto",
+        "vidyutā"
+      ]
+    },
+    {
+      "k": "VG:CONCEPT:VRSTI-RAIN",
+      "sa": "vṛṣṭi",
+      "al": [
+        "abhram",
+        "abhrāṇi",
+        "varṣam",
+        "vṛṣṭibhiḥ",
+        "vṛṣṭim",
+        "vṛṣṭiḥ",
+        "vṛṣṭiṃ",
+        "vṛṣṭyā"
+      ]
+    }
+  ],
+  "natphen_vs_devata": [
+    {
+      "k": "VG:CONCEPT:AGNI-FIRE",
+      "sa": "agni",
+      "devata_alias_collisions": []
+    },
+    {
+      "k": "VG:CONCEPT:AHAN-DAY",
+      "sa": "ahan",
+      "devata_alias_collisions": []
+    },
+    {
+      "k": "VG:CONCEPT:AP-WATERS",
+      "sa": "āpaḥ",
+      "devata_alias_collisions": []
+    },
+    {
+      "k": "VG:CONCEPT:CANDRAMAS-MOON",
+      "sa": "candramas",
+      "devata_alias_collisions": []
+    },
+    {
+      "k": "VG:CONCEPT:JYOTIS-LIGHT",
+      "sa": "jyotis",
+      "devata_alias_collisions": []
+    },
+    {
+      "k": "VG:CONCEPT:RATRI-NIGHT",
+      "sa": "rātri",
+      "devata_alias_collisions": []
+    },
+    {
+      "k": "VG:CONCEPT:SAMUDRA-OCEAN",
+      "sa": "samudra",
+      "devata_alias_collisions": []
+    },
+    {
+      "k": "VG:CONCEPT:SURYA-SUN",
+      "sa": "sūrya",
+      "devata_alias_collisions": []
+    },
+    {
+      "k": "VG:CONCEPT:TAMAS-DARKNESS",
+      "sa": "tamas",
+      "devata_alias_collisions": []
+    },
+    {
+      "k": "VG:CONCEPT:USAS-DAWN",
+      "sa": "uṣas",
+      "devata_alias_collisions": []
+    },
+    {
+      "k": "VG:CONCEPT:VATA-WIND",
+      "sa": "vāta",
+      "devata_alias_collisions": []
+    },
+    {
+      "k": "VG:CONCEPT:VIDYUT-LIGHTNING",
+      "sa": "vidyut",
+      "devata_alias_collisions": []
+    },
+    {
+      "k": "VG:CONCEPT:VRSTI-RAIN",
+      "sa": "vṛṣṭi",
+      "devata_alias_collisions": []
+    }
+  ]
+}

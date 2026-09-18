@@ -235,7 +235,7 @@ LEMMA_RELATIONSHIP: Final = "MENTIONS_LEMMA"
 #: navigating them is what the passage endpoints are for. ``MENTIONS_LEMMA`` (9,000) is
 #: behind ``include_internal``. ``QA_ISSUE_ON`` (915) attaches this repository's doubts about
 #: itself to passages and is never product content. ``ASSERTION_PREDICATE`` (2,672),
-#: ``ASSERTION_AGENT`` (2,502) and ``ASSERTION_TARGET`` (799) are the internal wiring of the
+#: ``ASSERTION_AGENT`` (2,660) and ``ASSERTION_TARGET`` (918) are the internal wiring of the
 #: reified ``SemanticAssertion`` node: a client reaches an assertion through
 #: ``HAS_SEMANTIC_ASSERTION`` and reads its roles off the node, so exposing the spokes would
 #: add three hops that mean nothing to a reader.
@@ -412,6 +412,13 @@ VARYING_CONFIDENCE_PREDICATES: Final[frozenset[str]] = frozenset(
         "HAS_THEME",
         "CONTRASTS_WITH",
         "REFERS_TO_NATURAL_PHENOMENON",
+        # These two carried a single value because they are tiny -- 3 edges and 1 -- which
+        # is a sample size and not a pipeline constant. R5 withdrew their confidence too,
+        # to uncalibrated_pipeline_score, and deliberately did NOT give them the
+        # source-explicit tier marker: 0.85 and 0.75 are not the source-explicit 1.0, and
+        # marking them so would assert something false about their evidence. They stay
+        # listed here as declared members of the varying set, so that a future edge of
+        # either predicate arriving with a real varying confidence is not a surprise.
         "INVOLVES_SUBSTANCE",
         "REFERS_TO_PLACE",
     }
@@ -425,10 +432,13 @@ CONFIDENCE_FILTER_CAVEAT: Final = (
     + " predicates stamp one value on every edge they have ("
     + ", ".join(f"{name} = {value}" for name, value in sorted(PIPELINE_CONSTANT_PREDICATES.items()))
     + "), so a threshold either keeps all of their edges or none, and keeping them is not "
-    "evidence of quality. Those edges return confidence = null and the constant as "
-    "pipeline_prior; edges of predicates where the value varies are filtered on it. No "
-    "predicate in this graph has a labelled evaluation set or a reliability curve behind "
-    "its confidence."
+    "evidence of quality. GAP-QUALITY-003 WITHDREW the stored field from those seven: the "
+    "edges carry source_explicit_tier_marker instead, because the value encoded an evidence "
+    "TIER and not a probability, and this map is now the one place the prior is declared. "
+    "Those edges return confidence = null and the constant as pipeline_prior; edges of "
+    "predicates where the value varies are filtered on it, and every one of those carries "
+    "calibration_status = NOT_CALIBRATED_NO_HUMAN_LABELLED_SAMPLE. No predicate in this "
+    "graph has a labelled evaluation set or a reliability curve behind its confidence."
 )
 
 # ---------------------------------------------------------------------------
@@ -1900,7 +1910,19 @@ def _confidence(
     predicate and reporting it as a confidence is how a reader comes to believe a filter
     raised precision.
     """
+    # Three fields, because GAP-QUALITY-003 split one into three. `confidence` survives only
+    # where the value genuinely varies; `source_explicit_tier_marker` carries the constant
+    # 1.0 of the seven source-explicit predicates; `uncalibrated_pipeline_score` carries the
+    # 0.85 and 0.75 of the two predicates that were constant because they are tiny. Reading
+    # only `confidence` made the last of those UNREACHABLE through the API -- the edge went
+    # from reporting VARIES_WITHIN_PREDICATE with its value to reporting nothing at all,
+    # which is information the product used to publish disappearing rather than being
+    # relabelled. Agent B's M19.
     raw = properties.get("confidence")
+    if raw is None:
+        raw = properties.get("source_explicit_tier_marker")
+    if raw is None:
+        raw = properties.get("uncalibrated_pipeline_score")
     value = float(raw) if isinstance(raw, (int, float)) else None
     if relationship_type in PIPELINE_CONSTANT_PREDICATES:
         return (
@@ -1908,6 +1930,10 @@ def _confidence(
             None,
             value if value is not None else PIPELINE_CONSTANT_PREDICATES[relationship_type],
         )
+    if properties.get("uncalibrated_pipeline_score") is not None:
+        # Constant on a 3-edge and a 1-edge population: a sample size, not a tier. Reported
+        # as a prior rather than a confidence, for the same reason as the seven.
+        return (ConfidenceBasis.PIPELINE_CONSTANT, None, value)
     if value is None:
         return ConfidenceBasis.ABSENT, None, None
     return ConfidenceBasis.VARIES_WITHIN_PREDICATE, value, None

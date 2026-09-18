@@ -667,6 +667,15 @@ def render(m: dict[str, Any]) -> str:
         f"{'YES' if m['claims_to_passages_via_concerns'] == 0 else 'NO'} |",
         f"| metrics wrongly pointing at passages | {m['metrics_to_passages']} | "
         f"{'YES' if m['metrics_to_passages'] == 0 else 'NO'} |",
+        # These two are enforced by the runner's exit code and were missing from this
+        # table, so the report showed 9 of the 11 gates it actually checks: a reader
+        # counting rows got a different number from a reader reading the exit status.
+        # The runner is authoritative and the table now states everything it enforces.
+        f"| claims graded other than TIER_D | {m['claims_non_candidate']} | "
+        f"{'YES' if m['claims_non_candidate'] == 0 else 'NO'} |",
+        f"| predicates falsely declared unpopulated | "
+        f"{len(m['falsely_declared_unpopulated'])} | "
+        f"{'YES' if not m['falsely_declared_unpopulated'] else 'NO'} |",
         "",
     ]
     if m["signature_violations"]:

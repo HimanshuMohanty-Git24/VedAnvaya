@@ -354,10 +354,12 @@ _LAYER_SPECS: Final[tuple[LayerSpec, ...]] = (
         # cell beside it. The note described the ASSERTION_AGENT sub-layer and the figure
         # measured HAS_SEMANTIC_ASSERTION, which is a different and much larger population.
         "Reaches all four corpora unevenly -- RV 27,057 assertions, AV 6,167, YV 1,543, "
-        "SV 364 -- and the agentive reading inside it does not. Only 2,502 assertions over "
-        "2,254 Rigvedic passages carry an agent, so 'who does what to whom' is Rigveda-only "
-        "even where the layer is not, and the Samavedic 364 are projected from "
-        "letter-identical Rigvedic verses rather than annotated in their own corpus.",
+        "SV 364 -- and the agentive reading inside it reaches three. 2,660 assertions carry "
+        "an agent: 2,406 Rigvedic from the morphological annotation, and 124 Atharvavedic "
+        "plus 34 Yajurvedic projected from the DCS dependency annotation's own role "
+        "resolution. The Samaveda carries no agent, so 'who does what to whom' is "
+        "unanswerable there, and its 364 assertions are projected from letter-identical "
+        "Rigvedic verses rather than annotated in their own corpus.",
     ),
     LayerSpec(
         "CONCEPT_ASSERTION",

@@ -1,0 +1,173 @@
+{
+  "artifact": "RELEASE_BLOCKER_R5_FINAL_RECEIPT",
+  "at": "2026-09-18T15:25:31.470921+00:00",
+  "census": {
+    "nodes": 164601,
+    "relationships": 509769,
+    "RV": 10552,
+    "SV": 1844,
+    "YV": 1975,
+    "AV": 5839,
+    "TOTAL": 20210
+  },
+  "corpus_invariant_held": true,
+  "registry_counts": {
+    "ASK_FORMAL_REGRADE_BLOCKED_EXTERNAL_QUOTA": 1,
+    "BLOCKED_EXTERNAL_SOURCE_UNAVAILABLE": 7,
+    "BLOCKED_OWNER_DECISION_REQUIRED": 2,
+    "CLOSED_DERIVED": 52,
+    "CLOSED_NOT_APPLICABLE": 2,
+    "CLOSED_SCOPE_DECISION": 13,
+    "CLOSED_VERIFIED_ZERO": 5,
+    "NEEDS_AUDIBLE_REVIEW": 3
+  },
+  "registry_not_terminated": [],
+  "registry_measurement_disagreements": [],
+  "registry_status_disagreements": [],
+  "registry_scope_citations_naming_no_file": [],
+  "registry_scope_citations_only_self_cited": [],
+  "owner_decision_required": [
+    "GAP-SAMAVEDA_MUSIC-002",
+    "GAP-SAMAVEDA_MUSIC-003"
+  ],
+  "the_eleven": {
+    "GAP-ENTITY_COVERAGE-004": {
+      "status": "CLOSED_DERIVED",
+      "closure_measure": "MATCH (n:DomainEntity) WHERE n.expectation_origin IS NULL RETURN count(n)",
+      "measured": 0,
+      "expected": 0,
+      "audit_measured": 0,
+      "audit_status": "CLOSED_DERIVED"
+    },
+    "GAP-ENTITY_COVERAGE-006": {
+      "status": "CLOSED_DERIVED",
+      "closure_measure": "MATCH (n:DomainEntity) WHERE n.recall_applicability IS NULL RETURN count(n)",
+      "measured": 0,
+      "expected": 0,
+      "audit_measured": 0,
+      "audit_status": "CLOSED_DERIVED"
+    },
+    "GAP-ENTITY_COVERAGE-007": {
+      "status": "CLOSED_DERIVED",
+      "closure_measure": "MATCH (n:NaturalPhenomenon) WHERE n.personification_match_basis IS NULL RETURN count(n)",
+      "measured": 0,
+      "expected": 0,
+      "audit_measured": 0,
+      "audit_status": "CLOSED_DERIVED"
+    },
+    "GAP-PRODUCT_SURFACE-005": {
+      "status": "CLOSED_DERIVED",
+      "closure_measure": "MATCH (p:Passage)-[:HAS_TEXT_VERSION]->(t:TextVersion) WHERE p.canonical_key IN ['VG:SV:KAU:CHANDA:P01:D08:V04','VG:SV:KAU:ARANYA:D01:V04','VG:SV:KAU:CHANDA:P04:D05:V06','VG:SV:KAU:CHANDA:P02:D07:V07'] AND (t.text_nfc STARTS WITH 'dra ' OR t.text_nfc STARTS WITH 'araṇyaka' OR t.text_nfc STARTS WITH 'āraṇyaka' OR t.text_nfc CONTAINS 'द्र. ' OR t.text_nfc STARTS WITH '(आरण्यक') RETURN count(t)",
+      "measured": 0,
+      "expected": 0,
+      "audit_measured": 0,
+      "audit_status": "CLOSED_DERIVED"
+    },
+    "GAP-QUALITY-003": {
+      "status": "CLOSED_DERIVED",
+      "closure_measure": "MATCH ()-[r]->() WHERE r.confidence IS NOT NULL AND r.calibration_status IS NULL RETURN count(r)",
+      "measured": 0,
+      "expected": 0,
+      "audit_measured": 0,
+      "audit_status": "CLOSED_DERIVED"
+    },
+    "GAP-RITUAL-003": {
+      "status": "CLOSED_DERIVED",
+      "closure_measure": "MATCH ()-[r:USES_OBJECT]->() RETURN count(r)",
+      "measured": 24,
+      "expected": 24,
+      "audit_measured": 24,
+      "audit_status": "CLOSED_DERIVED"
+    },
+    "GAP-RITUAL-005": {
+      "status": "CLOSED_DERIVED",
+      "closure_measure": "MATCH (r:Ritual) WHERE r.offering_status IS NULL RETURN count(r)",
+      "measured": 0,
+      "expected": 0,
+      "audit_measured": 0,
+      "audit_status": "CLOSED_DERIVED"
+    },
+    "GAP-RITUAL-006": {
+      "status": "CLOSED_DERIVED",
+      "closure_measure": "MATCH (m:Mantra) WHERE m.ritual_context_precision IS NULL RETURN count(m)",
+      "measured": 0,
+      "expected": 0,
+      "audit_measured": 0,
+      "audit_status": "CLOSED_DERIVED"
+    },
+    "GAP-SAMAVEDA_MUSIC-003": {
+      "status": "BLOCKED_OWNER_DECISION_REQUIRED",
+      "closure_measure": "MATCH (m:Mantra {veda:'SV'}) WHERE m.running_samhita_number IS NULL RETURN count(m)",
+      "measured": 0,
+      "expected": 0,
+      "audit_measured": 0,
+      "audit_status": "BLOCKED_OWNER_DECISION_REQUIRED"
+    },
+    "GAP-SEMANTICS-003": {
+      "status": "CLOSED_DERIVED",
+      "closure_measure": "MATCH (a:SemanticAssertion)-[:ASSERTION_TARGET]->(x) WHERE NOT x:Devata RETURN count(*)",
+      "measured": 103,
+      "expected": 103,
+      "audit_measured": 103,
+      "audit_status": "CLOSED_DERIVED"
+    },
+    "GAP-TRANSLATION-004": {
+      "status": "CLOSED_DERIVED",
+      "closure_measure": "MATCH (m:Mantra) WHERE m.translation_coverage_state IS NULL RETURN count(m)",
+      "measured": 0,
+      "expected": 0,
+      "audit_measured": 0,
+      "audit_status": "CLOSED_DERIVED"
+    },
+    "GAP-ENTITY_COVERAGE-001": {
+      "status": "CLOSED_DERIVED",
+      "closure_measure": "MATCH (e:Epithet)-[r]-(:Passage) RETURN count(r)",
+      "measured": 1035,
+      "expected": 1035,
+      "audit_measured": 1035,
+      "audit_status": "CLOSED_DERIVED"
+    },
+    "GAP-COMMUNITIES-002": {
+      "status": "CLOSED_DERIVED",
+      "closure_measure": "MATCH (d:Devata) WHERE d.structure IN ['PAIR','GROUP'] AND coalesce(d.component_count,0)=0 RETURN count(d)",
+      "measured": 55,
+      "expected": 55,
+      "audit_measured": 55,
+      "audit_status": "CLOSED_DERIVED"
+    }
+  },
+  "dependency": {
+    "semantic resemblance": "BLOCKED",
+    "cross-Veda matrices": "CURRENT",
+    "formula / parallel / variant relations": "BLOCKED",
+    "entity coverage": "CURRENT",
+    "ritual aggregates": "NOT_APPLICABLE",
+    "quality evaluation": "CURRENT",
+    "Ask retrieval": "BLOCKED",
+    "Visualization Lab aggregates": "CURRENT",
+    "Knowledge World public projection": "CURRENT"
+  },
+  "manual_and_external": {
+    "NEEDS_AUDIBLE_REVIEW": 3,
+    "ASK_FORMAL_REGRADE_BLOCKED_EXTERNAL_QUOTA": 1,
+    "audio_needs_audible_review_rows": 0
+  },
+  "gate": {
+    "REGISTRY_IMPLEMENTATION_FIXABLE": 0,
+    "ENTITY_INTERNAL_FIXABLE_GAPS": 0,
+    "RITUAL_INTERNAL_FIXABLE_GAPS": 0,
+    "SAMAVEDA_MUSIC_INTERNAL_FIXABLE": 0,
+    "SEMANTICS_INTERNAL_FIXABLE": 0,
+    "QUALITY_INTERNAL_FIXABLE": 0,
+    "TRANSLATION_INTERNAL_FIXABLE": 0,
+    "PRODUCT_SURFACE_INTERNAL_FIXABLE": 0,
+    "OWNER_DECISION_REQUIRED": 2,
+    "LIVE_GATED_FAILURES": 0,
+    "TARGETED_TEST_FAILURES": 0,
+    "STALE_PUBLIC_CLAIMS": 0,
+    "DEPENDENCY_STALE_INPUT": 0,
+    "DEPENDENCY_UNKNOWN": 0,
+    "GRAPH_SCORECARD": "11/11",
+    "AGENT_B_CRITICAL_OUTSTANDING": 0
+  }
+}

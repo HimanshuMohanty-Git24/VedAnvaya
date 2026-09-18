@@ -1,0 +1,379 @@
+{
+  "corrections": [
+    "VG:SV:KAU:ARANYA:D01:V04",
+    "VG:SV:KAU:CHANDA:P01:D08:V04",
+    "VG:SV:KAU:CHANDA:P02:D07:V07",
+    "VG:SV:KAU:CHANDA:P04:D05:V06"
+  ],
+  "affected_parallel_edges": 14,
+  "texts_available": 9,
+  "checks": [
+    {
+      "subject": "VG:SV:KAU:CHANDA:P01:D08:V04",
+      "rel": "REUSES_TEXT_FROM",
+      "object": "VG:RV:SAK:M03:S006:V011",
+      "stored": {
+        "lcs_ratio": 0.960784,
+        "similarity": 0.945392,
+        "edit_ratio": 0.975124,
+        "token_jaccard": 0.391304,
+        "ngram_jaccard": 0.93
+      },
+      "recomputed_on_contaminated_text": {
+        "lcs_ratio": 0.960784,
+        "similarity": 0.945392,
+        "edit_ratio": 0.975124,
+        "token_jaccard": 0.391304,
+        "ngram_jaccard": 0.93
+      },
+      "field_matches": {
+        "lcs_ratio": true,
+        "similarity": true,
+        "edit_ratio": true,
+        "token_jaccard": true,
+        "ngram_jaccard": true
+      },
+      "reproduced": true
+    },
+    {
+      "subject": "VG:SV:KAU:CHANDA:P01:D08:V04",
+      "rel": "REUSES_TEXT_FROM",
+      "object": "VG:RV:SAK:M03:S007:V011",
+      "stored": {
+        "lcs_ratio": 0.960784,
+        "similarity": 0.945392,
+        "edit_ratio": 0.975124,
+        "token_jaccard": 0.391304,
+        "ngram_jaccard": 0.93
+      },
+      "recomputed_on_contaminated_text": {
+        "lcs_ratio": 0.960784,
+        "similarity": 0.945392,
+        "edit_ratio": 0.975124,
+        "token_jaccard": 0.391304,
+        "ngram_jaccard": 0.93
+      },
+      "field_matches": {
+        "lcs_ratio": true,
+        "similarity": true,
+        "edit_ratio": true,
+        "token_jaccard": true,
+        "ngram_jaccard": true
+      },
+      "reproduced": true
+    },
+    {
+      "subject": "VG:SV:KAU:CHANDA:P01:D08:V04",
+      "rel": "REUSES_TEXT_FROM",
+      "object": "VG:RV:SAK:M03:S015:V007",
+      "stored": {
+        "lcs_ratio": 0.960784,
+        "similarity": 0.945392,
+        "edit_ratio": 0.975124,
+        "token_jaccard": 0.391304,
+        "ngram_jaccard": 0.93
+      },
+      "recomputed_on_contaminated_text": {
+        "lcs_ratio": 0.960784,
+        "similarity": 0.945392,
+        "edit_ratio": 0.975124,
+        "token_jaccard": 0.391304,
+        "ngram_jaccard": 0.93
+      },
+      "field_matches": {
+        "lcs_ratio": true,
+        "similarity": true,
+        "edit_ratio": true,
+        "token_jaccard": true,
+        "ngram_jaccard": true
+      },
+      "reproduced": true
+    },
+    {
+      "subject": "VG:SV:KAU:CHANDA:P01:D08:V04",
+      "rel": "REUSES_TEXT_FROM",
+      "object": "VG:RV:SAK:M03:S001:V023",
+      "stored": {
+        "lcs_ratio": 0.960784,
+        "similarity": 0.945392,
+        "edit_ratio": 0.975124,
+        "token_jaccard": 0.391304,
+        "ngram_jaccard": 0.93
+      },
+      "recomputed_on_contaminated_text": {
+        "lcs_ratio": 0.960784,
+        "similarity": 0.945392,
+        "edit_ratio": 0.975124,
+        "token_jaccard": 0.391304,
+        "ngram_jaccard": 0.93
+      },
+      "field_matches": {
+        "lcs_ratio": true,
+        "similarity": true,
+        "edit_ratio": true,
+        "token_jaccard": true,
+        "ngram_jaccard": true
+      },
+      "reproduced": true
+    },
+    {
+      "subject": "VG:SV:KAU:CHANDA:P01:D08:V04",
+      "rel": "REUSES_TEXT_FROM",
+      "object": "VG:RV:SAK:M03:S005:V011",
+      "stored": {
+        "lcs_ratio": 0.960784,
+        "similarity": 0.945392,
+        "edit_ratio": 0.975124,
+        "token_jaccard": 0.391304,
+        "ngram_jaccard": 0.93
+      },
+      "recomputed_on_contaminated_text": {
+        "lcs_ratio": 0.960784,
+        "similarity": 0.945392,
+        "edit_ratio": 0.975124,
+        "token_jaccard": 0.391304,
+        "ngram_jaccard": 0.93
+      },
+      "field_matches": {
+        "lcs_ratio": true,
+        "similarity": true,
+        "edit_ratio": true,
+        "token_jaccard": true,
+        "ngram_jaccard": true
+      },
+      "reproduced": true
+    },
+    {
+      "subject": "VG:SV:KAU:CHANDA:P01:D08:V04",
+      "rel": "NEAR_PARALLEL_OF",
+      "object": "VG:YV:VSM:A12:V051",
+      "lcs_ratio": 0.970588,
+      "similarity": 0.913866,
+      "edit_ratio": 0.970588,
+      "token_jaccard": 0.6875,
+      "ngram_jaccard": 0.857143,
+      "transformation": "HEAD_TRUNCATION",
+      "reproduced": null,
+      "why": "text missing"
+    },
+    {
+      "subject": "VG:SV:KAU:CHANDA:P02:D07:V07",
+      "rel": "REUSES_TEXT_FROM",
+      "object": "VG:RV:SAK:M08:S045:V022",
+      "stored": {
+        "lcs_ratio": 0.83871,
+        "similarity": 0.827688,
+        "edit_ratio": 0.904348,
+        "token_jaccard": 0.571429,
+        "ngram_jaccard": 0.816667
+      },
+      "recomputed_on_contaminated_text": {
+        "lcs_ratio": 0.83871,
+        "similarity": 0.827688,
+        "edit_ratio": 0.904348,
+        "token_jaccard": 0.571429,
+        "ngram_jaccard": 0.816667
+      },
+      "field_matches": {
+        "lcs_ratio": true,
+        "similarity": true,
+        "edit_ratio": true,
+        "token_jaccard": true,
+        "ngram_jaccard": true
+      },
+      "reproduced": true
+    },
+    {
+      "subject": "VG:RV:SAK:M03:S015:V007",
+      "rel": "NEAR_PARALLEL_OF",
+      "object": "VG:SV:KAU:CHANDA:P01:D08:V04",
+      "stored": {
+        "lcs_ratio": 0.960784,
+        "similarity": 0.945392,
+        "edit_ratio": 0.975124,
+        "token_jaccard": 0.391304,
+        "ngram_jaccard": 0.93
+      },
+      "recomputed_on_contaminated_text": {
+        "lcs_ratio": 0.960784,
+        "similarity": 0.945392,
+        "edit_ratio": 0.975124,
+        "token_jaccard": 0.391304,
+        "ngram_jaccard": 0.93
+      },
+      "field_matches": {
+        "lcs_ratio": true,
+        "similarity": true,
+        "edit_ratio": true,
+        "token_jaccard": true,
+        "ngram_jaccard": true
+      },
+      "reproduced": true
+    },
+    {
+      "subject": "VG:RV:SAK:M03:S007:V011",
+      "rel": "NEAR_PARALLEL_OF",
+      "object": "VG:SV:KAU:CHANDA:P01:D08:V04",
+      "stored": {
+        "lcs_ratio": 0.960784,
+        "similarity": 0.945392,
+        "edit_ratio": 0.975124,
+        "token_jaccard": 0.391304,
+        "ngram_jaccard": 0.93
+      },
+      "recomputed_on_contaminated_text": {
+        "lcs_ratio": 0.960784,
+        "similarity": 0.945392,
+        "edit_ratio": 0.975124,
+        "token_jaccard": 0.391304,
+        "ngram_jaccard": 0.93
+      },
+      "field_matches": {
+        "lcs_ratio": true,
+        "similarity": true,
+        "edit_ratio": true,
+        "token_jaccard": true,
+        "ngram_jaccard": true
+      },
+      "reproduced": true
+    },
+    {
+      "subject": "VG:RV:SAK:M03:S006:V011",
+      "rel": "NEAR_PARALLEL_OF",
+      "object": "VG:SV:KAU:CHANDA:P01:D08:V04",
+      "stored": {
+        "lcs_ratio": 0.960784,
+        "similarity": 0.945392,
+        "edit_ratio": 0.975124,
+        "token_jaccard": 0.391304,
+        "ngram_jaccard": 0.93
+      },
+      "recomputed_on_contaminated_text": {
+        "lcs_ratio": 0.960784,
+        "similarity": 0.945392,
+        "edit_ratio": 0.975124,
+        "token_jaccard": 0.391304,
+        "ngram_jaccard": 0.93
+      },
+      "field_matches": {
+        "lcs_ratio": true,
+        "similarity": true,
+        "edit_ratio": true,
+        "token_jaccard": true,
+        "ngram_jaccard": true
+      },
+      "reproduced": true
+    },
+    {
+      "subject": "VG:RV:SAK:M03:S001:V023",
+      "rel": "NEAR_PARALLEL_OF",
+      "object": "VG:SV:KAU:CHANDA:P01:D08:V04",
+      "stored": {
+        "lcs_ratio": 0.960784,
+        "similarity": 0.945392,
+        "edit_ratio": 0.975124,
+        "token_jaccard": 0.391304,
+        "ngram_jaccard": 0.93
+      },
+      "recomputed_on_contaminated_text": {
+        "lcs_ratio": 0.960784,
+        "similarity": 0.945392,
+        "edit_ratio": 0.975124,
+        "token_jaccard": 0.391304,
+        "ngram_jaccard": 0.93
+      },
+      "field_matches": {
+        "lcs_ratio": true,
+        "similarity": true,
+        "edit_ratio": true,
+        "token_jaccard": true,
+        "ngram_jaccard": true
+      },
+      "reproduced": true
+    },
+    {
+      "subject": "VG:RV:SAK:M03:S005:V011",
+      "rel": "NEAR_PARALLEL_OF",
+      "object": "VG:SV:KAU:CHANDA:P01:D08:V04",
+      "stored": {
+        "lcs_ratio": 0.960784,
+        "similarity": 0.945392,
+        "edit_ratio": 0.975124,
+        "token_jaccard": 0.391304,
+        "ngram_jaccard": 0.93
+      },
+      "recomputed_on_contaminated_text": {
+        "lcs_ratio": 0.960784,
+        "similarity": 0.945392,
+        "edit_ratio": 0.975124,
+        "token_jaccard": 0.391304,
+        "ngram_jaccard": 0.93
+      },
+      "field_matches": {
+        "lcs_ratio": true,
+        "similarity": true,
+        "edit_ratio": true,
+        "token_jaccard": true,
+        "ngram_jaccard": true
+      },
+      "reproduced": true
+    },
+    {
+      "subject": "VG:RV:SAK:M08:S045:V022",
+      "rel": "NEAR_PARALLEL_OF",
+      "object": "VG:SV:KAU:CHANDA:P02:D07:V07",
+      "stored": {
+        "lcs_ratio": 0.83871,
+        "similarity": 0.827688,
+        "edit_ratio": 0.904348,
+        "token_jaccard": 0.571429,
+        "ngram_jaccard": 0.816667
+      },
+      "recomputed_on_contaminated_text": {
+        "lcs_ratio": 0.83871,
+        "similarity": 0.827688,
+        "edit_ratio": 0.904348,
+        "token_jaccard": 0.571429,
+        "ngram_jaccard": 0.816667
+      },
+      "field_matches": {
+        "lcs_ratio": true,
+        "similarity": true,
+        "edit_ratio": true,
+        "token_jaccard": true,
+        "ngram_jaccard": true
+      },
+      "reproduced": true
+    },
+    {
+      "subject": "VG:AV:SAU:K20:S022:V001",
+      "rel": "NEAR_PARALLEL_OF",
+      "object": "VG:SV:KAU:CHANDA:P02:D07:V07",
+      "stored": {
+        "lcs_ratio": 0.83871,
+        "similarity": 0.827688,
+        "edit_ratio": 0.904348,
+        "token_jaccard": 0.571429,
+        "ngram_jaccard": 0.816667
+      },
+      "recomputed_on_contaminated_text": {
+        "lcs_ratio": 0.83871,
+        "similarity": 0.827688,
+        "edit_ratio": 0.904348,
+        "token_jaccard": 0.571429,
+        "ngram_jaccard": 0.816667
+      },
+      "field_matches": {
+        "lcs_ratio": true,
+        "similarity": true,
+        "edit_ratio": true,
+        "token_jaccard": true,
+        "ngram_jaccard": true
+      },
+      "reproduced": true
+    }
+  ],
+  "edges_checked": 13,
+  "edges_reproduced_exactly": 13,
+  "verdict": "REPRODUCED_SAFE_TO_RECOMPUTE"
+}

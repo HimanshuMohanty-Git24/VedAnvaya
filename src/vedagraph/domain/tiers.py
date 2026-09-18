@@ -903,3 +903,48 @@ def is_per_passage(properties: Mapping[str, Any]) -> bool:
         PRECISION_BY_SCOPE_ORIGIN.get(scope, AttributionPrecision.PER_PASSAGE)
         is AttributionPrecision.PER_PASSAGE
     )
+#: The seven predicates whose ``confidence`` was a constant 1.0 on every edge, withdrawn by
+#: GAP-QUALITY-003 and re-landed under a name that says what the value is.
+#:
+#: A constant on every edge of a predicate encodes the evidence TIER -- the source says so --
+#: and not a calibrated probability. Published as ``confidence`` it offered a numeric filter
+#: that selects all of a predicate's edges or none, which is an invitation to a threshold
+#: with no measured meaning. Published as ``source_explicit_tier_marker`` it says the one
+#: thing it actually knows.
+#:
+#: Declared HERE, in the module every writer already imports, because R5 landed the rename
+#: as a migration and left seven writers still stamping ``confidence`` -- so the next
+#: rebuild would have reversed a closed gap. Agent B's C05. A predicate's membership is not
+#: restated in the writers; they ask this map for the property name.
+SOURCE_EXPLICIT_TIER_PREDICATES: Final[frozenset[str]] = frozenset(
+    {
+        "HAS_RISHI",
+        "HAS_CHANDAS",
+        "HAS_DEVATA",
+        "HAS_DEVATA_ASCRIPTION",
+        "HAS_DEVATA_DERIVED",
+        "ASCRIBES_TO_DEVATA",
+        "BELONGS_TO_FAMILY",
+    }
+)
+
+#: The property a writer must use for a given predicate's evidence-strength figure.
+SOURCE_EXPLICIT_TIER_PROPERTY: Final = "source_explicit_tier_marker"
+
+#: Carried beside the marker so a reader meeting it knows why it is not called confidence.
+SOURCE_EXPLICIT_TIER_NOTE: Final = (
+    "The value was a constant 1.0 on every edge of this predicate. It encodes the evidence "
+    "TIER -- the source states this -- and not a calibrated probability, so it offered a "
+    "numeric filter that selects everything or nothing. confidence != probability."
+)
+
+
+def confidence_property(predicate: str) -> str:
+    """The property name a writer should stamp this predicate's strength figure onto.
+
+    ``source_explicit_tier_marker`` for the seven whose value is a tier, ``confidence`` for
+    everything else, where the value genuinely varies edge to edge.
+    """
+    if predicate in SOURCE_EXPLICIT_TIER_PREDICATES:
+        return SOURCE_EXPLICIT_TIER_PROPERTY
+    return "confidence"

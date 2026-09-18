@@ -1,0 +1,278 @@
+{
+  "artifact": "RELEASE_BLOCKER_R5_AGENT_B_HOSTILE_REVIEW",
+  "at": "2026-09-18",
+  "reviewer": "AGENT_B",
+  "posture": "read-only on the graph; no git state change; every write inside data/staging/release_blocker_r5/agentB/",
+  "counts": { "CRITICAL": 7, "MAJOR": 20, "MINOR": 9 },
+  "success_gate_verdict": "R5's SUBSTANTIVE closures reproduce under independent re-measurement. Its PUBLIC-SURFACE reconciliation does not, and GAP-QUALITY-003's closure is not reproducible from the build code. OWNER_DECISION_REQUIRED = 2 is stated honestly and correctly attributed to the two Samaveda-music entries, but the R5 brief's success gate demanding 0 is NOT met and the headline states the number without stating that the gate fails.",
+  "findings": [
+    {
+      "id": "R5B-C01",
+      "severity": "CRITICAL",
+      "claim_attacked": "GAP-QUALITY-003: '0 predicates carry a constant confidence'; the tier-vs-probability conflation is fixed.",
+      "what_i_measured": "The graph's own frozen disclosure query is now blind, and its product-facing caveat asserts superseded figures as measured fact. Re-running the frozen Cypher verbatim returns 11 rows with ZERO SINGLE_CONSTANT (it previously returned 18 rows with SINGLE_CONSTANT on 7 predicates) because `WHERE r.confidence IS NOT NULL` excludes all 51,364 withdrawn edges. Live: 25,470 confidence-bearing edges, 0 at 1.0, 0.85 on 12,778, 0.80 on 11,203. The caveat asserts '75,997 of 77,518 confidence-bearing edges -- 98.0% -- sit at exactly one of three values (1.0 on 50,468, 0.85 on 12,809, 0.80 on 12,720)', 'the baseline's 0.42 cluster was replaced by a 1.0 cluster of 50,468 edges', 'that rename is bounded backlog rather than done', and 'human_gold_status is UNANNOTATED on 2,459 SemanticAssertion nodes and null on the other 2,406' (live: null on 32,672). Caveats from this module are served: api/repositories/neo4j_repository.named_query_caveat reads them. R5 edited this very file (module docstring plus two widened OPTIONAL MATCH patterns), so it was in hand.",
+      "exact_query_or_file": "src/vedagraph/domain/queries.py:2035-2085 ; data/staging/release_blocker_r5/agentB/probe9.py",
+      "verdict": "CONFIRMED",
+      "what_must_change": "Widen the query to `WHERE r.confidence IS NOT NULL OR r.source_explicit_tier_marker IS NOT NULL OR r.uncalibrated_pipeline_score IS NOT NULL` and re-measure every figure in the caveat. As it stands the graph hides the constant it renamed."
+    },
+    {
+      "id": "R5B-C02",
+      "severity": "CRITICAL",
+      "claim_attacked": "GAP-QUALITY-003 closed and its public surfaces reconciled.",
+      "what_i_measured": "Two OpenAPI-served descriptions still assert the withdrawn property as present, and undercount it. models/graph.py:27-32: 'five predicates carry a single value on every edge they have: HAS_RISHI (17,889 edges, all 1.0), HAS_CHANDAS (16,298, all 1.0), HAS_DEVATA (10,558, all 1.0), HAS_DEVATA_ASCRIPTION (5,385, all 1.0) and BELONGS_TO_FAMILY (305, all 1.0).' routes/graph.py:62-68 repeats it as an endpoint description. Live: none of the seven carries `confidence` at all, and PIPELINE_CONSTANT_PREDICATES holds SEVEN, not five (it adds HAS_DEVATA_DERIVED and ASCRIBES_TO_DEVATA). Mirrored into the shipped frontend schema at api-schema.ts:835-841.",
+      "exact_query_or_file": "src/vedagraph/api/models/graph.py:27-32 ; src/vedagraph/api/routes/graph.py:62-68 ; src/vedagraph/api/services/graph_service.py:372-380 ; frontend/src/lib/api-schema.ts:835-841",
+      "verdict": "CONFIRMED",
+      "what_must_change": "Rewrite both descriptions from PIPELINE_CONSTANT_PREDICATES rather than from prose, say the value now lives in source_explicit_tier_marker, and regenerate api-schema.ts."
+    },
+    {
+      "id": "R5B-C03",
+      "severity": "CRITICAL",
+      "claim_attacked": "Stale claims corrected in the data-completeness reports for GAP-QUALITY-003 and GAP-SEMANTICS-003.",
+      "what_i_measured": "quality.md is GAP-QUALITY-003's own evidence report, R5 edited it, and it received exactly ONE correction banner (line 640, covering only the :Devata range). Left asserted as current: line 17-18, Section 0 'The one-sentence answer' -- '50,468 of 76,050 confidence-bearing edges carry exactly 1.0; five predicates stamp one value on every edge they have'; lines 255-260 -- '76,050 edges carry a confidence. 50,468 of them carry exactly 1.0; 12,782 carry 0.85 and 11,310 carry 0.80 ... Five predicates -- HAS_RISHI (17,889), HAS_CHANDAS (16,331), HAS_DEVATA (10,558), HAS_DEVATA_ASCRIPTION (5,385) and BELONGS_TO_FAMILY (305) -- stamp one value on every edge they have'; line 276 -- 'Every edge in this table says confidence: 1.0.'; lines 505-510 -- '0 carry one edge of each of the three types' (live: 10) and 'ASSERTION_AGENT points only at :Devata (2,502 edges), ASSERTION_TARGET only at :Devata (799)'.",
+      "exact_query_or_file": "docs/reports/data-completeness/quality.md:17,18,255-260,276,505-510,640",
+      "verdict": "CONFIRMED",
+      "what_must_change": "Correct Section 0 and Section 4 at the point of the claim, and extend the line-640 banner to cover the three-slot zero."
+    },
+    {
+      "id": "R5B-C04",
+      "severity": "CRITICAL",
+      "claim_attacked": "Stale public claims swept; 'only at :Devata' and the Samaveda-has-no-translation claim retired.",
+      "what_i_measured": "docs/reports/data-completeness/gap-census.md was NOT touched by R5 (git status --porcelain on that directory lists its five siblings and not it) and contains no R5 banner anywhere (grep for 'R5' returns nothing). Line 91 asserts 'Not one of the 4,865 assertions carries a complete agent-predicate-target triple, 1,522 carry no role slot at all, and the role slots can only point at deities' -- live: 10 assertions carry all three slots, 103 non-Devata ASSERTION_TARGET, 58 non-Devata ASSERTION_AGENT, and SemanticAssertion is 35,131 not 4,865. Line 92 asserts 'The Samaveda has no translation at all: 0 of 1,844 mantras carry HAS_TRANSLATION' -- live: 173. Lines 436-438 assert 'the measured count of assertions carrying agent, predicate and target together is 0, not 17'.",
+      "exact_query_or_file": "docs/reports/data-completeness/gap-census.md:91,92,436-438 ; git status --porcelain docs/reports/data-completeness/",
+      "verdict": "CONFIRMED",
+      "what_must_change": "Add the R5 correction banner this file never got, and correct rows 13 and 14 of the census table."
+    },
+    {
+      "id": "R5B-C05",
+      "severity": "CRITICAL",
+      "claim_attacked": "GAP-QUALITY-003's closure is durable: '51,364 edges renamed to source_explicit_tier_marker'.",
+      "what_i_measured": "The closure exists only as a hand-run staged migration, and the shipping build code re-creates the exact defect. Still writing `confidence` on the seven: graph/loader.py:444 (HAS_RISHI), :455 (HAS_DEVATA), :466 (HAS_CHANDAS) via `SET rel.confidence = row.confidence`; domain/v3_loader.py:1313 (HAS_DEVATA_ASCRIPTION), :2792 (BELONGS_TO_FAMILY, `m.confidence = 1.0`); domain/ascription_bridge.py:652 (ASCRIBES_TO_DEVATA, `\"confidence\": 1.0`), :674 (HAS_DEVATA_DERIVED, `\"confidence\": 1.0`); fed by graph/entities.py:159 `rec.get(\"confidence\", 1.0)`. And `grep -rn source_explicit_tier_marker src/vedagraph/graph/ src/vedagraph/domain/` returns ZERO hits -- no builder writes the replacement property. A rebuild takes the published closure measure `confidence IS NOT NULL AND calibration_status IS NULL` from 0 to 51,364 and produces 0 tier markers.",
+      "exact_query_or_file": "src/vedagraph/graph/loader.py:444,455,466 ; src/vedagraph/domain/v3_loader.py:1313,2792 ; src/vedagraph/domain/ascription_bridge.py:652,674 ; src/vedagraph/graph/entities.py:159",
+      "verdict": "CONFIRMED",
+      "what_must_change": "Move the rename into the edge writers before the closure can be called done, and add a live invariant that fails if any of the seven carries `confidence`."
+    },
+    {
+      "id": "R5B-C06",
+      "severity": "CRITICAL",
+      "claim_attacked": "Census moved cleanly from 164,597/509,486 to 164,601/509,769.",
+      "what_i_measured": "scripts/audit_public_identity.py:42 hard-asserts the OLD census and now aborts before doing any of its work. I ran it: `AssertionError: {'nodes': 164601, 'relationships': 509769}`. This is the public-identity determinism audit -- the evidence surface for the public-identity blocker closed at 5d9c163 -- and it cannot run at all after R5. Nothing references it (a repo-wide grep for 'audit_public_identity' outside data/staging returns nothing), so it fails by never being run rather than by going red. Both 164,597 and 509,486 were on R5's own stale-figure sweep list.",
+      "exact_query_or_file": "scripts/audit_public_identity.py:42 ; `PYTHONIOENCODING=utf-8 python scripts/audit_public_identity.py`",
+      "verdict": "CONFIRMED",
+      "what_must_change": "Re-pin to 164,601/509,769 with the R5 delta reconciliation written into the comment above it, then re-run it and record the result."
+    },
+    {
+      "id": "R5B-C07",
+      "severity": "CRITICAL",
+      "claim_attacked": "2,502 and 799 swept out of every surface that asserts them as current.",
+      "what_i_measured": "docs/reports/VEDAGRAPH_ONTOLOGY_REFERENCE_V3.md line 3 states 'Every count below is measured, not typed. Re-run it rather than editing it.' Line 76, under '### ASSERTION_AGENT', reads '- **edges:** 2,502'; line 111, under '### ASSERTION_TARGET', reads '- **edges:** 799'. Live: 2,660 and 918. The same generated file also carries two figures already stale before R5 (line 5 'Live graph: 116,838 nodes, 281,257 relationships'; line 968 'DerivedMetric (1,085)'), so it is a long-stale snapshot that R5's sweep did not reach at all. This is the document the project's own notes record as the ontology reference frozen for Product V1, and line 611 of it is what GAP-SAMAVEDA_MUSIC-003's blocker cites for the MUSICALIZED_AS gloss.",
+      "exact_query_or_file": "docs/reports/VEDAGRAPH_ONTOLOGY_REFERENCE_V3.md:3,5,76,111,968",
+      "verdict": "CONFIRMED",
+      "what_must_change": "Regenerate the ontology reference, or mark it as a dated snapshot so its own 'measured, not typed' claim stops being false."
+    },
+    {
+      "id": "R5B-M01",
+      "severity": "MAJOR",
+      "claim_attacked": "'4 verses corrected in canonical AND graph, both text roles'; remeasured.json key `apparatus_still_in_the_graph` reports the corrected heads.",
+      "what_i_measured": "The apparatus is still in the graph. On all four corrected verses the SEARCH_DERIVATIVE TextVersion's `text_original` retains the contaminated string: 'araNyakaganam dra arSeyabrahmaNam bhaSyam uduttama...' (ARANYA D01 V04), 'dra iDamagne...' (CHANDA P01 D08 V04), 'araNyakam abhi tva...' (CHANDA P02 D07 V07), 'araNyakaganam ya vtreSu...' (CHANDA P04 D05 V06). Measured: 1,840 of 1,844 SV SEARCH_DERIVATIVE rows have text_original == text_nfc; exactly the 4 corrected rows now differ, and on those 4 text_original is the pre-correction text. content_sha256 == sha256(NFC(text_nfc)) on all 8 rows, so the digests are right and the field is orphaned. The canonical artifact is clean: 0 of 1,844 rows differ and no apparatus marker appears in any file in data/canonical/samaveda_arcika_v1/. Not product-exposed: `text_original` has no reader in src/vedagraph/api or in frontend/. The closure measure inspects only t.text_nfc, and tests/domain/test_r5_gap_closures.py:736, whose docstring promises 'Both text roles, not just the one the staged Cypher named', also reads only t.text_nfc.",
+      "exact_query_or_file": "data/staging/release_blocker_r5/agentB/probe7.py ; tests/domain/test_r5_gap_closures.py:736-754",
+      "verdict": "CONFIRMED",
+      "what_must_change": "Correct text_original on the four SEARCH_DERIVATIVE rows, and widen the test to every string property on the TextVersion rather than text_nfc alone."
+    },
+    {
+      "id": "R5B-M02",
+      "severity": "MAJOR",
+      "claim_attacked": "'no cross-Veda edge publishes a variant claim from the apparatus' (test at line 768).",
+      "what_i_measured": "The NEAR_PARALLEL_OF edge RV 3.1.23 <-> SV CHANDA 1.8.4 still publishes `formula_evidence` containing the apparatus-prefixed quote 'draiDamagnepurudaMsaM...' on the SCRIPT_FOLDED surface, and `formula_difference_spans` is derived from that string. The test passes because it only counts edges carrying a stale marker and a preserved value; it never inspects the published quote. The sibling `evidence` field on the same edge WAS corrected.",
+      "exact_query_or_file": "data/staging/release_blocker_r5/agentB/probe8.py ; tests/domain/test_r5_gap_closures.py:768-793",
+      "verdict": "CONFIRMED",
+      "what_must_change": "Correct formula_evidence and formula_difference_spans on the affected edges, or mark them stale the way the transformation class was, and make the test read the quote."
+    },
+    {
+      "id": "R5B-M03",
+      "severity": "MAJOR",
+      "claim_attacked": "'13 cross-Veda edges rescored.'",
+      "what_i_measured": "No numeric metric changed, and none needed to. I re-ran vedagraph.enrich.crossveda.score_pair over build_surfaces of the corrected PRIMARY_TEXT for all 13 edges: stored-vs-recomputed disagreements on similarity, lcs_ratio, token_jaccard, ngram_jaccard and edit_ratio = 0 of 65. On every edge `cross_veda_transformation` == `cross_veda_transformation_uncorrected` == `cross_veda_transformation_superseded` == 'TWO_CONTIGUOUS_SUBSTITUTIONS', so the recorded supersession records no change. The edges were re-verified and annotated, not rescored. test_live_the_recomputed_similarity_metrics_landed asserts only that 13 edges carry a `cross_veda_metrics_recomputed_by` stamp -- a provenance string, not a metric.",
+      "exact_query_or_file": "data/staging/release_blocker_r5/agentB/rescore.py ; tests/domain/test_r5_gap_closures.py:795-804",
+      "verdict": "PARTIALLY_FALSIFIED",
+      "what_must_change": "Say 're-verified against the corrected text, unchanged' rather than 'rescored', and make the test assert a value rather than a stamp."
+    },
+    {
+      "id": "R5B-M04",
+      "severity": "MAJOR",
+      "claim_attacked": "The recomputed metrics landed on the 13 edges.",
+      "what_i_measured": "`cross_veda_lcs_ratio_rederived` holds 0.975124 on the RV-SV group and 0.904348 on the AV-SV group, matching neither the stored `lcs_ratio` (0.989899 / 0.981132) nor my independent score_pair recomputation on the corrected text (0.989899 / 0.981132). A property named '_rederived' sits beside `lcs_ratio` carrying a value nothing reproduces, with no surface named on it.",
+      "exact_query_or_file": "data/staging/release_blocker_r5/agentB/rescore.py",
+      "verdict": "CONFIRMED",
+      "what_must_change": "Name the surface the rederived ratio was computed on, or remove it -- an unreproducible figure beside the field it appears to correct is worse than no figure."
+    },
+    {
+      "id": "R5B-M05",
+      "severity": "MAJOR",
+      "claim_attacked": "'registry_status_disagreements = 0' and 'measurement_disagreements = 0' as evidence the registry and the gate agree.",
+      "what_i_measured": "The closure-measure drift check cannot fire on the write path. scripts/wave4_registry_closure_audit.py:2344-2360 writes gap['status'] and gap['closure_measure'] into data/gap_registry.json straight out of the same RULINGS table that lines 2160-2175 then compare the registry against. After any `--write` run the comparison is an identity. I confirmed 0 of 85 mismatches -- which is what the mechanism forces, not what it discovered. (The 66 graph measurements themselves are genuine: I re-ran every Cypher closure_measure in the registry against the live store and got 0 disagreements against the registry, the audit, and the audit's expected value.)",
+      "exact_query_or_file": "scripts/wave4_registry_closure_audit.py:2160-2175,2344-2360 ; data/staging/release_blocker_r5/agentB/probe1.py",
+      "verdict": "CONFIRMED",
+      "what_must_change": "Run the drift check against the registry as committed BEFORE the write, or stop presenting a zero the write path guarantees as a finding."
+    },
+    {
+      "id": "R5B-M06",
+      "severity": "MAJOR",
+      "claim_attacked": "The old closure measure is still recorded so the swap is auditable.",
+      "what_i_measured": "The machine-readable `closure_measure` was overwritten; only the prose `closure_test` retains the old test, unlabelled, and still presented as THE test. GAP-TRANSLATION-004 is CLOSED_DERIVED with closure_test literally \"MATCH (p:Mantra) WHERE p.veda='RV' AND NOT (p)-[:HAS_TRANSLATION]->() RETURN count(p) returns 0.\" -- that query returns 36. GAP-QUALITY-003 is CLOSED_DERIVED with closure_test still demanding 'a calibration curve measured against a human-labelled sample' and 'no predicate carries a single constant confidence on every edge'; neither is what the gate ran. GAP-ENTITY_COVERAGE-004's closure_test still demands 'Entity nodes carry an expected_source' while 223 deliberately do not. The drift check compares closure_measure only, never closure_test.",
+      "exact_query_or_file": "data/gap_registry.json -- closure_test vs closure_measure on all 8 re-specified entries",
+      "verdict": "CONFIRMED",
+      "what_must_change": "Add a `closure_test_superseded` field carrying the old prose with the reason, and make closure_test state the test the gate actually runs."
+    },
+    {
+      "id": "R5B-M07",
+      "severity": "MAJOR",
+      "claim_attacked": "'I replaced the closure measure on 8 entries'; each new measure is harder-or-equal to satisfy dishonestly.",
+      "what_i_measured": "It is strictly weaker as a gate on 7 of the 8. Seven of the new measures have the form `<property> IS NULL RETURN 0`, which any null-filling pass satisfies. On ENTITY_COVERAGE-006, -007, RITUAL-005 and RITUAL-006 the OLD measure already read its required value at baseline (0, 0, 4 of 4, 20,210 of 20,210), so those swaps did not convert a failing test into a passing one. On ENTITY_COVERAGE-004 (384, required 0), QUALITY-003 (7, required 0) and TRANSLATION-004 (36, required 0) they did. I then attacked the substance behind each and it is real, not decorative: all 384 entities carry a non-empty expectation_origin_evidence AND a verbatim expectation_origin_evidence_quote (0 null, 0 empty), all 11 named origin files exist on disk, expected_source is an exact bijection with the 161 class-A rows (0 class-A without it, 0 non-class-A with it), and class-A rows carry a real Vedic Index citation plus a HEADWORD_LEXICAL_MATCH_SENSE_NOT_HUMAN_REVIEWED flag; all 163 LEXICAL_RECOVERY_APPLICABLE entities carry both lexical_recall and lexical_recall_sample_size; the 6 RV UNCOVERED rows are real absences and the 30 even verses of RV 1.65-1.70 hold 0 HAS_TRANSLATION edges each; source_explicit_tier_marker = 1.0 on all 51,364 edges with 0 carrying both properties. Not a cheat -- but the gate no longer tests the substance, and only prose records it.",
+      "exact_query_or_file": "data/staging/release_blocker_r5/agentB/probe1.py, probe3.py, probe11.py, probe12.py",
+      "verdict": "PARTIALLY_FALSIFIED",
+      "what_must_change": "For each re-specified entry, add a second measure that can FAIL on substance -- e.g. count class-A rows whose expectation_origin_evidence_quote is empty, or edges carrying a tier marker whose value is not 1.0 -- rather than relying on a non-null count."
+    },
+    {
+      "id": "R5B-M08",
+      "severity": "MAJOR",
+      "claim_attacked": "OWNER_DECISIONS section 39 legitimately extends to GAP-RITUAL-005's offerings by analogy.",
+      "what_i_measured": "Judged plainly: the analogy is sound and the disclosure is exemplary -- section 39 says in terms 'R5 applies it that way and says so, so that a reader can see the extension and reject it if the owner did not intend it' -- but the mechanism that would have forced it to carry a citation was routed around. GAP-RITUAL-005 closes CLOSED_DERIVED with closure_citation: null AND closure_owner_decision: null. The audit downgrades CLOSED_SCOPE_DECISION with no citation to STILL_IMPLEMENTATION_FIXABLE (lines 2136-2142); CLOSED_DERIVED requires no citation at all. A scope reinterpretation recorded as a derived closure therefore passes the citation guard by not being subject to it. The same shape applies to ENTITY_COVERAGE-004, QUALITY-003, RITUAL-006 and TRANSLATION-004, all CLOSED_DERIVED with closure_citation: null. So: it is an agent-inferred extension of an owner decision, it does not formally close the entry (the derived measure does), and the ledger's 'AGENT-INFERRED can close nothing' rule is respected in letter while the substance of the closure rests on the extension.",
+      "exact_query_or_file": "scripts/wave4_registry_closure_audit.py:2136-2142 ; docs/reports/data-completeness/OWNER_DECISIONS.md section 39 ; data/staging/wave4/registry_closure_audit.json rows",
+      "verdict": "CONFIRMED",
+      "what_must_change": "Either carry the section-39 citation in closure_citation so the guard applies, or record the entry as awaiting owner ratification of the extension."
+    },
+    {
+      "id": "R5B-M09",
+      "severity": "MAJOR",
+      "claim_attacked": "GAP-SAMAVEDA_MUSIC-003 clause 2 is BLOCKED_OWNER_DECISION_REQUIRED on OWNER_DECISION_E_AUDIO_GATE.",
+      "what_i_measured": "The named decision does not cover the block. Clause 2's measured blockers are not audio: the object end of all 495 proposed MUSICALIZED_AS edges is absent (0 nodes with work_id starting VG:WORK:SV:KAU:GANA, 0 with canonical_key starting VG:SV:KAU:GANA), the 4 gana Works sit at identity_status PROPOSED_FOR_LEAD_ADJUDICATION, 657 gana unit nodes are unimported, the MUSICALIZED_AS relationship type does not exist, and VEDAGRAPH_ONTOLOGY_REFERENCE_V3.md:611 glosses MUSICALIZED_AS as RV->SV so its range would have to be widened first. None of that is the audio gate. It is also NOT 'unfinished engineering hidden behind a status' in the sense the brief forbids -- importing four new Works whose identity is explicitly PROPOSED_FOR_LEAD_ADJUDICATION genuinely needs a decision -- but it is filed under the wrong one.",
+      "exact_query_or_file": "data/staging/release_blocker_r5/agentA_samaveda_music/FINDINGS.md sections 1-2 ; data/staging/release_blocker_r5/agentB/probe3.py",
+      "verdict": "PARTIALLY_FALSIFIED",
+      "what_must_change": "Name the decision that actually blocks it -- gana Work identity adjudication plus the MUSICALIZED_AS range widening -- instead of the audio gate."
+    },
+    {
+      "id": "R5B-M10",
+      "severity": "MAJOR",
+      "claim_attacked": "'The midday pressing gained 0: its single-token aliases already reached all seven of its mentions.'",
+      "what_i_measured": "True of the count, silent on the consequence. Re-running extract_mentions re-paths 5 of the 7: mentions.py:389-400 deletes the token row when a phrase fires for the same entity, so RV 3.28.4, RV 3.32.3, RV 5.40.4, AVS 7.76.6 and AVS 20.12.7 would move from score 0.90 / method 'domain-mention-v1:sanskrit-token' to score 0.95 / 'domain-mention-v1:sanskrit-phrase' with matched_aliases becoming the phrase. I confirmed all five are live phrase matches by independent derivation and that all five still carry the token path in the graph. The mention layer's graph state is no longer what its own code produces.",
+      "exact_query_or_file": "src/vedagraph/domain/mentions.py:389-400 ; src/vedagraph/domain/layer_figures.py:133-134 ; data/staging/release_blocker_r5/agentB/phrase_rederive2.py",
+      "verdict": "CONFIRMED",
+      "what_must_change": "Re-path the five MADHYANDINA rows, or record the divergence so the next rebuild's diff is expected rather than alarming."
+    },
+    {
+      "id": "R5B-M11",
+      "severity": "MAJOR",
+      "claim_attacked": "build_index docstring: 'A registered alias containing whitespace goes to the PHRASE table and never to `token`.'",
+      "what_i_measured": "False -- there is no such routing. The aliases_sa loop at mentions.py:216-228 writes every alias to token[folded] regardless of whitespace, and appends it to `sandhi` whenever len(folded) >= MIN_SANDHI_ALIAS_CHARS. Phrases come only from the separate aliases_sa_phrases field, populated in concepts.py:566-573, which filters to strings containing a space. So a multi-word alias placed in aliases_sa still lands in the single-token table and matches nothing forever -- the exact defect GAP-ENTITY_COVERAGE-007's reason-still-open described -- and if fold_alias were ever to strip whitespace it would also enter the Samaveda substring pass. No entity currently does this, so the hazard is latent. The accompanying test documents the hazard rather than preventing it.",
+      "exact_query_or_file": "src/vedagraph/domain/mentions.py:205-241 ; src/vedagraph/enrich/concepts.py:566-573 ; tests/domain/test_r5_gap_closures.py:98",
+      "verdict": "CONFIRMED",
+      "what_must_change": "Enforce the stated invariant: skip whitespace-bearing aliases in the aliases_sa loop and route them to the phrase table, or raise."
+    },
+    {
+      "id": "R5B-M12",
+      "severity": "MAJOR",
+      "claim_attacked": "'Tests: tests/domain+enrich 654 passed; tests/api+graph+unit 3,008 passed; tests/product+integration+fixtures 120 passed.'",
+      "what_i_measured": "Reported as pass counts with no skip counts, and 21 of the 31 tests in tests/domain/test_r5_gap_closures.py skip by default: measured `10 passed, 21 skipped` without VEDAGRAPH_LIVE_NEO4J, and `31 passed` with it. Every test that measures a closure against the live graph is in the skipped set. Separately, the only test-accounting artifact in the R5 tree, data/staging/release_blocker_r4/test_accounting.json, is stamped 2026-09-18T12:04:00Z -- 54 minutes BEFORE the migration receipt at 12:58:34Z -- so it cannot be evidence for the post-migration state; it records default 3,800 passed / 84 skipped and live_neo4j 3,842 passed / 42 skipped, neither of which matches the headline's 3,782 total. I independently re-ran tests/api/test_app_health.py, tests/api/test_graph.py, tests/api/test_insights.py, tests/domain/test_layer_figures.py and tests/product/test_canonical_release_snapshot.py against the live store: 271 passed.",
+      "exact_query_or_file": "`pytest tests/domain/test_r5_gap_closures.py` vs `VEDAGRAPH_LIVE_NEO4J=1 pytest tests/domain/test_r5_gap_closures.py` ; data/staging/release_blocker_r4/test_accounting.json",
+      "verdict": "PARTIALLY_FALSIFIED",
+      "what_must_change": "Re-run scripts/release_test_accounting.py after the migration and report passed AND skipped per gate, naming the live-gated closure tests."
+    },
+    {
+      "id": "R5B-M13",
+      "severity": "MAJOR",
+      "claim_attacked": "Migration receipt: promised nodes_created 2, actual 2, all_checks_pass true.",
+      "what_i_measured": "The receipt accounts for half the node creation. Diffing the pre-migration backup against the live store names FOUR DerivedMetric additions (1,481 -> 1,485). Two carry r5_contract and are receipted (RITUAL_CONTEXT_PRECISION, MATERIAL_CULTURE_BY_RITUAL_CONTEXT). Two appear in no receipt -- not migration_receipt.json, not increment_2_graph_receipt.json, not canonical_correction_receipt.json: VG:METRIC:RITUAL_ENTITY_DENSITY:VG:CONCEPT:SATTRA:PERFORMED_BY and VG:METRIC:RITUAL_ENTITY_DENSITY:VG:CONCEPT:SVASTYAYANA:USES_OBJECT. migration_receipt.json's census_after.nodes reads 164,599 while the live store and the headline read 164,601. (Backup integrity verified: nodes.jsonl sha256 b678f923947b81f83597eac80641b9aec6b3e5996930914ad27633300f05c716 and relationships.jsonl ac8d1d5750fd0983604570e8868bb712f779baee057eda2b74e9f783140d1b55 both match MANIFEST.json and the receipt; 164,597 node lines and 509,486 relationship lines counted.)",
+      "exact_query_or_file": "data/staging/release_blocker_r5/agentB/recon.py ; data/staging/release_blocker_r5/migration_receipt.json",
+      "verdict": "PARTIALLY_FALSIFIED",
+      "what_must_change": "Receipt the two RITUAL_ENTITY_DENSITY metrics, say which pass created them, and reconcile the receipt's census_after to 164,601."
+    },
+    {
+      "id": "R5B-M14",
+      "severity": "MAJOR",
+      "claim_attacked": "Dependency: CURRENT=5, STALE_INPUT=0, BLOCKED=3, NOT_APPLICABLE=1, UNKNOWN=0.",
+      "what_i_measured": "The counts reproduce exactly (CURRENT 5, STALE_INPUT 0, BLOCKED 3, NOT_APPLICABLE 1, no UNKNOWN key present, unexplained_stale []), and the artifact's own graph_census reads 164,601 / 509,769. But 'cross-Veda matrices' is declared CURRENT while 13 of its own edges carry cross_veda_transformation_status = STALE_RECOMPUTE_REQUIRED_TEXT_CORRECTED and docs/reports/data-completeness/cross-veda.md:882 states its published HEAD_TRUNCATION row 'will read 1, not 2, when the cross-Veda stage next runs'. A consumer cannot be CURRENT while holding self-declared stale rows and a known-wrong published row.",
+      "exact_query_or_file": "data/staging/integration/dependency_status.json ; docs/reports/data-completeness/cross-veda.md:882 ; data/staging/release_blocker_r5/agentB/probe6.py",
+      "verdict": "PARTIALLY_FALSIFIED",
+      "what_must_change": "Move cross-Veda matrices to STALE_INPUT with the 13 edges as its reason, or state why a stale transformation class does not make the consumer stale."
+    },
+    {
+      "id": "R5B-M15",
+      "severity": "MAJOR",
+      "claim_attacked": "Stale figures swept out of the current benchmark and the shipped frontend.",
+      "what_i_measured": "docs/reports/V3_3_FINAL_100_QUESTION_BENCHMARK.jsonl -- the CURRENT benchmark -- still records in Q67 'ASSERTION_AGENT->Devata 2,502, ASSERTION_TARGET->Devata 799', in Q73 'ASSERTION_TARGET 799', and in Q77 'guard_verdict SINGLE_CONSTANT on 7 predicates (HAS_RISHI 17,889 edges at one value, HAS_CHANDAS 16,331, HAS_DEVATA 10,558, HAS_DEVATA_ASCRIPTION 5,385, BELONGS_TO_FAMILY 305, INVOLVES_SUBSTANCE 3, REFERS_TO_PLACE 1)' plus 'and 7 predicates are still single-constant'. frontend/src/lib/api-schema.ts:1346 ships '2,502 assertions over 2,254' while the Python docstring it mirrors, src/vedagraph/api/models/passage.py:588, already reads 2,660 -- the schema was not regenerated.",
+      "exact_query_or_file": "docs/reports/V3_3_FINAL_100_QUESTION_BENCHMARK.jsonl:67,73,77 ; frontend/src/lib/api-schema.ts:1346 ; src/vedagraph/api/models/passage.py:588",
+      "verdict": "CONFIRMED",
+      "what_must_change": "Regenerate api-schema.ts, and either restamp the benchmark or mark the V3_3 run as a dated snapshot superseded on these three questions."
+    },
+    {
+      "id": "R5B-M16",
+      "severity": "MAJOR",
+      "claim_attacked": "GAP-SEMANTICS-003's next action: 'widen the Devata-typed consumer queries that would otherwise silently under-report.'",
+      "what_i_measured": "R5 widened src/vedagraph/domain/queries.py:1077-1088 and left six others hard-coding :Devata on an assertion slot: queries.py:997, :1046; graph/insight_queries.py:599, :626; domain/v3_loader.py:1051; scripts/verify_v3_demonstrations.py:102. Each will now silently skip the 58 non-Devata agents and 103 non-Devata targets. The caveat at queries.py:1067 ('Both read 27 today, so the model layer targets no non-deity') survives only because the new edges carry derivation = TREEBANK_DEPREL_ROLE_PROJECTION; it is one projection away from undercounting.",
+      "exact_query_or_file": "src/vedagraph/domain/queries.py:997,1046,1067 ; src/vedagraph/graph/insight_queries.py:599,626 ; src/vedagraph/domain/v3_loader.py:1051 ; scripts/verify_v3_demonstrations.py:102",
+      "verdict": "PARTIALLY_FALSIFIED",
+      "what_must_change": "Widen the remaining six, or add a comment at each stating the scope is deliberate and what it excludes."
+    },
+    {
+      "id": "R5B-M17",
+      "severity": "MAJOR",
+      "claim_attacked": "GAP-RITUAL-006: 'ritual_context_precision on all 20,210 (0.95 reproducible / 0.7917 all-reviewed).'",
+      "what_i_measured": "One precision figure measured over a 24-row sample of a 769-row population is stamped on all 20,210 mantras -- including the 10,538 NO_RITUAL_CITATION_FOUND and 7,769 UNRESOLVED_SHARED_OPENING rows that were not in that population. The row does carry ritual_context_precision_population = 769, _sample_size = 24, _human_reviewed = 0 and _review_level = AGENT_ADJUDICATED_SINGLE_READER_NO_HUMAN_REVIEW on all 20,210, so a reader who reads the whole row can see the denominator; a consumer reading ritual_context_precision alone gets 0.95 for a class that was never sampled. The arithmetic itself checks out: 0.95 = 19/(24 - 4 withheld) and 0.7917 = 19/24.",
+      "exact_query_or_file": "data/staging/release_blocker_r5/agentB/probe6.py",
+      "verdict": "PARTIALLY_FALSIFIED",
+      "what_must_change": "Stamp the precision only on the rows inside the measured population, or add a ritual_context_precision_applies_to_this_row flag."
+    },
+    {
+      "id": "R5B-M18",
+      "severity": "MAJOR",
+      "claim_attacked": "Live-invariant coverage after the rename.",
+      "what_i_measured": "scripts/check_live_invariants.py:207-214, the WARN invariant `predicates_whose_confidence_is_a_single_constant`, now counts ~0 because the property left, not because calibration arrived -- it goes green for the wrong reason, which is the R3 finding this repo already recorded once. Its comment at :200-206 asserts 'Four predicates carry a SINGLE confidence value across every one of their edges (HAS_RISHI 17,889, HAS_CHANDAS 16,331, HAS_DEVATA 10,558, HAS_DEVATA_ASCRIPTION 5,385 -- 50,163 edges at exactly 1.0)'.",
+      "exact_query_or_file": "scripts/check_live_invariants.py:200-214",
+      "verdict": "CONFIRMED",
+      "what_must_change": "Make the invariant read source_explicit_tier_marker and uncalibrated_pipeline_score too, and re-measure the comment."
+    },
+    {
+      "id": "R5B-M19",
+      "severity": "MAJOR",
+      "claim_attacked": "GAP-QUALITY-003: 'represent that absence as a product and evidence state rather than manufacturing review.'",
+      "what_i_measured": "The three new properties are write-only. `calibration_status` on 25,470 edges is exposed by no API model (EvidenceView at api/models/common.py:337-348 and GraphEdgeView at api/models/graph.py:178-182 carry neither field), `source_explicit_tier_marker` has no reader in src/ outside a caveat string at graph_service.py:436, and `uncalibrated_pipeline_score` has no reader anywhere in the repo outside the script that wrote it. Consequence: the 0.85 and 0.75 on the 4 renamed edges are now unreachable through the API -- graph_service._confidence (:1902-1923) returns ConfidenceBasis.ABSENT for REFERS_TO_PLACE and INVOLVES_SUBSTANCE where it previously returned VARIES_WITHIN_PREDICATE with the value. Information the product used to publish is now hidden. On the reassuring side: no read path anywhere reads a missing confidence as zero, and _passes_filters (:2344-2370) keeps the seven unconditionally via a predicate-set short-circuit and treats non-numeric as 'no opinion', so min_confidence still behaves and excludes nothing it should keep.",
+      "exact_query_or_file": "src/vedagraph/api/services/graph_service.py:1902-1923,2344-2370 ; src/vedagraph/api/models/common.py:337-348 ; src/vedagraph/api/models/graph.py:178-182",
+      "verdict": "PARTIALLY_FALSIFIED",
+      "what_must_change": "Surface calibration_status on EvidenceView/GraphEdgeView and read uncalibrated_pipeline_score in _confidence, or the absence is represented only in the store and not on the product."
+    },
+    {
+      "id": "R5B-M20",
+      "severity": "MAJOR",
+      "claim_attacked": "R5 correction banners applied across the affected reports and scripts.",
+      "what_i_measured": "scripts/build_agent3_closure_report.py:251 still records as a live residual 'The :Devata-only range on ASSERTION_AGENT and ASSERTION_TARGET is unchanged.' docs/reports/data-completeness/agent-1-verification.md:111 still asserts 'Benchmark Q67 claims 17 assertions carry three role slots. Measured: 0' outside the reach of its line-132 banner. docs/reports/GRAPH_ENRICHMENT_V1.md:33 still asserts 'The Samaveda has no English translation at all. Zero, in any source.' docs/reports/data-completeness/semantic-resemblance.md:234, :417 and :912 still speak of 'the 173 Samavedic translations' in the future tense for an import that has landed, and :413 publishes 'Samavedic translations in the live graph | 0'.",
+      "exact_query_or_file": "scripts/build_agent3_closure_report.py:251 ; docs/reports/data-completeness/agent-1-verification.md:111 ; docs/reports/GRAPH_ENRICHMENT_V1.md:33 ; docs/reports/data-completeness/semantic-resemblance.md:234,413,417,912",
+      "verdict": "CONFIRMED",
+      "what_must_change": "Extend the banners to cover these, and reword the 173 from 'Samavedic translations' to 'reused Rigvedic renderings'."
+    },
+    { "id": "R5B-m01", "severity": "MINOR", "claim_attacked": "Public artifacts reconciled.", "what_i_measured": "frontend/public/world/world.predicates.json:284 reads 'A single confidence value across three edges is a sample size, not a measurement.' INVOLVES_SUBSTANCE's three edges no longer carry a confidence; the value moved to uncalibrated_pipeline_score. Sourced from graph_service.PREDICATE_SEMANTICS.", "exact_query_or_file": "frontend/public/world/world.predicates.json:284 ; scripts/export_predicate_semantics.py", "verdict": "CONFIRMED", "what_must_change": "Fix the source string and re-export." },
+    { "id": "R5B-m02", "severity": "MINOR", "claim_attacked": "HEAD_TRUNCATION figure disclosed.", "what_i_measured": "docs/reports/data-completeness/cross-veda.md:228 publishes HEAD_TRUNCATION = 2 with no inline marker; correctly disclosed and explained at section 859-885 of the same document, which deliberately leaves the table as measured.", "exact_query_or_file": "docs/reports/data-completeness/cross-veda.md:228,859-885", "verdict": "CONFIRMED", "what_must_change": "Add a pointer at the table row; correctly disclosed residual otherwise." },
+    { "id": "R5B-m03", "severity": "MINOR", "claim_attacked": "remeasured.json is the final remeasurement.", "what_i_measured": "It is stamped 18:29, before increment 2 (18:31) and the canonical correction (18:34), so its GAP-QUALITY-003 block still records 2 constant predicates and 25,474 confidence edges; and its key `apparatus_still_in_the_graph` in fact lists the CORRECTED heads rather than surviving apparatus.", "exact_query_or_file": "data/staging/release_blocker_r5/remeasured.json", "verdict": "CONFIRMED", "what_must_change": "Re-run remeasure.py after increment 2, or stamp the file as an intermediate." },
+    { "id": "R5B-m04", "severity": "MINOR", "claim_attacked": "'Graph scorecard 11/11.'", "what_i_measured": "Section 8 of docs/reports/GRAPH_QUALITY_V2_SCORECARD.md lists 9 integrity gates, all YES; no 11-of-11 figure appears anywhere in it. Every R5 figure update in that scorecard is correct: 164,601 / 509,769 / 28,122 / 1485 / RV 8,121 / 131 entities in 3+ Vedas, all of which I reproduced live.", "exact_query_or_file": "docs/reports/GRAPH_QUALITY_V2_SCORECARD.md section 8", "verdict": "PARTIALLY_FALSIFIED", "what_must_change": "State what the 11 are, or say 9 of 9 integrity gates." },
+    { "id": "R5B-m05", "severity": "MINOR", "claim_attacked": "remaining.json's affected-artifact figures.", "what_i_measured": "It says '51,356 relationship rows across 7 predicates' and 'ASCRIBES_TO_DEVATA 39'; the measured figures are 51,364 and 47. Both are reconciled in the audit ruling at wave4_registry_closure_audit.py:1298.", "exact_query_or_file": "data/staging/release_blocker_r5/remaining.json", "verdict": "CONFIRMED", "what_must_change": "Nothing; disclosed and reconciled." },
+    { "id": "R5B-m06", "severity": "MINOR", "claim_attacked": "'2,052 :RoleFiller nodes carry 348 REFERS_TO edges to registered entities.'", "what_i_measured": "The pre-migration backup fingerprint records REFERS_TO at 387, unchanged by R5; 245 reach a non-Devata, which matches. The 348 is a sub-count that the prose does not scope.", "exact_query_or_file": "data/staging/release_blocker_r5/backup/MANIFEST.json ; data/staging/release_blocker_r5/remaining.json", "verdict": "PARTIALLY_FALSIFIED", "what_must_change": "Scope the 348 or use 387." },
+    { "id": "R5B-m07", "severity": "MINOR", "claim_attacked": "R5 banner placement.", "what_i_measured": "The banners in agent-1-verification.md:132 and WAVE_3_INTEGRATION_PLAN.md:153 say 'the claim below' while the claim they correct sits above them.", "exact_query_or_file": "docs/reports/data-completeness/agent-1-verification.md:132 ; WAVE_3_INTEGRATION_PLAN.md:153", "verdict": "CONFIRMED", "what_must_change": "Say 'above'." },
+    { "id": "R5B-m08", "severity": "MINOR", "claim_attacked": "No consumer reads the withdrawn confidence.", "what_i_measured": "src/vedagraph/api/services/entity_service.py:550 projects h.confidence on HAS_DEVATA|HAS_DEVATA_DERIVED, now always null; the consumer at :1930 hard-codes None, so it is dead code rather than a defect.", "exact_query_or_file": "src/vedagraph/api/services/entity_service.py:545-550,1913-1933", "verdict": "CONFIRMED", "what_must_change": "Delete the projection or repoint it at source_explicit_tier_marker." },
+    { "id": "R5B-m09", "severity": "MINOR", "claim_attacked": "Translation coverage figures consistent.", "what_i_measured": "src/vedagraph/api/services/search_service.py:38 docstring reads 'RV 10,509 - AV 5,770 - YV 1,939 - SV 173' while the live constant at :465-469 in the same file reads RV 10,510 / AV 5,770 / YV 1,950 / SV 173. Pre-existing, not R5-introduced.", "exact_query_or_file": "src/vedagraph/api/services/search_service.py:38,465-469", "verdict": "CONFIRMED", "what_must_change": "Reconcile the docstring to the constant." }
+  ],
+  "claims_i_attacked_and_could_not_break": [
+    { "claim": "GAP-SEMANTICS-003", "how_i_attacked_it": "Re-measured from the pre-migration backup and live: ASSERTION_AGENT 2,502->2,660, ASSERTION_TARGET 799->918, non-Devata targets 0->103, non-Devata agents 58, all-three-slots 0->10, 0 duplicate (assertion, filler) pairs, 0 assertions with two distinct agents. New edges carry derivation TREEBANK_DEPREL_ROLE_PROJECTION at quality_tier TIER_B alongside the untouched nulls, so the derivations are not blended. Consumer query widened at queries.py:1077-1088." },
+    { "claim": "GAP-ENTITY_COVERAGE-004", "how_i_attacked_it": "Tried to show it was a decorative null-fill. 384/384 expectation_origin (161/127/79/17/0), 0 null origin evidence, 0 null-or-empty evidence quotes, all 11 named origin files exist on disk, expected_source an exact bijection with the 161 class-A rows (0 either way), 223 deliberately null. Class-A rows carry a real Vedic Index (Macdonell and Keith 1912) citation with entry and page, a verbatim headword quote, and a HEADWORD_LEXICAL_MATCH_SENSE_NOT_HUMAN_REVIEWED flag disclosing that the sense alignment is unreviewed." },
+    { "claim": "GAP-ENTITY_COVERAGE-006 and the ayas cell", "how_i_attacked_it": "384/384 recall_applicability (163/155/65/1); 163 of 163 LEXICAL_RECOVERY_APPLICABLE carry both lexical_recall and lexical_recall_sample_size; the ayas YV cell measures 0; ayas aliases_sa is unchanged at its 6 original forms; the ONLY domain-YAML change in the whole pass is 6 additive aliases_sa_phrases on 2 unrelated entities. No matcher was weakened and no alias was registered to force the cell." },
+    { "claim": "GAP-ENTITY_COVERAGE-007 phrase pass", "how_i_attacked_it": "Independently re-derived it over all 20,210 mantras and every text role (PRIMARY_TEXT and PARALLEL_TEXT, including the 1,975 YV rows a PRIMARY_TEXT-only scan misses) with the repo's own build_surfaces and fold_alias: exactly 6 tritiya-savana hits, exactly the 6 claimed keys (RV 3.28.5, 4.34.4, 4.35.9, 8.57.1, AVS 6.47.3, 9.1.13), no seventh. All 6 live edges carry score 0.95 and method domain-mention-v1:sanskrit-phrase. Code review: the phrase pass compares a token SEQUENCE so it cannot fire inside a longer word; the sandhi pass excludes both token and phrase hits; a (passage, entity) pair reached by both paths has its token row deleted, so no double count." },
+    { "claim": "Personification: the 7 UNAVAILABLE rows", "how_i_attacked_it": "All 7 are refusals, all carry witness_count 0 and a reason that explicitly says 'This is a statement about THIS REGISTRY and NOT about whether the Vedas personify the phenomenon -- several of these are addressed as beings in the text and were simply never curated as deities.' I folded every NaturalPhenomenon label and alias against every Devata label and alias and found ZERO collisions, which is exactly what the refusal asserts. VATA-WIND's row explains the VG:DEVATA:VAYUH reachability as a vocabulary choice rather than identity. Honest." },
+    { "claim": "GAP-RITUAL-003", "how_i_attacked_it": "yupa vedas_with_matches = 3, aliases_sa 4 -> 11, 12 mentions over AV 5 / RV 5 / YV 2 including both VG:YV:VSM:A19:V017 and VG:YV:VSM:A25:V029; USES_OBJECT 24 in the backup and 24 live, so 0 minted; mani wired to SVASTYAYANA and typed ASSERTED_SOURCE_STATES_USE with an independent_witness; dundubhi and audumbara typed REFUSED with refusal_code, refusal_reason, candidate_citation and candidate_quote. All three -- including the ASSERTION -- carry ritual_use_review_level = AGENT_ADJUDICATED_SINGLE_READER_NO_HUMAN_REVIEW and ritual_use_human_reviewed, so nothing is presented as stronger than the refusals." },
+    { "claim": "GAP-RITUAL-005 graph state", "how_i_attacked_it": "103/103 offering_status (5 asserted / 51 refused-as-co-occurrence / 47 not-attested), 0 null; RECEIVES_OFFERING 4 and USES_OFFERING 4 both unchanged from the backup fingerprint; 0 of the 258 PROBABLE rows imported." },
+    { "claim": "GAP-RITUAL-006 figures and review level", "how_i_attacked_it": "20,210/20,210 ritual_context_precision; 0.95 = 19/20 reproducible rows and 0.7917 = 19/24 all-reviewed both reproduce from the metric's own values_json; human_reviewed 0 on every row and on the metric node; is_human_gold = false on the one node in the graph that carries the key and reference_set_class = INDEPENDENT_SOURCE_ADJUDICATED_REFERENCE_SET; 0 nodes anywhere claim human gold. Every row carrying the 0.95 also carries its review level. The MATERIAL_CULTURE_BY_RITUAL_CONTEXT split sums to its stated 1,777." },
+    { "claim": "GAP-SAMAVEDA_MUSIC-003 clause 1 is not enumerate()", "how_i_attacked_it": "Rebuilt the mapping independently from TWO source-derived witnesses in data/canonical/samaveda_arcika_v1: the 1,844 WIKISOURCE_SA_RUNNING_SAMHITA_NUMBER citations (label 'SV <n>') and the RN suffix of the 1,844 PRIMARY_TEXT source_locators ('WS CHANDA.P1.D3 RN33'). Graph vs citations: 0 mismatches. Graph vs locator: 0 mismatches. Citations vs locator: 0 mismatches. Range 1..1875 with 1,844 distinct, and the 31 missing numbers are EXACTLY the 31 distinct details.source_running_number values in qa_issues.jsonl -- 0 missing numbers unexplained, 0 qa numbers that are not missing." },
+    { "claim": "GAP-QUALITY-003 graph state and information preservation", "how_i_attacked_it": "source_explicit_tier_marker = 1.0 on all 51,364 (HAS_RISHI 17,889, HAS_CHANDAS 16,298, HAS_DEVATA 10,558, HAS_DEVATA_ASCRIPTION 5,385, HAS_DEVATA_DERIVED 882, BELONGS_TO_FAMILY 305, ASCRIBES_TO_DEVATA 47), matching the backup's per-type confidence counts exactly; 0 edges carry both properties; uncalibrated_pipeline_score preserves 0.75 and 0.85 on the 4; 25,470 confidence edges all carry calibration_status; the minimum distinct-value count across the 11 surviving predicates is 3, so no predicate is constant under any definition. No value was destroyed." },
+    { "claim": "GAP-TRANSLATION-004 versus -006", "how_i_attacked_it": "36 RV mantras still lack their own HAS_TRANSLATION edge, and the 30 even verses of RV 1.65-1.70 hold exactly 0 edges each while the odd verses hold exactly 1 -- the 006 invariant is intact and no even verse gained an edge. The 6 UNCOVERED_NO_RENDERING_REACHES_IT rows (RV 5.55.8, 9.7.9, 10.48.7, 10.86.16, 10.86.17, 10.132.5) are typed rather than erased. SV: 173 HAS_TRANSLATION edges, all typed REUSED_RENDERING, plus 1,488 UNCOVERED_REUSABLE_PARALLEL_AVAILABLE and 183 UNCOVERED_NO_RENDERING_REACHES_IT. The 173 is labelled reuse and never totalled as Samaveda English on the API, the frontend or the public artifacts -- search_service.py, models/passage.py, routes/stats.py, frontend/public/data/provenance.json:506 and frontend/src/app/sources/page.tsx:525 all disclose it correctly. The remaining misstatements are in prose reports and are filed as R5B-M20." },
+    { "claim": "Migration safety and the forbidden operations", "how_i_attacked_it": "Backup verified against MANIFEST.json and the receipt by sha256 and line count. Backup-vs-live label delta: DerivedMetric only. Relationship-type delta: ASSERTION_AGENT +158, ASSERTION_TARGET +119, MENTIONS_ENTITY +6 and nothing else, matching the receipt's 283 exactly. Identity: 0 passage_keys, 0 formula_ids, 0 entity_keys, 0 text_ids and 0 assertion_keys added or removed. No re-key, no normalisation-derived identity minting, no node or relationship deleted. r5_contract appears on exactly 20,596 nodes = 20,210 Mantra + 384 DomainEntity + 2 DerivedMetric, with no node outside the plan carrying it." },
+    { "claim": "All 66 Cypher closure measures", "how_i_attacked_it": "Re-ran every Cypher closure_measure in data/gap_registry.json against the live store: 0 disagreements against the registry's recorded value, 0 against the audit's, 0 against the audit's expected value. The 19 non-Cypher entries are the same 19 the audit itself names as ungated, of which it names 16 as closures asserted with no live measurement -- disclosed in the artifact, not hidden." },
+    { "claim": "Confidence consumers do not read null as zero", "how_i_attacked_it": "Swept every relationship-property confidence read in src/ and frontend/. graph_service._confidence falls back to PIPELINE_CONSTANT_PREDICATES so the seven still report pipeline_prior 1.0; _passes_filters short-circuits on the predicate set before touching the property and treats non-numeric as 'no opinion'; passage_service's projections are inside collect() not WHERE and pass through _as_float which returns None. No frontend component renders a confidence value at all, and no published frontend artifact carries a confidence key on an edge record (world.json, world.bin, world.labels.json, home-world.json all 0). min_confidence still behaves." }
+  ]
+}

@@ -13,8 +13,10 @@ derived from it are Rigveda-only: ``HAS_DEVATA`` (10,558 edges), ``MENTIONS_LEMM
 (154,261 over all 10,552 Rigvedic verses) and the ``PERFORMS_ACTION`` (441) /
 ``IS_ASKED_TO`` (224) pair derived from the morphological assertions.
 ``HAS_SEMANTIC_ASSERTION`` is *not* in that set any more: it carries 35,131 edges and
-reaches all four corpora. What remains Rigveda-only inside it is the agentive reading --
-2,502 assertions carry an ``ASSERTION_AGENT`` and every one of them is Rigvedic. ``HAS_RISHI`` and
+reaches all four corpora. The agentive reading inside it was Rigveda-only and is not any
+more: ``ASSERTION_AGENT`` carries 2,660 edges over RV 2,406, AV 124 and YV 34, because
+GAP-SEMANTICS-003 projected the DCS dependency annotation's own role resolution onto the
+assertion. The Sāmaveda still carries no agent. ``HAS_RISHI`` and
 ``HAS_CHANDAS`` are *not* in that set any more: ``HAS_RISHI`` now carries 17,889 edges
 over RV (10,565), AV (5,084) and YV (2,240), and ``HAS_CHANDAS`` 16,320 over RV (10,523)
 and AV (5,797). At mantra level, 10,534 of the RV's 10,552, 4,542 of the AV's 5,839 and
@@ -992,6 +994,10 @@ QUERIES: Final[tuple[DomainQuery, ...]] = (
         cypher="""
         MATCH (p:Passage)-[:HAS_SEMANTIC_ASSERTION]->
               (s:SemanticAssertion {derivation: 'MORPHOLOGY_RULE'})
+        // :Devata is correct here and must stay. This query is scoped to MORPHOLOGY_RULE,
+        // whose 2,406 agents are all deities; the 58 non-deity agents GAP-SEMANTICS-003
+        // added carry derivation TREEBANK_DEPREL_ROLE_PROJECTION and belong to a different
+        // layer. Widening it would blend two derivations into one answer.
         MATCH (s)-[:ASSERTION_AGENT]->(agent:Devata)
         MATCH (s)-[:ASSERTION_PREDICATE]->(ap:ActionPredicate)
         WHERE s.patient <> '' AND s.beneficiary <> ''
@@ -1075,9 +1081,14 @@ QUERIES: Final[tuple[DomainQuery, ...]] = (
         cypher="""
         MATCH (p:Passage {canonical_key: $key})-[:HAS_SEMANTIC_ASSERTION]->
               (s:SemanticAssertion)
-        OPTIONAL MATCH (s)-[:ASSERTION_AGENT]->(agent:Devata)
+        // Untyped on purpose. Both predicates are declared over
+        // {Devata, DomainEntity} and GAP-SEMANTICS-003 populated the second half, so a
+        // :Devata-typed pattern here would silently drop 103 non-deity targets and 58
+        // non-deity agents -- reporting a slot as empty because the filler is a substance
+        // rather than a god.
+        OPTIONAL MATCH (s)-[:ASSERTION_AGENT]->(agent)
         OPTIONAL MATCH (s)-[:ASSERTION_PREDICATE]->(ap:ActionPredicate)
-        OPTIONAL MATCH (s)-[:ASSERTION_TARGET]->(target:Devata)
+        OPTIONAL MATCH (s)-[:ASSERTION_TARGET]->(target)
         RETURN s.derivation AS derivation, s.quality_tier AS tier,
                coalesce(ap.predicate, s.semantic_predicate) AS predicate,
                s.frame AS frame, agent.display_label AS agent,
@@ -2030,50 +2041,83 @@ QUERIES: Final[tuple[DomainQuery, ...]] = (
             "Where is the graph uncertain, and is the confidence field a calibrated measurement?"
         ),
         cypher="""
+        // Reads all THREE strength fields, not just `confidence`. GAP-QUALITY-003 withdrew
+        // `confidence` from the seven source-explicit predicates, and a `confidence IS NOT
+        // NULL` filter therefore reported zero SINGLE_CONSTANT rows while 51,364 edges
+        // still carried exactly 1.0 under another name -- making the one query whose job is
+        // to disclose the constants blind to the largest block of them. Agent B's C01.
         MATCH ()-[r]->()
         WHERE r.confidence IS NOT NULL
-        WITH type(r) AS predicate, r.confidence AS value, count(*) AS edges
-        WITH predicate, collect({value: value, edges: edges}) AS spread,
+           OR r.source_explicit_tier_marker IS NOT NULL
+           OR r.uncalibrated_pipeline_score IS NOT NULL
+        WITH type(r) AS predicate,
+             coalesce(r.confidence, r.source_explicit_tier_marker,
+                      r.uncalibrated_pipeline_score) AS value,
+             CASE WHEN r.confidence IS NOT NULL THEN 'confidence'
+                  WHEN r.source_explicit_tier_marker IS NOT NULL
+                       THEN 'source_explicit_tier_marker'
+                  ELSE 'uncalibrated_pipeline_score' END AS field,
+             r.calibration_status AS calibration_status,
+             count(*) AS edges
+        WITH predicate, field, calibration_status,
+             collect({value: value, edges: edges}) AS spread,
              sum(edges) AS predicate_total
-        WITH predicate, predicate_total, spread,
+        WITH predicate, field, calibration_status, predicate_total, spread,
              reduce(top = 0, s IN spread | CASE WHEN s.edges > top THEN s.edges ELSE top END)
                AS modal_edges
-        RETURN predicate, predicate_total, size(spread) AS distinct_values,
+        RETURN predicate, field, predicate_total, size(spread) AS distinct_values,
                modal_edges,
                round(1000.0 * modal_edges / predicate_total) / 10 AS modal_share_pct,
                CASE WHEN size(spread) = 1 THEN 'SINGLE_CONSTANT'
                     WHEN modal_edges * 2 > predicate_total THEN 'MAJORITY_ONE_CONSTANT'
                     ELSE 'DISTRIBUTED' END AS guard_verdict,
-               'PIPELINE_PRIOR, NOT A CALIBRATED CONFIDENCE' AS what_this_field_is,
-               'NONE: no labelled evaluation set and no reliability curve exist in this '
-               + 'graph' AS calibration_evidence
+               CASE WHEN field = 'source_explicit_tier_marker'
+                      THEN 'AN EVIDENCE TIER, NOT A PROBABILITY'
+                    WHEN field = 'uncalibrated_pipeline_score'
+                      THEN 'AN UNCALIBRATED PIPELINE SCORE, NOT A PROBABILITY'
+                    ELSE 'PIPELINE_PRIOR, NOT A CALIBRATED CONFIDENCE' END
+                 AS what_this_field_is,
+               coalesce(calibration_status,
+                        'NOT_CALIBRATED_NO_HUMAN_LABELLED_SAMPLE') AS calibration_evidence
         ORDER BY predicate_total DESC
         """,
         caveat=(
-            "THE FIELD IS NAMED `confidence` AND IS NOT ONE. It is a pipeline prior: a "
-            "constant stamped per branch. Measured, 75,997 of 77,518 confidence-bearing "
-            "edges -- 98.0% -- sit at exactly one of three values (1.0 on 50,468, 0.85 on "
-            "12,809, 0.80 on 12,720). A researcher who filters `confidence >= 0.8` "
-            "believes they have raised precision and has selected a set of pipeline "
-            "branches. This got WORSE in V3, not better: the baseline's 0.42 cluster was "
-            "replaced by a 1.0 cluster of 50,468 edges. "
-            "`guard_verdict` is the constant-value guard, and it is returned per row "
-            "rather than described here: SINGLE_CONSTANT means the value carries no "
-            "information at all for that predicate, MAJORITY_ONE_CONSTANT means one value "
-            "covers over half of it. "
-            "There is NO calibrated uncertainty in this graph. There is no labelled "
-            "evaluation set and no reliability diagram; `human_gold_status` is "
-            "UNANNOTATED on 2,459 SemanticAssertion nodes and null on the other 2,406, "
-            "and `review_state` is UNREVIEWED on all of them. Calibration is HUMAN_BLOCKED "
-            "and cannot be produced by a model run. "
+            "NO FIELD IN THIS GRAPH IS A CALIBRATED CONFIDENCE, and three different fields "
+            "carry the three different things that were all once called one. Measured after "
+            "GAP-QUALITY-003: 76,838 edges carry a strength figure, and 75,348 of them -- "
+            "98.1% -- sit at exactly one of three values (1.0 on 51,364, 0.85 on 12,781, "
+            "0.80 on 11,203). A researcher who filters on 0.8 believes they have raised "
+            "precision and has selected a set of pipeline branches. "
+            "WHICH FIELD an edge uses is returned per row, because the three are not the "
+            "same claim. `source_explicit_tier_marker` (51,364 edges over 7 predicates, all "
+            "at 1.0) is an EVIDENCE TIER: the source states the relation, and the figure "
+            "carries no per-edge information at all. It was called `confidence` until R5 "
+            "renamed it, because a constant stamped on every edge of a predicate offers a "
+            "threshold that keeps all of them or none. `uncalibrated_pipeline_score` (4 "
+            "edges over 2 predicates) is a pipeline default on a population too small to "
+            "vary -- 3 edges and 1 -- which is a sample size and not a tier, which is why "
+            "those two did NOT get the tier marker. `confidence` (25,470 edges over 11 "
+            "predicates) is the only one where the value genuinely varies edge to edge, and "
+            "every one of those edges carries "
+            "`calibration_status = NOT_CALIBRATED_NO_HUMAN_LABELLED_SAMPLE`. "
+            "`guard_verdict` is the constant-value guard, returned per row rather than "
+            "described here: SINGLE_CONSTANT means the value carries no information for "
+            "that predicate, MAJORITY_ONE_CONSTANT means one value covers over half of it. "
+            "Nine predicates read SINGLE_CONSTANT. "
+            "CALIBRATION IS HUMAN-BLOCKED and cannot be produced by a model run. There is "
+            "no labelled evaluation set and no reliability diagram anywhere in this graph: "
+            "`human_gold_status` is UNANNOTATED on 2,459 SemanticAssertion nodes and null "
+            "on the other 32,672, and `review_state` is UNREVIEWED on all 35,131. The "
+            "reference set that does exist is an "
+            "INDEPENDENT_SOURCE_ADJUDICATED_REFERENCE_SET and is NOT human gold; 0 nodes "
+            "in this graph claim to be. "
             "For real per-edge uncertainty use `quality_tier`, `evidence_basis` and "
             "`attribution_precision`, which are derived from what the edge actually rests "
-            "on. The field SHOULD be renamed to `pipeline_prior`; that rename is bounded "
-            "backlog rather than done, because `confidence` appears in 38 source files "
-            "and one of them, src/vedagraph/semantic/ontology.py, is inside the semantic "
-            "hash seal, where the same word means a model's own output rather than a "
-            "pipeline constant. A blanket rename would break the seal and conflate two "
-            "different quantities, so it needs a scoped pass over the edge writers alone."
+            "on. The remaining `confidence` spelling is NOT renamed further, and the reason "
+            "is a boundary rather than a backlog: src/vedagraph/semantic/ontology.py is "
+            "inside the semantic hash seal, where the same word means a model's own output "
+            "rather than a pipeline constant, so a blanket rename would break the seal and "
+            "conflate two quantities."
         ),
         serves=(77,),
     ),

@@ -242,13 +242,26 @@ def test_deleted_file_is_detected(tmp_path: pathlib.Path) -> None:
     assert result["missing"] == [victim.relative_to(tmp_path).as_posix()]
 
 
-def test_staged_sv_apparatus_proposal_still_describes_the_live_corpus() -> None:
-    """A staged correction goes stale silently; this makes it go stale loudly.
+def test_staged_sv_apparatus_proposal_was_applied_and_stays_applied() -> None:
+    """The correction has LANDED, so this guard now asserts the post-application state.
 
-    ``gap005_sv_apparatus_corrections.json`` records, per verse, the exact text that is stored
-    *today* and the exact text proposed instead. If the corpus is rebuilt or the correction is
-    applied, the recorded "current" text stops matching and the proposal must be regenerated
-    rather than quietly re-read as if it were still true.
+    It used to assert the pre-application state -- that the stored text still matched the
+    proposal's recorded "current" -- so that a staged correction would go stale loudly
+    rather than silently. It did exactly that: applying the correction in R5
+    (GAP-PRODUCT_SURFACE-005) turned this test red, which is the guard working and not the
+    guard breaking.
+
+    Inverted rather than deleted, because the same file still has something to check and
+    the direction is the only thing that changed. What must hold now:
+
+    *   the stored text equals the proposal's PROPOSED text, exactly;
+    *   the apparatus prefix is gone from the head of the stored text;
+    *   the correction was a pure prefix deletion, so ``current`` is still
+        ``apparatus + proposed`` and no other codepoint ever moved; and
+    *   the stored ``content_sha256`` is the proposed digest.
+
+    A rebuild that reintroduced the apparatus, or an edit that changed any other codepoint
+    while removing it, fails here.
     """
     proposal_path = (
         PROJECT_ROOT
@@ -273,18 +286,28 @@ def test_staged_sv_apparatus_proposal_still_describes_the_live_corpus() -> None:
 
     for correction in proposal["corrections"]:
         row = by_locator[correction["source_locator"]]
-        assert row["text_original"] == correction["current"]["text_original"], (
-            f"{correction['canonical_key']}: the stored text no longer matches the proposal. "
-            "Regenerate gap005_sv_apparatus_corrections.json."
-        )
         apparatus = correction["apparatus_removed"]["substring"]
         proposed = correction["proposed"]["text_original"]
-        assert row["text_original"] == apparatus + proposed, (
+        current = correction["current"]["text_original"]
+
+        # The proposal's own internal claim, still checked: a pure prefix deletion.
+        assert current == apparatus + proposed, (
             "the correction must be a pure prefix deletion: no other codepoint may change"
+        )
+        # And the stored text is now the corrected one.
+        assert row["text_original"] == proposed, (
+            f"{correction['canonical_key']}: the stored text is not the corrected reading. "
+            "If the corpus was rebuilt from the uncorrected parser, the apparatus is back."
+        )
+        assert not row["text_original"].startswith(apparatus), (
+            f"{correction['canonical_key']}: the apparatus prefix is present again"
         )
         assert (
             hashlib.sha256(proposed.encode("utf-8")).hexdigest()
             == correction["proposed"]["content_sha256"]
+        )
+        assert row["content_sha256"] == correction["proposed"]["content_sha256"], (
+            f"{correction['canonical_key']}: stored digest is not the corrected digest"
         )
         assert correction["source_evidence"][
             "corrected_reading_occurs_verbatim_in_pinned_page_line_form"

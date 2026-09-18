@@ -1,0 +1,242 @@
+{
+  "counts": {
+    "VG:CONCEPT:MADHYANDINA-SAVANA-MIDDAY-PRESSING": 5,
+    "VG:CONCEPT:TRTIYA-SAVANA-THIRD-PRESSING": 6
+  },
+  "hits": {
+    "VG:CONCEPT:MADHYANDINA-SAVANA-MIDDAY-PRESSING": [
+      [
+        "VG:AV:SAU:K07:S076:V006",
+        "PARALLEL_TEXT"
+      ],
+      [
+        "VG:AV:SAU:K07:S076:V006",
+        "PRIMARY_TEXT"
+      ],
+      [
+        "VG:AV:SAU:K20:S012:V007",
+        "PARALLEL_TEXT"
+      ],
+      [
+        "VG:AV:SAU:K20:S012:V007",
+        "PRIMARY_TEXT"
+      ],
+      [
+        "VG:RV:SAK:M03:S028:V004",
+        "PARALLEL_TEXT"
+      ],
+      [
+        "VG:RV:SAK:M03:S028:V004",
+        "PRIMARY_TEXT"
+      ],
+      [
+        "VG:RV:SAK:M03:S032:V003",
+        "PARALLEL_TEXT"
+      ],
+      [
+        "VG:RV:SAK:M03:S032:V003",
+        "PRIMARY_TEXT"
+      ],
+      [
+        "VG:RV:SAK:M05:S040:V004",
+        "PARALLEL_TEXT"
+      ],
+      [
+        "VG:RV:SAK:M05:S040:V004",
+        "PRIMARY_TEXT"
+      ]
+    ],
+    "VG:CONCEPT:TRTIYA-SAVANA-THIRD-PRESSING": [
+      [
+        "VG:AV:SAU:K06:S047:V003",
+        "PARALLEL_TEXT"
+      ],
+      [
+        "VG:AV:SAU:K06:S047:V003",
+        "PRIMARY_TEXT"
+      ],
+      [
+        "VG:AV:SAU:K09:S001:V013",
+        "PARALLEL_TEXT"
+      ],
+      [
+        "VG:AV:SAU:K09:S001:V013",
+        "PRIMARY_TEXT"
+      ],
+      [
+        "VG:RV:SAK:M03:S028:V005",
+        "PARALLEL_TEXT"
+      ],
+      [
+        "VG:RV:SAK:M03:S028:V005",
+        "PRIMARY_TEXT"
+      ],
+      [
+        "VG:RV:SAK:M04:S034:V004",
+        "PARALLEL_TEXT"
+      ],
+      [
+        "VG:RV:SAK:M04:S034:V004",
+        "PRIMARY_TEXT"
+      ],
+      [
+        "VG:RV:SAK:M04:S035:V009",
+        "PARALLEL_TEXT"
+      ],
+      [
+        "VG:RV:SAK:M04:S035:V009",
+        "PRIMARY_TEXT"
+      ],
+      [
+        "VG:RV:SAK:M08:S057:V001",
+        "PARALLEL_TEXT"
+      ],
+      [
+        "VG:RV:SAK:M08:S057:V001",
+        "PRIMARY_TEXT"
+      ]
+    ]
+  },
+  "live": [
+    {
+      "k": "VG:AV:SAU:K07:S076:V006",
+      "e": "VG:CONCEPT:MADHYANDINA-SAVANA-MIDDAY-PRESSING",
+      "method": "domain-mention-v1:sanskrit-token",
+      "score": 0.9,
+      "ali": [
+        "mādhyandine"
+      ],
+      "ev": "[{\"locator\":\"VG:AV:SAU:K07:S076:V006\",\"surface\":\"script_folded\",\"quote\":\"samare vasūnām mādhyandine savana ā\"}]"
+    },
+    {
+      "k": "VG:AV:SAU:K20:S012:V007",
+      "e": "VG:CONCEPT:MADHYANDINA-SAVANA-MIDDAY-PRESSING",
+      "method": "domain-mention-v1:sanskrit-token",
+      "score": 0.9,
+      "ali": [
+        "mādhyaṃdine"
+      ],
+      "ev": "[{\"locator\":\"VG:AV:SAU:K20:S012:V007\",\"surface\":\"script_folded\",\"quote\":\"yāsad arvāṅ mādhyaṃdine savane matsad\"}]"
+    },
+    {
+      "k": "VG:RV:SAK:M03:S028:V004",
+      "e": "VG:CONCEPT:MADHYANDINA-SAVANA-MIDDAY-PRESSING",
+      "method": "domain-mention-v1:sanskrit-token",
+      "score": 0.9,
+      "ali": [
+        "mādhyaṃdine"
+      ],
+      "ev": "[{\"locator\":\"VG:RV:SAK:M03:S028:V004\",\"surface\":\"script_folded\",\"quote\":\"mādhyaṃdine savane jātavedaḥ\"}]"
+    },
+    {
+      "k": "VG:RV:SAK:M03:S032:V003",
+      "e": "VG:CONCEPT:MADHYANDINA-SAVANA-MIDDAY-PRESSING",
+      "method": "domain-mention-v1:sanskrit-token",
+      "score": 0.9,
+      "ali": [
+        "mādhyaṃdine"
+      ],
+      "ev": "[{\"locator\":\"VG:RV:SAK:M03:S032:V003\",\"surface\":\"script_folded\",\"quote\":\"ta ojaḥ mādhyaṃdine savane vajrahasta\"}]"
+    },
+    {
+      "k": "VG:RV:SAK:M05:S040:V004",
+      "e": "VG:CONCEPT:MADHYANDINA-SAVANA-MIDDAY-PRESSING",
+      "method": "domain-mention-v1:sanskrit-token",
+      "score": 0.9,
+      "ali": [
+        "mādhyaṃdine"
+      ],
+      "ev": "[{\"locator\":\"VG:RV:SAK:M05:S040:V004\",\"surface\":\"script_folded\",\"quote\":\"yāsad arvāṅ mādhyaṃdine savane matsad\"}]"
+    },
+    {
+      "k": "VG:RV:SAK:M06:S047:V006",
+      "e": "VG:CONCEPT:MADHYANDINA-SAVANA-MIDDAY-PRESSING",
+      "method": "domain-mention-v1:sanskrit-token",
+      "score": 0.9,
+      "ali": [
+        "mādhyaṃdine"
+      ],
+      "ev": "[{\"locator\":\"VG:RV:SAK:M06:S047:V006\",\"surface\":\"script_folded\",\"quote\":\"samare vasūnām mādhyaṃdine savana ā\"}]"
+    },
+    {
+      "k": "VG:YV:VSM:A19:V026",
+      "e": "VG:CONCEPT:MADHYANDINA-SAVANA-MIDDAY-PRESSING",
+      "method": "domain-mention-v1:sanskrit-token",
+      "score": 0.9,
+      "ali": [
+        "mādhyaṃndinam"
+      ],
+      "ev": "[{\"locator\":\"VG:YV:VSM:A19:V026\",\"surface\":\"script_folded\",\"quote\":\"prātaḥ savanamindreṇaindraṃ mādhyaṃndinam vaiśvadevaṃṃ sarasvatyā\"}]"
+    },
+    {
+      "k": "VG:AV:SAU:K06:S047:V003",
+      "e": "VG:CONCEPT:TRTIYA-SAVANA-THIRD-PRESSING",
+      "method": "domain-mention-v1:sanskrit-phrase",
+      "score": 0.95,
+      "ali": [
+        "tṛtīyaṃ savanaṃ"
+      ],
+      "ev": null
+    },
+    {
+      "k": "VG:AV:SAU:K09:S001:V013",
+      "e": "VG:CONCEPT:TRTIYA-SAVANA-THIRD-PRESSING",
+      "method": "domain-mention-v1:sanskrit-phrase",
+      "score": 0.95,
+      "ali": [
+        "tṛtīye savana"
+      ],
+      "ev": null
+    },
+    {
+      "k": "VG:RV:SAK:M03:S028:V005",
+      "e": "VG:CONCEPT:TRTIYA-SAVANA-THIRD-PRESSING",
+      "method": "domain-mention-v1:sanskrit-phrase",
+      "score": 0.95,
+      "ali": [
+        "tṛtīye savane"
+      ],
+      "ev": null
+    },
+    {
+      "k": "VG:RV:SAK:M04:S034:V004",
+      "e": "VG:CONCEPT:TRTIYA-SAVANA-THIRD-PRESSING",
+      "method": "domain-mention-v1:sanskrit-phrase",
+      "score": 0.95,
+      "ali": [
+        "tṛtīyaṃ savanam"
+      ],
+      "ev": null
+    },
+    {
+      "k": "VG:RV:SAK:M04:S035:V009",
+      "e": "VG:CONCEPT:TRTIYA-SAVANA-THIRD-PRESSING",
+      "method": "domain-mention-v1:sanskrit-phrase",
+      "score": 0.95,
+      "ali": [
+        "tṛtīyaṃ savanaṃ"
+      ],
+      "ev": null
+    },
+    {
+      "k": "VG:RV:SAK:M08:S057:V001",
+      "e": "VG:CONCEPT:TRTIYA-SAVANA-THIRD-PRESSING",
+      "method": "domain-mention-v1:sanskrit-phrase",
+      "score": 0.95,
+      "ali": [
+        "tṛtīyaṃ savanam"
+      ],
+      "ev": null
+    },
+    {
+      "k": "VG:YV:VSM:A19:V026",
+      "e": "VG:CONCEPT:TRTIYA-SAVANA-THIRD-PRESSING",
+      "method": "domain-mention-v1:sanskrit-token",
+      "score": 0.9,
+      "ali": [
+        "tṛtīyamāptaṃṃ"
+      ],
+      "ev": "[{\"locator\":\"VG:YV:VSM:A19:V026\",\"surface\":\"script_folded\",\"quote\":\"vaiśvadevaṃṃ sarasvatyā tṛtīyamāptaṃṃ savanam\"}]"
+    }
+  ]
+}

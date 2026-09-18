@@ -149,3 +149,5 @@ claim.
 - **Samavedic morphology is unavailable** on three independent negatives.
 - **Samavedic ārcika verse audio is 0 of 1,844**, a verified zero over an assessed
   population. The LOAR deposit does not close it: no item is a Kauthuma ārcika recitation.
+
+> **R5 correction.** The `ASSERTION_AGENT` / `ASSERTION_TARGET` claim below measured the POPULATION and was never true of the declared RANGE, which has admitted `{Devata, DomainEntity}` throughout. `GAP-SEMANTICS-003` populated the second half in R5: 2,660 agents with 58 non-deity, 918 targets with 103 non-deity. See the R5 section of `quality.md`.

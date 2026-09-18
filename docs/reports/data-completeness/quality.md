@@ -15,7 +15,8 @@ human-annotated treebank fetched the same day.
 ## 0. The one-sentence answer
 
 **The `confidence` property is not a probability, and this report proves it three ways:**
-50,468 of 76,050 confidence-bearing edges carry exactly `1.0`; five predicates stamp one
+51,364 of 76,838 strength-bearing edges carry exactly `1.0` and none of them under
+`confidence` any more (see the R5 correction at the end of this report); SEVEN predicates stamp one
 value on every edge they have; and within a single nominal `1.0` the measured accuracy
 ranges from **71.4% to 97.6%** depending on a tier the number does not mention.
 
@@ -252,6 +253,8 @@ cannot see that and the per-alias table can.
 `proofs/calibration.json`
 
 ### Ground one — the value is mostly a constant
+
+> **SUPERSEDED BY R5 — see the correction at the end of this report.** The paragraph below measures the graph before `GAP-QUALITY-003` closed. It now reads 76,838 strength-bearing edges, 51,364 at exactly 1.0 and NONE of them under `confidence`, and 25,470 still carrying `confidence` over 11 predicates whose value genuinely varies.
 
 76,050 edges carry a `confidence`. **50,468 of them carry exactly `1.0`**; 12,782 carry
 0.85 and 11,310 carry 0.80. Those three values cover 98.0%. Five predicates —
@@ -506,7 +509,7 @@ slots and that the live measurement was 0. **Both figures are right and neither 
 wrong.** 17 assertions carry three role *edges*; 0 carry one edge of each of the three
 *types*. The disagreement was in the predicate, not the count, and the 1,522 figure both
 reports give is exact. Agent 1's schema limit is also confirmed: `ASSERTION_AGENT` points
-only at `:Devata` (2,502 edges), `ASSERTION_TARGET` only at `:Devata` (799), and
+only at `:Devata` (2,502 edges), `ASSERTION_TARGET` only at `:Devata` (799) **[SUPERSEDED BY R5: 2,660 and 918, with 58 and 103 non-deity — see the correction at the end of this report]**, and
 `ASSERTION_PREDICATE` only at `:ActionPredicate` (2,672).
 
 All 2,459 `MODEL_EXTRACTION` nodes carry `human_gold_status: UNANNOTATED`,
@@ -635,3 +638,59 @@ only genuinely continuous quality measures, and what `confidence` should have lo
   proper sense is not merely unmeasured here — the field's shape forbids it.
 - **No aboutness verdict.** The `ABOUT_CONCEPT` layer is scored on the lexical claim its
   own `method` field makes, and not on the interpretive claim its name makes.
+
+
+## R5 correction — the assertion slots no longer point only at `:Devata`
+
+The paragraph above measured the graph as it stood, and `GAP-SEMANTICS-003` has since moved
+it. The **declared range** was never narrow: `ontology.py` has admitted
+`{Devata, DomainEntity}` on both `ASSERTION_AGENT` and `ASSERTION_TARGET` throughout, so
+the entry's own `implementation_dependency` asking to "widen" them was asking for a widening
+that had already happened. What was missing was any edge.
+
+R5 projected the resolution that already existed one hop away: 2,052 `:RoleFiller` nodes
+carry 348 `REFERS_TO` edges to registered entities, derived `TREEBANK_DEPREL` from DCS
+dependency relations at `TIER_B` with the conllu `sent_id` on the edge. Measured after:
+
+| predicate | before | after | non-`:Devata` after |
+| --- | --- | --- | --- |
+| `ASSERTION_AGENT` | 2,502 | 2,660 | 58 |
+| `ASSERTION_TARGET` | 799 | 918 | 103 |
+
+Only `AGENT` and `PATIENT` were projected. `BENEFICIARY`, `GOAL`, `INSTRUMENT`, `LOCATION`
+and `SOURCE` stay on `ASSERTION_ROLE` alone: they are distinct roles, and folding five of
+them into a slot called "target" would make the slot mean five things — which is the tier
+blending the entry warned about.
+
+
+## R5 correction — every confidence figure in this report is superseded
+
+`GAP-QUALITY-003` closed in R5 and it moved the field this report is largely about. **Every
+`confidence` figure above, including the one-sentence answer in Section 0 and the tables in
+the confidence section, describes the graph BEFORE that closure.** They are left in place
+because they are the finding the gap was opened for; read them as the state that was
+corrected, not as the state that is.
+
+What the graph reads now, measured after the closure:
+
+| | before | now |
+| --- | --- | --- |
+| strength-bearing edges | 76,050 | **76,838** |
+| edges at exactly 1.0 | 50,468 | **51,364**, and none of them under `confidence` |
+| predicates stamping one value on every edge | 5 named (7 actual) | **7**, all under `source_explicit_tier_marker` |
+| edges still carrying `confidence` | 76,050 | **25,470**, over 11 predicates whose value genuinely varies |
+| those edges carrying a calibration disclosure | 0 | **25,470** |
+| `human_gold_status` null | 2,406 | **32,672** |
+| assertions carrying agent + predicate + target | 0 | **10** |
+| `ASSERTION_AGENT` / `ASSERTION_TARGET` | 2,502 / 799, `:Devata` only | **2,660 / 918**, with 58 / 103 non-deity |
+
+The 1.0 was never a probability. It recorded that the source states the relation — an
+evidence TIER — and published as `confidence` it offered a filter that keeps all of a
+predicate's edges or none. It is renamed rather than deleted, so the source-explicit fact
+survives, and the seven writers that produce those edges were changed at source so a rebuild
+reproduces the rename rather than reversing it.
+
+**No human gold was manufactured.** Calibration curves still do not exist and cannot, because
+no human-labelled sample exists in this repository: 0 nodes carry `is_human_gold = true`, and
+the reference set that does exist is an `INDEPENDENT_SOURCE_ADJUDICATED_REFERENCE_SET`. What
+changed is that the absence is now stated on all 25,470 edges instead of only in prose.

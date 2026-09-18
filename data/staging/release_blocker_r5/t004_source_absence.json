@@ -1,0 +1,149 @@
+{
+ "absent_from_source": [
+  "VG:RV:SAK:M01:S053:V001",
+  "VG:RV:SAK:M01:S065:V006",
+  "VG:RV:SAK:M01:S065:V007",
+  "VG:RV:SAK:M01:S065:V008",
+  "VG:RV:SAK:M01:S065:V009",
+  "VG:RV:SAK:M01:S065:V010",
+  "VG:RV:SAK:M01:S066:V006",
+  "VG:RV:SAK:M01:S066:V007",
+  "VG:RV:SAK:M01:S066:V008",
+  "VG:RV:SAK:M01:S066:V009",
+  "VG:RV:SAK:M01:S066:V010",
+  "VG:RV:SAK:M01:S067:V006",
+  "VG:RV:SAK:M01:S067:V007",
+  "VG:RV:SAK:M01:S067:V008",
+  "VG:RV:SAK:M01:S067:V009",
+  "VG:RV:SAK:M01:S067:V010",
+  "VG:RV:SAK:M01:S068:V006",
+  "VG:RV:SAK:M01:S068:V007",
+  "VG:RV:SAK:M01:S068:V008",
+  "VG:RV:SAK:M01:S068:V009",
+  "VG:RV:SAK:M01:S068:V010",
+  "VG:RV:SAK:M01:S069:V006",
+  "VG:RV:SAK:M01:S069:V007",
+  "VG:RV:SAK:M01:S069:V008",
+  "VG:RV:SAK:M01:S069:V009",
+  "VG:RV:SAK:M01:S069:V010",
+  "VG:RV:SAK:M01:S070:V007",
+  "VG:RV:SAK:M01:S070:V008",
+  "VG:RV:SAK:M01:S070:V009",
+  "VG:RV:SAK:M01:S070:V010",
+  "VG:RV:SAK:M01:S070:V011",
+  "VG:RV:SAK:M01:S073:V001",
+  "VG:RV:SAK:M01:S091:V018",
+  "VG:RV:SAK:M01:S179:V001",
+  "VG:RV:SAK:M01:S179:V002",
+  "VG:RV:SAK:M01:S179:V003",
+  "VG:RV:SAK:M01:S179:V004",
+  "VG:RV:SAK:M01:S179:V005",
+  "VG:RV:SAK:M01:S179:V006",
+  "VG:RV:SAK:M05:S044:V014",
+  "VG:RV:SAK:M05:S055:V008",
+  "VG:RV:SAK:M08:S093:V029",
+  "VG:RV:SAK:M09:S007:V009",
+  "VG:RV:SAK:M10:S048:V007",
+  "VG:RV:SAK:M10:S061:V005",
+  "VG:RV:SAK:M10:S061:V006",
+  "VG:RV:SAK:M10:S061:V007",
+  "VG:RV:SAK:M10:S061:V008",
+  "VG:RV:SAK:M10:S061:V009",
+  "VG:RV:SAK:M10:S086:V016",
+  "VG:RV:SAK:M10:S086:V017",
+  "VG:RV:SAK:M10:S132:V005"
+ ],
+ "by_hymn": {
+  "VG:RV:SAK:M01:S053": [
+   "V001"
+  ],
+  "VG:RV:SAK:M01:S065": [
+   "V006",
+   "V007",
+   "V008",
+   "V009",
+   "V010"
+  ],
+  "VG:RV:SAK:M01:S066": [
+   "V006",
+   "V007",
+   "V008",
+   "V009",
+   "V010"
+  ],
+  "VG:RV:SAK:M01:S067": [
+   "V006",
+   "V007",
+   "V008",
+   "V009",
+   "V010"
+  ],
+  "VG:RV:SAK:M01:S068": [
+   "V006",
+   "V007",
+   "V008",
+   "V009",
+   "V010"
+  ],
+  "VG:RV:SAK:M01:S069": [
+   "V006",
+   "V007",
+   "V008",
+   "V009",
+   "V010"
+  ],
+  "VG:RV:SAK:M01:S070": [
+   "V007",
+   "V008",
+   "V009",
+   "V010",
+   "V011"
+  ],
+  "VG:RV:SAK:M01:S073": [
+   "V001"
+  ],
+  "VG:RV:SAK:M01:S091": [
+   "V018"
+  ],
+  "VG:RV:SAK:M01:S179": [
+   "V001",
+   "V002",
+   "V003",
+   "V004",
+   "V005",
+   "V006"
+  ],
+  "VG:RV:SAK:M05:S044": [
+   "V014"
+  ],
+  "VG:RV:SAK:M05:S055": [
+   "V008"
+  ],
+  "VG:RV:SAK:M08:S093": [
+   "V029"
+  ],
+  "VG:RV:SAK:M09:S007": [
+   "V009"
+  ],
+  "VG:RV:SAK:M10:S048": [
+   "V007"
+  ],
+  "VG:RV:SAK:M10:S061": [
+   "V005",
+   "V006",
+   "V007",
+   "V008",
+   "V009"
+  ],
+  "VG:RV:SAK:M10:S086": [
+   "V016",
+   "V017"
+  ],
+  "VG:RV:SAK:M10:S132": [
+   "V005"
+  ]
+ },
+ "source_rows": 10502,
+ "distinct_mantras_in_source": 10500,
+ "canonical_mantras": 10552
+}

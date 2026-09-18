@@ -39,7 +39,14 @@ def main():
         # +1,444 relationships (1,035 MENTIONS_EPITHET, 399 MEASURES, 8
         # ASCRIBES_TO_DEVATA, 4 COMPOSED_OF, 1 ATTESTED_IN, less the 3 MEASURES that went
         # with the deleted metrics). The delta reconciles exactly against the baseline.
-        assert census == {"nodes": 164597, "relationships": 509486}, census
+        # 164,597/509,486 -> 164,601/509,769. Moved by two receipted R5 steps: the
+        # migration (data/staging/release_blocker_r5/migration_receipt.json -- +2
+        # DerivedMetric nodes and +283 relationships, actual == promised on every counter)
+        # and the entity-coverage consumer rebuild the dependency report then required
+        # (+2 DerivedMetric). Agent B's C06: this assert aborted the whole public-identity
+        # audit, and because nothing wires this script to a gate it failed by never being
+        # run rather than by going red.
+        assert census == {"nodes": 164601, "relationships": 509769}, census
         rows = session.run(
             "MATCH (n) WHERE NOT n:Internal RETURN properties(n) AS p, labels(n) AS labels, "
             + public_id_cypher("n") + " AS id"

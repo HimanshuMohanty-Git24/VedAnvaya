@@ -78,9 +78,17 @@ CORE = {"RV": 10552, "SV": 1844, "YV": 1975, "AV": 5839}
 #: Edge counts the migration cards promised would not change, and the one that changes by
 #: exactly one. M1's card states ASSERTION_AGENT 2,502 and ASSERTION_TARGET 799; M5's
 #: states EPITHET_VARIANT_OF goes 11 to 10 and SPECIALIZED_FORM_OF becomes 1.
+#:
+#: R5 MOVED THE FIRST TWO, and this readback is the reason the move is visible rather than
+#: silent. GAP-SEMANTICS-003 projected the existing RoleFiller REFERS_TO resolution onto the
+#: assertion as agent and target -- 158 agents and 119 targets, all derivation
+#: ``TREEBANK_DEPREL_ROLE_PROJECTION``. The figures below are the post-R5 populations. The
+#: Wave 3 card's own promise is unbroken: nothing R5 did altered a Wave 3 edge, it added a
+#: layer beside them, and the derivation on every added edge is what keeps the two
+#: separable by query.
 PROMISED: dict[str, int] = {
-    "ASSERTION_AGENT": 2502,
-    "ASSERTION_TARGET": 799,
+    "ASSERTION_AGENT": 2660,
+    "ASSERTION_TARGET": 918,
     "EPITHET_VARIANT_OF": 10,
     "SPECIALIZED_FORM_OF": 1,
     # HAS_STEP must NOT grow. Its 3 edges point at an :Action, and the 9,255 new steps use

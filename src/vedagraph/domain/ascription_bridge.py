@@ -54,6 +54,8 @@ from __future__ import annotations
 
 import collections
 import re
+
+from vedagraph.domain.tiers import SOURCE_EXPLICIT_TIER_NOTE
 from dataclasses import dataclass, field
 from typing import TYPE_CHECKING, Any, Final
 
@@ -649,7 +651,9 @@ def edge_properties(resolution: Resolution) -> dict[str, Any]:
         "attribution_precision": "NOT_AN_ATTRIBUTION",
         "quality_tier": "TIER_B",
         "knowledge_layer": "L2_DETERMINISTIC_DERIVED",
-        "confidence": 1.0,
+        "source_explicit_tier_marker": 1.0,
+        "encoded_tier": "L1_SOURCE_EXPLICIT",
+        "confidence_field_withdrawn_because": SOURCE_EXPLICIT_TIER_NOTE,
         "ascription_resolution_method": "TADDHITA_SASYA_DEVATA_DERIVATION",
         "ascription_resolution_path": resolution.derivation_path,
         "ascription_resolution_stem": resolution.stem,
@@ -671,7 +675,9 @@ def dedication_properties(resolution: Resolution, ascription_key: str) -> dict[s
         "scope_origin": "SUKTA_WIDE",
         "quality_tier": "TIER_B",
         "knowledge_layer": "L2_DETERMINISTIC_DERIVED",
-        "confidence": 1.0,
+        "source_explicit_tier_marker": 1.0,
+        "encoded_tier": "L1_SOURCE_EXPLICIT",
+        "confidence_field_withdrawn_because": SOURCE_EXPLICIT_TIER_NOTE,
         "via_ascription": ascription_key,
         "ascription_resolution_method": "TADDHITA_SASYA_DEVATA_DERIVATION",
         "ascription_resolution_path": resolution.derivation_path,
