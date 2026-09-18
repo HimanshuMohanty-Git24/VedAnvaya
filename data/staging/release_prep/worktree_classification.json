@@ -1,0 +1,1896 @@
+{
+  "artifact": "RELEASE_PREP_WORKTREE_CLASSIFICATION",
+  "head": "a40fb589e85f60dc608cec345005d4fc6f8ffec4",
+  "branch": "phase-data-completeness-v2",
+  "total_paths": 90,
+  "counts": {
+    "COMMIT_REQUIRED": 22,
+    "GENERATED_TRACKED": 2,
+    "LOCAL_EVIDENCE_KEEP_UNTRACKED": 66
+  },
+  "bytes_by_class": {
+    "COMMIT_REQUIRED": 523553,
+    "GENERATED_TRACKED": 653037,
+    "LOCAL_EVIDENCE_KEEP_UNTRACKED": 255162509
+  },
+  "policy": {
+    "commit": [
+      "COMMIT_REQUIRED",
+      "GENERATED_TRACKED"
+    ],
+    "delete": [
+      "TEMPORARY_SAFE_TO_DELETE, and only where evidence_has_a_durable_tracked_replacement is true"
+    ],
+    "ignore": [
+      "SHOULD_BE_GITIGNORED"
+    ],
+    "preserve_on_disk": [
+      "LOCAL_EVIDENCE_KEEP_UNTRACKED",
+      "UNKNOWN_REQUIRES_OWNER"
+    ],
+    "never": [
+      "git add -A",
+      "git clean -fd",
+      "git reset --hard"
+    ]
+  },
+  "proposed_gitignore_rules": [
+    {
+      "rule": "data/staging/final_stabilization/neo4j_backup_20260917/*.dump",
+      "covers": 1,
+      "bytes": 169799495,
+      "precedent": ".gitignore data/backup/*.dump"
+    },
+    {
+      "rule": "data/staging/release_blocker_r3/backup/*.jsonl",
+      "covers": 2,
+      "bytes": 494314964,
+      "precedent": ".gitignore data/staging/release_blocker_r4/backup/*.jsonl"
+    },
+    {
+      "rule": "data/staging/release_blocker_r5/backup/*.jsonl",
+      "covers": 2,
+      "bytes": 508649517,
+      "precedent": ".gitignore data/staging/release_blocker_r4/backup/*.jsonl"
+    }
+  ],
+  "deletions_without_a_durable_replacement": [],
+  "paths": [
+    {
+      "path": ".gitignore",
+      "size_bytes": 4105,
+      "git_status": " M",
+      "tracked": true,
+      "originating_phase": "release prep",
+      "classification": "COMMIT_REQUIRED",
+      "why": "The three backup rules proposed by this classification.",
+      "sha256": "340452b4f54575686ddda3825c9884b286ebcdf32bc7b7b13fb1ef84f920f329",
+      "digest_recorded_in_tracked_artifacts": [],
+      "path_named_in_tracked_artifacts": [
+        "data/gap_registry.json",
+        "data/staging/final_closure_sprint/agent6/gap005_canonical_release_manifest.json",
+        "data/staging/final_closure_sprint/registry_before.json",
+        "data/staging/release_blocker_r1/final_worktree_classification.json",
+        "data/staging/release_blocker_r1/frontend_consumer_receipt.json",
+        "data/staging/release_blocker_r1/registry_adjudication_receipt.json"
+      ],
+      "tracked_sha256_sidecar": null,
+      "regenerated_identically_by": null,
+      "evidence_has_a_durable_tracked_replacement": true
+    },
+    {
+      "path": "data/staging/release_blocker_r3/backup/MANIFEST.json",
+      "size_bytes": 1096,
+      "git_status": "??",
+      "tracked": false,
+      "originating_phase": "release blocker closure R3",
+      "classification": "COMMIT_REQUIRED",
+      "why": "1 KB, and the only versioned identity the 472 MB R3 backup would have. R4 and R5 each track their backup's MANIFEST.json and two .sha256 sidecars; R3 tracks nothing and has no sidecars at all, so ignoring the directory wholesale would destroy the digest in exactly the event it exists to detect. This manifest already carries both payload sha256 values inline, so tracking it alone completes the arrangement without needing sidecars.",
+      "sha256": "a7cd30cd63ec5df049fcfb5548bc4954246f96885ec0c8ec6cf8617b1d07d92f",
+      "digest_recorded_in_tracked_artifacts": [],
+      "path_named_in_tracked_artifacts": [],
+      "tracked_sha256_sidecar": null,
+      "regenerated_identically_by": null,
+      "evidence_has_a_durable_tracked_replacement": false
+    },
+    {
+      "path": "data/staging/release_prep/append_owner_decisions_r6.py",
+      "size_bytes": 11044,
+      "git_status": "??",
+      "tracked": false,
+      "originating_phase": "release prep",
+      "classification": "COMMIT_REQUIRED",
+      "why": "This pass's own generators and receipts. Small, durable, and cited by the release-prep report and by OWNER_DECISIONS.md section 40/41.",
+      "sha256": "8759a2b5ddbc961ba23028c47c88b9c580a725c4ae0bd248b82bcd3f792b7c08",
+      "digest_recorded_in_tracked_artifacts": [],
+      "path_named_in_tracked_artifacts": [],
+      "tracked_sha256_sidecar": null,
+      "regenerated_identically_by": null,
+      "evidence_has_a_durable_tracked_replacement": false
+    },
+    {
+      "path": "data/staging/release_prep/build_receipt.py",
+      "size_bytes": 9310,
+      "git_status": "??",
+      "tracked": false,
+      "originating_phase": "release prep",
+      "classification": "COMMIT_REQUIRED",
+      "why": "This pass's own generators and receipts. Small, durable, and cited by the release-prep report and by OWNER_DECISIONS.md section 40/41.",
+      "sha256": "8cc28bbb57be416daed57aa7482a85cf4e7661f6f12fc5f7e0df8d18a780a00e",
+      "digest_recorded_in_tracked_artifacts": [],
+      "path_named_in_tracked_artifacts": [],
+      "tracked_sha256_sidecar": null,
+      "regenerated_identically_by": null,
+      "evidence_has_a_durable_tracked_replacement": false
+    },
+    {
+      "path": "data/staging/release_prep/classify_worktree.py",
+      "size_bytes": 15918,
+      "git_status": "??",
+      "tracked": false,
+      "originating_phase": "release prep",
+      "classification": "COMMIT_REQUIRED",
+      "why": "This pass's own generators and receipts. Small, durable, and cited by the release-prep report and by OWNER_DECISIONS.md section 40/41.",
+      "sha256": "f9a1277f81b7f35fad819a85c06a0134a7557d33ba599146cbcf3233c1929d33",
+      "digest_recorded_in_tracked_artifacts": [],
+      "path_named_in_tracked_artifacts": [],
+      "tracked_sha256_sidecar": null,
+      "regenerated_identically_by": null,
+      "evidence_has_a_durable_tracked_replacement": false
+    },
+    {
+      "path": "data/staging/release_prep/release_prep_receipt.json",
+      "size_bytes": 3807,
+      "git_status": "??",
+      "tracked": false,
+      "originating_phase": "release prep",
+      "classification": "COMMIT_REQUIRED",
+      "why": "This pass's own generators and receipts. Small, durable, and cited by the release-prep report and by OWNER_DECISIONS.md section 40/41.",
+      "sha256": "d3bb6e5034c884cc7e24fa80e3d4824789d6449cc6e6b631264ea78de666a7c0",
+      "digest_recorded_in_tracked_artifacts": [],
+      "path_named_in_tracked_artifacts": [],
+      "tracked_sha256_sidecar": null,
+      "regenerated_identically_by": null,
+      "evidence_has_a_durable_tracked_replacement": false
+    },
+    {
+      "path": "data/staging/release_prep/worktree_classification.json",
+      "size_bytes": 106753,
+      "git_status": "??",
+      "tracked": false,
+      "originating_phase": "release prep",
+      "classification": "COMMIT_REQUIRED",
+      "why": "This pass's own generators and receipts. Small, durable, and cited by the release-prep report and by OWNER_DECISIONS.md section 40/41.",
+      "sha256": "1651b4a6cdf8e857f814322ed74b275b2b42fe574bd7b1dfe07b181da646375a",
+      "digest_recorded_in_tracked_artifacts": [],
+      "path_named_in_tracked_artifacts": [],
+      "tracked_sha256_sidecar": null,
+      "regenerated_identically_by": null,
+      "evidence_has_a_durable_tracked_replacement": false
+    },
+    {
+      "path": "docs/reports/data-completeness/OWNER_DECISIONS.md",
+      "size_bytes": 67281,
+      "git_status": " M",
+      "tracked": true,
+      "originating_phase": "release prep",
+      "classification": "COMMIT_REQUIRED",
+      "why": "Owner round eight, sections 40 and 41. A CLOSED_SCOPE_DECISION requires a citation naming where the decision is written down, and this is that file.",
+      "sha256": "8797acf1db6a94f927a0df3563cb4022c08da455fd9f8836d3e692483a697a9a",
+      "digest_recorded_in_tracked_artifacts": [],
+      "path_named_in_tracked_artifacts": [
+        "data/gap_registry.json",
+        "data/staging/final_closure_sprint/agent5/findings.body.json",
+        "data/staging/final_closure_sprint/agent5/findings.json",
+        "data/staging/final_closure_sprint/agent5/whitney_absence_parameters.json",
+        "data/staging/final_closure_sprint/lead/audio_engineering.json",
+        "data/staging/release_blocker_r1/hostile_verification_receipt.json"
+      ],
+      "tracked_sha256_sidecar": null,
+      "regenerated_identically_by": null,
+      "evidence_has_a_durable_tracked_replacement": true
+    },
+    {
+      "path": "scripts/audio_review_harness.py",
+      "size_bytes": 21846,
+      "git_status": " M",
+      "tracked": true,
+      "originating_phase": "release prep",
+      "classification": "COMMIT_REQUIRED",
+      "why": "The 1,021-row browser harness, fixed. review_id is not unique in the queue -- one id covers four Commons recordings -- and the harness keyed verdicts on it, so one keystroke would have marked three recordings AUDIBLY_VERIFIED that nobody played. The recording is now half of the row identity.",
+      "sha256": "68688ad7ee2eb39f899e193d5dd2e24a7ce16c193198060838c5bee40b972b8c",
+      "digest_recorded_in_tracked_artifacts": [],
+      "path_named_in_tracked_artifacts": [
+        "data/staging/integration/wave3_dry_run_v2.json",
+        "docs/reports/data-completeness/OWNER_DECISIONS.md"
+      ],
+      "tracked_sha256_sidecar": null,
+      "regenerated_identically_by": null,
+      "evidence_has_a_durable_tracked_replacement": true
+    },
+    {
+      "path": "scripts/review_audio_sample.py",
+      "size_bytes": 21480,
+      "git_status": "??",
+      "tracked": false,
+      "originating_phase": "release prep",
+      "classification": "COMMIT_REQUIRED",
+      "why": "The owner's audio sample reviewer.",
+      "sha256": "f66df642fc7ac8f84a1ee66a65fc915944390753f92e438aa7c823a7bb9200d1",
+      "digest_recorded_in_tracked_artifacts": [],
+      "path_named_in_tracked_artifacts": [],
+      "tracked_sha256_sidecar": null,
+      "regenerated_identically_by": null,
+      "evidence_has_a_durable_tracked_replacement": false
+    },
+    {
+      "path": "scripts/run_ask_benchmark.py",
+      "size_bytes": 27082,
+      "git_status": " M",
+      "tracked": true,
+      "originating_phase": "release prep",
+      "classification": "COMMIT_REQUIRED",
+      "why": "The benchmark runner gains the credential-slot report and the failover wiring.",
+      "sha256": "75711f9789b101c480333606dd9c5b3742c2e11b462937a61c74ce9fc07982cc",
+      "digest_recorded_in_tracked_artifacts": [],
+      "path_named_in_tracked_artifacts": [
+        "data/staging/integration/dependency_status.json",
+        "data/staging/integration/wave3_dependency_invalidation.json",
+        "data/staging/wave4/reproducibility_hold/dependency_state/run1/dependency_status.json",
+        "data/staging/wave4/reproducibility_hold/dependency_state/run2/dependency_status.json",
+        "docs/reports/ASK_PRODUCT_V1_BENCHMARK_FINAL.md"
+      ],
+      "tracked_sha256_sidecar": null,
+      "regenerated_identically_by": null,
+      "evidence_has_a_durable_tracked_replacement": true
+    },
+    {
+      "path": "scripts/wave4_registry_closure_audit.py",
+      "size_bytes": 157663,
+      "git_status": " M",
+      "tracked": true,
+      "originating_phase": "release prep",
+      "classification": "COMMIT_REQUIRED",
+      "why": "The ruling table is the audit. Both Samaveda-music rulings were restated here before being measured, which is the order this script is built to enforce.",
+      "sha256": "a62d60c8aa96fe7a064330412be99df88ea07547eedc60900b68acc3db72a4c8",
+      "digest_recorded_in_tracked_artifacts": [],
+      "path_named_in_tracked_artifacts": [
+        "data/gap_registry.json",
+        "data/staging/final_closure_sprint/baseline.json",
+        "data/staging/final_closure_sprint/lead/rulings.json",
+        "data/staging/final_closure_sprint/registry_before.json",
+        "data/staging/release_blocker_r1/agent_a_closure_receipt.json",
+        "data/staging/release_blocker_r1/final_worktree_classification.json"
+      ],
+      "tracked_sha256_sidecar": null,
+      "regenerated_identically_by": null,
+      "evidence_has_a_durable_tracked_replacement": true
+    },
+    {
+      "path": "src/vedagraph/llm/__init__.py",
+      "size_bytes": 1289,
+      "git_status": " M",
+      "tracked": true,
+      "originating_phase": "release prep",
+      "classification": "COMMIT_REQUIRED",
+      "why": "Credential slots, quota failover and secret redaction for the Ask benchmark.",
+      "sha256": "9955444163f75796fbc5878f45afe23ed7fb77dd2dc2a6eb6fcdf7879578d7d4",
+      "digest_recorded_in_tracked_artifacts": [],
+      "path_named_in_tracked_artifacts": [],
+      "tracked_sha256_sidecar": null,
+      "regenerated_identically_by": null,
+      "evidence_has_a_durable_tracked_replacement": false
+    },
+    {
+      "path": "src/vedagraph/llm/credentials.py",
+      "size_bytes": 6989,
+      "git_status": "??",
+      "tracked": false,
+      "originating_phase": "release prep",
+      "classification": "COMMIT_REQUIRED",
+      "why": "Credential slots, quota failover and secret redaction for the Ask benchmark.",
+      "sha256": "f7fcc428b78e1379c754bc1e95cd615fd6b3154f65c435a279db3fb9cccfb9ba",
+      "digest_recorded_in_tracked_artifacts": [],
+      "path_named_in_tracked_artifacts": [],
+      "tracked_sha256_sidecar": null,
+      "regenerated_identically_by": null,
+      "evidence_has_a_durable_tracked_replacement": false
+    },
+    {
+      "path": "src/vedagraph/llm/errors.py",
+      "size_bytes": 4368,
+      "git_status": " M",
+      "tracked": true,
+      "originating_phase": "release prep",
+      "classification": "COMMIT_REQUIRED",
+      "why": "Credential slots, quota failover and secret redaction for the Ask benchmark.",
+      "sha256": "9771aa4f1866a87b32ac56a6231184fc2e21689a8d2a9e715aa3f977bd0b7536",
+      "digest_recorded_in_tracked_artifacts": [],
+      "path_named_in_tracked_artifacts": [],
+      "tracked_sha256_sidecar": null,
+      "regenerated_identically_by": null,
+      "evidence_has_a_durable_tracked_replacement": false
+    },
+    {
+      "path": "src/vedagraph/llm/factory.py",
+      "size_bytes": 5156,
+      "git_status": " M",
+      "tracked": true,
+      "originating_phase": "release prep",
+      "classification": "COMMIT_REQUIRED",
+      "why": "Credential slots, quota failover and secret redaction for the Ask benchmark.",
+      "sha256": "a74d3a3a69ada128e2ff67dcd37c0e1fd4e2dbde0c97e945a5529d3d91d9af8f",
+      "digest_recorded_in_tracked_artifacts": [],
+      "path_named_in_tracked_artifacts": [],
+      "tracked_sha256_sidecar": null,
+      "regenerated_identically_by": null,
+      "evidence_has_a_durable_tracked_replacement": false
+    },
+    {
+      "path": "src/vedagraph/llm/failover.py",
+      "size_bytes": 6582,
+      "git_status": "??",
+      "tracked": false,
+      "originating_phase": "release prep",
+      "classification": "COMMIT_REQUIRED",
+      "why": "Credential slots, quota failover and secret redaction for the Ask benchmark.",
+      "sha256": "2a8b4ea84e9d667c63316a2b2115dc30397ace42410d1b7b5901973293c30e34",
+      "digest_recorded_in_tracked_artifacts": [],
+      "path_named_in_tracked_artifacts": [],
+      "tracked_sha256_sidecar": null,
+      "regenerated_identically_by": null,
+      "evidence_has_a_durable_tracked_replacement": false
+    },
+    {
+      "path": "src/vedagraph/llm/redaction.py",
+      "size_bytes": 2908,
+      "git_status": "??",
+      "tracked": false,
+      "originating_phase": "release prep",
+      "classification": "COMMIT_REQUIRED",
+      "why": "Credential slots, quota failover and secret redaction for the Ask benchmark.",
+      "sha256": "95f7586f07ae7319fc2d1fd9142990f7791cc2006610e65ad7a2d662577db7fb",
+      "digest_recorded_in_tracked_artifacts": [],
+      "path_named_in_tracked_artifacts": [],
+      "tracked_sha256_sidecar": null,
+      "regenerated_identically_by": null,
+      "evidence_has_a_durable_tracked_replacement": false
+    },
+    {
+      "path": "tests/llm/test_credential_failover.py",
+      "size_bytes": 14959,
+      "git_status": "??",
+      "tracked": false,
+      "originating_phase": "release prep",
+      "classification": "COMMIT_REQUIRED",
+      "why": "Tests for this pass's additions.",
+      "sha256": "dd8961a449ed49b1a06ecbdff44afe81d3867aec8a14a6cd9ed7700faf7231e6",
+      "digest_recorded_in_tracked_artifacts": [],
+      "path_named_in_tracked_artifacts": [],
+      "tracked_sha256_sidecar": null,
+      "regenerated_identically_by": null,
+      "evidence_has_a_durable_tracked_replacement": false
+    },
+    {
+      "path": "tests/unit/test_ask_benchmark_identity.py",
+      "size_bytes": 9196,
+      "git_status": "??",
+      "tracked": false,
+      "originating_phase": "release prep",
+      "classification": "COMMIT_REQUIRED",
+      "why": "Tests for this pass's additions.",
+      "sha256": "7f94bc8bb6c890b61e97a3666f0f7fccd51dc15a4a3ea2a9e4e3c5357146ed82",
+      "digest_recorded_in_tracked_artifacts": [],
+      "path_named_in_tracked_artifacts": [],
+      "tracked_sha256_sidecar": null,
+      "regenerated_identically_by": null,
+      "evidence_has_a_durable_tracked_replacement": false
+    },
+    {
+      "path": "tests/unit/test_audio_review_harness.py",
+      "size_bytes": 8628,
+      "git_status": " M",
+      "tracked": true,
+      "originating_phase": "release prep",
+      "classification": "COMMIT_REQUIRED",
+      "why": "Tests for this pass's additions.",
+      "sha256": "23ef28c3ee6bff4eb3c258bb51a4fc1903b0428b3e0126a33af1a270281e36f7",
+      "digest_recorded_in_tracked_artifacts": [],
+      "path_named_in_tracked_artifacts": [
+        "data/staging/final_closure_sprint/lead/audio_engineering.json",
+        "data/staging/release_blocker_r1/final_worktree_classification.json",
+        "data/staging/release_blocker_r1/starting_worktree_receipt.json"
+      ],
+      "tracked_sha256_sidecar": null,
+      "regenerated_identically_by": null,
+      "evidence_has_a_durable_tracked_replacement": true
+    },
+    {
+      "path": "tests/unit/test_review_audio_sample.py",
+      "size_bytes": 16093,
+      "git_status": "??",
+      "tracked": false,
+      "originating_phase": "release prep",
+      "classification": "COMMIT_REQUIRED",
+      "why": "Tests for this pass's additions.",
+      "sha256": "c7f28e8ef025a8d8458543f5db67fcc21b725663c0866762d7b194963235170d",
+      "digest_recorded_in_tracked_artifacts": [],
+      "path_named_in_tracked_artifacts": [],
+      "tracked_sha256_sidecar": null,
+      "regenerated_identically_by": null,
+      "evidence_has_a_durable_tracked_replacement": false
+    },
+    {
+      "path": "data/gap_registry.json",
+      "size_bytes": 480522,
+      "git_status": " M",
+      "tracked": true,
+      "originating_phase": "release prep",
+      "classification": "GENERATED_TRACKED",
+      "why": "The gap registry, rewritten by scripts/wave4_registry_closure_audit.py --write to record the two owner decisions. This is the registry consequence the brief asks be committed.",
+      "sha256": "e090e397eee6f4b8ff1c8f342923b91d188803f9c5cebc039ffc4a75590d0a64",
+      "digest_recorded_in_tracked_artifacts": [],
+      "path_named_in_tracked_artifacts": [
+        "data/staging/audio_rv/proofs/gap-audio-004-root-cause-corrected.md",
+        "data/staging/final_closure_sprint/agent7/defects_found.json",
+        "data/staging/final_closure_sprint/agent8/audit_findings.json",
+        "data/staging/release_blocker_r1/final_worktree_classification.json",
+        "data/staging/release_blocker_r1/hostile_verification_receipt.json",
+        "data/staging/release_blocker_r1/registry_adjudication_receipt.json"
+      ],
+      "tracked_sha256_sidecar": null,
+      "regenerated_identically_by": null,
+      "evidence_has_a_durable_tracked_replacement": true
+    },
+    {
+      "path": "data/staging/wave4/registry_closure_audit.json",
+      "size_bytes": 172515,
+      "git_status": " M",
+      "tracked": true,
+      "originating_phase": "wave 4 phase 7, regenerated at release prep",
+      "classification": "GENERATED_TRACKED",
+      "why": "The registry audit's own report, rewritten by this pass's --write run. Tracked already; the change is the two Samaveda-music rulings and the new content digest.",
+      "sha256": "568559af8b93e5842809b556cacf91acd0d5e87bfbac959bfcc7e36d496ece8b",
+      "digest_recorded_in_tracked_artifacts": [],
+      "path_named_in_tracked_artifacts": [
+        "data/gap_registry.json",
+        "data/staging/final_closure_sprint/registry_before.json",
+        "data/staging/release_blocker_r1/agent_a_closure_receipt.json",
+        "data/staging/release_blocker_r1/final_worktree_classification.json",
+        "data/staging/release_blocker_r1/hostile_verification_receipt.json",
+        "data/staging/release_blocker_r1/registry_adjudication_receipt.json"
+      ],
+      "tracked_sha256_sidecar": null,
+      "regenerated_identically_by": null,
+      "evidence_has_a_durable_tracked_replacement": true
+    },
+    {
+      "path": "data/manual/audio_review/sample_summary.json",
+      "size_bytes": 1825,
+      "git_status": "??",
+      "tracked": false,
+      "originating_phase": "release prep",
+      "classification": "LOCAL_EVIDENCE_KEEP_UNTRACKED",
+      "why": "Human review decisions. The owner is the only author, no agent may write here, and the repository's precedent for a human audio verdict is a tracked prose record (docs/reports/PRODUCT_V1_AUDIO_LISTENING_CHECK.md) written from the log rather than the raw log itself.",
+      "sha256": "d696adacdae54d691924c0a8158f5e7055e2e91ebc63ef1fdd444d91c58a383c",
+      "digest_recorded_in_tracked_artifacts": [],
+      "path_named_in_tracked_artifacts": [],
+      "tracked_sha256_sidecar": null,
+      "regenerated_identically_by": null,
+      "evidence_has_a_durable_tracked_replacement": false
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent1/CLOSURE_CONDITIONS.md",
+      "size_bytes": 3035,
+      "git_status": "??",
+      "tracked": false,
+      "originating_phase": "final closure sprint (agents 1-8)",
+      "classification": "LOCAL_EVIDENCE_KEEP_UNTRACKED",
+      "why": "Per-agent intermediate output and the ad-hoc probe scripts that produced it. The sprint's durable artifacts -- 111 of them, including every agent's manifest.json with per-file sha256, the closure reports and the registry outcomes -- are already tracked and committed. Committing the intermediates as well would add them to the repository only because they exist.",
+      "sha256": "5ae1d960e3d748c77c1e3042b2cf79e3f1fe7948671f0c35804b9f897953fb87",
+      "digest_recorded_in_tracked_artifacts": [
+        "data/staging/release_blocker_r1/starting_worktree_receipt.json"
+      ],
+      "path_named_in_tracked_artifacts": [
+        "data/staging/release_blocker_r1/final_worktree_classification.json",
+        "data/staging/release_blocker_r1/starting_worktree_receipt.json",
+        "data/staging/release_blocker_r3/baseline.json"
+      ],
+      "tracked_sha256_sidecar": null,
+      "regenerated_identically_by": null,
+      "evidence_has_a_durable_tracked_replacement": true
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent1/pada_parallel_groups.jsonl",
+      "size_bytes": 1217600,
+      "git_status": "??",
+      "tracked": false,
+      "originating_phase": "final closure sprint (agents 1-8)",
+      "classification": "LOCAL_EVIDENCE_KEEP_UNTRACKED",
+      "why": "Per-agent intermediate output and the ad-hoc probe scripts that produced it. The sprint's durable artifacts -- 111 of them, including every agent's manifest.json with per-file sha256, the closure reports and the registry outcomes -- are already tracked and committed. Committing the intermediates as well would add them to the repository only because they exist.",
+      "sha256": "4d5d210b034be7efb79ca22bcc9412909a809742c9420c76a05666b357d07306",
+      "digest_recorded_in_tracked_artifacts": [
+        "data/staging/final_closure_sprint/agent1/manifest.json",
+        "data/staging/release_blocker_r1/starting_worktree_receipt.json"
+      ],
+      "path_named_in_tracked_artifacts": [
+        "data/staging/release_blocker_r1/final_worktree_classification.json",
+        "data/staging/release_blocker_r1/starting_worktree_receipt.json",
+        "data/staging/release_blocker_r3/baseline.json"
+      ],
+      "tracked_sha256_sidecar": null,
+      "regenerated_identically_by": null,
+      "evidence_has_a_durable_tracked_replacement": true
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent1/proposed_mutations.json",
+      "size_bytes": 12498037,
+      "git_status": "??",
+      "tracked": false,
+      "originating_phase": "final closure sprint (agents 1-8)",
+      "classification": "LOCAL_EVIDENCE_KEEP_UNTRACKED",
+      "why": "Per-agent intermediate output and the ad-hoc probe scripts that produced it. The sprint's durable artifacts -- 111 of them, including every agent's manifest.json with per-file sha256, the closure reports and the registry outcomes -- are already tracked and committed. Committing the intermediates as well would add them to the repository only because they exist.",
+      "sha256": "7f79ada3e15ef9093fc44b05a39039061c2bdac2f57f673f3c6703936ee34870",
+      "digest_recorded_in_tracked_artifacts": [
+        "data/staging/final_closure_sprint/agent1/manifest.json",
+        "data/staging/release_blocker_r1/starting_worktree_receipt.json"
+      ],
+      "path_named_in_tracked_artifacts": [
+        "data/staging/release_blocker_r1/final_worktree_classification.json",
+        "data/staging/release_blocker_r1/starting_worktree_receipt.json",
+        "data/staging/release_blocker_r3/baseline.json"
+      ],
+      "tracked_sha256_sidecar": null,
+      "regenerated_identically_by": null,
+      "evidence_has_a_durable_tracked_replacement": true
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent1/reuse_direction_edges.jsonl",
+      "size_bytes": 2400436,
+      "git_status": "??",
+      "tracked": false,
+      "originating_phase": "final closure sprint (agents 1-8)",
+      "classification": "LOCAL_EVIDENCE_KEEP_UNTRACKED",
+      "why": "Per-agent intermediate output and the ad-hoc probe scripts that produced it. The sprint's durable artifacts -- 111 of them, including every agent's manifest.json with per-file sha256, the closure reports and the registry outcomes -- are already tracked and committed. Committing the intermediates as well would add them to the repository only because they exist.",
+      "sha256": "65a4ae3ffe158e6f511b4caa37531ba921f54987d560fdbc5aeb961b0f95afff",
+      "digest_recorded_in_tracked_artifacts": [
+        "data/staging/final_closure_sprint/agent1/manifest.json",
+        "data/staging/release_blocker_r1/starting_worktree_receipt.json"
+      ],
+      "path_named_in_tracked_artifacts": [
+        "data/staging/release_blocker_r1/final_worktree_classification.json",
+        "data/staging/release_blocker_r1/starting_worktree_receipt.json",
+        "data/staging/release_blocker_r3/baseline.json"
+      ],
+      "tracked_sha256_sidecar": null,
+      "regenerated_identically_by": null,
+      "evidence_has_a_durable_tracked_replacement": true
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent2/_q.py",
+      "size_bytes": 599,
+      "git_status": "??",
+      "tracked": false,
+      "originating_phase": "final closure sprint (agents 1-8)",
+      "classification": "LOCAL_EVIDENCE_KEEP_UNTRACKED",
+      "why": "Per-agent intermediate output and the ad-hoc probe scripts that produced it. The sprint's durable artifacts -- 111 of them, including every agent's manifest.json with per-file sha256, the closure reports and the registry outcomes -- are already tracked and committed. Committing the intermediates as well would add them to the repository only because they exist.",
+      "sha256": "675a5aff0ea53f9f0edeac76d21f95a8b6fad756e80c739e2f3cacdbb67a1dd0",
+      "digest_recorded_in_tracked_artifacts": [
+        "data/staging/release_blocker_r1/starting_worktree_receipt.json"
+      ],
+      "path_named_in_tracked_artifacts": [
+        "data/staging/release_blocker_r1/final_worktree_classification.json",
+        "data/staging/release_blocker_r1/starting_worktree_receipt.json",
+        "data/staging/release_blocker_r3/baseline.json"
+      ],
+      "tracked_sha256_sidecar": null,
+      "regenerated_identically_by": null,
+      "evidence_has_a_durable_tracked_replacement": true
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent2/build_agent2_staging.py",
+      "size_bytes": 51556,
+      "git_status": "??",
+      "tracked": false,
+      "originating_phase": "final closure sprint (agents 1-8)",
+      "classification": "LOCAL_EVIDENCE_KEEP_UNTRACKED",
+      "why": "Per-agent intermediate output and the ad-hoc probe scripts that produced it. The sprint's durable artifacts -- 111 of them, including every agent's manifest.json with per-file sha256, the closure reports and the registry outcomes -- are already tracked and committed. Committing the intermediates as well would add them to the repository only because they exist.",
+      "sha256": "149acf7e0bbcfbfde27ffa549e0552f3ac877a914633e651ffa3aa0cc536b2fc",
+      "digest_recorded_in_tracked_artifacts": [
+        "data/staging/release_blocker_r1/starting_worktree_receipt.json"
+      ],
+      "path_named_in_tracked_artifacts": [
+        "data/staging/release_blocker_r1/final_worktree_classification.json",
+        "data/staging/release_blocker_r1/starting_worktree_receipt.json",
+        "data/staging/release_blocker_r3/baseline.json"
+      ],
+      "tracked_sha256_sidecar": null,
+      "regenerated_identically_by": null,
+      "evidence_has_a_durable_tracked_replacement": true
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent2/sv_derived_dedications.jsonl",
+      "size_bytes": 2802859,
+      "git_status": "??",
+      "tracked": false,
+      "originating_phase": "final closure sprint (agents 1-8)",
+      "classification": "LOCAL_EVIDENCE_KEEP_UNTRACKED",
+      "why": "Per-agent intermediate output and the ad-hoc probe scripts that produced it. The sprint's durable artifacts -- 111 of them, including every agent's manifest.json with per-file sha256, the closure reports and the registry outcomes -- are already tracked and committed. Committing the intermediates as well would add them to the repository only because they exist.",
+      "sha256": "ed36a61e9589889c5cc1f896ac6ef52396e2d0bd80b0cc25d996c135cd21d27e",
+      "digest_recorded_in_tracked_artifacts": [
+        "data/staging/final_closure_sprint/agent2/manifest.json",
+        "data/staging/release_blocker_r1/starting_worktree_receipt.json"
+      ],
+      "path_named_in_tracked_artifacts": [
+        "data/staging/release_blocker_r1/final_worktree_classification.json",
+        "data/staging/release_blocker_r1/starting_worktree_receipt.json",
+        "data/staging/release_blocker_r3/baseline.json"
+      ],
+      "tracked_sha256_sidecar": null,
+      "regenerated_identically_by": null,
+      "evidence_has_a_durable_tracked_replacement": true
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent3/mentions_lemma_projection.jsonl",
+      "size_bytes": 102714088,
+      "git_status": "??",
+      "tracked": false,
+      "originating_phase": "final closure sprint (agents 1-8)",
+      "classification": "LOCAL_EVIDENCE_KEEP_UNTRACKED",
+      "why": "Per-agent intermediate output and the ad-hoc probe scripts that produced it. The sprint's durable artifacts -- 111 of them, including every agent's manifest.json with per-file sha256, the closure reports and the registry outcomes -- are already tracked and committed. Committing the intermediates as well would add them to the repository only because they exist.",
+      "sha256": null,
+      "digest_recorded_in_tracked_artifacts": [],
+      "path_named_in_tracked_artifacts": [
+        "data/staging/final_closure_sprint/agent3/proposed_mutations.json",
+        "data/staging/release_blocker_r1/final_worktree_classification.json",
+        "data/staging/release_blocker_r1/starting_worktree_receipt.json",
+        "data/staging/release_blocker_r3/baseline.json"
+      ],
+      "tracked_sha256_sidecar": null,
+      "regenerated_identically_by": null,
+      "evidence_has_a_durable_tracked_replacement": true
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent3/semantic_assertions.jsonl",
+      "size_bytes": 53007910,
+      "git_status": "??",
+      "tracked": false,
+      "originating_phase": "final closure sprint (agents 1-8)",
+      "classification": "LOCAL_EVIDENCE_KEEP_UNTRACKED",
+      "why": "Per-agent intermediate output and the ad-hoc probe scripts that produced it. The sprint's durable artifacts -- 111 of them, including every agent's manifest.json with per-file sha256, the closure reports and the registry outcomes -- are already tracked and committed. Committing the intermediates as well would add them to the repository only because they exist.",
+      "sha256": "5c904af624d149a06dc55aeedf4702b5418e21a0bba32a9d56797b238fd08e7e",
+      "digest_recorded_in_tracked_artifacts": [
+        "data/staging/final_closure_sprint/agent3/closure_report.json",
+        "data/staging/final_closure_sprint/agent3/proposed_mutations.json",
+        "data/staging/final_closure_sprint/agent3/semantic_assertion_delta_manifest.json",
+        "data/staging/release_blocker_r1/starting_worktree_receipt.json"
+      ],
+      "path_named_in_tracked_artifacts": [
+        "data/staging/final_closure_sprint/agent3/proposed_mutations.json",
+        "data/staging/release_blocker_r1/final_worktree_classification.json",
+        "data/staging/release_blocker_r1/starting_worktree_receipt.json",
+        "data/staging/release_blocker_r3/baseline.json"
+      ],
+      "tracked_sha256_sidecar": null,
+      "regenerated_identically_by": null,
+      "evidence_has_a_durable_tracked_replacement": true
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent3/text_versions_search_derivative.jsonl",
+      "size_bytes": 16543206,
+      "git_status": "??",
+      "tracked": false,
+      "originating_phase": "final closure sprint (agents 1-8)",
+      "classification": "LOCAL_EVIDENCE_KEEP_UNTRACKED",
+      "why": "Per-agent intermediate output and the ad-hoc probe scripts that produced it. The sprint's durable artifacts -- 111 of them, including every agent's manifest.json with per-file sha256, the closure reports and the registry outcomes -- are already tracked and committed. Committing the intermediates as well would add them to the repository only because they exist.",
+      "sha256": "eb442cc6972f69f4542d82de3b7c6c0e813e887dc0a4a1d343c816c1c5a5b4d4",
+      "digest_recorded_in_tracked_artifacts": [
+        "data/staging/final_closure_sprint/agent3/closure_report.json",
+        "data/staging/final_closure_sprint/agent3/proposed_mutations.json",
+        "data/staging/final_closure_sprint/agent3/text_versions_manifest.json",
+        "data/staging/release_blocker_r1/starting_worktree_receipt.json"
+      ],
+      "path_named_in_tracked_artifacts": [
+        "data/staging/final_closure_sprint/agent3/proposed_mutations.json",
+        "data/staging/release_blocker_r1/final_worktree_classification.json",
+        "data/staging/release_blocker_r1/starting_worktree_receipt.json",
+        "data/staging/release_blocker_r3/baseline.json"
+      ],
+      "tracked_sha256_sidecar": null,
+      "regenerated_identically_by": null,
+      "evidence_has_a_durable_tracked_replacement": true
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent4/agent4_build_body.py",
+      "size_bytes": 28205,
+      "git_status": "??",
+      "tracked": false,
+      "originating_phase": "final closure sprint (agents 1-8)",
+      "classification": "LOCAL_EVIDENCE_KEEP_UNTRACKED",
+      "why": "Per-agent intermediate output and the ad-hoc probe scripts that produced it. The sprint's durable artifacts -- 111 of them, including every agent's manifest.json with per-file sha256, the closure reports and the registry outcomes -- are already tracked and committed. Committing the intermediates as well would add them to the repository only because they exist.",
+      "sha256": "d9e7dbbcd5a1f6d0ebcb3bcc716da3dc54b1be17ca601c70f9481068c04f6ae1",
+      "digest_recorded_in_tracked_artifacts": [
+        "data/staging/final_closure_sprint/agent4/manifest.json",
+        "data/staging/release_blocker_r1/starting_worktree_receipt.json"
+      ],
+      "path_named_in_tracked_artifacts": [
+        "data/staging/release_blocker_r1/final_worktree_classification.json",
+        "data/staging/release_blocker_r1/starting_worktree_receipt.json",
+        "data/staging/release_blocker_r3/baseline.json"
+      ],
+      "tracked_sha256_sidecar": null,
+      "regenerated_identically_by": null,
+      "evidence_has_a_durable_tracked_replacement": true
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent4/agent4_overlay.py",
+      "size_bytes": 3001,
+      "git_status": "??",
+      "tracked": false,
+      "originating_phase": "final closure sprint (agents 1-8)",
+      "classification": "LOCAL_EVIDENCE_KEEP_UNTRACKED",
+      "why": "Per-agent intermediate output and the ad-hoc probe scripts that produced it. The sprint's durable artifacts -- 111 of them, including every agent's manifest.json with per-file sha256, the closure reports and the registry outcomes -- are already tracked and committed. Committing the intermediates as well would add them to the repository only because they exist.",
+      "sha256": "5c1d7d377993865206d6d3978f4882816d0625e21e6621ef6428d4d449b60f26",
+      "digest_recorded_in_tracked_artifacts": [
+        "data/staging/final_closure_sprint/agent4/manifest.json",
+        "data/staging/release_blocker_r1/starting_worktree_receipt.json"
+      ],
+      "path_named_in_tracked_artifacts": [
+        "data/staging/final_closure_sprint/agent4/proposed_mutations.json",
+        "data/staging/release_blocker_r1/final_worktree_classification.json",
+        "data/staging/release_blocker_r1/starting_worktree_receipt.json",
+        "data/staging/release_blocker_r3/baseline.json"
+      ],
+      "tracked_sha256_sidecar": null,
+      "regenerated_identically_by": null,
+      "evidence_has_a_durable_tracked_replacement": true
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent4/agent4_verdicts.py",
+      "size_bytes": 17098,
+      "git_status": "??",
+      "tracked": false,
+      "originating_phase": "final closure sprint (agents 1-8)",
+      "classification": "LOCAL_EVIDENCE_KEEP_UNTRACKED",
+      "why": "Per-agent intermediate output and the ad-hoc probe scripts that produced it. The sprint's durable artifacts -- 111 of them, including every agent's manifest.json with per-file sha256, the closure reports and the registry outcomes -- are already tracked and committed. Committing the intermediates as well would add them to the repository only because they exist.",
+      "sha256": "52876adfeb69e8fdc034357cb9af0dec82d2e13fbe7926a639e44b8053a73da2",
+      "digest_recorded_in_tracked_artifacts": [
+        "data/staging/final_closure_sprint/agent4/manifest.json",
+        "data/staging/release_blocker_r1/starting_worktree_receipt.json"
+      ],
+      "path_named_in_tracked_artifacts": [
+        "data/staging/release_blocker_r1/final_worktree_classification.json",
+        "data/staging/release_blocker_r1/starting_worktree_receipt.json",
+        "data/staging/release_blocker_r3/baseline.json"
+      ],
+      "tracked_sha256_sidecar": null,
+      "regenerated_identically_by": null,
+      "evidence_has_a_durable_tracked_replacement": true
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent4/build_agent4_ritual_closure.py",
+      "size_bytes": 56871,
+      "git_status": "??",
+      "tracked": false,
+      "originating_phase": "final closure sprint (agents 1-8)",
+      "classification": "LOCAL_EVIDENCE_KEEP_UNTRACKED",
+      "why": "Per-agent intermediate output and the ad-hoc probe scripts that produced it. The sprint's durable artifacts -- 111 of them, including every agent's manifest.json with per-file sha256, the closure reports and the registry outcomes -- are already tracked and committed. Committing the intermediates as well would add them to the repository only because they exist.",
+      "sha256": "ce8033c3846bf2e7bd06c6fd4d70de4d3b43539ee1191f5a31c6ca980b6c05bf",
+      "digest_recorded_in_tracked_artifacts": [
+        "data/staging/final_closure_sprint/agent4/manifest.json",
+        "data/staging/integration/dependency_ledger.json",
+        "data/staging/release_blocker_r1/starting_worktree_receipt.json"
+      ],
+      "path_named_in_tracked_artifacts": [
+        "data/staging/integration/dependency_ledger.json",
+        "data/staging/integration/dependency_status.json",
+        "data/staging/release_blocker_r1/final_worktree_classification.json",
+        "data/staging/release_blocker_r1/starting_worktree_receipt.json",
+        "data/staging/release_blocker_r3/baseline.json"
+      ],
+      "tracked_sha256_sidecar": null,
+      "regenerated_identically_by": null,
+      "evidence_has_a_durable_tracked_replacement": true
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent4/ritual_context.jsonl",
+      "size_bytes": 5711669,
+      "git_status": "??",
+      "tracked": false,
+      "originating_phase": "final closure sprint (agents 1-8)",
+      "classification": "LOCAL_EVIDENCE_KEEP_UNTRACKED",
+      "why": "Per-agent intermediate output and the ad-hoc probe scripts that produced it. The sprint's durable artifacts -- 111 of them, including every agent's manifest.json with per-file sha256, the closure reports and the registry outcomes -- are already tracked and committed. Committing the intermediates as well would add them to the repository only because they exist.",
+      "sha256": "0ae5a662ccfd962c6b36dab8af0212f584db9c0d0e093a5066304fd692eda499",
+      "digest_recorded_in_tracked_artifacts": [
+        "data/staging/final_closure_sprint/agent4/manifest.json",
+        "data/staging/integration/dependency_ledger.json",
+        "data/staging/release_blocker_r1/starting_worktree_receipt.json"
+      ],
+      "path_named_in_tracked_artifacts": [
+        "data/staging/integration/dependency_ledger.json",
+        "data/staging/release_blocker_r1/final_worktree_classification.json",
+        "data/staging/release_blocker_r1/starting_worktree_receipt.json",
+        "data/staging/release_blocker_r2/migration_ritual006_plan.json",
+        "data/staging/release_blocker_r3/baseline.json"
+      ],
+      "tracked_sha256_sidecar": null,
+      "regenerated_identically_by": null,
+      "evidence_has_a_durable_tracked_replacement": true
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent5/apply_whitney_absence.py",
+      "size_bytes": 10924,
+      "git_status": "??",
+      "tracked": false,
+      "originating_phase": "final closure sprint (agents 1-8)",
+      "classification": "LOCAL_EVIDENCE_KEEP_UNTRACKED",
+      "why": "Per-agent intermediate output and the ad-hoc probe scripts that produced it. The sprint's durable artifacts -- 111 of them, including every agent's manifest.json with per-file sha256, the closure reports and the registry outcomes -- are already tracked and committed. Committing the intermediates as well would add them to the repository only because they exist.",
+      "sha256": "481cde32e90c7183638a24a4e118b02c7f6fa76a5d30b0fceb33147a82e9d3fe",
+      "digest_recorded_in_tracked_artifacts": [
+        "data/staging/release_blocker_r1/starting_worktree_receipt.json"
+      ],
+      "path_named_in_tracked_artifacts": [
+        "data/staging/final_closure_sprint/agent5/proposed_mutations.json",
+        "data/staging/release_blocker_r1/final_worktree_classification.json",
+        "data/staging/release_blocker_r1/starting_worktree_receipt.json",
+        "data/staging/release_blocker_r3/baseline.json"
+      ],
+      "tracked_sha256_sidecar": null,
+      "regenerated_identically_by": null,
+      "evidence_has_a_durable_tracked_replacement": true
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent5/benchmark_reprobe.py",
+      "size_bytes": 6999,
+      "git_status": "??",
+      "tracked": false,
+      "originating_phase": "final closure sprint (agents 1-8)",
+      "classification": "LOCAL_EVIDENCE_KEEP_UNTRACKED",
+      "why": "Per-agent intermediate output and the ad-hoc probe scripts that produced it. The sprint's durable artifacts -- 111 of them, including every agent's manifest.json with per-file sha256, the closure reports and the registry outcomes -- are already tracked and committed. Committing the intermediates as well would add them to the repository only because they exist.",
+      "sha256": "51395e0f35a2e4f215a9b8bf4d7a9e4768514bc054ed9829bc859aba9ddb8676",
+      "digest_recorded_in_tracked_artifacts": [
+        "data/staging/release_blocker_r1/starting_worktree_receipt.json"
+      ],
+      "path_named_in_tracked_artifacts": [
+        "data/staging/final_closure_sprint/agent5/findings.body.json",
+        "data/staging/final_closure_sprint/agent5/findings.json",
+        "data/staging/release_blocker_r1/final_worktree_classification.json",
+        "data/staging/release_blocker_r1/starting_worktree_receipt.json",
+        "data/staging/release_blocker_r3/baseline.json"
+      ],
+      "tracked_sha256_sidecar": null,
+      "regenerated_identically_by": null,
+      "evidence_has_a_durable_tracked_replacement": true
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent5/build_artifact.py",
+      "size_bytes": 1638,
+      "git_status": "??",
+      "tracked": false,
+      "originating_phase": "final closure sprint (agents 1-8)",
+      "classification": "LOCAL_EVIDENCE_KEEP_UNTRACKED",
+      "why": "Per-agent intermediate output and the ad-hoc probe scripts that produced it. The sprint's durable artifacts -- 111 of them, including every agent's manifest.json with per-file sha256, the closure reports and the registry outcomes -- are already tracked and committed. Committing the intermediates as well would add them to the repository only because they exist.",
+      "sha256": "822688dca896c44108654e4810f5c31b7656c6c43d953b6fa864b6de1a504318",
+      "digest_recorded_in_tracked_artifacts": [
+        "data/staging/release_blocker_r1/starting_worktree_receipt.json"
+      ],
+      "path_named_in_tracked_artifacts": [
+        "data/staging/release_blocker_r1/final_worktree_classification.json",
+        "data/staging/release_blocker_r1/starting_worktree_receipt.json",
+        "data/staging/release_blocker_r3/baseline.json"
+      ],
+      "tracked_sha256_sidecar": null,
+      "regenerated_identically_by": null,
+      "evidence_has_a_durable_tracked_replacement": true
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent5/build_census_row_patch.py",
+      "size_bytes": 4785,
+      "git_status": "??",
+      "tracked": false,
+      "originating_phase": "final closure sprint (agents 1-8)",
+      "classification": "LOCAL_EVIDENCE_KEEP_UNTRACKED",
+      "why": "Per-agent intermediate output and the ad-hoc probe scripts that produced it. The sprint's durable artifacts -- 111 of them, including every agent's manifest.json with per-file sha256, the closure reports and the registry outcomes -- are already tracked and committed. Committing the intermediates as well would add them to the repository only because they exist.",
+      "sha256": "065742afd652f80633fce556b7162512a5f94b9bd91ca3145439e687a7574f74",
+      "digest_recorded_in_tracked_artifacts": [
+        "data/staging/release_blocker_r1/starting_worktree_receipt.json"
+      ],
+      "path_named_in_tracked_artifacts": [
+        "data/staging/final_closure_sprint/agent5/proposed_mutations.json",
+        "data/staging/release_blocker_r1/final_worktree_classification.json",
+        "data/staging/release_blocker_r1/starting_worktree_receipt.json",
+        "data/staging/release_blocker_r3/baseline.json"
+      ],
+      "tracked_sha256_sidecar": null,
+      "regenerated_identically_by": null,
+      "evidence_has_a_durable_tracked_replacement": true
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent5/build_whitney_absence_rows.py",
+      "size_bytes": 10841,
+      "git_status": "??",
+      "tracked": false,
+      "originating_phase": "final closure sprint (agents 1-8)",
+      "classification": "LOCAL_EVIDENCE_KEEP_UNTRACKED",
+      "why": "Per-agent intermediate output and the ad-hoc probe scripts that produced it. The sprint's durable artifacts -- 111 of them, including every agent's manifest.json with per-file sha256, the closure reports and the registry outcomes -- are already tracked and committed. Committing the intermediates as well would add them to the repository only because they exist.",
+      "sha256": "b628357c293d8b246ed76efc07d9f216bfb3a539881ede846ad5e3acd0928992",
+      "digest_recorded_in_tracked_artifacts": [
+        "data/staging/release_blocker_r1/starting_worktree_receipt.json"
+      ],
+      "path_named_in_tracked_artifacts": [
+        "data/staging/release_blocker_r1/final_worktree_classification.json",
+        "data/staging/release_blocker_r1/starting_worktree_receipt.json",
+        "data/staging/release_blocker_r3/baseline.json"
+      ],
+      "tracked_sha256_sidecar": null,
+      "regenerated_identically_by": null,
+      "evidence_has_a_durable_tracked_replacement": true
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent5/findings.json.sha256",
+      "size_bytes": 80,
+      "git_status": "??",
+      "tracked": false,
+      "originating_phase": "final closure sprint (agents 1-8)",
+      "classification": "LOCAL_EVIDENCE_KEEP_UNTRACKED",
+      "why": "Per-agent intermediate output and the ad-hoc probe scripts that produced it. The sprint's durable artifacts -- 111 of them, including every agent's manifest.json with per-file sha256, the closure reports and the registry outcomes -- are already tracked and committed. Committing the intermediates as well would add them to the repository only because they exist.",
+      "sha256": "764d2d2337699d0c421f8d4131aacf063d79626ab76e4ba0abc880ea88b51c5a",
+      "digest_recorded_in_tracked_artifacts": [
+        "data/staging/release_blocker_r1/starting_worktree_receipt.json"
+      ],
+      "path_named_in_tracked_artifacts": [
+        "data/staging/release_blocker_r1/final_worktree_classification.json",
+        "data/staging/release_blocker_r1/starting_worktree_receipt.json",
+        "data/staging/release_blocker_r3/baseline.json"
+      ],
+      "tracked_sha256_sidecar": null,
+      "regenerated_identically_by": null,
+      "evidence_has_a_durable_tracked_replacement": true
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent5/m_attrprops.py",
+      "size_bytes": 1112,
+      "git_status": "??",
+      "tracked": false,
+      "originating_phase": "final closure sprint (agents 1-8)",
+      "classification": "LOCAL_EVIDENCE_KEEP_UNTRACKED",
+      "why": "Per-agent intermediate output and the ad-hoc probe scripts that produced it. The sprint's durable artifacts -- 111 of them, including every agent's manifest.json with per-file sha256, the closure reports and the registry outcomes -- are already tracked and committed. Committing the intermediates as well would add them to the repository only because they exist.",
+      "sha256": "80216dc144283026e74cb50088306285e678b930b587af3671e6c2bd73c165f8",
+      "digest_recorded_in_tracked_artifacts": [
+        "data/staging/release_blocker_r1/starting_worktree_receipt.json"
+      ],
+      "path_named_in_tracked_artifacts": [
+        "data/staging/release_blocker_r1/final_worktree_classification.json",
+        "data/staging/release_blocker_r1/starting_worktree_receipt.json",
+        "data/staging/release_blocker_r3/baseline.json"
+      ],
+      "tracked_sha256_sidecar": null,
+      "regenerated_identically_by": null,
+      "evidence_has_a_durable_tracked_replacement": true
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent5/m_disclosure.py",
+      "size_bytes": 2168,
+      "git_status": "??",
+      "tracked": false,
+      "originating_phase": "final closure sprint (agents 1-8)",
+      "classification": "LOCAL_EVIDENCE_KEEP_UNTRACKED",
+      "why": "Per-agent intermediate output and the ad-hoc probe scripts that produced it. The sprint's durable artifacts -- 111 of them, including every agent's manifest.json with per-file sha256, the closure reports and the registry outcomes -- are already tracked and committed. Committing the intermediates as well would add them to the repository only because they exist.",
+      "sha256": "e6689765a1f523ddc0add81085027001a975144a452dffc1106381951c53aa86",
+      "digest_recorded_in_tracked_artifacts": [
+        "data/staging/release_blocker_r1/starting_worktree_receipt.json"
+      ],
+      "path_named_in_tracked_artifacts": [
+        "data/staging/release_blocker_r1/final_worktree_classification.json",
+        "data/staging/release_blocker_r1/starting_worktree_receipt.json",
+        "data/staging/release_blocker_r3/baseline.json"
+      ],
+      "tracked_sha256_sidecar": null,
+      "regenerated_identically_by": null,
+      "evidence_has_a_durable_tracked_replacement": true
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent5/m_label.py",
+      "size_bytes": 1299,
+      "git_status": "??",
+      "tracked": false,
+      "originating_phase": "final closure sprint (agents 1-8)",
+      "classification": "LOCAL_EVIDENCE_KEEP_UNTRACKED",
+      "why": "Per-agent intermediate output and the ad-hoc probe scripts that produced it. The sprint's durable artifacts -- 111 of them, including every agent's manifest.json with per-file sha256, the closure reports and the registry outcomes -- are already tracked and committed. Committing the intermediates as well would add them to the repository only because they exist.",
+      "sha256": "bba83cbbeacca68ed1125af2966fd37b5caafb311a529576665ea57e1305c6cd",
+      "digest_recorded_in_tracked_artifacts": [
+        "data/staging/release_blocker_r1/starting_worktree_receipt.json"
+      ],
+      "path_named_in_tracked_artifacts": [
+        "data/staging/release_blocker_r1/final_worktree_classification.json",
+        "data/staging/release_blocker_r1/starting_worktree_receipt.json",
+        "data/staging/release_blocker_r3/baseline.json"
+      ],
+      "tracked_sha256_sidecar": null,
+      "regenerated_identically_by": null,
+      "evidence_has_a_durable_tracked_replacement": true
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent5/m_ma.py",
+      "size_bytes": 603,
+      "git_status": "??",
+      "tracked": false,
+      "originating_phase": "final closure sprint (agents 1-8)",
+      "classification": "LOCAL_EVIDENCE_KEEP_UNTRACKED",
+      "why": "Per-agent intermediate output and the ad-hoc probe scripts that produced it. The sprint's durable artifacts -- 111 of them, including every agent's manifest.json with per-file sha256, the closure reports and the registry outcomes -- are already tracked and committed. Committing the intermediates as well would add them to the repository only because they exist.",
+      "sha256": "1a5fe79ed3de3c0c8254e78f07275d2cb5d3d01dad439b1b36f163658ea889d5",
+      "digest_recorded_in_tracked_artifacts": [
+        "data/staging/release_blocker_r1/starting_worktree_receipt.json"
+      ],
+      "path_named_in_tracked_artifacts": [
+        "data/staging/release_blocker_r1/final_worktree_classification.json",
+        "data/staging/release_blocker_r1/starting_worktree_receipt.json",
+        "data/staging/release_blocker_r3/baseline.json"
+      ],
+      "tracked_sha256_sidecar": null,
+      "regenerated_identically_by": null,
+      "evidence_has_a_durable_tracked_replacement": true
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent5/m_seers.py",
+      "size_bytes": 673,
+      "git_status": "??",
+      "tracked": false,
+      "originating_phase": "final closure sprint (agents 1-8)",
+      "classification": "LOCAL_EVIDENCE_KEEP_UNTRACKED",
+      "why": "Per-agent intermediate output and the ad-hoc probe scripts that produced it. The sprint's durable artifacts -- 111 of them, including every agent's manifest.json with per-file sha256, the closure reports and the registry outcomes -- are already tracked and committed. Committing the intermediates as well would add them to the repository only because they exist.",
+      "sha256": "f449709c2fb9ad7a7dc20ea661d362e1913d8cfc552df2a0432cf55a5caf6c2a",
+      "digest_recorded_in_tracked_artifacts": [
+        "data/staging/release_blocker_r1/starting_worktree_receipt.json"
+      ],
+      "path_named_in_tracked_artifacts": [
+        "data/staging/release_blocker_r1/final_worktree_classification.json",
+        "data/staging/release_blocker_r1/starting_worktree_receipt.json",
+        "data/staging/release_blocker_r3/baseline.json"
+      ],
+      "tracked_sha256_sidecar": null,
+      "regenerated_identically_by": null,
+      "evidence_has_a_durable_tracked_replacement": true
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent5/m_tierc.py",
+      "size_bytes": 1241,
+      "git_status": "??",
+      "tracked": false,
+      "originating_phase": "final closure sprint (agents 1-8)",
+      "classification": "LOCAL_EVIDENCE_KEEP_UNTRACKED",
+      "why": "Per-agent intermediate output and the ad-hoc probe scripts that produced it. The sprint's durable artifacts -- 111 of them, including every agent's manifest.json with per-file sha256, the closure reports and the registry outcomes -- are already tracked and committed. Committing the intermediates as well would add them to the repository only because they exist.",
+      "sha256": "59d710885f083ea07f98b580207433ef9cf2ed4f3a3fde4e5b49a7dd8dca7047",
+      "digest_recorded_in_tracked_artifacts": [
+        "data/staging/release_blocker_r1/starting_worktree_receipt.json"
+      ],
+      "path_named_in_tracked_artifacts": [
+        "data/staging/release_blocker_r1/final_worktree_classification.json",
+        "data/staging/release_blocker_r1/starting_worktree_receipt.json",
+        "data/staging/release_blocker_r3/baseline.json"
+      ],
+      "tracked_sha256_sidecar": null,
+      "regenerated_identically_by": null,
+      "evidence_has_a_durable_tracked_replacement": true
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent5/m_tierc11.py",
+      "size_bytes": 917,
+      "git_status": "??",
+      "tracked": false,
+      "originating_phase": "final closure sprint (agents 1-8)",
+      "classification": "LOCAL_EVIDENCE_KEEP_UNTRACKED",
+      "why": "Per-agent intermediate output and the ad-hoc probe scripts that produced it. The sprint's durable artifacts -- 111 of them, including every agent's manifest.json with per-file sha256, the closure reports and the registry outcomes -- are already tracked and committed. Committing the intermediates as well would add them to the repository only because they exist.",
+      "sha256": "10ea8f2247686a46c870eb63bea7c386d4310a5b5b444357c4a48fb937deb9bf",
+      "digest_recorded_in_tracked_artifacts": [
+        "data/staging/release_blocker_r1/starting_worktree_receipt.json"
+      ],
+      "path_named_in_tracked_artifacts": [
+        "data/staging/release_blocker_r1/final_worktree_classification.json",
+        "data/staging/release_blocker_r1/starting_worktree_receipt.json",
+        "data/staging/release_blocker_r3/baseline.json"
+      ],
+      "tracked_sha256_sidecar": null,
+      "regenerated_identically_by": null,
+      "evidence_has_a_durable_tracked_replacement": true
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent5/m_whitney.py",
+      "size_bytes": 1131,
+      "git_status": "??",
+      "tracked": false,
+      "originating_phase": "final closure sprint (agents 1-8)",
+      "classification": "LOCAL_EVIDENCE_KEEP_UNTRACKED",
+      "why": "Per-agent intermediate output and the ad-hoc probe scripts that produced it. The sprint's durable artifacts -- 111 of them, including every agent's manifest.json with per-file sha256, the closure reports and the registry outcomes -- are already tracked and committed. Committing the intermediates as well would add them to the repository only because they exist.",
+      "sha256": "7aed2994cfd5c84a7cbfd1f577fe71877fc30fa056f7d558c93a28eb6e21675e",
+      "digest_recorded_in_tracked_artifacts": [
+        "data/staging/release_blocker_r1/starting_worktree_receipt.json"
+      ],
+      "path_named_in_tracked_artifacts": [
+        "data/staging/release_blocker_r1/final_worktree_classification.json",
+        "data/staging/release_blocker_r1/starting_worktree_receipt.json",
+        "data/staging/release_blocker_r3/baseline.json"
+      ],
+      "tracked_sha256_sidecar": null,
+      "regenerated_identically_by": null,
+      "evidence_has_a_durable_tracked_replacement": true
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent5/m_whitney_absence.py",
+      "size_bytes": 1829,
+      "git_status": "??",
+      "tracked": false,
+      "originating_phase": "final closure sprint (agents 1-8)",
+      "classification": "LOCAL_EVIDENCE_KEEP_UNTRACKED",
+      "why": "Per-agent intermediate output and the ad-hoc probe scripts that produced it. The sprint's durable artifacts -- 111 of them, including every agent's manifest.json with per-file sha256, the closure reports and the registry outcomes -- are already tracked and committed. Committing the intermediates as well would add them to the repository only because they exist.",
+      "sha256": "cb8ad0e69bfc5a162da0022d04a5c1d0416e259b1a0f703997cca383c2f4c509",
+      "digest_recorded_in_tracked_artifacts": [
+        "data/staging/release_blocker_r1/starting_worktree_receipt.json"
+      ],
+      "path_named_in_tracked_artifacts": [
+        "data/staging/release_blocker_r1/final_worktree_classification.json",
+        "data/staging/release_blocker_r1/starting_worktree_receipt.json",
+        "data/staging/release_blocker_r3/baseline.json"
+      ],
+      "tracked_sha256_sidecar": null,
+      "regenerated_identically_by": null,
+      "evidence_has_a_durable_tracked_replacement": true
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent5/m_whitney_keys.py",
+      "size_bytes": 823,
+      "git_status": "??",
+      "tracked": false,
+      "originating_phase": "final closure sprint (agents 1-8)",
+      "classification": "LOCAL_EVIDENCE_KEEP_UNTRACKED",
+      "why": "Per-agent intermediate output and the ad-hoc probe scripts that produced it. The sprint's durable artifacts -- 111 of them, including every agent's manifest.json with per-file sha256, the closure reports and the registry outcomes -- are already tracked and committed. Committing the intermediates as well would add them to the repository only because they exist.",
+      "sha256": "83898c794dc674996f2c6cfd868b2c9739f5b545127cb87d6e28dcfe1ba0837d",
+      "digest_recorded_in_tracked_artifacts": [
+        "data/staging/release_blocker_r1/starting_worktree_receipt.json"
+      ],
+      "path_named_in_tracked_artifacts": [
+        "data/staging/release_blocker_r1/final_worktree_classification.json",
+        "data/staging/release_blocker_r1/starting_worktree_receipt.json",
+        "data/staging/release_blocker_r3/baseline.json"
+      ],
+      "tracked_sha256_sidecar": null,
+      "regenerated_identically_by": null,
+      "evidence_has_a_durable_tracked_replacement": true
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent5/measure_01.py",
+      "size_bytes": 1459,
+      "git_status": "??",
+      "tracked": false,
+      "originating_phase": "final closure sprint (agents 1-8)",
+      "classification": "LOCAL_EVIDENCE_KEEP_UNTRACKED",
+      "why": "Per-agent intermediate output and the ad-hoc probe scripts that produced it. The sprint's durable artifacts -- 111 of them, including every agent's manifest.json with per-file sha256, the closure reports and the registry outcomes -- are already tracked and committed. Committing the intermediates as well would add them to the repository only because they exist.",
+      "sha256": "6cd35d206125c7fab204e1e4040506ce7c130a7210f2a3e85ff3d8d9637e1288",
+      "digest_recorded_in_tracked_artifacts": [
+        "data/staging/release_blocker_r1/starting_worktree_receipt.json"
+      ],
+      "path_named_in_tracked_artifacts": [
+        "data/staging/release_blocker_r1/final_worktree_classification.json",
+        "data/staging/release_blocker_r1/starting_worktree_receipt.json",
+        "data/staging/release_blocker_r3/baseline.json"
+      ],
+      "tracked_sha256_sidecar": null,
+      "regenerated_identically_by": null,
+      "evidence_has_a_durable_tracked_replacement": true
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent5/measure_02.py",
+      "size_bytes": 1156,
+      "git_status": "??",
+      "tracked": false,
+      "originating_phase": "final closure sprint (agents 1-8)",
+      "classification": "LOCAL_EVIDENCE_KEEP_UNTRACKED",
+      "why": "Per-agent intermediate output and the ad-hoc probe scripts that produced it. The sprint's durable artifacts -- 111 of them, including every agent's manifest.json with per-file sha256, the closure reports and the registry outcomes -- are already tracked and committed. Committing the intermediates as well would add them to the repository only because they exist.",
+      "sha256": "4b1f4b24db81fcfaa1611c46dd1accda86487e9f07412fcc0127f85536db61f1",
+      "digest_recorded_in_tracked_artifacts": [
+        "data/staging/release_blocker_r1/starting_worktree_receipt.json"
+      ],
+      "path_named_in_tracked_artifacts": [
+        "data/staging/release_blocker_r1/final_worktree_classification.json",
+        "data/staging/release_blocker_r1/starting_worktree_receipt.json",
+        "data/staging/release_blocker_r3/baseline.json"
+      ],
+      "tracked_sha256_sidecar": null,
+      "regenerated_identically_by": null,
+      "evidence_has_a_durable_tracked_replacement": true
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent5/measure_03.py",
+      "size_bytes": 1229,
+      "git_status": "??",
+      "tracked": false,
+      "originating_phase": "final closure sprint (agents 1-8)",
+      "classification": "LOCAL_EVIDENCE_KEEP_UNTRACKED",
+      "why": "Per-agent intermediate output and the ad-hoc probe scripts that produced it. The sprint's durable artifacts -- 111 of them, including every agent's manifest.json with per-file sha256, the closure reports and the registry outcomes -- are already tracked and committed. Committing the intermediates as well would add them to the repository only because they exist.",
+      "sha256": "aa800459a65cbf3b9c1c87552e05b917ea0b3fb4b2a15041f87e8de0cf627fb6",
+      "digest_recorded_in_tracked_artifacts": [
+        "data/staging/release_blocker_r1/starting_worktree_receipt.json"
+      ],
+      "path_named_in_tracked_artifacts": [
+        "data/staging/release_blocker_r1/final_worktree_classification.json",
+        "data/staging/release_blocker_r1/starting_worktree_receipt.json",
+        "data/staging/release_blocker_r3/baseline.json"
+      ],
+      "tracked_sha256_sidecar": null,
+      "regenerated_identically_by": null,
+      "evidence_has_a_durable_tracked_replacement": true
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent5/measure_confidence.py",
+      "size_bytes": 1606,
+      "git_status": "??",
+      "tracked": false,
+      "originating_phase": "final closure sprint (agents 1-8)",
+      "classification": "LOCAL_EVIDENCE_KEEP_UNTRACKED",
+      "why": "Per-agent intermediate output and the ad-hoc probe scripts that produced it. The sprint's durable artifacts -- 111 of them, including every agent's manifest.json with per-file sha256, the closure reports and the registry outcomes -- are already tracked and committed. Committing the intermediates as well would add them to the repository only because they exist.",
+      "sha256": "2d3acf223f182ac5c8ad7cdf673df5e4e9ff4a36ec5155acb5636cfc66ac35da",
+      "digest_recorded_in_tracked_artifacts": [
+        "data/staging/release_blocker_r1/starting_worktree_receipt.json"
+      ],
+      "path_named_in_tracked_artifacts": [
+        "data/staging/release_blocker_r1/final_worktree_classification.json",
+        "data/staging/release_blocker_r1/starting_worktree_receipt.json",
+        "data/staging/release_blocker_r3/baseline.json"
+      ],
+      "tracked_sha256_sidecar": null,
+      "regenerated_identically_by": null,
+      "evidence_has_a_durable_tracked_replacement": true
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent5/measure_gold.py",
+      "size_bytes": 1604,
+      "git_status": "??",
+      "tracked": false,
+      "originating_phase": "final closure sprint (agents 1-8)",
+      "classification": "LOCAL_EVIDENCE_KEEP_UNTRACKED",
+      "why": "Per-agent intermediate output and the ad-hoc probe scripts that produced it. The sprint's durable artifacts -- 111 of them, including every agent's manifest.json with per-file sha256, the closure reports and the registry outcomes -- are already tracked and committed. Committing the intermediates as well would add them to the repository only because they exist.",
+      "sha256": "a817d8ac4a8de1e7a36f77b398002d2f150979f932a0c07dd454d108f6fe9fb5",
+      "digest_recorded_in_tracked_artifacts": [
+        "data/staging/release_blocker_r1/starting_worktree_receipt.json"
+      ],
+      "path_named_in_tracked_artifacts": [
+        "data/staging/release_blocker_r1/final_worktree_classification.json",
+        "data/staging/release_blocker_r1/starting_worktree_receipt.json",
+        "data/staging/release_blocker_r3/baseline.json"
+      ],
+      "tracked_sha256_sidecar": null,
+      "regenerated_identically_by": null,
+      "evidence_has_a_durable_tracked_replacement": true
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent5/measure_humanclaims.py",
+      "size_bytes": 1712,
+      "git_status": "??",
+      "tracked": false,
+      "originating_phase": "final closure sprint (agents 1-8)",
+      "classification": "LOCAL_EVIDENCE_KEEP_UNTRACKED",
+      "why": "Per-agent intermediate output and the ad-hoc probe scripts that produced it. The sprint's durable artifacts -- 111 of them, including every agent's manifest.json with per-file sha256, the closure reports and the registry outcomes -- are already tracked and committed. Committing the intermediates as well would add them to the repository only because they exist.",
+      "sha256": "e8e1a947bae3d2e687b0648deed4294e4c7b5837b4fc5c1c64fb024cacfbd818",
+      "digest_recorded_in_tracked_artifacts": [
+        "data/staging/release_blocker_r1/starting_worktree_receipt.json"
+      ],
+      "path_named_in_tracked_artifacts": [
+        "data/staging/release_blocker_r1/final_worktree_classification.json",
+        "data/staging/release_blocker_r1/starting_worktree_receipt.json",
+        "data/staging/release_blocker_r3/baseline.json"
+      ],
+      "tracked_sha256_sidecar": null,
+      "regenerated_identically_by": null,
+      "evidence_has_a_durable_tracked_replacement": true
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent6/SHA256SUMS.txt",
+      "size_bytes": 968,
+      "git_status": "??",
+      "tracked": false,
+      "originating_phase": "final closure sprint (agents 1-8)",
+      "classification": "LOCAL_EVIDENCE_KEEP_UNTRACKED",
+      "why": "Per-agent intermediate output and the ad-hoc probe scripts that produced it. The sprint's durable artifacts -- 111 of them, including every agent's manifest.json with per-file sha256, the closure reports and the registry outcomes -- are already tracked and committed. Committing the intermediates as well would add them to the repository only because they exist.",
+      "sha256": "a584edce15542f70f20b1173fdc55179dc3c6b670133105e306ea050d5fab2b4",
+      "digest_recorded_in_tracked_artifacts": [
+        "data/staging/release_blocker_r1/starting_worktree_receipt.json"
+      ],
+      "path_named_in_tracked_artifacts": [
+        "data/staging/release_blocker_r1/final_worktree_classification.json",
+        "data/staging/release_blocker_r1/starting_worktree_receipt.json",
+        "data/staging/release_blocker_r3/baseline.json"
+      ],
+      "tracked_sha256_sidecar": null,
+      "regenerated_identically_by": null,
+      "evidence_has_a_durable_tracked_replacement": true
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent7/alignment_confidence.py",
+      "size_bytes": 10325,
+      "git_status": "??",
+      "tracked": false,
+      "originating_phase": "final closure sprint (agents 1-8)",
+      "classification": "LOCAL_EVIDENCE_KEEP_UNTRACKED",
+      "why": "Per-agent intermediate output and the ad-hoc probe scripts that produced it. The sprint's durable artifacts -- 111 of them, including every agent's manifest.json with per-file sha256, the closure reports and the registry outcomes -- are already tracked and committed. Committing the intermediates as well would add them to the repository only because they exist.",
+      "sha256": "391a6bbc7f41ed6bf99ad97199f571f90df9a1cac2c7978668fb848d120ed2f2",
+      "digest_recorded_in_tracked_artifacts": [
+        "data/staging/final_closure_sprint/agent7/manifest.json",
+        "data/staging/release_blocker_r1/starting_worktree_receipt.json"
+      ],
+      "path_named_in_tracked_artifacts": [
+        "data/staging/release_blocker_r1/final_worktree_classification.json",
+        "data/staging/release_blocker_r1/starting_worktree_receipt.json",
+        "data/staging/release_blocker_r3/baseline.json"
+      ],
+      "tracked_sha256_sidecar": null,
+      "regenerated_identically_by": null,
+      "evidence_has_a_durable_tracked_replacement": true
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent7/alignment_confidence_rows.jsonl",
+      "size_bytes": 4996104,
+      "git_status": "??",
+      "tracked": false,
+      "originating_phase": "final closure sprint (agents 1-8)",
+      "classification": "LOCAL_EVIDENCE_KEEP_UNTRACKED",
+      "why": "Per-agent intermediate output and the ad-hoc probe scripts that produced it. The sprint's durable artifacts -- 111 of them, including every agent's manifest.json with per-file sha256, the closure reports and the registry outcomes -- are already tracked and committed. Committing the intermediates as well would add them to the repository only because they exist.",
+      "sha256": "e589647ce400f477ef6855db2ecc6f00cc85740ee5b1bf7c6313ab679a5c2f97",
+      "digest_recorded_in_tracked_artifacts": [
+        "data/staging/final_closure_sprint/agent7/manifest.json",
+        "data/staging/release_blocker_r1/starting_worktree_receipt.json"
+      ],
+      "path_named_in_tracked_artifacts": [
+        "data/staging/release_blocker_r1/final_worktree_classification.json",
+        "data/staging/release_blocker_r1/starting_worktree_receipt.json",
+        "data/staging/release_blocker_r3/baseline.json"
+      ],
+      "tracked_sha256_sidecar": null,
+      "regenerated_identically_by": null,
+      "evidence_has_a_durable_tracked_replacement": true
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent7/av_residual_full.py",
+      "size_bytes": 5760,
+      "git_status": "??",
+      "tracked": false,
+      "originating_phase": "final closure sprint (agents 1-8)",
+      "classification": "LOCAL_EVIDENCE_KEEP_UNTRACKED",
+      "why": "Per-agent intermediate output and the ad-hoc probe scripts that produced it. The sprint's durable artifacts -- 111 of them, including every agent's manifest.json with per-file sha256, the closure reports and the registry outcomes -- are already tracked and committed. Committing the intermediates as well would add them to the repository only because they exist.",
+      "sha256": "be38c27b51514242a8968b3c43d31b159effacff9eff8193b96fab0c2c9f87a8",
+      "digest_recorded_in_tracked_artifacts": [
+        "data/staging/final_closure_sprint/agent7/manifest.json",
+        "data/staging/release_blocker_r1/starting_worktree_receipt.json"
+      ],
+      "path_named_in_tracked_artifacts": [
+        "data/staging/release_blocker_r1/final_worktree_classification.json",
+        "data/staging/release_blocker_r1/starting_worktree_receipt.json",
+        "data/staging/release_blocker_r3/baseline.json"
+      ],
+      "tracked_sha256_sidecar": null,
+      "regenerated_identically_by": null,
+      "evidence_has_a_durable_tracked_replacement": true
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent7/build_closure_report.py",
+      "size_bytes": 21334,
+      "git_status": "??",
+      "tracked": false,
+      "originating_phase": "final closure sprint (agents 1-8)",
+      "classification": "LOCAL_EVIDENCE_KEEP_UNTRACKED",
+      "why": "Per-agent intermediate output and the ad-hoc probe scripts that produced it. The sprint's durable artifacts -- 111 of them, including every agent's manifest.json with per-file sha256, the closure reports and the registry outcomes -- are already tracked and committed. Committing the intermediates as well would add them to the repository only because they exist.",
+      "sha256": "6cbb470582ae988e55145fe515edc125bdd14d8b247a993df155fbb7e07f8fb0",
+      "digest_recorded_in_tracked_artifacts": [
+        "data/staging/final_closure_sprint/agent7/manifest.json",
+        "data/staging/release_blocker_r1/starting_worktree_receipt.json"
+      ],
+      "path_named_in_tracked_artifacts": [
+        "data/staging/release_blocker_r1/final_worktree_classification.json",
+        "data/staging/release_blocker_r1/starting_worktree_receipt.json",
+        "data/staging/release_blocker_r3/baseline.json"
+      ],
+      "tracked_sha256_sidecar": null,
+      "regenerated_identically_by": null,
+      "evidence_has_a_durable_tracked_replacement": true
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent7/build_manifest.py",
+      "size_bytes": 4918,
+      "git_status": "??",
+      "tracked": false,
+      "originating_phase": "final closure sprint (agents 1-8)",
+      "classification": "LOCAL_EVIDENCE_KEEP_UNTRACKED",
+      "why": "Per-agent intermediate output and the ad-hoc probe scripts that produced it. The sprint's durable artifacts -- 111 of them, including every agent's manifest.json with per-file sha256, the closure reports and the registry outcomes -- are already tracked and committed. Committing the intermediates as well would add them to the repository only because they exist.",
+      "sha256": "39d079838502cc1c81e55ce07f120d8eebc67df519935238accd043b2a6aecfe",
+      "digest_recorded_in_tracked_artifacts": [
+        "data/staging/final_closure_sprint/agent7/manifest.json",
+        "data/staging/release_blocker_r1/starting_worktree_receipt.json"
+      ],
+      "path_named_in_tracked_artifacts": [
+        "data/staging/release_blocker_r1/final_worktree_classification.json",
+        "data/staging/release_blocker_r1/starting_worktree_receipt.json",
+        "data/staging/release_blocker_r3/baseline.json"
+      ],
+      "tracked_sha256_sidecar": null,
+      "regenerated_identically_by": null,
+      "evidence_has_a_durable_tracked_replacement": true
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent7/build_proposed_mutations.py",
+      "size_bytes": 8720,
+      "git_status": "??",
+      "tracked": false,
+      "originating_phase": "final closure sprint (agents 1-8)",
+      "classification": "LOCAL_EVIDENCE_KEEP_UNTRACKED",
+      "why": "Per-agent intermediate output and the ad-hoc probe scripts that produced it. The sprint's durable artifacts -- 111 of them, including every agent's manifest.json with per-file sha256, the closure reports and the registry outcomes -- are already tracked and committed. Committing the intermediates as well would add them to the repository only because they exist.",
+      "sha256": "345f73f166e451072a93ed72bbf05dadcbb12d1e373120149ca2438d5fa75da9",
+      "digest_recorded_in_tracked_artifacts": [
+        "data/staging/final_closure_sprint/agent7/manifest.json",
+        "data/staging/release_blocker_r1/starting_worktree_receipt.json"
+      ],
+      "path_named_in_tracked_artifacts": [
+        "data/staging/release_blocker_r1/final_worktree_classification.json",
+        "data/staging/release_blocker_r1/starting_worktree_receipt.json",
+        "data/staging/release_blocker_r3/baseline.json"
+      ],
+      "tracked_sha256_sidecar": null,
+      "regenerated_identically_by": null,
+      "evidence_has_a_durable_tracked_replacement": true
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent7/build_residual_disposition.py",
+      "size_bytes": 14621,
+      "git_status": "??",
+      "tracked": false,
+      "originating_phase": "final closure sprint (agents 1-8)",
+      "classification": "LOCAL_EVIDENCE_KEEP_UNTRACKED",
+      "why": "Per-agent intermediate output and the ad-hoc probe scripts that produced it. The sprint's durable artifacts -- 111 of them, including every agent's manifest.json with per-file sha256, the closure reports and the registry outcomes -- are already tracked and committed. Committing the intermediates as well would add them to the repository only because they exist.",
+      "sha256": "9c792fc560dfeffd503e99a34abae86c03176c3894404f5a04fa34dfdaa06ed4",
+      "digest_recorded_in_tracked_artifacts": [
+        "data/staging/final_closure_sprint/agent7/manifest.json",
+        "data/staging/release_blocker_r1/starting_worktree_receipt.json"
+      ],
+      "path_named_in_tracked_artifacts": [
+        "data/staging/release_blocker_r1/final_worktree_classification.json",
+        "data/staging/release_blocker_r1/starting_worktree_receipt.json",
+        "data/staging/release_blocker_r3/baseline.json"
+      ],
+      "tracked_sha256_sidecar": null,
+      "regenerated_identically_by": null,
+      "evidence_has_a_durable_tracked_replacement": true
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent7/build_rows.py",
+      "size_bytes": 12751,
+      "git_status": "??",
+      "tracked": false,
+      "originating_phase": "final closure sprint (agents 1-8)",
+      "classification": "LOCAL_EVIDENCE_KEEP_UNTRACKED",
+      "why": "Per-agent intermediate output and the ad-hoc probe scripts that produced it. The sprint's durable artifacts -- 111 of them, including every agent's manifest.json with per-file sha256, the closure reports and the registry outcomes -- are already tracked and committed. Committing the intermediates as well would add them to the repository only because they exist.",
+      "sha256": "4bcf1bc49617d79b549604dc41e8b0fdc5e98a94d368e44a93ba4673392ed99d",
+      "digest_recorded_in_tracked_artifacts": [
+        "data/staging/final_closure_sprint/agent7/manifest.json",
+        "data/staging/release_blocker_r1/starting_worktree_receipt.json"
+      ],
+      "path_named_in_tracked_artifacts": [
+        "data/staging/release_blocker_r1/final_worktree_classification.json",
+        "data/staging/release_blocker_r1/starting_worktree_receipt.json",
+        "data/staging/release_blocker_r3/baseline.json"
+      ],
+      "tracked_sha256_sidecar": null,
+      "regenerated_identically_by": null,
+      "evidence_has_a_durable_tracked_replacement": true
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent7/embedded_label_sweep.py",
+      "size_bytes": 3933,
+      "git_status": "??",
+      "tracked": false,
+      "originating_phase": "final closure sprint (agents 1-8)",
+      "classification": "LOCAL_EVIDENCE_KEEP_UNTRACKED",
+      "why": "Per-agent intermediate output and the ad-hoc probe scripts that produced it. The sprint's durable artifacts -- 111 of them, including every agent's manifest.json with per-file sha256, the closure reports and the registry outcomes -- are already tracked and committed. Committing the intermediates as well would add them to the repository only because they exist.",
+      "sha256": "5d547d71a67e2ec3ab7a513d50a59bbc8cad63c36d6a7d530fafa84c652b7948",
+      "digest_recorded_in_tracked_artifacts": [
+        "data/staging/final_closure_sprint/agent7/manifest.json",
+        "data/staging/release_blocker_r1/starting_worktree_receipt.json"
+      ],
+      "path_named_in_tracked_artifacts": [
+        "data/staging/release_blocker_r1/final_worktree_classification.json",
+        "data/staging/release_blocker_r1/starting_worktree_receipt.json",
+        "data/staging/release_blocker_r3/baseline.json"
+      ],
+      "tracked_sha256_sidecar": null,
+      "regenerated_identically_by": null,
+      "evidence_has_a_durable_tracked_replacement": true
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent7/gate_regression.py",
+      "size_bytes": 4131,
+      "git_status": "??",
+      "tracked": false,
+      "originating_phase": "final closure sprint (agents 1-8)",
+      "classification": "LOCAL_EVIDENCE_KEEP_UNTRACKED",
+      "why": "Per-agent intermediate output and the ad-hoc probe scripts that produced it. The sprint's durable artifacts -- 111 of them, including every agent's manifest.json with per-file sha256, the closure reports and the registry outcomes -- are already tracked and committed. Committing the intermediates as well would add them to the repository only because they exist.",
+      "sha256": "c8d0d2aee64ee08035a10fa3ddef1f18ad5e908052f9fd05ecca4da013544c1c",
+      "digest_recorded_in_tracked_artifacts": [
+        "data/staging/final_closure_sprint/agent7/manifest.json",
+        "data/staging/release_blocker_r1/starting_worktree_receipt.json"
+      ],
+      "path_named_in_tracked_artifacts": [
+        "data/staging/release_blocker_r1/final_worktree_classification.json",
+        "data/staging/release_blocker_r1/starting_worktree_receipt.json",
+        "data/staging/release_blocker_r3/baseline.json"
+      ],
+      "tracked_sha256_sidecar": null,
+      "regenerated_identically_by": null,
+      "evidence_has_a_durable_tracked_replacement": true
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent7/gate_run_control/gate_b_failures.jsonl",
+      "size_bytes": 7792601,
+      "git_status": "??",
+      "tracked": false,
+      "originating_phase": "final closure sprint (agents 1-8)",
+      "classification": "LOCAL_EVIDENCE_KEEP_UNTRACKED",
+      "why": "Per-agent intermediate output and the ad-hoc probe scripts that produced it. The sprint's durable artifacts -- 111 of them, including every agent's manifest.json with per-file sha256, the closure reports and the registry outcomes -- are already tracked and committed. Committing the intermediates as well would add them to the repository only because they exist.",
+      "sha256": "7a1b48c9dc27e7f5b9ec29902cecca69d3cdac0dd23c6027a21c71d4bdbc4d97",
+      "digest_recorded_in_tracked_artifacts": [
+        "data/staging/final_closure_sprint/agent7/manifest.json",
+        "data/staging/release_blocker_r1/starting_worktree_receipt.json"
+      ],
+      "path_named_in_tracked_artifacts": [
+        "data/staging/release_blocker_r1/final_worktree_classification.json",
+        "data/staging/release_blocker_r1/starting_worktree_receipt.json",
+        "data/staging/release_blocker_r3/baseline.json"
+      ],
+      "tracked_sha256_sidecar": null,
+      "regenerated_identically_by": null,
+      "evidence_has_a_durable_tracked_replacement": true
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent7/gate_run_control/gate_b_rows.jsonl",
+      "size_bytes": 8134410,
+      "git_status": "??",
+      "tracked": false,
+      "originating_phase": "final closure sprint (agents 1-8)",
+      "classification": "LOCAL_EVIDENCE_KEEP_UNTRACKED",
+      "why": "Per-agent intermediate output and the ad-hoc probe scripts that produced it. The sprint's durable artifacts -- 111 of them, including every agent's manifest.json with per-file sha256, the closure reports and the registry outcomes -- are already tracked and committed. Committing the intermediates as well would add them to the repository only because they exist.",
+      "sha256": "dfea6f42f7f70a79331115eccaf00abb699bdc0114ea2335c898fb8d56ff87e1",
+      "digest_recorded_in_tracked_artifacts": [
+        "data/staging/final_closure_sprint/agent7/manifest.json",
+        "data/staging/release_blocker_r1/starting_worktree_receipt.json"
+      ],
+      "path_named_in_tracked_artifacts": [
+        "data/staging/release_blocker_r1/final_worktree_classification.json",
+        "data/staging/release_blocker_r1/starting_worktree_receipt.json",
+        "data/staging/release_blocker_r3/baseline.json"
+      ],
+      "tracked_sha256_sidecar": null,
+      "regenerated_identically_by": null,
+      "evidence_has_a_durable_tracked_replacement": true
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent7/gate_run_control/gate_c_rows.jsonl",
+      "size_bytes": 5892556,
+      "git_status": "??",
+      "tracked": false,
+      "originating_phase": "final closure sprint (agents 1-8)",
+      "classification": "LOCAL_EVIDENCE_KEEP_UNTRACKED",
+      "why": "Per-agent intermediate output and the ad-hoc probe scripts that produced it. The sprint's durable artifacts -- 111 of them, including every agent's manifest.json with per-file sha256, the closure reports and the registry outcomes -- are already tracked and committed. Committing the intermediates as well would add them to the repository only because they exist.",
+      "sha256": "91fadfa947ee48e128782d35b3a24343eb48ff24263ea8abeb678b64047b7137",
+      "digest_recorded_in_tracked_artifacts": [
+        "data/staging/final_closure_sprint/agent7/manifest.json",
+        "data/staging/release_blocker_r1/starting_worktree_receipt.json"
+      ],
+      "path_named_in_tracked_artifacts": [
+        "data/staging/release_blocker_r1/final_worktree_classification.json",
+        "data/staging/release_blocker_r1/starting_worktree_receipt.json",
+        "data/staging/release_blocker_r3/baseline.json"
+      ],
+      "tracked_sha256_sidecar": null,
+      "regenerated_identically_by": null,
+      "evidence_has_a_durable_tracked_replacement": true
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent7/gate_run_treatment/gate_b_failures.jsonl",
+      "size_bytes": 7760903,
+      "git_status": "??",
+      "tracked": false,
+      "originating_phase": "final closure sprint (agents 1-8)",
+      "classification": "LOCAL_EVIDENCE_KEEP_UNTRACKED",
+      "why": "Per-agent intermediate output and the ad-hoc probe scripts that produced it. The sprint's durable artifacts -- 111 of them, including every agent's manifest.json with per-file sha256, the closure reports and the registry outcomes -- are already tracked and committed. Committing the intermediates as well would add them to the repository only because they exist.",
+      "sha256": "3f9fabf9b9077179d34c1718b69e3a0a245189a32c3d5c3c8a2ff9c80a3465ba",
+      "digest_recorded_in_tracked_artifacts": [
+        "data/staging/final_closure_sprint/agent7/manifest.json",
+        "data/staging/release_blocker_r1/starting_worktree_receipt.json"
+      ],
+      "path_named_in_tracked_artifacts": [
+        "data/staging/release_blocker_r1/final_worktree_classification.json",
+        "data/staging/release_blocker_r1/starting_worktree_receipt.json",
+        "data/staging/release_blocker_r3/baseline.json"
+      ],
+      "tracked_sha256_sidecar": null,
+      "regenerated_identically_by": null,
+      "evidence_has_a_durable_tracked_replacement": true
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent7/gate_run_treatment/gate_b_rows.jsonl",
+      "size_bytes": 8137272,
+      "git_status": "??",
+      "tracked": false,
+      "originating_phase": "final closure sprint (agents 1-8)",
+      "classification": "LOCAL_EVIDENCE_KEEP_UNTRACKED",
+      "why": "Per-agent intermediate output and the ad-hoc probe scripts that produced it. The sprint's durable artifacts -- 111 of them, including every agent's manifest.json with per-file sha256, the closure reports and the registry outcomes -- are already tracked and committed. Committing the intermediates as well would add them to the repository only because they exist.",
+      "sha256": "e7f4e1223dd2f363cc75ed1a5882058aec5232d52c0f58cbc22f257793c2964e",
+      "digest_recorded_in_tracked_artifacts": [
+        "data/staging/final_closure_sprint/agent7/manifest.json",
+        "data/staging/release_blocker_r1/starting_worktree_receipt.json"
+      ],
+      "path_named_in_tracked_artifacts": [
+        "data/staging/release_blocker_r1/final_worktree_classification.json",
+        "data/staging/release_blocker_r1/starting_worktree_receipt.json",
+        "data/staging/release_blocker_r3/baseline.json"
+      ],
+      "tracked_sha256_sidecar": null,
+      "regenerated_identically_by": null,
+      "evidence_has_a_durable_tracked_replacement": true
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent7/gate_run_treatment/gate_c_rows.jsonl",
+      "size_bytes": 5894063,
+      "git_status": "??",
+      "tracked": false,
+      "originating_phase": "final closure sprint (agents 1-8)",
+      "classification": "LOCAL_EVIDENCE_KEEP_UNTRACKED",
+      "why": "Per-agent intermediate output and the ad-hoc probe scripts that produced it. The sprint's durable artifacts -- 111 of them, including every agent's manifest.json with per-file sha256, the closure reports and the registry outcomes -- are already tracked and committed. Committing the intermediates as well would add them to the repository only because they exist.",
+      "sha256": "92c55d4e8b6ae42ac5ae4f3663ddc867a508a7b69aa3461d225673588e0de346",
+      "digest_recorded_in_tracked_artifacts": [
+        "data/staging/final_closure_sprint/agent7/manifest.json",
+        "data/staging/release_blocker_r1/starting_worktree_receipt.json"
+      ],
+      "path_named_in_tracked_artifacts": [
+        "data/staging/release_blocker_r1/final_worktree_classification.json",
+        "data/staging/release_blocker_r1/starting_worktree_receipt.json",
+        "data/staging/release_blocker_r3/baseline.json"
+      ],
+      "tracked_sha256_sidecar": null,
+      "regenerated_identically_by": null,
+      "evidence_has_a_durable_tracked_replacement": true
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent7/graph_facts.json",
+      "size_bytes": 9320114,
+      "git_status": "??",
+      "tracked": false,
+      "originating_phase": "final closure sprint (agents 1-8)",
+      "classification": "LOCAL_EVIDENCE_KEEP_UNTRACKED",
+      "why": "Per-agent intermediate output and the ad-hoc probe scripts that produced it. The sprint's durable artifacts -- 111 of them, including every agent's manifest.json with per-file sha256, the closure reports and the registry outcomes -- are already tracked and committed. Committing the intermediates as well would add them to the repository only because they exist.",
+      "sha256": "bdaffce57ff9e79a8e0b12f35231a2a13c6ad21bf0ff36999c17662c3194d634",
+      "digest_recorded_in_tracked_artifacts": [
+        "data/staging/release_blocker_r1/starting_worktree_receipt.json"
+      ],
+      "path_named_in_tracked_artifacts": [
+        "data/staging/release_blocker_r1/final_worktree_classification.json",
+        "data/staging/release_blocker_r1/starting_worktree_receipt.json",
+        "data/staging/release_blocker_r3/baseline.json"
+      ],
+      "tracked_sha256_sidecar": null,
+      "regenerated_identically_by": null,
+      "evidence_has_a_durable_tracked_replacement": true
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent7/rv_addressing_probe.py",
+      "size_bytes": 5982,
+      "git_status": "??",
+      "tracked": false,
+      "originating_phase": "final closure sprint (agents 1-8)",
+      "classification": "LOCAL_EVIDENCE_KEEP_UNTRACKED",
+      "why": "Per-agent intermediate output and the ad-hoc probe scripts that produced it. The sprint's durable artifacts -- 111 of them, including every agent's manifest.json with per-file sha256, the closure reports and the registry outcomes -- are already tracked and committed. Committing the intermediates as well would add them to the repository only because they exist.",
+      "sha256": "2d36e2f452f09ae4bedd90f748c8c1f279d531b585ff3dadcf17b2916cf54df9",
+      "digest_recorded_in_tracked_artifacts": [
+        "data/staging/final_closure_sprint/agent7/manifest.json",
+        "data/staging/release_blocker_r1/starting_worktree_receipt.json"
+      ],
+      "path_named_in_tracked_artifacts": [
+        "data/staging/release_blocker_r1/final_worktree_classification.json",
+        "data/staging/release_blocker_r1/starting_worktree_receipt.json",
+        "data/staging/release_blocker_r3/baseline.json"
+      ],
+      "tracked_sha256_sidecar": null,
+      "regenerated_identically_by": null,
+      "evidence_has_a_durable_tracked_replacement": true
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent7/sv_running_number_derivation.py",
+      "size_bytes": 4971,
+      "git_status": "??",
+      "tracked": false,
+      "originating_phase": "final closure sprint (agents 1-8)",
+      "classification": "LOCAL_EVIDENCE_KEEP_UNTRACKED",
+      "why": "Per-agent intermediate output and the ad-hoc probe scripts that produced it. The sprint's durable artifacts -- 111 of them, including every agent's manifest.json with per-file sha256, the closure reports and the registry outcomes -- are already tracked and committed. Committing the intermediates as well would add them to the repository only because they exist.",
+      "sha256": "7bcf3e4710ce2aa891db6417f86b6930f2fec402adb11ed9617c1d237cae0745",
+      "digest_recorded_in_tracked_artifacts": [
+        "data/staging/final_closure_sprint/agent7/manifest.json",
+        "data/staging/release_blocker_r1/starting_worktree_receipt.json"
+      ],
+      "path_named_in_tracked_artifacts": [
+        "data/staging/release_blocker_r1/final_worktree_classification.json",
+        "data/staging/release_blocker_r1/starting_worktree_receipt.json",
+        "data/staging/release_blocker_r3/baseline.json",
+        "data/staging/release_blocker_r5/agentA_samaveda_music/FINDINGS.md"
+      ],
+      "tracked_sha256_sidecar": null,
+      "regenerated_identically_by": null,
+      "evidence_has_a_durable_tracked_replacement": true
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent7/sv_running_number_probe.py",
+      "size_bytes": 3307,
+      "git_status": "??",
+      "tracked": false,
+      "originating_phase": "final closure sprint (agents 1-8)",
+      "classification": "LOCAL_EVIDENCE_KEEP_UNTRACKED",
+      "why": "Per-agent intermediate output and the ad-hoc probe scripts that produced it. The sprint's durable artifacts -- 111 of them, including every agent's manifest.json with per-file sha256, the closure reports and the registry outcomes -- are already tracked and committed. Committing the intermediates as well would add them to the repository only because they exist.",
+      "sha256": "0c521b4d7d9b1378be1773b304fe8510793c541fab077bd04c99e058537b4b13",
+      "digest_recorded_in_tracked_artifacts": [
+        "data/staging/final_closure_sprint/agent7/manifest.json",
+        "data/staging/release_blocker_r1/starting_worktree_receipt.json"
+      ],
+      "path_named_in_tracked_artifacts": [
+        "data/staging/release_blocker_r1/final_worktree_classification.json",
+        "data/staging/release_blocker_r1/starting_worktree_receipt.json",
+        "data/staging/release_blocker_r3/baseline.json"
+      ],
+      "tracked_sha256_sidecar": null,
+      "regenerated_identically_by": null,
+      "evidence_has_a_durable_tracked_replacement": true
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent7/yv_provenance_rederivation.py",
+      "size_bytes": 4970,
+      "git_status": "??",
+      "tracked": false,
+      "originating_phase": "final closure sprint (agents 1-8)",
+      "classification": "LOCAL_EVIDENCE_KEEP_UNTRACKED",
+      "why": "Per-agent intermediate output and the ad-hoc probe scripts that produced it. The sprint's durable artifacts -- 111 of them, including every agent's manifest.json with per-file sha256, the closure reports and the registry outcomes -- are already tracked and committed. Committing the intermediates as well would add them to the repository only because they exist.",
+      "sha256": "c65b26cd43888254bd1a8d87ed9a6a76baa25bedce25889e7245d83d7707424c",
+      "digest_recorded_in_tracked_artifacts": [
+        "data/staging/final_closure_sprint/agent7/manifest.json",
+        "data/staging/release_blocker_r1/starting_worktree_receipt.json"
+      ],
+      "path_named_in_tracked_artifacts": [
+        "data/staging/release_blocker_r1/final_worktree_classification.json",
+        "data/staging/release_blocker_r1/starting_worktree_receipt.json",
+        "data/staging/release_blocker_r3/baseline.json"
+      ],
+      "tracked_sha256_sidecar": null,
+      "regenerated_identically_by": null,
+      "evidence_has_a_durable_tracked_replacement": true
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent8/fold_probe.txt",
+      "size_bytes": 2840,
+      "git_status": "??",
+      "tracked": false,
+      "originating_phase": "final closure sprint (agents 1-8)",
+      "classification": "LOCAL_EVIDENCE_KEEP_UNTRACKED",
+      "why": "Per-agent intermediate output and the ad-hoc probe scripts that produced it. The sprint's durable artifacts -- 111 of them, including every agent's manifest.json with per-file sha256, the closure reports and the registry outcomes -- are already tracked and committed. Committing the intermediates as well would add them to the repository only because they exist.",
+      "sha256": "112487481119be3833b6c5ee1316ae54734a938aaa69f2740541c467ac2719e8",
+      "digest_recorded_in_tracked_artifacts": [
+        "data/staging/release_blocker_r1/starting_worktree_receipt.json"
+      ],
+      "path_named_in_tracked_artifacts": [
+        "data/staging/release_blocker_r1/final_worktree_classification.json",
+        "data/staging/release_blocker_r1/starting_worktree_receipt.json",
+        "data/staging/release_blocker_r3/baseline.json"
+      ],
+      "tracked_sha256_sidecar": null,
+      "regenerated_identically_by": null,
+      "evidence_has_a_durable_tracked_replacement": true
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent8/m_untranslated.py",
+      "size_bytes": 1471,
+      "git_status": "??",
+      "tracked": false,
+      "originating_phase": "final closure sprint (agents 1-8)",
+      "classification": "LOCAL_EVIDENCE_KEEP_UNTRACKED",
+      "why": "Per-agent intermediate output and the ad-hoc probe scripts that produced it. The sprint's durable artifacts -- 111 of them, including every agent's manifest.json with per-file sha256, the closure reports and the registry outcomes -- are already tracked and committed. Committing the intermediates as well would add them to the repository only because they exist.",
+      "sha256": "10443c475c5d76cbd2906d1170dfdfebe710981c4efd6a4ff8ce37a449ea0c12",
+      "digest_recorded_in_tracked_artifacts": [
+        "data/staging/release_blocker_r1/starting_worktree_receipt.json"
+      ],
+      "path_named_in_tracked_artifacts": [
+        "data/staging/release_blocker_r1/final_worktree_classification.json",
+        "data/staging/release_blocker_r1/starting_worktree_receipt.json",
+        "data/staging/release_blocker_r3/baseline.json"
+      ],
+      "tracked_sha256_sidecar": null,
+      "regenerated_identically_by": null,
+      "evidence_has_a_durable_tracked_replacement": true
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent8/m_world_exact.py",
+      "size_bytes": 2186,
+      "git_status": "??",
+      "tracked": false,
+      "originating_phase": "final closure sprint (agents 1-8)",
+      "classification": "LOCAL_EVIDENCE_KEEP_UNTRACKED",
+      "why": "Per-agent intermediate output and the ad-hoc probe scripts that produced it. The sprint's durable artifacts -- 111 of them, including every agent's manifest.json with per-file sha256, the closure reports and the registry outcomes -- are already tracked and committed. Committing the intermediates as well would add them to the repository only because they exist.",
+      "sha256": "fa6c92f68839fdf55f11e8a4d60840b38373f6f78aa392fe957d3152a398108d",
+      "digest_recorded_in_tracked_artifacts": [
+        "data/staging/release_blocker_r1/starting_worktree_receipt.json"
+      ],
+      "path_named_in_tracked_artifacts": [
+        "data/staging/release_blocker_r1/final_worktree_classification.json",
+        "data/staging/release_blocker_r1/starting_worktree_receipt.json",
+        "data/staging/release_blocker_r3/baseline.json"
+      ],
+      "tracked_sha256_sidecar": null,
+      "regenerated_identically_by": null,
+      "evidence_has_a_durable_tracked_replacement": true
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent8/m_world_inputs.py",
+      "size_bytes": 1775,
+      "git_status": "??",
+      "tracked": false,
+      "originating_phase": "final closure sprint (agents 1-8)",
+      "classification": "LOCAL_EVIDENCE_KEEP_UNTRACKED",
+      "why": "Per-agent intermediate output and the ad-hoc probe scripts that produced it. The sprint's durable artifacts -- 111 of them, including every agent's manifest.json with per-file sha256, the closure reports and the registry outcomes -- are already tracked and committed. Committing the intermediates as well would add them to the repository only because they exist.",
+      "sha256": "6a833ca67986bfd9c025b6f548806180987cb36b02f85daf6ddd8dda3beddbf0",
+      "digest_recorded_in_tracked_artifacts": [
+        "data/staging/release_blocker_r1/starting_worktree_receipt.json"
+      ],
+      "path_named_in_tracked_artifacts": [
+        "data/staging/release_blocker_r1/final_worktree_classification.json",
+        "data/staging/release_blocker_r1/starting_worktree_receipt.json",
+        "data/staging/release_blocker_r3/baseline.json"
+      ],
+      "tracked_sha256_sidecar": null,
+      "regenerated_identically_by": null,
+      "evidence_has_a_durable_tracked_replacement": true
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent8/probe_agent3_fold.py",
+      "size_bytes": 2903,
+      "git_status": "??",
+      "tracked": false,
+      "originating_phase": "final closure sprint (agents 1-8)",
+      "classification": "LOCAL_EVIDENCE_KEEP_UNTRACKED",
+      "why": "Per-agent intermediate output and the ad-hoc probe scripts that produced it. The sprint's durable artifacts -- 111 of them, including every agent's manifest.json with per-file sha256, the closure reports and the registry outcomes -- are already tracked and committed. Committing the intermediates as well would add them to the repository only because they exist.",
+      "sha256": "5d55265284e526fb19b9218bb3bb44e56ea42731f0b358f9875e7cfd71310064",
+      "digest_recorded_in_tracked_artifacts": [
+        "data/staging/release_blocker_r1/starting_worktree_receipt.json"
+      ],
+      "path_named_in_tracked_artifacts": [
+        "data/staging/release_blocker_r1/final_worktree_classification.json",
+        "data/staging/release_blocker_r1/starting_worktree_receipt.json",
+        "data/staging/release_blocker_r3/baseline.json"
+      ],
+      "tracked_sha256_sidecar": null,
+      "regenerated_identically_by": null,
+      "evidence_has_a_durable_tracked_replacement": true
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent8/probe_scorecard.py",
+      "size_bytes": 2796,
+      "git_status": "??",
+      "tracked": false,
+      "originating_phase": "final closure sprint (agents 1-8)",
+      "classification": "LOCAL_EVIDENCE_KEEP_UNTRACKED",
+      "why": "Per-agent intermediate output and the ad-hoc probe scripts that produced it. The sprint's durable artifacts -- 111 of them, including every agent's manifest.json with per-file sha256, the closure reports and the registry outcomes -- are already tracked and committed. Committing the intermediates as well would add them to the repository only because they exist.",
+      "sha256": "b178e35076af9e796ad7689d1b786da551b8f243f1106e01fd58e6e7458aa406",
+      "digest_recorded_in_tracked_artifacts": [
+        "data/staging/release_blocker_r1/starting_worktree_receipt.json"
+      ],
+      "path_named_in_tracked_artifacts": [
+        "data/staging/release_blocker_r1/final_worktree_classification.json",
+        "data/staging/release_blocker_r1/starting_worktree_receipt.json",
+        "data/staging/release_blocker_r3/baseline.json"
+      ],
+      "tracked_sha256_sidecar": null,
+      "regenerated_identically_by": null,
+      "evidence_has_a_durable_tracked_replacement": true
+    }
+  ]
+}

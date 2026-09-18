@@ -67,6 +67,8 @@ from vedagraph.llm import get_llm_provider
 from vedagraph.llm.base import LLMProvider, LLMRequest, LLMResponse
 from vedagraph.llm.config import get_llm_settings
 from vedagraph.llm.errors import LLMError, LLMProviderUnavailableError
+from vedagraph.llm.factory import credential_slots
+from vedagraph.llm.failover import FailoverProvider
 
 BENCHMARK = Path("data/gold/ask_benchmark_v1.jsonl")
 CHECKPOINT_DIR = Path("data/gold/ask_benchmark_runs")
@@ -249,6 +251,15 @@ class UsageRecordingProvider(LLMProvider):
         """Forget the previous question's fault, so a stale one is never re-read."""
         self.last_fault = None
 
+    def credential_status(self) -> dict[str, int | str] | None:
+        """Slot counts when several credentials are configured, else ``None``.
+
+        Counts only. No prefix, no suffix, no length: four characters of a key is enough
+        to pick it out of a leaked log against a list of candidates.
+        """
+        inner = self._inner
+        return inner.status() if isinstance(inner, FailoverProvider) else None
+
     def generate(self, request: LLMRequest) -> LLMResponse:
         try:
             response = self._inner.generate(request)
@@ -403,6 +414,12 @@ def main() -> None:
     parser.add_argument("--pace", type=float, default=DEFAULT_PACE_SECONDS)
     parser.add_argument("--status", action="store_true", help="Report progress and answer nothing.")
     parser.add_argument(
+        "--credentials",
+        action="store_true",
+        help="Report how many credentials are configured and which slot is active. Counts "
+        "only -- no key, no prefix, no length. Answers nothing and spends nothing.",
+    )
+    parser.add_argument(
         "--limit", type=int, default=None, help="Answer at most N unanswered questions."
     )
     parser.add_argument(
@@ -423,6 +440,16 @@ def main() -> None:
     args = parser.parse_args()
 
     logging.disable(logging.WARNING)
+
+    if args.credentials:
+        # Deliberately before anything that could build a provider or touch the graph:
+        # this must be runnable with no Neo4j, and must spend nothing.
+        slots = credential_slots()
+        print(f"configured credentials: {len(slots)}")
+        print(f"active slot: {1 if slots else 0}")
+        print(f"remaining unused slots: {max(len(slots) - 1, 0)}")
+        return
+
     cases, question_set_hash = load_questions()
 
     provider = UsageRecordingProvider(get_llm_provider())
@@ -434,6 +461,15 @@ def main() -> None:
     print(f"provider    {identity.provider}  model {identity.model}")
     print(f"commit      {identity.code_commit}   questions {len(cases)}")
     print(f"checkpoint  {checkpoint_path(identity)}")
+    credentials = provider.credential_status()
+    if credentials is not None:
+        # The run id above is computed without any of this, and that is the point: a
+        # rotation changes who is billed and nothing the benchmark identifies a run by.
+        print(
+            f"credentials {credentials['configured_credentials']} configured, "
+            f"slot {credentials['active_slot']} active, "
+            f"{credentials['remaining_unused_slots']} unused"
+        )
     print(f"answered    {len(done)}/{len(cases)}   remaining {len(remaining)}\n")
 
     if args.status:
@@ -449,6 +485,9 @@ def main() -> None:
     answered = 0
     index = 0
     stalls = 0
+    # The runner disables WARNING logging, so the failover layer's own rotation notice
+    # would never reach the owner. Watched here instead and printed as run output.
+    last_slot = (credentials or {}).get("active_slot")
     # Nothing to pace against before the first question, and a stall wait has already
     # paced the retry that follows it far past anything --pace would add.
     skip_pace = True
@@ -490,6 +529,15 @@ def main() -> None:
                         provider=provider.name
                     )
                     record = None
+
+            now = (provider.credential_status() or {}).get("active_slot")
+            if now != last_slot:
+                print(
+                    f"   .. credential slot {last_slot} reported its allowance exhausted; "
+                    f"continuing on slot {now}. The run id is unchanged.",
+                    flush=True,
+                )
+                last_slot = now
 
             if fault is not None:
                 detail = getattr(fault, "detail", str(fault)) or type(fault).__name__

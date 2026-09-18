@@ -78,6 +78,7 @@ def test_the_log_is_append_only_and_the_queue_is_its_projection(sandbox: pathlib
     harness.append_decision(
         {
             "review_id": "REV-TEST-001",
+            "media_url": "https://example.invalid/a.ogg",
             "verdict": "AUDIBLY_REJECTED",
             "reviewer": "first pass",
             "reviewed_at": "2026-09-15T10:00:00+00:00",
@@ -88,6 +89,7 @@ def test_the_log_is_append_only_and_the_queue_is_its_projection(sandbox: pathlib
     harness.append_decision(
         {
             "review_id": "REV-TEST-001",
+            "media_url": "https://example.invalid/a.ogg",
             "verdict": "AUDIBLY_VERIFIED",
             "reviewer": "second pass",
             "reviewed_at": "2026-09-15T11:00:00+00:00",
@@ -136,6 +138,7 @@ def test_progress_counts_only_the_three_final_states(sandbox: pathlib.Path) -> N
     harness.append_decision(
         {
             "review_id": "REV-TEST-001",
+            "media_url": "https://example.invalid/a.ogg",
             "verdict": "TEXT_VERIFIED",
             "reviewer": "a pipeline",
             "reviewed_at": "2026-09-15T12:00:00+00:00",

@@ -1556,20 +1556,83 @@ RULINGS: Final[dict[str, Ruling]] = {
         citation="data/registry/works.yaml:290-297",
     ),
     "GAP-SAMAVEDA_MUSIC-002": Ruling(
-        "BLOCKED_OWNER_DECISION_REQUIRED",
-        "No melodic layer of any kind exists and MUSICALIZED_AS carries zero edges. The Wave 3 "
-        "samaveda_music domain staged 1,471 rows -- arcika notation with Vedic-extension "
-        "marks -- whose manifest declares this gap closed, and the domain is blocked behind "
-        "OWNER_DECISION_E_AUDIO_GATE with Gate B UNKNOWN and Gate C NOT_RUN. Staged and "
-        "unimported is not closed, and it is not a source absence either.",
+        "STILL_IMPLEMENTATION_FIXABLE",
+        "THE OWNER GATE IS ANSWERED AND THE ENTRY IS STILL NOT CLOSED, which is the honest "
+        "pair rather than a regression. OWNER_DECISION_F_NOTATION_IS_NOT_AUDIO "
+        "(OWNER_DECISIONS.md section 40) rules that the audible-review gate covers AUDIO "
+        "only and does not gate textual or musical notation, so this entry leaves "
+        "BLOCKED_OWNER_DECISION_REQUIRED: the gate it was parked behind was never the right "
+        "gate for 1,136 of the domain's 1,471 rows, which are combining Devanagari tone "
+        "marks printed on verse text and contain no recording anyone could listen to. The "
+        "decision is a PERMISSION CONDITIONAL ON FOUR THINGS, and they are measured rather "
+        "than assumed. MET -- recension compatible with the canonical Kauthuma arcika: the "
+        "source page-title prefix is samavedah/kauthumiya/samhita/, the accented witness's "
+        "own headers run purvarcikah/chanda arcikah through uttararcikah/navamaprapathakah "
+        "which is the Kauthuma arrangement and not Benfey's six-book Ranayaniya, 1,136 "
+        "verses are byte-identical under the declared normalisation to the text already held "
+        "at VG:WORK:SV:KAU, and recension.no_foreign_recension_inside_kauthuma evaluated "
+        "1,132 records against eight foreign-recension markers with 0 hits. MET for 1,136 "
+        "and only those -- coordinate alignment: arcika_notation.text_redderives is 1,136 "
+        "evaluated and 0 failures over CHANDA 471, ARANYA 31, MAHANAMNYA 3, UTTARA 631, the "
+        "pairing order-consistent under an LCS alignment rather than merely set-equal, with "
+        "identity.uuid_recomputes_from_urn 1,136/0 and identity.keys_and_urns_unique "
+        "1,132/0; the other 708 arcika verses are staged UNRESOLVED because the witness "
+        "disagrees with our text there and are exactly what the decision's own 'uncertain or "
+        "unaligned notation remains withheld' clause withholds. MET -- source-supplied and "
+        "not inferred: arcika_notation.tone_mark_present 1,136/0, "
+        "arcika_notation.no_pua_no_u0301 1,136/0 refusing both the private-use-area font "
+        "hack and the U+0301 acute that makes an IAST sa indistinguishable from an udatta, "
+        "and a codepoint census of 108,160 cantillation marks over 1,750,419 characters of "
+        "which 98.09% are real combining Devanagari Extended U+A8E1-U+A8F1; the notation is "
+        "recorded as codepoints and never interpreted into pitch. NOT MET -- existing "
+        "validation gates pass: Gate A is PASS at full evaluation coverage with --graph and "
+        "the domain's own QA report is 12 checks over 11,193 records with 0 defects, but "
+        "wave3_eligibility.json records Gate B UNKNOWN and Gate C NOT_RUN against a stated "
+        "eligibility rule of A and B and C all PASS. That fourth condition is not a "
+        "technicality: Gate C is an INDEPENDENT falsification attempt, four of four domains "
+        "adversarially tested so far have failed it, and two of those four had every "
+        "aggregate count survive -- so the artifact's own adversarial sample (the 40 "
+        "shortest gana-rendered verses, 0 defects) is the agent checking its own work, which "
+        "is the thing Gate C exists because it is not. CONSEQUENCE: the notation is "
+        "AUTHORISED AND NOT YET RELEASED. The graph still holds no melodic layer of any kind "
+        "-- 0 MUSICALIZED_AS edges, the relationship type absent from db.relationshipTypes(), "
+        "no label matching saman|gana|stobha|melod -- and a staged and unimported domain is "
+        "not closed, which this ledger learned when 944 Atharvavedic translations were "
+        "recorded as 'closed via the Wayback Machine' against a graph holding none of them. "
+        "THE REMAINING WORK IS NAMED AND BOUNDED: run Gate B and Gate C for samaveda_music, "
+        "then import the 1,136 aligned ARCIKA_NOTATION rows and leave the 708 unresolved ones "
+        "withheld. If the owner intended 'existing validation gates' to mean the structural "
+        "validator alone, this ruling is the one line that changes.",
         "MATCH ()-[r:MUSICALIZED_AS]->() RETURN count(r)",
         0,
-        owner_decision="OWNER_DECISION_E_AUDIO_GATE",
     ),
     "GAP-SAMAVEDA_MUSIC-003": Ruling(
-        "BLOCKED_OWNER_DECISION_REQUIRED",
-        "CLAUSE 1 IS CLOSED AND CLAUSE 2 IS NOT, and the entry stays on the owner gate for "
-        "the second alone rather than being reported closed. CLAUSE 1: 0 of 1,844 Samavedic "
+        "CLOSED_SCOPE_DECISION",
+        "CLAUSE 1 CLOSED AT R5 AND CLAUSE 2 IS NOW OUT OF SCOPE, so the entry closes on a "
+        "recorded owner decision rather than on an import. CLAUSE 2 FIRST, because it is "
+        "what the entry was blocked on: OWNER_DECISION_G_GANA_OBJECT_OUT_OF_V1 "
+        "(OWNER_DECISIONS.md section 41) rules that for Product V1 MUSICALIZED_AS "
+        "relationships are NOT required unless the object-side Gana identity is "
+        "independently established and canonical, that no Gana node or MUSICALIZED_AS edge "
+        "may be minted merely to satisfy a denominator, and that the missing object-side "
+        "Gana model is outside the Product V1 bounded corpus and is future enrichment. "
+        "Every premise it states is true as measured 2026-09-18 against the live store: 0 "
+        "MUSICALIZED_AS edges with the relationship type absent from db.relationshipTypes() "
+        "entirely, no label matching saman|gana|stobha|melod, 0 nodes carrying any property "
+        "key containing 'gana', 4 :Work nodes of which exactly one is Samavedic "
+        "(VG:WORK:SV:KAU), and all four gana Works in "
+        "data/staging/samaveda_music/gana_works.jsonl reading "
+        "identity_status PROPOSED_FOR_LEAD_ADJUDICATION with none of them in the graph. THE "
+        "EXCLUSION WAS ALREADY DECLARED, which is what makes this a scope decision rather "
+        "than a convenient one: VG:WORK:SV:KAU carries an excluded_corpora list naming "
+        "SAMAVEDA_GRAMAGEYA_GANA, SAMAVEDA_ARANYAKAGEYA_GANA, SAMAVEDA_UHAGANA and "
+        "SAMAVEDA_UHYAGANA and a scope property stating the gana collections require their "
+        "own work_id, and GAP-SAMAVEDA_MUSIC-001 already closed CLOSED_SCOPE_DECISION on "
+        "that same citation; this decision extends the same boundary to the PREDICATE that "
+        "would have crossed it. The 495 staged edges are not deleted or denied -- they stay "
+        "in data/staging/samaveda_music/, re-verified 495/495 against the graph's own stored "
+        "arcika text, and become importable once a gana corpus carries a canonical object "
+        "identity. CLAUSE 1, unmoved and re-measured: 0 of 1,844 Samavedic "
         "mantras carried a running Samhita number and all 1,844 now do. The number is the "
         "SOURCE'S OWN PRINTED SERIES, not this corpus's index, and the control is what "
         "proves it: an enumerate() over our own ordering would be exactly 1..1844 "
@@ -1591,23 +1654,23 @@ RULINGS: Final[dict[str, Ruling]] = {
         "TextVersion rows carry a null source_locator while the canonical file holds the "
         "real per-verse locator, and the 1,844 SEARCH_DERIVATIVE rows carry the derivation "
         "RECIPE in that field, which is not a locator. A prior basis said this recipe sat on "
-        "'1,844 SV TextVersion rows'; there are 3,688. CLAUSE 2 CANNOT BE CLOSED HERE AND IS "
-        "NOT UNFINISHED CODE: MUSICALIZED_AS carries 0 edges and the relationship type does "
-        "not exist, and neither does its object end -- 0 nodes carry a gana work id or a gana "
-        "canonical key, the only SV Work is VG:WORK:SV:KAU, and the four gana Works are "
-        "PROPOSED_FOR_LEAD_ADJUDICATION behind OWNER_DECISION_E_AUDIO_GATE, the same gate "
-        "GAP-SAMAVEDA_MUSIC-002 is recorded against. The predicate is also glossed "
-        "Passage-to-Passage RV-to-SV and would need widening before it could honestly carry "
-        "an SV-to-gana edge. Attaching an execution blocker to a row that still contained "
-        "undone internal work was the disguise the R1 hostile pass reverted this entry for; "
-        "that internal work is now done, so the gate is the whole of what remains.",
+        "'1,844 SV TextVersion rows'; there are 3,688. WHAT CHANGES AT RELEASE PREP IS THE "
+        "STATUS AND NOT A FIGURE: clause 1's measure still reads 0 and clause 2's still "
+        "reads 0 MUSICALIZED_AS edges. The predicate is glossed Passage-to-Passage RV-to-SV "
+        "and would have needed widening before it could honestly carry an SV-to-gana edge; "
+        "under section 41 it is not widened, not populated, and not required. Attaching an "
+        "execution blocker to a row that still contained undone internal work was the "
+        "disguise the R1 hostile pass reverted this entry for; that internal work was "
+        "finished at R5, and the owner has now placed what remained outside Product V1.",
         "MATCH (m:Mantra {veda:'SV'}) WHERE m.running_samhita_number IS NULL RETURN count(m)",
         0,
-        owner_decision="OWNER_DECISION_E_AUDIO_GATE",
+        citation="docs/reports/data-completeness/OWNER_DECISIONS.md section 41",
         prior_expect=1844,
         reaudit=(
-            "1,844 Samavedic mantras with no running Samhita number became 0. Clause 2 is "
-            "unmoved at 0 MUSICALIZED_AS edges and is what the entry is now blocked on."
+            "1,844 Samavedic mantras with no running Samhita number became 0 and stay 0. "
+            "Clause 2 is unmoved at 0 MUSICALIZED_AS edges and is now closed as out of "
+            "Product V1 scope by OWNER_DECISION_G_GANA_OBJECT_OUT_OF_V1 rather than by an "
+            "import: no gana node was minted and no edge was created."
         ),
     ),
     # ---- scholarship -----------------------------------------------------------------

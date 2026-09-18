@@ -5,6 +5,7 @@ Switch providers by changing VEDAGRAPH_LLM_PROVIDER in .env — no code changes.
 
 from vedagraph.llm.base import LLMCapabilities, LLMProvider, LLMRequest, LLMResponse
 from vedagraph.llm.config import LLMSettings, get_llm_settings
+from vedagraph.llm.credentials import CredentialSlots, load_credential_slots
 from vedagraph.llm.errors import (
     LLMAuthenticationError,
     LLMConfigurationError,
@@ -16,9 +17,12 @@ from vedagraph.llm.errors import (
     LLMResponseError,
     LLMTimeoutError,
 )
-from vedagraph.llm.factory import get_llm_provider
+from vedagraph.llm.factory import credential_slots, get_llm_provider
+from vedagraph.llm.failover import FailoverProvider, is_terminal_quota
 
 __all__ = [
+    "CredentialSlots",
+    "FailoverProvider",
     "LLMAuthenticationError",
     "LLMCapabilities",
     "LLMConfigurationError",
@@ -33,6 +37,9 @@ __all__ = [
     "LLMResponseError",
     "LLMSettings",
     "LLMTimeoutError",
+    "credential_slots",
     "get_llm_provider",
     "get_llm_settings",
+    "is_terminal_quota",
+    "load_credential_slots",
 ]

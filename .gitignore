@@ -84,3 +84,14 @@ data/backup/*.dump
 # backup the migration was gated on, so MANIFEST.json and the .sha256 sidecars ARE
 # tracked and the payload is not.
 data/staging/release_blocker_r4/backup/*.jsonl
+
+# The R3 and R5 logical exports, and the R2-era physical dump. Same rule and same reason as
+# the R4 export above: the payload is reproducible from the graph it was taken from, and
+# what a later reader needs is the IDENTITY of the backup a migration was gated on. R4 and
+# R5 already track MANIFEST.json plus a .sha256 sidecar per file. R3 has no sidecars, but
+# its MANIFEST.json carries both payload digests inline, so that one file is tracked and
+# completes the same arrangement -- ignoring the directory wholesale would destroy the
+# digest in exactly the event it exists to detect.
+data/staging/release_blocker_r3/backup/*.jsonl
+data/staging/release_blocker_r5/backup/*.jsonl
+data/staging/final_stabilization/neo4j_backup_20260917/*.dump

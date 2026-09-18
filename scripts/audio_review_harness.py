@@ -81,16 +81,32 @@ def read_jsonl(path: pathlib.Path) -> list[dict[str, Any]]:
         return [json.loads(line) for line in handle if line.strip()]
 
 
+def row_key(row: dict[str, Any]) -> str:
+    """The identity a decision attaches to: ``review_id`` is *not* unique in this queue.
+
+    ``REV-SV_CONTAINER_SCOPE-VG:SV:KAU:UTTARA:P01:R01`` covers **four** distinct Commons
+    recordings -- Aajya stotram I, II, III and IV -- because a container-scope mapping
+    asserts only that the file belongs to the arcika container, which is the granularity
+    the source itself chose. Keying decisions on ``review_id`` alone therefore made one
+    keystroke mark all four ``AUDIBLY_VERIFIED`` while three of them were never played,
+    which is the precise thing this gate exists to prevent. The recording is part of the
+    identity because the recording is what is being judged.
+
+    1,018 of the 1,021 rows are unaffected: their ``review_id`` appears once and the key
+    is a pure suffix on it, so nothing that was already unambiguous changes shape.
+    """
+    return f"{row.get('review_id') or ''}|{row.get('media_url') or ''}"
+
+
 def load_queue() -> list[dict[str, Any]]:
     """The queue with every recorded decision replayed over it, latest per row winning."""
     rows = read_jsonl(QUEUE)
     decisions: dict[str, dict[str, Any]] = {}
     for entry in read_jsonl(LOG):
-        review_id = str(entry.get("review_id") or "")
-        if review_id:
-            decisions[review_id] = entry
+        if entry.get("review_id"):
+            decisions[row_key(entry)] = entry
     for row in rows:
-        decision = decisions.get(str(row.get("review_id") or ""))
+        decision = decisions.get(row_key(row))
         if decision is None:
             continue
         row["review_status"] = decision["verdict"]
@@ -249,7 +265,7 @@ async function decide(verdict){
   const who=el("who").value.trim(); if(!who) return;
   const r=rows[idx];
   const res=await fetch("/api/decision",{method:"POST",headers:{"content-type":"application/json"},
-    body:JSON.stringify({review_id:r.review_id,verdict,reviewer:who,
+    body:JSON.stringify({review_id:r.review_id,media_url:r.media_url,verdict,reviewer:who,
       notes:el("notes").value.trim(),listened_seconds:Number(played.toFixed(2))})});
   if(!res.ok){alert((await res.json()).error); return;}
   const saved=await res.json();
@@ -316,6 +332,7 @@ class Handler(BaseHTTPRequestHandler):
             return
 
         review_id = str(payload.get("review_id") or "")
+        media_url = str(payload.get("media_url") or "")
         verdict = str(payload.get("verdict") or "")
         reviewer = str(payload.get("reviewer") or "").strip()
         listened = float(payload.get("listened_seconds") or 0.0)
@@ -326,9 +343,15 @@ class Handler(BaseHTTPRequestHandler):
         if not reviewer:
             self._json(400, {"error": "a verdict needs a named reviewer"})
             return
-        known = {str(r.get("review_id")) for r in read_jsonl(QUEUE)}
-        if review_id not in known:
-            self._json(400, {"error": f"{review_id} is not in the queue"})
+        # The *recording* must be in the queue, not merely the review id. A row whose id
+        # is shared by four files would otherwise accept a verdict that then landed on
+        # all four.
+        known = {row_key(r) for r in read_jsonl(QUEUE)}
+        if row_key({"review_id": review_id, "media_url": media_url}) not in known:
+            self._json(
+                400,
+                {"error": f"{review_id} with that recording is not in the queue"},
+            )
             return
         # The gate, enforced here rather than trusted to the page: a claim to have heard
         # the recording requires the recording to have played.
@@ -347,6 +370,9 @@ class Handler(BaseHTTPRequestHandler):
 
         entry = {
             "review_id": review_id,
+            # Half of the row identity, so a replay can tell the four Aajya stotra
+            # recordings apart. See row_key().
+            "media_url": media_url,
             "verdict": verdict,
             "reviewer": reviewer,
             "reviewed_at": datetime.datetime.now(datetime.UTC).isoformat(),
