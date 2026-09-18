@@ -1,0 +1,57 @@
+{
+  "artifact": "OWNER_DECISION_AUDIO_SAMPLE_ACCEPTANCE",
+  "decision_id": "OWNER_DECISION_AUDIO_SAMPLE_ACCEPTANCE",
+  "provenance": "OWNER-SUPPLIED",
+  "recorded_at": "2026-09-18T19:45:13.121077+00:00",
+  "recorded_in": "docs/reports/data-completeness/OWNER_DECISIONS.md section 43",
+  "decision": "The owner manually listened to 20 recordings from the deterministic VedAnvaya owner audio sample. All 20 reviewed recordings matched their expected Vedic passage/audio mapping. No reviewed recording was rejected and no effective uncertain verdict remains. The owner accepts this sample as sufficient release-level audible QA of the automated audio acquisition and mapping pipeline. This is SAMPLE-LEVEL validation. It does NOT mean every queued recording was individually heard.",
+  "AUDIO_OWNER_SAMPLE": "ACCEPTED",
+  "SAMPLE_REVIEWED": 20,
+  "SAMPLE_VERIFIED": 20,
+  "SAMPLE_UNCERTAIN": 0,
+  "SAMPLE_REJECTED": 0,
+  "sample": {
+    "manifest": "data/staging/wave4/audio_owner_sample_manifest.json",
+    "manifest_sha256": "8b6d57fdc14852de2508c4e67499379a5d4ff5459b8a3dda0aa75e123fbcba3f",
+    "seed": "vedanvaya-wave4-audio-sample",
+    "size": 100,
+    "reviewed_of_size": "20 of 100",
+    "strata_reviewed": {
+      "AV_COORDINATE_REMAPPED": 20,
+      "RV_1_65_TO_1_70_AFFECTED_SPAN": 0,
+      "RV_RECOVERED_150": 0,
+      "SV_CONTAINER_SCOPE": 0,
+      "YV_RECOVERED": 0
+    }
+  },
+  "scope": {
+    "level": "SAMPLE_LEVEL",
+    "what_this_establishes": "20 recordings drawn by a published seed from the audible-review queue were played by a named listener and matched the passage they are mapped to. That is evidence about the acquisition and mapping pipeline, and the owner accepts it as sufficient for release.",
+    "what_this_does_not_establish": "That the queue was heard. 1001 of 1021 rows have not been played by anyone and remain NEEDS_AUDIBLE_REVIEW. This decision may not be reported as AUDIBLY_VERIFIED = 1021, and no report, UI or API surface may describe it as exhaustive manual review.",
+    "queue_total": 1021,
+    "remaining_recordings": 1001,
+    "remaining_recordings_status": "NOT_INDIVIDUALLY_HEARD",
+    "rows_promoted_by_this_decision": 0,
+    "owner_decision_e_audio_gate": "Untouched. OWNER_DECISIONS.md section 14 stands: the 1,021-row queue stays mandatory, no automated check may relabel a row, and GAP-AUDIO-002, -003 and -004 stay NEEDS_AUDIBLE_REVIEW because their release requirement is promotion of 954 staged rows, not acceptance of a sample."
+  },
+  "corrections_replayed": [
+    {
+      "row_key": "REV-AV_COORDINATE_REMAPPED-VG:AV:SAU:K11:S005:V001|https://vedsearch.org/api/v1/attachment/audio/atharved/11.7.1/sanskrit",
+      "citation": "VG:AV:SAU:K11:S005:V001",
+      "from": "AUDIBLE_REVIEW_UNCERTAIN",
+      "to": "AUDIBLY_VERIFIED",
+      "reason": "OWNER_CORRECTION_ACCIDENTAL_KEYPRESS",
+      "reviewer": "Himanshu",
+      "superseded_decision_line": 17,
+      "new_playback_performed": false
+    }
+  ],
+  "measured_from": {
+    "decisions_log": "data/manual/audio_review/sample_decisions.jsonl",
+    "decisions_log_sha256": "f3aea20303ecc9d29884af190485c6f7a34c2bb90d3bb1cb636d04ad3545a567",
+    "decision_lines": 21,
+    "summary": "data/manual/audio_review/sample_summary.json",
+    "effective_verdicts_are": "the last line per row key. Corrections append; nothing is edited or deleted, so every superseded verdict stays readable in the log.",
+    "recomputed_by": "data/staging/release_prep/record_audio_sample_acceptance.py"
+  }
+}

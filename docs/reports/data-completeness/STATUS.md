@@ -108,9 +108,13 @@ rebuilt, 0 of 28 remain in any shipped artifact.
 3. **`ASK_FORMAL_REGRADE_BLOCKED_EXTERNAL_QUOTA`** unless the appended run record in
    `WAVE4_ADVERSARIAL_QA.md` §L1 says otherwise. `misleading = 0` is not claimed without a
    fresh 60/60 at the final commit. Partial runs are never combined.
-4. **1,021 audio rows, 0 heard.** The harness is built and adversarially tested; the work is a
-   person's. A 100-row seeded owner sample is at
-   `data/staging/wave4/audio_owner_sample_manifest.json`.
+4. **1,021 audio rows, 20 heard.** *(This item updated 2026-09-18; the rest of this file is
+   still Wave 4's.)* The owner listened to 20 rows of the seeded 100-row sample at
+   `data/staging/wave4/audio_owner_sample_manifest.json` and accepted them: `AUDIO_OWNER_SAMPLE
+   = ACCEPTED`, 20 reviewed, 20 verified, 0 uncertain, 0 rejected (OWNER_DECISIONS.md §43).
+   That is **sample-level owner review, not exhaustive manual review** — 1,001 of the 1,021
+   queue rows are `NOT_INDIVIDUALLY_HEARD`, 0 queue rows were promoted, and
+   `OWNER_DECISION_E_AUDIO_GATE` (§14) still blocks GAP-AUDIO-002, -003 and -004.
 5. **`GAP-TRANSLATION-006`** — 25 of 31 shipped translations in RV 1.65–1.70 sit on the wrong
    verse. Wrong data on a public surface, not missing data. Fix this before the rest of item 2.
 

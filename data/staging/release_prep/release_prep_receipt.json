@@ -113,5 +113,35 @@
     },
     "receipt_figures_edited": 0,
     "noted_at": "2026-09-18T18:16:08.548312+00:00"
+  },
+  "audio_sample_residual_closed": {
+    "what_this_closes": "manual_and_external_residuals.AUDIO_SAMPLE_REVIEW, which this receipt recorded as PENDING_OWNER with audio.reviewed 0 and AUDIBLY_VERIFIED_SAMPLE 0. The owner has since listened to 20 rows of the seeded 100-row sample and accepted them.",
+    "settled_by": "OWNER_DECISION_AUDIO_SAMPLE_ACCEPTANCE, OWNER_DECISIONS.md section 43, OWNER-SUPPLIED 2026-09-18.",
+    "current_reading": {
+      "AUDIO_SAMPLE_REVIEW": "CLOSED_OWNER_SAMPLE_ACCEPTED",
+      "AUDIO_OWNER_SAMPLE": "ACCEPTED",
+      "AUDIO_SAMPLE_REVIEWED": 20,
+      "AUDIO_SAMPLE_VERIFIED": 20,
+      "AUDIO_SAMPLE_UNCERTAIN": 0,
+      "AUDIO_SAMPLE_REJECTED": 0,
+      "measured_by": "data/manual/audio_review/owner_sample_acceptance.json",
+      "measured_at": "2026-09-18T19:45:13.121077+00:00"
+    },
+    "what_it_does_not_close": {
+      "NEEDS_AUDIBLE_REVIEW": 3,
+      "entries": [
+        "GAP-AUDIO-002",
+        "GAP-AUDIO-003",
+        "GAP-AUDIO-004"
+      ],
+      "why": "Their release requirement is the promotion of 954 staged rows into the product catalogue, which OWNER_DECISION_E_AUDIO_GATE (section 14) gates on the 1,021-row queue being heard. It has not been: 1001 of 1021 rows remain NOT_INDIVIDUALLY_HEARD. A sample acceptance is not a licence to relabel the population it was drawn from, and 0 queue rows were promoted.",
+      "queue_rows_promoted": 0
+    },
+    "also_unchanged": {
+      "ASK_FORMAL_REGRADE_BLOCKED_EXTERNAL_QUOTA": 1,
+      "ASK_FORMAL_60": "PENDING_OWNER_EXECUTION"
+    },
+    "receipt_figures_edited": 0,
+    "noted_at": "2026-09-18T19:46:52.656166+00:00"
   }
 }

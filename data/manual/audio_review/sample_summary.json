@@ -1,0 +1,73 @@
+{
+  "artifact": "OWNER_AUDIO_SAMPLE_REVIEW_SUMMARY",
+  "at": "2026-09-18T19:43:48.475305+00:00",
+  "sample_manifest": "data/staging/wave4/audio_owner_sample_manifest.json",
+  "sample_manifest_sha256": "8b6d57fdc14852de2508c4e67499379a5d4ff5459b8a3dda0aa75e123fbcba3f",
+  "sample_seed": "vedanvaya-wave4-audio-sample",
+  "sample_size": 100,
+  "reviewed": 20,
+  "undecided": 80,
+  "by_verdict": {
+    "AUDIBLY_VERIFIED": 20,
+    "AUDIBLY_REJECTED": 0,
+    "AUDIBLE_REVIEW_UNCERTAIN": 0
+  },
+  "by_stratum": {
+    "AV_COORDINATE_REMAPPED": {
+      "rows": 75,
+      "AUDIBLY_VERIFIED": 20,
+      "AUDIBLY_REJECTED": 0,
+      "AUDIBLE_REVIEW_UNCERTAIN": 0,
+      "undecided": 55
+    },
+    "RV_1_65_TO_1_70_AFFECTED_SPAN": {
+      "rows": 6,
+      "AUDIBLY_VERIFIED": 0,
+      "AUDIBLY_REJECTED": 0,
+      "AUDIBLE_REVIEW_UNCERTAIN": 0,
+      "undecided": 6
+    },
+    "RV_RECOVERED_150": {
+      "rows": 15,
+      "AUDIBLY_VERIFIED": 0,
+      "AUDIBLY_REJECTED": 0,
+      "AUDIBLE_REVIEW_UNCERTAIN": 0,
+      "undecided": 15
+    },
+    "SV_CONTAINER_SCOPE": {
+      "rows": 1,
+      "AUDIBLY_VERIFIED": 0,
+      "AUDIBLY_REJECTED": 0,
+      "AUDIBLE_REVIEW_UNCERTAIN": 0,
+      "undecided": 1
+    },
+    "YV_RECOVERED": {
+      "rows": 3,
+      "AUDIBLY_VERIFIED": 0,
+      "AUDIBLY_REJECTED": 0,
+      "AUDIBLE_REVIEW_UNCERTAIN": 0,
+      "undecided": 3
+    }
+  },
+  "AUDIBLY_VERIFIED_SAMPLE": 20,
+  "audible_review_queue_total": 1021,
+  "NOT_INDIVIDUALLY_HEARD": 1001,
+  "what_this_does_not_establish": "20 recordings in a 100-row seeded sample were accepted by a named listener. The other 1001 rows of the 1021-row queue were NOT individually heard and remain NEEDS_AUDIBLE_REVIEW. This summary is not, and may not be reported as, AUDIBLY_VERIFIED = 1021.",
+  "decisions_log": "data/manual/audio_review/sample_decisions.jsonl",
+  "decision_lines_in_log": 21,
+  "effective_verdicts_are": "the last line per row key in the decision log. Nothing is deleted or edited, so a superseded verdict stays readable at the line named below.",
+  "corrections": [
+    {
+      "row_key": "REV-AV_COORDINATE_REMAPPED-VG:AV:SAU:K11:S005:V001|https://vedsearch.org/api/v1/attachment/audio/atharved/11.7.1/sanskrit",
+      "citation": "VG:AV:SAU:K11:S005:V001",
+      "from": "AUDIBLE_REVIEW_UNCERTAIN",
+      "to": "AUDIBLY_VERIFIED",
+      "reason": "OWNER_CORRECTION_ACCIDENTAL_KEYPRESS",
+      "corrected_at": "2026-09-18T19:43:48.417812+00:00",
+      "reviewer": "Himanshu",
+      "superseded_decision_line": 17,
+      "new_playback_performed": false
+    }
+  ],
+  "corrections_count": 1
+}

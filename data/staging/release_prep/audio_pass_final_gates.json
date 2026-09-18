@@ -1,0 +1,39 @@
+{
+  "artifact": "AUDIO_OWNER_SAMPLE_PASS_FINAL_GATES",
+  "at": "2026-09-18T19:49:45.160695+00:00",
+  "gate": {
+    "REGISTRY_IMPLEMENTATION_FIXABLE": 0,
+    "OWNER_DECISION_REQUIRED": 0,
+    "DEPENDENCY_STALE_INPUT": 0,
+    "DEPENDENCY_UNKNOWN": 0,
+    "GRAPH_SCORECARD": "11/11"
+  },
+  "audio": {
+    "AUDIO_OWNER_SAMPLE": "ACCEPTED",
+    "AUDIO_SAMPLE_REVIEWED": 20,
+    "AUDIO_SAMPLE_VERIFIED": 20,
+    "AUDIO_SAMPLE_UNCERTAIN": 0,
+    "AUDIO_SAMPLE_REJECTED": 0,
+    "queue_total": 1021,
+    "NOT_INDIVIDUALLY_HEARD": 1001,
+    "queue_rows_promoted": 0,
+    "decision_lines_in_log": 21,
+    "corrections": 1
+  },
+  "still_open_and_counted_apart": {
+    "NEEDS_AUDIBLE_REVIEW": 3,
+    "ASK_FORMAL_REGRADE_BLOCKED_EXTERNAL_QUOTA": 1,
+    "ASK_FORMAL_60": "PENDING_OWNER_EXECUTION",
+    "note": "Execution blockers, terminal for 'nothing is OPEN' and not data-completeness closure. The three NEEDS_AUDIBLE_REVIEW entries are unchanged by the sample acceptance: their requirement is promotion of 954 staged rows, gated by OWNER_DECISION_E_AUDIO_GATE on the queue being heard, and 1,001 of 1,021 rows have not been."
+  },
+  "measured_from": {
+    "registry_audit": "data/staging/wave4/registry_closure_audit.json",
+    "registry_audit_at": "2026-09-18T19:47:37.244096+00:00",
+    "registry": "data/gap_registry.json",
+    "dependency": "data/staging/integration/dependency_status.json",
+    "dependency_at": "2026-09-18T19:48:40.475931+00:00",
+    "scorecard": "docs/reports/GRAPH_QUALITY_V2_SCORECARD.md",
+    "audio_acceptance": "data/manual/audio_review/owner_sample_acceptance.json",
+    "gate_definitions": "data/staging/release_blocker_r5/build_final_receipt.py"
+  }
+}

@@ -1245,3 +1245,74 @@ lets a reader infer a zero the data never stated. 0 Gana nodes, 0 `MUSICALIZED_A
 **Coverage is published as four figures and not one**, because a bare 1,136 hides which
 arcika a reader can and cannot see: CHANDA 471/585, ARANYA 31/55, MAHANAMNYA 3/10, UTTARA
 631/1194.
+
+
+# Owner round nine — The audio sample, listened to
+
+## 43. `OWNER_DECISION_AUDIO_SAMPLE_ACCEPTANCE` — sample-level, and it says so
+
+**Decision, as given (OWNER-SUPPLIED, 2026-09-18):**
+
+> The owner manually listened to 20 recordings from the deterministic VedAnvaya owner audio
+> sample.
+>
+> All 20 reviewed recordings matched their expected Vedic passage/audio mapping.
+>
+> No reviewed recording was rejected and no effective uncertain verdict remains.
+>
+> The owner accepts this sample as sufficient release-level audible QA of the automated
+> audio acquisition and mapping pipeline.
+>
+> This is SAMPLE-LEVEL validation. It does NOT mean every queued recording was individually
+> heard.
+
+**The first audio anyone has heard in this campaign.** §32 recorded 0 of 1,021, three passes
+running. 20 rows of the seeded 100-row sample now carry a verdict from a named listener, all
+20 `AUDIBLY_VERIFIED`, every one of them with the decoded file's sha256 and byte count on the
+row. They fall in one stratum, `AV_COORDINATE_REMAPPED` — 20 of that stratum's 75 sampled
+rows — which is worth stating plainly: this is evidence about the Atharvavedic coordinate
+remap that GAP-AUDIO-002 measured, and it is *not* evidence about the Rigvedic, Yajurvedic or
+Samavedic strata, none of which has been heard.
+
+**One verdict was corrected, and the correction appends.** Row 17 of the decision log
+recorded `AUDIBLE_REVIEW_UNCERTAIN` on an accidental keypress; the owner states the recording
+was played and matched. The repair is a 21st line with the same row key, not an edit: the log
+is the record of what a person typed and when, and a log you may rewrite is not one. Line 17
+is byte-identical to what it was, `decisions_by_row` takes the last line per key so the
+effective verdict is `AUDIBLY_VERIFIED`, and the summary names the supersession rather than
+letting a reader discover it by diffing.
+
+The correction performs no playback and claims none. `new_playback_performed` is `false`, the
+superseded row's audio file, sha256 and byte count are carried forward verbatim and flagged
+as carried, and `reviewed_at` still reads the original hearing. **20 recordings were heard and
+21 lines were written**, and the artifacts state both so the two can never be added up.
+Correcting *to* `AUDIBLY_VERIFIED` is refused outright when the superseded row records that
+nothing played — a correction may repair an input, never supply a hearing.
+
+**What is accepted, in the two figures that must not be confused:**
+
+| | |
+|---|---:|
+| `AUDIO_OWNER_SAMPLE` | **ACCEPTED** |
+| `SAMPLE_REVIEWED` / `SAMPLE_VERIFIED` | 20 / 20 |
+| `SAMPLE_UNCERTAIN` / `SAMPLE_REJECTED` | 0 / 0 |
+| queue rows **not individually heard** | **1,001 of 1,021** |
+| queue rows promoted by this decision | **0** |
+
+**`OWNER_DECISION_E_AUDIO_GATE` is not lifted.** §14 stands unchanged: the 1,021-row queue
+stays mandatory and no automated check may relabel a row. Acceptance of a sample is not a
+licence to relabel the population it was drawn from, so `GAP-AUDIO-002`, `-003` and `-004`
+stay `NEEDS_AUDIBLE_REVIEW` — their release requirement is the promotion of 954 staged rows
+into the product catalogue, which is what §14 gates, and not the acceptance of a sample. What
+this decision closes is the owner *execution* task the release-prep receipt was holding open
+as `AUDIO_SAMPLE_REVIEW: PENDING_OWNER`.
+
+**Every figure above is recomputed, not typed.**
+`data/staging/release_prep/record_audio_sample_acceptance.py` replays the decision log, counts
+the live queue, and refuses to write the acceptance record if what it measures disagrees with
+what the decision asserts — which was checked by mutation: dropping the correction, promoting
+one queue row, and flipping `new_playback_performed` each produce a refusal, and the
+unmutated inputs produce none. The record is
+`data/manual/audio_review/owner_sample_acceptance.json`; it and the mechanism are held by 15
+tests in `tests/unit/test_review_audio_sample.py`, five of which read the live artifacts
+rather than a sandbox.
