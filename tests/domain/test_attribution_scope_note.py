@@ -203,3 +203,117 @@ def test_the_live_note_matches_the_live_graph() -> None:
     for name, _means in ATTRIBUTION_PREDICATES:
         reach = ", ".join(scope[name]) if scope[name] else "no corpus"
         assert f"{name} reaches {reach}" in note, (name, reach)
+
+
+# ---------------------------------------------------------------------------
+# R3: the Atharvavedic dedication figures the new caveats publish
+# ---------------------------------------------------------------------------
+
+
+def _count(session: object, cypher: str) -> int:
+    """One integer off a single-row count query."""
+    record = session.run(cypher).single()  # type: ignore[attr-defined]
+    return int(record["n"])
+
+
+@pytest.mark.live
+@pytest.mark.skipif(
+    not os.environ.get("VEDAGRAPH_LIVE_NEO4J"),
+    reason="requires a populated Neo4j; set VEDAGRAPH_LIVE_NEO4J=1",
+)
+def test_the_atharvavedic_dedication_figures_in_the_caveats_are_live() -> None:
+    """Every figure R3 wrote into the AV dedication caveats, measured.
+
+    ``test_the_live_note_matches_the_live_graph`` pins ``profiles._reach_sentence``, a
+    different string. R3 added these figures to four places -- ``taxonomy.py``'s
+    ``attribution_scope_note`` (written onto all 214 ``:Devata`` and passed through to
+    ``/api/v1/ask``), ``queries.py``'s ``_SCOPE_CAVEAT``, ``graph_service.py``'s predicate
+    limits, and ``entity_service.py``'s ``ATTRIBUTION_SCOPE_STATEMENT`` -- and nothing pinned
+    any of them. A caveat that quotes a figure the graph has moved past is the one failure
+    mode a caveat cannot have, and this project has shipped it three times.
+
+    The numerator/denominator pairing is asserted explicitly, because the previous version of
+    this sentence published a PASSAGE count (4,665) against the MANTRA total (5,839) for a
+    whole R2 pass and every individual figure in it was correct.
+    """
+    from vedagraph.api.services.entity_service import ATTRIBUTION_SCOPE_STATEMENT
+    from vedagraph.domain.queries import _SCOPE_CAVEAT
+
+    with _live_session() as session:
+        measured = {
+            "ascription_edges": _count(
+                session, "MATCH ()-[r:HAS_DEVATA_ASCRIPTION]->() RETURN count(r) AS n"
+            ),
+            "ascription_passages": _count(
+                session,
+                "MATCH (p:Passage {veda:'AV'})-[:HAS_DEVATA_ASCRIPTION]->() "
+                "RETURN count(DISTINCT p) AS n",
+            ),
+            "av_passages": _count(
+                session, "MATCH (p:Passage {veda:'AV'}) RETURN count(p) AS n"
+            ),
+            "ascription_mantra_edges": _count(
+                session,
+                "MATCH (m:Mantra {veda:'AV'})-[r:HAS_DEVATA_ASCRIPTION]->() "
+                "RETURN count(r) AS n",
+            ),
+            "ascription_mantras": _count(
+                session,
+                "MATCH (m:Mantra {veda:'AV'})-[:HAS_DEVATA_ASCRIPTION]->() "
+                "RETURN count(DISTINCT m) AS n",
+            ),
+            "av_mantras": _count(session, "MATCH (m:Mantra {veda:'AV'}) RETURN count(m) AS n"),
+            "derived_edges": _count(
+                session, "MATCH ()-[r:HAS_DEVATA_DERIVED]->() RETURN count(r) AS n"
+            ),
+            "derived_passages": _count(
+                session,
+                "MATCH (p:Passage)-[:HAS_DEVATA_DERIVED]->() RETURN count(DISTINCT p) AS n",
+            ),
+            "derived_deities": _count(
+                session,
+                "MATCH ()-[:HAS_DEVATA_DERIVED]->(d:Devata) RETURN count(DISTINCT d) AS n",
+            ),
+            "descriptors": _count(
+                session, "MATCH (a:DevataAscription) RETURN count(a) AS n"
+            ),
+            "resolved": _count(
+                session,
+                "MATCH (a:DevataAscription) WHERE (a)-->(:Devata) RETURN count(a) AS n",
+            ),
+        }
+
+    expected = {
+        "ascription_edges": 5_385,
+        "ascription_passages": 4_665,
+        "av_passages": 6_590,
+        "ascription_mantra_edges": 4_816,
+        "ascription_mantras": 4_160,
+        "av_mantras": 5_839,
+        "derived_edges": 882,
+        "derived_passages": 851,
+        "derived_deities": 35,
+        "descriptors": 324,
+        "resolved": 39,
+    }
+    assert measured == expected, (
+        "a figure the AV dedication caveats publish has moved. Update the caveats in "
+        "taxonomy.py, queries.py, graph_service.py and entity_service.py together, and "
+        "re-land attribution_scope_note onto the 214 :Devata nodes."
+    )
+    unresolved = expected["descriptors"] - expected["resolved"]
+    assert unresolved == 285
+
+    # Each figure must appear in the sentences that quote it, with the RIGHT denominator.
+    for sentence in (_SCOPE_CAVEAT, ATTRIBUTION_SCOPE_STATEMENT):
+        assert "882" in sentence
+        assert "851" in sentence
+        assert "285" in sentence
+        # The exact defect: 4,665 is a PASSAGE count and was published against the MANTRA
+        # total. Asserted as the forbidden PAIRING, not as the absence of either figure --
+        # "4,160 of its 5,839 mantras" is the correct pairing and contains "5,839 mantras".
+        assert "4,665 of its 5,839" not in sentence, (
+            "a passage count is being published against the mantra total"
+        )
+    assert "4,665 of its 6,590" in _SCOPE_CAVEAT
+    assert "4,160 of its 5,839 mantras" in _SCOPE_CAVEAT

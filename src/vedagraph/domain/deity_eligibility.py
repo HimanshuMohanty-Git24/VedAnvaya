@@ -364,17 +364,31 @@ PRODUCT_CONSUMER_MEASURE: Final = (
 #: ``domain/queries``    counts structural SHAPE per axis (individual/pair/group), descriptive
 #:                       and reconciling to 214; it is not a membership filter
 #: ``domain/v3_loader``  selects PAIR/GROUP rows needing decomposition, a structural question
-#: ``entity_service``    validates a CLIENT-SUPPLIED ``structure`` filter against the known
-#:                       value space (``_validate_choice`` at one call site, and nothing else);
-#:                       rejecting an unknown query parameter is not deciding membership, and
-#:                       every membership read in that module goes through
-#:                       ``deity_structure_clause``
+#: ``entity_service``    two non-membership uses. It validates a CLIENT-SUPPLIED ``structure``
+#:                       filter against the known value space (``_validate_choice``), and it
+#:                       branches on ``structure == "ABSTRACT"`` at two sites to EMIT A CAVEAT
+#:                       about abstract labels. Neither decides who is a deity: every
+#:                       membership read in the module goes through ``deity_structure_clause``,
+#:                       which reads ``is_deity``.
+#:
+#: Matched by BASENAME, which is loose: any file so named anywhere under ``src/vedagraph``
+#: inherits the exemption. Kept because the alternative -- a relative path -- breaks the
+#: moment a module moves, and a broken allow-list fails the gate closed rather than open. The
+#: names above are distinctive enough that a collision would be deliberate.
+#: ``insight_service``   the string ``structure='HUMAN'`` appears once, inside CAVEAT PROSE
+#:                       that describes the superseded predicate as a defect: "This query
+#:                       published 192 while it excluded structure='HUMAN' alone." Membership
+#:                       in that module reads ``d.is_deity`` and the capability query counts
+#:                       ``is_deity`` rulings directly. A historical note naming the wrong
+#:                       predicate is how a reader learns why the figure moved; demanding the
+#:                       project forget it would be the opposite of disclosure.
 _STRUCTURE_PREDICATE_ALLOWED_IN: Final[frozenset[str]] = frozenset(
     {
         "deity_population.py",
         "deity_eligibility.py",
         "entity.py",
         "entity_service.py",
+        "insight_service.py",
         "queries.py",
         "v3_loader.py",
     }

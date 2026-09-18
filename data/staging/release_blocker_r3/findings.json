@@ -1,6 +1,6 @@
 {
   "artifact": "RELEASE_BLOCKER_R3_FINDINGS",
-  "at": "2026-09-18T06:16:53.739791+00:00",
+  "at": "2026-09-18T07:26:26.596264+00:00",
   "remaining_implementation_fixable": 17,
   "per_gap": {
     "GAP-ATTRIBUTION-002": {
@@ -115,5 +115,37 @@
       "frontend/scripts/world-groups.json": "Read by BOTH build-world.mjs and build-constellations.mjs and declared by nothing. It was extracted to its own file so the two steps could not disagree, and extracting it removed it from the only thing watching it. Adding it to the Lab consumer's inputs immediately turned that consumer STALE_INPUT, which is the proof the gap was real.",
       "src/vedagraph/api/services/graph_service.py": "export_predicate_semantics.py imports PREDICATE_SEMANTICS from it and names it as the source in its own output, so every predicate `limit` the Lab renders comes from this module and no declared digest moved when one changed."
     }
-  }
+  },
+  "agent_b_r3_round": {
+    "artifact": "data/staging/release_blocker_r3/agent_b_r3_receipt.json",
+    "reported": {
+      "CRITICAL": 2,
+      "MAJOR": 4,
+      "MINOR": 5
+    },
+    "outcome_after_agent_a_acted": {
+      "CRITICAL": 0,
+      "MAJOR": 0,
+      "MINOR": 0
+    },
+    "per_finding": {
+      "B-R3-C1 AV route reached one deity surface of three": "FIXED. Both deity surfaces, the ascription passages route and its count now read one pattern over HAS_DEVATA|HAS_DEVATA_DERIVED and agree exactly on every sampled deity (Indra/Agni/Soma/Sarasvati/Usas: total and scope identical across both routes). ATTRIBUTION_SCOPE_STATEMENT rewritten; the \"empty by construction\" caveat split so SV/YV keep it and AV gets a statement of which predicate serves it. profiles.DevataProfile.attribution_scope now derives from the measured family reach instead of returning the ATTRIBUTION_VEDAS constant. Three test_devatas fixtures updated with their causes named, one renamed because \"outside the Rigveda\" stopped being the boundary.",
+      "B-R3-C2 attribution_scope not reproducible from its generator": "FIXED. The literal is removed from taxonomy.py and the value is derived in loader.apply_overlay from both resolved dedication predicates, per GAP-ATTRIBUTION-009's own implementation_dependency. Two new tests: a live one pinning the 179/35 distribution with a falsifier in both directions, and a source one refusing the literal by name.",
+      "B-R3-M1 consumer-substitution needles evadable": "FIXED. Replaced the substring list with five regexes covering both polarities, both quote styles, the six known structure values and the bound-parameter form. It immediately caught insight_service, which turned out to be corrective caveat prose -- exempted with that reason recorded.",
+      "B-R3-M2 superseded-population regex could not fail on a JSON": "FIXED. The pattern now matches figure-before-noun AND noun-before-figure, which is the only form a generated JSON takes.",
+      "B-R3-M3 ABOUT_CONCEPT warrant did not reproduce": "FIXED, and it was the more interesting finding. 21,603 was not the English-only population (21,526 is); it was 46,439 - 24,836, a residue reverse-engineered from the answer. Reproduced Agent B independently: 24,913 Sanskrit-evidenced pairs, MINUS 91 that did not land with no recorded reason, PLUS 14 English-only pairs landed contrary to the stated rule, PLUS 25 absent from the artifact = 24,861. The constant was right; the warrant was wrong and concealed 105 rows that do not follow the artifact rule. Both are now named in the comment.",
+      "B-R3-M4 lead_receipt stated the pre-fix dependency counts": "FIXED. Regenerated from the live artifacts, with the reason for the regeneration recorded in the receipt itself. Scorecard 11/11 now captured there too, which Agent B correctly flagged as UNVERIFIED because no R3 artifact held it.",
+      "B-R3-m1 world-groups.json LF -> CRLF": "FIXED. 52 CRLF removed; the recorded project hazard, and I hit it.",
+      "B-R3-m2 new AV caveat figures unpinned": "FIXED. test_the_atharvavedic_dedication_figures_in_the_caveats_are_live pins all eleven, and asserts the forbidden 4,665-over-5,839 pairing rather than the absence of either figure.",
+      "B-R3-m3 allow-list exempts by basename; entity_service reason incomplete": "FIXED as disclosure. The basename match is kept -- a relative path breaks when a module moves and a broken allow-list fails the gate closed -- and both the looseness and entity_service's second use (structure == \"ABSTRACT\" for caveat emission at two sites) are now recorded.",
+      "B-R3-m4 >= admitted the double-count class": "FIXED. Now ==, with the reason.",
+      "B-R3-m5 sweep cleared instances not families": "FIXED. verify_public_claims.py gained four family-level checks, including the three entity_service caveats C1 found, and needles are anchored on the asserting form so a corrective note quoting an old phrase is not a false positive."
+    },
+    "agent_b_verdicts_accepted_as_stated": [
+      "claim 2 ENTITY_COVERAGE-008 UPHELD_WITH_QUALIFICATION, and Agent B strengthened the argument: the FLOOR of the superseded metric over ANY structure-value exclusion set is 13, not 0, because ABSTRACT is mixed 28 false / 13 true against is_deity. So 0 is unreachable whatever exclusion set is chosen, not merely under this one.",
+      "claim 3 SEMANTICS-004 UPHELD_WITH_QUALIFICATION: the decision and the closure landed in the same commit, so the citation is independent at file level and not at change-set level, and nothing attests the owner authored it. Recorded, not argued with -- it is a real limit on what a self-recorded owner decision can prove.",
+      "claim 4 clause 2 REFUTED as first shipped. Accepted and fixed; the registry basis now records that the fix for clause 2 reproduced the defect clause 2 was about."
+    ]
+  },
+  "generated_at": "2026-09-18T07:27:06.779708+00:00"
 }

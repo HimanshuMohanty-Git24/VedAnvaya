@@ -44,6 +44,23 @@ CHECKS = [
      'TWO DEITY-ATTRIBUTION PREDICATES'),
     ('atharvavedic_deity_ascription_scope', 'frontend/public/world/world.predicates.json',
      'A descriptor of the ascription\'s form, not a second deity attribution.'),
+    # FAMILY-level, added after Agent B's R3 round (B-R3-C1 / m5). The first version of this
+    # sweep cleared the 22 named INSTANCES and would have passed while entity_service still
+    # shipped two caveats calling Atharvavedic dedication empty by construction -- the same
+    # claim family, in a file nobody had listed. Clearing instances is not clearing families.
+    ('atharvavedic_deity_ascription_scope', 'src/vedagraph/api/services/entity_service.py',
+     'ATTRIBUTION IS NOT MENTION, AND IT IS RIGVEDIC'),
+    ('atharvavedic_deity_ascription_scope', 'src/vedagraph/api/services/entity_service.py',
+     'the Anukramani deity apparatus exists for the Rigveda only'),
+    # Anchored on the ASSERTING form, not the words. The corrected file quotes the old
+    # phrase in a note explaining why it was wrong -- "'Rigvedic by construction' was this
+    # comment and it was wrong about the corpus" -- and a sweep that flagged that would be
+    # demanding the project forget the defect. The claim was
+    # `ASCRIBES to the deity. Rigvedic by construction.`; that exact sentence must be gone.
+    ('atharvavedic_deity_ascription_scope', 'src/vedagraph/api/services/entity_service.py',
+     'to the deity. Rigvedic by construction'),
+    ('attribution_scope_stored_literal', 'src/vedagraph/domain/taxonomy.py',
+     '"attribution_scope": ["RV"]'),
 ]
 
 print(f"{'status':9s} {'family':40s} file :: quote")

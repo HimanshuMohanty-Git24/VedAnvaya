@@ -129,12 +129,18 @@ class _Repository(Protocol):
 #: The attribution-scope statement. Mandatory wherever an attribution figure appears: the
 #: Anukramani layer is Rigvedic and a zero elsewhere is a missing apparatus.
 ATTRIBUTION_SCOPE_STATEMENT: Final = (
-    "ATTRIBUTION IS NOT MENTION, AND IT IS RIGVEDIC. The `attributed_*` figures come from "
-    "HAS_DEVATA, the Anukramani's hymn-level dedication: 10,558 edges, every one on the "
-    "Rigveda, and 8,329 of them a sukta's label projected onto each of its mantras rather "
-    "than a statement about the verse. A zero for the Samaveda, Yajurveda or Atharvaveda "
-    "means those corpora carry no Anukramani apparatus, NOT that the deity is absent from "
-    "them -- for that read `mentions_by_veda`, which spans all four."
+    "ATTRIBUTION IS NOT MENTION. The `attributed_*` figures come from the two resolved "
+    "dedication predicates and from no other: HAS_DEVATA, the Anukramani's own hymn-level "
+    "dedication, 10,558 edges every one Rigvedic and 8,329 of them a sukta's label projected "
+    "onto each of its mantras rather than a statement about the verse; and "
+    "HAS_DEVATA_DERIVED, 882 Atharvavedic dedications over 851 passages reaching 35 deities, "
+    "recovered from the Anukramani's Sanskrit adjective by its own morphology under Panini "
+    "4.2.24 sasya devata. The dedication there is the source's and the resolution is this "
+    "project's. It reaches 39 of the Atharvaveda's 324 descriptors; the other 285 are refused "
+    "with a typed reason each, so an Atharvavedic zero here may be a refused descriptor "
+    "rather than no dedication. A Samavedic or Yajurvedic zero means those corpora carry no "
+    "Anukramani apparatus of any kind, NOT that the deity is absent from them -- for that "
+    "read `mentions_by_veda`, which spans all four."
 )
 
 #: The Samaveda statement. Mandatory wherever a Samavedic figure appears, because the SV
@@ -405,8 +411,18 @@ CALL (dv) {
     RETURN p.veda AS veda, count(DISTINCT p) AS named
 }
 WITH dv, certainty_split, mention_grid, collect([veda, named]) AS named_by_veda
+// BOTH resolved-dedication predicates, in one pattern, matching
+// insight_service._DEVATA_INSIGHT_QUERY exactly.
+//
+// This read HAS_DEVATA alone. R3 widened the /insights/devatas/{id} sibling to both routes
+// and left this one narrow, so the same product answered the same question two ways --
+// Indra attributed_total 2,869 scope ["RV"] here, ascribed_total 2,945 scope ["RV","AV"]
+// there -- and the node's own measured attribution_scope agreed with neither. That is the
+// type-level attribution failure this project has already recorded once, where three
+// mechanisms wrote one field and disagreed because no single contract was applied last.
+// HAS_DEVATA_ASCRIPTION stays out: an unresolved descriptor names no deity.
 CALL (dv) {
-    OPTIONAL MATCH (p:Passage)-[h:HAS_DEVATA]->(dv)
+    OPTIONAL MATCH (p:Passage)-[h:HAS_DEVATA|HAS_DEVATA_DERIVED]->(dv)
     RETURN count(DISTINCT p) AS ascribed,
            count(DISTINCT CASE WHEN h.attribution_precision = 'PER_PASSAGE'
                                THEN p END) AS ascribed_strict,
@@ -515,9 +531,14 @@ WHERE m.referent_certainty IN $tiers AND ($veda IS NULL OR p.veda = $veda)
 RETURN count(DISTINCT p) AS total
 """
 
-#: Passages the Anukramani ASCRIBES to the deity. Rigvedic by construction.
+#: Passages the Anukramani ASCRIBES to the deity, over both RESOLVED dedication predicates.
+#:
+#: "Rigvedic by construction" was this comment and it was wrong about the corpus: the
+#: Atharvaveda's dedication reaches 851 passages and 35 deities through HAS_DEVATA_DERIVED.
+#: The rows carry their own `attribution_precision`, `evidence_basis` and `provenance_class`,
+#: so a reader can tell which route produced each one without the route being the filter.
 _DEVATA_ASCRIPTION_PASSAGES: Final = """
-MATCH (p:Passage)-[h:HAS_DEVATA]->(:Devata {entity_key: $key})
+MATCH (p:Passage)-[h:HAS_DEVATA|HAS_DEVATA_DERIVED]->(:Devata {entity_key: $key})
 WHERE ($veda IS NULL OR p.veda = $veda)
 RETURN p.canonical_key AS passage_id, p.canonical_citation AS citation, p.veda AS veda,
        h.attribution_precision AS attribution_precision, h.quality_tier AS quality_tier,
@@ -528,7 +549,7 @@ SKIP $offset LIMIT $limit
 """
 
 _DEVATA_ASCRIPTION_COUNT: Final = """
-MATCH (p:Passage)-[:HAS_DEVATA]->(:Devata {entity_key: $key})
+MATCH (p:Passage)-[:HAS_DEVATA|HAS_DEVATA_DERIVED]->(:Devata {entity_key: $key})
 WHERE ($veda IS NULL OR p.veda = $veda)
 RETURN count(DISTINCT p) AS total
 """
@@ -1374,12 +1395,31 @@ class EntityService:
 
         if veda == "SV" or any(item.veda == "SV" for item in items):
             caveats.append(CaveatView(text=SAMAVEDA_SCOPE_STATEMENT, source="measured"))
-        if basis is MentionBasis.ASCRIPTION and veda in {"SV", "YV", "AV"}:
+        # "empty by construction ... the Rigveda only" was true of HAS_DEVATA and false of
+        # the corpus: HAS_DEVATA_DERIVED reaches 851 Atharvavedic passages and 35 deities, so
+        # on an AV request for one of those 35 the caveat asserted an emptiness the same graph
+        # contradicts. SV and YV genuinely carry no dedication layer of any kind; the AV case
+        # is a different statement and now gets one.
+        if basis is MentionBasis.ASCRIPTION and veda in {"SV", "YV"}:
             caveats.append(
                 CaveatView(
-                    text=f"basis=ascription with veda={veda} is empty by construction: the "
-                    "Anukramani deity apparatus exists for the Rigveda only. Use "
-                    "basis=mention to ask whether the deity is named in that corpus.",
+                    text=f"basis=ascription with veda={veda} is empty by construction: no "
+                    "Anukramani dedication apparatus was ingested for that corpus, under any "
+                    "of the three dedication predicates. Use basis=mention to ask whether the "
+                    "deity is named in it.",
+                    source="measured",
+                )
+            )
+        if basis is MentionBasis.ASCRIPTION and veda == "AV":
+            caveats.append(
+                CaveatView(
+                    text="basis=ascription with veda=AV is served from HAS_DEVATA_DERIVED, "
+                    "which resolves the Anukramani's Sanskrit adjective to a deity by its own "
+                    "morphology and reaches 851 of the Atharvaveda's passages and 35 of the "
+                    "214 deities. An empty result here is therefore a real absence for THIS "
+                    "deity, or one of the 285 descriptors refused resolution with a typed "
+                    "reason -- not an absent layer. Use basis=mention to ask whether the "
+                    "deity is named in the corpus.",
                     source="measured",
                 )
             )

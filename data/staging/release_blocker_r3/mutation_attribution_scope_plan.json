@@ -1,6 +1,6 @@
 {
   "artifact": "RELEASE_BLOCKER_R3_MUTATION_PLAN_ATTRIBUTION_SCOPE",
-  "at": "2026-09-18T06:05:01.968873+00:00",
+  "at": "2026-09-18T07:17:01.214041+00:00",
   "gap_id": "GAP-ATTRIBUTION-002",
   "clause": "clause 2, node side -- AV must appear in the dedication scope with its method stated",
   "operation": "SET attribution_scope (measured, per node) and attribution_scope_note on :Devata",

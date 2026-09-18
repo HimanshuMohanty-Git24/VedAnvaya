@@ -104,6 +104,12 @@ ATTRIBUTION_PREDICATES: tuple[tuple[str, str], ...] = (
     ),
 )
 
+#: The members of :data:`ATTRIBUTION_PREDICATES` that resolve to a NAMED deity, and so the
+#: only two that can put a corpus in a deity's dedication scope. ``HAS_DEVATA_ASCRIPTION``
+#: is excluded by construction: it points at a ``:DevataAscription`` holding Whitney's
+#: verbatim descriptor, and 285 of those 324 descriptors are refused a deity outright.
+RESOLVED_DEDICATION_PREDICATES: tuple[str, ...] = ("HAS_DEVATA", "HAS_DEVATA_DERIVED")
+
 #: The predicates ``DEVATA_ATTRIBUTION_BY_VEDA`` actually counts. One name, in one place,
 #: read by the metric's ``values``, its ``method`` string and its ``scope_note`` alike, so a
 #: build that widens what it counts cannot leave the method or the note describing the
@@ -185,12 +191,33 @@ class DevataProfile:
 
     @property
     def attribution_scope(self) -> tuple[str, ...]:
-        """Vedas whose attribution layer this profile could have drawn on.
+        """Vedas whose RESOLVED dedication layer this profile could have drawn on.
 
-        Read this before reading a zero. A zero for the Atharvaveda means the Atharvaveda
-        has no attribution layer, not that the deity is absent from it.
+        Read this before reading a zero. A zero for a Veda absent here means that Veda has
+        no resolved dedication layer, not that the deity is absent from it.
+
+        **Derived from the measurement, not from the constant.** This returned
+        :data:`ATTRIBUTION_VEDAS`, which is ``("RV",)`` and is correct *about ``HAS_DEVATA``*
+        -- and that is precisely the failure :func:`measure_attribution_scope` exists to
+        stop, stated in its own docstring: the figure stays right and the reader still
+        infers that the Atharvaveda has no deity attribution. ``HAS_DEVATA_DERIVED`` carries
+        882 Atharvavedic dedications over 851 passages, so ``["RV"]`` published the
+        Atharvaveda as an absent layer.
+
+        ``HAS_DEVATA_ASCRIPTION`` is excluded: an unresolved descriptor names no deity, so
+        it cannot put a corpus in a deity's dedication scope.
+
+        An empty :attr:`attribution_layer_scope` means the reach was never measured, and the
+        constant is returned unchanged rather than a scope being invented from nothing.
         """
-        return ATTRIBUTION_VEDAS
+        if not self.attribution_layer_scope:
+            return ATTRIBUTION_VEDAS
+        reached = {
+            veda
+            for predicate in RESOLVED_DEDICATION_PREDICATES
+            for veda in self.attribution_layer_scope.get(predicate, ())
+        }
+        return tuple(veda for veda in ALL_VEDAS if veda in reached)
 
     @property
     def total_attributed(self) -> int:

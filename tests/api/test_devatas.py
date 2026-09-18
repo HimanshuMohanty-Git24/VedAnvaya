@@ -816,7 +816,12 @@ def test_mention_and_ascription_are_different_questions(live_client: TestClient)
     assert all(row["attribution_precision"] for row in ascriptions["items"])
     assert all(row["referent_certainty"] is None for row in ascriptions["items"])
 
-    assert ascriptions["pagination"]["total"] == 1988
+    # 2,164 and not 1,988: this route read HAS_DEVATA alone while its sibling
+    # /api/v1/insights/devatas/{id} read both resolved dedication predicates, so the same
+    # product answered the same question two ways. Both now read HAS_DEVATA plus
+    # HAS_DEVATA_DERIVED. Agni gains 176 Atharvavedic passages, resolved from the
+    # Anukramani's own adjective under Panini 4.2.24 sasya devata.
+    assert ascriptions["pagination"]["total"] == 1988 + 176 == 2164
     ascribed_vedas = {
         str(row["veda"])
         for row in live_client.get(
@@ -824,19 +829,44 @@ def test_mention_and_ascription_are_different_questions(live_client: TestClient)
             params={"basis": "ascription", "limit": 200},
         ).json()["items"]
     }
-    assert ascribed_vedas == {"RV"}, "HAS_DEVATA is Rigvedic; a non-RV row would be a defect"
+    # RV and AV, and NOT SV or YV: those two carry no dedication layer under any of the three
+    # predicates, which is GAP-ATTRIBUTION-001 and a source block rather than an unbuilt
+    # projection. A Samavedic or Yajurvedic row here would be the defect.
+    assert ascribed_vedas == {"RV", "AV"}
     assert any("ATTRIBUTION IS NOT MENTION" in c["text"] for c in ascriptions["caveats"])
 
 
 @pytest.mark.neo4j
-def test_ascription_outside_the_rigveda_is_empty_and_says_why(live_client: TestClient) -> None:
-    payload = live_client.get(
+def test_ascription_outside_the_dedication_layer_is_empty_and_says_why(
+    live_client: TestClient,
+) -> None:
+    """Renamed, because "outside the Rigveda" stopped being the boundary.
+
+    The Atharvaveda now HAS a resolved dedication layer -- HAS_DEVATA_DERIVED, 851 passages
+    and 35 deities -- so asking for Agni's Atharvavedic ascription returns 176 real rows and
+    the old assertion of emptiness had become a false absence. The Samaveda and Yajurveda
+    carry no dedication layer under any of the three predicates, so THEY are what "empty by
+    construction" now means, and both halves are asserted here: the corpora that are empty
+    say why, and the corpus that is not is not claimed to be.
+    """
+    for veda in ("SV", "YV"):
+        payload = live_client.get(
+            f"/api/v1/devatas/{AGNI}/passages", params={"basis": "ascription", "veda": veda}
+        ).json()
+        assert payload["items"] == [], veda
+        assert payload["data_status"] != "SUPPORTED", veda
+        assert any("empty by construction" in c["text"] for c in payload["caveats"]), veda
+        assert any("basis=mention" in c["text"] for c in payload["caveats"]), veda
+
+    atharvan = live_client.get(
         f"/api/v1/devatas/{AGNI}/passages", params={"basis": "ascription", "veda": "AV"}
     ).json()
-    assert payload["items"] == []
-    assert payload["data_status"] != "SUPPORTED"
-    assert any("empty by construction" in caveat["text"] for caveat in payload["caveats"])
-    assert any("basis=mention" in caveat["text"] for caveat in payload["caveats"])
+    assert atharvan["pagination"]["total"] == 176
+    assert {row["veda"] for row in atharvan["items"]} == {"AV"}
+    # And it must NOT claim emptiness for a corpus it just served rows from.
+    assert not any("empty by construction" in c["text"] for c in atharvan["caveats"])
+    assert any("HAS_DEVATA_DERIVED" in c["text"] for c in atharvan["caveats"])
+    assert any("basis=mention" in c["text"] for c in atharvan["caveats"])
 
 
 @pytest.mark.neo4j
@@ -844,10 +874,15 @@ def test_the_profile_keeps_strict_and_inherited_attribution_apart(
     live_client: TestClient,
 ) -> None:
     payload = live_client.get(f"/api/v1/devatas/{INDRA}").json()
-    assert payload["attributed_total"] == 2869
+    # 2,945 = 2,869 Rigvedic + 76 Atharvavedic, both resolved dedication routes. The strict /
+    # inherited split this test exists for is unchanged in kind: the Atharvavedic rows are
+    # CONTAINER_INHERITED, a sukta label projected onto its verses, so they land in
+    # `attributed_inherited` and the two still sum to the total.
+    assert payload["attributed_total"] == 2945
     assert payload["attributed_per_passage"] == 655
-    assert payload["attributed_inherited"] == 2214
-    assert payload["attribution_scope"] == ["RV"]
+    assert payload["attributed_inherited"] == 2290
+    assert payload["attributed_per_passage"] + payload["attributed_inherited"] == 2945
+    assert payload["attribution_scope"] == ["RV", "AV"]
     assert any("ATTRIBUTION IS NOT MENTION" in c["text"] for c in payload["caveats"])
 
 

@@ -293,16 +293,42 @@ def test_no_consumer_outside_the_contract_substitutes_the_source_predicate() -> 
     `structure`. The allowed list names each exemption and why it is one.
     """
     import pathlib
+    import re
 
     from vedagraph.domain.deity_eligibility import _STRUCTURE_PREDICATE_ALLOWED_IN
 
     root = pathlib.Path(__file__).resolve().parents[2] / "src" / "vedagraph"
-    needles = ("DEITY_STRUCTURES", "NON_DEITY_STRUCTURES", "'HUMAN','PATRON_PRAISE'")
+    # A substring list caught only the exact spellings already in the tree. Probed: the
+    # positive Cypher form `structure IN ['INDIVIDUAL','PAIR','GROUP','ABSTRACT']`, the
+    # negative with spaces after the commas, the double-quoted Python `frozenset({"HUMAN",
+    # "PATRON_PRAISE", ...})`, `structure <> 'HUMAN'`, and `structure IN $deity_structures`
+    # ALL evaded it -- five of six forms, including the natural Python spelling. A gate that
+    # is green because nobody has yet written the obvious variant is green on substance and
+    # not on coverage, which is the shape this project records as worse than no validator.
+    #
+    # So: any `structure` comparison against any of the six known values, in either polarity
+    # and either quote style, plus the two contract-set names and a bound-parameter form.
+    _VALUES = "INDIVIDUAL|PAIR|GROUP|ABSTRACT|HUMAN|PATRON_PRAISE|UNSPECIFIED"
+    patterns = (
+        re.compile(r"\bDEITY_STRUCTURES\b"),
+        re.compile(r"\bNON_DEITY_STRUCTURES\b"),
+        # structure IN [...] / NOT IN [...] where any listed value is a known structure
+        re.compile(
+            r"structure[^\n]{0,40}?\b(?:NOT\s+)?IN\b[^\n]{0,80}?['\"](?:" + _VALUES + r")['\"]",
+            re.IGNORECASE,
+        ),
+        # structure = / <> / != a known structure
+        re.compile(
+            r"structure\s*(?:=|==|<>|!=)\s*['\"](?:" + _VALUES + r")['\"]", re.IGNORECASE
+        ),
+        # structure IN $bound_parameter -- the form that hides the values entirely
+        re.compile(r"structure[^\n]{0,40}?\bIN\b\s*\$", re.IGNORECASE),
+    )
     offenders = sorted(
         str(path.relative_to(root))
         for path in root.rglob("*.py")
         if path.name not in _STRUCTURE_PREDICATE_ALLOWED_IN
-        and any(needle in path.read_text(encoding="utf-8") for needle in needles)
+        and any(pattern.search(path.read_text(encoding="utf-8")) for pattern in patterns)
     )
     assert not offenders, (
         f"{offenders} reference a structure-based deity predicate. Product Deity membership "
@@ -337,11 +363,25 @@ def test_no_reader_facing_surface_publishes_a_superseded_deity_population() -> N
         *(root / "frontend" / "src").rglob("*.tsx"),
         *(root / "frontend" / "public").rglob("*.json"),
     ]
-    # The figure adjacent to a deity word. A bare 184 is not a claim: entity_service
-    # legitimately says "184 of the 214" about the PROFILED population, 214 minus 30 profiles.
+    # The figure adjacent to a deity word, in EITHER order. Figure-before-noun alone could
+    # not fail on a generated JSON at all: probed, `deities: 184`,
+    # `{"label":"Deities","value":184}`, `{"eligible_deities":184}` and `<span>{184}</span>
+    # deities` all evaded it, and number-after-label is the only form a JSON artifact takes.
+    # So the sweep it was credited with running over frontend/public/**/*.json was structurally
+    # unable to report anything.
+    #
+    # A bare 184 is not a claim: entity_service legitimately says "184 of the 214" about the
+    # PROFILED population (214 minus 30 profiles), and world.labels.json holds RV hymn
+    # addresses that read 184. Hence the adjacency requirement in both directions rather than
+    # a bare number search.
+    _figures = "|".join(str(n) for n in SUPERSEDED_POPULATION_FIGURES)
+    _noun = r"deities|deity|eligible_deities|resolved_deities|pantheon"
     pattern = re.compile(
-        r"\b(?:" + "|".join(str(n) for n in SUPERSEDED_POPULATION_FIGURES) + r")\b"
-        r"(?:\s+\w+){0,3}?\s+(?:deities|deity|eligible_deities|pantheon)",
+        # 184 ... deities
+        r"\b(?:" + _figures + r")\b(?:[\s\"':,}\]]+\w+){0,3}?[\s\"':,}\]]+(?:" + _noun + r")\b"
+        # deities ... 184   (covers `deities: 184`, `"eligible_deities":184`,
+        # `{"label":"Deities","value":184}`)
+        r"|\b(?:" + _noun + r")\b(?:[\s\"':,}\[\]{]+\w+){0,4}?[\s\"':,}\[\]{]+(?:" + _figures + r")\b",
         re.IGNORECASE,
     )
     hits = [
@@ -352,4 +392,81 @@ def test_no_reader_facing_surface_publishes_a_superseded_deity_population() -> N
     assert not hits, (
         "a superseded deity population is still published to a reader: "
         f"{hits}. The population is 157 by deity_eligibility.ELIGIBLE_DEITY_PREDICATE."
+    )
+
+
+# ---------------------------------------------------------------------------
+# attribution_scope, derived rather than stored
+# ---------------------------------------------------------------------------
+
+
+@pytest.mark.neo4j
+def test_attribution_scope_is_the_measured_per_node_reach(
+    live_repository: Neo4jRepository,
+) -> None:
+    """The per-node distribution, and the falsifier in both directions.
+
+    ``attribution_scope`` was the literal ``["RV"]`` on all 214 nodes, written by the
+    taxonomy overlay. That was true of ``HAS_DEVATA`` and became false the moment
+    ``HAS_DEVATA_DERIVED`` landed 882 Atharvavedic dedications reaching 35 of them. R3
+    corrected the graph and, for one commit, left the literal -- so the next rebuild through
+    the overlay would have flattened all 35 straight back. The value is now derived in
+    ``loader.apply_overlay`` from the graph, per GAP-ATTRIBUTION-009's own
+    ``implementation_dependency``, and this is the test that would have caught the flattening.
+
+    Asserted as the DISTRIBUTION plus two per-node falsifiers rather than as a single count,
+    because a count can be right while the wrong nodes carry the wrong scope.
+    """
+    rows = live_repository.run(
+        "MATCH (d:Devata) RETURN d.attribution_scope AS scope, count(*) AS n"
+    )
+    distribution = {tuple(row["scope"] or []): int(row["n"]) for row in rows}
+    assert distribution == {("RV",): 179, ("RV", "AV"): 35}, (
+        "the per-node dedication reach has moved. This is NOT a test to re-baseline: check "
+        "whether the taxonomy overlay has gone back to writing a literal."
+    )
+    claiming = live_repository.run_one(
+        """
+        MATCH (d:Devata)
+        OPTIONAL MATCH (p:Passage)-[:HAS_DEVATA|HAS_DEVATA_DERIVED]->(d)
+        WITH d, collect(DISTINCT p.veda) AS actual
+        WHERE any(v IN d.attribution_scope WHERE NOT v IN actual)
+        RETURN count(d) AS n
+        """
+    )
+    omitting = live_repository.run_one(
+        """
+        MATCH (d:Devata)
+        OPTIONAL MATCH (p:Passage)-[:HAS_DEVATA|HAS_DEVATA_DERIVED]->(d)
+        WITH d, [v IN collect(DISTINCT p.veda) WHERE v IS NOT NULL] AS actual
+        WHERE any(v IN actual WHERE NOT v IN d.attribution_scope)
+        RETURN count(d) AS n
+        """
+    )
+    assert claiming is not None and int(claiming["n"]) == 0, (
+        "a deity claims a corpus it has no resolved dedication edge in"
+    )
+    assert omitting is not None and int(omitting["n"]) == 0, (
+        "a deity omits a corpus it does have a resolved dedication edge in"
+    )
+
+
+def test_the_taxonomy_overlay_no_longer_stores_attribution_scope_as_a_literal() -> None:
+    """The generator half of the same defect, as a fact about the source.
+
+    A mutation that corrects the graph while the generator still writes the old literal is
+    reversible but not reproducible, and the next rebuild silently undoes it.
+    """
+    import pathlib
+
+    taxonomy = (
+        pathlib.Path(__file__).resolve().parents[2]
+        / "src"
+        / "vedagraph"
+        / "domain"
+        / "taxonomy.py"
+    ).read_text(encoding="utf-8")
+    assert '"attribution_scope": [' not in taxonomy, (
+        "taxonomy.py is storing attribution_scope as a literal again. It must be derived at "
+        "projection time in loader.apply_overlay -- see GAP-ATTRIBUTION-009."
     )

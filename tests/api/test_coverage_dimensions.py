@@ -215,7 +215,11 @@ def test_the_deity_insight_reports_coverage_per_dimension(live_client: TestClien
     assert set(routes) == {"HAS_DEVATA", "HAS_DEVATA_DERIVED"}
     assert routes["HAS_DEVATA"]["method"] == "SOURCE_STATED_ANUKRAMANI_DEDICATION"
     assert routes["HAS_DEVATA_DERIVED"]["method"] == "TADDHITA_SASYA_DEVATA_DERIVATION"
-    assert sum(row["passages"] for row in routes.values()) >= body["ascribed_total"]
+    # Equality, not `>=`. Measured: 0 passages carry both dedication predicates to one deity,
+    # so the routes partition the total exactly -- and `>=` would pass on the very
+    # double-counting class this assertion exists to catch, which is how a cartesian-product
+    # bug in this query doubled every per-Veda figure once already.
+    assert sum(row["passages"] for row in routes.values()) == body["ascribed_total"]
 
     # And the top-level block now describes exactly one dimension.
     assert coverage["vedas_not_covered"] == []

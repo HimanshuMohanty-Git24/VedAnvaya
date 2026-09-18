@@ -127,11 +127,32 @@ PREDICATE_TOTALS: Final[dict[str, int]] = {
     # (RV 1.162.6, 4.33.3, 5.2.7, VSM 19.17, VSM 25.29, AVS 12.1.38) = 28,116.
     "MENTIONS_ENTITY": 28_116,
     # 24,861 landed, against 46,439 rows in data/enrichment/vedagraph_enrichment_v1/
-    # concept_assertions.jsonl. The earlier declaration cited "46,508 rows minus 21,539
+    # concept_assertions.jsonl. The pre-R3 declaration cited "46,508 rows minus 21,539
     # english-only = 24,969" and neither operand matches the committed artifact any more.
-    # Reconciles exactly against it: 46,439 rows, MINUS the 21,603 whose evidence is
-    # English-only and which V3 retired, PLUS 25 Sanskrit-evidenced pairs landed outside
-    # this artifact (16 of them hotr-, from the ritual-role pass) = 24,861.
+    #
+    # R3's FIRST reconciliation of this figure was also wrong, and is corrected here rather
+    # than quietly replaced. It said "MINUS the 21,603 whose evidence is English-only". By
+    # `method`, the English-only population is 21,526, not 21,603 -- and 21,603 is not a
+    # population at all, it is 46,439 - 24,836, the residue that makes the subtraction come
+    # out. A warrant reverse-engineered from the answer reproduces the answer and nothing
+    # else, which is the whole failure mode a stated reconciliation exists to prevent.
+    #
+    # Measured per pair against the live graph, and it reconciles exactly:
+    #     24,913  Sanskrit-evidenced pairs (method != concept-alias-v1:english)
+    #   -     91  Sanskrit-evidenced pairs that did NOT land, and whose retirement has NO
+    #             recorded reason -- SOMA-DRINK 15, YAJNA-SACRIFICE 12, VASU-WEALTH 7,
+    #             SOMA-PRESSING 6, AGNI-FIRE 5, RAKSAS-DEMON 5, VAJA-PRIZE 4,
+    #             BHESAJA-HEALING 4 and 19 more concepts
+    #   +     14  English-only pairs that landed ANYWAY, contrary to the stated retirement
+    #   +     25  pairs absent from this artifact entirely, 16 of them hotr- from the
+    #             ritual-role pass
+    #   = 24,861
+    #
+    # The 91 and the 14 are open: they are a real, small, two-directional disagreement
+    # between the artifact's own rule and what the loader landed, and naming them is the
+    # point. They are NOT an R3 regression -- the R3 baseline logical export carries the same
+    # 24,861 -- so this constant describes a pre-R3 state accurately while disclosing that
+    # 105 of its rows do not follow the rule the artifact declares.
     "ABOUT_CONCEPT": 24_861,
 }
 

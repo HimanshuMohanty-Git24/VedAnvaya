@@ -129,7 +129,16 @@ class DevataTaxonomyEntry:
             # Atharvaveda, when the truth is that the Atharvaveda has no attribution
             # layer at all and 571 of its passages contain the word `indra`. A scope note
             # present on 25 of 214 nodes is a scope note that will be missed.
-            "attribution_scope": ["RV"],
+            # attribution_scope is DELIBERATELY ABSENT from this row. It is derived from the
+            # graph by :func:`vedagraph.domain.loader.apply_overlay` immediately after this
+            # SET, per GAP-ATTRIBUTION-009's own implementation_dependency: "Derive
+            # attribution_scope from the graph at projection time instead of storing a
+            # literal, so it cannot outlive the fact it describes."
+            #
+            # It WAS the literal ["RV"] here, on all 214 nodes. R3 measured it per node and
+            # landed 35 as ["RV","AV"] -- and left this literal in place, so the very next
+            # rebuild through this overlay would have flattened all 35 back. A stored literal
+            # that a mutation has to correct out-of-band is the defect, not the value.
             # The second sentence used to read "means that corpus has no attribution
             # layer", which was false for the Atharvaveda and reached the reader on all 214
             # nodes -- and reached Ask, which passes this string through as the qualifier on

@@ -1,0 +1,174 @@
+{
+ "artifact": "RELEASE_BLOCKER_R3_AGENT_B_RECEIPT",
+ "author": "AGENT B (independent closure auditor / hostile reviewer)",
+ "at": "2026-09-18T07:08:09.658476+00:00",
+ "audited_commit": "d244d8f (R3 work, committed by Agent A mid-audit; base 47a6dcc)",
+ "graph_access": "READ-ONLY. No write was issued to Neo4j. Repo writes confined to this file.",
+ "R3_AGENT_B_CRITICAL_OUTSTANDING": 2,
+ "R3_AGENT_B_MAJOR": 4,
+ "R3_AGENT_B_MINOR": 5,
+ "findings": [
+  {
+   "id": "B-R3-C1",
+   "severity": "CRITICAL",
+   "title": "The AV dedication route reached one deity surface of three, and two live caveats are now false",
+   "anchors": [
+    "src/vedagraph/api/services/entity_service.py:1380 :: 'basis=ascription with veda={veda} is empty by construction: the Anukramani deity apparatus exists for the Rigveda only.'",
+    "src/vedagraph/api/services/entity_service.py:132-137 :: ATTRIBUTION_SCOPE_STATEMENT 'ATTRIBUTION IS NOT MENTION, AND IT IS RIGVEDIC ... A zero for the Samaveda, Yajurveda or Atharvaveda means those corpora carry no Anukramani apparatus'",
+    "src/vedagraph/api/services/entity_service.py:1307-1308 :: attribution_scope=_as_list(row.get('ascribed_vedas')) or _as_list(props.get('profile_attribution_scope'))",
+    "tests/api/test_devatas.py:850 :: assert payload['attribution_scope'] == ['RV']"
+   ],
+   "measured": {
+    "HAS_DEVATA_DERIVED": "882 edges over 851 AV passages reaching 35 :Devata; AV-only",
+    "INDRAH": "/devatas/{id} attributed_total 2869 scope ['RV'] | /insights/devatas/{id} ascribed_total 2945 scope ['RV','AV'] | node attribution_scope ['RV','AV'] | node profile_attribution_scope ['RV']",
+    "AGNIH": "HAS_DEVATA 1988 passages, HAS_DEVATA_DERIVED 176 AV passages",
+    "SOMAH": "HAS_DEVATA 80 passages, HAS_DEVATA_DERIVED 54 AV passages"
+   },
+   "defect": "R3 widened /api/v1/insights/devatas/{id} to both resolved-dedication routes and wrote attribution_scope=['RV','AV'] on 35 :Devata, but left /api/v1/devatas/{id} and /api/v1/devatas/{id}/passages?basis=ascription on HAS_DEVATA alone. The same product now answers the same question three ways with no disclosure, and entity_service still ships two caveats that R3's own new taxonomy.py / queries.py / graph_service.py caveats contradict in the same build. This is the recorded type-level attribution failure reproduced.",
+   "must_change": "Either route entity_service's ascription reads through the same both-predicate pattern and rewrite the two caveats, or state on both surfaces which predicate set each counts and that the other exists. GAP-ATTRIBUTION-002 clause 2 cannot read CLOSED while one deity surface publishes AV and the sibling says AV is empty by construction."
+  },
+  {
+   "id": "B-R3-C2",
+   "severity": "CRITICAL",
+   "title": "The attribution_scope mutation is not reproducible from the generator it names",
+   "anchors": [
+    "data/staging/release_blocker_r3/mutation_attribution_scope_plan.json :: 'generator_corrected': 'src/vedagraph/domain/taxonomy.py'",
+    "src/vedagraph/domain/taxonomy.py:132 :: 'attribution_scope': ['RV'],",
+    "src/vedagraph/domain/loader.py:797 and src/vedagraph/domain/profiles.py:277 :: profile_attribution_scope",
+    "data/gap_registry.json GAP-ATTRIBUTION-009 implementation_dependency :: 'Derive attribution_scope from the graph at projection time instead of storing a literal'"
+   ],
+   "measured": "Enumeration of every writer of the property across src/ and scripts/: taxonomy.py:132 only, and it still writes the literal ['RV']. profile_attribution_scope is ['RV'] on all 214 nodes. The R3 taxonomy.py diff changed attribution_scope_note and nothing else.",
+   "defect": "A rebuild through the taxonomy overlay flattens the 35 ['RV','AV'] nodes back to ['RV']. The value is still a stored literal, now a differently-wrong one, so GAP-ATTRIBUTION-009's implementation_dependency is still unmet. No test asserts the 35.",
+   "must_change": "Compute attribution_scope in taxonomy.py from profiles.measure_attribution_scope (or an equivalent live read) at projection time, and add a live test asserting the per-node distribution, so the graph and the generator cannot disagree."
+  },
+  {
+   "id": "B-R3-M1",
+   "severity": "MAJOR",
+   "title": "test_no_consumer_outside_the_contract_substitutes_the_source_predicate can be evaded by the natural spellings",
+   "anchors": [
+    "tests/api/test_deity_population.py:300 :: needles = ('DEITY_STRUCTURES', 'NON_DEITY_STRUCTURES', \"'HUMAN','PATRON_PRAISE'\")"
+   ],
+   "measured": "6 probes, 5 evade. Not caught: the positive Cypher form \"WHERE d.structure IN ['INDIVIDUAL','PAIR','GROUP','ABSTRACT']\"; the negative with spaces \"NOT d.structure IN ['HUMAN', 'PATRON_PRAISE', 'UNSPECIFIED']\"; the natural Python spelling 'frozenset({\"HUMAN\", \"PATRON_PRAISE\", \"UNSPECIFIED\"})'; \"d.structure <> 'HUMAN'\"; \"d.structure IN $deity_structures\". Only the exact single-quoted negative triple is caught.",
+   "defect": "Clause 2 of the owner decision rests on this test, and the test detects one spelling of a predicate with at least five. No offender exists today (enumerated: models/entity.py vocabulary, entity_service ABSTRACT caveat, queries.py structural shape counts, v3_loader PAIR/GROUP selection, domain/ontology.py and models/enums.py enum declarations, insight_service caveat prose) so the gate is green on substance, not on coverage.",
+   "must_change": "Assert over a regex family covering both polarities and both quote styles, e.g. r'structure\\\\s*(?:IN|=|<>|!=)' plus the two constant names, and key the allowed list on full relative paths rather than basenames."
+  },
+  {
+   "id": "B-R3-M2",
+   "severity": "MAJOR",
+   "title": "test_no_reader_facing_surface_publishes_a_superseded_deity_population is non-falsifiable on the artifacts it names",
+   "anchors": [
+    "tests/api/test_deity_population.py:340-348 :: pattern = re.compile(r'\\\\b(?:184|192)\\\\b(?:\\\\s+\\\\w+){0,3}?\\\\s+(?:deities|deity|eligible_deities|pantheon)', re.IGNORECASE)"
+   ],
+   "measured": "9 probes, 6 evade. Not caught: 'deities: 184'; '{\"label\":\"Deities\",\"value\":184}'; '{\"eligible_deities\":184}'; '<span>{184}</span> deities'; '184<em>unique</em> deities'; 'the pantheon of 184'. The regex requires the figure BEFORE the noun, separated only by word characters. Across the 109 files it sweeps, the only bare 184/192 occurrences are RV hymn addresses in world.labels.json and a probe count in focus-layout.ts, so no realistic failure of the frontend/public/**/*.json half is representable.",
+   "defect": "A figure in a generated JSON artifact is always a value keyed by a label, i.e. the number comes after the word. Clause 5 of the owner decision is carried by a sweep that cannot see that shape.",
+   "must_change": "Match the figure within N characters of a deity word in EITHER order; and either add the docs surface or declare its exclusion - docs/design/research/05-ux-content-ia.md still publishes 'Resolved deities | 184 | /api/v1/stats deities.resolved_deities' and docs/reports/PHASE_8_CLOSURE.md still says '184 deities'."
+  },
+  {
+   "id": "B-R3-M3",
+   "severity": "MAJOR",
+   "title": "The ABOUT_CONCEPT reconciliation is arithmetically right and substantively mislabeled, and hides 91 unexplained retirements",
+   "anchors": [
+    "src/vedagraph/domain/layer_figures.py :: 'Reconciles exactly against it: 46,439 rows, MINUS the 21,603 whose evidence is English-only and which V3 retired, PLUS 25 Sanskrit-evidenced pairs landed outside this artifact (16 of them hotr-) = 24,861.'"
+   ],
+   "measured": "concept_assertions.jsonl holds 46,439 rows and 46,439 distinct (concept, passage) pairs. English-only rows = 21,526 under every definition I could construct (surfaces=={translation_en}: 21,526; method 'concept-alias-v1:english': 21,526; no script_folded and no sandhi: 21,526; no script_folded at all: 22,002). 21,603 matches nothing about evidence - it is 46,439 minus the 24,836 artifact pairs that landed. Applying the STATED rule gives 46,439 - 21,526 + 25 = 24,938, not 24,861. The true reconciliation is 24,913 Sanskrit-evidenced pairs, MINUS 91 of them not landed (SOMA-DRINK 15, YAJNA-SACRIFICE 12, VASU-WEALTH 7, SOMA-PRESSING 6, RAKSAS-DEMON 5, AGNI-FIRE 5, VAJA-PRIZE 4, BHESAJA-HEALING 4, and 19 further concepts), PLUS 39 landed outside that set - 25 absent from the artifact entirely, of which exactly 16 are HOTR-PRIEST (that half of the claim is exactly right), and 14 English-only pairs that landed contrary to the stated rule.",
+   "defect": "The declared constant 24,861 is correct and matches the live graph. The warrant beside it does not reproduce, and in not reproducing it conceals 91 Sanskrit-evidenced retirements with no recorded reason and 14 English-only retentions that contradict the rule the comment states. This is the corrections_applied-drifts-from-rows shape: read the row, not the audit block.",
+   "must_change": "Restate the comment as the measured decomposition (24,913 - 91 + 39) and record why the 91 were withheld; or name 21,603 as 'artifact pairs that did not land' rather than as the English-only population."
+  },
+  {
+   "id": "B-R3-M4",
+   "severity": "MAJOR",
+   "title": "lead_receipt.json contradicts the dependency artifact it certifies",
+   "anchors": [
+    "data/staging/release_blocker_r3/lead_receipt.json :: 'counts': {'CURRENT': 3, 'STALE_INPUT': 2, 'BLOCKED': 3, 'NOT_APPLICABLE': 1}",
+    "data/staging/integration/dependency_status.json (at 2026-09-18T06:32:34Z) :: {'CURRENT': 5, 'STALE_INPUT': 0, 'BLOCKED': 3, 'NOT_APPLICABLE': 1}"
+   ],
+   "measured": "9 consumers; STALE_INPUT 0 live; unexplained_stale []. The receipt was written at 06:14, eighteen minutes before the two consumers were rebuilt.",
+   "defect": "The document R3 offers as its closure receipt records the pre-fix state on the very claim (STALE_INPUT=0) it is offered as evidence for. A reader checking the receipt concludes the claim is false.",
+   "must_change": "Regenerate lead_receipt.json after the last rebuild, or stamp its dependency block with the hash of the artifact it was read from."
+  },
+  {
+   "id": "B-R3-m1",
+   "severity": "MINOR",
+   "title": "world-groups.json was rewritten LF to CRLF",
+   "anchors": [
+    "frontend/scripts/world-groups.json"
+   ],
+   "measured": "HEAD version: 0 CRLF, 45 bare LF. R3 version: 52 CRLF, 0 bare LF. The diff reads 97 lines changed for 7 added keys plus a re-sort.",
+   "defect": "The recorded project hazard: a whole-file rewrite hides the real change and makes the next diff unreadable.",
+   "must_change": "Rewrite with newline='\\n' to match the rest of the tree."
+  },
+  {
+   "id": "B-R3-m2",
+   "severity": "MINOR",
+   "title": "The new AV caveat figures are all correct and all unpinned",
+   "anchors": [
+    "src/vedagraph/domain/taxonomy.py:139-155 attribution_scope_note",
+    "src/vedagraph/domain/queries.py:147-165 _SCOPE_CAVEAT",
+    "tests/domain/test_attribution_scope_note.py:199 test_the_live_note_matches_the_live_graph"
+   ],
+   "measured": "Every figure verified against the graph: AV 6,590 passages / 5,839 mantras; HAS_DEVATA_ASCRIPTION 5,385 edges over 4,665 passages, 4,816 of them on 4,160 mantras; HAS_DEVATA_DERIVED 882 over 851 passages, 35 deities, AV-only; ASCRIBES_TO_DEVATA 39 edges from 39 descriptors to 35 deities; 210+67+4+3+1 = 285; SV and YV carry 0 edges over all three dedication predicates. No test asserts any of them - test_the_live_note_matches_the_live_graph pins profiles._reach_sentence, a different string.",
+   "must_change": "Assemble the note's figures from layer_figures/profiles measurements, or add a live test asserting each."
+  },
+  {
+   "id": "B-R3-m3",
+   "severity": "MINOR",
+   "title": "_STRUCTURE_PREDICATE_ALLOWED_IN exempts by basename, and one exemption's reason overstates",
+   "anchors": [
+    "src/vedagraph/domain/deity_eligibility.py:355-372",
+    "tests/api/test_deity_population.py:303 :: if path.name not in _STRUCTURE_PREDICATE_ALLOWED_IN",
+    "src/vedagraph/api/services/entity_service.py:1161 and :1269 :: structure == 'ABSTRACT'"
+   ],
+   "measured": "Any file named entity.py / queries.py / v3_loader.py / entity_service.py / deity_population.py / deity_eligibility.py anywhere under src/vedagraph is exempt. The entity_service exemption text says '_validate_choice at one call site, and nothing else', but lines 1161 and 1269 also read structure == 'ABSTRACT' (caveat emission, not membership).",
+   "must_change": "Key the allowed list on the path relative to src/vedagraph, and correct the exemption text to name the ABSTRACT caveat gate."
+  },
+  {
+   "id": "B-R3-m4",
+   "severity": "MINOR",
+   "title": "The route-sum assertion is weaker than the measurable invariant",
+   "anchors": [
+    "tests/api/test_coverage_dimensions.py:218 :: assert sum(row['passages'] for row in routes.values()) >= body['ascribed_total']"
+   ],
+   "measured": "0 passages carry both HAS_DEVATA and HAS_DEVATA_DERIVED to the same :Devata, so the invariant is equality. A '>=' passes on a double-count, which is the exact class of bug this test is credited with catching.",
+   "must_change": "Assert equality, and say in the failure message that inequality means a passage was counted on both routes."
+  },
+  {
+   "id": "B-R3-m5",
+   "severity": "MINOR",
+   "title": "verify_public_claims.py clears instances rather than families; and one receipt field reads as a failure",
+   "anchors": [
+    "data/staging/release_blocker_r3/verify_public_claims.py",
+    "data/staging/release_blocker_r3/mutation_attribution_scope_receipt.json :: 'note_matches_taxonomy': 0"
+   ],
+   "measured": "I re-derived the 22-item mapping and it is complete: 16 substring checks cover 16 items, the layer_figures drift check covers 5 (ASSERTION_LAYERS, DEDICATED_ENGLISH, MENTIONS_LEMMA, HAS_CHANDAS, and the MENTIONS_ENTITY+ABOUT_CONCEPT pair), and the world-group check covers 1. Each clears. But the test is 'the false string is gone', so a family is only as swept as its enumerated instances - the atharvavedic_deity_ascription_scope family has two surviving instances in entity_service.py (finding B-R3-C1) that are not in CHECKS. Separately, 'note_matches_taxonomy': 0 reads as a failed boolean; it is in fact a zero mismatch count. I verified the live note and taxonomy.py's note are byte-identical: sha256 8b8c13ba8819106c, length 1222, matching the plan's note_sha256.",
+   "must_change": "Anchor the sweep on the family's predicate ('the AV carries no dedication apparatus') across all of src/ and frontend/, not on the 22 quoted strings; and rename note_matches_taxonomy to note_mismatches."
+  }
+ ],
+ "verdicts": {
+  "1_owner_decisions_recorded": "UPHELD. OWNER_DECISIONS.md sections 34 and 35 are both present, both recorded verbatim, and both cited by their entries.",
+  "2_entity_coverage_008_closed_derived": "UPHELD_WITH_QUALIFICATION. Both 29s verified independently and they are different quantities: the superseded equality measure returns 29 = 28 ABSTRACT / is_deity=false / NOT_DEITY, plus 1 UNSPECIFIED / is_deity=true / DEITY (VG:DEVATA:SUNAH, 'the dog'); check_rows' excludes_the_29 = HUMAN_PATRON 22 + DANASTUTI_GIFT_PRAISE 7 = 29. Stronger than Agent A's argument: the FLOOR of the superseded metric over ANY structure-value-based exclusion set is 13, not 0, because ABSTRACT is mixed (28 false / 13 true) with respect to is_deity - so 0 is unreachable without overturning a recorded ruling. The underlying R2 defect (deity_structure_clause filtering on structure) was already fixed at 47a6dcc and the clause now reads coalesce(v.is_deity,false); 214 of 214 ruled, 0 unruled, 157 authoritative (152 DEITY + 5 UNDECIDED), 0 divergent nodes without a reason. Qualification: the two static tests carrying clauses 2 and 5 are weak - B-R3-M1 and B-R3-M2.",
+  "3_semantics_004_self_citation_cleared": "UPHELD_WITH_QUALIFICATION. closure_citation now names OWNER_DECISIONS.md section 34, the section exists, and the closure audit's scope_citations_only_self_cited is []. Qualification: the decision text and the closure landed in the same commit (d244d8f), so the citation's independence is file-level rather than change-set-level, and nothing in the repository attests the owner's authorship of the verbatim block.",
+  "4_attribution_002_clauses_2_and_3": "Clause 3 UPHELD: 324 of 324 carry a status from the closed seven-value vocabulary, 285 of 285 unresolved carry a typed reason, 0 unreasoned, 39 carry a derivation path, all written by the repository's own resolver. Clause 2 REFUTED - see B-R3-C1: closed on /insights/devatas/{id} only, while /devatas/{id} publishes the old scope and the old total and two entity_service caveats still assert that the AV has no dedication apparatus. Clause 1's diagnosis (41 of 210, agnidaivatam/indradaivatam) I did not re-derive; leaving it open is correct.",
+  "5_five_targeted_failures_are_zero": "UPHELD. 303 passed / 0 failed across tests/api/test_passages.py, test_coverage_dimensions.py, test_insights.py and test_devatas.py. tests/domain under VEDAGRAPH_LIVE_NEO4J=1: 5 failed / 367 passed, and the 5 are exactly the 5 named in findings.json, with the 6th (assertion-layer separability) now passing. All 3 'implementation defects' are real defects and both 'obsolete fixtures' are genuinely obsolete - see claims_that_survived_attack.",
+  "6_four_mutations_promised_equals_actual": "UPHELD, exhaustively. Full logical diff of the pre-mutation backup (164,201 nodes / 508,042 relationships, taken 05:29:30Z, before all four mutations at 05:31-06:05) against the live graph: 0 nodes added or removed, 0 label changes, 0 relationships added or removed, 0 type changes, 0 endpoint changes. The changed property keys are EXACTLY the promised set and nothing else - SemanticAssertion.knowledge_layer +30,266, .quality_tier +30,266, DevataAscription.ascription_resolution_status +324, .ascription_resolution_contract +324, .ascription_unresolved_reason +285, .ascription_comparison_tier +39, .ascription_derivation_path +39, Devata.attribution_scope_note modified on 214, Devata.attribution_scope modified on 35, ASSERTION_PREDICATE.derivation +30,266. The backups would reverse them: every prior value is null except the two Devata keys, whose priors are held in attribution_scope_backup.jsonl. Qualification is B-R3-C2: reversible is not the same as reproducible.",
+  "7_all_22_stale_claims_cleared": "UPHELD_WITH_QUALIFICATION. I re-derived the 22-item mapping and every item clears: layer_figures.measure() vs declared() = 0 drifted fields across all 13 families; 0 shipped world types fall outside world-groups.json; the 16 quoted strings are gone. Qualification: instance-level rather than family-level - B-R3-C1 is two surviving instances of the atharvavedic_deity_ascription_scope family in entity_service.py.",
+  "8_dependency_stale_input_zero": "UPHELD on the live artifact: CURRENT 5 / STALE_INPUT 0 / BLOCKED 3 / NOT_APPLICABLE 1, unexplained_stale []. Both declaration gaps are real and are now declared with their hashes in the ledger. The world-groups fix reaches the SHIPPED artifact: world.json regenerated 2026-09-18T06:11:32Z, types now carries all 7 previously-unmapped labels, and recomputing groupOf over all 71,373 raw nodes gives other=0 and deity=exactly 157 (the 57 non-deities land in unresolved-deity). REFUTED as stated in lead_receipt.json - see B-R3-M4.",
+  "9_registry_18_to_17_scorecard_11_of_11": "UPHELD on the registry: 85 entries, STILL_IMPLEMENTATION_FIXABLE 17, and the 17 ids are the baseline 18 minus GAP-ENTITY_COVERAGE-008. entries_without_a_ruling [], rulings_for_no_entry [], measurement_disagreements [], registry_status_disagreements [], scope_citations_naming_no_file [], scope_citations_only_self_cited []. tests/unit/test_registry_closure.py and test_dependency_state.py: 43 passed. 'scorecard 11/11' is UNVERIFIED - no R3 artifact states it, and scripts/graph_quality_scorecard.py writes a tracked file, which my constraints forbid."
+ },
+ "claims_that_survived_attack": [
+  "Both 29s, and the floor-13 proof that the superseded metric cannot reach 0 over any structure-value exclusion set. This is a stronger form of Agent A's own argument and it confirms it.",
+  "The four graph mutations, against a full 164,201-node / 508,042-relationship logical diff: nothing outside the promised property set was written, and no node, label, relationship, type or endpoint moved.",
+  "layer_figures: 0 drifted fields across all 13 families. MENTIONS_ENTITY reconciles EXACTLY - 28,227 artifact rows MINUS 117 SOMA-PRESSING pairs withheld (656 in the artifact, 539 landed) PLUS 6 yupa edges, and the 6 are exactly the 6 addresses named: RV 1.162.6, 4.33.3, 5.2.7, VSM 19.17, VSM 25.29, AVS 12.1.38. Neither decrease is an R3 regression: the backup diff proves R3 touched no MENTIONS_ENTITY or ABOUT_CONCEPT edge, so all ten constant movements describe a pre-R3 graph state.",
+  "The script-availability and _WORK_SCRIPTS defects. text_role enumerates to exactly 5 values in the graph (EXTRACTED_FROM_CONTAINER, NORMALIZED, PARALLEL_TEXT, PRIMARY_TEXT, SEARCH_DERIVATIVE) and all 5 are in _TEXT_SURFACE_BY_ROLE, so no role is silently dropped. The complete per-work per-role census (12 rows) shows SV and YV held Latin ONLY via SEARCH_DERIVATIVE, so scoping to displayable roles takes SV from [Latin, Devanagari] to [Devanagari] and YV likewise, and leaves RV and AV at [Latin]. Nothing that should have been kept was dropped, container passages included (YV EXTRACTED_FROM_CONTAINER, 1,975 Devanagari, is retained). No consumer legitimately needs the search derivative counted as a script: it is IAST on all 20,210 mantras, is_displayable=False, carries U+E000-E003 sentinels, and is disclosed separately as normalized_for_search. The 139 NORMALIZED rows are all YV Devanagari, as claimed.",
+  "Both fixtures. RV 1.1.1 carries exactly 3 TextVersions (PRIMARY_TEXT, PARALLEL_TEXT, SEARCH_DERIVATIVE). VG:RV:SAK:M03:S035:V011 carries exactly 17 parallel edges: 14 EXACT_PARALLEL_OF, 1 NEAR_PARALLEL_OF, 2 REUSES_TEXT_FROM. The 17th is REUSES_TEXT_FROM from VG:AV:SAU:K20:S011:V011 with pipeline_version vedagraph-agent1-final-closure-v1, and there are exactly 311 such edges. The neighbour already carried an EXACT_PARALLEL_OF, as claimed.",
+  "The ascribed_scope Cypher, for the cartesian-product class of error. All six CALL subqueries in _DEVATA_INSIGHT_QUERY were checked: #1 (MENTIONS_DEVATA by veda) and #2 (certainty) are multi-row and each is aggregated by the WITH immediately following it; #3 (ascribed / ascribed_vedas), #5 (ascribed_by_route, collect inside) and #6 (metrics) are single-row; #4 (a_veda) is the only multi-row subquery in its group. There is no second product. The OPTIONAL-MATCH-with-no-rows case yields [[null, null, 0]] and _dedication_routes discards it.",
+  "Every figure in the new AV dedication caveats: 6,590 / 5,839 / 5,385 / 4,665 / 4,816 / 4,160 / 882 / 851 / 39 / 35 / 324 / 285 (= 210+67+4+3+1), plus SV and YV carrying 0 edges over all three dedication predicates - enumerated, not assumed.",
+  "The world-group fix reaching the shipped bundle, and the Lab's deity group holding exactly the authoritative 157 with other=0. The DeityGroup-in-'deity' mistake the ledger comment describes is not in the shipped artifact.",
+  "The intentional-divergence and divergent-reason tests are both non-vacuous: an empty result set fails the dict equality, and authoritative_population is asserted == 157."
+ ],
+ "not_verified": [
+  "scorecard 11/11 - not stated in any R3 artifact, and the generator writes a tracked file.",
+  "GAP-ATTRIBUTION-002 clause 1's 41-of-210 suffix measurement - accepted as reported, and correctly left open.",
+  "That DEDICATED_ENGLISH RV and YV moved at b4b1b0b specifically. The backup proves the movement predates R3's mutations (RV 10,480 / YV 1,950 live, and R3 touched no TextVersion or rendering), but it cannot date the move to that commit.",
+  "pnpm build / typecheck / lint / frontend unit tests - barred by my constraints; Agent A owns them."
+ ]
+}

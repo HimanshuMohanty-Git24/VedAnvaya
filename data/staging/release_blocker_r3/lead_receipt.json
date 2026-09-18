@@ -1,6 +1,6 @@
 {
   "artifact": "RELEASE_BLOCKER_R3_LEAD_RECEIPT",
-  "at": "2026-09-18T06:14:44.235442+00:00",
+  "at": "2026-09-18T07:26:26.448020+00:00",
   "head_at_start": "47a6dcc6c8d589995eef92aa87c5dee6647bbbb8",
   "branch": "phase-data-completeness-v2",
   "registry": {
@@ -161,19 +161,27 @@
     ],
     "all_promised_equals_actual": true
   },
+  "scorecard": {
+    "gates_passing": 11,
+    "gates_failing": 0,
+    "verdict": "11/11",
+    "captured_from": "scripts/graph_quality_scorecard.py, re-run after every R3 mutation"
+  },
   "dependencies": {
     "counts": {
-      "CURRENT": 3,
-      "STALE_INPUT": 2,
+      "CURRENT": 5,
+      "STALE_INPUT": 0,
       "BLOCKED": 3,
       "NOT_APPLICABLE": 1
     },
     "unexplained_stale": [],
     "declaration_gaps_closed_in_r3": [
       "frontend/scripts/world-groups.json -> Visualization Lab aggregates",
-      "src/vedagraph/api/services/graph_service.py -> Knowledge World public projection"
+      "src/vedagraph/api/services/graph_service.py -> Knowledge World public projection",
+      "frontend/scripts/build-home-world.mjs -> Knowledge World public projection (builder AND output; found by frontend/tests/unit/public-identity.test.ts, not by this report)"
     ]
   },
+  "regenerated_after_agent_b_r3_round": "This receipt was first written at 06:14Z, BEFORE the dependency declaration gaps were closed and rebuilt, so it recorded STALE_INPUT=2 while the live artifact read 0 -- a closure receipt stating the pre-fix value of the claim it was offered as evidence for (Agent B B-R3-M4). Regenerated from the live artifacts.",
   "owner_decisions_recorded": [
     "OWNER_DECISION_SEMANTICS_004_STRATUM_MAP (docs/reports/data-completeness/OWNER_DECISIONS.md section 34)",
     "OWNER_DECISION_ENTITY_008_DEITY_MEMBERSHIP (docs/reports/data-completeness/OWNER_DECISIONS.md section 35)"

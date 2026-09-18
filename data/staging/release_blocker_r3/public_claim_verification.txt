@@ -15,6 +15,10 @@ CLEARED   atharvavedic_deity_ascription_scope      src/vedagraph/domain/taxonomy
 CLEARED   atharvavedic_deity_ascription_scope      src/vedagraph/domain/queries.py :: '4,665 of its 5,839 mantras'
 CLEARED   atharvavedic_deity_ascription_scope      src/vedagraph/domain/queries.py :: 'TWO DEITY-ATTRIBUTION PREDICATES'
 CLEARED   atharvavedic_deity_ascription_scope      frontend/public/world/world.predicates.json :: "A descriptor of the ascription's form, not a second "
+CLEARED   atharvavedic_deity_ascription_scope      src/vedagraph/api/services/entity_service.py :: 'ATTRIBUTION IS NOT MENTION, AND IT IS RIGVEDIC'
+CLEARED   atharvavedic_deity_ascription_scope      src/vedagraph/api/services/entity_service.py :: 'the Anukramani deity apparatus exists for the Rigved'
+CLEARED   atharvavedic_deity_ascription_scope      src/vedagraph/api/services/entity_service.py :: 'to the deity. Rigvedic by construction'
+CLEARED   attribution_scope_stored_literal         src/vedagraph/domain/taxonomy.py :: '"attribution_scope": ["RV"]'
 
 layer_figures_declared_vs_measured  drifted fields: 0 []
 world_type_group_mapping            nodes falling to "other": 0

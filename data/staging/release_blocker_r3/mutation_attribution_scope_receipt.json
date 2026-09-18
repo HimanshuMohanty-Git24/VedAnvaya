@@ -1,7 +1,7 @@
 {
   "artifact": "RELEASE_BLOCKER_R3_MUTATION_RECEIPT_ATTRIBUTION_SCOPE",
-  "at": "2026-09-18T06:05:02.720920+00:00",
-  "plan_sha256": "0212744bab178c47435255f4f887de4871e4257005874c9ffa269e8536de7f04",
+  "at": "2026-09-18T07:17:01.518527+00:00",
+  "plan_sha256": "34150899ae321799476cc3c6af497468ee38f4878c99bc3951fb60d5be00cb5e",
   "promised": {
     "nodes_written": 214,
     "scope_distribution": {
