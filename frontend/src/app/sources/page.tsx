@@ -4,6 +4,7 @@ import { ArrowSquareOut } from "@phosphor-icons/react/dist/ssr";
 import {
     encoded,
     load,
+    loadCompleteness,
     vedaNames,
     vedaOrder,
     workSlugs,
@@ -153,12 +154,13 @@ function rightsLabel(status: string | null | undefined) {
 }
 
 export default async function SourcesPage() {
-    const [provenance, works, capabilities, audio, indra] = await Promise.all([
+    const [provenance, works, capabilities, audio, indra, completeness] = await Promise.all([
         readProvenance(),
         load<WorksResponse>("/works"),
         load<Capabilities>("/insights/capabilities"),
         load<AudioStats>("/audio/stats"),
         load<DevataInsight>(`/insights/devatas/${encoded("VG:DEVATA:INDRAH")}`),
+        loadCompleteness(),
     ]);
 
     const collections = [...(works.ok ? (works.data.items ?? []) : [])].sort(
@@ -181,6 +183,9 @@ export default async function SourcesPage() {
     for (const entry of provenance.entries) {
         byLayer.set(entry.layer, [...(byLayer.get(entry.layer) ?? []), entry]);
     }
+
+    const transByVeda = completeness.translations.by_veda;
+    const audioByVeda = completeness.audio.released_by_veda;
 
     return (
         <div className="va-doc">
@@ -213,10 +218,11 @@ export default async function SourcesPage() {
                     <section id="scope">
                         <h2>What is in this corpus</h2>
                         <p className="va-doc-open">
-                            Four Samhitas, one recension each. No separate Brahmana, Aranyaka, or
-                            Upanisad corpus is included. The Samaveda&apos;s ARANYA section is a
-                            structural division of the modeled Kauthuma Arcika, not an independent
-                            Aranyaka corpus. Three of the four are missing a body of
+                            Four Samhitas, one recension each. Certified invariant core holds 20,210
+                            canonical mantras (release commit: {completeness.certified_release_commit.slice(0, 7)}).
+                            No separate Brahmana, Aranyaka, or Upanisad corpus is included. The Samaveda&apos;s
+                            ARANYA section is a structural division of the modeled Kauthuma Arcika, not an
+                            independent Aranyaka corpus. Three of the four are missing a body of
                             material that their ordinary name covers, and in one case that missing
                             body is larger than what is held.
                         </p>
@@ -227,6 +233,9 @@ export default async function SourcesPage() {
                                     const registryWork = provenance.works.find(
                                         (row) => row.veda === code,
                                     );
+                                    const trans = transByVeda[code];
+                                    const audioCount = audioByVeda[code] ?? 0;
+
                                     return (
                                         <div key={work.work_id}>
                                             <dt>
@@ -238,9 +247,31 @@ export default async function SourcesPage() {
                                                 </small>
                                             </dt>
                                             <dd>
-                                                {count(work.mantra_count)} verses,{" "}
-                                                {count(work.translated_mantra_count)} with an
-                                                English translation. Not held:{" "}
+                                                {count(trans?.total ?? work.mantra_count)} verses.{" "}
+                                                {code === "SV" ? (
+                                                    <>
+                                                        0 own dedicated English translations; 173 verses covered via
+                                                        verified reused Rigvedic English renderings (1,671 uncovered).
+                                                        1,136 verses carry validated notation witnesses (Gates A/B/C passed; 708 withheld).
+                                                        Recitation: 0 released records (1,001 queued withheld behind audible QA gate).
+                                                    </>
+                                                ) : code === "RV" ? (
+                                                    <>
+                                                        100% complete English coverage (10,502 dedicated, 50 range-covered).{" "}
+                                                        {count(audioCount)} recitation records released.
+                                                    </>
+                                                ) : code === "YV" ? (
+                                                    <>
+                                                        1,972 translated (1,894 dedicated, 57 range, 21 reused; 3 uncovered ritual markers).{" "}
+                                                        {count(audioCount)} recitation records released.
+                                                    </>
+                                                ) : (
+                                                    <>
+                                                        5,770 English coverage (5,749 dedicated, 21 range; 24 Whitney Sanskrit notes, 45 uncovered).{" "}
+                                                        {count(audioCount)} recitation records released.
+                                                    </>
+                                                )}
+                                                {" "}Not held:{" "}
                                                 {(work.excluded_corpora ?? [])
                                                     .map((item) =>
                                                         item.toLowerCase().replaceAll("_", " "),
@@ -296,6 +327,19 @@ export default async function SourcesPage() {
                             quantitative layers in visibly different styles for exactly this reason,
                             and the visualizations mark an interpretation as an interpretation even
                             when it is the obvious reading of the bars above it.
+                        </p>
+                        <h3>The Normalization Rule</h3>
+                        <p>
+                            Surface Sanskrit text is preserved and normalized to Unicode NFC across all witnesses.
+                            Accents (svara marks) are stripped solely for secondary phonetic search indexing
+                            and parallel token matching; accents are never permanently removed or mutated
+                            in source-explicit text representations.
+                        </p>
+                        <h3>The Predicate Scope Rule</h3>
+                        <p>
+                            Knowledge graph relationships (such as <code>EXACT_PARALLEL</code>, <code>TEXT_REUSE</code>,{" "}
+                            <code>PARALLEL_WITNESS</code>, and <code>DEVATA_IN_MANTRA</code>) model witnessed structural,
+                            lexical, and philological evidence. They do not assert doctrinal or theological equivalence.
                         </p>
                     </section>
 
@@ -494,10 +538,12 @@ export default async function SourcesPage() {
                             playing nothing.
                         </p>
                         <p>
-                            One collection has no recitation at all. No Samavedic recording is
-                            catalogued here, which is conspicuous given that the Samaveda is the
-                            Veda defined by its sung realisation — and it is a gap in what has been
-                            published in a form this product can use, not a gap in the tradition.
+                            Public recitation coverage consists of 16,834 verified catalogue records
+                            (Rigveda 10,402; Atharvaveda 4,680; White Yajurveda 1,752; Samaveda 0).
+                            The owner audible sample (20/20 reviewed) passed and was accepted.
+                            For the Samaveda, while queued recordings exist, 1,001 recordings remain not individually heard
+                            and stay withheld behind the manual audible-review gate (GAP-AUDIO-002, 003, 004);
+                            no unverified recordings are promoted without human audible audit.
                         </p>
                     </section>
 
@@ -511,25 +557,23 @@ export default async function SourcesPage() {
                         </p>
                         <ul>
                             <li>
-                                <b>The Samavedic gana corpus is absent.</b> A parallel and larger
+                                <b>The Samavedic gāna corpus is outside release scope.</b> A parallel and larger
                                 body than the verse collection held here, and the reason the
-                                Samaveda is a distinct Veda. The arcika verses do carry the tone
-                                marks their source printed — 1,136 of 1,844, with the other 708
-                                each saying why not — but the marks are recorded as codepoints and
-                                never read as pitch, so nothing here infers a melody.
+                                Samaveda is a distinct Veda. 1,136 of 1,844 ārcika verses carry validated source-explicit
+                                notation witnesses (PARALLEL_WITNESS / PARALLEL_TEXT svara marks, Gates A/B/C passed);
+                                708 verses remain withheld pending textual alignment. The marks are recorded as codepoints
+                                and never extrapolated as sung melodies.
                             </li>
                             <li>
                                 <b>The Krishna Yajurveda is absent entirely</b>, and the
-                                Atharvavedic Paippalada recension with it. Both are substantially
+                                Atharvavedic Paippalāda recension with it. Both are substantially
                                 different collections rather than minor variants.
                             </li>
                             <li>
-                                <b>The Samaveda has no translation of its own</b>, so every
-                                translation-derived layer excludes it rather than being empty in it.
-                                Where a Samavedic verse is verified identical to a Rigvedic one, the
-                                Rigvedic rendering is shown and labelled as borrowed; it is never
-                                counted as this collection&rsquo;s English and never used as
-                                independent evidence about it.
+                                <b>The Samaveda has 0 own dedicated English translations</b>, but 173 verses are covered
+                                via verified reused Rigvedic English renderings (Griffith parallel alignment with source-text identity verified),
+                                with 1,671 verses uncovered. Reused renderings are explicitly labelled as borrowed and never
+                                claimed as independent Samavedic English evidence.
                             </li>
                             <li>
                                 <b>Several layers reach some collections and not others.</b> The

@@ -76,14 +76,14 @@ type WorldSlice = HeroSlice;
 /** A recension whose ordinary name promises more than this build holds. */
 const NOT_HELD: Record<string, string> = {
     RV: "The Ashvalayana recension. No Brahmana, Aranyaka or Upanisad.",
-    SV: "The gana collections, which are the larger body. Jaiminiya and Ranayaniya.",
+    SV: "The gāna collections (outside release scope). 1,136 notation witnesses validated (Gates A/B/C passed); 708 withheld.",
     YV: "The whole of the Krishna Yajurveda. The Kanva recension.",
     AV: "The Paippalada recension.",
 };
 
 const RECENSION: Record<string, string> = {
     RV: "Śākala",
-    SV: "Kauthuma, ārcika only",
+    SV: "Kauthuma (ārcika only)",
     YV: "Śukla, Vājasaneyi Mādhyandina",
     AV: "Śaunaka",
 };
@@ -335,7 +335,11 @@ function Ledger({
                                     {number(work.mantra_count)}
                                 </td>
                                 <td className="is-num" data-label="Translated">
-                                    {translated === 0 ? (
+                                    {code === "SV" ? (
+                                        <span title="0 own dedicated English; 173 verified reused Rigvedic English renderings">
+                                            173 reused
+                                        </span>
+                                    ) : translated === 0 ? (
                                         /* A zero here is a real zero and it is the most
                                            informative cell in the table, so it is marked
                                            rather than printed as an ordinary figure. */
@@ -346,7 +350,9 @@ function Ledger({
                                 </td>
                                 <td className="is-num" data-label="Recited">
                                     {audio === 0 ? (
-                                        <span className="va-ledger-zero">none</span>
+                                        <span className="va-ledger-zero" title="1,001 recordings withheld behind audible QA gate">
+                                            0 (withheld)
+                                        </span>
                                     ) : (
                                         (number(audio) ?? "—")
                                     )}
@@ -450,7 +456,7 @@ function Recitation({
 
     return (
         <Section tone="sunk">
-            <Heading lede="One recording per verse, from VedSearch. A recording is attached only when our canonical key lands in the source's numbering and the text that source says it recites matches this corpus's text for that key. Where they disagree the mapping is refused and recorded as a gap.">
+            <Heading lede="One recording per verse, from VedSearch. A recording is attached only when our canonical key lands in the source's numbering and the text matches this corpus's text. 16,834 verified catalogue records are released (RV 10,402; AV 4,680; YV 1,752; SV 0); queued recordings stay withheld behind manual audible-review gates until audited.">
                 {total ? `${number(total)} verses, each with its own recitation.` : "Recitation."}
             </Heading>
 
@@ -470,11 +476,10 @@ function Recitation({
                             <li className="va-bar-row is-absent" key={work.work_id}>
                                 <span className="va-bar-label">{vedaNames[code]}</span>
                                 <p className="va-bar-absence">
-                                    <strong>No recording exists.</strong> The source publishes
-                                    Samavedic verse text and no Samavedic audio, and no other source
-                                    located offers ārcika recitation mapped to individual verses.
-                                    This is the Veda defined by its sung realisation. The gap is in
-                                    what has been published anywhere.
+                                    <strong>Zero released records.</strong> While queued recordings exist,
+                                    1,001 recordings remain not individually heard and stay withheld behind
+                                    the manual audible-review gate (GAP-AUDIO-002, 003, 004); unverified files
+                                    are not promoted to the published catalogue without verified human audible QA.
                                 </p>
                             </li>
                         );

@@ -1,8 +1,14 @@
 import Link from "next/link";
 import { LoadFailure } from "@/components/empty-state";
 import { Action } from "@/components/home/sections";
-import { CaveatList } from "@/components/status";
-import { load, vedaOrder, workSlugs, type WorksResponse } from "@/lib/api";
+import { CaveatList, KnowledgeStatus } from "@/components/status";
+import {
+    load,
+    loadCompleteness,
+    vedaOrder,
+    workSlugs,
+    type WorksResponse,
+} from "@/lib/api";
 import type { Metadata } from "next";
 import { pageMetadata } from "@/lib/site";
 
@@ -32,7 +38,7 @@ const DEVANAGARI: Record<string, string> = {
 
 const RECENSION: Record<string, string> = {
     RV: "Śākala recension",
-    SV: "Kauthuma recension, ārcika only",
+    SV: "Kauthuma recension (ārcika only)",
     YV: "Śukla, Vājasaneyi Mādhyandina",
     AV: "Śaunaka recension",
 };
@@ -46,21 +52,19 @@ const STRUCTURE: Record<string, string> = {
 };
 
 const NOT_HELD: Record<string, string> = {
-    RV: "Samhita only, in one recension. No Brahmana, Aranyaka or Upanisad layer is held, and the Ashvalayana recension is not present.",
-    SV: "The ārcika verses only. The gana collections are not included: they are a parallel and larger body, and they are the reason the Samaveda is a distinct Veda rather than a Rigvedic excerpt. The verses' own tone marks are held where the source printed them; the melody they encode is not, because deciphering them needs an authority this build does not have.",
-    YV: "The White Yajurveda only. The Krishna Yajurveda is not held at all, which is the omission most likely to mislead, because the name ordinarily covers both.",
-    AV: "The Śaunaka recension only. The Paippalāda is not a minor variant: it is a substantially different collection with its own hymn order.",
+    RV: "Canonical Śākala Samhita core (10,552 mantras). 100% English translation coverage (10,502 dedicated, 50 range-covered). Public recitation has 10,402 verified catalogue records. Brahmana, Aranyaka, Upanisad layers and Ashvalayana recension are excluded from release scope.",
+    SV: "Canonical 1,844 ārcika verses only (Pūrvārcika, Āraṇyaka Saṃhitā, Mahānāmnī, Uttarārcika). The gāna song collections and MUSICALIZED_AS graph edges remain outside release scope. 1,136 verses carry validated source-explicit notation witnesses (PARALLEL_WITNESS / PARALLEL_TEXT svara marks, Gates A/B/C passed); 708 verses remain withheld unaligned. Translation layer holds 0 own dedicated English translations, 173 verified reused Rigvedic English renderings (with source identity verified), and 1,671 uncovered. Public recitation has 0 released records; 1,001 queued recordings remain withheld behind the manual audible-review gate (GAP-AUDIO-002, 003, 004).",
+    YV: "The White Yajurveda only (Vājasaneyi Mādhyandina, 1,975 mantras). 1,972 translated (1,894 dedicated, 57 range, 21 reused; 3 uncovered ritual markers). Recited: 1,752 records. The Krishna Yajurveda (Taittirīya, Kāṭhaka, Maitrāyaṇī, Kapiṣṭhala) is absent entirely.",
+    AV: "The Śaunaka recension only (5,839 mantras). 5,770 English coverage (5,749 dedicated, 21 range; 24 Whitney Sanskrit notes for prose formulas, 45 uncovered). Recited: 4,680 records. The Paippalāda recension is absent.",
 };
-
-type AudioStats = { mapped_scope_keys_by_veda: Record<string, number> };
 
 const number = (value: number | null | undefined) =>
     typeof value === "number" ? value.toLocaleString("en-GB") : null;
 
 export default async function VedasPage() {
-    const [result, audio] = await Promise.all([
+    const [result, completeness] = await Promise.all([
         load<WorksResponse>("/works"),
-        load<AudioStats>("/audio/stats"),
+        loadCompleteness(),
     ]);
     if (!result.ok) {
         return (
@@ -72,7 +76,10 @@ export default async function VedasPage() {
     const works = [...(result.data.items ?? [])].sort(
         (a, b) => (vedaOrder[a.veda ?? ""] ?? 9) - (vedaOrder[b.veda ?? ""] ?? 9),
     );
-    const recited = audio.ok ? audio.data.mapped_scope_keys_by_veda : {};
+
+    const trans = completeness.translations;
+    const audio = completeness.audio;
+    const notation = completeness.samaveda_notation;
 
     return (
         <div className="va-page">
@@ -83,15 +90,21 @@ export default async function VedasPage() {
                     flattened into a common template, and each says which recension is held here
                     before it says how much of it.
                 </p>
+                <div style={{ marginTop: "var(--va-space-md)" }}>
+                    <KnowledgeStatus
+                        status="SUPPORTED"
+                        note={`Certified Core Invariant: ${completeness.total_canonical_mantras.toLocaleString("en-GB")} mantras (Release commit: ${completeness.certified_release_commit.slice(0, 7)}). Translations strictly typed; recitation bounded by audible review gates.`}
+                    />
+                </div>
             </header>
 
             <div className="va-collections">
                 {works.map((work) => {
                     const code = work.veda ?? "RV";
                     const slug = workSlugs[code];
-                    const total = work.mantra_count ?? 0;
-                    const translated = work.translated_mantra_count ?? 0;
-                    const audioCount = recited[code];
+                    const transItem = trans.by_veda[code];
+                    const total = work.mantra_count ?? transItem?.total ?? 0;
+                    const audioCount = audio.released_by_veda[code] ?? 0;
 
                     return (
                         <article className="va-collection" key={work.work_id}>
@@ -118,21 +131,48 @@ export default async function VedasPage() {
                                         <strong>{number(total)}</strong>
                                     </dd>
                                 </div>
-                                <div className={`va-fact${translated === 0 ? " is-none" : ""}`}>
+
+                                <div className="va-fact">
                                     <dt>Translated</dt>
                                     <dd>
-                                        <strong>
-                                            {translated === 0 ? "none" : number(translated)}
-                                        </strong>
+                                        {code === "SV" ? (
+                                            <strong title="0 own dedicated English; 173 verified reused Rigvedic English renderings">
+                                                173 <span style={{ fontSize: "var(--va-text-xs)", color: "var(--va-text-secondary)", fontWeight: "normal" }}>reused</span>
+                                            </strong>
+                                        ) : code === "RV" ? (
+                                            <strong title="10,502 dedicated English + 50 range-covered">
+                                                {number(10552)}
+                                            </strong>
+                                        ) : code === "YV" ? (
+                                            <strong title="1,894 dedicated + 57 range + 21 reused">
+                                                {number(1972)}
+                                            </strong>
+                                        ) : (
+                                            <strong title="5,749 dedicated + 21 range (24 non-English Sanskrit notes)">
+                                                {number(5770)}
+                                            </strong>
+                                        )}
                                     </dd>
                                 </div>
+
+                                {code === "SV" ? (
+                                    <div className="va-fact">
+                                        <dt>Notation</dt>
+                                        <dd>
+                                            <strong title="1,136 validated source-explicit notation witnesses (Gates A/B/C passed); 708 withheld">
+                                                {number(notation.validated_notation_witnesses)}
+                                            </strong>
+                                        </dd>
+                                    </div>
+                                ) : null}
+
                                 <div className={`va-fact${audioCount === 0 ? " is-none" : ""}`}>
                                     <dt>Recited</dt>
                                     <dd>
                                         <strong>
                                             {audioCount === 0
-                                                ? "none"
-                                                : (number(audioCount) ?? "not read")}
+                                                ? "0 (1,001 withheld)"
+                                                : number(audioCount)}
                                         </strong>
                                     </dd>
                                 </div>

@@ -143,8 +143,15 @@ export default async function PassagePage({ params }: Params) {
 
     const primary = reader.primary_text;
     const alternates = (reader.text.surfaces ?? []).filter(
-        (surface) => surface.text && surface.text !== primary?.text,
+        (surface) =>
+            surface.is_displayable !== false &&
+            surface.text &&
+            surface.text !== primary?.text,
     );
+    const hasNotationWitness =
+        (reader.text.surfaces ?? []).some(
+            (s) => s.surface === "PARALLEL_WITNESS" || (s.accented && s.is_displayable !== false),
+        ) || Boolean(primary?.accented);
     const crossVeda = parallels.ok
         ? (parallels.data.items ?? []).filter((row) => !row.same_veda && row.is_textual_parallelism)
         : [];
@@ -223,11 +230,14 @@ export default async function PassagePage({ params }: Params) {
                                 >
                                     <div className="va-verse-meta">
                                         <span>
-                                            {surface.witness_id ?? "Witness not identified"}
+                                            {surface.surface === "PARALLEL_WITNESS"
+                                                ? "Validated Notation Witness (Source-explicit svara marks)"
+                                                : (surface.witness_id ?? "Witness not identified")}
                                             {" · "}
                                             {surface.script === "DEVANAGARI"
                                                 ? "Devanagari"
                                                 : "Romanised"}
+                                            {surface.accented ? ", accented" : ""}
                                         </span>
                                         {surface.text && <CopyButton text={surface.text} />}
                                     </div>
@@ -247,6 +257,14 @@ export default async function PassagePage({ params }: Params) {
                                 </div>
                             ))}
                         </details>
+                    )}
+
+                    {reader.veda === "SV" && (
+                        <p className="va-notation-notice" style={{ fontSize: "var(--va-text-xs)", color: "var(--va-text-tertiary)", marginBlock: "var(--va-space-xs)" }}>
+                            {hasNotationWitness
+                                ? "Validated Samavedic notation witness held (source-explicit svara marks, Gates A/B/C passed)."
+                                : "Musical notation withheld for this verse (708 verses pending alignment; Gāna song collections outside release scope)."}
+                        </p>
                     )}
 
                     <section
@@ -327,7 +345,11 @@ export default async function PassagePage({ params }: Params) {
                             </>
                         ) : (
                             <KnowledgeStatus
-                                note="No translation of any kind reaches this passage in the current build — it has none of its own and no multi-verse print unit covers it. The verse is held; its translation layer is not."
+                                note={
+                                    reader.veda === "SV"
+                                        ? "This Samavedic verse has 0 own dedicated English translations in this corpus (1,671 Samaveda verses are uncovered; 173 have verified reused Rigvedic English renderings)."
+                                        : "No translation of any kind reaches this passage in the current build — it has none of its own and no multi-verse print unit covers it. The verse is held; its translation layer is not."
+                                }
                                 status={reader.translations.data_status}
                             />
                         )}

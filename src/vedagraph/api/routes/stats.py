@@ -15,10 +15,32 @@ from fastapi import APIRouter
 
 from vedagraph.api.dependencies import RepositoryDep
 from vedagraph.api.errors import COMMON_ERROR_RESPONSES
+from vedagraph.api.models.completeness import CompletenessResponse
 from vedagraph.api.models.insight import StatsResponse
+from vedagraph.api.services.completeness_service import CompletenessService
 from vedagraph.api.services.insight_service import InsightService
 
 router = APIRouter(tags=["Stats"], responses=COMMON_ERROR_RESPONSES)
+
+
+@router.get(
+    "/completeness",
+    summary="Certified data-completeness state (all corpora)",
+    description=(
+        "Returns the certified post-campaign data completeness and release state of VedAnvaya, "
+        "including exact canonical mantra counts, typed translation coverage, released recitation audio, "
+        "audible review gate state, Samaveda musical notation witnesses, and Ask benchmark results."
+    ),
+    response_model=CompletenessResponse,
+    responses=COMMON_ERROR_RESPONSES,
+)
+@router.get(
+    "/stats/completeness",
+    include_in_schema=False,
+    response_model=CompletenessResponse,
+)
+def completeness_stats() -> CompletenessResponse:
+    return CompletenessService().get_completeness()
 
 
 @router.get(

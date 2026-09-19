@@ -58,14 +58,16 @@ export function VedaAudioPanel({
     // offer recitations reads a missing panel as an oversight, and the Samavedic absence in
     // particular is a fact about what has been published rather than about this product.
     if (present.length === 0) {
-        if (caveats.length === 0) return null;
         return (
             <div className="panel">
                 <h3>
-                    <SpeakerHigh size={17} weight="duotone" aria-hidden="true" /> Recitation
-                    audio
+                    <SpeakerHigh size={17} weight="duotone" aria-hidden="true" /> Recitation audio
                 </h3>
-                <p className="panel-note">Not available for this collection.</p>
+                <p className="panel-note">
+                    <strong>0 released recordings.</strong> While queued recordings exist,
+                    1,001 recordings remain not individually heard and stay withheld behind the manual audible-review gate
+                    (GAP-AUDIO-002, 003, 004); no unverified recordings are promoted without verified human audible QA.
+                </p>
                 {caveats.slice(0, 1).map((caveat) => (
                     <p className="panel-note panel-note-faint" key={caveat.text}>
                         {caveat.text}
