@@ -93,8 +93,35 @@ import { inflateSync } from "node:zlib";
  * Run: npx playwright test graph-palette
  */
 
-const INDRA_INDEX = 22975;
 const INDRA_ID = "VG:DEVATA:INDRAH";
+
+/**
+ * Indra's node index, read from the artifact the page is using rather than written down.
+ *
+ * It was `const INDRA_INDEX = 22975` and it went stale without anything noticing: a rebuilt
+ * world reorders every node, and 22975 is now `SankhSS 5.7.1`, a ritual step that is not in
+ * Indra's focus scene at all. The symptom was not a wrong colour - it was the settle poll
+ * timing out, because `orbGeometry` was being asked about a node the camera had no reason to
+ * frame, and the failure read as "the camera never settled" for a camera that had.
+ *
+ * An index is a build-local fact and an id is not, which is the same rule
+ * `focus-curation.test.ts` already follows with `nodeById`. Memoised per worker because the
+ * label file is 4 MB.
+ */
+let indraIndex: number | null = null;
+
+async function indexOfIndra(page: Page): Promise<number> {
+    if (indraIndex !== null) return indraIndex;
+    const found = await page.evaluate(async (id) => {
+        const labels = (await (await fetch("/world/world.labels.json")).json()) as {
+            ids: string[];
+        };
+        return labels.ids.indexOf(id);
+    }, INDRA_ID);
+    expect(found, `${INDRA_ID} is not in the shipped artifact`).toBeGreaterThanOrEqual(0);
+    indraIndex = found;
+    return found;
+}
 
 /** The world is a two-megabyte artifact and a settling layout; it is not a fast page. */
 const SETTLE = 30_000;
@@ -529,7 +556,7 @@ async function openFocusedOnIndra(page: Page): Promise<Locator> {
                     const orb = engine?.orbGeometry?.([node])?.[0];
                     if (!orb || engine?.currentMode !== "FOCUS") return null;
                     return `${Math.round(orb.x)}:${Math.round(orb.y)}:${Math.round(orb.radius)}`;
-                }, INDRA_INDEX);
+                }, await indexOfIndra(page));
                 const settled = reading !== null && reading === previous;
                 previous = reading;
                 return settled ? reading : null;
@@ -585,7 +612,7 @@ async function assertOrbMatchesTokens(
             mode: engine.currentMode,
             drawn: engine.drawCount,
         };
-    }, INDRA_INDEX);
+    }, await indexOfIndra(page));
     expect(
         placed,
         "the engine handle did not place Indra: __vedaWorld is absent or the node is off screen",
@@ -680,7 +707,7 @@ async function assertOrbMatchesTokens(
 
     await testInfo.attach(`graph-palette-${label}.txt`, {
         body:
-            `node            ${INDRA_INDEX} (${INDRA_ID})\n` +
+            `node            ${indraIndex} (${INDRA_ID})\n` +
             `engine mode     ${placed!.mode}\n` +
             `frames drawn    ${placed!.drawn}\n` +
             `projected       ${placed!.x.toFixed(1)}, ${placed!.y.toFixed(1)} css px, radius ${placed!.radius.toFixed(1)}\n` +
@@ -785,8 +812,8 @@ test.describe("the 3D canvas publishes the colours the tokens declare", () => {
             const response = await fetch("/world/world.labels.json");
             const labels = (await response.json()) as { ids: string[]; labels: string[] };
             return { id: labels.ids[index], label: labels.labels[index] };
-        }, INDRA_INDEX);
-        expect(identity.id, `node ${INDRA_INDEX} is no longer Indra`).toBe(INDRA_ID);
+        }, await indexOfIndra(page));
+        expect(identity.id, `node ${indraIndex} is no longer Indra`).toBe(INDRA_ID);
         expect(identity.label).toBe("Indra");
 
         await assertOrbMatchesTokens(page, canvas, testInfo, "light");

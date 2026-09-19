@@ -75,10 +75,9 @@ function TextColumn({
                         )}
                     </>
                 ) : (
-                    <p className="muted">
-                        No translation of any kind reaches this passage: it has none of its own,
-                        and no multi-verse print unit covers it.
-                    </p>
+                    /* The same sentence the reader page prints, so the two views do not
+                       describe one state in two registers. */
+                    <p className="muted">No English rendering is linked to this passage.</p>
                 )}
             </div>
         </div>

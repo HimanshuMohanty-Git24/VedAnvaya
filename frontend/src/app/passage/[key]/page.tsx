@@ -7,6 +7,14 @@ import { CopyButton } from "@/components/copy-button";
 import { LoadFailure } from "@/components/empty-state";
 import { Action } from "@/components/home/sections";
 import { Apparatus } from "@/components/reader/apparatus";
+import {
+    crumbLevelName,
+    crumbValue,
+    provenanceLine,
+    vedaAdjective,
+    witnessName,
+} from "@/components/reader/provenance";
+import { SvaraNotation } from "@/components/reader/svara-notation";
 import { RecitationPlayer } from "@/components/recitation-player";
 import { Caveat, KnowledgeStatus } from "@/components/status";
 import {
@@ -48,10 +56,13 @@ type TranslationItem = NonNullable<Reader["translations"]["items"]>[number];
  */
 function translationLabel(translation: TranslationItem): string | null {
     if (translation.coverage_kind === "REUSED_RENDERING") {
-        const veda = translation.reused_from_veda
-            ? (vedaNames[translation.reused_from_veda] ?? translation.reused_from_veda)
-            : "another corpus";
-        return `Reused from the ${veda}`;
+        /*
+         * "Reused from the Rigveda" named the mechanism. What a reader needs first is that
+         * there IS an English rendering here and what licenses it: a published translation
+         * of a verse whose Sanskrit this build verified to be the same text. The mechanism
+         * still follows, in the source line and the disclosure beneath the quotation.
+         */
+        return `English rendering via the verified ${vedaAdjective(translation.reused_from_veda)} parallel`;
     }
     if (translation.language !== "en") {
         return `${translation.language_name ?? translation.language}, not English`;
@@ -71,6 +82,56 @@ function disclosureTitle(translation: TranslationItem): string {
     if (translation.coverage_kind === "REUSED_RENDERING") return "What this English is";
     if (translation.language !== "en") return "Why this is not English";
     return "What this rendering covers";
+}
+
+/**
+ * "the Rigveda", "the Rigveda and the Yajurveda", "the Rigveda, the Yajurveda and the
+ * Atharvaveda". Joining with " and the " alone produced the third case as a chant.
+ */
+function listCorpora(names: string[]): string {
+    const prefixed = names.map((name) => `the ${name}`);
+    if (prefixed.length <= 1) return prefixed[0] ?? "";
+    return `${prefixed.slice(0, -1).join(", ")} and ${prefixed[prefixed.length - 1]}`;
+}
+
+/**
+ * How far a fixed phrase travels, in a clause a reader can finish.
+ *
+ * The occurrence count is the corpus-wide total, so it includes this verse: "in 8 verses"
+ * rather than "in 8 other verses", which would be off by one on every row. A null count is
+ * omitted rather than rendered as zero - the formula exists, so zero is never the answer.
+ */
+function formulaReach(formula: {
+    occurrence_count?: number | null;
+    vedas?: string[] | null;
+    match_level?: string | null;
+}): string {
+    const parts: string[] = [];
+    const count = formula.occurrence_count ?? null;
+    if (count !== null) parts.push(count === 1 ? "in this verse only" : `in ${count} verses`);
+    const vedas = (formula.vedas ?? []).filter(Boolean);
+    if (vedas.length > 1) parts.push(`across ${vedas.join(", ")}`);
+    else if (vedas.length === 1) parts.push(`within ${vedas[0]}`);
+    if (formula.match_level === "SANDHI_INSENSITIVE") parts.push("matched across sandhi");
+    return parts.join(" · ");
+}
+
+/**
+ * The work's name, said rather than shouted.
+ *
+ * Three of the four works carry their scope in the label itself - "Samaveda Samhita -
+ * Kauthuma arcika only (gana corpus NOT included)" - and the upper-case NOT is deliberate
+ * where it is written: it is a property on the :Work node, put there so that no surface can
+ * print "Samaveda Samhita" over a corpus that is the arcika only. That guard is right and is
+ * not touched here.
+ *
+ * What is wrong is printing it verbatim at the top of a reading page, where it is the first
+ * thing a reader meets and reads as a machine label rather than as a statement about the
+ * edition. The claim is kept exactly; only its voice changes.
+ */
+function readableWorkLabel(label: string | null | undefined): string {
+    if (!label) return "";
+    return label.replace(/NOT included/g, "not included").replace(/ - /, " — ");
 }
 
 /** The attribution sentence for a search snippet, where no caveat can follow the text. */
@@ -142,33 +203,84 @@ export default async function PassagePage({ params }: Params) {
     const recitation = audio.ok ? (audio.data.tracks ?? [])[0] : undefined;
 
     const primary = reader.primary_text;
-    const alternates = (reader.text.surfaces ?? []).filter(
+    const surfaces = reader.text.surfaces ?? [];
+
+    /*
+     * The notated Samavedic witness.
+     *
+     * `PARALLEL_WITNESS` means four different things across the four corpora -- a second
+     * Rigvedic edition, an unaccented Yajurvedic or Atharvavedic twin, and in the Samaveda
+     * the sasvara text. Measured over the store: all 1,844 Samavedic primary surfaces are
+     * unaccented and exactly 1,136 carry an accented PARALLEL_WITNESS, so the pair
+     * (veda === "SV", accented) identifies the notation witness and nothing else. The test
+     * is deliberately not "is accented", which would promote the Rigvedic and Atharvavedic
+     * primary text on every other page.
+     */
+    const notation =
+        reader.veda === "SV"
+            ? surfaces.find(
+                  (surface) =>
+                      surface.surface === "PARALLEL_WITNESS" &&
+                      surface.accented === true &&
+                      surface.is_displayable !== false &&
+                      Boolean(surface.text),
+              )
+            : undefined;
+
+    /* A surface promoted to its own section is not also an "other witness". */
+    const alternates = surfaces.filter(
         (surface) =>
+            surface !== notation &&
             surface.is_displayable !== false &&
             surface.text &&
             surface.text !== primary?.text,
     );
-    const hasNotationWitness =
-        (reader.text.surfaces ?? []).some(
-            (s) => s.surface === "PARALLEL_WITNESS" || (s.accented && s.is_displayable !== false),
-        ) || Boolean(primary?.accented);
     const crossVeda = parallels.ok
         ? (parallels.data.items ?? []).filter((row) => !row.same_veda && row.is_textual_parallelism)
         : [];
+
+    /*
+     * One row per counterpart passage, carrying the citation rather than only the corpus it
+     * sits in. "This wording also stands in the Rigveda" was true and unusable: a Samavedic
+     * verse whose English arrives through RV 6.16.10 should name RV 6.16.10.
+     */
+    const elsewhere = [
+        ...crossVeda
+            .reduce((rows, row) => {
+                const rowKey = row.passage.canonical_key;
+                rows.set(rowKey, {
+                    key: rowKey,
+                    citation:
+                        row.passage.canonical_citation ?? row.passage.display_label ?? rowKey,
+                    veda: row.passage.veda,
+                });
+                return rows;
+            }, new Map<string, { key: string; citation: string; veda: string }>())
+            .values(),
+    ];
+    const formulas = reader.formulas?.items ?? [];
     const script = primary?.script === "DEVANAGARI" ? "DEVANAGARI" : "IAST";
 
     return (
         <div className="va-reader">
             <nav aria-label="Passage location" className="va-reader-where">
                 <Link href={`/vedas/${workSlugs[reader.veda] ?? "rigveda"}`}>
-                    {reader.work_display_label}
+                    {readableWorkLabel(reader.work_display_label)}
                 </Link>
+                {/* The Samavedic collection slot holds a NAME where every other level holds an
+                    ordinal, and the graph stores that name in upper case because it is a key.
+                    Printed raw it read as shouting; printed with its diacritics it reads as the
+                    section of the Samhita the reader is standing in. */}
                 {reader.breadcrumbs?.map((crumb) => (
                     <span key={crumb.canonical_key} style={{ display: "contents" }}>
                         <span aria-hidden="true">/</span>
                         <Link href={`/passage/${encoded(crumb.canonical_key ?? "")}`}>
-                            <em>{crumb.native_label}</em>
-                            <strong>{crumb.value}</strong>
+                            <em>
+                                {crumbLevelName(reader.veda, crumb.level_key, crumb.native_label)}
+                            </em>
+                            <strong>
+                                {crumbValue(reader.veda, crumb.level_key, crumb.value)}
+                            </strong>
                         </Link>
                     </span>
                 ))}
@@ -191,10 +303,12 @@ export default async function PassagePage({ params }: Params) {
                     {primary?.text ? (
                         <section aria-label="Sanskrit text" className="va-verse">
                             <div className="va-verse-meta">
-                                <span>
+                                <span title={primary.witness_id ?? undefined}>
                                     {script === "DEVANAGARI" ? "Devanagari" : "Romanised"}
                                     {primary.accented ? ", accented" : ""}
-                                    {primary.witness_id ? ` · ${primary.witness_id}` : ""}
+                                    {witnessName(primary.witness_id)
+                                        ? ` · ${witnessName(primary.witness_id)}`
+                                        : ""}
                                 </span>
                                 <CopyButton text={primary.text} />
                             </div>
@@ -207,6 +321,12 @@ export default async function PassagePage({ params }: Params) {
                             >
                                 {primary.text}
                             </p>
+                            {/* Who printed this text and under what licence, beneath the text
+                                rather than in a panel elsewhere. It is one line because a
+                                reader needs it once, not because it is unimportant. */}
+                            {provenanceLine(primary) ? (
+                                <p className="va-reader-provenance">{provenanceLine(primary)}</p>
+                            ) : null}
                         </section>
                     ) : (
                         <KnowledgeStatus status={reader.text.data_status} />
@@ -214,6 +334,34 @@ export default async function PassagePage({ params }: Params) {
 
                     {recitation ? (
                         <RecitationPlayer key={recitation.audio_id} track={recitation} />
+                    ) : null}
+
+                    {notation?.text ? (
+                        <SvaraNotation
+                            /* The notated text and the mūla text come from the same edition
+                               for every Samavedic verse held here, so repeating the source
+                               and licence under both prints the same line twice on one
+                               screen. It is stated again only when it differs. */
+                            provenance={
+                                provenanceLine(notation) === provenanceLine(primary)
+                                    ? null
+                                    : provenanceLine(notation)
+                            }
+                            text={notation.text}
+                            witness={witnessName(notation.witness_id)}
+                        />
+                    ) : reader.veda === "SV" ? (
+                        /*
+                         * One line, and no number in it. The previous copy printed the
+                         * withheld count and the names of three internal gates on the verse
+                         * page, which is a release-management fact wearing a reader's
+                         * clothes. What the reader needs is that this verse has no notated
+                         * witness and that the shape of that absence is documented.
+                         */
+                        <p className="va-reader-absence">
+                            No notated witness is linked to this verse.{" "}
+                            <Link href="/limits">What is not held</Link>
+                        </p>
                     ) : null}
 
                     {alternates.length > 0 && (
@@ -229,10 +377,9 @@ export default async function PassagePage({ params }: Params) {
                                     key={`${surface.witness_id}-${surface.surface}`}
                                 >
                                     <div className="va-verse-meta">
-                                        <span>
-                                            {surface.surface === "PARALLEL_WITNESS"
-                                                ? "Validated Notation Witness (Source-explicit svara marks)"
-                                                : (surface.witness_id ?? "Witness not identified")}
+                                        <span title={surface.witness_id ?? undefined}>
+                                            {witnessName(surface.witness_id) ??
+                                                "Witness not identified"}
                                             {" · "}
                                             {surface.script === "DEVANAGARI"
                                                 ? "Devanagari"
@@ -257,14 +404,6 @@ export default async function PassagePage({ params }: Params) {
                                 </div>
                             ))}
                         </details>
-                    )}
-
-                    {reader.veda === "SV" && (
-                        <p className="va-notation-notice" style={{ fontSize: "var(--va-text-xs)", color: "var(--va-text-tertiary)", marginBlock: "var(--va-space-xs)" }}>
-                            {hasNotationWitness
-                                ? "Validated Samavedic notation witness held (source-explicit svara marks, Gates A/B/C passed)."
-                                : "Musical notation withheld for this verse (708 verses pending alignment; Gāna song collections outside release scope)."}
-                        </p>
                     )}
 
                     <section
@@ -313,14 +452,17 @@ export default async function PassagePage({ params }: Params) {
                                                 </span>
                                             )}
                                         </figcaption>
-                                        {translation.disclosure && (
-                                            <Caveat title={disclosureTitle(translation)}>
-                                                {translation.disclosure}
-                                            </Caveat>
-                                        )}
+                                        {/*
+                                         * The parallel this English was taken from is a
+                                         * citation, and a citation belongs next to the text
+                                         * it licenses rather than inside a disclosure the
+                                         * reader has to open. It is printed before the
+                                         * explanation for the same reason the kind label is
+                                         * printed before the quotation.
+                                         */}
                                         {translation.reused_from_citation && (
                                             <p className="va-translation-source translation-source">
-                                                Shown from{" "}
+                                                Rendered from{" "}
                                                 <Link
                                                     href={`/passage/${encoded(translation.reused_from_passage_key ?? "")}`}
                                                 >
@@ -328,6 +470,24 @@ export default async function PassagePage({ params }: Params) {
                                                 </Link>
                                             </p>
                                         )}
+                                        {/*
+                                         * A reused rendering's disclosure is two sentences and
+                                         * is the ordinary case for a Samavedic verse, so it is
+                                         * set as a note rather than raised into a bordered
+                                         * caveat: on those pages the caveat box was the largest
+                                         * object on the screen. The three genuinely exceptional
+                                         * shapes keep the box.
+                                         */}
+                                        {translation.disclosure &&
+                                            (translation.coverage_kind === "REUSED_RENDERING" ? (
+                                                <p className="va-reader-origin">
+                                                    {translation.disclosure}
+                                                </p>
+                                            ) : (
+                                                <Caveat title={disclosureTitle(translation)}>
+                                                    {translation.disclosure}
+                                                </Caveat>
+                                            ))}
                                         {translation.coverage_kind === "RANGE_TRANSLATION" &&
                                             (translation.covers_canonical_keys?.length ?? 0) >
                                                 1 && (
@@ -344,33 +504,98 @@ export default async function PassagePage({ params }: Params) {
                                 ))}
                             </>
                         ) : (
-                            <KnowledgeStatus
-                                note={
-                                    reader.veda === "SV"
-                                        ? "This Samavedic verse has 0 own dedicated English translations in this corpus (1,671 Samaveda verses are uncovered; 173 have verified reused Rigvedic English renderings)."
-                                        : "No translation of any kind reaches this passage in the current build — it has none of its own and no multi-verse print unit covers it. The verse is held; its translation layer is not."
-                                }
-                                status={reader.translations.data_status}
-                            />
+                            /*
+                             * One sentence, and it is about this verse.
+                             *
+                             * What stood here was a status block quoting the whole corpus's
+                             * translation census, which on a Samavedic page is the ordinary
+                             * case and therefore the loudest thing on nine pages in ten. The
+                             * census is not wrong and it has not been deleted -- it is on
+                             * /limits, where a reader goes to ask that question, rather than
+                             * in front of the verse they came to read.
+                             */
+                            <p className="va-reader-absence">
+                                No English rendering is linked to this verse.{" "}
+                                <Link href="/limits">What is not held</Link>
+                            </p>
                         )}
                     </section>
 
-                    {crossVeda.length > 0 && (
-                        <Link
-                            className="va-parallel"
-                            href={`/reuse/${encoded(reader.canonical_key)}`}
-                        >
-                            <strong>
+                    {elsewhere.length > 0 && (
+                        <section aria-labelledby="va-reader-elsewhere-heading" className="va-reader-elsewhere">
+                            <h2 className="va-reading-heading" id="va-reader-elsewhere-heading">
                                 This wording also stands in{" "}
-                                {[...new Set(crossVeda.map((row) => vedaNames[row.passage.veda]))]
-                                    .filter(Boolean)
-                                    .join(" and ")}
-                            </strong>
-                            <small>
-                                Compare the two texts side by side, with what each witness reads and
-                                how the connection was established
-                            </small>
-                        </Link>
+                                {listCorpora(
+                                    [
+                                        ...new Set(
+                                            elsewhere.map((row) => vedaNames[row.veda]),
+                                        ),
+                                    ].filter(Boolean),
+                                )}
+                            </h2>
+                            {/* The citation, not just the corpus. 1,662 of the 1,844 Samavedic
+                                verses are linked to a Rigvedic counterpart, and on the 173 that
+                                carry a reused rendering this is the verse the English came
+                                from -- naming it is the difference between a fact and a lead. */}
+                            <ul className="va-reader-elsewhere-list">
+                                {elsewhere.slice(0, 6).map((row) => (
+                                    <li key={row.key}>
+                                        <Link href={`/passage/${encoded(row.key)}`}>
+                                            {row.citation}
+                                        </Link>
+                                    </li>
+                                ))}
+                            </ul>
+                            <Link
+                                className="va-reader-elsewhere-more"
+                                href={`/reuse/${encoded(reader.canonical_key)}`}
+                            >
+                                Compare the texts side by side, with what each witness reads and how
+                                the connection was established
+                            </Link>
+                        </section>
+                    )}
+
+                    {formulas.length > 0 && (
+                        /*
+                         * The formula layer, which the reader payload did not carry until this
+                         * pass and which 10,574 mantras have something in.
+                         *
+                         * It earns a place on the page for the Samaveda in particular. A
+                         * Samavedic verse has no seer, no metre and no ascribed deity - those
+                         * three layers are Rigveda-only - so besides the text and its Rigvedic
+                         * counterpart, its shared wording is most of what there is to read
+                         * about it. 1,311 of the 1,844 carry at least one.
+                         *
+                         * The match level travels with each phrase rather than being averaged
+                         * away: the layer is a normalised-string match, SCRIPT_FOLDED is a
+                         * closer reading than SANDHI_INSENSITIVE, and a row that showed both
+                         * as "shares this phrase" would spend a distinction the edge recorded.
+                         */
+                        <section aria-labelledby="va-reader-formulae-heading" className="va-reader-formulae">
+                            <h2 className="va-reading-heading" id="va-reader-formulae-heading">
+                                Fixed phrases in this verse
+                            </h2>
+                            <ul className="va-reader-formulae-list">
+                                {formulas.slice(0, 6).map((formula) => (
+                                    <li key={formula.formula_id}>
+                                        <Link href={`/formula-families/${encoded(formula.formula_id)}`}>
+                                            <span className="va-reader-formula-form" lang="sa">
+                                                {formula.source_form || formula.display_form}
+                                            </span>
+                                        </Link>
+                                        <span className="va-reader-formula-reach">
+                                            {formulaReach(formula)}
+                                        </span>
+                                    </li>
+                                ))}
+                            </ul>
+                            <p className="va-reader-formulae-note">
+                                Phrases are matched on a normalised Sanskrit surface, so a
+                                match is shared wording and not a claim about which verse
+                                said it first.
+                            </p>
+                        </section>
                     )}
 
                     <nav aria-label="Adjacent passages" className="va-reader-adjacent reader-nav">

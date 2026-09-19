@@ -211,7 +211,13 @@ def work_audio(
     summary="Catalog-wide audio figures",
     description=(
         "Every figure derived from the catalog on this request, so nothing here can drift "
-        "from what the catalog says.\n\n"
+        "from what the catalog says. A client rendering audio coverage must read these "
+        "counts rather than hard-coding one, because the catalogue grows.\n\n"
+        "`by_publication_tier` and `by_veda_and_tier` split the catalogue into "
+        "`RELEASED_VERIFIED` -- a named person played it -- and "
+        "`SOURCE_MAPPED_UNREVIEWED` -- mapped and checked by instrument, heard by nobody. "
+        "The two sum to `total_records`. A surface that adds them and calls the total "
+        "verified is the one thing this split exists to prevent.\n\n"
         "`by_availability` is reported beside the coverage counts on purpose: a catalog "
         "whose records were last measured unreachable is a different product state from one "
         "whose records answer, and omitting it would read as full coverage."

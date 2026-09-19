@@ -5,6 +5,7 @@ from __future__ import annotations
 from fastapi.testclient import TestClient
 
 from tests.api.conftest import FakeRepository, build_client
+from vedagraph.product.audio.catalog import AudioCatalog
 
 COMPLETENESS = "/api/v1/completeness"
 STATS_COMPLETENESS = "/api/v1/stats/completeness"
@@ -65,9 +66,28 @@ def test_completeness_endpoint_returns_certified_state():
         assert "Gate C: SURVIVED" in sv_not["gates_passed"]
 
         # Audio released and review queue
+        #
+        # The catalogue total is asserted against the catalogue rather than against a
+        # literal. It was 16,834 here until OWNER_DECISION_AUDIO_TWO_TIER_PUBLICATION
+        # admitted 946 source-mapped recordings, and a number frozen in a test is exactly
+        # what a policy change is supposed to move. What must not move is the arithmetic:
+        # the per-Veda counts and the two tiers each have to sum to the whole, which is the
+        # property that catches a partial rewrite, and the response must not describe an
+        # unheard recording as verified.
         audio = data["audio"]
-        assert audio["released_catalogue_records"] == 16834
+        assert audio["released_catalogue_records"] == len(AudioCatalog.load_default())
+        assert sum(audio["released_by_veda"].values()) == audio["released_catalogue_records"]
+        assert sum(audio["released_by_tier"].values()) == audio["released_catalogue_records"]
         assert audio["released_by_veda"]["SV"] == 0
+        assert set(audio["released_by_tier"]) == {
+            "RELEASED_VERIFIED",
+            "SOURCE_MAPPED_UNREVIEWED",
+        }
+        for veda, tiers in audio["released_by_veda_and_tier"].items():
+            assert sum(tiers.values()) == audio["released_by_veda"][veda], veda
+        assert "human-verified" not in audio["truth_statement"].replace(
+            "not described as human-verified", ""
+        )
         assert audio["owner_audible_sample_status"] == "ACCEPTED"
         assert audio["owner_sample_reviewed"] == 20
         assert audio["owner_sample_verified"] == 20

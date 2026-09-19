@@ -52,6 +52,35 @@ const nextConfig: NextConfig = {
      */
     async headers() {
         return [
+            /*
+             * The manifest is the one file that must never be served stale.
+             *
+             * `immutable` on a stable filename is a promise the artifact cannot keep: a
+             * rebuild puts new bytes at the same URL, and the entries are evicted
+             * independently, so a browser can end up holding this build's labels beside last
+             * build's geometry. Nothing errors when that happens - the section offsets still
+             * resolve and every node reports the group of whoever sat at its index in the
+             * other build, so the whole graph is confidently mislabelled.
+             *
+             * `world.json` is 28 KB and now carries the version the loader appends to the
+             * other addresses, so it is revalidated on every visit and the two large files
+             * stay immutable behind a URL that changes when they do. A conditional request
+             * for 28 KB is the entire cost of never shipping a mismatched world again.
+             */
+            {
+                source: "/world/world.json",
+                headers: [
+                    { key: "Cache-Control", value: "public, max-age=0, must-revalidate" },
+                    { key: "Vary", value: "Accept-Encoding" },
+                ],
+            },
+            {
+                source: "/world/world.predicates.json",
+                headers: [
+                    { key: "Cache-Control", value: "public, max-age=0, must-revalidate" },
+                    { key: "Vary", value: "Accept-Encoding" },
+                ],
+            },
             {
                 source: "/world/:file*",
                 headers: [

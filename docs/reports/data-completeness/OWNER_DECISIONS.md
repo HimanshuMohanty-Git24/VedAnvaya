@@ -1316,3 +1316,63 @@ unmutated inputs produce none. The record is
 `data/manual/audio_review/owner_sample_acceptance.json`; it and the mechanism are held by 15
 tests in `tests/unit/test_review_audio_sample.py`, five of which read the live artifacts
 rather than a sandbox.
+
+# Owner round ten — Audible review becomes a badge
+
+## 44. `OWNER_DECISION_AUDIO_TWO_TIER_PUBLICATION` — visibility and verification are separated
+
+**Decision, as given (OWNER-SUPPLIED, 2026-09-19):**
+
+> I don't care about Q audio. I want the thing to be done.
+
+**Interpreted, and recorded as interpreted** so the reading is auditable rather than
+implicit: potentially usable audio must not be kept invisible merely because it lacks
+exhaustive individual human audible review. Human audible review becomes an additional QA
+badge, not an absolute visibility gate.
+
+**This supersedes `OWNER_DECISION_E_AUDIO_GATE` in one clause only** — the publication
+clause of §8 and §14. §8 and §14 are not edited, and stay above as the record of what was
+decided on the day it was decided. What §8 was really protecting is untouched and is now
+enforced in code rather than by withholding: **automated checking is not listening**.
+`PublicationTier.RELEASED_VERIFIED` cannot be constructed without
+`audible_review_evidence` citing a decision row, and `SOURCE_MAPPED_UNREVIEWED` cannot
+carry one. Both clauses are mutation-tested: disarm either guard and the refusal stops
+happening.
+
+The full record, with the five admission conditions and what may never happen, is
+`docs/decisions/OWNER_DECISION_AUDIO_TWO_TIER_PUBLICATION.md`.
+
+**What was actually admitted.** 954 withheld staged rows were re-evaluated. All 954 had
+their media re-fetched from the publisher on 2026-09-19 — a census, not a sample — and all
+954 resolved; the 150 Rigvedic rows additionally re-hashed identical to the sha256 recorded
+on 2026-09-15. 946 were admitted and **8 refused**, all eight the Yajurvedic residue whose
+source text field is dittographic or truncated, so what the recording says is unknown. This
+decision widens what may be published *unheard*; it does not widen what may be published
+*unmapped*.
+
+| Veda | `RELEASED_VERIFIED` | `SOURCE_MAPPED_UNREVIEWED` | total |
+|---|---:|---:|---:|
+| AV | 20 | 5,431 | 5,451 |
+| RV | 0 | 10,552 | 10,552 |
+| SV | 0 | 0 | 0 |
+| YV | 0 | 1,777 | 1,777 |
+
+**Only 20 records in the whole catalogue carry a hearing**, and they are the same 20 rows
+`OWNER_DECISION_AUDIO_SAMPLE_ACCEPTANCE` covers — matched individually by canonical key
+*and* by the media URL actually played, because a verdict about one recording of a passage
+is not a verdict about a different recording of it. **All 16,834 incumbent records were
+classified `SOURCE_MAPPED_UNREVIEWED`**: none of their keys appears in the sample decision
+log, so there is no evidence for a reviewed tier and none was invented. The 61 published
+rows that sit in the review queue (`RV_1_65_TO_1_70_AFFECTED_SPAN`) still read
+`NEEDS_AUDIBLE_REVIEW` with a null reviewer and a null verdict; being queued is not being
+heard.
+
+**The 1,021-row queue is unchanged.** Nothing in this decision promotes a queue row,
+relabels one, or claims a hearing. `data/staging/audio_review_queue.jsonl` still reads
+`NEEDS_AUDIBLE_REVIEW` on all 1,021 rows.
+
+**Every figure above is measured.** `docs/reports/audio/staged_addressability_probe.jsonl`
+holds one row per request; `docs/reports/audio/admission_report.json` and
+`admission_outcomes.jsonl` hold the per-candidate verdict; the catalogue validator now
+carries `tiers_partition_the_catalogue` and `reviewed_tier_cites_a_real_hearing` and passes
+both against the live graph.

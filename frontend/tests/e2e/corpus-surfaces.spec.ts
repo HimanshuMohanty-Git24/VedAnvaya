@@ -20,15 +20,34 @@ const reader = (key: string) => `/passage/${encodeURIComponent(key)}`;
 /* ------------------------------------------------------------------ vedas - */
 
 test.describe("the collection index", () => {
-    test("names each recension and what it does not hold", async ({ page }) => {
+    test("names each recension, and reaches the page that names the exclusions", async ({
+        page,
+    }) => {
         await page.goto("/vedas");
 
-        /* The Krishna Yajurveda is the omission most likely to mislead, because the name
-           ordinarily covers both. If this sentence ever disappears the page starts implying
-           it holds a Veda it does not have. */
-        await expect(page.getByText(/Krishna Yajurveda is not held/i)).toBeVisible();
-        await expect(page.getByText(/gana collections/i).first()).toBeVisible();
-        await expect(page.getByText(/Paippal/i).first()).toBeVisible();
+        /*
+         * The recension stays here. The exclusions moved.
+         *
+         * /vedas is a reading gateway in this phase's direction, and each card used to carry
+         * a paragraph of what that edition does not hold - three of the four opened on an
+         * absence. The exclusions are not gone and are not softened: they are on /limits, in
+         * full, per edition, and this test follows the link to check rather than trusting it.
+         */
+        for (const recension of [/Śākala/, /Kauthuma/, /Mādhyandina/, /Śaunaka/]) {
+            await expect(page.getByText(recension).first()).toBeVisible();
+        }
+        await expect(page.getByText(/scope page|what is not held|limits/i).first()).toBeVisible();
+
+        const limits = await page.request.get("/limits");
+        expect(limits.status()).toBe(200);
+        const scope = await limits.text();
+        /* The Krishna (Black) Yajurveda is the omission most likely to mislead, because the
+           name ordinarily covers both. The gana collections and the Paippalada recension are
+           the other two a reader would otherwise assume were here. */
+        expect(scope).toMatch(/Krishna|Kṛṣṇa|Black/i);
+        expect(scope).toMatch(/Taittirīya/);
+        expect(scope).toMatch(/gāna|Gāna|Grāmageya/);
+        expect(scope).toMatch(/Paippalāda/);
 
         /* Samaveda has no translation layer at all. It must read as a typed "none", never as
            a zero that invites the reader to infer the verses are untranslatable. */
@@ -50,7 +69,11 @@ test.describe("the collection index", () => {
 test.describe("one collection", () => {
     test("states the limit before the index", async ({ page }) => {
         await page.goto("/vedas/yajurveda");
-        const limit = page.locator(".va-work-limit");
+        /* `.va-work-limit` was a block of exclusions; `.va-work-scope` is the line that
+           names the edition and points at the page holding them. The claim under test is
+           unchanged: a reader meets the scope of what they are about to read before they
+           meet the index of it. */
+        const limit = page.locator(".va-work-scope");
         const index = page.locator(".va-findaid");
         await expect(limit).toBeVisible();
         await expect(index).toBeVisible();

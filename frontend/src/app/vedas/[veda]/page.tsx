@@ -4,7 +4,6 @@ import type { Metadata } from "next";
 import { ArchiveIndex } from "@/components/corpus/archive-index";
 import { LoadFailure } from "@/components/empty-state";
 import { Action } from "@/components/home/sections";
-import { CaveatList, KnowledgeStatus } from "@/components/status";
 import { VedaAudioPanel } from "@/components/veda-audio-panel";
 import {
     encoded,
@@ -23,11 +22,17 @@ import { pageMetadata } from "@/lib/site";
 /**
  * One Samhita, as a collection rather than as a folder.
  *
- * The page answers four questions in the order a reader asks them: which recension is this,
- * how much of it is here, what is deliberately not here, and how do I get into it. The limit
- * statement comes before the index on purpose. A reader who descends into the Yajurveda
- * without having been told that the Krishna recension is absent will read every absence they
- * find as a fact about the Yajurveda, and it is not: it is a fact about this build.
+ * The page leads with what is readable. A reader who has arrived here wants the text, so the
+ * order is: which edition this is, how it is divided, what it carries, and then the index into
+ * it. The measured counts come from `/works` and `/audio/stats`; the list of what the
+ * collection carries is read from the work's own `knowledge_layers`, so it can never claim a
+ * layer the graph does not hold for this corpus.
+ *
+ * The edition's boundaries -- the recension held, the recensions absent, how translation,
+ * recitation and notation coverage are typed -- are stated once, on /limits, and linked from
+ * the foot of the page and from the scope line under the title. They used to be a paragraph
+ * here, above the index, which made the first thing a reader met on the way to the text a
+ * statement of what they would not find in it.
  */
 
 const DEVANAGARI: Record<string, string> = {
@@ -39,7 +44,7 @@ const DEVANAGARI: Record<string, string> = {
 
 const RECENSION: Record<string, string> = {
     RV: "Śākala recension",
-    SV: "Kauthuma recension (ārcika only)",
+    SV: "Kauthuma recension, ārcika",
     YV: "Śukla, Vājasaneyi Mādhyandina",
     AV: "Śaunaka recension",
 };
@@ -47,7 +52,7 @@ const RECENSION: Record<string, string> = {
 /** The levels each collection actually uses. None of them is forced into another's shape. */
 const STRUCTURE: Record<string, string> = {
     RV: "Mandala → Sukta → Mantra",
-    SV: "Collection → Prapathaka → Ardha → Dasati → Verse",
+    SV: "Ārcika → Prapāṭhaka → Ardha → Daśati → Verse",
     YV: "Adhyaya → Mantra",
     AV: "Kanda → Sukta → Mantra",
 };
@@ -61,27 +66,54 @@ const STRUCTURE: Record<string, string> = {
  */
 const SHAPE_NOTE: Record<string, string> = {
     RV: "Ten mandalas, each a book of hymns, each hymn a run of mantras. The family books, two to seven, are the older core; the first and tenth are later collections.",
-    SV: "Four named ārcikas rather than numbered books, subdivided down to single verses. The divisions are the verse collection's own; they are not the gāna song-books, which are not held here.",
+    SV: "Four named ārcikas rather than numbered books, subdivided down to single verses. The divisions are the verse collection's own.",
     YV: "Forty adhyayas holding mantras directly. There is no hymn level between them, because the Yajurveda is arranged by rite rather than by hymn, and many of its units are prose.",
     AV: "Twenty kandas of hymns. The arrangement of the earlier books is largely by hymn length rather than by subject, so a kanda is not a theme.",
 };
 
-const NOT_HELD: Record<string, string> = {
-    RV: "Canonical Śākala Samhita core (10,552 mantras). 100% English translation coverage (10,502 dedicated, 50 range-covered). Public recitation has 10,402 verified catalogue records. Brahmana, Aranyaka, Upanisad layers and Ashvalayana recension are excluded from release scope.",
-    SV: "Canonical 1,844 ārcika verses only (Pūrvārcika, Āraṇyaka Saṃhitā, Mahānāmnī, Uttarārcika). The gāna song collections and MUSICALIZED_AS graph edges remain outside release scope. 1,136 verses carry validated source-explicit notation witnesses (PARALLEL_WITNESS / PARALLEL_TEXT svara marks, Gates A/B/C passed); 708 verses remain withheld unaligned. Translation layer holds 0 own dedicated English translations, 173 verified reused Rigvedic English renderings (with source identity verified), and 1,671 uncovered. Public recitation has 0 released records; 1,001 queued recordings remain withheld behind the manual audible-review gate (GAP-AUDIO-002, 003, 004).",
-    YV: "The White Yajurveda only (Vājasaneyi Mādhyandina, 1,975 mantras). 1,972 translated (1,894 dedicated, 57 range, 21 reused; 3 uncovered ritual markers). Recited: 1,752 records. The Krishna Yajurveda (Taittirīya, Kāṭhaka, Maitrāyaṇī, Kapiṣṭhala) is absent entirely.",
-    AV: "The Śaunaka recension only (5,839 mantras). 5,770 English coverage (5,749 dedicated, 21 range; 24 Whitney Sanskrit notes for prose formulas, 45 uncovered). Recited: 4,680 records. The Paippalāda recension is absent.",
+/** One sentence on what this edition is. A recension and a character, never a count. */
+const EDITION: Record<string, string> = {
+    RV: "The oldest of the four and the source most of the others draw on, with the traditional index naming a seer, a deity and a metre for every verse.",
+    SV: "The Rigveda arranged for singing: the ārcika verse collection in the Kauthuma recension, carrying the svara marks that record how it was pitched.",
+    YV: "The liturgy itself — formulas spoken at the rite, many of them prose, arranged by the order of the ceremony rather than by hymn.",
+    AV: "The domestic and the urgent: healing, protection, rivalry, marriage and statecraft, and the collection that shows most of Vedic life outside the sacrificial ground.",
+};
+
+/** The measured layers, in the reader's words. A layer this map does not know is not shown. */
+const LAYER_LABEL: Record<string, string> = {
+    TRANSLATION: "English translation",
+    DEVATA_ASCRIPTION: "Deity named by the index",
+    DEVATA_ASCRIPTION_DESCRIPTOR: "Deity descriptors from the index",
+    RISHI_ATTRIBUTION: "Seer attribution",
+    CHANDAS_ATTRIBUTION: "Metre",
+    DEVATA_MENTION: "Deities named in the verse",
+    ENTITY_MENTION: "Named entities",
+    FORMULA_OCCURRENCE: "Shared formulas",
+    CONCEPT_ASSERTION: "Concept links",
+};
+
+const SCRIPT_LABEL: Record<string, string> = {
+    IAST: "Accented romanised Sanskrit",
+    DEVANAGARI: "Devanagari",
 };
 
 type Params = { params: Promise<{ veda: string }> };
+
+type AudioStats = { mapped_scope_keys_by_veda?: Record<string, number> };
+
+/** One work's measured detail. Only the fields this page reads are declared. */
+type WorkDetail = Work & {
+    knowledge_layers?: Array<{ layer: string; status: string }>;
+    text_scripts?: string[];
+};
 
 export async function generateMetadata({ params }: Params): Promise<Metadata> {
     const { veda } = await params;
     const code = veda.slice(0, 2).toUpperCase();
     const name = vedaNames[code] ?? veda;
     const title = name.charAt(0).toUpperCase() + name.slice(1);
-    const description = NOT_HELD[code]
-        ? `${RECENSION[code]}. ${NOT_HELD[code]}`
+    const description = EDITION[code]
+        ? `${RECENSION[code]}. ${EDITION[code]}`
         : `The ${title} as held in this corpus.`;
     return pageMetadata({ title, description, pathname: `/vedas/${veda}` });
 }
@@ -98,9 +130,11 @@ export default async function VedaPage({ params }: Params) {
     const workId = workIds[veda];
     if (!workId) notFound();
 
-    const [worksResult, rootResult, completeness] = await Promise.all([
+    const [worksResult, rootResult, detailResult, audioStats, completeness] = await Promise.all([
         load<WorksResponse>("/works"),
         load<WorkRoot>(`/works/${encoded(workId)}/root?limit=120`),
+        load<WorkDetail>(`/works/${encoded(workId)}`),
+        load<AudioStats>("/audio/stats"),
         loadCompleteness(),
     ]);
     const failure = firstFailure(worksResult, rootResult);
@@ -118,15 +152,58 @@ export default async function VedaPage({ params }: Params) {
     const work = worksResult.data.items?.find((item: Work) => item.work_id === workId);
     if (!work) notFound();
     const root = rootResult.data;
+    const detail = detailResult.ok ? detailResult.data : null;
     const code = work.veda ?? "RV";
+    const name = vedaNames[code] ?? veda;
     const rootLevel = root.root_level;
     const rootLabel = rootLevel?.native_label ?? "division";
 
     const audioResult = await load<WorkAudio>(`/works/${encoded(workId)}/audio?limit=1`);
-    const transItem = completeness.translations.by_veda[code];
-    const total = work.mantra_count ?? transItem?.total ?? 0;
-    const audioCount = completeness.audio.released_by_veda[code] ?? 0;
-    const notation = completeness.samaveda_notation;
+    const total = work.mantra_count ?? 0;
+    const translated = work.translated_mantra_count ?? 0;
+    const reused = completeness.translations.by_veda[code]?.reused_rendering ?? 0;
+    /*
+     * The recitation count comes from the audio service and from nowhere else. The
+     * completeness record carries a second per-Veda recitation block which disagrees with it
+     * on this build, reporting one corpus's recording count as that corpus's mantra total.
+     */
+    const recited = audioStats.ok
+        ? (audioStats.data.mapped_scope_keys_by_veda?.[code] ?? 0)
+        : 0;
+    const notation =
+        code === "SV" ? completeness.samaveda_notation.validated_notation_witnesses : null;
+
+    const built = new Set(
+        (detail?.knowledge_layers ?? [])
+            .filter((row) => row.status === "SUPPORTED")
+            .map((row) => row.layer),
+    );
+
+    /*
+     * What this collection carries, built from what was measured.
+     *
+     * The translation entry is relabelled where a corpus has none of its own: the Samaveda's
+     * TRANSLATION edges are Rigvedic renderings shown against verses verified
+     * character-identical, and calling that "English translation" here would be the single
+     * most misleading phrase on the page.
+     */
+    const carries: string[] = [];
+    for (const script of detail?.text_scripts ?? []) {
+        const label = SCRIPT_LABEL[script];
+        if (label) carries.push(label);
+    }
+    if (built.has("TRANSLATION")) {
+        carries.push(
+            translated ? LAYER_LABEL.TRANSLATION : "Reused English renderings, labelled as reuse",
+        );
+    }
+    if (recited > 0) carries.push("Verse-by-verse recitation");
+    if (notation) carries.push("Source-explicit svara notation");
+    carries.push("Cross-Veda parallels");
+    for (const [layer, label] of Object.entries(LAYER_LABEL)) {
+        if (layer === "TRANSLATION") continue;
+        if (built.has(layer)) carries.push(label);
+    }
 
     return (
         <div className="va-page">
@@ -139,6 +216,7 @@ export default async function VedaPage({ params }: Params) {
                 </p>
                 <h1>{work.traditional_name ?? root.traditional_name ?? veda}</h1>
                 <p className="va-work-recension">{RECENSION[code]}</p>
+                <p className="va-work-edition">{EDITION[code]}</p>
             </header>
 
             <div className="va-work-band">
@@ -156,45 +234,23 @@ export default async function VedaPage({ params }: Params) {
                         </dd>
                     </div>
                     <div className="va-fact">
-                        <dt>Translated</dt>
+                        <dt>{translated ? "Translated" : "Reused renderings"}</dt>
                         <dd>
-                            {code === "SV" ? (
-                                <strong title="0 own dedicated English; 173 verified reused Rigvedic English renderings">
-                                    173 <span style={{ fontSize: "var(--va-text-xs)", color: "var(--va-text-secondary)", fontWeight: "normal" }}>reused</span>
-                                </strong>
-                            ) : code === "RV" ? (
-                                <strong title="10,502 dedicated English + 50 range-covered">
-                                    {number(10552)}
-                                </strong>
-                            ) : code === "YV" ? (
-                                <strong title="1,894 dedicated + 57 range + 21 reused">
-                                    {number(1972)}
-                                </strong>
-                            ) : (
-                                <strong title="5,749 dedicated + 21 range (24 non-English Sanskrit notes)">
-                                    {number(5770)}
-                                </strong>
-                            )}
+                            <strong>{number(translated ? translated : reused)}</strong>
                         </dd>
                     </div>
-                    {code === "SV" ? (
+                    {notation ? (
                         <div className="va-fact">
-                            <dt>Notation</dt>
+                            <dt>Notation witnesses</dt>
                             <dd>
-                                <strong title="1,136 validated source-explicit notation witnesses (Gates A/B/C passed); 708 withheld">
-                                    {number(notation.validated_notation_witnesses)}
-                                </strong>
+                                <strong>{number(notation)}</strong>
                             </dd>
                         </div>
                     ) : null}
-                    <div className={`va-fact${audioCount === 0 ? " is-none" : ""}`}>
+                    <div className={`va-fact${recited === 0 ? " is-none" : ""}`}>
                         <dt>Recited</dt>
                         <dd>
-                            <strong>
-                                {audioCount === 0
-                                    ? "0 (1,001 withheld)"
-                                    : number(audioCount)}
-                            </strong>
+                            <strong>{recited === 0 ? "none yet" : number(recited)}</strong>
                         </dd>
                     </div>
                     <div className="va-fact">
@@ -207,16 +263,50 @@ export default async function VedaPage({ params }: Params) {
             </div>
 
             {/*
-             * The limit statement is a section of the page, not a footnote on it. It is the
-             * thing a reader most needs before they start counting what they find.
+             * What the collection carries, before the index into it. This is the section the
+             * reader uses to decide where to go, and every entry in it was measured on this
+             * request rather than asserted here.
              */}
-            <section className="va-work-limit">
-                <h2>What this collection does not hold</h2>
-                <p>{NOT_HELD[code]}</p>
-                <div className="va-work-status">
-                    <KnowledgeStatus status={work.data_status} />
-                </div>
-            </section>
+            {carries.length ? (
+                <section className="va-work-carries">
+                    <h2>What this collection carries</h2>
+                    <ul className="va-collection-features">
+                        {carries.map((item) => (
+                            <li className="va-collection-feature" key={item}>
+                                {item}
+                            </li>
+                        ))}
+                    </ul>
+                    <p className="va-work-scope">
+                        This is one recension of one Samhita.{" "}
+                        <Link href="/limits">What this edition covers and excludes</Link>, and how
+                        each kind of coverage is typed, is set out on the scope page.
+                    </p>
+                    {/*
+                      * Two sentences that stay on the Samaveda's own page rather than moving
+                      * to /limits with the rest of the scope.
+                      *
+                      * Both guard against an inference this particular page invites and no
+                      * other one does. It lists source-explicit svara notation among what the
+                      * collection carries, and svara marks are the closest thing in this
+                      * product to music: a reader who meets them here, with the gāna
+                      * unmentioned, can reasonably conclude that the sung Samaveda is what
+                      * they are looking at. It is not. The marks are reproduced from a
+                      * printed witness and nothing in this build turns them into pitch.
+                      *
+                      * A link to a scope page does not close that, because the reader has no
+                      * reason to suspect there is anything to go and check.
+                      */}
+                    {code === "SV" && (
+                        <p className="va-work-scope">
+                            The gāna song-books, in which these verses are actually sung, are
+                            not included: what is held is the ārcika verse collection. Where a
+                            verse carries svara marks they are reproduced from the printed
+                            witness, and nothing here shows, notates or infers melody.
+                        </p>
+                    )}
+                </section>
+            ) : null}
 
             <ArchiveIndex
                 rootLabel={rootLabel}
@@ -234,7 +324,7 @@ export default async function VedaPage({ params }: Params) {
                 <div className="va-work-ways">
                     <h2>Other ways in</h2>
                     <Action href={`/search?q=${encodeURIComponent(code)}`}>
-                        Search inside this collection
+                        Search inside the {name}
                     </Action>
                     <Action href={`/graph?node=${encoded(workId)}`}>
                         Open this work in the graph
@@ -242,8 +332,6 @@ export default async function VedaPage({ params }: Params) {
                     <Action href="/devatas">Deities named across the four collections</Action>
                 </div>
             </div>
-
-            <CaveatList caveats={work.caveats} title="Scope notes for this work" />
         </div>
     );
 }

@@ -12,7 +12,8 @@
     "test:e2e": "playwright test",
     "audit:contrast": "node scripts/audit-contrast.mjs",
     "audit:tokens": "node scripts/audit-tokens.mjs",
-    "audit": "node scripts/audit-tokens.mjs && node scripts/audit-contrast.mjs && node scripts/audit-graph-contrast.mjs && node scripts/audit-class-collisions.mjs",
+    "audit": "node scripts/audit-tokens.mjs && node scripts/audit-contrast.mjs && node scripts/audit-graph-contrast.mjs && node scripts/audit-class-collisions.mjs && node scripts/audit-completeness-fallback.mjs",
+    "audit:completeness": "node scripts/audit-completeness-fallback.mjs",
     "audit:graph": "node scripts/audit-graph-contrast.mjs",
     "audit:classes": "node scripts/audit-class-collisions.mjs"
   },

@@ -17,6 +17,7 @@ answer is a 502 naming audio, not the 503 that means the knowledge graph is down
 
 from __future__ import annotations
 
+import json
 from collections.abc import Iterator
 from pathlib import Path
 from typing import Any
@@ -34,6 +35,7 @@ from vedagraph.product.audio.models import (
     Availability,
     MappingConfidence,
     PlaybackMode,
+    PublicationTier,
 )
 
 HYMN_KEY = "VG:RV:SAK:M01:S001"
@@ -659,3 +661,120 @@ def test_an_empty_catalog_asserts_nothing_about_coverage(silent_client: TestClie
     payload = silent_client.get("/api/v1/audio/stats").json()
     assert payload["caveats"] == []
     assert payload["data_status"] == "NOT_BUILT"
+
+
+# ---------------------------------------------------------------------------
+# Publication tiers on the wire
+#
+# The two-tier policy of 2026-09-19 (OWNER_DECISION_AUDIO_TWO_TIER_PUBLICATION) publishes
+# recordings nobody has heard. Everything below is the API half of what keeps that honest:
+# the tier travels with each track, the prose beside it never claims a hearing, and the
+# stats block splits the catalogue rather than reporting one total a surface could call
+# verified.
+# ---------------------------------------------------------------------------
+
+#: Phrases that assert a person heard the recording. None may appear in what the API sends
+#: for an unreviewed track. The bare word "verified" is not on the list, because the
+#: unreviewed note has to be able to say it is *not* described as verified.
+HUMAN_REVIEW_CLAIMS = (
+    "human verified",
+    "human-verified",
+    "audibly verified",
+    "verified by ear",
+    "listened to and confirmed",
+)
+
+
+def reviewed_record(**overrides: object) -> AudioRecord:
+    return verse_record(
+        audio_id="VEDSEARCH:RV:1.1.2",
+        scope_key="VG:RV:SAK:M01:S001:V002",
+        publication_tier=PublicationTier.RELEASED_VERIFIED,
+        audible_review_evidence=(
+            "data/manual/audio_review/sample_decisions.jsonl: reviewer Himanshu played it."
+        ),
+        **overrides,
+    )
+
+
+def test_a_track_carries_its_publication_tier(verse_client: TestClient) -> None:
+    track = verse_client.get(f"/api/v1/passages/{VERSE_KEY}/audio").json()["tracks"][0]
+    assert track["publication_tier"] == "SOURCE_MAPPED_UNREVIEWED"
+
+
+def test_an_unreviewed_track_is_never_described_as_human_verified(
+    verse_client: TestClient,
+) -> None:
+    """Checked over the whole track object, not just the field that was meant to say it."""
+    track = verse_client.get(f"/api/v1/passages/{VERSE_KEY}/audio").json()["tracks"][0]
+    assert track["publication_tier"] != "RELEASED_VERIFIED"
+    rendered = json.dumps(track).lower()
+    for claim in HUMAN_REVIEW_CLAIMS:
+        assert claim not in rendered, claim
+    assert "no person has listened to it" in track["review_note"].lower()
+
+
+def test_a_reviewed_track_says_a_named_reviewer_played_it() -> None:
+    catalog = AudioCatalog([reviewed_record()])
+    app, client, repository = client_for(catalog, key="VG:RV:SAK:M01:S001:V002")
+    with client:
+        app.state.repository = repository
+        app.state.audio_catalog = catalog
+        track = client.get("/api/v1/passages/VG:RV:SAK:M01:S001:V002/audio").json()["tracks"][0]
+    assert track["publication_tier"] == "RELEASED_VERIFIED"
+    assert "named reviewer" in track["review_note"].lower()
+
+
+def test_no_track_leaks_the_review_evidence_string(verse_client: TestClient) -> None:
+    """``audible_review_evidence`` names an internal path; the note is what a reader gets."""
+    track = verse_client.get(f"/api/v1/passages/{VERSE_KEY}/audio").json()["tracks"][0]
+    assert "audible_review_evidence" not in track
+
+
+def test_stats_split_the_catalogue_by_tier_and_the_tiers_sum() -> None:
+    catalog = AudioCatalog([verse_record(), reviewed_record()])
+    app, client, repository = client_for(catalog)
+    with client:
+        app.state.repository = repository
+        app.state.audio_catalog = catalog
+        payload = client.get("/api/v1/audio/stats").json()
+    assert payload["by_publication_tier"] == {
+        "RELEASED_VERIFIED": 1,
+        "SOURCE_MAPPED_UNREVIEWED": 1,
+    }
+    assert sum(payload["by_publication_tier"].values()) == payload["total_records"]
+
+
+def test_stats_report_every_tier_for_every_veda_even_at_zero() -> None:
+    catalog = AudioCatalog([verse_record()])
+    app, client, repository = client_for(catalog)
+    with client:
+        app.state.repository = repository
+        app.state.audio_catalog = catalog
+        payload = client.get("/api/v1/audio/stats").json()
+    by_veda = payload["by_veda_and_tier"]
+    assert set(by_veda) >= {"RV", "SV", "YV", "AV"}
+    for veda, tiers in by_veda.items():
+        assert set(tiers) == {"RELEASED_VERIFIED", "SOURCE_MAPPED_UNREVIEWED"}, veda
+    assert by_veda["SV"]["SOURCE_MAPPED_UNREVIEWED"] == 0
+    assert sum(sum(t.values()) for t in by_veda.values()) == payload["total_records"]
+
+
+def test_stats_say_how_many_recordings_nobody_heard() -> None:
+    catalog = AudioCatalog([verse_record(), reviewed_record()])
+    app, client, repository = client_for(catalog)
+    with client:
+        app.state.repository = repository
+        app.state.audio_catalog = catalog
+        caveats = " ".join(c["text"] for c in client.get("/api/v1/audio/stats").json()["caveats"])
+    assert "have not been listened to by anyone" in caveats
+    assert "Do not describe the total as human-verified." in caveats
+
+
+def test_an_empty_catalog_makes_no_claim_about_hearings(silent_client: TestClient) -> None:
+    payload = silent_client.get("/api/v1/audio/stats").json()
+    assert payload["by_publication_tier"] == {
+        "RELEASED_VERIFIED": 0,
+        "SOURCE_MAPPED_UNREVIEWED": 0,
+    }
+    assert payload["caveats"] == []

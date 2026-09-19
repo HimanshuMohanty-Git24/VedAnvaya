@@ -87,12 +87,72 @@
     color: var(--va-text-primary);
     text-wrap: balance;
     font-optical-sizing: auto;
-    /* The second line is the qualification, and it is set a step quieter so the eye reads
-       the claim first and the condition second, which is the order they matter in. */
+    /* Two lines for a thirty-three character headline. At 16ch `balance` found a third line
+       and broke the name away from its predicate; at 18ch it sets as name-plus-clause. */
     max-width: 18ch;
 }
 
+/*
+ * The predicate, a step quieter than the name.
+ *
+ * "VedAnvaya" is the noun and "The Vedas, connected" is what it is for, and they are not the
+ * same kind of thing. Setting them at one weight makes the line read as a slogan; setting the
+ * second in the secondary ink makes it read as an apposition, which is what it is. It is still
+ * the same type size, so the headline stays one object rather than becoming a headline and a
+ * subtitle pretending to be one.
+ */
+.va-hero-em {
+    color: var(--va-text-secondary);
+}
 
+/* -------------------------------------------------------- the capability rail - */
+
+/*
+ * Five verbs, directly under the headline.
+ *
+ * The hero's job is to say what a reader can do here before it says how much of it there is,
+ * so the rail sits above the lede and above the figures. Each word is a link to the surface
+ * that does the thing: a rail of capability words that do not go anywhere is an advertisement.
+ *
+ * Separated by middots, which is how the five read as one line rather than as five controls.
+ */
+.va-hero-rail {
+    margin: var(--va-space-xl) 0 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: var(--va-space-2xs) var(--va-space-sm);
+}
+
+/*
+ * The separator is a middot on the item, not a rule between items.
+ *
+ * A border drawn on `li + li` is the obvious way to rule a horizontal list and it breaks the
+ * moment the list wraps: whichever item lands first on the second line keeps the separator it
+ * inherited from its position in the source, and a stray hairline appears against the left
+ * margin. A mark that belongs to the item travels with the item.
+ */
+.va-hero-rail li:not(:last-child)::after {
+    content: "·";
+    margin-inline-start: var(--va-space-sm);
+    color: var(--va-text-tertiary);
+}
+
+.va-hero-rail-item {
+    font-family: var(--va-font-ui);
+    font-size: var(--va-text-sm);
+    font-weight: var(--va-weight-medium);
+    letter-spacing: var(--va-tracking-wide);
+    color: var(--va-text-secondary);
+    text-decoration: none;
+    transition: var(--va-transition-colors);
+}
+
+.va-hero-rail-item:hover {
+    color: var(--va-accent-text);
+}
 
 .va-hero-lede {
     margin: var(--va-space-xl) 0 0;
@@ -600,6 +660,132 @@
     color: var(--va-text-secondary);
 }
 
+/* ------------------------------------------------- the measured figures - */
+
+/*
+ * What the product holds, as a band of figures.
+ *
+ * Not a stat strip of four big numbers on a coloured ground. Each cell carries a value, the
+ * thing it counts and one clause that keeps the value from being read as something it is not,
+ * and the clause is the reason the cell has to be a block rather than a tile: a tile has room
+ * for a number and a two-word label and nothing else, which is exactly how a figure loses the
+ * condition that makes it true.
+ *
+ * Set as a definition list because that is what it is. The grid is `auto-fit` over a 17rem
+ * minimum, so it settles at three columns on a desktop, two on a tablet and one at 390px
+ * without a breakpoint of its own, and the wide cell spans the whole row wherever it lands.
+ */
+.va-counts-section .va-heading {
+    margin-bottom: var(--va-space-2xl);
+}
+
+.va-counts {
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr));
+    gap: var(--va-space-2xl) var(--va-space-3xl);
+    border-top: var(--va-border-width) solid var(--va-line-strong);
+    padding-top: var(--va-space-2xl);
+}
+
+.va-count-cell {
+    display: grid;
+    align-content: start;
+    gap: var(--va-space-xs);
+}
+
+.va-count-cell.is-wide {
+    grid-column: 1 / -1;
+    padding-top: var(--va-space-2xl);
+    border-top: var(--va-rule-quiet);
+}
+
+.va-count-cell dd {
+    margin: 0;
+    display: grid;
+    gap: var(--va-space-sm);
+}
+
+.va-count-label {
+    font-size: var(--va-text-2xs);
+    font-weight: var(--va-weight-semibold);
+    letter-spacing: var(--va-tracking-eyebrow);
+    text-transform: uppercase;
+    color: var(--va-text-tertiary);
+}
+
+.va-count-value {
+    font-family: var(--va-font-display);
+    font-size: clamp(2rem, 1.5rem + 1.6vw, 2.75rem);
+    font-weight: var(--va-weight-regular);
+    line-height: var(--va-leading-flat);
+    letter-spacing: var(--va-tracking-display);
+    font-variant-numeric: tabular-nums;
+    font-optical-sizing: auto;
+    color: var(--va-text-primary);
+}
+
+.va-count-gloss {
+    max-width: 34ch;
+    font-size: var(--va-text-sm);
+    line-height: var(--va-leading-normal);
+    color: var(--va-text-secondary);
+}
+
+/*
+ * The named populations, counted apart.
+ *
+ * They are on one line at a smaller size than the headline figures on purpose. Giving each of
+ * them a display-size number would say they are five more headline metrics; they are one
+ * metric with five parts, and the parts must not be added together.
+ */
+.va-count-subjects {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--va-space-md) var(--va-space-2xl);
+}
+
+.va-count-subjects li {
+    display: flex;
+    align-items: baseline;
+    gap: var(--va-space-xs);
+}
+
+.va-count-subjects b {
+    font-family: var(--va-font-display);
+    font-size: var(--va-text-xl);
+    font-weight: var(--va-weight-regular);
+    font-variant-numeric: tabular-nums;
+    color: var(--va-text-primary);
+}
+
+.va-count-subjects span {
+    font-size: var(--va-text-xs);
+    letter-spacing: var(--va-tracking-eyebrow);
+    text-transform: uppercase;
+    color: var(--va-text-tertiary);
+}
+
+/* Where the figures came from. A number a reader cannot trace is a number nothing can
+   check, so the provenance of the band is part of the band and not a footer somewhere else. */
+.va-count-source {
+    margin: var(--va-space-2xl) 0 0;
+    max-width: var(--va-measure);
+    font-size: var(--va-text-xs);
+    line-height: var(--va-leading-normal);
+    color: var(--va-text-tertiary);
+}
+
+.va-count-source a {
+    color: var(--va-accent-text);
+    text-decoration: none;
+    border-bottom: var(--va-border-width) solid
+        color-mix(in srgb, var(--va-accent-text) 34%, transparent);
+}
+
 /* ------------------------------------------------------------- the ledger - */
 
 .va-ledger-section .va-heading {
@@ -664,9 +850,32 @@
     color: var(--va-text-tertiary);
 }
 
-.va-ledger-absent {
-    color: var(--va-text-tertiary);
-    max-width: 30ch;
+/*
+ * The last column is a way in, not a fact.
+ *
+ * The table used to end in a paragraph of what each collection does not hold, which made the
+ * widest column on the page the one about absence and buried the link to the text itself. The
+ * scope statements moved to /limits; what stands here instead is the thing the table is for.
+ */
+.va-ledger-open {
+    text-align: end;
+    padding-right: 0;
+    white-space: nowrap;
+}
+
+.va-ledger-open a {
+    font-size: var(--va-text-sm);
+    font-weight: var(--va-weight-medium);
+    color: var(--va-accent-text);
+    text-decoration: none;
+    border-bottom: var(--va-border-width) solid
+        color-mix(in srgb, var(--va-accent-text) 30%, transparent);
+    transition: var(--va-transition-colors);
+}
+
+.va-ledger-open a:hover {
+    color: var(--va-text-primary);
+    border-bottom-color: var(--va-text-primary);
 }
 
 /* A real zero, marked as one. It is the most informative cell in the table and printing it
@@ -1062,12 +1271,19 @@
  * a sentence. 34ch gives it two lines at every width the page supports.
  */
 .va-absence .va-heading {
-    max-width: 34ch;
+    max-width: 52ch;
     margin-inline: auto;
 }
 
 .va-absence .va-heading-title {
     font-size: var(--va-text-2xl);
+    max-width: 34ch;
+    margin-inline: auto;
+}
+
+.va-absence .va-heading-lede {
+    max-width: 52ch;
+    margin-inline: auto;
 }
 
 .va-absence-list {
@@ -1098,10 +1314,20 @@
 }
 
 .va-absence-close {
-    margin: var(--va-space-2xl) auto var(--va-space-xl);
+    margin: var(--va-space-2xl) auto 0;
     max-width: var(--va-measure);
     font-size: var(--va-text-sm);
     color: var(--va-text-tertiary);
+}
+
+/* Two ways on rather than one. The evidence model and the scope of the edition are different
+   questions and a single link forces the reader to guess which one it answers. */
+.va-absence-actions {
+    margin-top: var(--va-space-2xl);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--va-space-xl) var(--va-space-3xl);
 }
 
 /* ------------------------------------------------------------- start here - */
@@ -1248,8 +1474,15 @@
 }
 
 @media (max-width: 47.99rem) {
-    .va-hero-break {
-        display: none;
+    /* The band's cells stack, so the wide cell no longer needs a rule to mark itself out from
+       a row of siblings it is not sitting beside. */
+    .va-count-cell.is-wide {
+        padding-top: 0;
+        border-top: 0;
+    }
+
+    .va-count-subjects {
+        gap: var(--va-space-sm) var(--va-space-xl);
     }
 
     /*
@@ -1335,8 +1568,17 @@
         text-align: start;
     }
 
-    .va-ledger-absent {
-        max-width: none;
+    /* Stacked, the "Read" cell is the record's own action and belongs at its foot, aligned
+       with everything above it rather than pushed to the right edge of a column that is no
+       longer there. */
+    .va-ledger-open {
+        text-align: start;
+        white-space: normal;
+        padding-top: var(--va-space-xs);
+    }
+
+    .va-ledger-open::before {
+        content: none;
     }
 }
 

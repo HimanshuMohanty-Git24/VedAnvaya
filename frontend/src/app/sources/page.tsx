@@ -185,7 +185,23 @@ export default async function SourcesPage() {
     }
 
     const transByVeda = completeness.translations.by_veda;
-    const audioByVeda = completeness.audio.released_by_veda;
+    /*
+     * Recitation counts come from `/audio/stats` and from nowhere else. The completeness
+     * record carries a second per-Veda recitation block which disagrees with it on this
+     * build, reporting one corpus's recording count as that corpus's entire mantra total.
+     */
+    const audioByVeda = audioStats?.mapped_scope_keys_by_veda ?? {};
+    /*
+     * `by_publication_tier` is newer than the generated schema, so it is read through a local
+     * shape rather than asserted onto the generated one. Absent, it reads as "not stated"
+     * rather than as zero, because "no recording has been heard" and "we did not ask" are
+     * different claims and only one of them belongs in this paragraph.
+     */
+    const tiers = (audioStats as { by_publication_tier?: Record<string, number> } | null)
+        ?.by_publication_tier;
+    const earVerified = tiers ? (tiers.RELEASED_VERIFIED ?? 0) : null;
+    const notation = completeness.samaveda_notation;
+    const askBenchmark = completeness.ask_benchmark;
 
     return (
         <div className="va-doc">
@@ -246,32 +262,45 @@ export default async function SourcesPage() {
                                                     {registryWork?.recension ?? work.recension}
                                                 </small>
                                             </dt>
+                                            {/*
+                                              * Every figure in this cell is read from the
+                                              * certified completeness record rather than typed
+                                              * into the sentence. An earlier version spelled
+                                              * each corpus out by hand, and the four branches
+                                              * drifted apart from the record they were copied
+                                              * from: one of them printed a corpus total in the
+                                              * slot where a translation count belongs.
+                                              */}
                                             <dd>
-                                                {count(trans?.total ?? work.mantra_count)} verses.{" "}
+                                                {count(trans?.total_mantras ?? work.mantra_count)} verses.{" "}
+                                                {trans?.dedicated_english
+                                                    ? `${count(trans.dedicated_english)} dedicated English translations`
+                                                    : "No English translation of its own"}
+                                                {trans?.range_covered
+                                                    ? `, ${count(trans.range_covered)} covered by a multi-verse range`
+                                                    : ""}
+                                                {trans?.reused_rendering
+                                                    ? `, ${count(trans.reused_rendering)} covered by a verified reused parallel rendering`
+                                                    : ""}
+                                                {trans?.non_english
+                                                    ? `, ${count(trans.non_english)} carrying a non-English scholarly note`
+                                                    : ""}
+                                                {trans?.uncovered
+                                                    ? `, ${count(trans.uncovered)} with none`
+                                                    : ""}
+                                                .{" "}
                                                 {code === "SV" ? (
                                                     <>
-                                                        0 own dedicated English translations; 173 verses covered via
-                                                        verified reused Rigvedic English renderings (1,671 uncovered).
-                                                        1,136 verses carry validated notation witnesses (Gates A/B/C passed; 708 withheld).
-                                                        Recitation: 0 released records (1,001 queued withheld behind audible QA gate).
+                                                        {count(notation.validated_notation_witnesses)} verses
+                                                        carry a validated source-explicit notation witness and{" "}
+                                                        {count(notation.unaligned_withheld_verses)} await
+                                                        alignment.{" "}
                                                     </>
-                                                ) : code === "RV" ? (
-                                                    <>
-                                                        100% complete English coverage (10,502 dedicated, 50 range-covered).{" "}
-                                                        {count(audioCount)} recitation records released.
-                                                    </>
-                                                ) : code === "YV" ? (
-                                                    <>
-                                                        1,972 translated (1,894 dedicated, 57 range, 21 reused; 3 uncovered ritual markers).{" "}
-                                                        {count(audioCount)} recitation records released.
-                                                    </>
-                                                ) : (
-                                                    <>
-                                                        5,770 English coverage (5,749 dedicated, 21 range; 24 Whitney Sanskrit notes, 45 uncovered).{" "}
-                                                        {count(audioCount)} recitation records released.
-                                                    </>
-                                                )}
-                                                {" "}Not held:{" "}
+                                                ) : null}
+                                                {audioCount
+                                                    ? `${count(audioCount)} recitation records released.`
+                                                    : "No recitation released; the queue is still in review."}{" "}
+                                                Not addressed:{" "}
                                                 {(work.excluded_corpora ?? [])
                                                     .map((item) =>
                                                         item.toLowerCase().replaceAll("_", " "),
@@ -512,6 +541,17 @@ export default async function SourcesPage() {
                             prevent. Answer quality does depend in part on which model is
                             configured, and that is a real limitation rather than a footnote.
                         </p>
+                        <p>
+                            Measured on a fixed benchmark of {askBenchmark.total_questions}{" "}
+                            questions, the current build returned{" "}
+                            {askBenchmark.effective_acceptable} acceptable outcomes:{" "}
+                            {askBenchmark.supported_correct} answered from evidence,{" "}
+                            {askBenchmark.partial_correct} answered in part,{" "}
+                            {askBenchmark.insufficient_evidence_refused} refused for want of
+                            evidence, {askBenchmark.misleading} misleading and{" "}
+                            {askBenchmark.hallucinated} invented. A refusal is counted as a correct
+                            outcome, because it is one.
+                        </p>
                     </section>
 
                     <section id="method-audio">
@@ -538,12 +578,28 @@ export default async function SourcesPage() {
                             playing nothing.
                         </p>
                         <p>
-                            Public recitation coverage consists of 16,834 verified catalogue records
-                            (Rigveda 10,402; Atharvaveda 4,680; White Yajurveda 1,752; Samaveda 0).
-                            The owner audible sample (20/20 reviewed) passed and was accepted.
-                            For the Samaveda, while queued recordings exist, 1,001 recordings remain not individually heard
-                            and stay withheld behind the manual audible-review gate (GAP-AUDIO-002, 003, 004);
-                            no unverified recordings are promoted without human audible audit.
+                            <b>A checked mapping is not an audible review.</b> A recording is
+                            catalogued because its mapping was established &mdash; the source&rsquo;s
+                            own verse coordinates resolve to our canonical key, the Sanskrit matches
+                            this corpus&rsquo;s text, and the media resolves &mdash; and not because
+                            anyone has listened to it.{" "}
+                            {earVerified === 0
+                                ? "None of the catalogued recordings carries an audible review, so the total must not be described as human-verified."
+                                : earVerified === null
+                                  ? "How many carry an audible review is stated on the scope page."
+                                  : `${count(earVerified)} of them carry an audible review.`}{" "}
+                            An owner sample of {completeness.audio.owner_sample_reviewed} recordings
+                            was listened to in full, with{" "}
+                            {completeness.audio.owner_sample_verified} verified and{" "}
+                            {completeness.audio.owner_sample_rejected} rejected, and a separate
+                            queue of {count(completeness.audio.queue_total)} recordings is held
+                            outside the catalogue with{" "}
+                            {count(completeness.audio.not_individually_heard)} of them not yet heard
+                            individually.{" "}
+                            <Link href="/limits#recitation">
+                                The per-collection figures are on the scope page
+                            </Link>
+                            .
                         </p>
                     </section>
 
@@ -557,12 +613,15 @@ export default async function SourcesPage() {
                         </p>
                         <ul>
                             <li>
-                                <b>The Samavedic gāna corpus is outside release scope.</b> A parallel and larger
-                                body than the verse collection held here, and the reason the
-                                Samaveda is a distinct Veda. 1,136 of 1,844 ārcika verses carry validated source-explicit
-                                notation witnesses (PARALLEL_WITNESS / PARALLEL_TEXT svara marks, Gates A/B/C passed);
-                                708 verses remain withheld pending textual alignment. The marks are recorded as codepoints
-                                and never extrapolated as sung melodies.
+                                <b>The Samavedic gāna corpus is outside this edition.</b> A parallel
+                                and larger body than the verse collection held here, and the reason
+                                the Samaveda is a distinct Veda.{" "}
+                                {count(notation.validated_notation_witnesses)} of{" "}
+                                {count(notation.canonical_corpus_mantras)} ārcika verses carry a
+                                validated source-explicit notation witness and{" "}
+                                {count(notation.unaligned_withheld_verses)} await textual alignment.
+                                The marks are recorded as codepoints and never extrapolated into
+                                sung melodies.
                             </li>
                             <li>
                                 <b>The Krishna Yajurveda is absent entirely</b>, and the
@@ -570,10 +629,13 @@ export default async function SourcesPage() {
                                 different collections rather than minor variants.
                             </li>
                             <li>
-                                <b>The Samaveda has 0 own dedicated English translations</b>, but 173 verses are covered
-                                via verified reused Rigvedic English renderings (Griffith parallel alignment with source-text identity verified),
-                                with 1,671 verses uncovered. Reused renderings are explicitly labelled as borrowed and never
-                                claimed as independent Samavedic English evidence.
+                                <b>The Samaveda has no English translation of its own.</b>{" "}
+                                {count(transByVeda.SV?.reused_rendering)} verses are covered by a
+                                verified reused Rigvedic rendering, aligned against text whose
+                                identity was checked character by character, and{" "}
+                                {count(transByVeda.SV?.uncovered)} carry none. A reused rendering is
+                                labelled as borrowed and is never counted as independent Samavedic
+                                English evidence.
                             </li>
                             <li>
                                 <b>Several layers reach some collections and not others.</b> The

@@ -83,6 +83,7 @@ from vedagraph.api.models.passage import (
     AgentiveAssertionView,
     AssertionModality,
     AttestedSet,
+    FormulaPhraseView,
     AudioAvailability,
     BreadcrumbView,
     MentionedDevataSet,
@@ -1018,13 +1019,33 @@ CALL (p) {
     WHERE NOT o:Internal AND type(r) <> 'CONTAINS'
     RETURN count(DISTINCT o) AS graph_neighbour_count
 }
+// Collected without a grouping key for the same reason the parallel block above is: most
+// passages carry no formula, and a subquery returning no rows would eliminate the reader
+// row and turn a formula-less verse into a 404.
+CALL (p) {
+    MATCH (p)-[r:USES_FORMULA]->(f:Formula)
+    WHERE NOT f:Internal
+    WITH f, r
+    ORDER BY coalesce(f.occurrence_count, 0) DESC, f.formula_id
+    RETURN collect({
+        formula_id: f.formula_id,
+        display_form: f.display_form,
+        source_form: coalesce(r.formula_source_form, r.source_form),
+        occurrence_count: f.occurrence_count,
+        vedas: f.vedas,
+        cross_veda: f.cross_veda,
+        match_level: coalesce(r.formula_match_level, r.match_level)
+    })[0..$entity_limit] AS formulas,
+      count(f) AS formula_total
+}
 """
     + f"""
 RETURN {_P} AS passage, w.display_label AS work_display_label,
        w.work_name AS work_traditional_name,
        text_versions, translations, range_translations,
        rishis, devatas, chandas, mentioned_devatas,
-       concepts, concept_total, parallel_counts, graph_neighbour_count
+       concepts, concept_total, formulas, formula_total,
+       parallel_counts, graph_neighbour_count
 """
 )
 
@@ -1594,6 +1615,46 @@ def paged_meaning[T](
         if overrun is not None:
             caveats.append(overrun)
     return status, caveats
+
+
+def _formula_set(
+    rows: list[dict[str, Any]] | None, total: Any
+) -> AttestedSet[FormulaPhraseView]:
+    """The verse's shared phrases, or an empty set that says why it is empty.
+
+    Empty is the common case - 9,636 of the corpus's 20,210 mantras carry no formula edge -
+    and an empty ``SUPPORTED`` set would assert that the verse shares no wording with any
+    other, which is a statement about the matcher and not about the text. So an empty set
+    carries the caveat that makes it readable, which is also what ``AttestedSet`` requires.
+    """
+    items = [
+        FormulaPhraseView(
+            formula_id=str(row["formula_id"]),
+            display_form=str(row.get("display_form") or row["formula_id"]),
+            source_form=_nonempty(row.get("source_form")),
+            occurrence_count=_as_int(row.get("occurrence_count")),
+            vedas=[str(veda) for veda in row.get("vedas") or []],
+            cross_veda=row["cross_veda"] if isinstance(row.get("cross_veda"), bool) else None,
+            match_level=_nonempty(row.get("match_level")),
+        )
+        for row in rows or []
+        if isinstance(row, dict) and row.get("formula_id")
+    ]
+    if not items:
+        return AttestedSet[FormulaPhraseView](
+            caveats=[
+                CaveatView(
+                    text=(
+                        "No fixed phrase from the formula layer was matched in this verse. "
+                        "The layer is a normalised-string match over the corpus, so this is "
+                        "a statement about what that match found and not a finding that the "
+                        "verse shares no wording with any other."
+                    ),
+                    source="measured",
+                )
+            ]
+        )
+    return AttestedSet[FormulaPhraseView](items=items, total=_as_int(total))
 
 
 def _parallel_counts(rows: list[dict[str, Any]]) -> ParallelCounts:
@@ -2423,6 +2484,7 @@ class PassageService:
             major_concepts=self._entity_set(
                 row.get("concepts"), row.get("concept_total"), "ABOUT_CONCEPT", is_container
             ),
+            formulas=_formula_set(row.get("formulas"), row.get("formula_total")),
             previous=previous,
             next=following,
             neighbour_note=neighbour_note,

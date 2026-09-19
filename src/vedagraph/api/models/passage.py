@@ -668,20 +668,29 @@ class AgentiveAssertionView(ApiModel):
 
 
 class AudioAvailability(ApiModel):
-    """Recitation audio, which this graph does not have.
+    """The *graph's* recitation layer, which does not exist. Not the product's.
 
     Deliberately not a boolean and not a null. ``false`` reads as "this verse has no
     recording" and ``null`` renders as a disabled button with no explanation; both invite a
-    frontend to ship a play control over a corpus with no audio layer at all. The validator
-    refuses any other status, so adding audio means editing this contract on purpose.
+    frontend to ship a play control over a layer that is not there. The validator refuses
+    any other status, so adding audio to the *graph* means editing this contract on purpose.
+
+    The note used to read "No recitation audio exists anywhere in this graph", which was
+    true of the graph and false as a sentence a reader would understand: the product serves
+    16,834 catalogued recordings from ``/api/v1/passages/{key}/audio``, and RV 1.1.1
+    returns a playable track from the same server that was answering "anywhere" with
+    "none". A field can be correct about its own layer and still be the wrong thing to say,
+    and this one is read by clients that have no way to know the distinction. It now names
+    the surface that does hold the audio.
     """
 
     status: KnowledgeStatus = KnowledgeStatus.NOT_BUILT
     recordings: list[EntityRef] = Field(default_factory=list)
     note: str = (
-        "No recitation audio exists anywhere in this graph: the frozen model has no audio "
-        "node, relationship or property. This is an unbuilt layer and not a statement that "
-        "the passage is unrecited."
+        "The knowledge graph holds no audio node, relationship or property, so this block "
+        "is always empty. It is not a statement about whether a recording exists: "
+        "recitations are served from the audio catalogue at "
+        "GET /api/v1/passages/{key}/audio, which is the surface to ask."
     )
 
     @model_validator(mode="after")
@@ -689,7 +698,8 @@ class AudioAvailability(ApiModel):
         if self.status is not KnowledgeStatus.NOT_BUILT or self.recordings:
             raise ValueError(
                 "There is no audio layer in the frozen graph. Reporting anything but "
-                "NOT_BUILT here would be a claim no node supports."
+                "NOT_BUILT here would be a claim no node supports. Catalogued recordings "
+                "are served by /api/v1/passages/{key}/audio and do not belong in this block."
             )
         return self
 
@@ -791,6 +801,36 @@ class NavigationResult(ApiModel):
     results: Paginated[PassageSummary]
 
 
+class FormulaPhraseView(ApiModel):
+    """A fixed phrase this verse shares with other verses, and how far it travels.
+
+    The reader carried no formula layer at all, which left 10,574 mantras - 1,311 of the
+    Samaveda's 1,844 among them - with real, readable substance the reading page could not
+    show. For a Samavedic verse that matters more than for any other corpus: it has no
+    seer, no metre and no ascribed deity of its own, so its shared wording is most of what
+    there is to say about it beyond the text.
+
+    ``match_level`` travels because the formula layer's identity is a normalised-string
+    match and the strength of that match varies per occurrence: ``SCRIPT_FOLDED`` is a
+    stronger claim than ``SANDHI_INSENSITIVE``, and a surface that showed both as "shares
+    this phrase" would flatten the distinction the edge went to the trouble of recording.
+    ``source_form`` is what this verse actually reads, which can differ from the family's
+    ``display_form``.
+    """
+
+    formula_id: str
+    display_form: str
+    #: The wording as it stands in *this* verse, where the edge recorded it.
+    source_form: str | None = None
+    #: Verses carrying this formula anywhere in the corpus. Null means not established.
+    occurrence_count: int | None = None
+    #: The corpora it is attested in, as recorded on the formula.
+    vedas: list[str] = Field(default_factory=list)
+    cross_veda: bool | None = None
+    #: How closely this verse's wording matched. Null where the edge predates recording.
+    match_level: str | None = None
+
+
 class ReaderPayload(ApiModel):
     """Everything needed to render one mantra in a single call (spec section 11).
 
@@ -827,6 +867,14 @@ class ReaderPayload(ApiModel):
         "why the reader carries it rather than leaving those three corpora blank."
     )
     major_concepts: AttestedSet[EntityRef]
+    formulas: AttestedSet[FormulaPhraseView] = Field(
+        default_factory=lambda: AttestedSet[FormulaPhraseView](
+            data_status=KnowledgeStatus.NOT_BUILT
+        ),
+        description="Fixed phrases this verse shares with others. For a Samavedic verse "
+        "this is often the only knowledge layer besides the text and its Rigvedic "
+        "counterpart, because the seer, metre and ascription layers are Rigveda-only.",
+    )
 
     previous: PassageSummary | None = None
     next: PassageSummary | None = None

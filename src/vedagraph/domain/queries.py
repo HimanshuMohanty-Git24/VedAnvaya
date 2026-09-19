@@ -1830,6 +1830,7 @@ QUERIES: Final[tuple[DomainQuery, ...]] = (
         question="Which Rigvedic verses are reused in the Samaveda, and how closely?",
         cypher="""
         MATCH (sv:Passage)-[r:REUSES_TEXT_FROM]->(rv:Passage)
+        WHERE sv.veda = 'SV' AND rv.veda = 'RV'
         RETURN sv.canonical_citation AS samaveda, rv.canonical_citation AS rigveda,
                r.match_level AS match_level, r.quality_tier AS tier
         ORDER BY samaveda LIMIT 30
@@ -1839,6 +1840,14 @@ QUERIES: Final[tuple[DomainQuery, ...]] = (
             "surface, because a Devanagari SV text and a Latin RV text share no code "
             "points. A blank match_level means the edge predates level recording."
         ),
+        # The corpus filter is not decoration, and it was added after the fact. This query
+        # is named for one Veda pair, asks its question about one Veda pair and returns two
+        # columns called `samaveda` and `rigveda` -- but it matched any passage to any
+        # passage, which was harmless only while RV->SV was the sole direction recorded.
+        # It stopped being the sole one: REUSES_TEXT_FROM now also carries 311 AV->RV
+        # edges, `ORDER BY samaveda` sorts `AVS ...` ahead of every Samavedic citation, and
+        # all thirty rows this served were Atharvavedic under a column headed "samaveda".
+        # A query whose result contradicts its own field names is worse than a missing one.
         serves=(6, 7, 50),
     ),
     DomainQuery(

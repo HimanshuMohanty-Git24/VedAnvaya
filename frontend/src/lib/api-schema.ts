@@ -363,7 +363,9 @@ export interface paths {
         };
         /**
          * Catalog-wide audio figures
-         * @description Every figure derived from the catalog on this request, so nothing here can drift from what the catalog says.
+         * @description Every figure derived from the catalog on this request, so nothing here can drift from what the catalog says. A client rendering audio coverage must read these counts rather than hard-coding one, because the catalogue grows.
+         *
+         *     `by_publication_tier` and `by_veda_and_tier` split the catalogue into `RELEASED_VERIFIED` -- a named person played it -- and `SOURCE_MAPPED_UNREVIEWED` -- mapped and checked by instrument, heard by nobody. The two sum to `total_records`. A surface that adds them and calls the total verified is the one thing this split exists to prevent.
          *
          *     `by_availability` is reported beside the coverage counts on purpose: a catalog whose records were last measured unreachable is a different product state from one whose records answer, and omitting it would read as full coverage.
          */
@@ -1239,6 +1241,26 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/completeness": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Certified data-completeness state (all corpora)
+         * @description Returns the certified post-campaign data completeness and release state of VedAnvaya, including exact canonical mantra counts, typed translation coverage, released recitation audio, audible review gate state, Samaveda musical notation witnesses, and Ask benchmark results.
+         */
+        get: operations["completeness_stats_api_v1_completeness_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/stats": {
         parameters: {
             query?: never;
@@ -1408,6 +1430,32 @@ export interface components {
             cautions?: string[];
         };
         /**
+         * AskBenchmarkCompleteness
+         * @description Certified Ask formal 60 benchmark verification result.
+         */
+        AskBenchmarkCompleteness: {
+            /** Benchmark Version */
+            benchmark_version: string;
+            /** Status */
+            status: string;
+            /** Total Questions */
+            total_questions: number;
+            /** Effective Acceptable */
+            effective_acceptable: string;
+            /** Supported Correct */
+            supported_correct: number;
+            /** Partial Correct */
+            partial_correct: number;
+            /** Insufficient Evidence Refused */
+            insufficient_evidence_refused: number;
+            /** Misleading */
+            misleading: number;
+            /** Hallucinated */
+            hallucinated: number;
+            /** Truth Statement */
+            truth_statement: string;
+        };
+        /**
          * AskMode
          * @enum {string}
          */
@@ -1572,6 +1620,21 @@ export interface components {
             /** Caveats */
             caveats?: components["schemas"]["CaveatView"][];
         };
+        /** AttestedSet[FormulaPhraseView] */
+        AttestedSet_FormulaPhraseView_: {
+            /** Items */
+            items?: components["schemas"]["FormulaPhraseView"][];
+            /**
+             * Total
+             * @description Items available where that differs from the number returned; null means not established and never means zero.
+             */
+            total?: number | null;
+            /** @default SUPPORTED */
+            data_status: components["schemas"]["KnowledgeStatus"];
+            coverage?: components["schemas"]["CoverageView"] | null;
+            /** Caveats */
+            caveats?: components["schemas"]["CaveatView"][];
+        };
         /** AttestedSet[SemanticRelationView] */
         AttestedSet_SemanticRelationView_: {
             /** Items */
@@ -1671,12 +1734,20 @@ export interface components {
         };
         /**
          * AudioAvailability
-         * @description Recitation audio, which this graph does not have.
+         * @description The *graph's* recitation layer, which does not exist. Not the product's.
          *
          *     Deliberately not a boolean and not a null. ``false`` reads as "this verse has no
          *     recording" and ``null`` renders as a disabled button with no explanation; both invite a
-         *     frontend to ship a play control over a corpus with no audio layer at all. The validator
-         *     refuses any other status, so adding audio means editing this contract on purpose.
+         *     frontend to ship a play control over a layer that is not there. The validator refuses
+         *     any other status, so adding audio to the *graph* means editing this contract on purpose.
+         *
+         *     The note used to read "No recitation audio exists anywhere in this graph", which was
+         *     true of the graph and false as a sentence a reader would understand: the product serves
+         *     16,834 catalogued recordings from ``/api/v1/passages/{key}/audio``, and RV 1.1.1
+         *     returns a playable track from the same server that was answering "anywhere" with
+         *     "none". A field can be correct about its own layer and still be the wrong thing to say,
+         *     and this one is read by clients that have no way to know the distinction. It now names
+         *     the surface that does hold the audio.
          */
         AudioAvailability: {
             /** @default NOT_BUILT */
@@ -1685,9 +1756,53 @@ export interface components {
             recordings?: components["schemas"]["EntityRef"][];
             /**
              * Note
-             * @default No recitation audio exists anywhere in this graph: the frozen model has no audio node, relationship or property. This is an unbuilt layer and not a statement that the passage is unrecited.
+             * @default The knowledge graph holds no audio node, relationship or property, so this block is always empty. It is not a statement about whether a recording exists: recitations are served from the audio catalogue at GET /api/v1/passages/{key}/audio, which is the surface to ask.
              */
             note: string;
+        };
+        /**
+         * AudioCompleteness
+         * @description Certified public recitation audio and audible review gate status.
+         */
+        AudioCompleteness: {
+            /** Released Catalogue Records */
+            released_catalogue_records: number;
+            /** Released By Veda */
+            released_by_veda: {
+                [key: string]: number;
+            };
+            /** Released Scope Keys By Veda */
+            released_scope_keys_by_veda: {
+                [key: string]: number;
+            };
+            /** Released By Tier */
+            released_by_tier?: {
+                [key: string]: number;
+            };
+            /** Released By Veda And Tier */
+            released_by_veda_and_tier?: {
+                [key: string]: {
+                    [key: string]: number;
+                };
+            };
+            /** Owner Audible Sample Status */
+            owner_audible_sample_status: string;
+            /** Owner Sample Reviewed */
+            owner_sample_reviewed: number;
+            /** Owner Sample Verified */
+            owner_sample_verified: number;
+            /** Owner Sample Rejected */
+            owner_sample_rejected: number;
+            /** Queue Total */
+            queue_total: number;
+            /** Not Individually Heard */
+            not_individually_heard: number;
+            /** Queue Rows Promoted */
+            queue_rows_promoted: number;
+            /** Withheld Gates */
+            withheld_gates: string[];
+            /** Truth Statement */
+            truth_statement: string;
         };
         /**
          * AudioPlaybackView
@@ -1801,10 +1916,13 @@ export interface components {
          * AudioStatsResponse
          * @description Catalog-wide figures, all derived.
          *
-         *     Deliberately reports ``by_availability`` beside the coverage counts. A catalog of 1,801
-         *     records of which most were last measured as unreachable is a different product state
-         *     from one where they answer, and a stats block that omitted it would read as full
-         *     coverage.
+         *     Deliberately reports ``by_availability`` beside the coverage counts. A catalog whose
+         *     records were mostly last measured as unreachable is a different product state from one
+         *     where they answer, and a stats block that omitted it would read as full coverage.
+         *
+         *     Reports ``by_publication_tier`` for the same reason. Since 2026-09-19 the catalogue
+         *     holds recordings nobody has listened to, and a single total would let a surface call
+         *     all of them verified.
          */
         AudioStatsResponse: {
             /** Total Records */
@@ -1812,6 +1930,24 @@ export interface components {
             /** By Veda */
             by_veda?: {
                 [key: string]: number;
+            };
+            /**
+             * By Publication Tier
+             * @description Records per tier. Sums to `total_records`, which is the invariant a client may rely on: there is no third, hidden state.
+             *
+             *     `RELEASED_VERIFIED` counts recordings a named person played. `SOURCE_MAPPED_UNREVIEWED` counts recordings mapped and checked by instrument and heard by nobody. A surface that adds them together and calls the total 'verified' is the one failure this split exists to make impossible.
+             */
+            by_publication_tier?: {
+                [key: string]: number;
+            };
+            /**
+             * By Veda And Tier
+             * @description `{veda: {tier: count}}`, with every tier present for every Veda even at zero -- so a Veda with no reviewed recordings renders as '0 reviewed' rather than rendering as nothing. Read this rather than hard-coding a coverage figure.
+             */
+            by_veda_and_tier?: {
+                [key: string]: {
+                    [key: string]: number;
+                };
             };
             /** By Scope Type */
             by_scope_type?: {
@@ -1878,6 +2014,16 @@ export interface components {
             /** End Seconds */
             end_seconds?: number | null;
             availability: components["schemas"]["Availability"];
+            /**
+             * @description Whether a person has heard this recording. `SOURCE_MAPPED_UNREVIEWED` is the normal answer and must never be rendered with the words 'verified', 'human verified' or 'audibly verified'. Render `review_note` verbatim and the label cannot overstate it.
+             * @default SOURCE_MAPPED_UNREVIEWED
+             */
+            publication_tier: components["schemas"]["PublicationTier"];
+            /**
+             * Review Note
+             * @description Reader-facing prose for `publication_tier`, safe to render verbatim. Written in one place so no second code path can phrase an unheard recording as a checked one.
+             */
+            review_note: string;
             mapping_confidence: components["schemas"]["MappingConfidence"];
             /**
              * Mapping Method
@@ -2295,6 +2441,34 @@ export interface components {
             claim_rows?: components["schemas"]["InterpretiveClaimRow"][];
         };
         /**
+         * CompletenessResponse
+         * @description The complete certified data-completeness state of VedAnvaya.
+         */
+        CompletenessResponse: {
+            /** @default SUPPORTED */
+            data_status: components["schemas"]["KnowledgeStatus"];
+            /**
+             * Certified Release Commit
+             * @default 50a40429103fa32a5667ee58c72c029cfbeb0f74
+             */
+            certified_release_commit: string;
+            /** As Of Date */
+            as_of_date: string;
+            /** Total Canonical Mantras */
+            total_canonical_mantras: number;
+            /** Truth Summary */
+            truth_summary: string;
+            /** Corpora */
+            corpora: components["schemas"]["CorpusCompletenessItem"][];
+            translations: components["schemas"]["TranslationCompletenessSummary"];
+            samaveda_notation: components["schemas"]["SamavedaNotationCompleteness"];
+            audio: components["schemas"]["AudioCompleteness"];
+            ask_benchmark: components["schemas"]["AskBenchmarkCompleteness"];
+            evidence_layers: components["schemas"]["EvidenceLayersCompleteness"];
+            /** Caveats */
+            caveats?: components["schemas"]["CaveatView"][];
+        };
+        /**
          * ConcernEvidenceRow
          * @description A concern or affliction, with the predicate and tier that reached it.
          *
@@ -2349,6 +2523,32 @@ export interface components {
             role: string;
             /** Content */
             content: string;
+        };
+        /**
+         * CorpusCompletenessItem
+         * @description One canonical Samhita's certified invariant scope and metrics.
+         */
+        CorpusCompletenessItem: {
+            /** Veda */
+            veda: string;
+            /** Traditional Name */
+            traditional_name: string;
+            /** Devanagari Name */
+            devanagari_name: string;
+            /** Recension */
+            recension: string;
+            /** Scope Honest Label */
+            scope_honest_label: string;
+            /** Scope Note */
+            scope_note: string;
+            /** Canonical Mantras */
+            canonical_mantras: number;
+            /** Structure */
+            structure: string;
+            /** Excluded Corpora */
+            excluded_corpora?: string[];
+            /** Limitations */
+            limitations: string;
         };
         /**
          * CorpusFigure
@@ -3708,6 +3908,24 @@ export interface components {
          */
         EvidenceItemType: "PASSAGE" | "ENTITY_FACT" | "GRAPH_PATH" | "METRIC" | "INTERPRETIVE_CLAIM" | "FORMULA_FAMILY" | "TEXTUAL_REUSE" | "ATTRIBUTION" | "CORPUS_DISTRIBUTION" | "LEXICAL_PRESENCE";
         /**
+         * EvidenceLayersCompleteness
+         * @description The four knowledge evidence layers and grounding rules.
+         */
+        EvidenceLayersCompleteness: {
+            /** Source Explicit */
+            source_explicit: string;
+            /** Deterministic Derived */
+            deterministic_derived: string;
+            /** Semantic Model Assisted */
+            semantic_model_assisted: string;
+            /** Interpretive Claim */
+            interpretive_claim: string;
+            /** Normalization Rule */
+            normalization_rule: string;
+            /** Predicate Reach Rule */
+            predicate_reach_rule: string;
+        };
+        /**
          * EvidenceSpanView
          * @description One quoted witness for an assertion.
          */
@@ -4151,6 +4369,39 @@ export interface components {
              * @description The wording as it stands in this passage.
              */
             source_form?: string | null;
+        };
+        /**
+         * FormulaPhraseView
+         * @description A fixed phrase this verse shares with other verses, and how far it travels.
+         *
+         *     The reader carried no formula layer at all, which left 10,574 mantras - 1,311 of the
+         *     Samaveda's 1,844 among them - with real, readable substance the reading page could not
+         *     show. For a Samavedic verse that matters more than for any other corpus: it has no
+         *     seer, no metre and no ascribed deity of its own, so its shared wording is most of what
+         *     there is to say about it beyond the text.
+         *
+         *     ``match_level`` travels because the formula layer's identity is a normalised-string
+         *     match and the strength of that match varies per occurrence: ``SCRIPT_FOLDED`` is a
+         *     stronger claim than ``SANDHI_INSENSITIVE``, and a surface that showed both as "shares
+         *     this phrase" would flatten the distinction the edge went to the trouble of recording.
+         *     ``source_form`` is what this verse actually reads, which can differ from the family's
+         *     ``display_form``.
+         */
+        FormulaPhraseView: {
+            /** Formula Id */
+            formula_id: string;
+            /** Display Form */
+            display_form: string;
+            /** Source Form */
+            source_form?: string | null;
+            /** Occurrence Count */
+            occurrence_count?: number | null;
+            /** Vedas */
+            vedas?: string[];
+            /** Cross Veda */
+            cross_veda?: boolean | null;
+            /** Match Level */
+            match_level?: string | null;
         };
         /**
          * FormulaSpanRow
@@ -5354,6 +5605,34 @@ export interface components {
          */
         PlaybackMode: "REMOTE_DIRECT" | "LOCAL_CACHE" | "EXTERNAL_EMBED" | "EXTERNAL_LINK" | "PROXIED_STREAM";
         /**
+         * PublicationTier
+         * @description Whether a human has heard this recording, kept apart from whether it is published.
+         *
+         *     **Why the two were ever one field.** Until 2026-09-19 they were not fields at all:
+         *     publication *was* the gate. ``OWNER_DECISION_E_AUDIO_GATE`` (OWNER_DECISIONS.md §8 and
+         *     §14) held that no fragile audio entered the canonical layer until its row had been
+         *     listened to, so 954 staged rows sat outside the catalogue and the catalogue carried no
+         *     review vocabulary because everything in it was, by construction, on the same footing.
+         *
+         *     ``OWNER_DECISION_AUDIO_TWO_TIER_PUBLICATION`` of 2026-09-19 supersedes that gate and
+         *     replaces it with this enum. Audible review is now a badge. The one thing the new policy
+         *     does not permit is the collapse these two values exist to prevent: describing an
+         *     unreviewed recording as verified. Hence
+         *     :attr:`AudioRecord.audible_review_evidence`, which
+         *     :meth:`AudioRecord._check_internal_consistency` requires before
+         *     :attr:`RELEASED_VERIFIED` may be written and refuses on
+         *     :attr:`SOURCE_MAPPED_UNREVIEWED` -- so the tier cannot be typed, only earned, and
+         *     cannot be half-typed either.
+         *
+         *     The default is :attr:`SOURCE_MAPPED_UNREVIEWED` on purpose. A catalogue line written
+         *     before this field existed carries no tier, and the honest reading of a row that says
+         *     nothing about review is that nobody reviewed it. A default of
+         *     ``RELEASED_VERIFIED`` would have promoted all 16,834 incumbent records to a verdict no
+         *     listener ever gave.
+         * @enum {string}
+         */
+        PublicationTier: "RELEASED_VERIFIED" | "SOURCE_MAPPED_UNREVIEWED";
+        /**
          * ReaderPayload
          * @description Everything needed to render one mantra in a single call (spec section 11).
          *
@@ -5391,6 +5670,8 @@ export interface components {
             /** @description Deities *named* in the verse, graded. Distinct from `devatas`, which is the Anukramani's ascription and reaches the Rigveda only -- for a Samavedic, Yajurvedic or Atharvavedic verse this is the only deity signal there is, which is why the reader carries it rather than leaving those three corpora blank. */
             mentioned_devatas: components["schemas"]["MentionedDevataSet"];
             major_concepts: components["schemas"]["AttestedSet_EntityRef_"];
+            /** @description Fixed phrases this verse shares with others. For a Samavedic verse this is often the only knowledge layer besides the text and its Rigvedic counterpart, because the seer, metre and ascription layers are Rigveda-only. */
+            formulas?: components["schemas"]["AttestedSet_FormulaPhraseView_"];
             previous?: components["schemas"]["PassageSummary"] | null;
             next?: components["schemas"]["PassageSummary"] | null;
             /**
@@ -6062,6 +6343,71 @@ export interface components {
             not_covered?: string[];
         };
         /**
+         * SamavedaNotationCompleteness
+         * @description Certified status of the Samaveda notation and Gāna scope.
+         */
+        SamavedaNotationCompleteness: {
+            /**
+             * Canonical Corpus Mantras
+             * @default 1844
+             */
+            canonical_corpus_mantras: number;
+            /**
+             * Validated Notation Witnesses
+             * @default 1136
+             */
+            validated_notation_witnesses: number;
+            /** Gates Passed */
+            gates_passed?: string[];
+            /**
+             * Evidence Class
+             * @default PARALLEL_WITNESS / PARALLEL_TEXT
+             */
+            evidence_class: string;
+            /**
+             * Notation System
+             * @default Kauthuma numeric svara (source-printed codepoints)
+             */
+            notation_system: string;
+            /**
+             * Source Supplied
+             * @default true
+             */
+            source_supplied: boolean;
+            /**
+             * Interpreted Into Pitch
+             * @default false
+             */
+            interpreted_into_pitch: boolean;
+            /**
+             * Unaligned Withheld Verses
+             * @default 708
+             */
+            unaligned_withheld_verses: number;
+            /**
+             * Withheld Reason
+             * @default Unaligned or unsupported notation rows withheld
+             */
+            withheld_reason: string;
+            /**
+             * Gana Object Layer
+             * @default OUT_OF_SCOPE
+             */
+            gana_object_layer: string;
+            /**
+             * Gana Works Modeled
+             * @default 0
+             */
+            gana_works_modeled: number;
+            /**
+             * Musicalized As Edges
+             * @default 0
+             */
+            musicalized_as_edges: number;
+            /** Truth Statement */
+            truth_statement: string;
+        };
+        /**
          * SearchLanguage
          * @description Which textual surfaces a caller wants read.
          * @enum {string}
@@ -6373,6 +6719,30 @@ export interface components {
             note?: string | null;
         };
         /**
+         * TranslationCompletenessSummary
+         * @description Overall translation coverage with typed categories.
+         */
+        TranslationCompletenessSummary: {
+            /** By Veda */
+            by_veda: {
+                [key: string]: components["schemas"]["TranslationVedaItem"];
+            };
+            /** Total Mantras */
+            total_mantras: number;
+            /** Total Dedicated English */
+            total_dedicated_english: number;
+            /** Total Range Covered */
+            total_range_covered: number;
+            /** Total Reused Rendering */
+            total_reused_rendering: number;
+            /** Total Non English */
+            total_non_english: number;
+            /** Total Uncovered */
+            total_uncovered: number;
+            /** Truth Statement */
+            truth_statement: string;
+        };
+        /**
          * TranslationCoverage
          * @description How much of a work is translated, in what sense, and by whom.
          *
@@ -6456,6 +6826,34 @@ export interface components {
          * @enum {string}
          */
         TranslationCoverageKind: "DEDICATED_TRANSLATION" | "RANGE_TRANSLATION" | "CONTAINER_TRANSLATION" | "REUSED_RENDERING";
+        /**
+         * TranslationVedaItem
+         * @description Typed translation coverage for one corpus.
+         */
+        TranslationVedaItem: {
+            /** Veda */
+            veda: string;
+            /** Total Mantras */
+            total_mantras: number;
+            /** Dedicated English */
+            dedicated_english: number;
+            /** Range Covered */
+            range_covered: number;
+            /** Reused Rendering */
+            reused_rendering: number;
+            /** Non English */
+            non_english: number;
+            /** Uncovered */
+            uncovered: number;
+            /** Independent English */
+            independent_english: number;
+            /** Coverage Percentage */
+            coverage_percentage: number;
+            /** Has Own Dedicated English */
+            has_own_dedicated_english: boolean;
+            /** Notes */
+            notes: string;
+        };
         /**
          * TranslationView
          * @description One aligned translation, and what kind of coverage it actually gives this verse.
@@ -6647,6 +7045,13 @@ export interface components {
             playable_scope_count: number;
             /** Scope Type Counts */
             scope_type_counts?: {
+                [key: string]: number;
+            };
+            /**
+             * Source Counts
+             * @description Recordings per publisher, over the whole Veda rather than over the page of `tracks` returned. Present because a surface that derived this from `tracks` would be describing a sample as though it were the population, and one did: the Rigveda's recitation panel read its publishers off the first page of tracks and named the Cologne collection, which supplies 150 of its 10,552 recordings, as the source of the collection.
+             */
+            source_counts?: {
                 [key: string]: number;
             };
             data_status: components["schemas"]["KnowledgeStatus"];
@@ -10104,6 +10509,80 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["CapabilitiesResponse"];
+                };
+            };
+            /** @description The request is well-formed but unsupported. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description No such passage, entity or work. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description The record exists but this product holds no bytes for it. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description A parameter failed validation. */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description A third-party media source did not answer. */
+            502: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description The knowledge graph is unavailable. */
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+        };
+    };
+    completeness_stats_api_v1_completeness_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CompletenessResponse"];
                 };
             };
             /** @description The request is well-formed but unsupported. */

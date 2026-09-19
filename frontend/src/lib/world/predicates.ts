@@ -120,7 +120,13 @@ let cached: Promise<PredicateTable> | null = null;
  */
 export function loadPredicateSemantics(signal?: AbortSignal): Promise<PredicateTable> {
     if (!cached) {
-        cached = fetch("/world/world.predicates.json", { signal })
+        /*
+         * Revalidated, not cached hard. Twenty-one kilobytes against a year-long `immutable`
+         * header on a stable filename: a rebuilt artifact would leave a reader naming this
+         * build's edges out of last build's vocabulary, and a 304 costs less than that is
+         * worth. The large files are versioned by export hash instead - see `artifactUrl`.
+         */
+        cached = fetch("/world/world.predicates.json", { signal, cache: "no-cache" })
             .then((response) => {
                 if (!response.ok) throw new Error("The relationship vocabulary could not be read.");
                 return response.json() as Promise<PredicateTable>;

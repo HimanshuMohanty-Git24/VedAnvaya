@@ -32,6 +32,7 @@ import os
 import re
 import sys
 from collections.abc import Iterable
+from functools import lru_cache
 from pathlib import Path
 from typing import Any, Final
 
@@ -72,6 +73,28 @@ class ProvenanceError(RuntimeError):
 # is displayed without supplying any of it, and a reader who sees it listed beside the text
 # sources would reasonably conclude some of the verses came from it.
 # ---------------------------------------------------------------------------------------
+@lru_cache(maxsize=1)
+def _measured_figures() -> dict[str, str]:
+    """Figures a contribution sentence may interpolate, counted rather than written down.
+
+    One entry today and the mechanism matters more than the count: the recitation sentence
+    carried "16,834" as a literal and went on carrying it after the catalogue grew to
+    17,780, because a number inside prose is the one number no test reads. A missing
+    catalogue raises rather than substituting a guess -- this script builds a provenance
+    document, and a provenance document that quietly states a stale figure is worse than
+    one that fails to build.
+    """
+    catalogue = ROOT / "data" / "product" / "audio_catalog.jsonl"
+    if not catalogue.is_file():
+        raise ProvenanceError(
+            f"{catalogue} is missing, so the recitation count cannot be measured. "
+            "Refusing to write a provenance document with an unverified figure."
+        )
+    with catalogue.open("r", encoding="utf-8") as handle:
+        recitations = sum(1 for line in handle if line.strip())
+    return {"recitation_count": f"{recitations:,}"}
+
+
 LAYERS: Final[list[dict[str, str]]] = [
     {
         "id": "primary-text",
@@ -293,10 +316,13 @@ CONTRIBUTIONS: Final[list[dict[str, Any]]] = [
         "source_ids": ["VEDSEARCH"],
         "rights_status": "UNKNOWN",
         "evidence": "data/product/audio_catalog.jsonl",
+        # The count is read from the catalogue at build time, not written here. It was
+        # "16,834" as a literal and stayed 16,834 through the admission of 946 further
+        # recordings, because prose is the one place a figure has nothing checking it.
         "contributes": (
-            "16,834 verse recitations, one file per verse, streamed from the source rather "
-            "than copied. No Samavedic recitation is catalogued, which is the gap this "
-            "layer most obviously has."
+            "{recitation_count} verse recitations, one file per verse, streamed from the "
+            "source rather than copied. No Samavedic recitation is catalogued, which is "
+            "the gap this layer most obviously has."
         ),
     },
     # --- comparison ---------------------------------------------------------------------
@@ -534,7 +560,9 @@ def build() -> dict[str, Any]:
                     "site_rights_status": rights.get("status"),
                     "rights_url": rights.get("license_url"),
                     "vedas": contribution["vedas"],
-                    "contributes": contribution["contributes"],
+                    "contributes": contribution["contributes"].format(
+                        **_measured_figures()
+                    ),
                     "evidence": contribution["evidence"],
                     "artifacts": mine,
                 }

@@ -38,6 +38,10 @@ class TranslationVedaItem(ApiModel):
     uncovered: int
     independent_english: int
     coverage_percentage: float
+    #: True where this corpus has an English translation of its own, as opposed to one
+    #: reached through a parallel in another corpus. The Samaveda has none, and a reader
+    #: told "194 renderings" without that distinction has been told the wrong thing.
+    has_own_dedicated_english: bool
     notes: str
 
 
@@ -80,6 +84,12 @@ class AudioCompleteness(ApiModel):
     released_catalogue_records: int
     released_by_veda: dict[str, int]
     released_scope_keys_by_veda: dict[str, int]
+    #: The catalogue split by publication tier. Sums to ``released_catalogue_records``.
+    #: Present because the two must never be collapsed: ``OWNER_DECISION_AUDIO_TWO_TIER_
+    #: PUBLICATION`` widens what may be published *unheard*, and a single total would let
+    #: a surface call 17,760 unlistened recordings human-verified.
+    released_by_tier: dict[str, int] = Field(default_factory=dict)
+    released_by_veda_and_tier: dict[str, dict[str, int]] = Field(default_factory=dict)
     owner_audible_sample_status: str
     owner_sample_reviewed: int
     owner_sample_verified: int
@@ -122,6 +132,13 @@ class CompletenessResponse(ApiModel):
 
     data_status: KnowledgeStatus = KnowledgeStatus.SUPPORTED
     certified_release_commit: str = "50a40429103fa32a5667ee58c72c029cfbeb0f74"
+    #: The date this certified state describes.
+    as_of_date: str
+    #: The four Samhitas summed. Derived from ``corpora`` rather than written down, so it
+    #: cannot drift from the rows beneath it the way a typed-in total does.
+    total_canonical_mantras: int
+    #: One sentence a product surface can quote without assembling figures itself.
+    truth_summary: str
     corpora: list[CorpusCompletenessItem]
     translations: TranslationCompletenessSummary
     samaveda_notation: SamavedaNotationCompleteness

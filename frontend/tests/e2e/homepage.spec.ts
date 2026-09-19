@@ -148,12 +148,21 @@ async function home(page: Page) {
 }
 
 test.describe("homepage: the opening claim", () => {
-    test("the hero states what is held and offers both ways in", async ({ page }) => {
+    test("the hero states what the product is and offers both ways in", async ({ page }) => {
         await home(page);
 
+        /*
+         * The h1 used to be asked for "four samhitas" and "evidence", which was a scope
+         * statement doing the work of a title. The owner's direction for this pass is that
+         * the homepage says what VedAnvaya *does* and leaves the boundaries to /limits, so
+         * the h1 is now the product's own sentence and the scope figures sit under it in the
+         * measured band. Both claims are still made on the page; what changed is which
+         * element carries them, so the assertions moved rather than went.
+         */
         const heading = page.getByRole("heading", { level: 1 });
-        await expect(heading).toContainText(/four samhitas/i);
-        await expect(heading).toContainText(/evidence/i);
+        await expect(heading).toContainText(/VedAnvaya/);
+        await expect(heading).toContainText(/connected/i);
+        await expect(page.locator("main")).toContainText(/four samhitas/i);
 
         // The brand line is Devanagari and must be marked as Sanskrit, or a screen reader
         // reads it with English phonetics and a translation tool offers to translate it.
@@ -180,7 +189,7 @@ test.describe("homepage: the opening claim", () => {
     test("the signal line counts the corpus, not the build", async ({ page }) => {
         await home(page);
         const signal = page.locator(".va-hero-signal");
-        await expect(signal).toContainText(/\d[\d,]* verses/);
+        await expect(signal).toContainText(/\d[\d,]* canonical mantras/);
         await expect(signal).toContainText(/\d[\d,]* recitations/);
         // The graph's relationship total is withheld by the API, which says why: most of its
         // edges are one annotation layer's projection of a container label onto the passages
@@ -188,19 +197,45 @@ test.describe("homepage: the opening claim", () => {
         // No surface may print it, and the homepage is where the temptation is strongest.
         await expect(signal).not.toContainText(/relationship/i);
     });
+
+    test("the five ways in are each a destination", async ({ page }) => {
+        /*
+         * Read, Explore, Ask, Hear, Connect. The owner named this rail, and a rail of words
+         * that go nowhere would satisfy any assertion about its text, so what is checked is
+         * that each one resolves to a page that answers.
+         */
+        await home(page);
+        const rail = page.locator(".va-hero-rail");
+        await expect(rail).toBeVisible();
+        for (const name of ["Read", "Explore", "Ask", "Hear", "Connect"]) {
+            const link = rail.getByRole("link", { name, exact: true });
+            await expect(link, `${name} is not on the rail`).toBeVisible();
+            const href = await link.getAttribute("href");
+            expect(href, `${name} points nowhere`).toBeTruthy();
+            const response = await page.request.get(href!);
+            expect(response.status(), `${name} -> ${href}`).toBeLessThan(400);
+        }
+    });
 });
 
 test.describe("homepage: the sections are present and distinct", () => {
     test("every section renders and the heading order is sound", async ({ page }) => {
         await home(page);
 
+        /*
+         * The sections a reader is promised, by subject rather than by sentence.
+         *
+         * This list was seven exact phrases, one of which -- "whose nothing it is" -- headed
+         * the wall of absences the owner asked to be removed from this page. Pinning prose in
+         * an end-to-end test makes the prose unchangeable, which is the wrong thing for a test
+         * to make true of a homepage. What must be present is a section about each capability.
+         */
         for (const phrase of [
             /one recension each/i,
             /everything standing behind it/i,
             /own recitation/i,
             /more than one collection/i,
             /check the answer/i,
-            /whose nothing it is/i,
             /where to start/i,
         ]) {
             await expect(page.getByRole("heading", { name: phrase })).toBeVisible();
@@ -230,7 +265,10 @@ test.describe("homepage: the sections are present and distinct", () => {
 
         const rows = [
             ["Rigveda", /Śākala/],
-            ["Samaveda", /ārcika only/],
+            /* "Kauthuma (ārcika)" rather than "Kauthuma recension, ārcika only": the same
+               two facts, shorter, in a table cell. The claim being held is that the ledger
+               names the recension AND says the ārcika is all of it that is here. */
+            ["Samaveda", /Kauthuma.*ārcika/],
             ["Yajurveda", /Mādhyandina/],
             ["Atharvaveda", /Śaunaka/],
         ] as const;
@@ -240,9 +278,21 @@ test.describe("homepage: the sections are present and distinct", () => {
             );
         }
 
-        // The Krishna Yajurveda is the omission most likely to mislead, because "the
-        // Yajurveda" ordinarily means both it and the White. It has to be named on the page.
-        await expect(page.locator(".va-ledger-section")).toContainText(/Krishna Yajurveda/);
+        /*
+         * The Krishna Yajurveda is the omission most likely to mislead, because "the
+         * Yajurveda" ordinarily means both it and the White. It still has to be named -- but
+         * on the page that explains scope, which is where the owner's direction moved every
+         * exclusion. The homepage carries the link; /limits carries the fact. Asserted here
+         * rather than only in the limits suite so that removing it from both fails something.
+         */
+        await expect(page.locator(".va-ledger-section")).toContainText(
+            /scope page|what is not held|limits/i,
+        );
+        const limits = await page.request.get("/limits");
+        expect(limits.status()).toBe(200);
+        const scope = await limits.text();
+        expect(scope).toMatch(/Krishna Yajurveda|Kṛṣṇa Yajurveda|Black (recension|Yajurveda)/i);
+        expect(scope).toMatch(/Taittirīya/);
     });
 });
 
@@ -259,19 +309,42 @@ test.describe("homepage: absence is typed, not blank", () => {
 
         const absence = page.locator(".va-bar-row.is-absent");
         await expect(absence).toHaveCount(1);
-        await expect(absence).toContainText(/No recording exists/i);
+        /* In words, and never as a zero. The wording moved from "No recording exists" to
+           "No Samavedic recording is catalogued", which is the more precise of the two --
+           it is a statement about this catalogue rather than about the world. */
+        await expect(absence).toContainText(/No Samavedic recording is catalogued/i);
         // The claim is about what has been published, not about the tradition.
         await expect(absence).toContainText(/published/i);
+        await expect(absence).toContainText(/not a statement about the tradition/i);
     });
 
-    test("the three states of nothing are each named", async ({ page }) => {
+    test("the four grades of evidence are each named, and an unbuilt layer says so", async ({
+        page,
+    }) => {
+        /*
+         * This list used to name the three states of nothing -- Not built, Insufficient
+         * evidence, Partial -- which is a compliance vocabulary, and the owner's direction
+         * for this pass moves that detail to /limits. What stands in its place is the
+         * distinction a reader actually needs in front of a figure: whether it came from a
+         * source, from a rule, from a model, or from somebody's reading.
+         *
+         * The grades are still four and still named. What is asserted alongside them is the
+         * property the old list existed to protect: an unbuilt layer answers "not built"
+         * rather than answering zero. That sentence has to be somewhere on the page.
+         */
         await home(page);
         const list = page.locator(".va-absence-list");
-        await expect(list.locator("dt")).toHaveCount(3);
-        await expect(list).toContainText("Not built");
-        await expect(list).toContainText("Insufficient evidence");
-        await expect(list).toContainText("Partial");
-        await expect(list).toContainText(/not a zero/i);
+        await expect(list.locator("dt")).toHaveCount(4);
+        for (const grade of ["Source", "Derived", "Model-assisted", "Interpretation"]) {
+            await expect(list).toContainText(grade);
+        }
+        await expect(page.locator("main")).toContainText(/never built|was never built|not built/i);
+
+        /* And the three states of nothing are still named, on the page that explains scope. */
+        const limits = await page.request.get("/limits");
+        const scope = await limits.text();
+        expect(scope).toMatch(/Insufficient evidence/i);
+        expect(scope).toMatch(/Partial/i);
     });
 
     test("the Samavedic recitation row draws no bar at all", async ({ page }) => {

@@ -1,0 +1,707 @@
+/* ============================================================================
+   Connections. Owns the va-conn-* namespace.
+
+   The surface this replaces led with a 6 x 8 grid of typed cells that overflowed
+   sideways and was the first thing on the page. A matrix is a record, not an
+   interface: it answers "what joins the Rigveda to the Samaveda" only after a
+   reader has decoded eight column headings, and on a phone it answered nothing at
+   all because two thirds of it were off-screen.
+
+   So the order is inverted. The kinds of connection are explained first, then each
+   corpus pair is summarised in its own words, and the full cell-by-cell evidence
+   sits last, behind a disclosure, stacking into one block per pair below 72rem.
+
+   Everything else follows the house language: no card has a fill, depth is a
+   hairline and space rather than a shadow, there is one accent and it is used
+   sparingly, and every number is set in tabular figures so a column reads down.
+
+   Epistemic colour is not decoration here either. A measured count, a measured
+   zero, a class that cannot enter a pair and a measure that was never built are
+   four different answers, and `data-tone` carries that distinction into the
+   stylesheet so it survives at a glance as well as in the words.
+   ============================================================================ */
+
+.va-conn-page {
+    width: min(100% - (2 * var(--va-shell-gutter)), var(--va-shell-max));
+    margin-inline: auto;
+    padding-block: var(--va-space-3xl) var(--va-space-6xl);
+}
+
+/* ------------------------------------------------------------------ head -- */
+
+.va-conn-head {
+    max-width: var(--va-measure-wide);
+    margin-bottom: var(--va-space-5xl);
+    padding-bottom: var(--va-space-2xl);
+    border-bottom: var(--va-border-width) solid var(--va-line-strong);
+}
+
+.va-conn-eyebrow {
+    margin: 0 0 var(--va-space-md);
+    font-size: var(--va-text-2xs);
+    letter-spacing: var(--va-tracking-wide);
+    text-transform: uppercase;
+    color: var(--va-text-tertiary);
+}
+
+.va-conn-head h1 {
+    margin: 0;
+    max-width: var(--va-measure);
+    font-family: var(--va-font-display);
+    font-size: var(--va-text-3xl);
+    font-weight: var(--va-weight-regular);
+    line-height: var(--va-leading-flat);
+    letter-spacing: var(--va-tracking-display);
+    font-optical-sizing: auto;
+    text-wrap: balance;
+}
+
+.va-conn-lede {
+    margin: var(--va-space-xl) 0 0;
+    max-width: var(--va-measure);
+    font-size: var(--va-text-lg);
+    line-height: var(--va-leading-normal);
+    color: var(--va-text-secondary);
+}
+
+/*
+ * The standfirst states what the page can show, derived from the measurement.
+ * Rubricated the way a manuscript marks the sentence that governs the section:
+ * a gold rule in the margin, not a filled warning box.
+ */
+.va-conn-standfirst {
+    margin: var(--va-space-2xl) 0 0;
+    max-width: var(--va-measure);
+    padding-left: var(--va-space-xl);
+    border-left: var(--va-border-width-accent) solid var(--va-gold-500);
+    font-size: var(--va-text-md);
+    line-height: var(--va-leading-normal);
+    color: var(--va-text-strong);
+}
+
+/* -------------------------------------------------------------- sections -- */
+
+.va-conn-section {
+    margin-top: var(--va-space-5xl);
+}
+
+.va-conn-section-head {
+    max-width: var(--va-measure);
+    margin-bottom: var(--va-space-2xl);
+}
+
+.va-conn-section-head h2 {
+    margin: 0;
+    font-family: var(--va-font-display);
+    font-size: var(--va-text-2xl);
+    font-weight: var(--va-weight-regular);
+    line-height: var(--va-leading-tight);
+    letter-spacing: var(--va-tracking-tight);
+    font-optical-sizing: auto;
+    text-wrap: balance;
+}
+
+.va-conn-section-head p {
+    margin: var(--va-space-md) 0 0;
+    font-size: var(--va-text-base);
+    line-height: var(--va-leading-normal);
+    color: var(--va-text-secondary);
+}
+
+/* ------------------------------------------------- the kinds of connection -- */
+
+.va-conn-kinds {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border-top: var(--va-border-width) solid var(--va-line-strong);
+}
+
+.va-conn-kind {
+    display: grid;
+    gap: var(--va-space-md) var(--va-space-3xl);
+    padding-block: var(--va-space-xl);
+    border-bottom: var(--va-rule-quiet);
+}
+
+@media (min-width: 46rem) {
+    .va-conn-kinds .va-conn-kind {
+        grid-template-columns: minmax(0, 1fr) minmax(11rem, 17rem);
+        align-items: start;
+    }
+}
+
+.va-conn-kind-text h3 {
+    margin: 0;
+    font-family: var(--va-font-display);
+    font-size: var(--va-text-lg);
+    font-weight: var(--va-weight-regular);
+    line-height: var(--va-leading-tight);
+}
+
+.va-conn-kind-text p {
+    margin: var(--va-space-sm) 0 0;
+    max-width: var(--va-measure);
+    font-size: var(--va-text-base);
+    line-height: var(--va-leading-normal);
+    color: var(--va-text-secondary);
+}
+
+.va-conn-kind-figure {
+    display: flex;
+    flex-direction: column;
+    gap: var(--va-space-3xs);
+    margin: 0;
+}
+
+@media (min-width: 46rem) {
+    .va-conn-kinds .va-conn-kind-figure {
+        align-items: flex-end;
+        text-align: right;
+    }
+}
+
+.va-conn-kind-figure b {
+    font-family: var(--va-font-display);
+    font-size: var(--va-text-2xl);
+    font-weight: var(--va-weight-regular);
+    line-height: var(--va-leading-flat);
+    font-variant-numeric: tabular-nums;
+    font-optical-sizing: auto;
+}
+
+.va-conn-kind-figure span {
+    font-size: var(--va-text-xs);
+    line-height: var(--va-leading-snug);
+    color: var(--va-text-tertiary);
+}
+
+.va-conn-kind-figure small {
+    font-size: var(--va-text-2xs);
+    line-height: var(--va-leading-snug);
+    color: var(--va-text-tertiary);
+    max-width: 22rem;
+}
+
+/*
+ * The word a cell uses when it has no count.
+ *
+ * It is deliberately not a number and deliberately not blank. An unknown drawn as
+ * `0` is the single misreading this whole surface exists to prevent, and an empty
+ * cell reads as a rendering bug rather than as an answer.
+ */
+.va-conn-state {
+    font-size: var(--va-text-2xs);
+    letter-spacing: var(--va-tracking-eyebrow);
+    text-transform: uppercase;
+    color: var(--va-tone-unbuilt);
+}
+
+.va-conn-page [data-tone="none"] .va-conn-state {
+    color: var(--va-tone-partial);
+}
+
+.va-conn-page [data-tone="shape"] .va-conn-state {
+    color: var(--va-tone-neutral);
+}
+
+/* --------------------------------------------------------- pair by pair -- */
+
+.va-conn-pairs {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--va-space-3xl);
+}
+
+@media (min-width: 52rem) {
+    .va-conn-page .va-conn-pairs {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: var(--va-space-3xl) var(--va-space-4xl);
+    }
+}
+
+@media (min-width: 76rem) {
+    .va-conn-page .va-conn-pairs {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+}
+
+.va-conn-pair {
+    padding-top: var(--va-space-xl);
+    border-top: var(--va-border-width) solid var(--va-line-strong);
+}
+
+.va-conn-pair-name {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: var(--va-space-sm);
+    margin: 0;
+    font-family: var(--va-font-display);
+    font-size: var(--va-text-xl);
+    font-weight: var(--va-weight-regular);
+    line-height: var(--va-leading-tight);
+}
+
+.va-conn-pair-name span[aria-hidden="true"] {
+    color: var(--va-accent-base);
+    font-size: var(--va-text-md);
+}
+
+.va-conn-pair-lead {
+    display: flex;
+    flex-direction: column;
+    gap: var(--va-space-3xs);
+    margin: var(--va-space-md) 0 0;
+}
+
+.va-conn-pair-lead b {
+    font-size: var(--va-text-base);
+    font-weight: var(--va-weight-medium);
+    color: var(--va-accent-text);
+    font-variant-numeric: tabular-nums;
+}
+
+.va-conn-pair-lead span {
+    font-size: var(--va-text-2xs);
+    color: var(--va-text-tertiary);
+    font-variant-numeric: tabular-nums;
+}
+
+.va-conn-metrics {
+    margin: var(--va-space-xl) 0 0;
+}
+
+.va-conn-metric {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--va-space-lg);
+    padding-block: var(--va-space-sm);
+    border-bottom: var(--va-rule-quiet);
+}
+
+.va-conn-metric dt {
+    font-size: var(--va-text-base);
+    color: var(--va-text-secondary);
+}
+
+.va-conn-metric dd {
+    margin: 0;
+    font-family: var(--va-font-display);
+    font-size: var(--va-text-lg);
+    line-height: var(--va-leading-flat);
+    font-variant-numeric: tabular-nums;
+    font-optical-sizing: auto;
+    white-space: nowrap;
+}
+
+.va-conn-pair-note {
+    margin: var(--va-space-lg) 0 0;
+    font-size: var(--va-text-sm);
+    line-height: var(--va-leading-normal);
+    color: var(--va-text-secondary);
+}
+
+/*
+ * A measured refusal, carrying its reason.
+ *
+ * This is what replaced the page's warning boxes. "Partial coverage" told a reader
+ * nothing; "96.1% of this pair's verses are counterparts of one and the same
+ * Rigvedic verse, so the two corpora share Rigvedic text rather than each other's"
+ * is the most interesting sentence on the page, and it comes from the measurement.
+ */
+.va-conn-refusal {
+    margin: var(--va-space-lg) 0 0;
+    padding-left: var(--va-space-lg);
+    border-left: var(--va-border-width-accent) solid
+        color-mix(in srgb, var(--va-gold-500) 55%, transparent);
+    font-size: var(--va-text-sm);
+    line-height: var(--va-leading-normal);
+    color: var(--va-text-secondary);
+}
+
+.va-conn-refusal strong {
+    color: var(--va-text-primary);
+    font-weight: var(--va-weight-medium);
+}
+
+/* ---------------------------------------------------- the witness rows -- */
+
+.va-conn-witnesses {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border-top: var(--va-border-width) solid var(--va-line-strong);
+}
+
+.va-conn-witnesses > li {
+    border-bottom: var(--va-rule-quiet);
+}
+
+.va-conn-witness {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: var(--va-space-sm) var(--va-space-xl);
+    padding-block: var(--va-space-lg);
+    color: inherit;
+    text-decoration: none;
+    transition: var(--va-transition-colors);
+}
+
+.va-conn-witness-side {
+    display: flex;
+    flex-direction: column;
+    gap: var(--va-space-3xs);
+    min-width: 7.5rem;
+}
+
+.va-conn-witness-side small {
+    font-size: var(--va-text-2xs);
+    letter-spacing: var(--va-tracking-eyebrow);
+    text-transform: uppercase;
+    color: var(--va-text-tertiary);
+}
+
+.va-conn-witness-side strong {
+    font-family: var(--va-font-iast);
+    font-size: var(--va-text-md);
+    font-weight: var(--va-weight-regular);
+    color: var(--va-text-primary);
+}
+
+.va-conn-witness-rel {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--va-space-xs);
+    font-size: var(--va-text-2xs);
+    letter-spacing: var(--va-tracking-eyebrow);
+    text-transform: uppercase;
+    color: var(--va-accent-text);
+}
+
+.va-conn-witness-level {
+    font-size: var(--va-text-2xs);
+    color: var(--va-text-tertiary);
+}
+
+.va-conn-witness-go {
+    display: inline-flex;
+    margin-left: auto;
+    color: var(--va-accent-base);
+}
+
+a.va-conn-witness:hover .va-conn-witness-side strong {
+    color: var(--va-accent-text);
+}
+
+.va-conn-footnote {
+    margin: var(--va-space-lg) 0 0;
+    max-width: var(--va-measure);
+    font-size: var(--va-text-sm);
+    line-height: var(--va-leading-normal);
+    color: var(--va-text-tertiary);
+}
+
+.va-conn-onward {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--va-space-xs);
+    margin-top: var(--va-space-2xl);
+    padding-bottom: 1px;
+    width: fit-content;
+    font-size: var(--va-text-base);
+    color: var(--va-accent-text);
+    border-bottom: var(--va-border-width) solid
+        color-mix(in srgb, var(--va-accent-base) 35%, transparent);
+}
+
+.va-conn-onward:hover {
+    border-bottom-color: var(--va-accent-base);
+}
+
+/* ------------------------------------------------------- formula spans -- */
+
+.va-conn-span {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--va-space-xl);
+}
+
+@media (min-width: 40rem) {
+    .va-conn-page .va-conn-span {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (min-width: 64rem) {
+    .va-conn-page .va-conn-span {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: var(--va-space-2xl);
+    }
+}
+
+.va-conn-span > li {
+    display: flex;
+    flex-direction: column;
+    gap: var(--va-space-2xs);
+    padding-top: var(--va-space-lg);
+    border-top: var(--va-border-width) solid var(--va-line-strong);
+}
+
+/* The single-Veda row is the baseline the cross-Veda ones are read against, not a
+   fifth finding. A dashed rule says so without a second colour. */
+.va-conn-span > li[data-cross="false"] {
+    border-top-style: dashed;
+}
+
+.va-conn-span b {
+    font-family: var(--va-font-display);
+    font-size: var(--va-text-2xl);
+    font-weight: var(--va-weight-regular);
+    line-height: var(--va-leading-flat);
+    font-variant-numeric: tabular-nums;
+    font-optical-sizing: auto;
+}
+
+.va-conn-span span {
+    font-size: var(--va-text-sm);
+    line-height: var(--va-leading-snug);
+    color: var(--va-text-secondary);
+}
+
+.va-conn-span small {
+    font-size: var(--va-text-2xs);
+    color: var(--va-text-tertiary);
+    font-variant-numeric: tabular-nums;
+}
+
+/* --------------------------------------------------------------- scope -- */
+
+.va-conn-scope {
+    margin: 0 0 var(--va-space-2xl);
+    border-top: var(--va-border-width) solid var(--va-line-strong);
+}
+
+.va-conn-scope > div {
+    display: grid;
+    gap: var(--va-space-2xs);
+    padding-block: var(--va-space-md);
+    border-bottom: var(--va-rule-quiet);
+}
+
+@media (min-width: 46rem) {
+    .va-conn-scope > div {
+        grid-template-columns: minmax(0, 10rem) minmax(0, 1fr);
+        gap: var(--va-space-2xl);
+        align-items: baseline;
+    }
+}
+
+.va-conn-scope dt {
+    font-family: var(--va-font-display);
+    font-size: var(--va-text-md);
+}
+
+.va-conn-scope dd {
+    margin: 0;
+    max-width: var(--va-measure);
+    font-size: var(--va-text-sm);
+    line-height: var(--va-leading-snug);
+    color: var(--va-text-secondary);
+}
+
+/* The bodies a reader may believe are included and which are not held. Second
+   line rather than second column: it is the sentence most often skipped and it
+   has to sit directly under the scope it qualifies. */
+.va-conn-scope dd small {
+    display: block;
+    margin-top: var(--va-space-2xs);
+    font-size: var(--va-text-2xs);
+    line-height: var(--va-leading-snug);
+    color: var(--va-text-tertiary);
+}
+
+/* ------------------------------------------------- the evidence matrix -- */
+
+.va-conn-evidence {
+    border-top: var(--va-border-width) solid var(--va-line-strong);
+    border-bottom: var(--va-border-width) solid var(--va-line-strong);
+}
+
+.va-conn-evidence-summary {
+    display: flex;
+    flex-direction: column;
+    gap: var(--va-space-3xs);
+    padding-block: var(--va-space-lg);
+    cursor: pointer;
+    list-style: none;
+}
+
+.va-conn-evidence-summary::-webkit-details-marker {
+    display: none;
+}
+
+/*
+ * `display: flex` on the summary removes the disclosure triangle, so the
+ * affordance has to be drawn back. A plus and a minus rather than a chevron: the
+ * house language has no icon set of its own and a typographic mark is what a
+ * printed apparatus would use.
+ */
+.va-conn-evidence-summary > span {
+    font-family: var(--va-font-display);
+    font-size: var(--va-text-md);
+    color: var(--va-accent-text);
+}
+
+.va-conn-evidence-summary > span::after {
+    content: "\002B";
+    margin-left: var(--va-space-sm);
+    color: var(--va-text-tertiary);
+}
+
+.va-conn-evidence[open] .va-conn-evidence-summary > span::after {
+    content: "\2212";
+}
+
+.va-conn-evidence-summary:hover > span {
+    color: var(--va-accent-hover);
+}
+
+.va-conn-evidence-summary small {
+    font-size: var(--va-text-2xs);
+    color: var(--va-text-tertiary);
+    font-variant-numeric: tabular-nums;
+}
+
+.va-conn-evidence-body {
+    padding-bottom: var(--va-space-2xl);
+}
+
+.va-conn-evidence-key {
+    margin: 0 0 var(--va-space-xl);
+    max-width: var(--va-measure);
+    font-size: var(--va-text-sm);
+    line-height: var(--va-leading-normal);
+    color: var(--va-text-secondary);
+}
+
+.va-conn-table-wrap {
+    overflow-x: auto;
+}
+
+.va-conn-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-variant-numeric: tabular-nums;
+}
+
+.va-conn-table thead th {
+    padding: var(--va-space-sm) var(--va-space-md);
+    text-align: left;
+    vertical-align: bottom;
+    font-size: var(--va-text-2xs);
+    font-weight: var(--va-weight-medium);
+    letter-spacing: var(--va-tracking-eyebrow);
+    text-transform: uppercase;
+    color: var(--va-text-tertiary);
+    border-bottom: var(--va-border-width) solid var(--va-line-strong);
+}
+
+.va-conn-table tbody th {
+    padding: var(--va-space-md);
+    text-align: left;
+    font-family: var(--va-font-display);
+    font-size: var(--va-text-base);
+    font-weight: var(--va-weight-regular);
+    border-bottom: var(--va-rule-quiet);
+}
+
+.va-conn-table td {
+    padding: var(--va-space-md);
+    border-bottom: var(--va-rule-quiet);
+    vertical-align: baseline;
+}
+
+.va-conn-figure {
+    font-size: var(--va-text-md);
+    font-weight: var(--va-weight-medium);
+}
+
+.va-conn-page .va-conn-cell[data-tone="none"] {
+    background: color-mix(in srgb, var(--va-tone-partial-surface) 55%, transparent);
+}
+
+.va-conn-page .va-conn-cell[data-tone="unknown"],
+.va-conn-page .va-conn-cell[data-tone="shape"] {
+    background: color-mix(in srgb, var(--va-tone-unbuilt-surface) 45%, transparent);
+}
+
+/*
+ * Below 72rem the matrix stacks into one block per corpus pair.
+ *
+ * The column heading then travels on the value itself, via `data-label`, which is
+ * why every cell sets one. Nothing is dropped in the narrow layout: all 48 cells
+ * are present in both, because the cells that carry no count are precisely the ones
+ * worth keeping. A table that can only be read by dragging it sideways is a table a
+ * phone reader does not read at all, and that was the old surface's primary
+ * interface.
+ */
+@media (max-width: 72rem) {
+    .va-conn-evidence-body .va-conn-table-wrap {
+        overflow-x: visible;
+    }
+
+    .va-conn-evidence-body .va-conn-table,
+    .va-conn-evidence-body .va-conn-table tbody {
+        display: block;
+    }
+
+    .va-conn-evidence-body .va-conn-table thead {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        margin: -1px;
+        padding: 0;
+        overflow: hidden;
+        clip-path: inset(50%);
+        white-space: nowrap;
+        border: 0;
+    }
+
+    .va-conn-evidence-body .va-conn-table tr {
+        display: block;
+        margin-bottom: var(--va-space-2xl);
+    }
+
+    .va-conn-evidence-body .va-conn-table tr:last-child {
+        margin-bottom: 0;
+    }
+
+    .va-conn-evidence-body .va-conn-table tbody th {
+        display: block;
+        padding: 0 0 var(--va-space-sm);
+        font-size: var(--va-text-lg);
+        border-bottom: var(--va-border-width) solid var(--va-line-strong);
+    }
+
+    .va-conn-evidence-body .va-conn-table td {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        gap: var(--va-space-lg);
+        padding: var(--va-space-sm) var(--va-space-xs);
+    }
+
+    .va-conn-evidence-body .va-conn-table td::before {
+        content: attr(data-label);
+        font-size: var(--va-text-2xs);
+        letter-spacing: var(--va-tracking-eyebrow);
+        text-transform: uppercase;
+        color: var(--va-text-tertiary);
+    }
+}

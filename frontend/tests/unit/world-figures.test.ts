@@ -119,9 +119,41 @@ describe("the Samavedic hierarchy is stated one way", () => {
             expect(read(page)).not.toContain("Parvan");
         });
         it(`${page} states the deepest measured shape`, () => {
-            expect(read(page)).toContain(
-                "Collection → Prapathaka → Ardha → Dasati → Verse",
-            );
+            /*
+             * The levels, in order, with diacritics folded away.
+             *
+             * Pinned as a literal string until this pass, which failed the moment the
+             * pages started spelling the divisions properly -- "Ārcika → Prapāṭhaka →
+             * Ardha → Daśati → Verse" is the same claim as "Collection → Prapathaka →
+             * Ardha → Dasati → Verse" and a better rendering of it. What the test is for
+             * is that both pages state the *same* five-level shape and neither quietly
+             * loses a level, so that is what it now asserts. The top division is left out
+             * of the sequence deliberately: "Ārcika" and "Collection" are both true of it
+             * and the choice between them is editorial.
+             */
+            expect(levelsIn(read(page))).toEqual([
+                "prapathaka",
+                "ardha",
+                "dasati",
+                "verse",
+            ]);
         });
     }
+
+    it("states it the same way on both pages", () => {
+        const [index, detail] = pages.map((page) => levelsIn(read(page)));
+        expect(index).toEqual(detail);
+    });
 });
+
+/** The Samavedic divisions a page names, in the order it names them, diacritics folded. */
+function levelsIn(source: string): string[] {
+    const folded = source.normalize("NFD").replace(/\p{Diacritic}/gu, "").toLowerCase();
+    const arrow = folded.indexOf("prapathaka");
+    if (arrow < 0) return [];
+    const line = folded.slice(arrow, folded.indexOf(String.fromCharCode(10), arrow));
+    return line
+        .split("→")
+        .map((part) => part.replace(/[^a-z]/g, ""))
+        .filter(Boolean);
+}

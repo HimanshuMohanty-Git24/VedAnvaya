@@ -256,6 +256,121 @@
     color: var(--va-text-secondary);
 }
 
+/* ------------------------------------------------------------- provenance - */
+
+/*
+ * Who printed this text, under what licence.
+ *
+ * Set below the verse and quiet, because it is the answer to a question the reader may not
+ * have asked yet. It is one line and not a panel: an edition and a licence are two facts,
+ * and two facts do not need a container.
+ */
+.va-reader-provenance {
+    margin: var(--va-space-md) 0 0;
+    max-inline-size: var(--va-reader-measure);
+    font-size: var(--va-text-xs);
+    color: var(--va-text-tertiary);
+}
+
+/* ---------------------------------------------------------- svara notation - */
+
+/*
+ * The Samavedic notated witness.
+ *
+ * This is a section and not a row inside a disclosure, because for the 1,136 verses that
+ * have one it is the second most important object on the page after the verse itself. It
+ * is framed the way the verse is framed -- a rule above, space around, no box -- so that
+ * promoting it does not turn it into a card competing with the text.
+ */
+.va-reader-notation {
+    margin-top: var(--va-space-3xl);
+    padding-top: var(--va-space-xl);
+    border-top: var(--va-rule-quiet);
+}
+
+/*
+ * A shade under the verse and a shade over an inline quotation. The notation carries marks
+ * above and below every syllable, so it needs more leading than the plain text at the same
+ * size, and the accent stack is what sets the ceiling on the size.
+ */
+.va-reader-notation-text {
+    margin: 0;
+    max-inline-size: var(--va-reader-measure);
+    font-size: clamp(1.1rem, 0.95rem + 0.7vw, 1.46rem);
+    line-height: 2.05;
+}
+
+.va-reader-notation-about {
+    margin-top: var(--va-space-lg);
+    max-inline-size: var(--va-reader-measure);
+}
+
+.va-reader-notation-about > summary {
+    display: inline-flex;
+    align-items: baseline;
+    gap: var(--va-space-xs);
+    cursor: pointer;
+    list-style: none;
+    font-size: var(--va-text-xs);
+    color: var(--va-text-tertiary);
+    transition: var(--va-transition-colors);
+}
+
+.va-reader-notation-about > summary::-webkit-details-marker {
+    display: none;
+}
+
+.va-reader-notation-about > summary::before {
+    content: "";
+    width: 5px;
+    height: 5px;
+    border-inline-end: var(--va-border-width) solid currentColor;
+    border-block-end: var(--va-border-width) solid currentColor;
+    rotate: -45deg;
+    translate: 0 -2px;
+    transition: var(--va-transition-transform);
+}
+
+.va-reader-notation-about[open] > summary::before {
+    rotate: 45deg;
+}
+
+.va-reader-notation-about > summary:hover {
+    color: var(--va-accent-text);
+}
+
+.va-reader-notation-about > p {
+    margin: var(--va-space-sm) 0 0;
+    padding-inline-start: var(--va-space-lg);
+    border-inline-start: var(--va-border-width) solid var(--va-line-hairline);
+    font-size: var(--va-text-sm);
+    line-height: var(--va-leading-prose);
+    color: var(--va-text-secondary);
+}
+
+/* ---------------------------------------------------------------- absence - */
+
+/*
+ * A layer that does not reach this verse.
+ *
+ * One sentence in the margin voice, with the route to the full account beside it. What this
+ * replaces was a bordered status block carrying the corpus-wide census, which on a Samavedic
+ * page fires on nine verses in ten and was therefore the largest object on most of them. The
+ * census still exists; it is on /limits, which is where a reader asks that question.
+ */
+.va-reader-absence {
+    margin: var(--va-space-xl) 0 0;
+    max-inline-size: var(--va-reader-measure);
+    font-size: var(--va-text-sm);
+    color: var(--va-text-tertiary);
+}
+
+.va-reader-absence a {
+    color: var(--va-accent-text);
+    text-decoration-thickness: from-font;
+    text-underline-offset: 0.22em;
+}
+
 /* ------------------------------------------------------------ translation - */
 
 .va-translation {
@@ -328,39 +443,81 @@
     color: var(--va-text-tertiary);
 }
 
+.va-translation-source a {
+    color: var(--va-accent-text);
+    text-decoration-thickness: from-font;
+    text-underline-offset: 0.22em;
+}
+
+/*
+ * What a reused rendering is, printed rather than boxed.
+ *
+ * The sentence is the API's own disclosure. It sits under the citation it explains, in the
+ * margin voice, because on a Samavedic page it is the normal case: a caveat box here fired
+ * on every translated verse in the corpus and read as an alarm rather than a note.
+ */
+.va-reader-origin {
+    margin: var(--va-space-sm) 0 0;
+    max-inline-size: var(--va-reader-measure);
+    font-size: var(--va-text-xs);
+    line-height: var(--va-leading-prose);
+    color: var(--va-text-tertiary);
+}
+
 /* --------------------------------------------------------- parallel entry - */
 
 /*
- * The parallel is an editorial statement, not a call to action in a box: this wording stands
- * somewhere else, and here is where. The rule above it is the separator; the arrow is the
- * only ornament.
+ * Where else this wording stands.
+ *
+ * An editorial statement, not a call to action in a box. What it gained over the link it
+ * replaces is the citation: a reader on a Samavedic verse whose English arrives through
+ * RV 6.16.10 can now see, and open, RV 6.16.10 without first opening the comparison view.
  */
-.va-parallel {
-    display: grid;
-    gap: var(--va-space-2xs);
+.va-reader-elsewhere {
     margin-top: var(--va-space-2xl);
     padding-top: var(--va-space-lg);
     border-top: var(--va-rule-feature);
-    color: inherit;
-    text-decoration: none;
     max-inline-size: var(--va-reader-measure);
 }
 
-.va-parallel strong {
+.va-reader-elsewhere > h2 {
+    margin-bottom: var(--va-space-md);
+}
+
+.va-reader-elsewhere-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--va-space-xs) var(--va-space-lg);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.va-reader-elsewhere-list a {
     font-family: var(--va-font-display);
     font-size: var(--va-text-xl);
     font-weight: var(--va-weight-regular);
+    font-variant-numeric: tabular-nums;
     color: var(--va-text-primary);
+    text-decoration: none;
     transition: var(--va-transition-colors);
 }
 
-.va-parallel:hover strong {
+.va-reader-elsewhere-list a:hover {
     color: var(--va-accent-text);
 }
 
-.va-parallel small {
+.va-reader-elsewhere-more {
+    display: inline-block;
+    margin-top: var(--va-space-md);
     font-size: var(--va-text-sm);
     color: var(--va-text-tertiary);
+    text-decoration: none;
+    transition: var(--va-transition-colors);
+}
+
+.va-reader-elsewhere-more:hover {
+    color: var(--va-accent-text);
 }
 
 /* ------------------------------------------------------------ adjacent nav - */
@@ -965,6 +1122,34 @@ section.recitation {
 }
 
 /*
+ * The same correction, in the apparatus rail.
+ *
+ * An unbuilt layer is the ordinary state of Samavedic ascription -- the corpus carries no
+ * seer, deity or metre index at all -- so on 1,844 pages this reported a standing property
+ * of the corpus in the shape of a notification, and it did so twice in a rail whose whole
+ * language is rules and links. The state is still typed, still named and still toned; it is
+ * simply set as a line of the rail rather than as a chip laid on top of it.
+ */
+.va-apparatus-group > .knowledge-status.is-compact {
+    padding: 0;
+    background: none;
+    border: 0;
+    border-radius: 0;
+    font-family: var(--va-font-ui);
+    font-size: var(--va-text-xs);
+    gap: var(--va-space-2xs);
+}
+
+.va-apparatus-group > .knowledge-status.is-compact svg {
+    width: 13px;
+    height: 13px;
+}
+
+.va-apparatus-group > .knowledge-status.is-compact strong {
+    font-weight: var(--va-weight-regular);
+}
+
+/*
  * The play control.
  *
  * The old rule gives it a circular filled background, and the new one draws a rubric diamond
@@ -977,4 +1162,75 @@ section.recitation .recitation-play {
     border: 0;
     border-radius: 0;
     box-shadow: none;
+}
+
+/* ---------------------------------------------------------- fixed phrases - */
+
+/*
+ * The formula layer, set as a reading apparatus rather than as a list of chips.
+ *
+ * It matters most where the page has least: a Samavedic verse carries no seer, no metre
+ * and no ascribed deity, because all three layers are Rigveda-only, so its shared wording
+ * is a large part of what there is to read. 1,311 of the 1,844 have at least one.
+ *
+ * The phrase is set in the Devanagari-capable serif at reading size and the reach sits
+ * beside it in the small UI face, so the eye takes the Sanskrit first and the apparatus
+ * second - the same relationship the witness line has to the verse above it.
+ */
+.va-reader-formulae {
+    margin-top: var(--va-space-2xl);
+    padding-top: var(--va-space-lg);
+    border-top: var(--va-rule-feature);
+    max-inline-size: var(--va-reader-measure);
+}
+
+.va-reader-formulae > h2 {
+    margin-bottom: var(--va-space-md);
+}
+
+.va-reader-formulae-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--va-space-sm);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.va-reader-formulae-list > li {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: var(--va-space-xs) var(--va-space-md);
+}
+
+.va-reader-formulae-list a {
+    text-decoration: none;
+    transition: var(--va-transition-colors);
+}
+
+.va-reader-formulae-list a:hover {
+    color: var(--va-accent-text);
+}
+
+.va-reader-formula-form {
+    /* IAST, not Devanagari: the formula layer stores a normalised Latin surface, so
+       `satsi barhiṣi` is what a row actually reads. The Devanagari face here would be a
+       fallback chain nothing in the string reaches. */
+    font-family: var(--va-font-iast);
+    font-size: var(--va-text-lg);
+    color: var(--va-text-primary);
+}
+
+.va-reader-formula-reach {
+    font-size: var(--va-text-xs);
+    font-variant-numeric: tabular-nums;
+    color: var(--va-text-tertiary);
+}
+
+.va-reader-formulae-note {
+    margin: var(--va-space-md) 0 0;
+    font-size: var(--va-text-xs);
+    line-height: var(--va-leading-prose);
+    color: var(--va-text-tertiary);
 }

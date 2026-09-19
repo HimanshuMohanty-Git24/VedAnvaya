@@ -485,6 +485,43 @@ export const W_BRIDGE = 1.0;
 /** No node group may hold more than this share of the budget after the fill rounds. */
 export const GROUP_CEILING = 0.3;
 
+/**
+ * Tighter ceilings for the two groups that are apparatus rather than subject matter.
+ *
+ * Measured at budget 40 against the shipped artifact, with one ceiling for everybody:
+ *
+ *     Indra  pool passage:4745 record:820 idea:47 deity:39 rite:3 thing:1
+ *            shown passage:12 idea:9 record:9 deity:6 rite:2 thing:1 derived:1
+ *     Agni   shown passage:12 idea:9 record:8 deity:5 rite:2 thing:1 ...
+ *     Soma   shown passage:12 idea:9 record:9 deity:7 thing:1 rite:1 derived:1
+ *
+ * Twenty-one of Indra's forty seats - over half the scene - went to passages and evidence
+ * records, and six to other deities. That is a faithful picture of the *degree distribution*
+ * and a poor picture of the subject: a reader who clicks Indra is asking what Indra is
+ * connected to, and "four thousand verses mention him" is one fact, not twelve rows.
+ *
+ * The 35,131-node semantic-assertion layer is why this became visible when it did. Before the
+ * public-identity repair in 5d9c163 those nodes were dropped from the export; restoring them
+ * was correct, and it also doubled the artifact and handed the fill round 820 new candidates
+ * on Indra alone. Nothing about the curation changed - the corpus it curates did.
+ *
+ * So passages and evidence records get their own, lower ceilings and the freed seats go to the
+ * groups the weighted fill was already ranking behind them. Neither group is hidden: both keep
+ * their coverage-round seat, both keep their sidebar family row with the full count, and both
+ * are reachable through the list and "show more". This governs how many are *drawn at once*.
+ *
+ * A group absent from this table uses GROUP_CEILING.
+ */
+export const GROUP_CEILING_OVERRIDES: Record<string, number> = {
+    passage: 0.15,
+    record: 0.1,
+};
+
+/** The share of the budget one node group may hold, after the fill rounds. */
+export function groupCeiling(group: string): number {
+    return GROUP_CEILING_OVERRIDES[group] ?? GROUP_CEILING;
+}
+
 /** Share of the budget held back for constellation reach, and its absolute bounds. */
 export const BRIDGE_RESERVE = 0.1;
 export const BRIDGE_RESERVE_MIN = 2;
@@ -1091,6 +1128,17 @@ export function selectFocus(
      * candidates left returns its surplus to the pool rather than leaving the budget unspent.
      * Remainders tie by group name, so an equal split cannot drift between runs.
      */
+    /*
+     * Per group, not one number. `options.groupCeiling` still overrides every group at once,
+     * because a caller that passes it is asking for a uniform experiment and a table that
+     * quietly ignored half of it would make that experiment lie.
+     *
+     * Declared here rather than inside the fill round because ROUND 5 applies it too, and the
+     * two rounds disagreeing about the ceiling is the defect ROUND 5 documents.
+     */
+    const ceilingOf = (group: number) =>
+        Math.max(1, Math.floor(budget * (options.groupCeiling ?? groupCeiling(groups[group]))));
+
     let traceFill = 0;
     if (room() > 0) {
         const weight = new Map<number, number>();
@@ -1100,7 +1148,6 @@ export function selectFocus(
             if (prior <= 0) continue;
             weight.set(group, Math.sqrt(byGroup[group]?.length ?? 0) * prior);
         }
-        const ceiling = Math.max(1, Math.floor(budget * (options.groupCeiling ?? GROUP_CEILING)));
         const held = new Map<number, number>();
         for (const candidate of chosen) {
             held.set(candidate.groupIndex, (held.get(candidate.groupIndex) ?? 0) + 1);
@@ -1139,7 +1186,7 @@ export function selectFocus(
             for (const group of pool) {
                 const assigned = quota.get(group) ?? 0;
                 const free = freeInGroup[group] - assigned;
-                const headroom = Math.max(0, ceiling - (held.get(group) ?? 0) - assigned);
+                const headroom = Math.max(0, ceilingOf(group) - (held.get(group) ?? 0) - assigned);
                 const want = base.get(group) ?? 0;
                 const allow = Math.min(want, free, headroom);
                 quota.set(group, assigned + allow);
@@ -1209,19 +1256,62 @@ export function selectFocus(
     }
 
     /*
-     * ROUND 5 - RANK FILL.
+     * ROUND 5 - RANK FILL, and it honours the ceilings the fill round just applied.
      *
      * Slots the fill could not place - because every group with a prior ran dry, or the
      * ceiling bound - go to the highest-salience neighbour left. A zero-prior group stays out:
      * a scene padded to forty with derived metrics is worse than a scene of thirty-six.
+     *
+     * It used to honour no ceiling at all, which was invisible only because the fill round
+     * rarely left it anything: passages took their full share and the budget was spent. Giving
+     * passages and records a tighter ceiling made this round fire, and measured, it put 15
+     * ideas on Soma against a documented maximum of 12 - the fill round's apportionment
+     * undone, one round later, by the round that was supposed to be mopping up.
+     *
+     * Two passes rather than one. The first respects the tight per-group ceiling, so a subject
+     * with plenty of company keeps a subject-led scene. The second relaxes to the general
+     * ceiling, and exists for the subjects that genuinely have nothing else: a metre is
+     * attached to four thousand verses and to almost nothing that is not a verse, and a scene
+     * of six passages for `triṣṭubh` would be a worse answer than the twelve it drew before.
+     * Relaxation is bounded by GROUP_CEILING, so no group can take the whole scene either way.
      */
     let traceRank = 0;
     if (room() > 0) {
-        for (const candidate of sorted) {
-            if (room() <= 0) break;
-            if (priorOf(groups[candidate.groupIndex]) <= 0) continue;
-            if (take(candidate, "RANK")) traceRank += 1;
+        const heldNow = new Map<number, number>();
+        for (const candidate of chosen) {
+            heldNow.set(candidate.groupIndex, (heldNow.get(candidate.groupIndex) ?? 0) + 1);
         }
+        const generalCeiling = Math.max(
+            1,
+            Math.floor(budget * (options.groupCeiling ?? GROUP_CEILING)),
+        );
+        const rankPass = (ceilingFor: (group: number) => number) => {
+            for (const candidate of sorted) {
+                if (room() <= 0) break;
+                const group = candidate.groupIndex;
+                if (priorOf(groups[group]) <= 0) continue;
+                if ((heldNow.get(group) ?? 0) >= ceilingFor(group)) continue;
+                if (take(candidate, "RANK")) {
+                    heldNow.set(group, (heldNow.get(group) ?? 0) + 1);
+                    traceRank += 1;
+                }
+            }
+        };
+        rankPass(ceilingOf);
+        if (room() > 0) rankPass(() => generalCeiling);
+        /*
+         * And finally with no ceiling at all, which is what this round did before.
+         *
+         * It is reached only by a subject whose neighbours are all of one kind, and those are
+         * common: every one of the 729 seers is attached to passages and to nothing else, so
+         * `maitrāvaruṇirvasiṣṭhaḥ` has 836 neighbours of which 836 are verses. Stopping at the
+         * ceiling would draw him twelve of a possible forty and call the other 824 hidden,
+         * which is a diversity rule applied where there is no diversity to protect.
+         *
+         * Subject-rich roots never get here: Indra, Varuna, Agni, Soma and the Maruts all fill
+         * the budget in the two bounded passes, so the ceilings still decide their scenes.
+         */
+        if (room() > 0) rankPass(() => Number.POSITIVE_INFINITY);
     }
 
     return {

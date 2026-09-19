@@ -33,6 +33,7 @@ from vedagraph.product.audio.models import (
     Availability,
     MappingConfidence,
     PlaybackMode,
+    PublicationTier,
 )
 
 
@@ -141,6 +142,18 @@ class AudioTrackView(ApiModel):
     start_seconds: float | None = None
     end_seconds: float | None = None
     availability: Availability
+    publication_tier: PublicationTier = Field(
+        default=PublicationTier.SOURCE_MAPPED_UNREVIEWED,
+        description="Whether a person has heard this recording. "
+        "`SOURCE_MAPPED_UNREVIEWED` is the normal answer and must never be rendered with "
+        "the words 'verified', 'human verified' or 'audibly verified'. Render "
+        "`review_note` verbatim and the label cannot overstate it.",
+    )
+    review_note: str = Field(
+        description="Reader-facing prose for `publication_tier`, safe to render verbatim. "
+        "Written in one place so no second code path can phrase an unheard recording as a "
+        "checked one."
+    )
     mapping_confidence: MappingConfidence
     mapping_method: str = Field(
         description="How this recording came to be attached to this passage, in one "
@@ -197,6 +210,16 @@ class WorkAudioResponse(ApiModel):
         "player."
     )
     scope_type_counts: dict[str, int] = Field(default_factory=dict)
+    source_counts: dict[str, int] = Field(
+        default_factory=dict,
+        description="Recordings per publisher, over the whole Veda rather than over the page "
+        "of `tracks` returned. "
+        "Present because a surface that derived this from `tracks` would be describing a "
+        "sample as though it were the population, and one did: the Rigveda's recitation "
+        "panel read its publishers off the first page of tracks and named the Cologne "
+        "collection, which supplies 150 of its 10,552 recordings, as the source of the "
+        "collection.",
+    )
     data_status: KnowledgeStatus
     caveats: list[CaveatView] = Field(default_factory=list)
 
@@ -204,14 +227,32 @@ class WorkAudioResponse(ApiModel):
 class AudioStatsResponse(ApiModel):
     """Catalog-wide figures, all derived.
 
-    Deliberately reports ``by_availability`` beside the coverage counts. A catalog of 1,801
-    records of which most were last measured as unreachable is a different product state
-    from one where they answer, and a stats block that omitted it would read as full
-    coverage.
+    Deliberately reports ``by_availability`` beside the coverage counts. A catalog whose
+    records were mostly last measured as unreachable is a different product state from one
+    where they answer, and a stats block that omitted it would read as full coverage.
+
+    Reports ``by_publication_tier`` for the same reason. Since 2026-09-19 the catalogue
+    holds recordings nobody has listened to, and a single total would let a surface call
+    all of them verified.
     """
 
     total_records: int
     by_veda: dict[str, int] = Field(default_factory=dict)
+    by_publication_tier: dict[str, int] = Field(
+        default_factory=dict,
+        description="Records per tier. Sums to `total_records`, which is the invariant a "
+        "client may rely on: there is no third, hidden state.\n\n"
+        "`RELEASED_VERIFIED` counts recordings a named person played. "
+        "`SOURCE_MAPPED_UNREVIEWED` counts recordings mapped and checked by instrument and "
+        "heard by nobody. A surface that adds them together and calls the total 'verified' "
+        "is the one failure this split exists to make impossible.",
+    )
+    by_veda_and_tier: dict[str, dict[str, int]] = Field(
+        default_factory=dict,
+        description="`{veda: {tier: count}}`, with every tier present for every Veda even "
+        "at zero -- so a Veda with no reviewed recordings renders as '0 reviewed' rather "
+        "than rendering as nothing. Read this rather than hard-coding a coverage figure.",
+    )
     by_scope_type: dict[str, int] = Field(default_factory=dict)
     by_audio_type: dict[str, int] = Field(default_factory=dict)
     by_mapping_confidence: dict[str, int] = Field(default_factory=dict)

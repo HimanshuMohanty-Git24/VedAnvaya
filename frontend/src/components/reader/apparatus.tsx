@@ -127,7 +127,16 @@ export function Apparatus({
                         />
                     ))
                 ) : (
-                    <KnowledgeStatus status={reader.devatas.data_status} />
+                    /*
+                     * Compact, because in the rail this is a label and not an argument.
+                     *
+                     * The Samaveda has no ascription layer at all, so the full block -- an
+                     * icon, a heading and two sentences of explanation -- fired on all 1,844
+                     * of its verse pages and was the tallest object in the rail on every one
+                     * of them. The state is still typed and still named; what is gone is the
+                     * paragraph, which is on /limits.
+                     */
+                    <KnowledgeStatus compact status={reader.devatas.data_status} />
                 )}
             </section>
 
@@ -158,7 +167,7 @@ export function Apparatus({
                         ) : null}
                     </>
                 ) : (
-                    <KnowledgeStatus status={reader.mentioned_devatas.data_status} />
+                    <KnowledgeStatus compact status={reader.mentioned_devatas.data_status} />
                 )}
             </section>
 

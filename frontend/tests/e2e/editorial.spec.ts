@@ -177,15 +177,45 @@ test.describe("what these pages refuse to say", () => {
     }) => {
         await page.goto("/visualizations/transmission");
         const key = page.locator(".va-matrix-key");
-        await expect(key.getByText(/never established for this pair/i)).toBeVisible();
-        await expect(key.getByText(/does not exist anywhere in this graph/i)).toBeVisible();
+        await expect(key).toBeVisible();
 
-        /* Every cell of the matrix carries a status, including the ones that are not counts.
-           An untyped cell would render as an empty box and read as a zero. */
+        /*
+         * Every mark on the grid is explained in the key, and the key explains nothing that
+         * is not on the grid.
+         *
+         * Two specific legend sentences were pinned here, and one of them -- "never
+         * established for this pair" -- stopped rendering when the measurement behind those
+         * cells moved from NOT_ESTABLISHED_FOR_PAIR to MEASURED_ZERO. The legend is built
+         * from the statuses actually present, which is correct behaviour and the reason a
+         * sentence pinned in a test is the wrong thing to assert: the claim is that no mark
+         * is unexplained, and it survives the data moving underneath it.
+         */
         const cells = page.locator(".va-matrix tbody td");
         expect(await cells.count()).toBeGreaterThan(0);
+
+        const statuses = new Set<string>();
         for (const cell of await cells.all()) {
-            await expect(cell).toHaveAttribute("data-cell", /\w+/);
+            const status = await cell.getAttribute("data-cell");
+            /* An untyped cell would render as an empty box and read as a zero. */
+            expect(status, "a matrix cell carries no status").toMatch(/\w+/);
+            statuses.add(status!);
+        }
+
+        const keyText = await key.innerText();
+        const nonCount = [...statuses].filter((status) => status !== "MEASURED");
+        expect(nonCount.length, "no cell on this grid is anything but a count").toBeGreaterThan(0);
+        for (const status of nonCount) {
+            const mark = await page
+                .locator(`.va-matrix tbody td[data-cell="${status}"]`)
+                .first()
+                .innerText();
+            expect(keyText, `${status} prints "${mark}" and the key does not explain it`).toContain(
+                mark.trim(),
+            );
+        }
+        /* The most misreadable of them all, whenever it is on the grid. */
+        if (statuses.has("NOT_BUILT")) {
+            await expect(key.getByText(/does not exist anywhere in this graph/i)).toBeVisible();
         }
     });
 

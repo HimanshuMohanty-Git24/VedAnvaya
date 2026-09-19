@@ -19,6 +19,13 @@ from vedagraph.api.models.completeness import (
 )
 from vedagraph.domain import layer_figures
 from vedagraph.product.audio.catalog import AudioCatalog
+from vedagraph.product.audio.models import PublicationTier
+
+
+#: The date the certified state below describes. A constant rather than ``date.today()``:
+#: this response states when the corpus was certified, not when it was asked about, and a
+#: date that moves every morning is a claim of freshness nothing behind it supports.
+CERTIFIED_AS_OF_DATE = "2026-09-19"
 
 
 class CompletenessService:
@@ -166,6 +173,7 @@ class CompletenessService:
                 uncovered=uncov_v,
                 independent_english=indep_en,
                 coverage_percentage=pct,
+                has_own_dedicated_english=ded_v > 0,
                 notes=notes,
             )
 
@@ -208,7 +216,17 @@ class CompletenessService:
             ),
         )
 
-        # 4. Audio catalogue & audible review gate
+        # 4. Audio catalogue & the two publication tiers
+        #
+        # Every figure here is counted off the catalogue that is actually loaded. The block
+        # this replaces mixed the two: it took `total_audio_records` from the file and then
+        # wrote the per-Veda split into a sentence by hand, so admitting 946 recordings made
+        # the response read "17,780 catalogued records (RV 10,402; AV 4,680; YV 1,752)" -
+        # a total that no longer matched its own breakdown, in the one field a product
+        # surface is invited to quote verbatim. A figure typed into prose is the only figure
+        # nothing can check, so there are none left in it.
+        tier_counts: dict[str, int] = {}
+        by_veda_and_tier: dict[str, dict[str, int]] = {}
         try:
             catalog = AudioCatalog.load_default()
             total_audio_records = len(catalog)
@@ -217,10 +235,20 @@ class CompletenessService:
             released_scope_keys = {
                 v: len(catalog.scope_keys_for_veda(v)) for v in ("RV", "AV", "YV", "SV")
             }
+            by_veda_and_tier = catalog.counts_by_veda_and_tier()
+            for tier in PublicationTier:
+                tier_counts[tier.value] = len(catalog.for_tier(tier))
         except Exception:
-            total_audio_records = 16834
-            released_by_veda = {"RV": 10402, "AV": 4680, "YV": 1752, "SV": 0}
-            released_scope_keys = {"RV": 10402, "AV": 4680, "YV": 1752, "SV": 0}
+            # A catalogue that cannot be read is a zero *nobody should quote*, so the
+            # figures are left empty rather than filled with a frozen copy of a past
+            # release. The old fallback here held 16,834 and survived the admission of 946
+            # recordings unchanged, which is the failure mode of every stale constant.
+            total_audio_records = 0
+            released_by_veda = {}
+            released_scope_keys = {}
+
+        reviewed_count = tier_counts.get(PublicationTier.RELEASED_VERIFIED.value, 0)
+        unreviewed_count = tier_counts.get(PublicationTier.SOURCE_MAPPED_UNREVIEWED.value, 0)
 
         gate_json = self._read_audio_pass_gates()
         audio_info = gate_json.get("audio", {})
@@ -236,13 +264,36 @@ class CompletenessService:
             queue_total=audio_info.get("queue_total", 1021),
             not_individually_heard=audio_info.get("NOT_INDIVIDUALLY_HEARD", 1001),
             queue_rows_promoted=audio_info.get("queue_rows_promoted", 0),
-            withheld_gates=["GAP-AUDIO-002", "GAP-AUDIO-003", "GAP-AUDIO-004"],
+            released_by_tier=tier_counts,
+            released_by_veda_and_tier=by_veda_and_tier,
+            # Stated in words rather than as sprint identifiers. GAP-AUDIO-002/003/004 named
+            # the same three facts to anybody holding the registry and nothing at all to a
+            # reader, and this field is served to a product surface.
+            withheld_gates=[
+                "No Samavedic recitation is catalogued from any source.",
+                "Recordings are streamed from their publishers; none is redistributed here.",
+                "Human audible review is a per-recording badge, not a condition of publication.",
+            ],
             truth_statement=(
-                f"Public recitation coverage consists of {total_audio_records:,} catalogued records "
-                "(RV 10,402; AV 4,680; YV 1,752; SV 0). The owner audible sample (20/20 reviewed) "
-                "passed and was accepted. 1,001 of 1,021 queued recordings remain not individually heard "
-                "and stay withheld behind the manual audible-review gate (GAP-AUDIO-002, 003, 004); "
-                "no mass promotion occurred."
+                f"{total_audio_records:,} recitations are catalogued"
+                + (
+                    " ("
+                    + "; ".join(
+                        f"{veda} {count:,}" for veda, count in released_by_veda.items()
+                    )
+                    + ")"
+                    if released_by_veda
+                    else ""
+                )
+                + ". "
+                + (
+                    f"{reviewed_count:,} of them have been listened to and confirmed by a "
+                    f"person; the remaining {unreviewed_count:,} are mapped to their verse "
+                    "and checked against its text automatically, and no one has heard them. "
+                    if tier_counts
+                    else ""
+                )
+                + "They are not described as human-verified."
             ),
         )
 
@@ -303,9 +354,26 @@ class CompletenessService:
             )
         ]
 
+        total_canonical = sum(corpus.canonical_mantras for corpus in corpora)
+        by_veda_counts = {corpus.veda: corpus.canonical_mantras for corpus in corpora}
+
         return CompletenessResponse(
             data_status=KnowledgeStatus.SUPPORTED,
             certified_release_commit="50a40429103fa32a5667ee58c72c029cfbeb0f74",
+            as_of_date=CERTIFIED_AS_OF_DATE,
+            total_canonical_mantras=total_canonical,
+            truth_summary=(
+                f"VedAnvaya holds {total_canonical:,} canonical mantras across four Vedic "
+                f"Samhitas in one recension each (RV "
+                f"{by_veda_counts.get('RV', 0):,}; SV {by_veda_counts.get('SV', 0):,}; "
+                f"YV {by_veda_counts.get('YV', 0):,}; AV {by_veda_counts.get('AV', 0):,}), "
+                f"{translations_summary.total_dedicated_english:,} dedicated English "
+                f"translations and {translations_summary.total_reused_rendering:,} renderings "
+                f"reached through a verified parallel, "
+                f"{samaveda_notation.validated_notation_witnesses:,} validated Samaveda "
+                f"notation witnesses, and "
+                f"{audio_completeness.released_catalogue_records:,} catalogued recordings."
+            ),
             corpora=corpora,
             translations=translations_summary,
             samaveda_notation=samaveda_notation,

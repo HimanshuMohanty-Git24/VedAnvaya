@@ -111,16 +111,69 @@ test.describe("recitation across the Valakhilya boundary", () => {
         await expect(page.getByRole("heading", { level: 1 })).toHaveText("RV 8.71.1");
     });
 
-    test("a Valakhilya verse offers no player rather than the wrong one", async ({ page }) => {
+    test("a Valakhilya verse plays its own recitation, under its own numbering", async ({
+        page,
+    }) => {
+        /*
+         * This test used to assert that RV 8.49.1 offered *no* player, and that was the right
+         * answer while the only catalogued source was VedSearch: VedSearch omits the eleven
+         * Valakhilya hymns entirely and renumbers everything after them, so its "8.49.1" is
+         * this corpus's 8.60.1. Attaching it here would have played the wrong verse, and no
+         * player is better than the wrong one.
+         *
+         * `OWNER_DECISION_AUDIO_TWO_TIER_PUBLICATION` admitted 150 recordings from the
+         * Kirchheiner collection at Cologne, 104 of them across this span, and that source
+         * numbers the Valakhilya *in place*. So the answer changed: there is now a right
+         * recording to offer.
+         *
+         * What is asserted is therefore the mapping rather than the absence, because the
+         * absence was only ever a proxy for it. The two numbering systems must never be
+         * applied to the same verse, and the pair below is the place that would break first.
+         */
         await page.goto(`/passage/${RV_8_49_1}`);
         await expect(page.getByRole("heading", { level: 1 })).toHaveText("RV 8.49.1");
-        // The text is unaffected; only the player is absent.
         await expect(page.locator(".sanskrit").first()).toBeVisible();
-        await absentHere(
-            page,
-            (scope) => scope.locator("section.recitation"),
-            atUrl(`/passage/${RV_1_1_1}`, "RV 1.1.1, which does have a recitation"),
+
+        const recitation = page.locator("section.recitation");
+        await expect(recitation).toBeVisible();
+        await expect(recitation).toContainText("RV 8.49.1");
+
+        /* In place: a source that counts the Valakhilya, at this verse's own coordinates. */
+        const inside = await page.content();
+        expect(inside).toContain("08.049.01");
+        expect(inside, "a Valakhilya verse must not be served under the permuted numbering").not.toContain(
+            "/rigved/8.49.1/",
         );
+    });
+
+    test("the verse after the Valakhilya is served under the permuted numbering", async ({
+        page,
+    }) => {
+        /*
+         * The other half of the same claim, and the half that catches the mistake going the
+         * other way. RV 8.60.1 is VedSearch's 8.49.1, because VedSearch has eleven fewer
+         * hymns in this mandala. A build that "fixed" the permutation would play 8.60.1's
+         * audio at 8.49.1 and break both verses at once, and only checking both notices.
+         */
+        await page.goto("/passage/VG%3ARV%3ASAK%3AM08%3AS060%3AV001");
+        await expect(page.getByRole("heading", { level: 1 })).toHaveText("RV 8.60.1");
+        const recitation = page.locator("section.recitation");
+        await expect(recitation).toBeVisible();
+        await expect(recitation).toContainText("RV 8.60.1");
+
+        /*
+         * Read from the catalogue rather than from the DOM. A VedSearch recording is served
+         * through this product's own proxy, so the page carries a local address and the
+         * source numbering appears only in the record behind it - which is the right place
+         * to assert it anyway, because that is where the mapping is made.
+         */
+        const audio = await page.request.get(
+            "/backend/passages/VG%3ARV%3ASAK%3AM08%3AS060%3AV001/audio",
+        );
+        expect(audio.status()).toBe(200);
+        const [track] = (await audio.json()).tracks;
+        expect(track, "RV 8.60.1 has no catalogued recitation").toBeTruthy();
+        expect(track.audio_id, "the permutation is not applied at RV 8.60.1").toContain("8.49.1");
     });
 });
 
@@ -151,16 +204,30 @@ test.describe("Veda page coverage figures", () => {
         await page.goto("/vedas/rigveda");
         const panel = page.locator(".panel", { hasText: "Recitation audio" });
         await expect(panel).toBeVisible();
-        // A denominator is what stops "10,402 verses" reading as the whole collection.
-        await expect(panel).toContainText(/of 10,552 verses/);
+        /*
+         * A denominator is what stops "10,402 verses" reading as the whole collection -- and
+         * when the count *is* the whole collection, saying "all" is the same guarantee said
+         * the other way round. The Rigveda reached complete coverage when the Kirchheiner
+         * recordings filled the Valakhilya, so the panel now leads with "All 10,552 verses";
+         * asserting only the denominator form would fail a page that had become *more*
+         * informative, and asserting only the bare count would pass the defect this test was
+         * written for. Both forms are accepted; a bare figure with neither is not.
+         */
+        await expect(panel).toContainText(/(of 10,552 verses|All 10,552 verses)/);
         await expect(panel).toContainText("one recording per verse");
+
+        /* The publishers, counted over the collection rather than read off a page of it. */
+        await expect(panel).toContainText(/VedSearch \(10,402\)/);
     });
 
     test("the Samaveda explains its absence instead of showing a zero", async ({ page }) => {
         await page.goto("/vedas/samaveda");
         const panel = page.locator(".panel", { hasText: "Recitation audio" });
         await expect(panel).toBeVisible();
-        await expect(panel).toContainText("Not available for this collection");
+        /* In words. The sentence moved from "Not available for this collection" to "No
+           recitation is catalogued for this collection", which says whose absence it is in
+           the sentence itself rather than leaving it to the one after. */
+        await expect(panel).toContainText(/No recitation is catalogued for this collection/i);
         // Whose absence it is: what has been published, not what the tradition holds.
         await expect(panel).toContainText(/not a statement about the tradition/);
         await expect(panel).not.toContainText("0 verses");

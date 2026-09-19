@@ -598,9 +598,49 @@ assert set(_LABEL_SPECIFICITY) <= set(TYPE_NAME_BY_LABEL), (
 )
 
 
-def result_type_for_labels(labels: list[str] | None) -> SearchResultType:
-    """Most specific product type for a node's labels. Falls back to CONCEPT, never a label."""
+#: Product types by the ``display_type`` spelling the graph stores them under.
+_TYPE_BY_DISPLAY_TYPE: Final[dict[str, str]] = {
+    label: type_name for label, type_name in TYPE_NAME_BY_LABEL.items()
+}
+
+
+def result_type_for_labels(
+    labels: list[str] | None,
+    display_type: str | None = None,
+    *,
+    scoped_to: str | None = None,
+) -> SearchResultType:
+    """The product type to show for a node. Falls back to CONCEPT, never to a raw label.
+
+    Three sources, applied in one order, because three of them disagreeing quietly is how
+    a reader ends up being told a cow is an offering.
+
+    ``scoped_to`` wins where the caller already knows which type it asked for. A row in
+    ``/api/v1/entities/animal`` is in that list because the node carries ``:Animal``, and
+    labelling it ``OFFERING`` in the same response contradicts the request that produced
+    it. Measured before this existed: ``/entities/animal`` typed cattle and the horse
+    ``OFFERING``, ``/entities/concept`` typed a row ``COSMIC_ENTITY``, ``/entities/place``
+    typed one ``RIVER``, ``/entities/social_rite`` typed one ``RITUAL``.
+
+    ``display_type`` wins next, where the node carries one and it names a product type.
+    That property is the curated ruling about what the thing *is*: cattle is labelled
+    ``:Concept:DomainEntity:Animal:Offering`` and its ``display_type`` is ``Animal``, which
+    is a decision somebody made and the specificity order below is not.
+
+    The specificity order is the fallback and keeps doing what it did: ``labels()`` has no
+    guaranteed order, so a node with several product labels must not be typed by whichever
+    one the driver happened to return first.
+    """
     present = set(labels or ())
+    if scoped_to:
+        try:
+            return SearchResultType(scoped_to)
+        except ValueError:
+            pass
+    if display_type:
+        named = _TYPE_BY_DISPLAY_TYPE.get(display_type)
+        if named and (not present or display_type in present):
+            return SearchResultType(named)
     for label in _LABEL_SPECIFICITY:
         if label in present:
             return SearchResultType(TYPE_NAME_BY_LABEL[label])
@@ -717,7 +757,8 @@ WITH n, stable_id, weight,
   END AS match_type
 WHERE match_type IS NOT NULL
   AND ($type_labels IS NULL OR any(l IN labels(n) WHERE l IN $type_labels))
-RETURN match_type, stable_id, labels(n) AS node_labels, n.display_label AS display_label,
+RETURN match_type, stable_id, labels(n) AS node_labels, n.display_type AS display_type,
+       n.display_label AS display_label,
        n.short_description AS short_description, n.definition AS definition,
        n.structure AS structure, n.is_deity AS is_deity, weight
 ORDER BY $rung_order[match_type], weight DESC, stable_id
@@ -748,7 +789,8 @@ WITH n, stable_id, weight,
   END AS match_type
 WHERE match_type IS NOT NULL
   AND ($type_labels IS NULL OR any(l IN labels(n) WHERE l IN $type_labels))
-RETURN match_type, stable_id, labels(n) AS node_labels, n.display_label AS display_label,
+RETURN match_type, stable_id, labels(n) AS node_labels, n.display_type AS display_type,
+       n.display_label AS display_label,
        null AS short_description, null AS definition, null AS structure,
        null AS is_deity, weight
 ORDER BY $rung_order[match_type], weight DESC, stable_id
@@ -1242,7 +1284,9 @@ class SearchService:
         rung_index = MATCH_TYPE_ORDER.index(match_type)
 
         if "node_labels" in row:
-            result_type = result_type_for_labels(row.get("node_labels"))
+            result_type = result_type_for_labels(
+                row.get("node_labels"), row.get("display_type")
+            )
             # The recorded ruling, not the structure. Filtering search on structure made
             # search disagree with /devatas about 29 subjects: it hid the dog, whom the
             # ruling admits and the deity route serves, and surfaced the 28 abstractions

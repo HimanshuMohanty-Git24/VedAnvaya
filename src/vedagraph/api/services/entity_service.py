@@ -2032,7 +2032,11 @@ class EntityService:
             rows = self._repository.run(_entity_list_query(spec), **parameters)
             items = [
                 EntityListRow(
-                    type=result_type_for_labels(row.get("node_labels")).value,
+                    type=result_type_for_labels(
+                        row.get("node_labels"),
+                        row.get("display_type"),
+                        scoped_to=spec.type_name,
+                    ).value,
                     id=str(row["id"]),
                     display_label=str(row.get("display_label") or row["id"]),
                     label_iast=_text(row.get("label_iast")),
@@ -2143,7 +2147,11 @@ class EntityService:
             )
 
         return EntityProfile(
-            type=result_type_for_labels(row.get("node_labels")).value,
+            type=result_type_for_labels(
+                row.get("node_labels"),
+                props.get("display_type"),
+                scoped_to=spec.type_name,
+            ).value,
             id=str(props.get(spec.id_property) or props.get("entity_key") or entity_id),
             display_label=str(props.get("display_label") or entity_id),
             label_iast=_text(props.get("label_iast")) or _text(props.get("preferred_label")),

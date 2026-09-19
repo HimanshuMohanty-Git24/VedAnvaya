@@ -81,7 +81,9 @@ function realWorld(): Promise<{ world: World; labels: WorldLabels }> {
 
         const previous = globalThis.fetch;
         globalThis.fetch = (async (url: RequestInfo | URL) => {
-            const path = String(url);
+            /* The loader versions these addresses with the export hash, so the stub matches the
+               filename rather than the whole URL. */
+            const path = String(url).split("?")[0];
             if (path.endsWith("world.bin")) {
                 return { ok: true, arrayBuffer: async () => buffer } as unknown as Response;
             }
@@ -345,6 +347,106 @@ describe("choosing what to draw", () => {
         for (const neighbour of derived) {
             expect(["PREDICATE", "CATEGORY", "CONSTELLATION", "PINNED"]).toContain(neighbour.reason);
         }
+    });
+
+    /*
+     * ------------------------------------------------------------------------------------
+     * The scene a reader gets when they click a deity.
+     *
+     * Reported after the completeness campaign: "clicking Indra yields approximately one
+     * useful connection where the older product used to expose many". Measured, the
+     * neighbourhood was never one node - it was forty, of which twenty-one were verses and
+     * evidence records and six were other deities. That is a faithful picture of the degree
+     * distribution and a poor answer to "what is Indra connected to", and it got worse
+     * rather than better when the public-identity repair restored 35,131 semantic-assertion
+     * nodes to the export and handed the fill round 820 new candidates on Indra alone.
+     *
+     * These pin the shape of the repair rather than its numbers: subjects outnumber
+     * apparatus, the apparatus keeps its tighter ceilings, and the sparse case still fills.
+     * ------------------------------------------------------------------------------------
+     */
+
+    /** Groups that are Vedic subject matter, as opposed to apparatus around it. */
+    const SUBJECT_GROUPS = new Set([
+        "deity",
+        "person",
+        "idea",
+        "rite",
+        "thing",
+        "wording",
+        "unresolved-deity",
+    ]);
+
+    const MAJOR_DEITIES = [
+        "VG:DEVATA:INDRAH",
+        "VG:DEVATA:VARUNAH",
+        "VG:DEVATA:AGNIH",
+        "VG:DEVATA:SOMAH",
+        "VG:DEVATA:MARUTAH",
+    ];
+
+    for (const id of MAJOR_DEITIES) {
+        it(`${id} is drawn as a neighbourhood of subjects, not of verses`, async () => {
+            const { world, labels } = await realWorld();
+            const selection = selectFocus(
+                world,
+                labels,
+                nodeById(labels, id),
+                FOCUS_BUDGET,
+            );
+            const counts = new Map<string, number>();
+            for (const neighbour of selection.shown) {
+                counts.set(neighbour.group, (counts.get(neighbour.group) ?? 0) + 1);
+            }
+            const subjects = [...counts.entries()]
+                .filter(([group]) => SUBJECT_GROUPS.has(group))
+                .reduce((total, [, count]) => total + count, 0);
+
+            const shape = [...counts.entries()].map(([g, c]) => `${g}:${c}`).join(" ");
+            expect(subjects, `${id} drew ${shape}`).toBeGreaterThan(selection.shown.length / 2);
+
+            /*
+             * Against the general ceiling, not the tight one.
+             *
+             * `groupCeiling("passage")` is 0.15 and governs the *fill* round; the rank
+             * round that follows it deliberately relaxes to GROUP_CEILING once every
+             * subject group is at its own cap, because leaving seats empty beside four
+             * thousand available verses is not a better scene. Asserting the tight figure
+             * here would pin an internal round rather than what a reader sees, and it
+             * fails on Varuna, who has 12 deities, 12 ideas and nothing else to give the
+             * remaining seats to.
+             */
+            const general = Math.floor(FOCUS_BUDGET * GROUP_CEILING);
+            expect(counts.get("passage") ?? 0, shape).toBeLessThanOrEqual(general);
+            expect(counts.get("record") ?? 0, shape).toBeLessThanOrEqual(general);
+
+            /* More than one *kind* of subject, which is the assertion a count survives: a
+               scene of forty deities would pass the line above and still be a star. */
+            const subjectKinds = [...counts.keys()].filter((group) =>
+                SUBJECT_GROUPS.has(group),
+            );
+            expect(subjectKinds.length, shape).toBeGreaterThan(1);
+
+            /* And more than one kind of relationship, for the same reason. */
+            const predicates = new Set(
+                selection.shown.flatMap((neighbour) => neighbour.predicates),
+            );
+            expect(predicates.size, `${id} drew predicates ${[...predicates]}`).toBeGreaterThan(1);
+        });
+    }
+
+    it("still fills the scene for a subject whose neighbours are all of one kind", async () => {
+        /*
+         * Every one of the 729 seers is attached to passages and to nothing else, and so are
+         * the metres. A ceiling meant to protect diversity has nothing to protect there, and
+         * an early version of this repair drew such a subject twelve neighbours out of a
+         * possible forty while reporting the other 824 as hidden.
+         */
+        const { world, labels } = await realWorld();
+        const root = nodeById(labels, "VG:RISHI:MAITRAVARUNIRVASISTHAH");
+        const selection = selectFocus(world, labels, root, FOCUS_BUDGET);
+        expect(selection.total).toBeGreaterThan(FOCUS_BUDGET);
+        expect(selection.shown.length).toBe(FOCUS_BUDGET);
     });
 
     it("only ever adds when the reader asks for more", async () => {
