@@ -1,6 +1,6 @@
 {
   "artifact": "RELEASE_TEST_ACCOUNTING",
-  "at": "2026-09-18T15:52:27.959662+00:00",
+  "at": "2026-09-19T00:35:28.930751+00:00",
   "paths": [
     "tests"
   ],
@@ -10,21 +10,21 @@
   ],
   "per_gate": {
     "default": {
-      "collected": 3919,
-      "executed": 3877,
-      "passed": 3877,
+      "collected": 4097,
+      "executed": 3978,
+      "passed": 3978,
       "failed": 0,
       "errored": 0,
-      "skipped": 42,
+      "skipped": 119,
       "deselected": 0,
       "returncode": 0,
       "failures": [],
       "errors": []
     },
     "live_neo4j": {
-      "collected": 3919,
-      "executed": 3877,
-      "passed": 3877,
+      "collected": 4097,
+      "executed": 4055,
+      "passed": 4055,
       "failed": 0,
       "errored": 0,
       "skipped": 42,
@@ -167,6 +167,6 @@
     "Run bounded live checks manually; CI never crawls external sources. D:\\VedaGraph\\tests\\integration\\test_live_vhp.py:6: R",
     "the vocalic l is genuinely rare; its zero is a corpus fact D:\\VedaGraph\\tests\\api\\test_search_normalized_fold.py:183: th"
   ],
-  "executed_under_at_least_one_gate": 3877,
-  "skipped_under_at_least_one_gate": 42
+  "executed_under_at_least_one_gate": 4055,
+  "skipped_under_at_least_one_gate": 119
 }

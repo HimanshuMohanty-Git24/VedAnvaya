@@ -1,24 +1,21 @@
 {
   "artifact": "WAVE4_REGISTRY_CLOSURE_AUDIT",
-  "at": "2026-09-18T21:32:54.946151+00:00",
+  "at": "2026-09-19T00:10:21.049565+00:00",
   "entries": 85,
   "entries_without_a_ruling": [],
   "rulings_for_no_entry": [],
   "counts": {
     "BLOCKED_EXTERNAL_SOURCE_UNAVAILABLE": 7,
-    "CLOSED_DERIVED": 52,
+    "CLOSED_DERIVED": 53,
     "CLOSED_NOT_APPLICABLE": 2,
     "CLOSED_SCOPE_DECISION": 14,
     "CLOSED_SOURCE_ACQUIRED": 1,
     "CLOSED_VERIFIED_ZERO": 5,
-    "NEEDS_AUDIBLE_REVIEW": 3,
-    "STILL_IMPLEMENTATION_FIXABLE": 1
+    "NEEDS_AUDIBLE_REVIEW": 3
   },
-  "closed": 81,
+  "closed": 82,
   "execution_blockers": 3,
-  "not_terminated": [
-    "GAP-PRODUCT_SURFACE-004"
-  ],
+  "not_terminated": [],
   "measurement_disagreements": [],
   "resolved_measurement_disagreements": [
     "GAP-ATTRIBUTION-001: declared 39 before integration, re-declared 47, graph measures 47. 0 resolved ascriptions became 39, so the AV half is no longer unbuilt and the entry's remaining reach is the SV and YV apparatus absence alone. R4 widened the deity-adjective suffix matcher to the vrddhi spelling and 8 more descriptors resolved, so this measure -- which counts resolved ascriptions and is shared with GAP- ATTRIBUTION-002 -- moved 39 -> 47. This entry's verdict is unchanged: the resolution count is context here and the SV/YV apparatus absence is what it is blocked on.",
@@ -996,10 +993,10 @@
     },
     {
       "gap_id": "GAP-PRODUCT_SURFACE-004",
-      "closure_status": "STILL_IMPLEMENTATION_FIXABLE",
-      "declared_status": "STILL_IMPLEMENTATION_FIXABLE",
+      "closure_status": "CLOSED_DERIVED",
+      "declared_status": "CLOSED_DERIVED",
       "downgraded": false,
-      "closure_basis": "The re-grade is no longer blocked and no longer unrun, and it did not pass. A commit-keyed run at de7195c, run_id openrouter-nvidia_nemotron-3-ultra-550b-a55b:free-dddb14430cac6c58, answered 60 of 60 -- slot 1 carried Q1-Q49, reported its allowance exhausted, and slot 2 carried Q50-Q60 without changing run_id, config_hash or code_commit -- and was graded against this entry's own three clauses. Measurement in data/staging/release_prep/ask_formal_60_final.json. CLAUSE 1 PASSES, now from a run at this HEAD rather than from the older composite: Q34 returns the Sanskrit held at VG:SV:KAU:ARANYA:D01:V01 cited [E1], and Q45 independently returns four SV ARANYA loci. CLAUSE 2 PASSES: planner.py carries the metals route and Q13, Q21 and Q47 read the known-false lexical zero as a matcher artefact rather than as absence. CLAUSE 3 FAILS: it requires MISLEADING at 0 with Q34 answered. Q34 is answered and graded PARTIAL_CORRECT; MISLEADING is 1. Q38 'Who are the Maruts?' was returned as SUPPORTED / STRONG asserting two rankings the live graph contradicts -- 'the most widely mentioned deity group in the corpus' over 560 MENTIONS_DEVATA verses that rank third behind apah 761 and asvinau 626, and 'the largest number of hymn-level dedications' over 428 HAS_DEVATA edges that rank sixth behind Indra 2,869, Agni 1,988, Soma Pavamana 1,087, the All-Gods 805 and the Asvins 631. This is NOT the defect the entry was opened for and retrieval is not implicated: all 60 packets replayed to identical item counts, all 304 citations resolve, 0 invented ids survived, 0 Sanskrit runs are fabricated, and 428 is a real figure correctly cited. The unsupported tokens are 'most widely' and 'largest', which no check reaches: the figure check tests integers and a superlative carries none, and the quantitative validator scopes to the rows a sentence cites, which hold no comparison. Same shape as the Q02 'all ten mandalas' defect, not covered by the universal rule shipped for it, and therefore implementation work on the synthesis guardrail rather than an external block -- which is why this is STILL_IMPLEMENTATION_FIXABLE and not an execution blocker. Clause 3 is NOT claimed passed and MISLEADING = 0 is NOT claimed. Smallest remediation: Q38 alone, by the scripts/grade_ask_delta.py procedure.",
+      "closure_basis": "All three clauses now pass, and the third passes by the remediation this entry's own blocker list prescribed rather than by narrowing the clause. CLAUSE 1 PASSES: Ask reaches Samavedic passages -- Q34 'What does SV ARANYA 1.1 contain?' returns the Sanskrit held at VG:SV:KAU:ARANYA:D01:V01 cited [E1], with no invented id and no claim of absence, and Q45 independently returns four SV ARANYA loci for Varuna. CLAUSE 2 PASSES: planner.py carries the metals route and Q13, Q21 and Q47 each read the known-false lexical zero as a matcher artefact rather than as textual absence. CLAUSE 3 NOW PASSES, at MISLEADING = 0 with Q34 answered. WHAT WAS MEASURED, EXACTLY. The previous pass measured MISLEADING = 1 at Q38 'Who are the Maruts?', an answer returned as SUPPORTED / STRONG asserting two corpus-level rankings the graph contradicts: 'the most widely mentioned deity group in the corpus', and 'the largest number of hymn-level dedications'. Every figure in those sentences was real and correctly cited, so no check reached them -- the figure check tests integers and a superlative carries none. That was implementation work on the synthesis guardrail, and it is done at 2b74525: a seventh quantitative rule, UNSUPPORTED_RANKING, licenses a ranking word only where the cited rows hold a comparison the sentence has joined, binding rule 9 states the same contract to the model before generation, and the repair instruction prescribes the bounded form. No branch anywhere keys on Maruts, on Q38 or on a figure. The rule was calibrated against all 123 answers this repository holds rather than against the one that motivated it: 12 first-pass findings narrowed to 5, all 5 unlicensed rankings over a single subject's own rows, and the other six rules fire on exactly the sentences they did before. 36 regression tests, and the guard was deleted ten different ways to check they notice -- all ten mutants die. THE RE-ASK. Q38 alone was re-asked at 2b74525 under run_id openrouter-nvidia_nemotron-3-ultra-550b-a55b:free-07997da672f3155b, on the first draft with no repair retry, and graded by the canonical machinery of scripts/grade_ask_delta.py -- packet replay, citation audit, quantitative validator, figure check -- in data/staging/release_prep/grade_q38_delta_and_compose.py. The answer carries no ranking word at all. Its figures verify twice, against the replayed packet and independently against the live graph: MENTIONS_DEVATA at DEITY_CERTAIN measures AV 77, RV 401, SV 28, YV 54, and HAS_DEVATA measures 428 Rigvedic verses of which 379 are CONTAINER_INHERITED. 13 of 13 packet items replayed, 6 citations all resolving, 0 invented, 0 Sanskrit absent from the packet, 0 quantitative findings, 0 integers in the prose absent from the packet, not truncated. Graded SUPPORTED_CORRECT. WHAT THE COMPOSITE IS, AND IS NOT. The effective result is the original immutable 60-question run plus one formally graded remediation delta: 59 verdicts copied unchanged from data/staging/release_prep/ask_formal_60_final.json, and Q38 re-measured. 60 of 60 acceptable, MISLEADING 0, HALLUCINATED 0, at 39 SUPPORTED_CORRECT, 4 PARTIAL_CORRECT and 17 INSUFFICIENT_EVIDENCE_CORRECTLY_REFUSED. It is NOT a fresh run of 60 provider questions, and the receipt says so per question: composing 59 + 1 with per-question provenance is the remediation the previous certification's own blocker table specified for this clause, and the frozen JSONL is unedited -- its sha256 is re-checked against the graded value before the composite is written. The delta's config_hash differs from the frozen run's because the fix added binding rule 9 to the synthesis system prompt and the prompt digest is inside that hash; that is recorded rather than smoothed over. Receipt: data/staging/release_prep/ask_formal_60_post_remediation.json.",
       "closure_measure": "MATCH (m:Mantra {veda:'SV'}) RETURN count(m)",
       "closure_measured_value": 1844,
       "closure_expected_value": 1844,
@@ -1009,8 +1006,8 @@
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
       "closure_blocked_evidence_missing": null,
-      "terminates": false,
-      "is_data_completeness_closure": false
+      "terminates": true,
+      "is_data_completeness_closure": true
     },
     {
       "gap_id": "GAP-PRODUCT_SURFACE-005",
@@ -1673,5 +1670,5 @@
       "is_data_completeness_closure": true
     }
   ],
-  "sha256": "3daf308976bc931638fa054b5386f8e2b4ca94b01c0d27a4e899458cfbd26167"
+  "sha256": "b6dde8f061ad9500f772f4f5ba1ecd5cf98d3f87dcd8f561cf8fb57a817ee1f0"
 }

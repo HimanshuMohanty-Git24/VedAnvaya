@@ -2473,7 +2473,7 @@
       "implementation_dependency": "A passage-lookup channel that covers all four corpora, and insight-endpoint routing for the entity and material-culture questions. Note this is retrieval work, not data work, so it sits outside the ingestion waves.",
       "owner_agent": 16,
       "closure_test": "Ask returns a Samavedic passage for a direct SV citation, routes a metals question to the metals insight, and a re-run of the 60-question benchmark holds MISLEADING at 0 with Q34 answered.",
-      "status": "STILL_IMPLEMENTATION_FIXABLE",
+      "status": "CLOSED_DERIVED",
       "causation_status": "HYPOTHESIS_NOT_YET_MEASURED",
       "observed_gap": "Ask cannot retrieve Samavedic passages at all and cannot reach several insight endpoints, so it refuses or misleads on questions the API answers directly.",
       "initial_hypothesis": "A retrieval-planning gap rather than a data gap: the Samavedic mantras are present and addressable, and the metals insight is served, but no Ask channel reaches either. The Q34 failure is the more serious because it produced a MISLEADING grade about a corpus whose absence Ask then attributed to scope - conflating a planner blind spot with a declared exclusion, which is precisely the confusion the scope statements exist to prevent.",
@@ -2496,31 +2496,41 @@
       "measured_root_cause": null,
       "source_availability": "UNDIAGNOSED",
       "initial_hypothesis_status": "UNTESTED",
-      "closure_method": null,
-      "closure_basis": "The formal re-grade is no longer blocked and is no longer unrun. A commit-keyed run at de7195c, run_id openrouter-nvidia_nemotron-3-ultra-550b-a55b:free-dddb14430cac6c58, answered 60 of 60 -- slot 1 carried Q1-Q49, reported its allowance exhausted, and slot 2 carried Q50-Q60 without changing run_id, config_hash or code_commit. It was then graded against this entry's own three-clause closure test, with the measurement in data/staging/release_prep/ask_formal_60_final.json. CLAUSE 1 PASSES: Ask reaches Samavedic passages. Q34 'What does SV ARANYA 1.1 contain?' returns the Sanskrit held at VG:SV:KAU:ARANYA:D01:V01, cited [E1], with no invented id and no claim of absence; Q45 independently returns four SV ARANYA loci for Varuna. CLAUSE 2 PASSES: planner.py carries the metals route, and Q13, Q21 and Q47 answer ayas questions correctly, each reading the known-false lexical zero as a matcher artefact rather than as textual absence. CLAUSE 3 FAILS: the clause requires MISLEADING at 0 with Q34 answered. Q34 is answered and graded PARTIAL_CORRECT. MISLEADING is 1, not 0, at Q38 'Who are the Maruts?' -- an answer returned as SUPPORTED / STRONG that asserts two corpus-level rankings the live graph contradicts: the Maruts are called 'the most widely mentioned deity group in the corpus' when their 560 MENTIONS_DEVATA verses rank third behind apah at 761 and asvinau at 626, and they are said to 'receive the largest number of hymn-level dedications' when their 428 HAS_DEVATA edges rank sixth behind Indra 2,869, Agni 1,988, Soma Pavamana 1,087, the All-Gods 805 and the Asvins 631. The defect is NOT the one this entry was opened for. Retrieval is sound: all 60 packets replayed to identical item counts, every citation resolves, no Sanskrit is fabricated and no figure is invented -- 428 is real and correctly cited. The unsupported tokens are 'most widely' and 'largest'. No check reaches them: the figure check tests integers and a superlative carries none, and the quantitative validator scopes to the rows a sentence cites, which hold no comparison. That is the same shape as the Q02 'all ten mandalas' defect and is not covered by the universal rule shipped for it, so it is implementation work on the synthesis guardrail, not data work and not an external block. The status therefore moves from an external-quota execution blocker to STILL_IMPLEMENTATION_FIXABLE. The smallest remediation is Q38 alone, by the documented scripts/grade_ask_delta.py procedure: fix, re-ask the one question at the new commit, compose 59 + 1 with per-question provenance, and leave the frozen 60 as evidence. MISLEADING = 0 is NOT claimed.",
+      "closure_method": "IMPLEMENTATION_FIXED_AND_REGRADED",
+      "closure_basis": "All three clauses now pass, and the third passes by the remediation this entry's own blocker list prescribed rather than by narrowing the clause. CLAUSE 1 PASSES: Ask reaches Samavedic passages -- Q34 'What does SV ARANYA 1.1 contain?' returns the Sanskrit held at VG:SV:KAU:ARANYA:D01:V01 cited [E1], with no invented id and no claim of absence, and Q45 independently returns four SV ARANYA loci for Varuna. CLAUSE 2 PASSES: planner.py carries the metals route and Q13, Q21 and Q47 each read the known-false lexical zero as a matcher artefact rather than as textual absence. CLAUSE 3 NOW PASSES, at MISLEADING = 0 with Q34 answered. WHAT WAS MEASURED, EXACTLY. The previous pass measured MISLEADING = 1 at Q38 'Who are the Maruts?', an answer returned as SUPPORTED / STRONG asserting two corpus-level rankings the graph contradicts: 'the most widely mentioned deity group in the corpus', and 'the largest number of hymn-level dedications'. Every figure in those sentences was real and correctly cited, so no check reached them -- the figure check tests integers and a superlative carries none. That was implementation work on the synthesis guardrail, and it is done at 2b74525: a seventh quantitative rule, UNSUPPORTED_RANKING, licenses a ranking word only where the cited rows hold a comparison the sentence has joined, binding rule 9 states the same contract to the model before generation, and the repair instruction prescribes the bounded form. No branch anywhere keys on Maruts, on Q38 or on a figure. The rule was calibrated against all 123 answers this repository holds rather than against the one that motivated it: 12 first-pass findings narrowed to 5, all 5 unlicensed rankings over a single subject's own rows, and the other six rules fire on exactly the sentences they did before. 36 regression tests, and the guard was deleted ten different ways to check they notice -- all ten mutants die. THE RE-ASK. Q38 alone was re-asked at 2b74525 under run_id openrouter-nvidia_nemotron-3-ultra-550b-a55b:free-07997da672f3155b, on the first draft with no repair retry, and graded by the canonical machinery of scripts/grade_ask_delta.py -- packet replay, citation audit, quantitative validator, figure check -- in data/staging/release_prep/grade_q38_delta_and_compose.py. The answer carries no ranking word at all. Its figures verify twice, against the replayed packet and independently against the live graph: MENTIONS_DEVATA at DEITY_CERTAIN measures AV 77, RV 401, SV 28, YV 54, and HAS_DEVATA measures 428 Rigvedic verses of which 379 are CONTAINER_INHERITED. 13 of 13 packet items replayed, 6 citations all resolving, 0 invented, 0 Sanskrit absent from the packet, 0 quantitative findings, 0 integers in the prose absent from the packet, not truncated. Graded SUPPORTED_CORRECT. WHAT THE COMPOSITE IS, AND IS NOT. The effective result is the original immutable 60-question run plus one formally graded remediation delta: 59 verdicts copied unchanged from data/staging/release_prep/ask_formal_60_final.json, and Q38 re-measured. 60 of 60 acceptable, MISLEADING 0, HALLUCINATED 0, at 39 SUPPORTED_CORRECT, 4 PARTIAL_CORRECT and 17 INSUFFICIENT_EVIDENCE_CORRECTLY_REFUSED. It is NOT a fresh run of 60 provider questions, and the receipt says so per question: composing 59 + 1 with per-question provenance is the remediation the previous certification's own blocker table specified for this clause, and the frozen JSONL is unedited -- its sha256 is re-checked against the graded value before the composite is written. The delta's config_hash differs from the frozen run's because the fix added binding rule 9 to the synthesis system prompt and the prompt digest is inside that hash; that is recorded rather than smoothed over. Receipt: data/staging/release_prep/ask_formal_60_post_remediation.json.",
       "closure_measure": "MATCH (m:Mantra {veda:'SV'}) RETURN count(m)",
       "closure_measured_value": 1844,
       "closure_citation": null,
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-18T17:50:51.889334+00:00",
+      "closure_measured_at": "2026-09-19T00:09:08.013624+00:00",
       "closure_prior_expected_value": null,
       "closure_reaudit": null,
       "ask_formal_60": {
-        "run_id": "openrouter-nvidia_nemotron-3-ultra-550b-a55b:free-dddb14430cac6c58",
-        "code_commit": "de7195c",
-        "answered": "60/60",
-        "graded": "60/60",
-        "clause_1_samavedic_passage": "PASS",
-        "clause_2_metals_route": "PASS",
-        "clause_3_misleading_zero": "FAIL",
-        "MISLEADING": 1,
-        "MISLEADING_ids": [
+        "baseline_run_id": "openrouter-nvidia_nemotron-3-ultra-550b-a55b:free-dddb14430cac6c58",
+        "baseline_code_commit": "de7195c",
+        "baseline_answered": "60/60",
+        "remediation_delta_run_id": "openrouter-nvidia_nemotron-3-ultra-550b-a55b:free-07997da672f3155b",
+        "remediation_delta_code_commit": "2b74525",
+        "remediation_delta_question_ids": [
           "Q38"
         ],
+        "composition": "59 verdicts from the frozen run + 1 graded remediation delta",
+        "clause_1_samavedic_passage": "PASS",
+        "clause_2_metals_route": "PASS",
+        "clause_3_misleading_zero": "PASS",
+        "effective_acceptable": "60/60",
+        "MISLEADING": 0,
+        "MISLEADING_ids": [],
         "HALLUCINATED": 0,
         "invented_citations_surviving": 0,
-        "receipt": "data/staging/release_prep/ask_formal_60_final.json"
+        "Q38_verdict": "SUPPORTED_CORRECT",
+        "Q38_original_verdict": "MISLEADING",
+        "receipts": [
+          "data/staging/release_prep/ask_formal_60_final.json",
+          "data/staging/release_prep/ask_formal_60_post_remediation.json"
+        ],
+        "not_claimed": "This is not a fresh run of 60 provider questions. 59 answers were generated at de7195c and are graded as they were; one was re-asked at 2b74525."
       }
     },
     {

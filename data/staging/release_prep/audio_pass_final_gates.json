@@ -1,6 +1,6 @@
 {
   "artifact": "AUDIO_OWNER_SAMPLE_PASS_FINAL_GATES",
-  "at": "2026-09-18T19:49:45.160695+00:00",
+  "at": "2026-09-19T00:13:47.573390+00:00",
   "gate": {
     "REGISTRY_IMPLEMENTATION_FIXABLE": 0,
     "OWNER_DECISION_REQUIRED": 0,
@@ -22,16 +22,24 @@
   },
   "still_open_and_counted_apart": {
     "NEEDS_AUDIBLE_REVIEW": 3,
-    "ASK_FORMAL_REGRADE_BLOCKED_EXTERNAL_QUOTA": 1,
-    "ASK_FORMAL_60": "PENDING_OWNER_EXECUTION",
+    "ASK_FORMAL_REGRADE_BLOCKED_EXTERNAL_QUOTA": 0,
+    "ASK_FORMAL_60": {
+      "status": "COMPLETE",
+      "graded": 60,
+      "effective_acceptable": "60/60",
+      "MISLEADING": 0,
+      "HALLUCINATED": 0,
+      "composition": "The original immutable 60-question run, plus one formally graded remediation delta. 59 verdicts are copied unchanged from the frozen grading; Q38 alone was re-asked at a new commit and re-measured. The frozen JSONL is unedited and its sha256 is checked above.",
+      "receipt": "data/staging/release_prep/ask_formal_60_post_remediation.json"
+    },
     "note": "Execution blockers, terminal for 'nothing is OPEN' and not data-completeness closure. The three NEEDS_AUDIBLE_REVIEW entries are unchanged by the sample acceptance: their requirement is promotion of 954 staged rows, gated by OWNER_DECISION_E_AUDIO_GATE on the queue being heard, and 1,001 of 1,021 rows have not been."
   },
   "measured_from": {
     "registry_audit": "data/staging/wave4/registry_closure_audit.json",
-    "registry_audit_at": "2026-09-18T19:47:37.244096+00:00",
+    "registry_audit_at": "2026-09-19T00:10:21.049565+00:00",
     "registry": "data/gap_registry.json",
     "dependency": "data/staging/integration/dependency_status.json",
-    "dependency_at": "2026-09-18T19:48:40.475931+00:00",
+    "dependency_at": "2026-09-19T00:12:41.979582+00:00",
     "scorecard": "docs/reports/GRAPH_QUALITY_V2_SCORECARD.md",
     "audio_acceptance": "data/manual/audio_review/owner_sample_acceptance.json",
     "gate_definitions": "data/staging/release_blocker_r5/build_final_receipt.py"

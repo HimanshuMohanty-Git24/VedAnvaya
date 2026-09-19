@@ -29,6 +29,9 @@ SCORECARD = ROOT / "docs" / "reports" / "GRAPH_QUALITY_V2_SCORECARD.md"
 ACCEPTANCE = ROOT / "data" / "manual" / "audio_review" / "owner_sample_acceptance.json"
 SUMMARY = ROOT / "data" / "manual" / "audio_review" / "sample_summary.json"
 OUT = ROOT / "data" / "staging" / "release_prep" / "audio_pass_final_gates.json"
+POST_REMEDIATION = (
+    ROOT / "data" / "staging" / "release_prep" / "ask_formal_60_post_remediation.json"
+)
 
 
 def scorecard_gates() -> tuple[int, int]:
@@ -51,6 +54,26 @@ def scorecard_gates() -> tuple[int, int]:
             if len(cells) == 3 and cells[2] in {"YES", "NO"}:
                 lines.append(line)
     return sum(1 for line in lines if line.strip().endswith("YES |")), len(lines)
+
+
+def ask_formal_60_state() -> dict[str, object]:
+    """The Ask formal 60's state, read off the post-remediation receipt.
+
+    Falls back to naming the absence rather than to a cheerful default: a receipt that
+    reports a gate it could not find as though it had passed is worse than one that fails.
+    """
+    if not POST_REMEDIATION.exists():
+        return {"status": "RECEIPT_ABSENT", "receipt": str(POST_REMEDIATION)}
+    receipt = json.loads(POST_REMEDIATION.read_text(encoding="utf-8"))
+    return {
+        "status": "COMPLETE",
+        "graded": receipt["graded"],
+        "effective_acceptable": receipt["effective_acceptable"],
+        "MISLEADING": receipt["MISLEADING"],
+        "HALLUCINATED": receipt["HALLUCINATED"],
+        "composition": receipt["composition"],
+        "receipt": "data/staging/release_prep/ask_formal_60_post_remediation.json",
+    }
 
 
 def main() -> int:
@@ -101,7 +124,10 @@ def main() -> int:
             "ASK_FORMAL_REGRADE_BLOCKED_EXTERNAL_QUOTA": audit["counts"].get(
                 "ASK_FORMAL_REGRADE_BLOCKED_EXTERNAL_QUOTA", 0
             ),
-            "ASK_FORMAL_60": "PENDING_OWNER_EXECUTION",
+            # Read, not typed. This was the hardcoded string PENDING_OWNER_EXECUTION,
+            # which stayed true-looking through the run's execution, its grading and its
+            # remediation because nothing measured it.
+            "ASK_FORMAL_60": ask_formal_60_state(),
             "note": (
                 "Execution blockers, terminal for 'nothing is OPEN' and not data-completeness "
                 "closure. The three NEEDS_AUDIBLE_REVIEW entries are unchanged by the sample "

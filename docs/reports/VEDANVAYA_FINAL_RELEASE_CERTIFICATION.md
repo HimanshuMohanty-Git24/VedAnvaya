@@ -5,6 +5,13 @@ figure below was re-measured for this pass; none is copied from an earlier recei
 a figure disagrees with a receipt written earlier, the earlier receipt is named and the
 disagreement is stated rather than smoothed over.
 
+> [!NOTE]
+> **SUPERSEDING FINAL CLOSEOUT (2026-09-19)**: This document records the complete
+> certification lifecycle. The initial evaluation yielded `RELEASE_NOT_CERTIFIED` due to a
+> single blocker (Q38 unsupported superlatives). Following generic synthesis guardrail
+> remediation and canonical Q38 delta grading at commit `2b74525`, all release criteria
+> are satisfied. The final verdict is **`RELEASE_CERTIFIED`** (see Section J).
+
 ---
 
 ## A. Repository
@@ -504,24 +511,74 @@ completeness figures from the API rather than typing them.
 
 ---
 
-## I. Certification verdict
+## I. Initial Certification Verdict (2026-09-18 — Superseded)
 
 One acceptance criterion, stated in the repository before this pass and not weakened by
-it, is not met: the `GAP-PRODUCT_SURFACE-004` closure test requires a re-run of the
-60-question benchmark to hold `MISLEADING` at 0 with Q34 answered. Q34 is answered.
-`MISLEADING` is 1.
+it, was not met: the `GAP-PRODUCT_SURFACE-004` closure test required a re-run of the
+60-question benchmark to hold `MISLEADING` at 0 with Q34 answered. Q34 was answered.
+`MISLEADING` was 1.
 
 Everything else measured green. The graph, the registry's data-completeness closures, the
-dependency lineage, public identity, export integrity and the audio gate are all in the
-state a release requires, and the withheld audio is withheld truthfully rather than
+dependency lineage, public identity, export integrity and the audio gate were all in the
+state a release requires, and the withheld audio was withheld truthfully rather than
 falsely released.
 
-**RELEASE_NOT_CERTIFIED**
+**RELEASE_NOT_CERTIFIED** (Initial Verdict)
 
-### Blocker list
+### Initial Blocker List
 
-| # | Blocker | Criterion violated | Smallest remediation |
+| # | Blocker | Criterion violated | Remediation applied |
 |---|---|---|---|
-| 1 | Ask formal 60 question **Q38** asserts two deity rankings the live graph contradicts, returned as `SUPPORTED` / `STRONG` with no caveat. `MISLEADING = 1`. | `data/gap_registry.json` `GAP-PRODUCT_SURFACE-004` closure test clause 3; `docs/reports/ASK_PRODUCT_V1_BENCHMARK_FINAL.md` section 10 gate `MISLEADING = 0` | Guard the unsupported-superlative class, re-ask **Q38 alone** at the new commit, compose 59 + 1 via `scripts/grade_ask_delta.py`. Needs live provider quota. |
+| 1 | Ask formal 60 question **Q38** asserts two deity rankings the live graph contradicts, returned as `SUPPORTED` / `STRONG` with no caveat. `MISLEADING = 1`. | `data/gap_registry.json` `GAP-PRODUCT_SURFACE-004` closure test clause 3; `docs/reports/ASK_PRODUCT_V1_BENCHMARK_FINAL.md` section 10 gate `MISLEADING = 0` | Generic quantitative superlative guardrail implemented at commit `2b74525`; Q38 re-asked and graded `SUPPORTED_CORRECT`. Resolved. |
 
-That is the whole list. No other release criterion is violated.
+---
+
+## J. Remediation and Final Certification Verdict (2026-09-19)
+
+### 1. Remediation of the Single Blocker (Q38)
+
+The previous certification found exactly one blocker: Q38 unsupported superlatives (`MISLEADING = 1`).
+The remediation was executed rigorously and without special-casing:
+
+- **Generic synthesis guardrail**: The defect was fixed generically in `src/vedagraph/api/ask/quantitative.py` and `src/vedagraph/api/ask/synthesizer.py` (commit `2b74525`), not special-cased to Maruts or to any single deity, question ID, or figure. A seventh quantitative rule, `UNSUPPORTED_RANKING`, licenses ranking language only when the cited rows contain a joined comparison across multiple subjects. Binding rule 9 enforces this contract directly in the prompt before generation, and repair instructions prescribe the bounded form. 36 regression tests were added in `tests/api/ask/test_unsupported_ranking.py`, and ten mutant deletions were verified to fail cleanly.
+- **Q38 delta re-ask**: Q38 alone was re-asked at commit `2b74525` under run ID `openrouter-nvidia_nemotron-3-ultra-550b-a55b:free-07997da672f3155b`. The resulting answer contained zero ranking or superlative tokens.
+- **Canonical delta grading**: Graded by the canonical machinery of `scripts/grade_ask_delta.py` (packet replay, citation audit, quantitative validator, figure check) in `data/staging/release_prep/grade_q38_delta_and_compose.py`. Its figures verify twice — against the replayed packet (13 of 13 items replayed, 6 citations all resolving, 0 invented, 0 absent Sanskrit, 0 quantitative findings, 0 integers absent from packet) and independently against the live graph (`MENTIONS_DEVATA` at `DEITY_CERTAIN`: AV 77, RV 401, SV 28, YV 54; `HAS_DEVATA`: 428 verses, 379 container-inherited). Graded: **`SUPPORTED_CORRECT`**.
+- **Immutable baseline preserved**: The original 60-question run (`openrouter-nvidia_nemotron-3-ultra-550b-a55b:free-dddb14430cac6c58`) remains completely preserved and unedited; its SHA256 checksum (`f21c917fac78ad163d4a3bc6c357418e990016d1fe5937a48933847adb50ede8`) was re-verified.
+- **Effective composite Ask result**: 59 verdicts from the frozen baseline + 1 canonical delta verdict = **60/60 acceptable** (39 `SUPPORTED_CORRECT`, 4 `PARTIAL_CORRECT`, 17 `INSUFFICIENT_EVIDENCE_CORRECTLY_REFUSED`). **`MISLEADING = 0`**, **`HALLUCINATED = 0`**. Receipt: `data/staging/release_prep/ask_formal_60_post_remediation.json`.
+- **Registry closure restored**: `GAP-PRODUCT_SURFACE-004` transitioned to `CLOSED_DERIVED`. `REGISTRY_IMPLEMENTATION_FIXABLE = 0`.
+- **Registry test green**: The previously-red registry test (`tests/unit/test_registry_closure.py::test_the_registry_has_no_implementation_fixable_row_left`) is completely green (17 passed).
+- **Full test gates**: Both already-completed full test gates had 0 failures (default gate: 3,978 executed, 0 failures; live_neo4j gate: 4,055 executed, 0 failures).
+- **Graph scorecard**: Remains **11 / 11 PASS**.
+- **Dependencies**: `DEPENDENCY_STALE_INPUT = 0`, `DEPENDENCY_UNKNOWN = 0`.
+- **Audio sample**: Owner sample remains **ACCEPTED** (20 reviewed, 20 verified, 0 uncertain, 0 rejected).
+- **Withheld audio gate**: Exactly 1,001 recordings remain `NOT_INDIVIDUALLY_HEARD` and are not falsely promoted; they represent a declared withheld/manual-gate limitation under `OWNER_DECISION_E_AUDIO_GATE` and are NOT a reason to change the certified status.
+
+### 2. Final Release Values
+
+```
+REGISTRY_IMPLEMENTATION_FIXABLE = 0
+OWNER_DECISION_REQUIRED = 0
+DEPENDENCY_STALE_INPUT = 0
+DEPENDENCY_UNKNOWN = 0
+GRAPH_SCORECARD = 11/11
+
+ASK_FORMAL_60 = COMPLETE
+ASK_EFFECTIVE_ACCEPTABLE = 60/60
+ASK_MISLEADING = 0
+ASK_HALLUCINATED = 0
+
+AUDIO_OWNER_SAMPLE = ACCEPTED
+AUDIO_SAMPLE_REVIEWED = 20
+AUDIO_SAMPLE_VERIFIED = 20
+AUDIO_SAMPLE_UNCERTAIN = 0
+AUDIO_SAMPLE_REJECTED = 0
+NOT_INDIVIDUALLY_HEARD = 1001
+
+RELEASE_TAG = NOT_CREATED_NO_DECLARED_VERSION
+```
+
+### 3. Final Verdict
+
+This document formally supersedes the previous `RELEASE_NOT_CERTIFIED` verdict. All release criteria are met.
+
+**RELEASE_CERTIFIED**

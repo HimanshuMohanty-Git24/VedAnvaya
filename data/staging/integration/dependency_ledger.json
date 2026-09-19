@@ -191,22 +191,22 @@
   "Ask retrieval": {
     "consumer": "Ask retrieval",
     "input_hashes": {
-      "label:Concept": "n=375;keyless=0;keys=dceeb64027c86c4fe9f1f5db531cfa94361458b2b8b78b21b7a3933d111fc83c",
+      "label:Concept": "n=384;keyless=0;keys=400f2010abb625c2140a3ab58c8e62161d20998f0c6b63b03a195e512114ad87",
       "label:Devata": "n=214;keyless=0;keys=2c4a14b6bf91f0806acbb0870661713c886928d869db02685e6f05dd38a2f8f4",
       "label:Mantra": "n=20210;keyless=0;keys=a83c3a79343bf58135f64d89d8c1befe87455f09765662257388aac6507523a6",
       "label:Passage": "n=22537;keyless=0;keys=39a13384921e22b23f9cd72bd9b4b26b462b22a089de2a09f6b2f6ecfb2eaaf7",
-      "label:Translation": "n=17283;keyless=17283;keys=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "label:Translation": "n=18427;keyless=18427;keys=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "type:ABOUT_CONCEPT": "n=24861;unnamed=0;pairs=499c5d65713399051f8903e60791ef04e3c2bd911d799cd6eff0892d7bd89999",
       "type:HAS_DEVATA": "n=10558;unnamed=0;pairs=8e4eea692c244357e1b3bdd2106719549f5a37430fa668977c59636ac0fedde8",
-      "type:HAS_TRANSLATION": "n=17283;unnamed=17283;pairs=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "type:MENTIONS_ENTITY": "n=28110;unnamed=0;pairs=2c66d80eada586d6f80aa587673228c4b7c02cc05dbba7200fceb174fa6afa62",
+      "type:HAS_TRANSLATION": "n=18427;unnamed=18427;pairs=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "type:MENTIONS_ENTITY": "n=28122;unnamed=0;pairs=7d20224a1d37805f2fbdb451488eb2877b53301424683bf3f74c04115ae01e6f",
       "file:data/gold/ask_benchmark_v1.jsonl": "bdeb057586b2f0df25cef1dba4a0f309c9b329bbfe7d1080539bdc2bde3be9a5"
     },
-    "built_at": "2026-09-16T10:32:50.832825+00:00",
+    "built_at": "2026-09-19T00:12:06.098201+00:00",
     "graph_census": {
-      "nodes": 116838,
-      "relationships": 281257
+      "nodes": 165737,
+      "relationships": 510905
     },
-    "blocked_reason": "ASK_FORMAL_60_GRADED_GATE_FAILED. The external quota block is discharged: a commit-keyed run at de7195c, run_id openrouter-nvidia_nemotron-3-ultra-550b-a55b:free-dddb14430cac6c58, answered 60 of 60 across two credential slots without forking run identity, and has been graded. The gate is not met. MISLEADING = 1 against a required 0, at Q38, which asserts two deity rankings the live graph contradicts while every figure it prints is real and correctly cited. Retrieval is not implicated: 60 of 60 packets replayed to identical item counts, 304 citations all resolve, 0 invented ids survived and 0 Sanskrit runs are fabricated. This consumer stays BLOCKED, but on our own synthesis guardrail rather than on a rate limit. The deterministic Ask suites still pass. Measurement: data/staging/release_prep/ask_formal_60_final.json. SUPERSEDED REASON, kept because it was true when written: a fresh commit-keyed run at b986193 reached 0 of 60 and stopped at Q01 with LLMRateLimitError, the daily allowance being exhausted."
+    "blocked_reason": "ASK_FORMAL_60_GATE_PASSES_REBUILD_NEEDS_A_PROVIDER_ALLOWANCE. The gate this consumer was blocked on is met. The effective result is 60 of 60 acceptable at MISLEADING 0 and HALLUCINATED 0 -- the immutable 60-question run at de7195c, run_id openrouter-nvidia_nemotron-3-ultra-550b-a55b:free-dddb14430cac6c58, plus one formally graded remediation delta for Q38 at 2b74525, run_id openrouter-nvidia_nemotron-3-ultra-550b-a55b:free-07997da672f3155b, graded SUPPORTED_CORRECT with 0 quantitative findings, 6 resolving citations, 0 invented and 0 Sanskrit absent from the packet. Measurement: data/staging/release_prep/ask_formal_60_post_remediation.json. This consumer nevertheless stays BLOCKED, and the reason is now a plain one rather than a failing gate: it declares no output artifact, so it can never read CURRENT, and its only rebuild is a fresh sixty provider questions. That rebuild is not runnable today -- the free daily allowance was exhausted before the Q38 delta and the delta itself was answered on the allowance that reset at 00:00Z. Nothing in the graph or in the declared inputs moved: 10 of 10 input hashes are unchanged. SUPERSEDED REASON, kept because it was true when written: ASK_FORMAL_60_GRADED_GATE_FAILED -- MISLEADING = 1 against a required 0, at Q38, which asserted two deity rankings the live graph contradicts while every figure it printed was real and correctly cited; retrieval was not implicated then either, with 60 of 60 packets replaying to identical item counts and 304 citations all resolving. SUPERSEDED EARLIER REASON, likewise kept: a fresh commit-keyed run at b986193 reached 0 of 60 and stopped at Q01 with LLMRateLimitError, the daily allowance being exhausted."
   }
 }
