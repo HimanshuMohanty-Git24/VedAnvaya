@@ -70,8 +70,8 @@ const SURFACES = [
     { name: "32-entity-condition", url: `/entities/condition/${E(TAKMAN)}` },
     { name: "33-visualizations", url: "/visualizations", full: true },
     { name: "34-visualize-four-corpora", url: "/visualizations/four-corpora", full: true },
-    { name: "35-sources", url: "/sources", full: true },
-    { name: "36-limits", url: "/limits", full: true },
+    { name: "35-sources", url: "/sources" },
+    { name: "36-limits", url: "/limits" },
     { name: "37-about", url: "/about", full: true },
 ];
 
