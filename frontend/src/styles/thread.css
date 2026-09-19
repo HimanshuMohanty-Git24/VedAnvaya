@@ -1,0 +1,359 @@
+/* ============================================================================
+   The Anvaya Thread: VedAnvaya's motion identity.
+
+   Anvaya is the thread that runs through a text: the syntactic order that binds
+   scattered words into a sentence. The product is named for it, and the one
+   thing every animated surface here does is draw that thread.
+
+   ## The law
+
+   NO MOTION MAY ASSERT WHAT THE DATA DOES NOT.
+
+   Three verbs, and nothing else moves:
+
+     RESOLVE   something arrives at its measured value. A bar grows from zero to
+               the figure the API returned, once, and stops. It never overshoots,
+               because an overshoot draws a value that was never measured.
+
+     DRAW      a line extends along its own axis where a real structural or
+               evidentiary relation exists. A rule between two sections that the
+               apparatus actually joins; the thread from a citation to the
+               evidence row it cites. A drawn line is a claim, so it is only
+               drawn where the claim holds.
+
+     ADVANCE   a marker moves along a track that already exists, driven by real
+               progress: audio `currentTime` along the accent trace, the reader's
+               own scroll along the archive register. Nothing advances on a
+               timer.
+
+   Absence remains still. A NONE FOUND row, a NEVER MEASURED cell and a NOT A
+   PAIR RELATION cell do not animate at all, because motion would give them a
+   liveliness the underlying claim does not have.
+
+   ## Why there is no animation library
+
+   Every primitive below is CSS. The three that need a real progress value take
+   it through one custom property that JavaScript writes and CSS reads, which is
+   one number per frame and no reconciliation. A library would buy easing curves
+   the token scale already has.
+
+   ## Reduced motion
+
+   Every primitive degrades to its end state, never to a shorter version of
+   itself. `prefers-reduced-motion: reduce` is honoured once, at the bottom of
+   this file, so no surface has to remember it.
+   ============================================================================ */
+
+/* ---------------------------------------------------------------- DRAW --- */
+
+/*
+ * A rule that draws itself as it enters.
+ *
+ * Scroll-driven, through `animation-timeline: view()`, so the line's progress is
+ * the reader's own position and stops dead when they do. There is no
+ * IntersectionObserver and no scroll listener: this runs off the main thread,
+ * and a page with twenty of them costs no JavaScript at all.
+ *
+ * Behind `@supports`, because `view()` is unsupported in Safari before 26 and in
+ * Firefox without a flag. The fallback is not a JavaScript polyfill; it is the
+ * finished rule, printed. A reader on an older browser sees the editorial
+ * surface the drawn version resolves to.
+ *
+ * Only major editorial section rules take this. Every divider drawing itself is
+ * a page that will not sit still.
+ */
+.va-rule-drawn {
+    display: block;
+    block-size: var(--va-border-width);
+    inline-size: 100%;
+    border: 0;
+    margin: 0;
+    background: var(--va-line-strong);
+}
+
+@supports (animation-timeline: view()) {
+    @media (prefers-reduced-motion: no-preference) {
+        .va-rule-drawn {
+            transform-origin: left center;
+            animation: va-draw-rule linear both;
+            animation-timeline: view();
+            /*
+             * Drawn across the first third of its pass through the viewport and finished
+             * well before it leaves. A rule still completing at the bottom edge reads as
+             * broken rather than as arriving.
+             */
+            animation-range: entry 10% cover 34%;
+        }
+
+        [dir="rtl"] .va-rule-drawn {
+            transform-origin: right center;
+        }
+    }
+}
+
+@keyframes va-draw-rule {
+    from {
+        transform: scaleX(0);
+    }
+    to {
+        transform: scaleX(1);
+    }
+}
+
+/*
+ * The thread itself: a hairline that runs from a mark to what it is attached to.
+ *
+ * Used at the head of a section that the apparatus genuinely joins to the one
+ * above it, and beside a reader's marginal note where the note annotates the
+ * verse it sits against. The rubric pip at its head is the manuscript's own
+ * device for marking a division; the line is what this product adds.
+ */
+.va-anvaya {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: var(--va-space-sm);
+}
+
+.va-anvaya::before {
+    content: "";
+    inline-size: var(--va-space-xs);
+    block-size: var(--va-space-xs);
+    flex: none;
+    rotate: 45deg;
+    background: var(--va-accent-base);
+}
+
+.va-anvaya::after {
+    content: "";
+    block-size: var(--va-border-width);
+    flex: 1;
+    background: var(--va-line-hairline);
+    transform-origin: left center;
+}
+
+@supports (animation-timeline: view()) {
+    @media (prefers-reduced-motion: no-preference) {
+        .va-anvaya::after {
+            animation: va-draw-rule linear both;
+            animation-timeline: view();
+            animation-range: entry 10% cover 30%;
+        }
+    }
+}
+
+/* -------------------------------------------------------------- RESOLVE --- */
+
+/*
+ * A bar arriving at its measured value.
+ *
+ * `--va-resolve-to` is the width the data says, written by the component from the
+ * figure it already renders as text beside the bar. The animation runs from zero
+ * to exactly that and stops: `animation-fill-mode: both` with no overshoot in the
+ * curve, because `--va-ease-standard` is a cubic-bezier whose control points are
+ * inside the unit square. A spring here would draw a value 8% higher than the one
+ * measured, for 120ms, and that is a false figure on screen.
+ *
+ * It runs once, on entry, and a bar that has resolved does not resolve again.
+ */
+.va-resolve {
+    --va-resolve-to: 0%;
+    inline-size: var(--va-resolve-to);
+}
+
+/*
+ * Time-driven, not scroll-driven, and that is a correction rather than a shortcut.
+ *
+ * This ran on `animation-timeline: view()` with `animation-range: entry 0% cover 22%`, on
+ * the reasoning that a bar should resolve as the reader reaches it. What that actually
+ * produces is a bar pinned at `inline-size: 0` for as long as it is outside the range - and
+ * a scroll timeline's range is measured against the nearest *scrollport*, so a bar inside a
+ * horizontal scroller, or below the fold on a short page, or in a screenshot, or in a print
+ * stylesheet, is a measured figure drawn as nothing.
+ *
+ * Measured at 390px on the four-corpora plate: every bar computed to 0px wide with
+ * `--va-resolve-to: 100%` set on it. A product whose whole argument is that a null is not a
+ * zero had just drawn its largest figure as one, on a phone, because of a timeline.
+ *
+ * So the bar runs once on entry, over 400ms, and `both` holds it at its measured value from
+ * then on. There is no scroll position at which it is not the figure. The section rules keep
+ * their scroll timeline, because a rule that has not drawn yet is a rule, not a false value.
+ */
+@media (prefers-reduced-motion: no-preference) {
+    .va-resolve {
+        animation: va-resolve-bar var(--va-duration-slow) var(--va-ease-standard) both;
+    }
+}
+
+@keyframes va-resolve-bar {
+    from {
+        inline-size: 0%;
+    }
+    to {
+        inline-size: var(--va-resolve-to);
+    }
+}
+
+/*
+ * Vertical resolve, for a column.
+ *
+ * Separate keyframes rather than a transform, because scaling a bar also scales
+ * its hairline border and its annotation, and a 1px rule drawn at scale 0.02 is
+ * invisible until the animation is nearly over.
+ */
+.va-resolve-block {
+    --va-resolve-to: 0%;
+    block-size: var(--va-resolve-to);
+}
+
+/* Same correction as `.va-resolve`: a column pinned at zero height is a false figure. */
+@media (prefers-reduced-motion: no-preference) {
+    .va-resolve-block {
+        animation: va-resolve-column var(--va-duration-slow) var(--va-ease-standard) both;
+    }
+}
+
+@keyframes va-resolve-column {
+    from {
+        block-size: 0%;
+    }
+    to {
+        block-size: var(--va-resolve-to);
+    }
+}
+
+/* -------------------------------------------------------------- ADVANCE --- */
+
+/*
+ * A marker on a track, positioned by a real progress value.
+ *
+ * `--va-advance` is a unit interval written by whoever owns the progress: the
+ * audio element's `currentTime / duration`, or a scroll timeline. It is a
+ * position, not an animation, so there is nothing to disable under reduced
+ * motion: the marker still has to be where the audio is.
+ */
+.va-advance {
+    --va-advance: 0;
+    transform: translateX(calc(var(--va-advance) * 100%));
+}
+
+/*
+ * The scroll-driven archive register.
+ *
+ * The one horizontally moving text in the product. It is driven entirely by the
+ * page's own scroll through `animation-timeline: view()`, so it moves only while
+ * the reader moves and is perfectly still otherwise. It is not a marquee: there
+ * is no loop, no timer and no autoplay, and `scripts/audit-motion.mjs` refuses
+ * an infinite animation anywhere in this codebase.
+ *
+ * Without scroll-timeline support it is a horizontally scrollable row, which is
+ * what the reader can do by hand.
+ */
+.va-register-track {
+    /*
+     * How far the track may travel, declared here rather than left to a fallback.
+     *
+     * The component measures its own overflow and writes this inline. Declaring the
+     * default at the same place the animation reads it means the token audit can see it,
+     * and a track that has not measured itself yet travels zero rather than an unstated
+     * distance.
+     */
+    --va-register-travel: 0px;
+    display: flex;
+    gap: var(--va-space-2xl);
+    inline-size: max-content;
+}
+
+@supports (animation-timeline: view()) {
+    @media (prefers-reduced-motion: no-preference) {
+        .va-register-track {
+            /*
+             * The travel is bounded by how much wider the track is than its frame, so the
+             * last citation lands flush at the right edge rather than scrolling off it.
+             * The component measures both and writes the difference here.
+             */
+            animation: va-register-advance linear both;
+            animation-timeline: view();
+            animation-range: entry 0% exit 100%;
+        }
+    }
+}
+
+@keyframes va-register-advance {
+    from {
+        transform: translateX(0);
+    }
+    to {
+        transform: translateX(calc(-1 * var(--va-register-travel)));
+    }
+}
+
+/* ------------------------------------------------------- reduced motion --- */
+
+/*
+ * One block, and it lands every primitive on its end state.
+ *
+ * Not `animation: none`, which for `va-resolve` would leave the bar at the
+ * `inline-size: 0%` its own rule sets and draw every measured value as zero. The
+ * static width is restored explicitly.
+ */
+@media (prefers-reduced-motion: reduce) {
+    .va-rule-drawn,
+    .va-anvaya::after,
+    .va-register-track {
+        animation: none;
+        transform: none;
+    }
+
+    .va-resolve {
+        animation: none;
+        inline-size: var(--va-resolve-to);
+    }
+
+    .va-resolve-block {
+        animation: none;
+        block-size: var(--va-resolve-to);
+    }
+}
+
+/* ------------------------------------------- the brand thread, drawn - */
+
+/*
+ * The section divider, extended from its own mark as the reader reaches it.
+ *
+ * `.va-thread` is the brand's divider and is defined in `shell.css`: a flex row of
+ * [hairline][ornament][hairline]. It is not redefined here - these are descendant rules
+ * that give its two hairlines a scroll-driven scale, growing outward from the ornament in
+ * both directions at once.
+ *
+ * That direction is the whole reason this one is worth animating. The Anvaya Thread is a
+ * mark about connection, and a line that arrives *from* its own centre draws the connection
+ * rather than illustrating it. A rule that wiped left to right would be a progress bar.
+ *
+ * Only the homepage's two major divisions carry this mark, so only two rules on the site
+ * draw. A page where every divider animates does not sit still.
+ */
+@supports (animation-timeline: view()) {
+    @media (prefers-reduced-motion: no-preference) {
+        .va-thread .va-thread-rule {
+            animation: va-draw-rule linear both;
+            animation-timeline: view();
+            animation-range: entry 20% cover 42%;
+        }
+
+        .va-thread .va-thread-rule:first-child {
+            transform-origin: right center;
+        }
+
+        .va-thread .va-thread-rule:last-child {
+            transform-origin: left center;
+        }
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .va-thread .va-thread-rule {
+        animation: none;
+        transform: none;
+    }
+}

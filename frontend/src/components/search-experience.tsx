@@ -1,12 +1,93 @@
 "use client";
 
-import { ArrowRight, MagnifyingGlass, WarningCircle } from "@phosphor-icons/react";
+import { MagnifyingGlass, WarningCircle } from "@phosphor-icons/react";
+import clsx from "clsx";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useMemo, useRef, useState } from "react";
 import type { SearchResponse } from "@/lib/api";
 import { entityHref, entityTypeLabel, humanizePredicate, statusCopy } from "@/lib/knowledge";
 import { NoSearchResults } from "./empty-state";
+
+/**
+ * Search, as an archive catalogue.
+ *
+ * Every distinction the previous carded version drew is still drawn - the record type, the
+ * gloss, how the row matched, and which collection it sits in. What changed is the dialect:
+ * ruled entries with ranged metadata instead of bordered cards in a grid. See the note at
+ * the head of the finding-aid block in `src/styles/register.css`.
+ */
+
+/** Full names, because "RV" in a right margin is a code and "Rigveda" is a collection. */
+const VEDA_NAMES: Record<string, string> = {
+    RV: "Rigveda",
+    SV: "Samaveda",
+    YV: "Yajurveda",
+    AV: "Atharvaveda",
+};
+
+/**
+ * Which face this record's name is set in.
+ *
+ * Three kinds arrive in one list and setting them all in the display face is wrong for two
+ * of them. A passage row's label is a canonical citation, which wants tabular figures so a
+ * column of them aligns. A seer or a formula row's label is romanised Sanskrit carrying
+ * combining accents, and the display face has no mark-attachment table at all: set in it,
+ * `indraḥ` loses its dot-below to the glyph origin. Only an English name takes Fraunces.
+ */
+function nameClass(item: { type: string; display_label: string }) {
+    if (item.type === "PASSAGE" || item.type === "STRUCTURAL_CONTAINER") return "is-citation";
+    /* A label carrying a Latin diacritic or a Devanagari letter. Plain ASCII falls
+       through to the display face, which is where an English name belongs. */
+    if (/[\u0100-\u017f\u1e00-\u1eff\u0900-\u097f]/.test(item.display_label)) {
+        return "is-sanskrit";
+    }
+    return undefined;
+}
+
+/**
+ * A passage's subtitle is `AV / MANTRA`: the corpus code and the structural level.
+ *
+ * Printed as it stands it said three things the row already said - the collection is named
+ * in the right margin, the type is named above the citation - and it said them in machine
+ * case. What is genuinely new in it is the *level*, so that is what is kept, and it replaces
+ * the generic "passage" rather than sitting beside it. A verse and the hymn containing it
+ * are both passages and a reader scanning a column wants to know which.
+ */
+const STRUCTURED_SUBTITLE = /^([A-Z]{2})\s*\/\s*([A-Z_]+)$/;
+
+function recordKind(item: { type: string; subtitle?: string | null }) {
+    const structured = item.subtitle ? STRUCTURED_SUBTITLE.exec(item.subtitle) : null;
+    if (structured) return humanizePredicate(structured[2]);
+    return entityTypeLabel(item.type);
+}
+
+/**
+ * The line under the name: what this record is, in words a reader can use.
+ *
+ * The snippet is preferred over the subtitle for a passage, which is the opposite of what
+ * this did before. `subtitle ?? snippet` meant every verse in the catalogue described itself
+ * as "AV / MANTRA" while the Sanskrit the query actually matched - which is the single most
+ * useful thing a search over a corpus can show - was fetched, carried across the wire and
+ * thrown away. An entity keeps its prose gloss, because that is a real description and its
+ * snippet is null.
+ */
+function describeRecord(item: {
+    type: string;
+    subtitle?: string | null;
+    snippet?: string | null;
+}): { text: string; sanskrit: boolean } | null {
+    const gloss = item.subtitle && !STRUCTURED_SUBTITLE.test(item.subtitle) ? item.subtitle : null;
+    if (gloss) return { text: gloss, sanskrit: false };
+    if (item.snippet) {
+        return {
+            text: item.snippet,
+            /* A passage's snippet is the verse. Anything else's is English around a match. */
+            sanskrit: item.type === "PASSAGE" || item.type === "STRUCTURAL_CONTAINER",
+        };
+    }
+    return null;
+}
 
 const TYPE_FILTERS = [
     { value: "", label: "Everything" },
@@ -244,12 +325,11 @@ export function SearchExperience({
                 <div className={pending ? "search-results-wrap is-stale" : "search-results-wrap"}>
                     <div className="results-meta">
                         <span>
-                            {items.length}
-                            {data?.pagination?.has_more ? "+" : ""} ranked results
+                            <strong>{items.length}</strong>
+                            {data?.pagination?.has_more ? "+" : ""} ranked records
                         </span>
                         <span>
-                            Searched{" "}
-                            {(data?.surfaces_searched ?? []).map(humanizePredicate).join(", ")}
+                            Read {(data?.surfaces_searched ?? []).map(humanizePredicate).join(", ")}
                         </span>
                         {pending && <span className="refreshing">Refining…</span>}
                     </div>
@@ -258,31 +338,54 @@ export function SearchExperience({
                         <NoSearchResults query={trimmed} />
                     ) : (
                         <ul className="search-results">
-                            {items.map((item) => (
-                                <li key={`${item.type}-${item.stable_id}`}>
-                                    <Link
-                                        href={entityHref(item.type, item.stable_id)}
-                                        className="result-row"
-                                    >
-                                        <span className="result-type">
-                                            {entityTypeLabel(item.type)}
-                                        </span>
-                                        <div>
-                                            <strong>{item.display_label}</strong>
-                                            {(item.subtitle || item.snippet) && (
-                                                <p>{item.subtitle ?? item.snippet}</p>
+                            {items.map((item) => {
+                                const described = describeRecord(item);
+                                return (
+                                    <li key={`${item.type}-${item.stable_id}`}>
+                                        <Link
+                                            href={entityHref(item.type, item.stable_id)}
+                                            className="result-row"
+                                        >
+                                            <span className="result-record">
+                                                <span className="result-type">
+                                                    {recordKind(item)}
+                                                </span>
+                                                <strong className={clsx(nameClass(item))}>
+                                                    {item.display_label}
+                                                </strong>
+                                            </span>
+                                            <span className="result-body">
+                                                {described && (
+                                                    <p
+                                                        className={clsx(
+                                                            described.sanskrit && "is-sanskrit",
+                                                        )}
+                                                        lang={described.sanskrit ? "sa" : undefined}
+                                                    >
+                                                        {described.text}
+                                                    </p>
+                                                )}
+                                                {/*
+                                                 * Why this row is here. Printed on every result,
+                                                 * without exception: a ranked list that will not
+                                                 * say what it matched on is a list a reader has to
+                                                 * take on trust, and this product does not ask for
+                                                 * that anywhere else.
+                                                 */}
+                                                <small>
+                                                    Matched on{" "}
+                                                    <em>{humanizePredicate(item.match_type)}</em>
+                                                </small>
+                                            </span>
+                                            {item.veda && (
+                                                <span className="result-veda">
+                                                    {VEDA_NAMES[item.veda] ?? item.veda}
+                                                </span>
                                             )}
-                                            <small>
-                                                Matched on {humanizePredicate(item.match_type)}
-                                            </small>
-                                        </div>
-                                        {item.veda && (
-                                            <span className="result-veda">{item.veda}</span>
-                                        )}
-                                        <ArrowRight size={17} aria-hidden="true" />
-                                    </Link>
-                                </li>
-                            ))}
+                                        </Link>
+                                    </li>
+                                );
+                            })}
                         </ul>
                     )}
 
@@ -303,15 +406,25 @@ export function SearchExperience({
     );
 }
 
+/**
+ * Five ruled entries with nothing in them yet.
+ *
+ * Shaped like the catalogue rather than like a generic loading card, so the page does not
+ * change layout when the records arrive. The first column is the record slot and carries two
+ * bars for the type and the name; the second is the description.
+ */
 function ResultSkeleton() {
     return (
         <div className="search-results" aria-hidden="true">
             {[0, 1, 2, 3, 4].map((row) => (
                 <div className="result-skeleton" key={row}>
-                    <div className="skeleton" style={{ width: 74, height: 18 }} />
                     <div>
-                        <div className="skeleton" style={{ width: "36%", height: 18 }} />
-                        <div className="skeleton" style={{ width: "72%", height: 13 }} />
+                        <div className="skeleton" style={{ width: 72, height: 11 }} />
+                        <div className="skeleton" style={{ width: "62%", height: 22 }} />
+                    </div>
+                    <div>
+                        <div className="skeleton" style={{ width: "88%", height: 15 }} />
+                        <div className="skeleton" style={{ width: "44%", height: 12 }} />
                     </div>
                 </div>
             ))}

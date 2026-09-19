@@ -705,3 +705,23 @@ a.va-conn-witness:hover .va-conn-witness-side strong {
         color: var(--va-text-tertiary);
     }
 }
+
+/*
+ * The rule at the head of each division, drawn as the reader reaches it.
+ *
+ * The one motion added to this page, and the only one it should have. Every count on it is
+ * a different kind of claim about two verses, and the page's whole argument is that they
+ * are not degrees of one measure - so no figure here gets a bar, a length or a weight.
+ * Measured against each other the five classes would read as "near parallel is four times
+ * exact parallel", which inverts their evidential order: the smaller number is the stronger
+ * claim. A rule that draws as a section arrives asserts nothing about any of them.
+ *
+ * The arc diagram the brief offers as optional is deliberately not built, for the same
+ * reason. A chord between two collections has to be weighted by something, every candidate
+ * weight is a count from a different class, and one chord carrying several classes is the
+ * merged similarity score this product refuses to compute.
+ */
+.va-conn-section > .va-rule-drawn {
+    margin-bottom: var(--va-space-2xl);
+    background: var(--va-line-strong);
+}

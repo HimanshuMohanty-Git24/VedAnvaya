@@ -1,13 +1,13 @@
 import Link from "next/link";
 import { LoadFailure } from "@/components/empty-state";
 import { PageHeading } from "@/components/page-heading";
+import { ScopeRegister } from "@/components/corpus/scope-register";
 import { Caveat, CaveatList, KnowledgeStatus } from "@/components/status";
 import {
     load,
     loadCompleteness,
     vedaNames,
     vedaOrder,
-    workSlugs,
     type Capabilities,
     type Stats,
     type WorksResponse,
@@ -63,42 +63,11 @@ const VERDICT_COPY: Record<string, { label: string; note: string }> = {
     },
 };
 
-/** Corpus identifiers, in the words a reader of the tradition would use. */
-const EXCLUDED_LABEL: Record<string, string> = {
-    SECOND_RIGVEDIC_RECENSION: "the Bāṣkala recension",
-    RIGVEDIC_BRAHMANA: "the Rigvedic Brāhmaṇas",
-    RIGVEDIC_ARANYAKA: "the Rigvedic Āraṇyakas",
-    ASHVALAYANA_SAMHITA: "the Āśvalāyana Saṃhitā",
-    UPANISAD: "the Upaniṣads",
-    ATHARVAVEDA_PAIPPALADA_RECENSION: "the Paippalāda recension of the Atharvaveda",
-    GOPATHA_BRAHMANA: "the Gopatha Brāhmaṇa",
-    KRISHNA_YAJURVEDA_TAITTIRIYA: "the Taittirīya Saṃhitā",
-    KRISHNA_YAJURVEDA_KATHAKA: "the Kāṭhaka Saṃhitā",
-    KRISHNA_YAJURVEDA_MAITRAYANI: "the Maitrāyaṇī Saṃhitā",
-    KRISHNA_YAJURVEDA_KAPISTHALA: "the Kapiṣṭhala Saṃhitā",
-    SHUKLA_YAJURVEDA_KANVA_RECENSION: "the Kāṇva recension of the White Yajurveda",
-    SATAPATHA_BRAHMANA: "the Śatapatha Brāhmaṇa",
-    SAMAVEDA_GRAMAGEYA_GANA: "the Grāmageyagāna",
-    SAMAVEDA_ARANYAKAGEYA_GANA: "the Āraṇyakageyagāna",
-    SAMAVEDA_ARANYAGANA: "the Āraṇyagāna",
-    SAMAVEDA_UHAGANA: "the Ūhagāna",
-    SAMAVEDA_UHA_GANA: "the Ūhagāna",
-    SAMAVEDA_UHYAGANA: "the Ūhyagāna",
-    SAMAVEDA_UHYA_GANA: "the Ūhyagāna",
-    SECOND_SAMAVEDIC_RECENSION: "the Jaiminīya and Rāṇāyanīya recensions",
-    SAMAVEDIC_BRAHMANA: "the Sāmavedic Brāhmaṇas",
-};
+/* The exclusion vocabulary moved to `ScopeRegister`, which is the one place that renders
+   it now. Two copies of a table mapping a registry code to a reader's word for it is two
+   places for the registry to outgrow. */
 
-const excludedLabel = (code: string) =>
-    EXCLUDED_LABEL[code] ?? code.toLowerCase().replaceAll("_", " ");
 
-/** One sentence on the recension each edition holds. */
-const RECENSION: Record<string, string> = {
-    RV: "Śākala recension, Saṃhitā only",
-    SV: "Kauthuma recension, ārcika only",
-    YV: "White Yajurveda, Vājasaneyi Mādhyandina recension",
-    AV: "Śaunaka recension, Saṃhitā only",
-};
 
 const number = (value: number | null | undefined) =>
     typeof value === "number" ? value.toLocaleString("en-GB") : null;
@@ -195,34 +164,27 @@ export default async function LimitsPage() {
                 </p>
 
                 {collections.length ? (
-                    <dl className="va-scope-list">
-                        {collections.map((work) => {
-                            const code = work.veda ?? "";
-                            const excluded = work.excluded_corpora ?? [];
-                            return (
-                                <div className="va-scope-entry" key={work.work_id}>
-                                    <dt>
-                                        <Link href={`/vedas/${workSlugs[code] ?? ""}`}>
-                                            {vedaNames[code] ?? work.traditional_name}
-                                        </Link>
-                                        <span>{RECENSION[code] ?? work.recension}</span>
-                                    </dt>
-                                    <dd>
-                                        <p className="va-scope-figure">
-                                            {number(work.mantra_count)} mantras addressed by a
-                                            canonical key and a canonical citation.
-                                        </p>
-                                        {excluded.length ? (
-                                            <p>
-                                                <b>Not addressed by this edition:</b>{" "}
-                                                {excluded.map(excludedLabel).join("; ")}.
-                                            </p>
-                                        ) : null}
-                                    </dd>
-                                </div>
-                            );
-                        })}
-                    </dl>
+                    <>
+                        {/*
+                         * The same scope register the collections page carries, so a reader
+                         * who has met it there recognises it here. It replaces a definition
+                         * list that ran every exclusion of an edition into one sentence:
+                         * "the Bāṣkala recension; the Rigvedic Brāhmaṇas; the Rigvedic
+                         * Āraṇyakas; the Upaniṣads" is four different kinds of absence set
+                         * as one, and the Yajurvedic row ran to seven. As a register each
+                         * one is a line, and each line says which layer it belongs to.
+                         *
+                         * Deliberately not a tree. See the note in `ScopeRegister`.
+                         */}
+                        <ScopeRegister works={collections} />
+                        <p className="va-scope-caption">
+                            A solid mark is what this build holds. A hollow one is a corpus the
+                            registry records as named and outside this edition, so an absence
+                            measured here is an absence from the held recension only. The order
+                            is the registry&rsquo;s; nothing on this page asserts that any
+                            recension descends from any other.
+                        </p>
+                    </>
                 ) : (
                     <p>
                         The per-edition figures could not be read from the knowledge service for

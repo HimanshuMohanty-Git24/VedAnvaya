@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { WorldPreviewPanel } from "@/components/home/world-preview-panel";
 import type { HeroSlice } from "@/components/home/world-preview";
+import { ArchiveStrip, type ArchiveEntry } from "@/components/home/archive-strip";
 import { Action, Heading, Kicker, Section, SectionRule } from "@/components/home/sections";
 import { ServiceUnavailable } from "@/components/empty-state";
 import { pageMetadata } from "@/lib/site";
@@ -152,6 +153,61 @@ const START_HERE = [
 const number = (value: number | null | undefined) =>
     typeof value === "number" ? value.toLocaleString("en-GB") : null;
 
+/**
+ * One anchor per collection, so the archive register is made of real citations.
+ *
+ * Four keys are typed here and nothing else is: what the strip prints comes back from
+ * `/passages/{key}/siblings`, which returns the neighbours the corpus actually holds with
+ * their own canonical citations. A citation is an address rather than a claim, so an anchor
+ * is a route and not a figure - but the addresses around it are still read rather than
+ * written, and a division that stopped existing would shorten the strip rather than print a
+ * verse this build does not hold.
+ */
+const ARCHIVE_ANCHORS: Array<{ veda: string; key: string }> = [
+    { veda: "RV", key: "VG:RV:SAK:M01:S001:V001" },
+    { veda: "SV", key: "VG:SV:KAU:CHANDA:P01:D01:V01" },
+    { veda: "YV", key: "VG:YV:VSM:A01:V001" },
+    { veda: "AV", key: "VG:AV:SAU:K01:S001:V001" },
+];
+
+type SiblingsResponse = {
+    results?: {
+        items?: Array<{ canonical_key?: string | null; canonical_citation?: string | null }> | null;
+    } | null;
+};
+
+/**
+ * The register's entries, interleaved by collection.
+ *
+ * Round-robin rather than concatenated, because nine Rigvedic citations followed by four
+ * Atharvavedic ones reads as two lists and the point of the register is that the four
+ * collections are one corpus. A collection that returns nothing simply does not appear.
+ */
+async function readArchiveRegister(): Promise<ArchiveEntry[]> {
+    const responses = await Promise.all(
+        ARCHIVE_ANCHORS.map((anchor) =>
+            load<SiblingsResponse>(`/passages/${encoded(anchor.key)}/siblings?limit=10`),
+        ),
+    );
+    const byVeda = responses.map((result, i) => {
+        const anchor = ARCHIVE_ANCHORS[i];
+        const rows = result.ok ? (result.data.results?.items ?? []) : [];
+        return rows
+            .filter((row) => row.canonical_key && row.canonical_citation)
+            .map((row) => ({
+                collection: vedaNames[anchor.veda] ?? anchor.veda,
+                citation: row.canonical_citation as string,
+                passageKey: row.canonical_key as string,
+            }));
+    });
+    const out: ArchiveEntry[] = [];
+    const longest = Math.max(0, ...byVeda.map((rows) => rows.length));
+    for (let i = 0; i < longest; i += 1) {
+        for (const rows of byVeda) if (rows[i]) out.push(rows[i]);
+    }
+    return out;
+}
+
 async function readWorldSlice(): Promise<WorldSlice | null> {
     /*
      * Read from disk rather than fetched over HTTP. It is a build artifact that ships in
@@ -172,18 +228,31 @@ function figure(rows: Stats["corpus"] | undefined, name: string): number | null 
 }
 
 export default async function Home() {
-    const [works, stats, audio, crossVeda, diffusion, featured, opening, worldSlice, completeness] =
-        await Promise.all([
-            load<WorksResponse>("/works"),
-            load<Stats>("/stats"),
-            load<AudioStats>("/audio/stats"),
-            load<CrossVeda>("/insights/cross-veda"),
-            load<FormulaDiffusion>("/insights/formula-diffusion"),
-            load<Passage>(`/passages/${encoded("VG:RV:SAK:M10:S129:V007")}`),
-            load<Passage>(`/passages/${encoded("VG:RV:SAK:M01:S001:V001")}`),
-            readWorldSlice(),
-            loadCompleteness(),
-        ]);
+    const [
+        works,
+        stats,
+        audio,
+        crossVeda,
+        diffusion,
+        featured,
+        opening,
+        worldSlice,
+        completeness,
+        register,
+    ] = await Promise.all([
+        load<WorksResponse>("/works"),
+        load<Stats>("/stats"),
+        load<AudioStats>("/audio/stats"),
+        load<CrossVeda>("/insights/cross-veda"),
+        load<FormulaDiffusion>("/insights/formula-diffusion"),
+        load<Passage>(`/passages/${encoded("VG:RV:SAK:M10:S129:V007")}`),
+        load<Passage>(`/passages/${encoded("VG:RV:SAK:M01:S001:V001")}`),
+        readWorldSlice(),
+        loadCompleteness(),
+        /* Four more reads, in the same parallel batch and behind the same 300 s
+           revalidation, so the register costs one round trip every five minutes. */
+        readArchiveRegister(),
+    ]);
 
     if (!works.ok || !stats.ok) {
         return (
@@ -281,6 +350,16 @@ export default async function Home() {
             <Reading passage={opening} />
 
             <Recitation collections={collections} recited={recited} total={recitations} />
+
+            {/*
+             * The one horizontal moment, placed once.
+             *
+             * Here because this is where the page's vertical rhythm most needs breaking: the
+             * recitation bars above and the connections split below are the two tallest
+             * stacked blocks on the homepage, and a register running the other way between
+             * them is the break. See `ArchiveStrip` for why there is no timer in it.
+             */}
+            <ArchiveStrip entries={register} />
 
             <Connections
                 families={families}

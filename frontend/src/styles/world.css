@@ -470,7 +470,7 @@
     inset: 0;
     pointer-events: none;
     overflow: hidden;
-    z-index: 2;
+    z-index: var(--va-z-annotation);
     /*
      * 300 ms, which is MapLibre's `fadeDuration` default and the figure Vaaraniemi, Treib &
      * Westermann use for the entry and exit crossfade. Not a duration token: the scale has 240 and
@@ -870,7 +870,7 @@
     position: absolute;
     inset-block-end: var(--va-space-2xl);
     inset-inline-start: var(--va-space-2xl);
-    z-index: 3;
+    z-index: var(--va-z-panel);
     width: min(32rem, calc(100% - var(--va-space-4xl)));
     padding: var(--va-space-lg);
     background: var(--va-surface-raised);

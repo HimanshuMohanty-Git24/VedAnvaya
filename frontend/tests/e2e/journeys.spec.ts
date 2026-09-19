@@ -226,14 +226,32 @@ test.describe("journey 5 — Atharvavedic healing", () => {
         await page.goto("/explore/atharvaveda");
         await expect(page.getByRole("heading", { name: "Afflictions" })).toBeVisible();
 
+        /*
+         * The affliction block holds afflictions and nothing else, and that is still the
+         * assertion. What changed is where it is checked: the block used to badge every row
+         * AFFLICTION under a heading that said "Afflictions", which is the heading repeated
+         * twenty times, so the badge now appears only in the block where the kind genuinely
+         * varies. The guarantee is unchanged and is asserted on the rows themselves - every
+         * one of them links into the condition register, and a threat would not.
+         */
         const afflictionRows = page
-            .locator(".av-block", { hasText: "Afflictions" })
-            .locator(".av-row");
-        const kinds = await afflictionRows.locator(".condition-kind").allTextContents();
-        expect(kinds.length).toBeGreaterThan(0);
-        for (const kind of kinds) {
-            expect(kind.trim()).toBe("Affliction");
+            .locator("section", { hasText: "Afflictions" })
+            .locator(".va-register-row")
+            .filter({ hasNot: page.locator(".va-register-kind") });
+        const hrefs = await afflictionRows.evaluateAll((nodes) =>
+            nodes.map((node) => node.getAttribute("href") ?? ""),
+        );
+        expect(hrefs.length).toBeGreaterThan(0);
+        for (const href of hrefs) {
+            expect(href).toMatch(/^\/entities\/condition\//);
         }
+        /* The kind is still drawn where it varies: the block listing what the texts address. */
+        await expect(
+            page
+                .locator("section", { hasText: "What the texts address" })
+                .locator(".va-register-kind")
+                .first(),
+        ).toBeVisible();
 
         await page.getByRole("link", { name: /fever/ }).first().click();
         await expect(page).toHaveURL(new RegExp(TAKMAN));
@@ -266,7 +284,7 @@ test.describe("journey 6 — a formula across collections", () => {
     test("family, its members, and where the wording occurs", async ({ page }) => {
         await page.goto("/formulas");
         await expect(page.getByRole("heading", { level: 1 })).toHaveText("Formula families");
-        await page.locator(".formula-list a").first().click();
+        await page.locator("#va-formula-index").locator("xpath=..").locator(".va-register-row").first().click();
 
         await expect(page).toHaveURL(/\/formula-families\//);
         await expect(page.getByRole("heading", { name: "The shape of this family" })).toBeVisible();
@@ -331,7 +349,7 @@ test.describe("journey 8 — a ritual to its passages", () => {
     test("rite, offerings, and a describing passage", async ({ page }) => {
         await page.goto("/rituals");
         await expect(page.getByText(/Not a taxonomy of Vedic ritual/)).toBeVisible();
-        await page.locator(".ritual-grid a").first().click();
+        await page.locator(".va-register-row").first().click();
 
         await expect(page).toHaveURL(/\/rituals\//);
         await expect(page.getByRole("heading", { name: "The shape of the rite" })).toBeVisible();
@@ -358,12 +376,12 @@ test.describe("journey 9 — an unsupported capability answers truthfully", () =
     test("an unbuilt layer is not reported as an absence from the corpus", async ({ page }) => {
         await page.goto("/material-culture?category=metals");
         await expect(page.getByText("A null is not a zero")).toBeVisible();
-        const noMatch = page.locator(".cell-reason").first();
+        const noMatch = page.locator(".va-block-table .is-none").first();
         await expect(noMatch).toHaveText("no match");
 
         // The known-wrong cell is declared rather than left to read as silence.
         await expect(page.getByRole("heading", { name: "Gaps we know are wrong" })).toBeVisible();
-        const gap = page.locator(".gap-card").first();
+        const gap = page.locator(".va-gap > li").first();
         await expect(gap).toContainText(
             /NOT '0 occurrences'|not '0 occurrences'|No lexical match/i,
         );

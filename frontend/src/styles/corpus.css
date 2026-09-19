@@ -468,8 +468,21 @@
     transition: var(--va-transition-colors);
 }
 
+/*
+ * The current tab, and the reason `background` is reset here rather than inherited.
+ *
+ * The rule above resets the background on `.va-page .kind-tabs a`, which has the same
+ * specificity as the old pill rule's `[aria-current="page"]` variant in `globals.css` -
+ * and that one is later in the cascade, so it kept its `background: var(--ink)` while this
+ * block set `color: var(--va-text-primary)` over it. Measured on /entities/condition and
+ * /material-culture: the selected tab rendered as a solid black rectangle with its label
+ * invisible, in both themes, and it had been that way since the tabs were converted.
+ */
 .va-page .kind-tabs a[aria-current="page"] {
+    background: none;
+    border-color: transparent;
     border-bottom-color: var(--va-accent-base);
+    border-radius: 0;
     color: var(--va-text-primary);
 }
 
@@ -531,7 +544,7 @@
     content: "";
     position: absolute;
     inset: 0;
-    z-index: -1;
+    z-index: var(--va-z-beneath);
     background-image: image-set(
         url("/brand/textures/plates-light-1536.avif") type("image/avif"),
         url("/brand/textures/plates-light-1536.webp") type("image/webp")

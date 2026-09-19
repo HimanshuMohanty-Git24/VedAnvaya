@@ -1390,3 +1390,154 @@
         gap: var(--va-space-xs);
     }
 }
+
+/* ======================================================= the evidence binding - */
+
+/*
+ * A citation and the item it cites, bound at both ends.
+ *
+ * The relation is real - this sentence rests on that passage - so the Anvaya Thread is
+ * allowed to draw it. See the motion law in `thread.css`: DRAW is for a line extended where
+ * a structural or evidentiary relation exists, and this is the clearest evidentiary relation
+ * in the product.
+ *
+ * Both halves respond to hover *and* focus. A binding that exists only under a pointer is
+ * not a binding for a keyboard reader, and the citation markers are already in the tab
+ * order: tabbing through the prose now walks the evidence.
+ */
+.va-cite {
+    position: relative;
+}
+
+/* The thread under the marker, drawn from its start rather than faded in. */
+.va-cite::after {
+    content: "";
+    position: absolute;
+    inset-inline-start: 0;
+    inset-block-end: -2px;
+    inline-size: 0;
+    block-size: var(--va-border-width-accent);
+    background: var(--va-accent-base);
+    transition: inline-size var(--va-duration-fast) var(--va-ease-standard);
+}
+
+.va-cite[data-bound="true"]:not(:disabled) {
+    color: var(--va-text-primary);
+}
+
+.va-cite[data-bound="true"]:not(:disabled)::after {
+    inline-size: 100%;
+}
+
+/*
+ * The bound entry, lifted by a rule in the margin rather than by a background.
+ *
+ * A tint would make the entry look like a different kind of evidence for as long as the
+ * reader points at it, which is a claim; a rule in the margin is the manuscript's own way of
+ * saying "this one", and it costs the entry no ink of its own.
+ */
+.va-evidence-entry {
+    position: relative;
+    padding-inline-start: var(--va-space-lg);
+    transition: var(--va-transition-colors);
+}
+
+.va-evidence-entry::before {
+    content: "";
+    position: absolute;
+    inset-inline-start: 0;
+    inset-block: var(--va-space-md);
+    inline-size: var(--va-border-width-accent);
+    background: var(--va-accent-base);
+    transform: scaleY(0);
+    transform-origin: top center;
+    transition: transform var(--va-duration-base) var(--va-ease-standard);
+}
+
+.va-evidence-entry[data-bound="true"]::before {
+    transform: scaleY(1);
+}
+
+.va-evidence-entry[data-bound="true"] .va-evidence-id {
+    color: var(--va-accent-text);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .va-cite::after,
+    .va-evidence-entry::before {
+        transition: none;
+    }
+}
+
+/* ===================================================== the qualifier, in clauses - */
+
+/*
+ * "Does not establish", set as a list of statements instead of a paragraph.
+ *
+ * Measured on a live answer: one qualifier ran 412 characters over six lines at 13px in a
+ * 560px drawer, with four separate claims in it and no visual break anywhere. It is the most
+ * careful writing in the product and it was the easiest thing on the page to skip. Nothing
+ * is rewritten - see `clauses` in `lib/ask.ts`, whose round trip is asserted - only the
+ * line breaks are chosen.
+ */
+.evidence-drawer .ask-qualifier-body {
+    display: grid;
+    gap: var(--va-space-xs);
+}
+
+.evidence-drawer .ask-qualifier-body > span {
+    display: block;
+    padding-inline-start: var(--va-space-md);
+    border-inline-start: var(--va-border-width) solid var(--va-line-hairline);
+    font-size: var(--va-text-sm);
+    line-height: var(--va-leading-snug);
+    color: var(--va-text-secondary);
+}
+
+/* The label of a labelled clause - "What it does not establish:" - is the author's own
+   division and is set as one, not as another sentence. */
+.evidence-drawer .ask-qualifier-body > span:only-child {
+    border-inline-start: 0;
+    padding-inline-start: 0;
+}
+
+/* The same treatment for the answer's own scope notes, which have the same shape. */
+.va-answer-caveats li > p + p {
+    margin-top: var(--va-space-xs);
+}
+
+/*
+ * A list the model wrote, set as a list.
+ *
+ * No bullet glyph: a rubric mark in the margin is how the rest of the product marks a
+ * division, and a disc beside a finding that carries three citations reads as a slide.
+ * See `parseAnswer` for why these arrive as one paragraph and have to be recovered.
+ */
+.va-answer-points {
+    list-style: none;
+    margin: var(--va-space-lg) 0;
+    padding: 0;
+    display: grid;
+    gap: var(--va-space-md);
+}
+
+.va-answer-points > li {
+    position: relative;
+    padding-inline-start: var(--va-space-xl);
+}
+
+.va-answer-points > li::before {
+    content: "";
+    position: absolute;
+    inset-inline-start: 0;
+    top: 0.62em;
+    inline-size: var(--va-space-md);
+    block-size: var(--va-border-width);
+    background: var(--va-accent-base);
+}
+
+/* The model's own emphasis, rendered rather than printed as asterisks. */
+.va-answer-prose strong {
+    font-weight: var(--va-weight-medium);
+    color: var(--va-text-primary);
+}

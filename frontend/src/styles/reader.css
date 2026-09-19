@@ -164,6 +164,22 @@
     rotate: 45deg;
 }
 
+/*
+ * The strip above the verse.
+ *
+ * It used to carry the script and the witness on the left and the copy control on the
+ * right. Both descriptions moved to the margin, so what is left is one control - and a lone
+ * control ranged left above a verse reads as a heading for it. Ranged right it reads as
+ * what it is: an affordance on the block, out of the way of the first word.
+ *
+ * The witness block still uses this strip with two children, and `space-between` is right
+ * there, so the range is set by content rather than by rule: `margin-inline-start: auto` on
+ * the last child does both.
+ *
+ * No measure cap here. Above 84rem the folio grid already holds the block to the measure;
+ * below it the block spans the reading track and the control should range to the same edge
+ * the rule under the verse does, not to a measure that is no longer the block's width.
+ */
 .va-verse-meta {
     display: flex;
     flex-wrap: wrap;
@@ -171,10 +187,15 @@
     justify-content: space-between;
     gap: var(--va-space-md);
     margin-bottom: var(--va-space-lg);
+    min-block-size: 1.5rem;
     font-size: var(--va-text-2xs);
     letter-spacing: var(--va-tracking-eyebrow);
     text-transform: uppercase;
     color: var(--va-text-tertiary);
+}
+
+.va-verse-meta > :last-child {
+    margin-inline-start: auto;
 }
 
 .va-verse .sanskrit {
@@ -190,6 +211,214 @@
  */
 .va-verse .sanskrit {
     font-size: clamp(1.22rem, 1rem + 0.95vw, 1.72rem);
+}
+
+/* ============================================================== the folio - */
+
+/*
+ * The pothi margin.
+ *
+ * A palm-leaf or birch-bark leaf is written in a wide horizontal field with generous space
+ * on every side, and a reader's, a scribe's or a commentator's hand goes in the outer
+ * margin. This reader had that space already and was throwing it away: at 1440px the
+ * reading track is 912px wide with the text set to a 544px measure, so 368px stood empty
+ * between the verse and the apparatus rail on every page of the corpus.
+ *
+ * What goes in it is the editorial apparatus of *this block*: which witness printed this
+ * text, under what licence, who translated it, how far its fixed phrases reach. The rail to
+ * the right keeps what the tradition ascribes to the verse as a whole. The two are different
+ * kinds of statement and they now look different.
+ *
+ * ## The rule this design is built around
+ *
+ * A margin note is anchored at the level the evidence exists at, and no finer. Every note
+ * here is verse-level or block-level, because that is the only level this corpus records:
+ * `text.surfaces` is per witness per verse, `translations.items` is per rendering per verse,
+ * `formulas.items` is per phrase per verse. There is no line-level alignment anywhere in the
+ * store, so there is no line-level marginalia anywhere on this page, and the grid is what
+ * enforces it - a note is a grid sibling of one block and cannot be positioned against a
+ * line even by accident.
+ */
+.va-folio {
+    display: block;
+}
+
+/*
+ * Three columns, and the margin only appears when there is room for all three.
+ *
+ * 84rem is not a round number chosen for tidiness. Below it the shell is narrower than
+ * 34rem of text + 11rem of margin + 17rem of rail + two gaps, and something has to give;
+ * what gives is the margin, because the text measure is set by legibility and the rail is
+ * the apparatus. Measured at 1440px the three tracks come to 1216px inside a 1320px shell.
+ */
+@media (min-width: 84rem) {
+    .va-folio {
+        display: grid;
+        grid-template-columns: minmax(0, var(--va-reader-measure)) minmax(10rem, 15rem);
+        column-gap: var(--va-space-3xl);
+        align-items: start;
+    }
+
+    .va-folio-margin {
+        position: relative;
+        padding-top: var(--va-space-2xl);
+        padding-inline-start: var(--va-space-lg);
+        /*
+         * The rule line. A ruled leaf carries a vertical bounding line at the edge of the
+         * text field, and the margin is what lies outside it.
+         */
+        border-inline-start: var(--va-border-width) solid var(--va-line-hairline);
+    }
+
+    /*
+     * The registration mark: the cord geometry, borrowed and kept out of the text.
+     *
+     * A pothi leaf is bound by a cord through a punched hole, and on many leaves the scribe
+     * left a ruled ring around it. Drawing a hole through the verse would make the text bend
+     * around a fiction, which is cosplay and is worse than nothing; drawn on the rule line in
+     * the margin it is registration - it says where this leaf is held - and costs the reading
+     * column nothing.
+     *
+     * Once per page, on the block the page is about.
+     */
+    .va-folio-margin.has-registration::before {
+        content: "";
+        position: absolute;
+        top: var(--va-space-2xl);
+        inset-inline-start: calc(-1 * var(--va-space-sm) + var(--va-border-width) / 2);
+        inline-size: var(--va-space-md);
+        block-size: var(--va-space-md);
+        border: var(--va-border-width) solid var(--va-line-strong);
+        border-radius: 50%;
+        background: var(--va-surface-page);
+    }
+}
+
+/*
+ * Between 62rem and 84rem, and on a phone: the note folds under its block.
+ *
+ * Set apart by a rubric rule on the inline edge, which is the same device the witness block
+ * already uses, so the strip reads as apparatus rather than as body text. It is not moved
+ * into the apparatus rail: a note about which edition printed this text is not an ascription
+ * and does not belong in a list of them, and separating a note from its block to save a
+ * column would cost the one thing the margin is for.
+ */
+@media (max-width: 83.999rem) {
+    .va-folio-margin {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--va-space-md) var(--va-space-2xl);
+        margin-top: var(--va-space-lg);
+        padding-inline-start: var(--va-space-md);
+        max-inline-size: var(--va-reader-measure);
+        border-inline-start: var(--va-border-width-accent) solid var(--va-line-hairline);
+    }
+
+    .va-folio-note {
+        flex: 1 1 14rem;
+        min-inline-size: 0;
+    }
+}
+
+.va-folio-note + .va-folio-note {
+    margin-top: var(--va-space-lg);
+}
+
+@media (max-width: 83.999rem) {
+    .va-folio-note + .va-folio-note {
+        margin-top: 0;
+    }
+}
+
+.va-folio-term {
+    margin: 0 0 var(--va-space-3xs);
+    font-size: var(--va-text-2xs);
+    font-weight: var(--va-weight-semibold);
+    letter-spacing: var(--va-tracking-eyebrow);
+    text-transform: uppercase;
+    color: var(--va-text-tertiary);
+}
+
+.va-folio-body,
+.va-folio-body p {
+    margin: 0;
+    font-size: var(--va-text-xs);
+    line-height: var(--va-leading-snug);
+    color: var(--va-text-secondary);
+}
+
+.va-folio-body p + p {
+    margin-top: var(--va-space-2xs);
+}
+
+.va-folio-body a {
+    color: var(--va-accent-text);
+    text-decoration: none;
+    border-bottom: var(--va-border-width) solid
+        color-mix(in srgb, var(--va-accent-text) 32%, transparent);
+    transition: var(--va-transition-colors);
+}
+
+.va-folio-body a:hover,
+.va-folio-body a:focus-visible {
+    color: var(--va-text-primary);
+    border-bottom-color: var(--va-text-primary);
+}
+
+/* A note that records a gap rather than a fact. Never silent, never a blank. */
+.va-folio-note.is-absent .va-folio-body,
+.va-folio-note.is-absent .va-folio-body p {
+    color: var(--va-tone-unbuilt);
+}
+
+/* The Sanskrit form of a fixed phrase, quoted in the margin. */
+.va-folio-body .va-folio-form {
+    display: block;
+    font-family: var(--va-font-iast);
+    font-size: var(--va-text-sm);
+    letter-spacing: 0;
+    color: var(--va-text-primary);
+}
+
+/* ----------------------------------------------------------- the shelfmark - */
+
+/*
+ * The archival identifier, at the foot of the folio.
+ *
+ * Quiet on purpose. It is useful - it is what a citation of this build resolves against -
+ * and it is not what the reader came for, so it is set in the mono face at the smallest step
+ * on the scale, under a rule, below everything else the page has to say.
+ */
+.va-shelfmark {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: var(--va-space-sm) var(--va-space-lg);
+    margin-top: var(--va-space-3xl);
+    padding-top: var(--va-space-md);
+    border-top: var(--va-rule-quiet);
+    max-inline-size: var(--va-reader-measure);
+}
+
+.va-shelfmark-term {
+    font-size: var(--va-text-2xs);
+    font-weight: var(--va-weight-semibold);
+    letter-spacing: var(--va-tracking-eyebrow);
+    text-transform: uppercase;
+    color: var(--va-text-tertiary);
+}
+
+.va-shelfmark-key {
+    font-family: var(--va-font-mono);
+    font-size: var(--va-text-2xs);
+    letter-spacing: 0.02em;
+    color: var(--va-text-secondary);
+    overflow-wrap: anywhere;
+}
+
+.va-shelfmark-cite {
+    font-size: var(--va-text-2xs);
+    color: var(--va-text-tertiary);
 }
 
 /* --------------------------------------------------------------- witnesses - */
@@ -254,6 +483,182 @@
     margin: var(--va-space-sm) 0 0;
     font-size: var(--va-text-sanskrit-inline);
     color: var(--va-text-secondary);
+}
+
+/* ----------------------------------------------------------- the collation - */
+
+/*
+ * The verse and a second witness, set side by side.
+ *
+ * While a witness is open the verse block takes the whole reading track rather than the
+ * text measure, and the folio margin folds beneath it exactly as it does between 62 and
+ * 84rem. That is the same fallback, reused: there is no third column of room, and the
+ * alternative - two verses at half the measure each - is two texts neither of which can be
+ * read.
+ */
+.va-collation {
+    display: grid;
+    gap: var(--va-space-xl);
+}
+
+@media (min-width: 62rem) {
+    .va-collation[data-compare="true"] {
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+        column-gap: var(--va-space-4xl);
+        align-items: start;
+    }
+
+    .va-collation[data-compare="true"] .va-collation-controls {
+        grid-column: 1 / -1;
+    }
+}
+
+/*
+ * While collating, the folio gives up its margin.
+ *
+ * The margin's notes fold under the block, which is the medium-width treatment and is
+ * already written. Nothing is hidden and nothing moves into a different component.
+ */
+@media (min-width: 84rem) {
+    .va-folio:has(.va-collation[data-compare="true"]) {
+        display: block;
+    }
+
+    .va-folio:has(.va-collation[data-compare="true"]) .va-folio-margin {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--va-space-md) var(--va-space-2xl);
+        margin-top: var(--va-space-lg);
+        padding-top: 0;
+        padding-inline-start: var(--va-space-md);
+        border-inline-start: var(--va-border-width-accent) solid var(--va-line-hairline);
+    }
+
+    .va-folio:has(.va-collation[data-compare="true"]) .va-folio-margin.has-registration::before {
+        content: none;
+    }
+
+    .va-folio:has(.va-collation[data-compare="true"]) .va-folio-note + .va-folio-note {
+        margin-top: 0;
+    }
+}
+
+/*
+ * The primary keeps the verse size and the full ink. The witness steps down.
+ *
+ * Both distinctions are needed. At a narrow width the two stack and position says nothing
+ * about which is the text of the page, so the size and the tone have to.
+ */
+.va-collation-witness {
+    padding-inline-start: var(--va-space-lg);
+    border-inline-start: var(--va-border-width) solid var(--va-line-hairline);
+}
+
+.va-collation-witness .sanskrit {
+    margin: 0;
+    max-inline-size: none;
+    font-size: clamp(1.05rem, 0.92rem + 0.6vw, 1.32rem);
+    color: var(--va-text-secondary);
+}
+
+.va-collation-witness-head {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: var(--va-space-md);
+    margin-bottom: var(--va-space-lg);
+    min-block-size: 1.5rem;
+}
+
+.va-collation-witness-name {
+    margin: 0;
+    font-size: var(--va-text-2xs);
+    font-weight: var(--va-weight-semibold);
+    letter-spacing: var(--va-tracking-eyebrow);
+    text-transform: uppercase;
+    color: var(--va-accent-text);
+}
+
+.va-collation-witness-kind {
+    margin: var(--va-space-3xs) 0 0;
+    font-size: var(--va-text-2xs);
+    letter-spacing: var(--va-tracking-eyebrow);
+    text-transform: uppercase;
+    color: var(--va-text-tertiary);
+}
+
+.va-collation-close {
+    flex: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    /* 44px of pad on a coarse pointer; the mark inside stays 14px. */
+    inline-size: 1.75rem;
+    block-size: 1.75rem;
+    padding: 0;
+    border: var(--va-border-hairline);
+    border-radius: var(--va-radius-xs);
+    background: none;
+    color: var(--va-text-tertiary);
+    cursor: pointer;
+    transition: var(--va-transition-colors);
+}
+
+.va-collation-close:hover,
+.va-collation-close:focus-visible {
+    color: var(--va-accent-text);
+    border-color: var(--va-accent-base);
+}
+
+@media (pointer: coarse) {
+    .va-collation-close {
+        inline-size: 2.75rem;
+        block-size: 2.75rem;
+    }
+}
+
+.va-collation-witness-provenance,
+.va-collation-note {
+    margin: var(--va-space-md) 0 0;
+    font-size: var(--va-text-2xs);
+    line-height: var(--va-leading-snug);
+    color: var(--va-text-tertiary);
+}
+
+/* The controls: one per alternate witness, quiet, in the rule-and-type language. */
+.va-collation-controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--va-space-md) var(--va-space-xl);
+}
+
+.va-collation-controls:empty {
+    display: none;
+}
+
+.va-collation-open {
+    padding: 0 0 var(--va-space-3xs);
+    border: 0;
+    border-bottom: var(--va-border-width) solid
+        color-mix(in srgb, var(--va-accent-text) 32%, transparent);
+    background: none;
+    font-family: var(--va-font-ui);
+    font-size: var(--va-text-sm);
+    color: var(--va-accent-text);
+    cursor: pointer;
+    transition: var(--va-transition-colors);
+}
+
+.va-collation-open:hover,
+.va-collation-open:focus-visible {
+    color: var(--va-text-primary);
+    border-bottom-color: var(--va-text-primary);
+}
+
+@media (pointer: coarse) {
+    .va-collation-open {
+        min-block-size: 2.75rem;
+    }
 }
 
 /* ------------------------------------------------------------- provenance - */
@@ -876,7 +1281,7 @@ section.recitation {
     transform: scale(0.96);
 }
 
-/* ------------------------------------------------------------ the cadence - */
+/* ------------------------------------------------------- the accent trace - */
 
 .recitation-track {
     position: relative;
@@ -885,6 +1290,25 @@ section.recitation {
     height: 2.2rem;
     display: grid;
     place-items: center;
+}
+
+/*
+ * Failing closed, drawn.
+ *
+ * Where the text carries no accent marks this control has no contour behind it - a
+ * Samavedic notated witness, an unaccented Devanagari primary, a verse with a single mark.
+ * What replaces it is a plain rule, which is what a seek control is when it is not also
+ * saying something about the text. It is not the brand's house contour: drawing a shape
+ * that is not this verse's is the whole failure mode the trace exists to end.
+ */
+.recitation-track[data-trace="none"]::before {
+    content: "";
+    position: absolute;
+    inset-inline: 0;
+    top: 50%;
+    block-size: var(--va-border-width);
+    background: var(--va-line-hairline);
+    pointer-events: none;
 }
 
 .recitation-cadence {
@@ -896,6 +1320,20 @@ section.recitation {
        present and practically invisible, which makes it decoration rather than a motif. */
     color: color-mix(in srgb, var(--va-text-tertiary) 55%, transparent);
     pointer-events: none;
+}
+
+/*
+ * The sentence that keeps the drawing from being read as a measurement.
+ *
+ * Visible rather than a `title`. A tooltip is unreachable on a touch device and unread on a
+ * desktop, and this is the one line standing between a contour and a reader who believes
+ * they are looking at recorded pitch.
+ */
+.recitation-trace-note {
+    margin: var(--va-space-sm) 0 0;
+    font-size: var(--va-text-2xs);
+    line-height: var(--va-leading-snug);
+    color: var(--va-text-tertiary);
 }
 
 /*

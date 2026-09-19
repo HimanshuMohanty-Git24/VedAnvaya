@@ -1,14 +1,9 @@
 "use client";
 
-import {
-    ArrowSquareOut,
-    Pause,
-    Play,
-    SpeakerHigh,
-    WarningCircle,
-} from "@phosphor-icons/react";
-import { useEffect, useId, useRef, useState } from "react";
-import { Cadence } from "./brand/cadence";
+import { ArrowSquareOut, Pause, Play, SpeakerHigh, WarningCircle } from "@phosphor-icons/react";
+import { useEffect, useId, useMemo, useRef, useState } from "react";
+import { AccentTrace } from "./reader/accent-trace";
+import { accentTrace } from "@/lib/accent-trace";
 import type { AudioTrack } from "@/lib/api";
 
 /**
@@ -64,7 +59,22 @@ function formatTime(seconds: number): string {
     return `${minutes}:${String(rest).padStart(2, "0")}`;
 }
 
-export function RecitationPlayer({ track }: { track: AudioTrack }) {
+export function RecitationPlayer({
+    track,
+    text,
+    script = "IAST",
+}: {
+    track: AudioTrack;
+    /**
+     * The verse as this page prints it, so the trace is derived from the text on screen.
+     *
+     * Optional. A caller with no text - the Vedas overview's sample player - gets no trace
+     * rather than a house pattern, which is the whole point: the contour is a picture of
+     * *this* edition's accents or it is nothing.
+     */
+    text?: string | null;
+    script?: "IAST" | "DEVANAGARI";
+}) {
     const mediaRef = useRef<HTMLVideoElement | HTMLAudioElement | null>(null);
     const [playing, setPlaying] = useState(false);
     const [current, setCurrent] = useState(0);
@@ -73,6 +83,15 @@ export function RecitationPlayer({ track }: { track: AudioTrack }) {
     const [failed, setFailed] = useState(false);
     const [loading, setLoading] = useState(false);
     const seekId = useId();
+
+    /*
+     * The Accent Trace, derived once per text.
+     *
+     * Null is a first-class outcome and the player draws no contour for it. See
+     * `lib/accent-trace.ts` for the four cases that fail closed - most importantly a
+     * notated Samavedic witness, whose marks are sung numerals rather than accents.
+     */
+    const trace = useMemo(() => accentTrace(text, script), [text, script]);
 
     const src = track.playback.stream_url ?? track.playback.media_url ?? null;
     const isVideo = track.playback.media_kind === "video";
@@ -124,8 +143,8 @@ export function RecitationPlayer({ track }: { track: AudioTrack }) {
                     <div>
                         <strong>This recitation did not load</strong>
                         <small>
-                            The recording is streamed from {track.source.name}, which is
-                            sometimes slow to answer. The text on this page is unaffected.
+                            The recording is streamed from {track.source.name}, which is sometimes
+                            slow to answer. The text on this page is unaffected.
                         </small>
                     </div>
                     <SourceLink track={track} label="Play at the source" />
@@ -136,11 +155,7 @@ export function RecitationPlayer({ track }: { track: AudioTrack }) {
                         type="button"
                         className="recitation-play"
                         onClick={toggle}
-                        aria-label={
-                            playing
-                                ? `Pause ${track.title}`
-                                : `Play ${track.title}`
-                        }
+                        aria-label={playing ? `Pause ${track.title}` : `Play ${track.title}`}
                         aria-describedby={`${seekId}-scope`}
                     >
                         {playing ? (
@@ -151,21 +166,26 @@ export function RecitationPlayer({ track }: { track: AudioTrack }) {
                     </button>
 
                     {/*
-                     * The Vedic Cadence sits behind the seek control, and the control itself
+                     * The Accent Trace sits behind the seek control, and the control itself
                      * is made transparent over it. The range input stays exactly where it
                      * was: it is what carries the keyboard interaction, the accessible name
                      * and the value text, and replacing it with a div and pointer handlers
                      * would mean rebuilding all three by hand and getting one of them wrong.
                      *
-                     * The motif is the brand's drawing of pitch accent, which is the reason
-                     * this corpus is transmitted as sound at all, so it is the one ornament
-                     * on this page that is about what the control does.
+                     * What stood here was the brand's house contour, drawn identically on
+                     * all 17,780 recordings. It was a picture of a verse, and never of the
+                     * verse. The trace is derived from the accent marks this edition prints
+                     * in the text above, and where it cannot be derived safely nothing is
+                     * drawn: the control keeps its own rule and says why.
                      */}
-                    <span className="recitation-track">
-                        <Cadence
-                            className="recitation-cadence"
-                            progress={duration ? current / duration : 0}
-                        />
+                    <span className="recitation-track" data-trace={trace ? "derived" : "none"}>
+                        {trace ? (
+                            <AccentTrace
+                                className="recitation-cadence"
+                                progress={duration ? current / duration : 0}
+                                trace={trace}
+                            />
+                        ) : null}
                         <input
                             id={seekId}
                             className="recitation-seek"
@@ -209,6 +229,21 @@ export function RecitationPlayer({ track }: { track: AudioTrack }) {
                 </div>
             )}
 
+            {/*
+             * What the line is, in one sentence, visible rather than in a tooltip.
+             *
+             * A tooltip cannot be read on a touch device and is not read at all by most
+             * people on a desktop, and this is the sentence that keeps a drawing from being
+             * mistaken for a measurement. The full statement is in the disclosure below.
+             */}
+            {!failed && trace ? (
+                <p className="recitation-trace-note">
+                    The line traces the {trace.marked} accent{" "}
+                    {trace.marked === 1 ? "mark" : "marks"} printed in this verse. It is not
+                    measured pitch and not a melody.
+                </p>
+            ) : null}
+
             {isVideo ? (
                 <video
                     ref={mediaRef as React.RefObject<HTMLVideoElement>}
@@ -246,7 +281,7 @@ export function RecitationPlayer({ track }: { track: AudioTrack }) {
                 />
             )}
 
-            <Provenance track={track} />
+            <Provenance track={track} trace={trace ?? null} />
         </section>
     );
 }
@@ -273,7 +308,14 @@ function SourceLink({ track, label }: { track: AudioTrack; label: string }) {
  * recording's provenance collapses -- but it is present, because a reader who cannot see
  * where a recitation came from cannot judge it.
  */
-function Provenance({ track }: { track: AudioTrack }) {
+function Provenance({
+    track,
+    trace,
+}: {
+    track: AudioTrack;
+    /** The derived trace, or null where the text could not be read safely. */
+    trace?: ReturnType<typeof accentTrace>;
+}) {
     return (
         <details className="recitation-provenance">
             <summary>About this recording</summary>
@@ -283,17 +325,35 @@ function Provenance({ track }: { track: AudioTrack }) {
 
                 <dt>Recording covers</dt>
                 <dd>
-                    {SCOPE_WORDS[track.scope.scope_type] ??
-                        track.scope.scope_type.toLowerCase()}
-                    {track.scope.scope_citation ? ` — ${track.scope.scope_citation}` : ""}
+                    {SCOPE_WORDS[track.scope.scope_type] ?? track.scope.scope_type.toLowerCase()}
+                    {track.scope.scope_citation ? ` · ${track.scope.scope_citation}` : ""}
                 </dd>
 
                 <dt>Matched to this passage</dt>
                 <dd>
                     {track.text_verified
-                        ? "Confirmed — the text the source says this recording recites matches this corpus's text for this passage."
+                        ? "Confirmed. The text the source says this recording recites matches this corpus's text for this passage."
                         : "By the source's own numbering. The recited text was not compared."}
                 </dd>
+
+                {/* Only where there is a control to have a line behind. The
+                    external-source branch has no transport, so `trace` is undefined
+                    there and the row is omitted rather than reporting on a drawing
+                    that is not on the page. */}
+                {trace !== undefined ? (
+                    <>
+                        <dt>The line behind the control</dt>
+                        <dd>
+                            {trace
+                                ? `An accent trace: one turn for each of the ${trace.marked} accent marks printed in this verse, ` +
+                                  `a mark above the letter turning the line up and a mark below turning it down. It is derived from ` +
+                                  `the text on this page and from nothing else. It is not measured pitch, not a reconstructed melody, ` +
+                                  `and not a timing of the recording: the playhead moves across it because both run left to right, ` +
+                                  `and no syllable is claimed to align with any moment of the audio.`
+                                : "No accent trace is drawn for this verse. The line is derived only from accent marks printed in the text, and this text carries none that can be read as accents."}
+                        </dd>
+                    </>
+                ) : null}
 
                 <dt>Recitation tradition</dt>
                 <dd>{track.tradition ?? "Not stated by the source"}</dd>

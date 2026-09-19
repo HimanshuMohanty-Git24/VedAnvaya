@@ -82,7 +82,13 @@ for (const width of [1440, 1024, 390]) {
             const compactSize = await reference.evaluate((e) => getComputedStyle(e).fontSize);
 
             await page.goto("/formulas");
-            await page.locator(".formula-list a").first().click();
+            /* The formula index is a register now; the row is the link. */
+            await page
+                .locator("#va-formula-index")
+                .locator("xpath=..")
+                .locator(".va-register-row")
+                .first()
+                .click();
             const status = page
                 .locator(".formula-stats .knowledge-status.is-compact strong")
                 .first();

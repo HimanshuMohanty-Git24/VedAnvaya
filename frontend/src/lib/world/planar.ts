@@ -116,6 +116,16 @@ export type PlanarGraph = {
     edges: PlanarEdge[];
     index: Map<number, number>;
     rootId: number | null;
+    /**
+     * Which of the three scenes this is, stated rather than inferred.
+     *
+     * The renderer used to read `rootId === null` as "this is the world map", which was true
+     * of the two scenes that existed and stopped being true the moment a third arrived: a
+     * route has a rootId and is not a Focus scene, so every branch keyed on that test would
+     * have drawn a route with Focus's ink and Focus's label rules. A scene should say what it
+     * is.
+     */
+    kind: "world" | "focus" | "path";
     /** The bodies and springs behind `nodes`. One store, so nothing can disagree with it. */
     field: Field;
     /**
@@ -552,7 +562,17 @@ export function buildFocusScene(
         SEPARATION_MIN,
         2 * LEAF_ORB_RADIUS + SEPARATION_PAD,
     );
-    return { nodes, edges, index, rootId: root, field, authored: true, guarantee, spacing: 1 };
+    return {
+        nodes,
+        edges,
+        index,
+        rootId: root,
+        field,
+        authored: true,
+        guarantee,
+        spacing: 1,
+        kind: "focus",
+    };
 }
 
 /** How much further out one press of "space it out" pushes the slots. */
@@ -750,6 +770,7 @@ export function buildWorldScene(
             authored: true,
             guarantee: null,
             spacing: 1,
+            kind: "world",
         };
     }
 
@@ -836,7 +857,183 @@ export function buildWorldScene(
     }
     edges.sort((x, y) => x.weight - y.weight);
 
-    return { nodes, edges, index, rootId: null, field, authored: true, guarantee: null, spacing: 1 };
+    return {
+        nodes,
+        edges,
+        index,
+        rootId: null,
+        field,
+        authored: true,
+        guarantee: null,
+        spacing: 1,
+        kind: "world",
+    };
+}
+
+/* --------------------------------------------------------------- route geometry - */
+
+/*
+ * The chain's geometry, in px at scale 1, like every other authored scene here.
+ *
+ * `PATH_PITCH_MIN` is the number that matters. A hop's phrase is set between two marks and
+ * the edge-label view drops a word it cannot fit, so a pitch that does not clear
+ * "is ascribed to" at the interface size turns an explained route into an unexplained chain
+ * of dots. Measured at the 11px label size: the longest phrase in the curated predicate
+ * table sets at 118 px, two end orbs take 32, and the pad between a word and a mark is 12
+ * each side - 174, rounded up.
+ */
+const PATH_PITCH_MIN = 180;
+/** Past this the chain stops reading as a chain and becomes marks with gaps between them. */
+const PATH_PITCH_MAX = 300;
+/** Clear space at the ends of a row, so an end orb's label is never against the edge. */
+const PATH_MARGIN = 48;
+/** Between serpentine rows. Two rows is the worst case at depth 4. */
+const PATH_ROW_GAP = 140;
+
+/* --------------------------------------------------------------- the route - */
+
+/**
+ * The endpoints of a traced route, drawn larger than the waypoints between them.
+ *
+ * `ROOT_ORB_RADIUS` for the two ends, because they are what the reader asked about, and
+ * the leaf radius for the waypoints, because they are what the service found in between.
+ */
+export const PATH_END_RADIUS = ROOT_ORB_RADIUS;
+export const PATH_STEP_RADIUS = LEAF_ORB_RADIUS;
+
+/**
+ * A traced route, laid out as a chain.
+ *
+ * ## Why this exists at all
+ *
+ * Path was the one view the planar renderer never had. The shell computed the scope as
+ * `view === "FOCUS" && selected ? "focus" : "world"`, so choosing PATH in 2D fell through
+ * the ternary to `"world"` and drew the whole corpus as its constellations - the route
+ * nowhere on the canvas, and no error anywhere to say so. A reader who traced Agni to Indra
+ * and then switched renderer got a map of everything and no indication that the thing they
+ * had asked for had been silently dropped. The 3D view had drawn the route since the feature
+ * shipped, which is exactly why nothing caught it: the feature worked, in one of its two
+ * renderers.
+ *
+ * ## The arrangement
+ *
+ * A serpentine chain: left to right, wrapping to a second row when the band cannot seat the
+ * whole route on one. A route is at most five nodes - `/graph/path` searches to depth 4 - so
+ * two rows is the worst case and there is no general packing problem to solve here.
+ *
+ * Not a force layout. A route has an order, the order is the reader's answer, and a
+ * simulation would arrange it by degree and lose it. The nodes are anchored with zero slack
+ * and the field never steps: `preroll` is not called and the scene is born at rest.
+ *
+ * Every hop is one edge in the drawn graph, carrying `edge: -1 - i`. The negative key is the
+ * same convention the spatial view uses for hops: it says "this is a step in a route, not an
+ * edge in the artifact", so the relationship inspector does not try to look it up and the
+ * label view takes its words from the service instead.
+ */
+export function buildPathScene(
+    world: World,
+    route: readonly number[],
+    band: { width: number; height: number },
+): PlanarGraph {
+    const nodes: PlanarNode[] = [];
+    const index = new Map<number, number>();
+    const steps = Math.max(0, route.length - 1);
+    const field = createField({
+        dims: 2,
+        count: route.length,
+        edges: steps,
+        tuning: tuningFor(2),
+    });
+
+    if (route.length === 0) {
+        return {
+            nodes,
+            edges: [],
+            index,
+            rootId: null,
+            field,
+            authored: true,
+            guarantee: null,
+            spacing: 1,
+            kind: "path",
+        };
+    }
+
+    /*
+     * How many stops fit on one row.
+     *
+     * The pitch has to clear two end orbs and the words between them. `PATH_PITCH_MIN` is
+     * the floor: below it the hop phrase - "co-occurs with", "is ascribed to" - cannot be
+     * set between two marks at all, and the label view drops it, which turns a route into
+     * an unexplained chain of dots.
+     */
+    const usable = Math.max(240, band.width) - PATH_MARGIN * 2;
+    const perRow = Math.max(2, Math.min(route.length, Math.floor(usable / PATH_PITCH_MIN) + 1));
+    const rows = Math.ceil(route.length / perRow);
+    const pitch = route.length > 1 ? Math.min(PATH_PITCH_MAX, usable / (perRow - 1)) : 0;
+    const rowGap = Math.min(PATH_ROW_GAP, Math.max(120, band.height) / Math.max(1, rows));
+
+    route.forEach((node, i) => {
+        const row = Math.floor(i / perRow);
+        const column = i % perRow;
+        /* Serpentine: odd rows run right to left, so the chain never jumps the full width. */
+        const along = row % 2 === 0 ? column : perRow - 1 - column;
+        const x = (along - (perRow - 1) / 2) * pitch;
+        const y = (row - (rows - 1) / 2) * rowGap;
+        const isEnd = i === 0 || i === route.length - 1;
+
+        field.seed[i] = node;
+        field.pos[i * 2] = x;
+        field.pos[i * 2 + 1] = y;
+        field.anchor[i * 2] = x;
+        field.anchor[i * 2 + 1] = y;
+        field.radius[i] = isEnd ? PATH_END_RADIUS : PATH_STEP_RADIUS;
+        field.mass[i] = 1 + Math.cbrt(world.nodeDegree[node] ?? 1) * 0.5;
+        /* Zero slack. The order is the answer; nothing may drift out of it. */
+        field.slack[i] = 0;
+
+        index.set(node, i);
+        nodes.push(
+            new PlanarBody(
+                field,
+                i,
+                node,
+                world.nodeGroup[node],
+                world.nodeDegree[node] ?? 0,
+                isEnd ? 0 : 1,
+                1,
+                null,
+                /* Every stop on a route is named. Five labels is not a label budget. */
+                true,
+            ),
+        );
+    });
+
+    const edges: PlanarEdge[] = [];
+    for (let i = 0; i < steps; i += 1) {
+        const rest = Math.hypot(
+            field.pos[i * 2] - field.pos[(i + 1) * 2],
+            field.pos[i * 2 + 1] - field.pos[(i + 1) * 2 + 1],
+        );
+        edges.push({ a: i, b: i + 1, edge: -1 - i, rest, bridge: false, weight: 1 });
+        field.edgeA[i] = i;
+        field.edgeB[i] = i + 1;
+        field.edgeRest[i] = rest;
+    }
+
+    return {
+        nodes,
+        edges,
+        index,
+        /* The route's first endpoint holds the role the subject holds in Focus: it is what
+           the diagram is anchored on, and it is what a tap returns to. */
+        rootId: route[0] ?? null,
+        field,
+        authored: true,
+        guarantee: PATH_PITCH_MIN,
+        spacing: 1,
+        kind: "path",
+    };
 }
 
 /* ------------------------------------------------------------------- the loop - */
@@ -1056,5 +1253,6 @@ export function buildNeighbourhood(
         authored: false,
         guarantee: null,
         spacing: 1,
+        kind: "focus",
     };
 }

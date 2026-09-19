@@ -18,6 +18,10 @@
 @import "../styles/lab.css";
 @import "../styles/editorial.css";
 @import "../styles/connections.css";
+@import "../styles/register.css";
+/* The motion identity is imported last, so a surface sheet cannot silently win a
+   `prefers-reduced-motion` reset it has no business overriding. */
+@import "../styles/thread.css";
 
 /* ============================================================
    VedaGraph design system
@@ -254,7 +258,7 @@ table {
     position: fixed;
     top: 10px;
     left: 10px;
-    z-index: 100;
+    z-index: var(--va-z-skip);
     transform: translateY(-160%);
     padding: 10px 16px;
     border-radius: var(--radius-sm);
@@ -376,7 +380,7 @@ table {
 .site-header {
     position: sticky;
     top: 0;
-    z-index: 40;
+    z-index: var(--va-z-sticky);
     height: 66px;
     border-bottom: 1px solid var(--line);
     background: color-mix(in srgb, var(--bg) 86%, transparent);
@@ -1860,279 +1864,10 @@ table {
 
 /* ---------- Search ---------- */
 
-.search-page {
-    max-width: 1000px;
-}
-
-.search-experience {
-    display: flex;
-    flex-direction: column;
-    gap: 18px;
-}
-
-.search-experience > label {
-    font-size: 0.84rem;
-    color: var(--muted);
-}
-
-.search-field {
-    display: flex;
-    align-items: center;
-    gap: 13px;
-    padding: 15px 18px;
-    border: 1px solid var(--line-strong);
-    border-radius: var(--radius);
-    background: var(--surface);
-}
-
-.search-field:focus-within {
-    border-color: var(--accent);
-}
-
-.search-field svg {
-    color: var(--faint);
-    flex-shrink: 0;
-}
-
-.search-field input {
-    flex: 1;
-    border: 0;
-    background: transparent;
-    font-size: 1.12rem;
-    outline: none;
-    min-width: 0;
-}
-
-.search-field kbd {
-    font-family: inherit;
-    font-size: 0.72rem;
-    padding: 2px 7px;
-    border-radius: 5px;
-    border: 1px solid var(--line);
-    color: var(--faint);
-}
-
-.filter-bank {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: flex-end;
-    justify-content: space-between;
-    gap: 16px;
-}
-
-.filter-bank fieldset {
-    border: 0;
-    padding: 0;
-    margin: 0;
-    min-width: 0;
-}
-
-.filter-bank legend {
-    font-size: 0.72rem;
-    letter-spacing: 0.09em;
-    text-transform: uppercase;
-    color: var(--faint);
-    margin-bottom: 8px;
-}
-
-.filter-row {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px;
-}
-
-.filter-row button {
-    padding: 5px 12px;
-    border-radius: 999px;
-    border: 1px solid var(--line);
-    background: transparent;
-    font-size: 0.83rem;
-    color: var(--muted);
-}
-
-.filter-row button[aria-pressed="true"] {
-    background: var(--ink);
-    border-color: var(--ink);
-    color: var(--bg);
-}
-
-.filter-selects {
-    display: flex;
-    gap: 14px;
-}
-
-.filter-selects label {
-    display: grid;
-    gap: 5px;
-    font-size: 0.72rem;
-    letter-spacing: 0.09em;
-    text-transform: uppercase;
-    color: var(--faint);
-}
-
-.filter-selects select,
-.graph-options select {
-    padding: 6px 10px;
-    border-radius: var(--radius-sm);
-    border: 1px solid var(--line);
-    background: var(--surface);
-    font-size: 0.85rem;
-    letter-spacing: 0;
-    text-transform: none;
-    color: var(--ink);
-}
-
-.search-prompts {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-}
-
-.search-prompts button {
-    display: grid;
-    gap: 2px;
-    text-align: left;
-    padding: 11px 15px;
-    border-radius: var(--radius-sm);
-    border: 1px solid var(--line);
-    background: var(--surface);
-}
-
-.search-prompts button:hover {
-    border-color: var(--accent);
-}
-
-.search-prompts strong {
-    font-weight: 500;
-}
-
-.search-prompts span {
-    font-size: 0.78rem;
-    color: var(--muted);
-}
-
-.search-results-wrap {
-    display: flex;
-    flex-direction: column;
-    gap: 14px;
-    transition: opacity 0.2s ease;
-}
-
-.search-results-wrap.is-stale {
-    opacity: 0.55;
-}
-
-.results-meta {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 16px;
-    font-size: 0.78rem;
-    color: var(--faint);
-    padding-bottom: 10px;
-    border-bottom: 1px solid var(--line);
-}
-
-.refreshing {
-    color: var(--va-accent-text);
-}
-
-.search-results {
-    display: grid;
-    gap: 6px;
-}
-
-.result-row,
-.result-skeleton {
-    display: grid;
-    grid-template-columns: 118px minmax(0, 1fr) auto auto;
-    align-items: center;
-    gap: 16px;
-    padding: 14px 16px;
-    border: 1px solid var(--line);
-    border-radius: var(--radius-sm);
-    background: var(--surface);
-}
-
-.result-row:hover {
-    border-color: var(--accent);
-}
-
-.result-type {
-    font-size: 0.7rem;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--faint);
-}
-
-.result-row strong {
-    font-weight: 500;
-}
-
-.result-row p {
-    margin-top: 3px;
-    font-size: 0.84rem;
-    color: var(--muted);
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-}
-
-.result-row small {
-    display: block;
-    margin-top: 4px;
-    font-size: 0.74rem;
-    color: var(--faint);
-}
-
-.result-veda {
-    font-size: 0.72rem;
-    letter-spacing: 0.08em;
-    color: var(--va-accent-text);
-}
-
-.result-skeleton > div:last-child {
-    display: grid;
-    gap: 7px;
-}
-
-.search-error {
-    display: flex;
-    gap: 10px;
-    padding: 13px 16px;
-    border-radius: var(--radius-sm);
-    background: var(--tone-insufficient-bg);
-    color: var(--tone-insufficient);
-    font-size: 0.86rem;
-}
-
-.search-error strong {
-    display: block;
-}
-
-.search-error span {
-    color: var(--muted);
-    font-size: 0.8rem;
-}
-
-.search-caveats {
-    border: 1px solid var(--line);
-    border-radius: var(--radius-sm);
-    background: var(--surface-sunk);
-    font-size: 0.84rem;
-}
-
-.search-caveats summary {
-    padding: 11px 15px;
-    cursor: pointer;
-    color: var(--muted);
-}
-
-.search-caveats p {
-    padding: 0 15px 12px;
-    color: var(--muted);
-    line-height: 1.6;
-}
+/* The search surface moved to the editorial register. Every rule that used to stand
+   here - the bordered field, the pill filters and the four-column carded result rows -
+   is now in `src/styles/register.css`, defined once. See the note at its head for why a
+   documentation-style card grid was the wrong dialect for an archive catalogue. */
 
 .entity-group {
     display: flex;
@@ -2549,7 +2284,7 @@ table {
 .dialog-overlay {
     position: fixed;
     inset: 0;
-    z-index: 60;
+    z-index: var(--va-z-overlay);
     background: rgb(12 18 20 / 0.42);
     backdrop-filter: blur(2px);
 }
@@ -2559,7 +2294,7 @@ table {
     top: 0;
     right: 0;
     bottom: 0;
-    z-index: 61;
+    z-index: var(--va-z-modal);
     width: min(100%, 560px);
     display: flex;
     flex-direction: column;
@@ -2572,7 +2307,7 @@ table {
 .evidence-drawer header {
     position: sticky;
     top: 0;
-    z-index: 1;
+    z-index: var(--va-z-content);
     display: flex;
     align-items: flex-start;
     justify-content: space-between;
@@ -3940,7 +3675,7 @@ table {
 .mobile-nav-panel {
     position: fixed;
     inset: 0 0 0 auto;
-    z-index: 61;
+    z-index: var(--va-z-modal);
     width: min(100%, 360px);
     padding: 22px;
     background: var(--bg);
@@ -4086,16 +3821,6 @@ table {
         gap: 14px;
     }
 
-    .result-row,
-    .result-skeleton {
-        grid-template-columns: 1fr auto;
-        gap: 8px;
-    }
-
-    .result-type {
-        grid-column: 1 / -1;
-    }
-
     .reuse-row {
         grid-template-columns: 1fr;
         gap: 8px;
@@ -4120,10 +3845,6 @@ table {
     .interpretation-frame dl div {
         grid-template-columns: 1fr;
         gap: 2px;
-    }
-
-    .search-field input {
-        font-size: 1rem;
     }
 
     .profile-hero {
@@ -4205,8 +3926,7 @@ table {
 .comparison-column,
 .limit-card,
 .insight-section,
-.discovery-link > span,
-.result-row > div {
+.discovery-link > span {
     min-width: 0;
 }
 

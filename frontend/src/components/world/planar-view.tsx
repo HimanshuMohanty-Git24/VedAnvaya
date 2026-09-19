@@ -16,6 +16,7 @@ import { GROUP_NAMES, useGraphPalette, type GraphPalette } from "@/lib/world/pal
 import {
     PREROLL_LIMIT,
     buildFocusScene,
+    buildPathScene,
     buildWorldScene,
     isAtRest,
     markRadius,
@@ -107,6 +108,14 @@ const FOCUS_NAME_CAP = 8;
 const AGGREGATE_WIDTHS = [0.8, 1.4, 2.2, 3.2];
 
 /**
+ * The value `labelSubjectRef` holds while a route's hops are the labels.
+ *
+ * The ref's other values are node indices and null, so a route needs a value neither of
+ * those can be. -1 is not a node.
+ */
+const PATH_LABEL_SUBJECT = -1;
+
+/**
  * Which width class a line of this weight falls in.
  *
  * Logarithmic against the heaviest line in the scene. Linear, the busiest pair of
@@ -140,6 +149,9 @@ export function PlanarView({
     labels,
     root,
     scope,
+    path,
+    pathHops,
+    chromeBoxes,
     onSelect,
     onInspectEdge,
     inspectedEdge = null,
@@ -153,11 +165,42 @@ export function PlanarView({
      * What this canvas is drawing.
      *
      * "world" draws the composed corpus as its constellations; "focus" draws one subject and
-     * the neighbours `focus.ts` curated for it. They share this component because they share a
-     * visual language and an interaction model, and because a reader moving between them should
-     * feel the same diagram deepening rather than two different tools.
+     * the neighbours `focus.ts` curated for it; "path" draws a traced route as an ordered
+     * chain. They share this component because they share a visual language and an
+     * interaction model, and because a reader moving between them should feel the same
+     * diagram deepening rather than three different tools.
+     *
+     * "path" did not exist until this phase. The shell computed the scope as
+     * `view === "FOCUS" && selected ? "focus" : "world"`, so PATH fell through the ternary
+     * and the 2D renderer drew the whole corpus with the route nowhere on it, silently. The
+     * 3D renderer had drawn routes since the feature shipped, which is why nothing caught
+     * it: the feature worked, in one of its two renderers. See `buildPathScene`.
      */
-    scope: "world" | "focus";
+    scope: "world" | "focus" | "path";
+    /**
+     * The route, as indices into the artifact, when `scope` is "path".
+     *
+     * Passed rather than derived. The service found this route and resolved its waypoints;
+     * re-deriving it from the artifact here would be a second answer to a question already
+     * answered, and the two could disagree about a hop the reader is looking at.
+     */
+    path?: readonly number[];
+    /**
+     * Where the chrome is standing on the stage, so no phrase is placed under it.
+     *
+     * Rectangles in canvas coordinates, measured by the shell. Handed straight to the label
+     * layer; nothing here reads them.
+     */
+    chromeBoxes?: ReadonlyArray<{ x: number; y: number; w: number; h: number }>;
+    /**
+     * One phrase per hop, in route order, when `scope` is "path".
+     *
+     * Sent with the route rather than looked up again from the artifact, because the service
+     * already resolved them from the same curated predicate table the artifact was exported
+     * from. Re-deriving them here would mean matching an API hop back to an edge index, and
+     * could disagree with the list the reader is looking at beside the canvas.
+     */
+    pathHops?: readonly string[];
     /**
      * A subject was chosen. Non-nullable on purpose.
      *
@@ -191,6 +234,9 @@ export function PlanarView({
        renderers cannot come to different conclusions about what a subject is attached to. */
     const labelViewRef = useRef<EdgeLabelView | null>(null);
     const labelSubjectRef = useRef<number | null>(null);
+    /* The hop phrases, mirrored for the frame loop. Written in the effect beside the palette
+       and the predicates, never during render: see the note there. */
+    const pathHopsRef = useRef<readonly string[]>([]);
     const picksRef = useRef<EdgeLabelPick[]>([]);
     const planarEdgeRef = useRef<Map<number, number>>(new Map());
     const pointsRef = useRef<Float32Array>(new Float32Array(0));
@@ -221,7 +267,8 @@ export function PlanarView({
         paletteRef.current = palette;
         predicatesRef.current = predicates;
         inspectRef.current = onInspectEdge;
-    }, [palette, predicates, onInspectEdge]);
+        pathHopsRef.current = pathHops ?? [];
+    }, [palette, predicates, onInspectEdge, pathHops]);
 
     const viewRef = useRef({ x: 0, y: 0, scale: 1, vx: 0, vy: 0 });
     /**
@@ -397,9 +444,25 @@ export function PlanarView({
         root: scope === "focus" && measured ? root : null,
         budget,
     });
+    /* The route as a stable key, so the layout effect re-runs on a new route rather than on
+       every render that happens to hand it a fresh array with the same contents in it. */
+    const routeKey = (path ?? []).join(",");
 
     useEffect(() => {
         if (!measured) return;
+        if (scope === "path") {
+            /*
+             * A traced route, as an ordered chain. Anchored with zero slack and never
+             * stepped: the order is the answer the service gave, and a simulation would
+             * rearrange it by degree and lose it.
+             */
+            const route = routeKey ? routeKey.split(",").map(Number) : [];
+            graphRef.current = route.length ? buildPathScene(world, route, band) : null;
+            sleepingRef.current = true;
+            fit();
+            markDirty();
+            return;
+        }
         if (scope === "world") {
             /*
              * The corpus as its constellations, relaxed in the plane.
@@ -431,7 +494,7 @@ export function PlanarView({
         const used = preroll(graph);
         sleepingRef.current = reducedRef.current || used < PREROLL_LIMIT;
         fit();
-    }, [world, scope, neighbourhood, band, measured, fit, markDirty]);
+    }, [world, scope, routeKey, neighbourhood, band, measured, fit, markDirty]);
 
     /**
      * The one thing the chrome may ask of this canvas.
@@ -556,7 +619,18 @@ export function PlanarView({
             const into =
                 hovered !== null && (edge.a === hovered || edge.b === hovered)
                     ? hoverBucket
-                    : a.ring === 0 || b.ring === 0
+                    : /*
+                       * Every step of a route is the route.
+                       *
+                       * The ring test below is right for Focus, where a line touching the
+                       * subject is the relationship asked about and a line between two
+                       * neighbours is context. On a route it is wrong twice over: only the
+                       * first and last hops touch an endpoint, so a four-step route came out
+                       * with its two outer hops in ink and its two inner ones in the quiet
+                       * bridge weight - drawn as though the middle of the answer were
+                       * context for its ends.
+                       */
+                      graph.kind === "path" || a.ring === 0 || b.ring === 0
                       ? spokeBucket
                       : buckets[aggregateClass(edge.weight, heaviest)];
             into.points.push(toScreenX(a.x), toScreenY(a.y), toScreenX(b.x), toScreenY(b.y));
@@ -746,7 +820,80 @@ export function PlanarView({
          * transform of coordinates this function already has.
          */
         const labelView = labelViewRef.current;
-        if (labelView && scope === "focus") {
+
+        /*
+         * A traced route names its own steps.
+         *
+         * The same arrangement the spatial view uses, for the same reason: in PATH the drawn
+         * lines are the hops and not a subject's neighbourhood, so the words describe those,
+         * and the words come from the service that found the route rather than from the
+         * artifact. The keys are negative, which is how the inspector knows these are hops -
+         * a hop is not one edge in the world file, and its explanation is already set out in
+         * the list beside the canvas.
+         *
+         * A step with no phrase is skipped here rather than filtered afterwards: the points
+         * buffer is indexed in step with `picks`, so dropping one from one and not the other
+         * puts every later label on the wrong line.
+         */
+        if (labelView && scope === "path" && graph.kind === "path") {
+            const hops = pathHopsRef.current;
+            if (labelSubjectRef.current !== PATH_LABEL_SUBJECT) {
+                labelSubjectRef.current = PATH_LABEL_SUBJECT;
+                const picks: EdgeLabelPick[] = [];
+                graph.edges.forEach((edge, i) => {
+                    const text = hops[i] ?? "";
+                    if (!text) return;
+                    picks.push({
+                        edge: edge.edge,
+                        other: graph.nodes[edge.b].id,
+                        outgoing: true,
+                        predicate: "",
+                        text,
+                        /* Earlier steps first, so a long route loses its tail, not its head. */
+                        priority: 1 - i / Math.max(1, graph.edges.length),
+                    });
+                });
+                picksRef.current = picks;
+                pointsRef.current = new Float32Array(picks.length * LABEL_STRIDE);
+                planarEdgeRef.current = new Map(
+                    graph.edges.map((edge, i) => [edge.edge, i] as const),
+                );
+                labelView.setRelationCap(Math.max(picks.length, edgeLabelBudget(width)));
+                labelView.setLabels(picks);
+            }
+
+            const picks = picksRef.current;
+            if (picks.length > 0) {
+                const points = pointsRef.current;
+                picks.forEach((pick, i) => {
+                    const base = i * LABEL_STRIDE;
+                    const planarIndex = planarEdgeRef.current.get(pick.edge);
+                    if (planarIndex === undefined) {
+                        points[base] = 0;
+                        return;
+                    }
+                    const edge = graph.edges[planarIndex];
+                    const from = graph.nodes[edge.a];
+                    const to = graph.nodes[edge.b];
+                    const ax = toScreenX(from.x);
+                    const ay = toScreenY(from.y);
+                    const bx = toScreenX(to.x);
+                    const by = toScreenY(to.y);
+                    LABEL_FRACTIONS.forEach((t, f) => {
+                        points[base + 1 + f * 2] = ax + (bx - ax) * t;
+                        points[base + 2 + f * 2] = ay + (by - ay) * t;
+                    });
+                    points[base] = 1;
+                });
+                labelView.update(points, { width, height });
+                /* The assignment waits for stillness, so a settled diagram has to offer one
+                   more frame or the deadline never arrives and the phrases stay at opacity
+                   zero. A path scene is born at rest, so without this it never draws a word. */
+                if (labelView.pending) markDirty();
+            } else {
+                labelView.update(new Float32Array(0), { width, height });
+            }
+        } else if (labelView && scope === "focus") {
             const subject =
                 hovered ?? (graph.rootId === null ? null : graph.index.get(graph.rootId) ?? null);
 
@@ -841,6 +988,14 @@ export function PlanarView({
         labelView.setInspected(inspectedEdge);
         markDirty();
     }, [inspectedEdge, markDirty]);
+
+    /* The chrome's boxes, so the label layer never places a phrase behind a panel. */
+    useEffect(() => {
+        const labelView = labelViewRef.current;
+        if (!labelView) return;
+        labelView.setObstacles(chromeBoxes ?? []);
+        markDirty();
+    }, [chromeBoxes, markDirty]);
 
     /* The overlay outlives individual neighbourhoods; only its contents change. */
     useEffect(() => {
@@ -1250,6 +1405,17 @@ export function PlanarView({
                     This world map is drawn from the corpus&rsquo;s constellations, and the
                     artifact loaded does not carry them. Rebuild the world artifact, or open a
                     subject to see its connections.
+                </p>
+            )}
+            {/*
+             * Path with no route yet. Said rather than drawn as an empty canvas, which is
+             * what the reader got before: the scope fell through to the world map, so an
+             * unanswered trace looked like a corpus map and an answered one looked the same.
+             */}
+            {scope === "path" && (path?.length ?? 0) === 0 && (
+                <p className="va-planar-empty">
+                    Name two subjects in the panel to trace a route between them. The route is
+                    drawn here as a chain, with each step named.
                 </p>
             )}
         </div>

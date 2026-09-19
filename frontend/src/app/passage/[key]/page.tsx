@@ -3,10 +3,11 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { AskAboutButton } from "@/components/ask/ask-about-button";
-import { CopyButton } from "@/components/copy-button";
 import { LoadFailure } from "@/components/empty-state";
 import { Action } from "@/components/home/sections";
 import { Apparatus } from "@/components/reader/apparatus";
+import { Folio, FolioNote, Shelfmark } from "@/components/reader/folio";
+import { WitnessColumn } from "@/components/reader/witness-column";
 import {
     crumbLevelName,
     crumbValue,
@@ -259,6 +260,7 @@ export default async function PassagePage({ params }: Params) {
             .values(),
     ];
     const formulas = reader.formulas?.items ?? [];
+    const translated = reader.translations.items ?? [];
     const script = primary?.script === "DEVANAGARI" ? "DEVANAGARI" : "IAST";
 
     return (
@@ -301,39 +303,110 @@ export default async function PassagePage({ params }: Params) {
                     </header>
 
                     {primary?.text ? (
-                        <section aria-label="Sanskrit text" className="va-verse">
-                            <div className="va-verse-meta">
-                                <span title={primary.witness_id ?? undefined}>
-                                    {script === "DEVANAGARI" ? "Devanagari" : "Romanised"}
-                                    {primary.accented ? ", accented" : ""}
-                                    {witnessName(primary.witness_id)
-                                        ? ` · ${witnessName(primary.witness_id)}`
-                                        : ""}
-                                </span>
-                                <CopyButton text={primary.text} />
-                            </div>
-                            <p
-                                className={
-                                    script === "DEVANAGARI" ? "sanskrit devanagari" : "sanskrit"
-                                }
-                                data-script={script}
-                                lang="sa"
-                            >
-                                {primary.text}
-                            </p>
-                            {/* Who printed this text and under what licence, beneath the text
-                                rather than in a panel elsewhere. It is one line because a
-                                reader needs it once, not because it is unimportant. */}
-                            {provenanceLine(primary) ? (
-                                <p className="va-reader-provenance">{provenanceLine(primary)}</p>
-                            ) : null}
-                        </section>
+                        /*
+                         * The verse, and the margin beside it.
+                         *
+                         * The two lines that used to sit above and below the text - which
+                         * script this is and who printed it - are now in the margin. Neither
+                         * is a statement the verse makes, and both were interrupting the one
+                         * that is: a reader met "ROMANISED, ACCENTED · AUFRECHT EDITION" in
+                         * tracked upper case before they met the Sanskrit. In the margin they
+                         * are still one glance away and no longer in the way.
+                         *
+                         * Nothing is hidden by this. Below 84rem the margin folds back under
+                         * the block and both lines are printed in full.
+                         */
+                        <Folio
+                            label="Apparatus for the Sanskrit text"
+                            registration
+                            notes={
+                                <>
+                                    <FolioNote term="Witness">
+                                        <p title={primary.witness_id ?? undefined}>
+                                            {witnessName(primary.witness_id) ??
+                                                "Not identified in this build"}
+                                        </p>
+                                        <p>
+                                            {script === "DEVANAGARI" ? "Devanagari" : "Romanised"}
+                                            {primary.accented
+                                                ? ", accented"
+                                                : ", without accents"}
+                                        </p>
+                                    </FolioNote>
+                                    {provenanceLine(primary) ? (
+                                        <FolioNote term="Printed from">
+                                            <p>{provenanceLine(primary)}</p>
+                                        </FolioNote>
+                                    ) : null}
+                                    {reader.graph_neighbour_count ? (
+                                        <FolioNote term="In the graph">
+                                            <p>
+                                                <Link
+                                                    href={`/graph?node=${encoded(reader.canonical_key)}`}
+                                                >
+                                                    {reader.graph_neighbour_count.toLocaleString(
+                                                        "en-GB",
+                                                    )}{" "}
+                                                    connections
+                                                </Link>
+                                            </p>
+                                        </FolioNote>
+                                    ) : null}
+                                </>
+                            }
+                        >
+                            <section aria-label="Sanskrit text" className="va-verse">
+                                {/*
+                                 * The verse, and the control that opens a second witness
+                                 * beside it. See `WitnessColumn`: one control, one region,
+                                 * a column at 62rem and above and a stacked disclosure
+                                 * below it, and no diff between the two texts.
+                                 */}
+                                <WitnessColumn
+                                    alternates={alternates.map((surface) => ({
+                                        key: `${surface.witness_id}-${surface.surface}`,
+                                        text: surface.text as string,
+                                        script:
+                                            surface.script === "DEVANAGARI"
+                                                ? "DEVANAGARI"
+                                                : "IAST",
+                                        name:
+                                            witnessName(surface.witness_id) ??
+                                            "the unidentified witness",
+                                        /* Stated only where it differs from the primary's,
+                                           so the same edition and licence is not printed
+                                           twice on one screen. */
+                                        provenance:
+                                            provenanceLine(surface) === provenanceLine(primary)
+                                                ? null
+                                                : provenanceLine(surface),
+                                        accented: surface.accented,
+                                    }))}
+                                    primary={{
+                                        key: "primary",
+                                        text: primary.text,
+                                        script,
+                                        name: witnessName(primary.witness_id) ?? "this edition",
+                                        accented: primary.accented,
+                                    }}
+                                />
+                            </section>
+                        </Folio>
                     ) : (
                         <KnowledgeStatus status={reader.text.data_status} />
                     )}
 
                     {recitation ? (
-                        <RecitationPlayer key={recitation.audio_id} track={recitation} />
+                        <RecitationPlayer
+                            key={recitation.audio_id}
+                            /* The accent trace is derived from the text this page prints,
+                               so the player is handed that text rather than fetching or
+                               guessing at one. A verse with no primary surface passes null
+                               and the player draws no contour. */
+                            script={script}
+                            text={primary?.text}
+                            track={recitation}
+                        />
                     ) : null}
 
                     {notation?.text ? (
@@ -364,48 +437,42 @@ export default async function PassagePage({ params }: Params) {
                         </p>
                     ) : null}
 
-                    {alternates.length > 0 && (
-                        <details className="va-witnesses witness-block">
-                            <summary>
-                                {alternates.length === 1
-                                    ? "One other witness prints this text"
-                                    : `${alternates.length} other witnesses print this text`}
-                            </summary>
-                            {alternates.map((surface) => (
-                                <div
-                                    className="va-witness"
-                                    key={`${surface.witness_id}-${surface.surface}`}
-                                >
-                                    <div className="va-verse-meta">
-                                        <span title={surface.witness_id ?? undefined}>
-                                            {witnessName(surface.witness_id) ??
-                                                "Witness not identified"}
-                                            {" · "}
-                                            {surface.script === "DEVANAGARI"
-                                                ? "Devanagari"
-                                                : "Romanised"}
-                                            {surface.accented ? ", accented" : ""}
-                                        </span>
-                                        {surface.text && <CopyButton text={surface.text} />}
-                                    </div>
-                                    <p
-                                        className={
-                                            surface.script === "DEVANAGARI"
-                                                ? "sanskrit devanagari"
-                                                : "sanskrit"
-                                        }
-                                        data-script={
-                                            surface.script === "DEVANAGARI" ? "DEVANAGARI" : "IAST"
-                                        }
-                                        lang="sa"
-                                    >
-                                        {surface.text}
-                                    </p>
-                                </div>
-                            ))}
-                        </details>
-                    )}
-
+                    <Folio
+                        label="Provenance of the translation"
+                        notes={
+                            translated.length ? (
+                                <>
+                                    {translated.map((translation) => (
+                                        <FolioNote
+                                            key={`margin-${translation.translator}-${translation.text}`}
+                                            term="Rendered by"
+                                        >
+                                            <p>
+                                                {translation.translator}
+                                                {translation.year ? `, ${translation.year}` : ""}
+                                            </p>
+                                            {translation.work_edition ? (
+                                                <p>{translation.work_edition}</p>
+                                            ) : null}
+                                            {translation.language !== "en" ? (
+                                                <p>
+                                                    {translation.language_name ??
+                                                        translation.language}
+                                                </p>
+                                            ) : null}
+                                        </FolioNote>
+                                    ))}
+                                </>
+                            ) : (
+                                /* The absence is typed in the margin too, and in the unbuilt
+                                   tone, so a reader scanning the margins of a Samavedic page
+                                   is not left to read a blank as a translation. */
+                                <FolioNote term="Rendered by" tone="absent">
+                                    <p>No rendering is linked to this verse.</p>
+                                </FolioNote>
+                            )
+                        }
+                    >
                     <section
                         aria-label="Translation"
                         className="va-translation translation-section"
@@ -437,21 +504,6 @@ export default async function PassagePage({ params }: Params) {
                                         >
                                             {translation.text}
                                         </blockquote>
-                                        <figcaption>
-                                            <span>
-                                                {translation.translator}
-                                                {translation.year ? `, ${translation.year}` : ""}
-                                            </span>
-                                            {translation.work_edition && (
-                                                <span>{translation.work_edition}</span>
-                                            )}
-                                            {translation.language !== "en" && (
-                                                <span>
-                                                    {translation.language_name ??
-                                                        translation.language}
-                                                </span>
-                                            )}
-                                        </figcaption>
                                         {/*
                                          * The parallel this English was taken from is a
                                          * citation, and a citation belongs next to the text
@@ -520,6 +572,7 @@ export default async function PassagePage({ params }: Params) {
                             </p>
                         )}
                     </section>
+                    </Folio>
 
                     {elsewhere.length > 0 && (
                         <section aria-labelledby="va-reader-elsewhere-heading" className="va-reader-elsewhere">
@@ -572,6 +625,44 @@ export default async function PassagePage({ params }: Params) {
                          * closer reading than SANDHI_INSENSITIVE, and a row that showed both
                          * as "shares this phrase" would spend a distinction the edge recorded.
                          */
+                        <Folio
+                            label="How the fixed phrases were matched"
+                            notes={
+                                <>
+                                    <FolioNote term="Matched on">
+                                        <p>
+                                            A normalised Sanskrit surface. A match is shared
+                                            wording and not a claim about which verse said it
+                                            first.
+                                        </p>
+                                    </FolioNote>
+                                    <FolioNote term="Reach">
+                                        {/*
+                                         * The collections each phrase occurs in, as words.
+                                         *
+                                         * Deliberately not the four-mark reach register used
+                                         * on /formulas. That register's value is that a mark
+                                         * outside the measured set reads as "not read" rather
+                                         * than "not there" - and the reader payload's formula
+                                         * block carries `coverage: null`, so this view cannot
+                                         * say which collections were read for this phrase.
+                                         * Drawing four marks here would be typing an absence
+                                         * out of a scope statement that is not in the
+                                         * response. The family page states it and is linked.
+                                         */}
+                                        <p>
+                                            {[
+                                                ...new Set(
+                                                    formulas.flatMap(
+                                                        (formula) => formula.vedas ?? [],
+                                                    ),
+                                                ),
+                                            ].join(", ") || "not stated for this verse"}
+                                        </p>
+                                    </FolioNote>
+                                </>
+                            }
+                        >
                         <section aria-labelledby="va-reader-formulae-heading" className="va-reader-formulae">
                             <h2 className="va-reading-heading" id="va-reader-formulae-heading">
                                 Fixed phrases in this verse
@@ -590,12 +681,8 @@ export default async function PassagePage({ params }: Params) {
                                     </li>
                                 ))}
                             </ul>
-                            <p className="va-reader-formulae-note">
-                                Phrases are matched on a normalised Sanskrit surface, so a
-                                match is shared wording and not a claim about which verse
-                                said it first.
-                            </p>
                         </section>
+                        </Folio>
                     )}
 
                     <nav aria-label="Adjacent passages" className="va-reader-adjacent reader-nav">
@@ -618,6 +705,12 @@ export default async function PassagePage({ params }: Params) {
                             </Link>
                         )}
                     </nav>
+
+                    {/* The archival identifier, last. See `Shelfmark`. */}
+                    <Shelfmark
+                        canonicalKey={reader.canonical_key}
+                        citation={reader.canonical_citation ?? undefined}
+                    />
                 </article>
 
                 <aside aria-label="Passage apparatus" className="sticky-aside">

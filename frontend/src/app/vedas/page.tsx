@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { ScopeRegister } from "@/components/corpus/scope-register";
 import { LoadFailure } from "@/components/empty-state";
 import { Action } from "@/components/home/sections";
 import {
@@ -302,11 +303,35 @@ export default async function VedasPage() {
                 })}
             </div>
 
-            <p className="va-collections-foot">
-                Each edition is one recension of one Samhita. Which recension, what it excludes,
-                and how translation, recitation and notation coverage are typed is set out in full
-                on <Link href="/limits">the scope page</Link>.
-            </p>
+            {/*
+             * What each edition is, and what it is not, as a register.
+             *
+             * The sentence this replaces pointed at /limits and asked the reader to take the
+             * exclusions on trust until they got there. They are the most consequential facts
+             * on this page - "the Yajurveda" ordinarily means both recensions and this build
+             * holds one - so they are stated here, in a form a reader can scan, and /limits
+             * carries the same register at length.
+             *
+             * Deliberately a register and not a tree. See the note in `ScopeRegister`: a tree
+             * would assert descent between recensions, which is a question this build has no
+             * evidence about.
+             */}
+            <section aria-labelledby="va-vedas-scope" className="va-block">
+                <hr className="va-rule-drawn" />
+                <h2 className="va-block-heading" id="va-vedas-scope">
+                    One recension each, and what that leaves out
+                </h2>
+                <p className="va-block-note">
+                    A solid mark is the edition this build holds. A hollow one is a corpus the
+                    registry records as named and outside it, so an absence measured in this
+                    product is an absence from the held recension only.
+                </p>
+                <ScopeRegister link={false} works={works} />
+                <p className="va-scope-caption">
+                    How translation, recitation and notation coverage are typed is set out in
+                    full on <Link href="/limits">the scope page</Link>.
+                </p>
+            </section>
         </div>
     );
 }

@@ -12,7 +12,18 @@ import { PLATES_BY_SLUG } from "@/lib/lab";
  * beautifully and states something false, so none of them would be caught by a screenshot.
  */
 
-const width = (node: Element | null) => (node as HTMLElement | null)?.style.width;
+/**
+ * A bar's drawn length.
+ *
+ * Read from `--va-resolve-to` rather than from `width`. The value moved there when the bars
+ * were given the RESOLVE primitive: `.va-resolve` reads that property for *both* the static
+ * size and the keyframe's end state, so it is the one place the measured figure is written
+ * and the one place to assert it. What these tests check is unchanged - that a null draws no
+ * bar, that a measured zero draws no length, and that every bar is scaled against one
+ * ceiling - and all three would now pass vacuously against `style.width`, which is empty.
+ */
+const width = (node: Element | null) =>
+    (node as HTMLElement | null)?.style.getPropertyValue("--va-resolve-to");
 
 describe("BarTable", () => {
     const rows: Datum[] = [
@@ -43,14 +54,14 @@ describe("BarTable", () => {
     it("scales every bar against one ceiling, so two rows are comparable", () => {
         const { container } = render(<BarTable caption="Deities" rows={rows} />);
         const bars = [...container.querySelectorAll(".va-rank-bar")] as HTMLElement[];
-        expect(bars[0].style.width).toBe("100%");
-        expect(Number.parseFloat(bars[1].style.width)).toBeCloseTo((1708 / 3566) * 100, 1);
+        expect(width(bars[0])).toBe("100%");
+        expect(Number.parseFloat(width(bars[1]) ?? "")).toBeCloseTo((1708 / 3566) * 100, 1);
     });
 
     it("honours an explicit ceiling so two tables can share a scale", () => {
         const { container } = render(<BarTable caption="Deities" max={7132} rows={rows} />);
         const bars = [...container.querySelectorAll(".va-rank-bar")] as HTMLElement[];
-        expect(bars[0].style.width).toBe("50%");
+        expect(width(bars[0])).toBe("50%");
     });
 
     it("is a table before it is a chart, with a caption and row headers", () => {

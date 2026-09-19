@@ -6,6 +6,7 @@ import Link from "next/link";
 import { useEffect, useRef } from "react";
 import {
     EVIDENCE_TYPE_ORDER,
+    clauses,
     evidenceTypeCopy,
     type AskEvidenceItem,
     type EvidenceItemType,
@@ -138,7 +139,7 @@ function EvidenceRow({ item, cited }: { item: AskEvidenceItem; cited: boolean })
         item.citation ??
         item.entity_label ??
         (item.source_label && item.target_label
-            ? `${item.source_label} — ${item.target_label}`
+            ? `${item.source_label} · ${item.target_label}`
             : null) ??
         item.passage_key ??
         `Evidence ${item.id}`;
@@ -213,13 +214,26 @@ function EvidenceRow({ item, cited }: { item: AskEvidenceItem; cited: boolean })
              * in the item: drawn as an error, it teaches a reader that the most careful thing
              * on the page is the thing that went wrong.
              */}
-            <p className="ask-qualifier">
+            {/*
+             * Broken into its clauses, and not one character shorter.
+             *
+             * These run to four or five sentences, each qualifying a different thing, and set
+             * as one paragraph at 13px in a 560px drawer they were the most-skimmed text in
+             * the product - which is the exact opposite of what they are for. `clauses` only
+             * decides where a line ends; `tests/unit/ask-clauses.test.ts` asserts that
+             * rejoining its output reproduces the input exactly.
+             */}
+            <div className="ask-qualifier">
                 <b>Does not establish</b>
-                <span>
-                    {item.qualifier ??
-                        "No qualifier travelled with this item. Read its knowledge status before relying on it."}
-                </span>
-            </p>
+                <div className="ask-qualifier-body">
+                    {clauses(
+                        item.qualifier ??
+                            "No qualifier travelled with this item. Read its knowledge status before relying on it.",
+                    ).map((clause, index) => (
+                        <span key={index}>{clause}</span>
+                    ))}
+                </div>
+            </div>
 
             <div className="ask-evidence-footer">
                 <KnowledgeStatus status={item.knowledge_status} compact />

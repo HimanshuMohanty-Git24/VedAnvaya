@@ -99,8 +99,23 @@ export function BarTable({
                             ) : (
                                 <span
                                     aria-hidden="true"
-                                    className="va-rank-bar"
-                                    style={{ width: barWidth(row.value, ceiling) }}
+                                    /*
+                                     * RESOLVE: zero to the measured value, once, on entry.
+                                     *
+                                     * The width is written as `--va-resolve-to` rather than
+                                     * as `width`, and `.va-resolve` reads it for both the
+                                     * static size and the keyframe. So the end state is the
+                                     * measured figure in either case - under reduced motion
+                                     * and on a browser with no scroll timeline the bar is
+                                     * simply drawn at its value - and there is no curve
+                                     * anywhere that overshoots it. See `thread.css`.
+                                     */
+                                    className="va-rank-bar va-resolve"
+                                    style={
+                                        {
+                                            "--va-resolve-to": barWidth(row.value, ceiling),
+                                        } as React.CSSProperties
+                                    }
                                 />
                             )}
                         </td>
@@ -174,14 +189,22 @@ export function CorpusStrip({
                                 ) : (
                                     <span
                                         aria-hidden="true"
-                                        className="va-strip-bar"
-                                        style={{ width: barWidth(figure.value, ceiling) }}
+                                        /* RESOLVE, exactly as in `RankTable` above. */
+                                        className="va-strip-bar va-resolve"
+                                        style={
+                                            {
+                                                "--va-resolve-to": barWidth(
+                                                    figure.value,
+                                                    ceiling,
+                                                ),
+                                            } as React.CSSProperties
+                                        }
                                     />
                                 )}
                             </td>
                             <td className="va-strip-value">
                                 {figure.value == null ? (
-                                    <span className="va-strip-null">—</span>
+                                    <span aria-hidden="true" className="va-strip-null">—</span>
                                 ) : (
                                     <>
                                         {perThousand ? rate(figure.value) : count(figure.value)}

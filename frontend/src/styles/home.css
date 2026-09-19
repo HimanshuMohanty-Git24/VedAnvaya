@@ -6,9 +6,21 @@
    twice in a row, so the page reads as composed rather than as a stack.
    ============================================================================ */
 
+/*
+ * The page width, declared on every band that is a band.
+ *
+ * `--va-page` is scoped rather than global, which is right - it is the homepage's own
+ * measure and nothing outside the homepage should inherit it. The cost is that a new band
+ * has to be added here, and the archive strip was not: `width: var(--va-page)` with no
+ * declaration in scope computes to `auto`, so its head sat flush against the viewport's
+ * left edge while every other heading on the page started on the 60px margin. Invalid at
+ * computed-value time means silent, and the token audit could not see it either - the
+ * token *is* declared, just not here.
+ */
 .va-hero,
 .va-section,
-.va-plate {
+.va-plate,
+.va-archive-strip {
     --va-page: min(100% - (2 * var(--va-shell-gutter)), var(--va-shell-max));
 }
 
@@ -34,7 +46,7 @@
     content: "";
     position: absolute;
     inset: 0;
-    z-index: -1;
+    z-index: var(--va-z-beneath);
     background-image: image-set(
         url("/brand/textures/hero-light-1920.avif") type("image/avif"),
         url("/brand/textures/hero-light-1920.webp") type("image/webp")
@@ -602,7 +614,7 @@
 
 .va-section-inner {
     position: relative;
-    z-index: 1;
+    z-index: var(--va-z-content);
     width: var(--va-page);
     margin-inline: auto;
 }
@@ -816,11 +828,29 @@
     border-bottom: var(--va-border-width) solid var(--va-line-strong);
 }
 
+/*
+ * A numeric column is flush to its own right edge, and gets a gutter only where the next
+ * cell is not another number.
+ *
+ * `padding-right: 0` on every `.is-num` was right when "Recited" ended the table and wrong
+ * the moment the "Read" column was added after it: on every row the figure and the link met
+ * with no space at all, and the page read "10,552Open Rigveda".
+ *
+ * The first fix restored the gutter on every numeric cell, which cost 48px of table width
+ * and pushed the whole page 15px past a 768px viewport - a defect traded for a defect. Two
+ * right-aligned columns need no gutter between them: each one's content already sits at its
+ * own right edge and the whitespace is in the middle. Only the boundary with the left-ranged
+ * link needs one, and `:has()` names exactly that boundary.
+ */
 .va-ledger .is-num {
     text-align: end;
     font-variant-numeric: tabular-nums;
     padding-right: 0;
     white-space: nowrap;
+}
+
+.va-ledger .is-num:has(+ .va-ledger-open) {
+    padding-right: var(--va-space-lg);
 }
 
 .va-ledger tbody th {
@@ -1041,7 +1071,7 @@
     inset-block: 0;
     inset-inline-start: 0;
     background: var(--va-accent-base);
-    z-index: 1;
+    z-index: var(--va-z-content);
 }
 
 .va-bar-figure {
@@ -1138,7 +1168,7 @@
     content: "";
     position: absolute;
     inset: 0;
-    z-index: 0;
+    z-index: var(--va-z-ground);
     pointer-events: none;
     background-image: image-set(
         url("/brand/textures/inquiry-light-1600.avif") type("image/avif"),
@@ -1201,7 +1231,7 @@
 .va-plate-ground {
     position: absolute;
     inset: 0;
-    z-index: -1;
+    z-index: var(--va-z-beneath);
     width: 100%;
     height: 100%;
     object-fit: cover;
@@ -1586,5 +1616,155 @@
     .va-action svg,
     .va-start-list a::before {
         transition: none;
+    }
+}
+
+/* ========================================================= the archive strip - */
+
+/*
+ * The one horizontal moving-text moment on the site, placed once.
+ *
+ * It sits where the homepage's vertical rhythm most needs breaking: between the recitation
+ * coverage bars and the connections split, which are the two tallest stacked blocks on the
+ * page. A band of citations running the other way is the break, and it is made of the
+ * corpus's own addresses rather than of decoration.
+ *
+ * See `ArchiveStrip` for why there is no timer in it and `thread.css` for the ADVANCE
+ * primitive the track uses.
+ */
+.va-archive-strip {
+    position: relative;
+    isolation: isolate;
+    margin-block: var(--va-space-5xl);
+    padding-block: var(--va-space-3xl);
+    border-block: var(--va-border-width) solid var(--va-line-strong);
+    overflow: clip;
+}
+
+/*
+ * The head sits on the page's own left margin, like every other section head.
+ *
+ * `width: var(--va-page)` with `margin-inline: auto` is the shell; the measure is applied
+ * to the children rather than to the wrapper, because a `max-width` on the wrapper centres
+ * it and the strip's head then floats in the middle of a page that is ranged left.
+ */
+.va-archive-strip-head {
+    width: var(--va-page);
+    margin-inline: auto;
+    margin-bottom: var(--va-space-2xl);
+}
+
+.va-archive-strip-head > * {
+    max-width: var(--va-measure);
+}
+
+.va-archive-strip-head h2 {
+    margin: 0;
+    font-family: var(--va-font-display);
+    font-size: var(--va-text-xl);
+    font-weight: var(--va-weight-regular);
+    line-height: var(--va-leading-tight);
+    color: var(--va-text-primary);
+}
+
+.va-archive-strip-head p {
+    margin: var(--va-space-sm) 0 0;
+    font-size: var(--va-text-sm);
+    color: var(--va-text-tertiary);
+}
+
+/*
+ * The frame clips; the track travels.
+ *
+ * Full-bleed on purpose - this is the one element on the page that runs past the shell's
+ * gutters, which is what makes it read as a register running through the page rather than
+ * as another block sitting in it.
+ */
+.va-archive-frame {
+    /* Padded rather than inset, so the first citation starts on the page's own left margin
+       and the last one is free to run off the right edge. */
+    padding-inline-start: max(var(--va-shell-gutter), (100% - var(--va-shell-max)) / 2);
+    overflow-x: auto;
+    overflow-y: hidden;
+    scrollbar-width: none;
+}
+
+.va-archive-frame::-webkit-scrollbar {
+    display: none;
+}
+
+/*
+ * The frame stays hand-scrollable at every level of support, and that is a correction.
+ *
+ * It was `overflow-x: clip` wherever `animation-timeline` was available, on the reasoning
+ * that a hand-scroll would fight the scroll-driven translate. Measured, that reasoning cost
+ * more than it bought: with the track translated and the frame clipped, an entry that has
+ * travelled out of the frame is focusable and unreachable - the browser cannot scroll a
+ * clipped box to reveal a focused child, so tabbing through the register moved focus to
+ * citations nobody could see. Playwright found it by being unable to click the first entry.
+ *
+ * `auto` with the scrollbar suppressed keeps the reveal available, and the rule below makes
+ * sure there is something to reveal: the moment focus enters the register the lateral offset
+ * is dropped, so a keyboard reader operates a plain row and the browser's own
+ * scroll-into-view works against untransformed positions.
+ */
+.va-archive-strip:focus-within .va-register-track {
+    animation: none;
+    transform: none;
+}
+
+.va-archive-strip .va-register-track {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    align-items: baseline;
+}
+
+.va-archive-strip .va-register-track a {
+    display: grid;
+    gap: var(--va-space-3xs);
+    color: inherit;
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+.va-archive-collection {
+    font-size: var(--va-text-2xs);
+    letter-spacing: var(--va-tracking-eyebrow);
+    text-transform: uppercase;
+    color: var(--va-text-tertiary);
+    transition: var(--va-transition-colors);
+}
+
+.va-archive-citation {
+    font-family: var(--va-font-display);
+    font-size: var(--va-text-2xl);
+    font-weight: var(--va-weight-regular);
+    font-variant-numeric: tabular-nums;
+    letter-spacing: var(--va-tracking-tight);
+    line-height: var(--va-leading-flat);
+    color: var(--va-text-secondary);
+    border-bottom: var(--va-border-width) solid transparent;
+    transition: var(--va-transition-colors);
+}
+
+.va-archive-strip .va-register-track a:hover .va-archive-citation,
+.va-archive-strip .va-register-track a:focus-visible .va-archive-citation {
+    color: var(--va-accent-text);
+    border-bottom-color: var(--va-accent-base);
+}
+
+.va-archive-strip .va-register-track a:hover .va-archive-collection,
+.va-archive-strip .va-register-track a:focus-visible .va-archive-collection {
+    color: var(--va-text-secondary);
+}
+
+@media (max-width: 47.999rem) {
+    .va-archive-citation {
+        font-size: var(--va-text-xl);
+    }
+
+    .va-archive-strip .va-register-track {
+        gap: var(--va-space-xl);
     }
 }

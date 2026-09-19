@@ -224,7 +224,8 @@ export default async function ConnectionsPage() {
             </header>
 
             <section className="va-conn-section" aria-labelledby="va-conn-kinds-heading">
-                <div className="va-conn-section-head">
+                <hr className="va-rule-drawn" />
+                    <div className="va-conn-section-head">
                     <h2 id="va-conn-kinds-heading">The kinds of connection</h2>
                     <p>
                         Each is a different claim about two verses, and a count is the number of
@@ -290,7 +291,8 @@ export default async function ConnectionsPage() {
             </section>
 
             <section className="va-conn-section" aria-labelledby="va-conn-pairs-heading">
-                <div className="va-conn-section-head">
+                <hr className="va-rule-drawn" />
+                    <div className="va-conn-section-head">
                     <h2 id="va-conn-pairs-heading">Pair by pair</h2>
                     <p>
                         {orderingClass
@@ -379,6 +381,7 @@ export default async function ConnectionsPage() {
 
             {resolved.length > 0 && (
                 <section className="va-conn-section" aria-labelledby="va-conn-witness-heading">
+                    <hr className="va-rule-drawn" />
                     <div className="va-conn-section-head">
                         <h2 id="va-conn-witness-heading">Verses that carry earlier wording</h2>
                         <p>
@@ -463,6 +466,7 @@ export default async function ConnectionsPage() {
 
             {span.length > 0 && (
                 <section className="va-conn-section" aria-labelledby="va-conn-span-heading">
+                    <hr className="va-rule-drawn" />
                     <div className="va-conn-section-head">
                         <h2 id="va-conn-span-heading">How far a shared phrase travels</h2>
                         <p>
@@ -490,7 +494,8 @@ export default async function ConnectionsPage() {
             )}
 
             <section className="va-conn-section" aria-labelledby="va-conn-evidence-heading">
-                <div className="va-conn-section-head">
+                <hr className="va-rule-drawn" />
+                    <div className="va-conn-section-head">
                     <h2 id="va-conn-evidence-heading">The evidence behind this page</h2>
                     <p>
                         What &ldquo;the four Vedas&rdquo; means here, and every cell of the

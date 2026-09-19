@@ -395,3 +395,86 @@ export function formatMs(value: number) {
     if (value >= 1000) return `${(value / 1000).toFixed(2)} s`;
     return `${Math.round(value)} ms`;
 }
+
+/**
+ * A long scope statement, split into the clauses it is already made of.
+ *
+ * ## What this is for
+ *
+ * "What this answer does not settle" and an evidence item's "Does not establish" are the
+ * most careful writing in the product and were the hardest to read: a single paragraph of
+ * four or five sentences, set at 13px in a 560px drawer, each sentence qualifying a
+ * different thing. Measured on a live answer, one qualifier ran 412 characters over six
+ * lines with no visual break in it. A reader skims a wall like that, which is exactly the
+ * text they must not skim.
+ *
+ * ## What it is not
+ *
+ * **Not a rewrite, and not a summary.** Every character of the input appears in the output.
+ * `clauses(t).join(" ") === t.trim()` is asserted in `tests/unit/ask-clauses.test.ts`, and it
+ * is the whole contract: this function is allowed to decide where a line ends and nothing
+ * else. Shortening a statement about what the evidence does not establish would be the worst
+ * available edit to this product.
+ *
+ * ## Why the splitter is conservative
+ *
+ * These statements are full of citations, and a citation contains full stops. `VS 18.21
+ * inventories the pressing gear` and `AVS 5.22.2 names the deity` both carry a period
+ * mid-token, and a naive split on `. ` cuts them in half. So a break needs three things at
+ * once: a letter before the stop, a space after it, and a capital or an opening quote
+ * starting the next word. `18.21` fails the first test, `e.g. the` fails the third.
+ *
+ * A labelled clause - `What it does not establish:` - is also a break, because it is the
+ * author's own division and the sentence after it is a different statement from the one
+ * before.
+ */
+export function clauses(text: string | null | undefined): string[] {
+    const trimmed = (text ?? "").trim();
+    if (!trimmed) return [];
+
+    const parts: string[] = [];
+    let start = 0;
+    for (let i = 0; i < trimmed.length - 1; i += 1) {
+        const here = trimmed[i];
+        const next = trimmed[i + 1];
+
+        /* A labelled clause. The colon stays with the label it introduces. */
+        if (here === ":" && next === " " && /[a-z]/.test(trimmed[i - 1] ?? "")) {
+            const label = trimmed.slice(start, i + 1);
+            /* Only where the label is short enough to be a label rather than a sentence that
+               happens to end in a colon. Measured: the real ones run 12 to 34 characters. */
+            if (label.trim().length <= 48) {
+                parts.push(label.trim());
+                start = i + 2;
+                continue;
+            }
+        }
+
+        if (here !== "." && here !== "?" && here !== "!") continue;
+        if (next !== " ") continue;
+        /* A letter before the stop, never a digit: `18.21` is one token. */
+        if (!/[a-zA-Z)\]"'’”]/.test(trimmed[i - 1] ?? "")) continue;
+        /* A capital, a digit-led citation or an opening quote after it. `e.g. the` is not a
+           break; `RV 1.32.1 is` is. */
+        if (!/[A-Z0-9"'‘“]/.test(trimmed[i + 2] ?? "")) continue;
+
+        parts.push(trimmed.slice(start, i + 1).trim());
+        start = i + 2;
+    }
+    const tail = trimmed.slice(start).trim();
+    if (tail) parts.push(tail);
+    return parts.length > 0 ? parts : [trimmed];
+}
+
+/**
+ * The subsystem that raised a caveat, in words.
+ *
+ * `certainty_scope`, `generation_truncated`, `formula_family_span_census`: registry keys,
+ * printed raw under every scope note. They are genuine provenance - which part of the
+ * service is speaking - and they were reading as leaked identifiers, which is a different
+ * thing and teaches a reader to ignore the line. Only the spelling changes.
+ */
+export function caveatSourceLabel(source: string | null | undefined) {
+    if (!source) return "not recorded";
+    return source.toLowerCase().replaceAll("_", " ");
+}
