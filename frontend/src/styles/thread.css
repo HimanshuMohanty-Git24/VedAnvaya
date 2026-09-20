@@ -264,16 +264,50 @@
     inline-size: max-content;
 }
 
+/*
+ * The timeline's subject, and the reason the register did not move.
+ *
+ * `animation-timeline: view()` is an *anonymous* view timeline, and an anonymous timeline
+ * is measured against the element's nearest ancestor scroll container - not against the
+ * page. The track's nearest ancestor scroll container is the frame it sits in, which is
+ * `overflow-x: auto; overflow-y: hidden` so that the row stays hand-scrollable, and
+ * `overflow-y: hidden` makes a box a scroll container just as surely as `auto` does. The
+ * frame never scrolls in the block axis, so the track was permanently, exactly halfway
+ * "in view" of it: measured in Chromium the animation was attached, running, and pinned at
+ * 49.97% through every scroll position on the page. The register was not static because the
+ * animation was missing. It was static because it was bound to a scroller that cannot move,
+ * and it was frozen 2,097px to the left, which is why its first citations were cut off by
+ * the frame's left edge.
+ *
+ * A *named* timeline fixes it by naming the subject rather than inferring it: this class
+ * goes on the strip, whose own nearest ancestor scroll container is the document, so the
+ * progress being read is the strip's passage through the viewport. The `@supports` guard
+ * stays on the animation rather than on the name - declaring a timeline nothing references
+ * costs nothing, and the fallback is still the finished state.
+ */
+.va-register-scope {
+    view-timeline-name: --va-register;
+    view-timeline-axis: block;
+}
+
 @supports (animation-timeline: view()) {
     @media (prefers-reduced-motion: no-preference) {
         .va-register-track {
             /*
-             * The travel is bounded by how much wider the track is than its frame, so the
-             * last citation lands flush at the right edge rather than scrolling off it.
-             * The component measures both and writes the difference here.
+             * The travel is the smaller of two distances, and the second one is what keeps
+             * this an archival register rather than a ticker.
+             *
+             * The first is the track's own overflow, so the register can never advance past
+             * its own last citation. The second is a stated share of the reader's scroll:
+             * over the range below, the strip passes the viewport in a viewport-height plus
+             * its own height of scrolling, and the register may cross no more than seven
+             * tenths of that. Without the cap this track's 4,197px of citations would have
+             * been dragged through in one screen of scroll - about four pixels sideways for
+             * every pixel down, which is unreadable at its own speed and is the thing the
+             * marquee ban is about. The component measures both and writes the smaller.
              */
             animation: va-register-advance linear both;
-            animation-timeline: view();
+            animation-timeline: --va-register;
             animation-range: entry 0% exit 100%;
         }
     }

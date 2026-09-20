@@ -828,22 +828,29 @@ function Recitation({
                     const have = recited[code] ?? 0;
                     const of = work.mantra_count ?? 0;
                     /*
-                     * The Samavedic row is not a zero-length bar. A bar of length zero sits in
-                     * the same visual sentence as the other three and reads as "almost none",
-                     * which is a different claim from "none exists anywhere". It gets a typed
-                     * statement at the same weight as the bars instead.
+                     * The Samavedic row is not a zero-length bar, and it is no longer a panel
+                     * either.
+                     *
+                     * A bar of length zero sits in the same visual sentence as the other three
+                     * and reads as "almost none", which is a different claim from "none exists
+                     * anywhere", so the row still carries no track. What it carried instead was
+                     * a four-line paragraph with a toned edge, and manual QA was right about it:
+                     * the row grew to twice the height of its neighbours and the homepage spent
+                     * its largest recitation block explaining an absence rather than showing what
+                     * the layer holds.
+                     *
+                     * One typed status now, at the rhythm of the other three rows. "No catalogued
+                     * recitation" is the whole claim: it is about this catalogue and says nothing
+                     * about the tradition, which is exactly the distinction the paragraph existed
+                     * to draw. The argument behind it is not deleted - it is on /limits, on
+                     * /sources and on /vedas/samaveda, which is where a reader who wants it goes,
+                     * and duplicating it here made the homepage the least readable of the four.
                      */
                     if (have === 0) {
                         return (
                             <li className="va-bar-row is-absent" key={work.work_id}>
                                 <span className="va-bar-label">{vedaNames[code]}</span>
-                                <p className="va-bar-absence">
-                                    <strong>No Samavedic recording is catalogued.</strong> The
-                                    Samaveda is the one Veda defined by its sung realisation, so
-                                    this is the most conspicuous gap in the layer &mdash; and it is
-                                    a gap in what has been published, not a statement about the
-                                    tradition.
-                                </p>
+                                <span className="va-bar-none">No catalogued recitation</span>
                             </li>
                         );
                     }

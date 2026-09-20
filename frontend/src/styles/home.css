@@ -1087,22 +1087,21 @@
 
 .va-bar-row.is-absent {
     grid-template-columns: 9rem minmax(0, 1fr);
-    align-items: start;
 }
 
-.va-bar-absence {
-    margin: 0;
-    max-width: var(--va-measure);
+/*
+ * The typed absence, at the rhythm of a bar row rather than instead of one.
+ *
+ * It replaced a bordered paragraph that ran to four lines and made the Samavedic row twice
+ * the height of the three around it. Two rules keep it small: it is one line at the size the
+ * figures are set at, and it has no edge, no fill and no padding - the register's dialect
+ * says a row is a ruled line and metadata is ranged, and a toned panel inside one row was
+ * the only enclosure on the page. The tone mark is dropped with it, which costs nothing:
+ * `--va-tone-unbuilt` was never the channel carrying the claim here. The words are.
+ */
+.va-bar-none {
     font-size: var(--va-text-sm);
-    line-height: var(--va-leading-normal);
-    color: var(--va-text-secondary);
-    padding-inline-start: var(--va-space-lg);
-    border-inline-start: var(--va-border-width-accent) solid var(--va-tone-unbuilt);
-}
-
-.va-bar-absence strong {
-    color: var(--va-text-primary);
-    font-weight: var(--va-weight-medium);
+    color: var(--va-text-tertiary);
 }
 
 /* ---------------------------------------------------------------- the chain - */
@@ -1244,8 +1243,32 @@
     display: none;
 }
 
+/*
+ * What frames the plate once the photograph is gone.
+ *
+ * Dropping the ground is right and dropping it left nothing: in dark the section was four
+ * centred blocks floating in an unbounded band, with no edge anywhere to compose them
+ * against. The replacement is the hairline dialect rather than the texture at low opacity -
+ * a rule above and below, which is how the archive strip is framed on the same page, and
+ * the tightened block spacing that the photograph's own margins were carrying in light.
+ */
+.dark .va-plate {
+    border-block: var(--va-border-width) solid var(--va-line-strong);
+    padding-block: var(--va-space-4xl);
+}
+
+/*
+ * One column, one axis, and every block on it.
+ *
+ * The inner was 58rem, which no child but the verse ever filled: the verse ran 875px wide
+ * and the translation 536px directly beneath it, so the composition tapered from a line
+ * nearly the full plate to one a little over half of it and read as positioned rather than
+ * set. 46rem is the width the verse wants at this size and the width the translation is
+ * already given, so the two now sit in one column and the kicker and the colophon range on
+ * the same centre.
+ */
 .va-plate-inner {
-    width: min(100% - (2 * var(--va-shell-gutter)), 58rem);
+    width: min(100% - (2 * var(--va-shell-gutter)), 46rem);
     margin: 0;
     text-align: center;
 }
@@ -1254,12 +1277,30 @@
     justify-content: center;
 }
 
+/*
+ * The last line, and the defect this section was reported for.
+ *
+ * `.va-sanskrit` sets `text-align-last: start`, and it is right to: a verse is not
+ * justified, and a flush last line would assert a line length the metre does not have. But
+ * `text-align-last` is a separate property from `text-align`, so a centred verse inherited
+ * it and ranged its *final* line hard left while every line above it was centred. On the
+ * plate that is two lines, one of them centred and one of them not, which is exactly the
+ * "positioned rather than composed" the QA pass saw. Centred here, and only here, because
+ * this is the one block on the site set as an epigraph rather than as a reading text.
+ *
+ * `balance` for the same reason. The plate's lines are the wrap's, not the poem's - the
+ * dandas are inside the run and the break falls where the measure puts it - so evening them
+ * asserts nothing the default did not already assert. With the narrower inner it turns an
+ * 875/583 split into three lines within 60px of each other.
+ */
 .va-plate-verse {
     margin: var(--va-space-xl) 0 0;
     max-width: none;
     font-size: clamp(1.2rem, 0.95rem + 1.1vw, 1.7rem);
     color: var(--va-text-primary);
     text-align: center;
+    text-align-last: center;
+    text-wrap: balance;
 }
 
 .va-plate-translation {
@@ -1396,7 +1437,19 @@
     transition: var(--va-transition-colors);
 }
 
+/*
+ * Ranged at the right margin, because that is what the register does with metadata.
+ *
+ * The note sat at the start of a `1fr` column it never filled, so every row of the last
+ * section on the page ended with a 478px band of nothing between the note and the rule's
+ * own right edge - seven of them stacked, which is the "awkward dead space" the QA pass
+ * names. Ranging it right gives the rule two ends to run between and turns the block into
+ * the contents page it already is. The mobile rule below stacks it back under the title,
+ * where a ranged note would read as a caption for the wrong thing.
+ */
 .va-start-note {
+    justify-self: end;
+    text-align: end;
     font-size: var(--va-text-sm);
     color: var(--va-text-tertiary);
 }
@@ -1500,6 +1553,8 @@
 
     .va-start-note {
         grid-column: 2;
+        justify-self: start;
+        text-align: start;
     }
 }
 
@@ -1707,8 +1762,18 @@
  * sure there is something to reveal: the moment focus enters the register the lateral offset
  * is dropped, so a keyboard reader operates a plain row and the browser's own
  * scroll-into-view works against untransformed positions.
+ *
+ * `:focus-visible`, not `:focus-within`, and that distinction is the second half of the
+ * register's click defect. A pointer press on a link focuses it, so with `:focus-within` the
+ * mousedown dropped a three-hundred-pixel lateral offset *between the press and the
+ * release*: the citation jumped out from under the cursor, mouseup landed on a different
+ * element, and the click never completed. Measured against the running page - the pointer
+ * proof stayed on the homepage while the keyboard proof opened the verse. Keyboard focus
+ * still matches, because Chromium does not match `:focus-visible` on a pointer press to a
+ * link, so the reveal a tab-stop needs is unchanged and the pointer no longer moves its own
+ * target.
  */
-.va-archive-strip:focus-within .va-register-track {
+.va-archive-strip:has(.va-register-track a:focus-visible) .va-register-track {
     animation: none;
     transform: none;
 }

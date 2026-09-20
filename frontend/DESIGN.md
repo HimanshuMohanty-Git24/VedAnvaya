@@ -212,8 +212,27 @@ claim does not have.
 - Nothing loops and nothing runs on a timer. The three indefinite animations in the product
   are pending-state indicators bound to an open request, and they are named in
   `scripts/audit-motion.mjs`. Anything else fails the build.
-- Scroll-driven motion uses `animation-timeline: view()` behind `@supports`, so it runs off
-  the main thread and stops when the reader stops. The fallback is the finished state.
+- Scroll-driven motion uses a view progress timeline behind `@supports (animation-timeline:
+  view())`, so it runs off the main thread and stops when the reader stops. The fallback is
+  the finished state.
+- **A scroll-driven subject inside a scroller takes a *named* timeline.** `view()` is
+  anonymous and resolves against the element's nearest ancestor scroll container, not
+  against the page — and a box is a scroll container on both axes the moment either one is
+  `auto`, `scroll` or `hidden`. The archive register shipped with its track inside a
+  horizontally scrollable frame, so its timeline was the frame's block axis, which cannot
+  move: the animation was attached, running, and pinned at 49.97% at every scroll position
+  on the page. It read as static, and no gate saw it, because nothing about it was missing.
+  Where the subject is not a direct child of the document scroller, declare
+  `view-timeline-name` on an ancestor that is, and reference it. `tests/e2e/manual-qa.spec.ts`
+  asserts the register's timeline by name and measures the distance it travels.
+- **Restraint is a distance, not an easing.** A scroll-driven translate is bounded by the
+  scroll its range covers. The register may cross at most one lateral pixel per pixel the
+  reader scrolls; uncapped it would have dragged 4,197px of citations through one screen,
+  which is a marquee with the timer taken out.
+- **Dropping a lateral offset on `:focus-within` breaks the pointer.** A press focuses the
+  link, so the offset fell away between mousedown and mouseup and the target left the
+  cursor; the click never completed. `:focus-visible` gives the keyboard reader the still
+  row they need without moving what a pointer is aiming at.
 - No animation library. Every primitive is CSS; the two that need a real progress value take
   it through one custom property.
 

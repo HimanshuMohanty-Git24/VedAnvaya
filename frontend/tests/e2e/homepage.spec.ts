@@ -309,13 +309,21 @@ test.describe("homepage: absence is typed, not blank", () => {
 
         const absence = page.locator(".va-bar-row.is-absent");
         await expect(absence).toHaveCount(1);
-        /* In words, and never as a zero. The wording moved from "No recording exists" to
-           "No Samavedic recording is catalogued", which is the more precise of the two --
-           it is a statement about this catalogue rather than about the world. */
-        await expect(absence).toContainText(/No Samavedic recording is catalogued/i);
-        // The claim is about what has been published, not about the tradition.
-        await expect(absence).toContainText(/published/i);
-        await expect(absence).toContainText(/not a statement about the tradition/i);
+        /*
+         * In words, and never as a zero -- but in a *line*, not a paragraph.
+         *
+         * The wording went from "No recording exists" to "No Samavedic recording is
+         * catalogued" (a statement about this catalogue rather than about the world) and
+         * then, in the manual-QA pass, to "No catalogued recitation": the same claim at the
+         * length a register row can carry. The four-line version that came with it - the
+         * Samaveda's sung realisation, the conspicuousness of the gap, published-versus-
+         * tradition - is on /limits, /sources and /vedas/samaveda, and the homepage no
+         * longer spends its largest recitation block restating it. `manual-qa.spec.ts`
+         * holds the bound; this is the wording.
+         */
+        await expect(absence.locator(".va-bar-none")).toHaveText(/^No catalogued recitation$/i);
+        // No bar, because a zero-length bar reads as "almost none" rather than "none".
+        await expect(absence.locator(".va-bar-track")).toHaveCount(0);
     });
 
     test("the four grades of evidence are each named, and an unbuilt layer says so", async ({
