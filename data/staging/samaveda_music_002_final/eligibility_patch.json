@@ -1,0 +1,60 @@
+{
+  "artifact": "SAMAVEDA_MUSIC_ELIGIBILITY_PATCH",
+  "at": "2026-09-18T17:56:08.360756+00:00",
+  "domain": "samaveda_music",
+  "scope": "one domain; the other thirteen rows are left at their 2026-09-15 values",
+  "why_not_a_full_regeneration": "scripts/wave3_eligibility_ledger.py re-runs the structural validator for all fourteen domains and would re-digest every row against a graph that has moved since the snapshot. That is a broad re-measurement, and reopening thirteen unrelated domains to correct one row is outside this pass. The generator's own ASSESSMENTS table is corrected in the same change so a later full regeneration agrees with this patch instead of reverting it.",
+  "rows_digest_verified": "c56169455380d625f8be58b83bf325def7086542efc6a18946f16b52c69f858d",
+  "before": {
+    "gate_a_structural": {
+      "status": "PASS",
+      "detail": "validator PASS at full evaluation coverage with --graph"
+    },
+    "gate_b_semantic": {
+      "status": "UNKNOWN",
+      "detail": "no semantic review recorded"
+    },
+    "gate_c_adversarial": {
+      "status": "NOT_RUN",
+      "detail": "adversarial test not yet performed"
+    },
+    "restage_required": false,
+    "restage_reason": null,
+    "blocked_by": [
+      "OWNER_DECISION_E_AUDIO_GATE"
+    ],
+    "depends_on": [],
+    "input_digests": {},
+    "own_digest": "c56169455380d625f8be58b83bf325def7086542efc6a18946f16b52c69f858d",
+    "stale_inputs": [],
+    "status": "BLOCKED",
+    "status_detail": "three gates pass, blocked by OWNER_DECISION_E_AUDIO_GATE"
+  },
+  "after": {
+    "gate_a_structural": {
+      "status": "PASS",
+      "detail": "validator PASS at full evaluation coverage with --graph"
+    },
+    "gate_b_semantic": {
+      "status": "PASS",
+      "detail": "scripts/samaveda_music_gate_b.py at 2026-09-18T17:20:11.039403+00:00: 12 checks over the four sections this file names, 12,782 row-evaluations, 0 defects, 0 checks below full coverage. The 332 GANA_RENDERING rows are reported and not averaged in: their object side is outside Product V1 by OWNER_DECISIONS.md section 41."
+    },
+    "gate_c_adversarial": {
+      "status": "DEFECT_FOUND_AND_FIXED",
+      "detail": "scripts/samaveda_music_gate_c.py. It LANDED: 39 of the 708 withheld verses stated a reason the repository disproves, their exact normalised text being released with notation on a coreferent twin. The failing run is preserved at data/staging/samaveda_music_002_final/gate_c_run1.json; the 39 now carry WITNESS_OCCURRENCE_CONSUMED_BY_A_COREFERENT_REPEAT, no row moved from withheld to released, and no notation was invented. Re-run 2026-09-18T17:30:30.510409+00:00: SURVIVED, 8 attacks, 0 defects. Independent of the staging codepath: it refuses to read the artifact's own tone_stripped_text or QA report, re-implements the declared normalisation from the manifest's prose using the Unicode character database, and carries a negative control that reads 1,136/1,136 aligned against 0/1,136 shifted by one verse."
+    },
+    "restage_required": false,
+    "restage_reason": null,
+    "blocked_by": [],
+    "depends_on": [],
+    "input_digests": {},
+    "own_digest": "c56169455380d625f8be58b83bf325def7086542efc6a18946f16b52c69f858d",
+    "stale_inputs": [],
+    "status": "ELIGIBLE",
+    "status_detail": "all three gates pass and no blocker is open; imported 2026-09-18, see data/staging/samaveda_music_002_final/import_receipt.json",
+    "blocked_by_cleared": {
+      "OWNER_DECISION_E_AUDIO_GATE": "Never the right gate for this domain. OWNER_DECISIONS.md section 40 rules the audible-review gate covers AUDIO only; 1,136 of these 1,471 rows are printed tone marks and contain no recording anyone could listen to."
+    },
+    "imported": true
+  }
+}

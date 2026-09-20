@@ -115,3 +115,66 @@ describe("extractCitedIds", () => {
         expect([...new Set(fromSegments)]).toEqual(extractCitedIds(answer));
     });
 });
+
+/**
+ * Markdown the model wrote, rendered rather than printed.
+ *
+ * The synthesis models emit markdown; nothing asks them to and nothing here can stop them.
+ * The frontend's job is to render what arrived, and measured on a live answer it was
+ * printing the syntax: `**Indra together with Vayu**` on the page, asterisks and all, and a
+ * four-item list run together into one line because paragraphs split on blank lines and a
+ * newline inside a `<p>` is a space.
+ *
+ * Neither of these changes a word of the answer. That is the assertion in both directions:
+ * the text is identical, only its structure is recovered.
+ */
+describe("markdown in a synthesised answer", () => {
+    it("renders a doubled asterisk as emphasis and drops only the asterisks", () => {
+        const [paragraph] = parseAnswer("Indra is **named directly** in this hymn.");
+        const text = paragraph.segments
+            .filter((segment) => segment.kind === "text")
+            .map((segment) => segment.text)
+            .join("");
+        expect(text).toBe("Indra is named directly in this hymn.");
+        expect(
+            paragraph.segments.some(
+                (segment) => segment.kind === "text" && segment.emphasis === true,
+            ),
+        ).toBe(true);
+    });
+
+    it("leaves a single asterisk alone, because it is a footnote mark more often than an italic", () => {
+        const [paragraph] = parseAnswer("The figure is a minimum*, not a total.");
+        expect(paragraph.segments).toHaveLength(1);
+        expect(paragraph.segments[0]).toEqual({
+            kind: "text",
+            text: "The figure is a minimum*, not a total.",
+        });
+    });
+
+    it("keeps a citation inside an emphasised run reachable", () => {
+        const [paragraph] = parseAnswer("**Agni is named [E1]** in the opening verse.");
+        const citations = paragraph.segments.filter((segment) => segment.kind === "citation");
+        expect(citations).toHaveLength(1);
+        expect(citations[0]).toEqual({ kind: "citation", ids: ["E1"] });
+    });
+
+    it("recovers a list the model wrote, one item per line", () => {
+        const [block] = parseAnswer("- RV 1.2.5 invokes Vayu [E1]\n- RV 1.3.4 invokes Indra [E3]");
+        expect(block.bullets).toHaveLength(2);
+        expect(block.segments).toHaveLength(0);
+        const first = block.bullets?.[0]
+            .filter((segment) => segment.kind === "text")
+            .map((segment) => segment.text)
+            .join("");
+        expect(first?.trim()).toBe("RV 1.2.5 invokes Vayu");
+        expect(block.bullets?.[1].some((segment) => segment.kind === "citation")).toBe(true);
+    });
+
+    it("does not invent a list out of prose that happens to contain a dash", () => {
+        /* One dashed line among prose is prose. Turning it into a list would be inventing
+           structure rather than keeping the author's. */
+        const [block] = parseAnswer("The pair is attested.\n- but only in one hymn");
+        expect(block.bullets).toBeUndefined();
+    });
+});

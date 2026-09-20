@@ -1,0 +1,164 @@
+{
+ "requirement": "test these five classes explicitly and report each, including zeros",
+ "how_the_test_is_scoped": "classes 1-4 live BELOW the marks that hide them, so they are decomposed at UNICODE_NORMALIZED -- but only for a pair whose scripts AND accent notations already agree. For any other pair the difference there is dominated by script or notation, which is not a structural class, so the row records separable=false with the reason instead of inventing one. Class 5 is whatever survives to the pair's own ceiling, so an exact pair touches no class 5 BY CONSTRUCTION.",
+ "separable_pairs": 1542,
+ "not_separable_pairs": 4591,
+ "not_separable_reasons": {
+  "accent notations differ (GRETIL_AV_ACUTE_GRAVE vs GRETIL_RV_ANUDATTA_SVARITA)": 1325,
+  "scripts differ": 3026,
+  "accent notations differ (UNACCENTED vs DEVANAGARI_SVARA)": 240
+ },
+ "per_class": {
+  "1_SELF_ADDRESS": {
+   "pairs": 688,
+   "by_claim": {
+    "EXACT_PARALLEL": 126,
+    "VARIANT": 40,
+    "NEAR_PARALLEL": 522
+   },
+   "corpus_measurement": "YV 1,964 of 1,975 mantras (99.44%) and AV 5,513 of 5,839 (94.42%) print their own verse number inline; RV 58 of 10,552 (0.55%) and SV 17 of 1,844 (0.92%) do not. The Rigvedic 643 texts containing a digit are GRETIL's in-word pluti marks.",
+   "result": "NON-ZERO and it was the original defect"
+  },
+  "2_SECTION_LABEL": {
+   "pairs": 214,
+   "by_claim": {
+    "EXACT_PARALLEL": 14,
+    "VARIANT": 6,
+    "NEAR_PARALLEL": 194
+   },
+   "corpus_measurement": {
+    "AV|brace_group": 220,
+    "AV|bracket_group": 152,
+    "SV|paren_group": 3,
+    "YV|paren_group": 4
+   },
+   "examples": {
+    "AV|brace_group": [
+     "{4}",
+     "{5}",
+     "{6}",
+     "{7}"
+    ],
+    "AV|bracket_group": [
+     "[note CORRIGENDA ed. ŚPP",
+     "[1]",
+     "[2]",
+     "[3]"
+    ],
+    "SV|paren_group": [
+     "(आरण्यकगानम्)",
+     "(आरण्यकम्)",
+     "(आरण्यकगानम्)"
+    ],
+    "YV|paren_group": [
+     "(१ उपरिप्रुता इति पाठः.)",
+     "(१)",
+     "(तु. तैसं. १.७.११.१)",
+     "(पुण्डृणाची – पाठभेदः)"
+    ]
+   },
+   "result": "NON-ZERO. 220 Atharvavedic brace groups ({4}, {5} paryaya numbers), 152 bracket groups including '[note CORRIGENDA ed. SPP]' -- an editorial note inside a text field -- 4 Yajurvedic paren groups including '(tu. taisam. 1.7.11.1)', a cross-reference to the Taittiriya Samhita, and 3 Samavedic gana labels '(aranyakaganam)'."
+  },
+  "3_EDITION_APPARATUS": {
+   "pairs": 112,
+   "by_claim": {
+    "EXACT_PARALLEL": 22,
+    "VARIANT": 34,
+    "NEAR_PARALLEL": 56
+   },
+   "corpus_measurement": {
+    "RV": {
+     "ASCII_PIPE": 10552,
+     "APOSTROPHE": 973
+    },
+    "SV": {
+     "DANDA": 1766,
+     "AVAGRAHA": 148,
+     "ASCII_PIPE": 30,
+     "ASCII_COLON": 1,
+     "DOUBLE_DANDA": 1
+    },
+    "YV": {
+     "DANDA": 1973,
+     "ASCII_COLON": 893,
+     "ASCII_PIPE": 6,
+     "AVAGRAHA": 595,
+     "DOUBLE_DANDA": 11,
+     "APOSTROPHE": 1
+    },
+    "AV": {
+     "ASCII_PIPE": 5839,
+     "APOSTROPHE": 855
+    }
+   },
+   "result": "NON-ZERO. The RV and AV mark every verse with an ASCII pipe (10,552 and 5,839); the SV and YV use the Devanagari danda (1,766 and 1,973) but the SV uses an ASCII pipe in 30 mantras, which is the '|' against Danda case. 893 Yajurvedic mantras type visarga as an ASCII colon."
+  },
+  "4_EMBEDDED_CITATION_LANGUAGE": {
+   "pairs": 0,
+   "by_claim": {},
+   "corpus_measurement": {
+    "SV|भाष्य": 1,
+    "SV|इति": 5,
+    "YV|इति": 7,
+    "YV|इति पाठः": 1,
+    "YV|इति श्रुतिः": 1
+   },
+   "corpus_examples": {
+    "SV|भाष्य": [
+     "SV ARANYA 1.4"
+    ],
+    "SV|इति": [
+     "SV UTTARA 1.2.1.2",
+     "SV UTTARA 2.2.15.2",
+     "SV UTTARA 3.1.4.1"
+    ],
+    "YV|इति": [
+     "VSM 4.24",
+     "VSM 6.22",
+     "VSM 7.3"
+    ],
+    "YV|इति पाठः": [
+     "VSM 7.3"
+    ],
+    "YV|इति श्रुतिः": [
+     "VSM 7.3"
+    ]
+   },
+   "result": "ZERO PAIRS, and the zero is the point. The class exists in the corpus -- VSM 7.3 carries 1,091 characters of Uvata commentary with 'iti srutih' and 'iti pathah' inside it, the sibling agent's 954-letter case confirmed and measured at 1,091 here; SV ARANYA 1.4 and SV CHANDA 1.8.4 carry 'dr.' cross-references. After stripping, NO pair's difference touches citation language. Before the classifier existed, VSM 7.3's commentary was in the comparison input, which is why this is reported as a closed class and not an absent one.",
+   "commentary_bearing_mantras": [
+    "AVS 3.3.3",
+    "AVS 3.3.4",
+    "AVS 3.3.5",
+    "AVS 3.3.6",
+    "AVS 8.1.10",
+    "AVS 8.1.21",
+    "SV ARANYA 1.4",
+    "SV CHANDA 2.7.7",
+    "SV CHANDA 4.5.6",
+    "SV ARANYA 1.4",
+    "SV CHANDA 1.8.4",
+    "VSM 7.3"
+   ]
+  },
+  "5_TRUE_VARIANT_WORDING": {
+   "pairs": 5244,
+   "by_claim": {
+    "VARIANT": 1317,
+    "NEAR_PARALLEL": 3927
+   },
+   "subtypes": {
+    "ORTHOGRAPHIC_VARIATION": 475,
+    "WORD_DIVISION": 819,
+    "ACCENT_PLACEMENT": 23,
+    "NEAR_PARALLEL_DIFF": 3927
+   },
+   "result": "NON-ZERO and it survives everything above: 1,317 variants (819 word division, 475 orthographic, 23 accent placement) and 3,927 near parallels. Every one of them differs at its own comparison ceiling, which is what makes it a variant rather than apparatus."
+  }
+ },
+ "invariants": {
+  "exact_touching_true_wording": 0,
+  "nonexact_not_touching_true_wording": 0,
+  "identical_above_ceiling": 451
+ },
+ "invariant_reading": "exact_touching_true_wording=0 and nonexact_not_touching_true_wording=0 hold BY CONSTRUCTION now, which is the improvement: the first version checked them and the check fired 284 times, every one an accent mark or a Devanagari character that the decomposition had read as changed wording. identical_above_ceiling=451 is EXPECTED, not a failure -- with the ceiling at PUNCTUATION_NORMALIZED, 451 within-recension pairs are identical at the stronger SOURCE_EXACT, and that bonus is recorded in levels_reached."
+}

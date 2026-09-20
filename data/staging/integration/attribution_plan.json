@@ -1,0 +1,65 @@
+{
+  "artifact": "ATTRIBUTION_IMPORT_RECEIPT",
+  "at": "2026-09-16T05:03:38.106807+00:00",
+  "executed": false,
+  "backup": null,
+  "git_commit": "477da976bc11799bbcc3d2b41a45a1026feccc4b",
+  "working_tree_clean": true,
+  "gates": {
+    "gate_b_verdict": "GATE_B_FINDINGS",
+    "gate_b_failed_checks": 1,
+    "gate_c_verdict": "GATE_C_PASS",
+    "gate_c_census_contradicted": 0,
+    "gate_c_defect_class": "NONE",
+    "preconditions_met": true
+  },
+  "promised": {
+    "nodes_create": 0,
+    "nodes_update": 22537,
+    "nodes_retire": 0,
+    "relationships_create": 0,
+    "relationships_update": 0,
+    "relationships_retire": 0,
+    "property_writes": 97114,
+    "nodes_before": 116825,
+    "nodes_after": 116825,
+    "relationships_before": 281290,
+    "relationships_after": 281290,
+    "core_corpus_must_not_move": true,
+    "note": "Properties only. This import creates and deletes nothing, so both census figures are unchanged by construction and any movement in either is a defect."
+  },
+  "census_before": {
+    "nodes": 116825,
+    "relationships": 281290,
+    "core": {
+      "AV": 5839,
+      "RV": 10552,
+      "SV": 1844,
+      "YV": 1975
+    }
+  },
+  "census_after": {
+    "nodes": 116825,
+    "relationships": 281290,
+    "core": {
+      "AV": 5839,
+      "RV": 10552,
+      "SV": 1844,
+      "YV": 1975
+    }
+  },
+  "node_delta": 0,
+  "relationship_delta": 0,
+  "core_corpus_unchanged": true,
+  "passages_updated": 0,
+  "passages_promised": 22537,
+  "matched_the_promise": true,
+  "withheld": {
+    "WHITNEY_INDEX": {
+      "rows": 466,
+      "reason": "entity_resolution_method = VERBATIM_SOURCE_STRING_NOT_RESOLVED on every row. The object is a printed Sanskrit string that resolves to no node, and the only way to supply one is a normalized-string join, which is barred.",
+      "classification": "RETAINED_NON_IMPORTABLE_UNRESOLVED_OBJECT"
+    }
+  },
+  "sha256": "2506cf4e07b8c08df2aac6b6acae798e19cec1a7c4ab13518ab032d6bead4008"
+}

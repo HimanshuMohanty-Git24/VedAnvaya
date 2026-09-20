@@ -1,0 +1,101 @@
+{
+  "schema_version": "1.0",
+  "run_id": "c8dc92a33d56a0a0",
+  "executed": true,
+  "started_from_dry_run": "data\\staging\\integration\\wave3_dry_run_v2.json",
+  "dry_run_sha256": "5222305be71b425ecda7c3793495e709b0d9db50f0b842b1d90ce44ef4337322",
+  "at": "2026-09-15T19:15:04.241328+00:00",
+  "rollback_point": {
+    "backup_directory": "D:/vedanvaya-backups/wave3-pre-import-20260915T155144",
+    "backup_sha256": "a0ab27b627f0fc60fc002fd7b248d519a0c15bf1c31250c9f6056081eaad6957",
+    "backup_bytes": 96841712,
+    "git_commit": "cc92e61b05a2b6f999acf9e79372fd2041b8ada8",
+    "restore": "docker stop vedagraph-neo4j; docker run --rm -v infra_neo4j_data:/data -v <backup_directory>:/backups neo4j:5.26-community neo4j-admin database load neo4j --from-path=/backups --overwrite-destination=true; docker start vedagraph-neo4j. The dump must be named neo4j.dump inside a timestamped directory: load matches by database name, which is how the first restore attempt in this project failed."
+  },
+  "census_before": {
+    "nodes": 116852,
+    "relationships": 281290,
+    "core_corpus": {
+      "AV": 5839,
+      "RV": 10552,
+      "SV": 1844,
+      "YV": 1975
+    }
+  },
+  "census_after": {
+    "nodes": 116825,
+    "relationships": 281290,
+    "core_corpus": {
+      "AV": 5839,
+      "RV": 10552,
+      "SV": 1844,
+      "YV": 1975
+    }
+  },
+  "node_delta": -27,
+  "relationship_delta": 0,
+  "core_corpus_unchanged": true,
+  "promised_node_delta": 0,
+  "promised_relationship_delta": 0,
+  "per_group_disagreements": [],
+  "every_group_matched_the_plan": true,
+  "steps": [
+    {
+      "correction": "SOMA_PRESSING_WEAK_ALIAS_RETIREMENT",
+      "retired_aliases": [
+        "sute",
+        "suteṣu",
+        "sutāsaḥ"
+      ],
+      "mentions_entity_sent": 117,
+      "about_concept_sent": 108,
+      "matched_alias_updates_sent": 12,
+      "executed": true,
+      "mentions_entity_landed": 0,
+      "about_concept_landed": 0,
+      "matched_alias_updates_landed": 12
+    },
+    {
+      "correction": "M5_SPECIALIZED_FORM_OF",
+      "edges_sent": 1,
+      "executed": true,
+      "edges_landed": 0,
+      "epithet_variant_of_before": 10,
+      "epithet_variant_of_after": 10,
+      "specialized_form_of_after": 1
+    },
+    {
+      "correction": "WITHHELD_REGISTRY_ENTITIES",
+      "keys_the_plan_now_withholds": 54,
+      "present_and_unreachable": 27,
+      "already_applied": false,
+      "executed": true,
+      "nodes_deleted": 27
+    },
+    {
+      "correction": "RETYPE_ASSERTED_BY",
+      "mistyped_edges": 0,
+      "already_applied": true,
+      "executed": false
+    },
+    {
+      "correction": "RESTORE_CURATED_DISPLAY_LABELS",
+      "nodes_with_a_non_curated_label": 0,
+      "already_applied": true,
+      "executed": false
+    },
+    {
+      "correction": "LABEL_REDIRECT_TARGETS_AS_RITUALS",
+      "targets": [
+        "VG:CONCEPT:GRHAPRAVESA",
+        "VG:CONCEPT:PITRMEDHA",
+        "VG:CONCEPT:PITRYANA-FUNERARY-RITE",
+        "VG:CONCEPT:SALA-HOUSE-BUILDING",
+        "VG:CONCEPT:VIVAHA-MARRIAGE"
+      ],
+      "unlabelled": 0,
+      "already_applied": true,
+      "executed": false
+    }
+  ]
+}

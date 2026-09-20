@@ -1,0 +1,240 @@
+{
+  "artifact": "FINAL_CLOSURE_SPRINT_INTEGRATION_RECEIPT",
+  "at": "2026-09-16T18:24:59.656587+00:00",
+  "baseline": {
+    "nodes": 117970,
+    "relationships": 282389,
+    "core_total": 20210
+  },
+  "applied": [
+    {
+      "seq": 1,
+      "agent": 6,
+      "group": "AGENT6-MUT-01",
+      "what": "26 DerivedMetric scope_notes asserting the Anukramani layer is Rigveda-only, false against 4,816 AV ascription edges",
+      "promised": {
+        "nodes": 0,
+        "relationships": 0,
+        "updated": 26
+      },
+      "actual": {
+        "nodes": 0,
+        "relationships": 0,
+        "updated": 26
+      },
+      "readback": "0 nodes still carry either false sentence",
+      "verdict": "MATCH"
+    },
+    {
+      "seq": 2,
+      "agent": 1,
+      "group": "A1_FORMULA_DISPLAY_FORM_REPAIR + _PRE_FOLD_FIX_FLAG + _BASIS_BACKFILL",
+      "what": "23 Formula display_forms publishing raw U+1CEA repaired; 23 flagged; 4,802 backfilled so display_form_basis is a total partition",
+      "promised": {
+        "nodes": 0,
+        "relationships": 0,
+        "rows": 4848
+      },
+      "actual": {
+        "nodes": 0,
+        "relationships": 0,
+        "rows": 4848
+      },
+      "readback": "0 Formula nodes publish U+1CEA; display_form_basis present on 4,825 of 4,825",
+      "verdict": "MATCH",
+      "pre_checks": "all 4,825 keys resolved to a live :Formula; all 23 declared before-values matched live"
+    },
+    {
+      "seq": 3,
+      "agent": 2,
+      "group": "5 runnable groups",
+      "what": "occurrence_count on 1,518; is_deity rulings on 214; 39 RESOLVES_TO_DEVATA; 882 AV HAS_DEVATA_DERIVED; 12 DeityCommunity integer display_labels typed",
+      "promised": {
+        "nodes": 0,
+        "relationships": 921
+      },
+      "actual": {
+        "nodes": 0,
+        "relationships": 921
+      },
+      "readback": {
+        "Rishi occurrence_count=0": "367 -> 0",
+        "DevataAscription resolved": "0 -> 39",
+        "AV HAS_DEVATA_DERIVED": 882,
+        "SV HAS_DEVATA_DERIVED": "0 (withheld by ruling)",
+        "DeityCommunity integer labels": "12 -> 0"
+      },
+      "verdict": "MATCH"
+    },
+    {
+      "seq": 4,
+      "agent": 1,
+      "group": "A1_PADA_PARALLEL_LAYER + reuse direction + granularity typing",
+      "promised": {
+        "nodes": 1434,
+        "relationships": 4390
+      },
+      "actual_first_attempt": {
+        "nodes": 1434,
+        "relationships": 4387
+      },
+      "verdict": "MISMATCH -- STOPPED, DIAGNOSED, REPAIRED, RE-VERIFIED",
+      "defect": {
+        "owner": "the LEAD's executor, not the agent's data",
+        "statement": "my MERGE key for HAS_PARALLEL_PADA was (subject, object) and omitted the pada. Three Rigvedic mantras each contribute TWO padas (a and c) to the same parallel group -- a refrain repeated within one verse -- so each pair collapsed into a single edge AND the second row's `pada` value overwrote the first.",
+        "affected": [
+          "VG:RV:SAK:M01:S097:V001",
+          "VG:RV:SAK:M09:S058:V001",
+          "VG:RV:SAK:M08:S093:V031"
+        ],
+        "why_it_was_caught": "the census assertion actual==promised. Nothing else would have shown it: 4,076 edges look like a healthy import, and the overwritten `pada` property is invisible without comparing to the source rows.",
+        "repair": "deleted all 4,076 and recreated all 4,079 keyed on pada_key, which is unique across all rows (asserted before writing)",
+        "after": "4,079 edges; the three affected mantras each carry both 'a' and 'c' to their group, verified individually"
+      }
+    },
+    {
+      "seq": 5,
+      "agent": 5,
+      "group": "WHITNEY_ABSENCE_TYPE",
+      "promised": {
+        "nodes": 0,
+        "relationships": 0,
+        "property_writes": 466
+      },
+      "actual": {
+        "nodes": 0,
+        "relationships": 0,
+        "evidence_rows": 466,
+        "chandas_corrections": 117,
+        "devata_corrections": 33
+      },
+      "readback": "443 passages carry evidence; 150 false ASSESSED_SOURCE_ABSENT corrected; 0 stale reason codes",
+      "also": "the 23,003-row census artifact patched too (150 blocks over 140 lines), so attribution_import --execute cannot silently revert the correction and report success",
+      "verdict": "MATCH"
+    },
+    {
+      "seq": 6,
+      "agent": 3,
+      "group": "8 groups",
+      "promised": {
+        "nodes": 44776,
+        "relationships": 220303
+      },
+      "actual": {
+        "nodes": 44776,
+        "relationships": 220303
+      },
+      "lead_error": "my runner asserted MENTIONS_LEMMA == 145,261, which is the DELTA; 9,000 edges already existed so the end state is 154,261. The run STOPPED rather than patch forward, which was correct given what it believed. Verified independently before continuing: live pair set == artifact pair set exactly, 0 outside, 0 missing, delta 145,261 as declared.",
+      "second_lead_error": "target query for the YV group used text_role UNACCENTED_DERIVED; the real role is NORMALIZED, so a landed group read as unstarted",
+      "readback": {
+        "Lemma nodes with no edge": "9,992 -> 0",
+        "MENTIONS_LEMMA": 154261,
+        "SEARCH_DERIVATIVE": "5,839 over 1 work -> 20,210 over 4",
+        "DomainEntity domain NULL": "375 -> 0",
+        "SemanticAssertion": "4,865 -> 35,131",
+        "RV mantras with assertions": "2,542 -> 10,173",
+        "non-RV mantras with assertions": "0 -> 4,080",
+        "SV assertions": "364 = 372 staged minus the 8 withheld",
+        "ASSERTION_ROLE from Passage": "2,052 -> 0",
+        "ASSERTION_ROLE from SemanticAssertion": "0 -> 2,052",
+        "signature violations": 0,
+        "UNREVIEWED": "35,131 -- the gap does NOT close"
+      },
+      "verdict": "MATCH after correcting two of my own expectations"
+    },
+    {
+      "seq": 7,
+      "agent": 2,
+      "group": "vocabulary corrections",
+      "promised": {
+        "nodes": 0,
+        "relationships": 0
+      },
+      "actual": {
+        "nodes": 0,
+        "relationships": 0
+      },
+      "readback": {
+        "RESOLVES_TO_DEVATA": "39 -> 0 (retyped, not duplicated)",
+        "ASCRIBES_TO_DEVATA": "0 -> 39",
+        "HAS_DEVATA_DERIVED CONTAINER_INHERITED": 882,
+        "withdrawn precision value": 0,
+        "withdrawn evidence_basis values": 0
+      },
+      "note": "three unmapped values WITHDRAWN rather than mapped; zero new enum members",
+      "verdict": "MATCH"
+    },
+    {
+      "seq": 8,
+      "agent": 7,
+      "group": "M1+M2+M3",
+      "promised": {
+        "nodes": 12,
+        "relationships": 12
+      },
+      "actual": {
+        "nodes": 12,
+        "relationships": 12
+      },
+      "readback": {
+        "Translation with null alignment_confidence": "18,415 -> 0",
+        "RV 8.93.29 translated": 1,
+        "untranslated RV": "37 -> 36",
+        "untranslated YV": "36 -> 25",
+        "untranslated SV": 1671,
+        "untranslated AV": 51
+      },
+      "note": "M2 verified as a pure TRIM before writing: text_after is a strict prefix of text_before, and the removed 90 bytes are ' 2 section-sign ' plus verse 29's English, which M1 creates verbatim. Neither alone is safe.",
+      "verdict": "MATCH"
+    },
+    {
+      "seq": 9,
+      "agent": 4,
+      "group": "ritual",
+      "promised": {
+        "nodes": 9,
+        "relationships": 27
+      },
+      "actual": {
+        "nodes": 9,
+        "relationships": 27
+      },
+      "lead_error": "endpoints are keyed by entity_key on 21 rows and canonical_key on 6; my first runner assumed one shape and crashed after creating 21. End-state verification then confirmed all 27 present exactly once.",
+      "readback": {
+        "RitualRole": "11 -> 20",
+        "RECEIVES_OFFERING": "0 -> 4, all Devata->Offering",
+        "hotr PERFORMED_BY": "0 -> 1",
+        "ritual_context": "0 -> 20,210",
+        "audumbara supplementary_attestation_count": "91 -> 0 with ASSESSED_ZERO_EVERY_LINE_IS_UDUMBARA_WOOD"
+      },
+      "ritual_context_distribution": {
+        "NO_RITUAL_CITATION_FOUND": 10538,
+        "UNRESOLVED_SHARED_OPENING": 7769,
+        "EMPLOYED_IN_RITE_PROBABLE": 1275,
+        "EMPLOYED_IN_RITE": 416,
+        "RITE_NAMED_IN_THIS_MANTRA": 212
+      },
+      "verdict": "MATCH"
+    }
+  ],
+  "census_now": {
+    "nodes": 164201,
+    "relationships": 508042,
+    "core_total": 20210,
+    "from_baseline": "+46,231 nodes / +225,653 relationships; core corpus never moved"
+  },
+  "core_corpus_invariant": "20,210 asserted after every group, never moved",
+  "still_to_integrate": [
+    "agent3 (8 groups, ~+44,776 nodes / +220,303 rels) - runnable Cypher requested",
+    "agent2 (4 groups without cypher: ATTRIBUTION-002 props, ENTITY_COVERAGE-002 nodes+props, COMMUNITIES-002 props)",
+    "agent4 (ritual: +9 nodes / +27 rels, 20,210 ritual_context property writes) - corrections in flight",
+    "agent5 (WHITNEY_ABSENCE_TYPE, 466 property writes) - executable form requested",
+    "agent7 (12 translations + RV 8.93.28 literal repair + 18,415 alignment_confidence)"
+  ],
+  "not_integrated": [
+    "agent2 GAP-ATTRIBUTION-002 (324 property rows), GAP-ENTITY_COVERAGE-002 (642 rows incl. +567 DerivedMetric), GAP-COMMUNITIES-002 (57 property rows) -- these three ship no cypher",
+    "agent6 GAP-005's 4 SV apparatus verses -- apply-ready cypher staged",
+    "agent1 formula layer refresh -- OWNER STOP, canonical identity change"
+  ],
+  "lead_errors_summary": "Four of my own expectations were wrong and every one was caught by an assertion rather than by luck: a MERGE key omitting `pada`; a delta asserted as an end state; a guessed text_role; and an assumed endpoint-key shape. In each case the runner stopped and I diagnosed before proceeding. No mutation was patched forward on an unexplained mismatch."
+}

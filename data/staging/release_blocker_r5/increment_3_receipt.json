@@ -1,0 +1,97 @@
+{
+  "artifact": "R5_INCREMENT_3",
+  "at": "2026-09-18T14:48:43.363542+00:00",
+  "m01_text_original": {
+    "rows_drifted_before": 4,
+    "drifted_keys": [
+      "VG:SV:KAU:ARANYA:D01:V04|SEARCH_DERIVATIVE",
+      "VG:SV:KAU:CHANDA:P01:D08:V04|SEARCH_DERIVATIVE",
+      "VG:SV:KAU:CHANDA:P02:D07:V07|SEARCH_DERIVATIVE",
+      "VG:SV:KAU:CHANDA:P04:D05:V06|SEARCH_DERIVATIVE"
+    ],
+    "rows_fixed": 4,
+    "sv_derivative_invariant_before": {
+      "rows": 1844,
+      "mirrored": 1840,
+      "null_original": 0
+    },
+    "sv_derivative_invariant_after": {
+      "rows": 1844,
+      "mirrored": 1844
+    },
+    "all_sv_derivative_rows_now_mirror_text_nfc": true
+  },
+  "m02_formula_evidence": {
+    "edges_carrying_formula_evidence": 8,
+    "edges_withdrawn": 8,
+    "rows": [
+      {
+        "subject": "VG:RV:SAK:M03:S015:V007",
+        "rel": "NEAR_PARALLEL_OF",
+        "object": "VG:SV:KAU:CHANDA:P01:D08:V04",
+        "withdrawn": true,
+        "quote_head": "iḷāmagnepurudaṃsaṃsaniṃgoḥśaśvattamaṃhav"
+      },
+      {
+        "subject": "VG:RV:SAK:M03:S007:V011",
+        "rel": "NEAR_PARALLEL_OF",
+        "object": "VG:SV:KAU:CHANDA:P01:D08:V04",
+        "withdrawn": true,
+        "quote_head": "iḷāmagnepurudaṃsaṃsaniṃgoḥśaśvattamaṃhav"
+      },
+      {
+        "subject": "VG:RV:SAK:M03:S006:V011",
+        "rel": "NEAR_PARALLEL_OF",
+        "object": "VG:SV:KAU:CHANDA:P01:D08:V04",
+        "withdrawn": true,
+        "quote_head": "iḷāmagnepurudaṃsaṃsaniṃgoḥśaśvattamaṃhav"
+      },
+      {
+        "subject": "VG:RV:SAK:M03:S001:V023",
+        "rel": "NEAR_PARALLEL_OF",
+        "object": "VG:SV:KAU:CHANDA:P01:D08:V04",
+        "withdrawn": true,
+        "quote_head": "iḷāmagnepurudaṃsaṃsaniṃgoḥśaśvattamaṃhav"
+      },
+      {
+        "subject": "VG:RV:SAK:M03:S005:V011",
+        "rel": "NEAR_PARALLEL_OF",
+        "object": "VG:SV:KAU:CHANDA:P01:D08:V04",
+        "withdrawn": true,
+        "quote_head": "iḷāmagnepurudaṃsaṃsaniṃgoḥśaśvattamaṃhav"
+      },
+      {
+        "subject": "VG:RV:SAK:M08:S045:V022",
+        "rel": "NEAR_PARALLEL_OF",
+        "object": "VG:SV:KAU:CHANDA:P02:D07:V07",
+        "withdrawn": true,
+        "quote_head": "abhitvāvṛṣabhāsutesutaṃsṛjāmipītayetṛmpā"
+      },
+      {
+        "subject": "VG:AV:SAU:K20:S022:V001",
+        "rel": "NEAR_PARALLEL_OF",
+        "object": "VG:SV:KAU:CHANDA:P02:D07:V07",
+        "withdrawn": true,
+        "quote_head": "abhitvāvṛṣabhāsutesutaṃsṛjāmipītayetṛmpā"
+      },
+      {
+        "subject": "VG:SV:KAU:CHANDA:P01:D08:V04",
+        "rel": "NEAR_PARALLEL_OF",
+        "object": "VG:YV:VSM:A12:V051",
+        "withdrawn": true,
+        "quote_head": "draiḍāmagnepurudaṃsaṃsaniṃgoḥśaśvattamaṃ"
+      }
+    ]
+  },
+  "m03_m04_transformation_class": {
+    "edges_sentinelled": 13,
+    "sentinel": "STALE_PENDING_REDERIVATION",
+    "why_a_sentinel_and_not_null": "Null would let a reader infer 'no transformation', which is a different false claim from HEAD_TRUNCATION. The old value stays in cross_veda_transformation_superseded.",
+    "metric_rescore_was_real": "All 13 of 13 edges had a non-empty metric_delta in the staging receipt, and the deltas are large: the SV-AV pair moved lcs_ratio 0.83871 -> 0.981132 and similarity 0.827688 -> 0.970958. Agent B's M03 compared the stored value against a recomputation on the CORRECTED text, which is what the stored value now is, so its agreement confirms the rescore rather than refuting it."
+  },
+  "verification": {
+    "apparatus_in_any_text_field_of_the_four": 0,
+    "edges_publishing_a_known_false_transformation": 0,
+    "head_truncation_edges_remaining": 2
+  }
+}

@@ -185,6 +185,26 @@
 }
 
 /*
+ * The hit list is the one overlay that has to stop light.
+ *
+ * The graph chrome is deliberately transparent on desktop so the world reads through it, and
+ * for a heading and three controls that is right. A list of twenty results is a different
+ * object: it covers a third of the canvas, and the subjects underneath it are labelled, so
+ * "Prthivi" and "Varuna" print through "Indra and Vayu DEITY" and neither is readable. The
+ * narrow chrome at a phone width already solves this by going opaque -- see the block at the
+ * foot of graph.css -- and this is the same remedy applied to the one element that needs it
+ * at every width, rather than to the whole panel.
+ *
+ * Inline padding with a matching negative margin so the paper extends past the text without
+ * moving it: the list stays optically aligned with the label and the input above it.
+ */
+.va-world-hits {
+    padding-inline: var(--va-space-sm);
+    margin-inline: calc(-1 * var(--va-space-sm));
+    background: var(--va-surface-page);
+}
+
+/*
  * One scroller, not two.
  *
  * These lists carried `max-height: 44dvh; overflow-y: auto` inside a panel that scrolls, which
@@ -450,7 +470,7 @@
     inset: 0;
     pointer-events: none;
     overflow: hidden;
-    z-index: 2;
+    z-index: var(--va-z-annotation);
     /*
      * 300 ms, which is MapLibre's `fadeDuration` default and the figure Vaaraniemi, Treib &
      * Westermann use for the entry and exit crossfade. Not a duration token: the scale has 240 and
@@ -850,7 +870,7 @@
     position: absolute;
     inset-block-end: var(--va-space-2xl);
     inset-inline-start: var(--va-space-2xl);
-    z-index: 3;
+    z-index: var(--va-z-panel);
     width: min(32rem, calc(100% - var(--va-space-4xl)));
     padding: var(--va-space-lg);
     background: var(--va-surface-raised);

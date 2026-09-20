@@ -1,0 +1,369 @@
+{
+  "artifact": "AGENT_3_CLOSURE_REPORT",
+  "agent": "AGENT_3_MORPHOLOGY_SEMANTICS",
+  "domain": "morphology and semantic roles",
+  "at": "2026-09-16T19:00:10.889380+00:00",
+  "neo4j_write_access_taken": "NONE",
+  "live_measured_now": {
+    "lemma_zero_indegree": 2519,
+    "distinct_lemmas_reached": 7512,
+    "search_derivative_textversions": 20210,
+    "yv_mantras_without_unaccented": 0,
+    "has_semantic_assertion_edges": 4865,
+    "rv_mantras_with_assertion": 2542,
+    "non_rv_mantras_with_assertion": 0,
+    "assertions_unreviewed": 4865,
+    "assertions_total": 4865,
+    "assertions_three_slot": 0,
+    "assertion_role_from_assertion": 0,
+    "domain_entities": 375,
+    "domain_is_null": 375
+  },
+  "gaps": {
+    "GAP-MORPHOLOGY-001": {
+      "closure_test": "MATCH (l:Lemma) WHERE size([(l)<--()|1])=0 RETURN count(l) falls far below 9,992, and any product surface reporting lemma coverage states distinct lemmas reached alongside mantras reached.",
+      "measured_before": 2519,
+      "measured_after_proposed_import": 0,
+      "distinct_lemmas_reached_before": 7512,
+      "distinct_lemmas_reached_after": 10031,
+      "mantras_reached_after": 10552,
+      "outcome": "CLOSED_DERIVED (PROPOSED -- the delta is staged, not written)",
+      "registry_disagreement": {
+        "claim": "projecting all 10,031 lemmas would add on the order of a million edges",
+        "measured_edges": 154261,
+        "verdict": "FALSE -- overstated by roughly 6.5x"
+      }
+    },
+    "GAP-MORPHOLOGY-004": {
+      "closure_test": "The 711 tokens are resolved or each carries a typed reason for non-resolution, and RIGVEDA_LEXICAL_MENTION_POLICY.md no longer lists this as deferred.",
+      "measured": {
+        "tokens": 711,
+        "carrying_a_typed_linguistic_reason": 711,
+        "carrying_only_the_workflow_reason": 0,
+        "by_reason": {
+          "LEXEME_COVERS_DEITY_AND_APPELLATIVE": 625,
+          "DEVATA_OR_RISHI_UNDECIDABLE": 74,
+          "REGISTRY_HOLDS_TWO_ENTITIES_FOR_ONE_LEMMA": 12
+        },
+        "anukramani_corroborated_but_still_unresolved": 79
+      },
+      "policy_document_updated": "docs/architecture/RIGVEDA_LEXICAL_MENTION_POLICY.md",
+      "outcome": "CLOSED_DERIVED",
+      "registry_disagreement": {
+        "claim": "the 711 are unresolved because no feature-conditioned alias mechanism exists",
+        "verdict": "FALSE",
+        "feature_conditioned_aliases_present": 7,
+        "feature_conditioned_alias_lemmas": [
+          "aśvín-",
+          "mitrá-",
+          "sárasvant-",
+          "sūryā́-",
+          "sū́rya-",
+          "áditi-"
+        ],
+        "sarasvant_aliases": [
+          {
+            "entity_key": "VG:DEVATA:SARASVAN",
+            "allowed_gender": [
+              "M"
+            ],
+            "review_status": "ACCEPTED"
+          },
+          {
+            "entity_key": "VG:DEVATA:SARASVATI",
+            "allowed_gender": [
+              "F"
+            ],
+            "review_status": "ACCEPTED"
+          }
+        ],
+        "sarasvant_rows_in_the_711": 0,
+        "measured_gender_split_of_sarasvant_tokens": {
+          "F": 70,
+          "M": 5
+        },
+        "residual_lemmas_separable_by_any_annotated_feature": 0
+      }
+    },
+    "GAP-MORPHOLOGY-006": {
+      "closure_test": "Every work carries a search-normalised text version, the 139 YV mantras gain an unaccented form, and a single accent-bearing query is shown to reach all four corpora equally.",
+      "measured_before": {
+        "search_derivative_textversions": 20210,
+        "works_covered": 1,
+        "yv_mantras_without_unaccented": 0
+      },
+      "measured_after_proposed_import": {
+        "search_derivative_textversions": 20210,
+        "works_covered": 4,
+        "yv_mantras_without_unaccented": 0
+      },
+      "accent_bearing_probes": [
+        {
+          "query": "agním",
+          "query_is_accent_bearing": true,
+          "folded_query": "agnim",
+          "hits_per_veda": {
+            "AV": 19,
+            "RV": 102,
+            "SV": 15,
+            "YV": 19
+          },
+          "reaches_all_four": true
+        },
+        {
+          "query": "sómam",
+          "query_is_accent_bearing": true,
+          "folded_query": "somam",
+          "hits_per_veda": {
+            "AV": 23,
+            "RV": 148,
+            "SV": 16,
+            "YV": 15
+          },
+          "reaches_all_four": true
+        },
+        {
+          "query": "índra",
+          "query_is_accent_bearing": true,
+          "folded_query": "indra",
+          "hits_per_veda": {
+            "AV": 571,
+            "RV": 1613,
+            "SV": 334,
+            "YV": 211
+          },
+          "reaches_all_four": true
+        },
+        {
+          "query": "devásya",
+          "query_is_accent_bearing": true,
+          "folded_query": "devasya",
+          "hits_per_veda": {
+            "AV": 40,
+            "RV": 65,
+            "SV": 11,
+            "YV": 40
+          },
+          "reaches_all_four": true
+        }
+      ],
+      "clause_1_every_work_carries_a_search_normalised_version": "SATISFIED after import",
+      "clause_2_the_139_yv_mantras_gain_an_unaccented_form": "SATISFIED after import",
+      "clause_3_one_accent_bearing_query_reaches_all_four_equally": {
+        "status": "UNVERIFIED",
+        "why": "My four probes were measured against the derived surfaces directly, not through the shipped search path, and none of them contains r-vocalic, anusvara or the lateral series -- so they could not have detected the defect the lead found. The lead measured the product: the NORMALIZED_SANSKRIT_PHRASE rung binds an unfolded query against sentinel-folded text, so a query carrying one of those characters returns 0 on that rung. End to end no probe reaches all four corpora and YV/SV appear in none.",
+        "ownership": "pre-existing product defect, routed by the lead to Agent 6. Not mine to fix and not fixed here.",
+        "resolves_when": "the search fix lands and the lead re-measures post-integration"
+      },
+      "outcome": "CLOSED_DERIVED (PROPOSED) on clauses 1 and 2; clause 3 UNVERIFIED pending the search fix. The gap is NOT reported as fully closed."
+    },
+    "GAP-SEMANTICS-001": {
+      "closure_test": "HAS_SEMANTIC_ASSERTION reaches a non-Rigvedic corpus, RV coverage rises above 2,542, and no surface reports a blended assertion total.",
+      "measured_before": {
+        "edges": 4865,
+        "rv_mantras": 2542,
+        "non_rv_mantras": 0
+      },
+      "measured_after_proposed_import": {
+        "has_semantic_assertion_reaches_non_rv": [
+          "AV",
+          "SV",
+          "YV"
+        ],
+        "rv_mantras_covered": 10150,
+        "rv_before": 2542,
+        "blended_total_forbidden": true,
+        "five_instruments": {
+          "live_MORPHOLOGY_RULE": 2406,
+          "live_MODEL_EXTRACTION": 2459,
+          "MORPHOLOGY_RULE_PREDICATE_ONLY": 28370,
+          "TREEBANK_DEPREL": 1532,
+          "CROSS_VEDA_TEXT_IDENTITY": 364
+        }
+      },
+      "withheld_from_the_import": {
+        "assertions": 8,
+        "pairs": 5,
+        "reason": "GRAPH_TYPES_PAIR_NEAR_PARALLEL_NOT_EXACT",
+        "rule": "When a staged claim contradicts the graph's own typing, the graph's typing wins unless the staged claim independently re-establishes itself. A letter comparison computed at staging time is not independent re-establishment.",
+        "deleted": false,
+        "artifact": "semantic_assertions_withheld.jsonl",
+        "made_visible_by": "the projection_edge_types field added in round two. The artifact's single-valued field named REUSES_TEXT_FROM on these pairs and would have hidden the NEAR_PARALLEL_OF typing entirely.",
+        "cost": "8 assertions of 30274",
+        "corroborated_by_the_artifacts_own_score": {
+          "pairs_scoring_below_1.0": [
+            0.923077,
+            0.941365,
+            0.948718,
+            0.958542,
+            0.972006
+          ],
+          "pairs_scoring_exactly_1.0": 211,
+          "sub_1_0_set_equals_near_parallel_set": [
+            "VG:SV:KAU:CHANDA:P03:D06:V09",
+            "VG:SV:KAU:UTTARA:P01:R02:D10:V01",
+            "VG:SV:KAU:UTTARA:P05:R01:D01:V03",
+            "VG:SV:KAU:UTTARA:P05:R02:D03:V06",
+            "VG:SV:KAU:UTTARA:P05:R02:D09:V02"
+          ],
+          "note": "Independent of both of the lead's failed probes. The projection asserted letter identity on five pairs its own containment score already said were not identical."
+        }
+      },
+      "outcome": "CLOSED_DERIVED (PROPOSED -- the delta is staged, not written)"
+    },
+    "GAP-SEMANTICS-002": {
+      "closure_test": "MATCH (a:SemanticAssertion) WHERE a.review_state='UNREVIEWED' RETURN count(a) falls below 4,865, with the reviewed sample stratified by derivation and its reviewer recorded.",
+      "property_name": "review_state (read from the database; review_status does not exist as a property key)",
+      "measured_live_now_pre_import": 4865,
+      "measured_after_integration": 35131,
+      "multiple": 7.22,
+      "correction": "An earlier draft reported '4,865 unchanged'. That is the live layer only. My own delta stages 30,274 further assertions, every one UNREVIEWED, so the declared closure_measure reads 35,139 after integration. Closing GAP-SEMANTICS-001's coverage multiplies this gap's population by 7.2x.",
+      "delivered": "the review harness, its closed state vocabulary with a guard that refuses a model writing HUMAN_REVIEWED, and a 120-row sample stratified by derivation",
+      "rows_written_to_a_reviewed_state": 0,
+      "independent_source_reach": {
+        "only_independent_adjudicator_held": "DCS dependency treebank",
+        "dcs_rigvedic_coverage": 0,
+        "live_assertions_that_are_rigvedic": 4865,
+        "live_assertions_an_independent_source_could_decide": 0,
+        "conclusion": "SOURCE_ADJUDICATED reaches 0 of the live layer. What remains is a human reading verses. That is reviewer time, not an unavailable external source, and it is not an implementation gap either."
+      },
+      "outcome": "STILL_IMPLEMENTATION_FIXABLE",
+      "precise_reason": "NOT CLOSED. The remaining work is a person reading verses. It is not an external source blocker -- no source is missing -- and it is no longer an implementation gap either, because the harness now exists. Writing any reviewed state from this sprint would have been a model's output relabelled as review, which the campaign forbids."
+    },
+    "GAP-SEMANTICS-003": {
+      "closure_test": "MATCH (a:SemanticAssertion) with all three slots present returns a non-zero count, and at least one assertion has a non-Devata target.",
+      "measured_before": {
+        "three_slot_assertions": 0,
+        "assertion_role_edges_starting_at_an_assertion": 0
+      },
+      "measured_after_proposed_import": {
+        "assertions_with_all_three_slots": 341,
+        "at_least_one_non_devata_target": true,
+        "non_devata_target_fillers": 691,
+        "note": "A RoleFiller fills the slot as an occurrence. It is promoted to an entity only where an independent resolution produced a REFERS_TO edge; 1,665 of 2,052 fillers carry none and stay occurrences."
+      },
+      "defect_found": {
+        "what": "ASSERTION_ROLE was anchored on :Passage instead of :SemanticAssertion, and the assertions the fillers belong to were never imported at all",
+        "where": "scripts/wave3_import_plan.py:220-257 (SR_ASSERTION_ROLE_EDGES start_label='Passage') and the NOT_IMPORTED entry for semantic_roles/rows.jsonl at scripts/wave3_import_plan.py:205-208",
+        "contract_violated": "SCHEMA_MIGRATION_CARDS.md M1: (:SemanticAssertion)-[:ASSERTION_ROLE]->(:RoleFiller), and its migration test 'every :RoleFiller resolves to exactly one :SemanticAssertion'",
+        "measured_conformance": "0 of 2,052"
+      },
+      "ontology_change_shipped_with_the_re_anchor": {
+        "file": "src/vedagraph/domain/ontology.py",
+        "was": "ASSERTION_ROLE: (Passage|Mantra) -> RoleFiller",
+        "now": "ASSERTION_ROLE: SemanticAssertion -> RoleFiller",
+        "why": "the signature had been written to match the defective import rather than migration card M1, which declares (:SemanticAssertion)-[:ASSERTION_ROLE]->(:RoleFiller). Neither half is valid alone: the signature without the re-anchor makes 2,052 live edges violate it, the re-anchor without the signature makes 2,052 new ones violate it.",
+        "pinned_by": "tests/domain/test_agent3_closure.py::test_the_assertion_role_signature_matches_the_migration_card"
+      },
+      "outcome": "CLOSED_DERIVED (PROPOSED -- the delta is staged, not written)",
+      "residual": "The :Devata-only range on ASSERTION_AGENT and ASSERTION_TARGET is unchanged. The triple is completed through :RoleFiller, which is what migration card M1 declared; the two old edge types keep their range and every existing edge."
+    },
+    "GAP-SEMANTICS-005": {
+      "closure_test": "MATCH (e:DomainEntity) WHERE e.domain IS NULL RETURN count(e) returns 0, with multi-domain entities carrying every applicable domain rather than one.",
+      "measured_before": 375,
+      "measured_after_proposed_import": 0,
+      "entities": 375,
+      "multi_domain_entities": 68,
+      "by_provenance": {
+        "deterministic": 350,
+        "model-assisted": 25
+      },
+      "outcome": "CLOSED_DERIVED (PROPOSED -- the delta is staged, not written)",
+      "registry_disagreement": "The registry row's description and evidence say 229 DomainEntity nodes; the live count is 375. The row's own closure_basis already says 375, so the description is stale by 146."
+    }
+  },
+  "samaveda_two_axes_reported_separately": {
+    "PUBLISHED_HUMAN_ANNOTATION": {
+      "state": "UNAVAILABLE",
+      "basis": "three comprehensive resources enumerated in full, three negatives: DCS 271 corpora / 23,576 entries, UD_Sanskrit-Vedic 57 texts / 27,182 sentences, VedaWeb 2.0 seven texts. The Samaveda Samhita is in none of them.",
+      "classification": "BLOCKED_EXTERNAL_SOURCE_UNAVAILABLE for this axis only"
+    },
+    "MORPHOLOGICAL_ANALYSIS": {
+      "state": "PROCESSED_WITH_A_MEASURED_ZERO_TOKEN_YIELD",
+      "passages_processed": 1844,
+      "morphological_tokens_analysed": 0,
+      "passages_with_a_transferred_analysis": 211,
+      "passages_before_the_near_parallel_withholding": 216,
+      "abstentions_with_a_stated_reason": {
+        "SKELETON_NOT_IDENTICAL_TO_RIGVEDIC_SOURCE": 1436,
+        "NO_RIGVEDIC_PARALLEL_EDGE": 182,
+        "IDENTICAL_BUT_RIGVEDIC_SOURCE_CARRIES_NO_ASSERTION": 10,
+        "GRAPH_TYPES_PAIR_NEAR_PARALLEL_NOT_EXACT": 5
+      },
+      "method": "deterministic cross-Veda letter-identity transfer from the Rigvedic analysis; CROSS_VEDA_TEXT_IDENTITY, independently_annotated=false",
+      "honest_statement": "All 1,844 were processed and each leaves in exactly one state with a reason, which is what owner decision 5 asks for. But the yield is 0 Samavedic tokens analysed: the 211 positive verses carry a Rigvedic analysis transferred at letter identity, not an analysis of Samavedic words. Reporting this as 'Samaveda morphology processed' without the token figure would be the misleading form of a true sentence.",
+      "what_the_samaveda_did_gain_this_sprint": "a search-normalised text version for all 1,844 mantras. Whether that makes a query reach it end to end is UNVERIFIED -- see GAP-MORPHOLOGY-006 clause 3. Either way it is GAP-MORPHOLOGY-006 and it is not morphology.",
+      "standing_constraint": "The Samavedic assertions may NEVER be counted as Samaveda morphology or as Samavedic annotation, on any surface. The figure is 364 assertions over 211 verses after the NEAR_PARALLEL_OF withholding, down from 372 over 216."
+    }
+  },
+  "cross_veda_projection_evidence": {
+    "projected_rows": 364,
+    "target_verses": 211,
+    "pairs_with_no_parallel_edge": 0,
+    "live_edge_type_sets_over_the_importable_pairs": {
+      "REUSES_TEXT_FROM+VARIANT_OF": 306,
+      "EXACT_PARALLEL_OF+REUSES_TEXT_FROM": 58
+    },
+    "artifact_single_valued_claim": {
+      "VARIANT_OF": 263,
+      "EXACT_PARALLEL_OF": 49,
+      "REUSES_TEXT_FROM": 52
+    },
+    "every_claimed_type_present_in_the_live_set": true,
+    "ruling_basis_verified": "every one of the 216 pairs carries REUSES_TEXT_FROM; 0 rest on a fold computed at staging time",
+    "withheld_projections": {
+      "assertions": 8,
+      "pairs": 5,
+      "reason": "GRAPH_TYPES_PAIR_NEAR_PARALLEL_NOT_EXACT",
+      "rule": "When a staged claim contradicts the graph's own typing, the graph's typing wins unless the staged claim independently re-establishes itself. A letter comparison computed at staging time is not independent re-establishment.",
+      "deleted": false,
+      "artifact": "semantic_assertions_withheld.jsonl",
+      "made_visible_by": "the projection_edge_types field added in round two. The artifact's single-valued field named REUSES_TEXT_FROM on these pairs and would have hidden the NEAR_PARALLEL_OF typing entirely.",
+      "cost": "8 assertions of 30274",
+      "corroborated_by_the_artifacts_own_score": {
+        "pairs_scoring_below_1.0": [
+          0.923077,
+          0.941365,
+          0.948718,
+          0.958542,
+          0.972006
+        ],
+        "pairs_scoring_exactly_1.0": 211,
+        "sub_1_0_set_equals_near_parallel_set": [
+          "VG:SV:KAU:CHANDA:P03:D06:V09",
+          "VG:SV:KAU:UTTARA:P01:R02:D10:V01",
+          "VG:SV:KAU:UTTARA:P05:R01:D01:V03",
+          "VG:SV:KAU:UTTARA:P05:R02:D03:V06",
+          "VG:SV:KAU:UTTARA:P05:R02:D09:V02"
+        ],
+        "note": "Independent of both of the lead's failed probes. The projection asserted letter identity on five pairs its own containment score already said were not identical."
+      }
+    }
+  },
+  "trade_this_import_makes": {
+    "improves": "GAP-SEMANTICS-001 -- HAS_SEMANTIC_ASSERTION reaches all four corpora and RV coverage goes 2542 -> 10150 of 10,552.",
+    "worsens_SEMANTICS_002": "the unreviewed population goes 4865 -> 35131, a 7.2x multiplication. Closing coverage makes the review gap larger, not smaller.",
+    "deepens_SEMANTICS_003": "28370 of the staged rows are MORPHOLOGY_RULE_PREDICATE_ONLY and carry no role slot at all, so the share of assertions with an incomplete triple rises even as the absolute count of complete triples goes 0 -> 341.",
+    "rule": "None of these three figures may be reported without the other two."
+  },
+  "artifact_digests": {
+    "assertion_role_edges.jsonl": "bb50918575f6a89beeeca8a48a3a6ea8c77eac91ec51daf29ca918ec0f97f77c",
+    "closure_conditions.json": "3f17279a9c5ce9de1220269814aa031069d155ef1816fc4929fca06788c963ca",
+    "domain_entity_domains.jsonl": "ce3d7d29a4c41c8f91b1da0c06bd59c7728ac1d6a96d3fc2caebab530b60dba9",
+    "domain_entity_domains_manifest.json": "8c0147b7a7418bfcd5f7064221687801563947f7daf7f7189032ed40586d5706",
+    "lexical_nonresolution_manifest.json": "ad54cc867a6d096570d89e216367575a4ef7c86b079e2f37b3acc5e85083e723",
+    "lexical_nonresolution_typed.jsonl": "7cf9e23b7be32616a40a110851ec485ab971047f59206784a46f058b35ecac12",
+    "mentions_lemma_manifest.json": "b038793950a311e2f87aa355a6f13914808faad324179c054012e303ad629d59",
+    "mentions_lemma_projection.jsonl": "ec744478500edafeb0fffcacda3d305892d71c3f6f16d6974b68239f42d6d614",
+    "proposed_mutations.json": "b94441ce3c5769cc6e4b406d8dc6524796db13714a3d9de18645277f398c1bce",
+    "semantic_assertion_delta_manifest.json": "cb54b64706f5f10e727db55ce77069a96ca11a7a29fa1b2dd1e99bd43fecbf89",
+    "semantic_assertions.jsonl": "5c904af624d149a06dc55aeedf4702b5418e21a0bba32a9d56797b238fd08e7e",
+    "semantic_assertions_withheld.jsonl": "e60203def20de2db3a8fa43897d9003608c1dbde889784fc660f78d688c15967",
+    "semantic_review_frame.jsonl": "2c696aeae5a85601408f32536b6f7dee0f75b350718def1b6e183e66243c57d7",
+    "semantic_review_frame_manifest.json": "2c6c2db09242d0501509ffbcca755039d0021ec723bafc054ef03ee0e1033205",
+    "text_versions_manifest.json": "96baa079354f2bea15e2a4d8bab13234efa90c52b5aa3e511ef0ee144820bd84",
+    "text_versions_search_derivative.jsonl": "eb442cc6972f69f4542d82de3b7c6c0e813e887dc0a4a1d343c816c1c5a5b4d4",
+    "text_versions_yv_unaccented_derived.jsonl": "2a516931e41b3c5d711f155b94a57c963f1bade34d58ac3c7e927eccac0fecd9"
+  },
+  "self_digest_note": "closure_report.json is deliberately absent from artifact_digests: a file cannot carry its own hash. Digest it after the fact."
+}

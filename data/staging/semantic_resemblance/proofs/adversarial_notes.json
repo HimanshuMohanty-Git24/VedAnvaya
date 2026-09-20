@@ -1,0 +1,20 @@
+{
+ "SOMA_DEITY_VS_SUBSTANCE": {
+  "deity_sense_pool": 247,
+  "other_sense_pool": 606,
+  "triples": 20,
+  "truth_basis": "HAS_DEVATA / HAS_DEVATA_ASCRIPTION dedication (Anukramani) vs the registry's Offering+Substance typing of soma juice"
+ },
+ "AGNI_DEITY_VS_PHYSICAL_FIRE": {
+  "deity_sense_pool": 448,
+  "other_sense_pool": 419,
+  "triples": 20,
+  "truth_basis": "dedication vs the registry's NaturalPhenomenon typing of fire"
+ },
+ "VAC_DEITY_VS_SPEECH_FACULTY": {
+  "deity_sense_pool": 24,
+  "other_sense_pool": 468,
+  "triples": 12,
+  "truth_basis": "AV 4.30 vagdevatyam / AV vacaspatyam / RV Vac dedications / RV 10.125 vs the registry's PhilosophicalConcept typing of speech"
+ }
+}

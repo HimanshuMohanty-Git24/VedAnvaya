@@ -1,0 +1,394 @@
+{
+ "question": "does every load-bearing figure in formula.md match the artifact?",
+ "why": "every table reads from a file, so a number typed into a sentence is the only one nothing else can catch.",
+ "checks": 64,
+ "failures": 0,
+ "result": "PASS",
+ "detail": [
+  {
+   "check": "rows.jsonl total",
+   "measured": 11181,
+   "expected_by_the_report": 11181,
+   "pass": true
+  },
+  {
+   "check": "rows mantra-grained",
+   "measured": 5636,
+   "expected_by_the_report": 5636,
+   "pass": true
+  },
+  {
+   "check": "rows Formula-grained",
+   "measured": 4825,
+   "expected_by_the_report": 4825,
+   "pass": true
+  },
+  {
+   "check": "rows FormulaFamily-grained",
+   "measured": 720,
+   "expected_by_the_report": 720,
+   "pass": true
+  },
+  {
+   "check": "relations.jsonl",
+   "measured": 6139,
+   "expected_by_the_report": 6139,
+   "pass": true
+  },
+  {
+   "check": "rejected.jsonl",
+   "measured": 14574,
+   "expected_by_the_report": 14574,
+   "pass": true
+  },
+  {
+   "check": "considered = 20210+4825+720",
+   "measured": 25755,
+   "expected_by_the_report": 25755,
+   "pass": true
+  },
+  {
+   "check": "accepted == rows",
+   "measured": 11181,
+   "expected_by_the_report": 11181,
+   "pass": true
+  },
+  {
+   "check": "accepted+rejected == considered",
+   "measured": 25755,
+   "expected_by_the_report": 25755,
+   "pass": true
+  },
+  {
+   "check": "EXACT_PARALLEL total",
+   "measured": 895,
+   "expected_by_the_report": 895,
+   "pass": true
+  },
+  {
+   "check": "VARIANT total",
+   "measured": 1317,
+   "expected_by_the_report": 1317,
+   "pass": true
+  },
+  {
+   "check": "NEAR_PARALLEL total",
+   "measured": 3927,
+   "expected_by_the_report": 3927,
+   "pass": true
+  },
+  {
+   "check": "cross EXACT",
+   "measured": 279,
+   "expected_by_the_report": 279,
+   "pass": true
+  },
+  {
+   "check": "within EXACT",
+   "measured": 616,
+   "expected_by_the_report": 616,
+   "pass": true
+  },
+  {
+   "check": "cross VARIANT",
+   "measured": 1259,
+   "expected_by_the_report": 1259,
+   "pass": true
+  },
+  {
+   "check": "within VARIANT",
+   "measured": 58,
+   "expected_by_the_report": 58,
+   "pass": true
+  },
+  {
+   "check": "cross NEAR",
+   "measured": 3053,
+   "expected_by_the_report": 3053,
+   "pass": true
+  },
+  {
+   "check": "within NEAR",
+   "measured": 874,
+   "expected_by_the_report": 874,
+   "pass": true
+  },
+  {
+   "check": "WORD_DIVISION",
+   "measured": 819,
+   "expected_by_the_report": 819,
+   "pass": true
+  },
+  {
+   "check": "ORTHOGRAPHIC_VARIATION",
+   "measured": 475,
+   "expected_by_the_report": 475,
+   "pass": true
+  },
+  {
+   "check": "ACCENT_PLACEMENT",
+   "measured": 23,
+   "expected_by_the_report": 23,
+   "pass": true
+  },
+  {
+   "check": "NONE_AT_COMPARISON_CEILING",
+   "measured": 895,
+   "expected_by_the_report": 895,
+   "pass": true
+  },
+  {
+   "check": "ceiling PUNCTUATION_NORMALIZED",
+   "measured": 1548,
+   "expected_by_the_report": 1548,
+   "pass": true
+  },
+  {
+   "check": "ceiling SCRIPT_FOLDED",
+   "measured": 3026,
+   "expected_by_the_report": 3026,
+   "pass": true
+  },
+  {
+   "check": "ceiling ACCENT_INSENSITIVE",
+   "measured": 1565,
+   "expected_by_the_report": 1565,
+   "pass": true
+  },
+  {
+   "check": "identity rows at SOURCE_EXACT (above the ceiling, the bonus case)",
+   "measured": 452,
+   "expected_by_the_report": 452,
+   "pass": true
+  },
+  {
+   "check": "candidate pairs",
+   "measured": 34502,
+   "expected_by_the_report": 34502,
+   "pass": true
+  },
+  {
+   "check": "identity pairs",
+   "measured": 2206,
+   "expected_by_the_report": 2206,
+   "pass": true
+  },
+  {
+   "check": "near kept",
+   "measured": 3927,
+   "expected_by_the_report": 3927,
+   "pass": true
+  },
+  {
+   "check": "candidate balance",
+   "measured": 34502,
+   "expected_by_the_report": 34502,
+   "pass": true
+  },
+  {
+   "check": "class 1 SELF_ADDRESS",
+   "measured": 688,
+   "expected_by_the_report": 688,
+   "pass": true
+  },
+  {
+   "check": "class 2 SECTION_LABEL",
+   "measured": 214,
+   "expected_by_the_report": 214,
+   "pass": true
+  },
+  {
+   "check": "class 3 EDITION_APPARATUS",
+   "measured": 112,
+   "expected_by_the_report": 112,
+   "pass": true
+  },
+  {
+   "check": "class 4 EMBEDDED_CITATION_LANGUAGE is a measured zero",
+   "measured": 0,
+   "expected_by_the_report": 0,
+   "pass": true
+  },
+  {
+   "check": "class 5 TRUE_VARIANT_WORDING",
+   "measured": 5244,
+   "expected_by_the_report": 5244,
+   "pass": true
+  },
+  {
+   "check": "separable pairs",
+   "measured": 1542,
+   "expected_by_the_report": 1542,
+   "pass": true
+  },
+  {
+   "check": "not separable, with a reason",
+   "measured": 4591,
+   "expected_by_the_report": 4591,
+   "pass": true
+  },
+  {
+   "check": "INVARIANT exact touching true wording",
+   "measured": 0,
+   "expected_by_the_report": 0,
+   "pass": true
+  },
+  {
+   "check": "INVARIANT non-exact not touching true wording",
+   "measured": 0,
+   "expected_by_the_report": 0,
+   "pass": true
+  },
+  {
+   "check": "R4 flagged and refused is a measured zero",
+   "measured": 0,
+   "expected_by_the_report": 0,
+   "pass": true
+  },
+  {
+   "check": "mantras made uncomparable by stripping",
+   "measured": 0,
+   "expected_by_the_report": 0,
+   "pass": true
+  },
+  {
+   "check": "strip guard breaches",
+   "measured": 1,
+   "expected_by_the_report": 1,
+   "pass": true
+  },
+  {
+   "check": "mantras the stripper shortens",
+   "measured": 8,
+   "expected_by_the_report": 8,
+   "pass": true
+  },
+  {
+   "check": "contaminated formulas",
+   "measured": 1,
+   "expected_by_the_report": 1,
+   "pass": true
+  },
+  {
+   "check": "formulas entirely inside removed material",
+   "measured": 0,
+   "expected_by_the_report": 0,
+   "pass": true
+  },
+  {
+   "check": "nesting INDEPENDENT",
+   "measured": 2788,
+   "expected_by_the_report": 2788,
+   "pass": true
+  },
+  {
+   "check": "nesting CONTAINS_ANOTHER",
+   "measured": 934,
+   "expected_by_the_report": 934,
+   "pass": true
+  },
+  {
+   "check": "nesting NESTED_IN_ANOTHER",
+   "measured": 918,
+   "expected_by_the_report": 918,
+   "pass": true
+  },
+  {
+   "check": "nesting NESTED_AND_CONTAINING",
+   "measured": 185,
+   "expected_by_the_report": 185,
+   "pass": true
+  },
+  {
+   "check": "nesting sums to 4825",
+   "measured": 4825,
+   "expected_by_the_report": 4825,
+   "pass": true
+  },
+  {
+   "check": "match_level SCRIPT_FOLDED",
+   "measured": 20577,
+   "expected_by_the_report": 20577,
+   "pass": true
+  },
+  {
+   "check": "match_level SANDHI_INSENSITIVE",
+   "measured": 2109,
+   "expected_by_the_report": 2109,
+   "pass": true
+  },
+  {
+   "check": "shares_formula_with edges",
+   "measured": 6148,
+   "expected_by_the_report": 6148,
+   "pass": true
+  },
+  {
+   "check": "families",
+   "measured": 720,
+   "expected_by_the_report": 720,
+   "pass": true
+  },
+  {
+   "check": "not importable relation rows",
+   "measured": 6,
+   "expected_by_the_report": 6,
+   "pass": true
+  },
+  {
+   "check": "retype recommendations",
+   "measured": 515,
+   "expected_by_the_report": 515,
+   "pass": true
+  },
+  {
+   "check": "new relations",
+   "measured": 1256,
+   "expected_by_the_report": 1256,
+   "pass": true
+  },
+  {
+   "check": "typology backfill",
+   "measured": 4368,
+   "expected_by_the_report": 4368,
+   "pass": true
+  },
+  {
+   "check": "new within identity by veda SV",
+   "measured": 205,
+   "expected_by_the_report": 205,
+   "pass": true
+  },
+  {
+   "check": "new within identity by veda AV",
+   "measured": 137,
+   "expected_by_the_report": 137,
+   "pass": true
+  },
+  {
+   "check": "new within identity by veda YV",
+   "measured": 80,
+   "expected_by_the_report": 80,
+   "pass": true
+  },
+  {
+   "check": "RV within identity all already in the graph",
+   "measured": 0,
+   "expected_by_the_report": 0,
+   "pass": true
+  },
+  {
+   "check": "INVARIANT no row identical below its ceiling while typed EXACT",
+   "measured": 0,
+   "expected_by_the_report": 0,
+   "pass": true
+  },
+  {
+   "check": "every relation row carries a structural-class decomposition or a reason",
+   "measured": 6139,
+   "expected_by_the_report": 6139,
+   "pass": true
+  }
+ ],
+ "includes": "the post-rebuild claim counts, the five-class results including class 4's zero, the candidate-population balance, the stripper guards, and the three invariants that now hold by construction rather than by check."
+}

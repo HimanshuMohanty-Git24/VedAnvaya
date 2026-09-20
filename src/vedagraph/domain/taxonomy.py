@@ -129,11 +129,39 @@ class DevataTaxonomyEntry:
             # Atharvaveda, when the truth is that the Atharvaveda has no attribution
             # layer at all and 571 of its passages contain the word `indra`. A scope note
             # present on 25 of 214 nodes is a scope note that will be missed.
-            "attribution_scope": ["RV"],
+            # attribution_scope is DELIBERATELY ABSENT from this row. It is derived from the
+            # graph by :func:`vedagraph.domain.loader.apply_overlay` immediately after this
+            # SET, per GAP-ATTRIBUTION-009's own implementation_dependency: "Derive
+            # attribution_scope from the graph at projection time instead of storing a
+            # literal, so it cannot outlive the fact it describes."
+            #
+            # It WAS the literal ["RV"] here, on all 214 nodes. R3 measured it per node and
+            # landed 35 as ["RV","AV"] -- and left this literal in place, so the very next
+            # rebuild through this overlay would have flattened all 35 back. A stored literal
+            # that a mutation has to correct out-of-band is the defect, not the value.
+            # The second sentence used to read "means that corpus has no attribution
+            # layer", which was false for the Atharvaveda and reached the reader on all 214
+            # nodes -- and reached Ask, which passes this string through as the qualifier on
+            # an absence, so a false "no attribution layer" became a model-visible
+            # justification for a false answer.
             "attribution_scope_note": (
-                "The Anukramani attribution layer covers the Rigveda only. A zero for SV, "
-                "YV or AV means that corpus has no attribution layer, NOT that the deity "
-                "is absent from it."
+                "attribution_scope names the corpora whose dedications are RESOLVED to this "
+                "node. HAS_DEVATA is Rigveda-only, so a zero for SV, YV or AV means this "
+                "predicate does not reach that corpus -- NOT that the deity is absent from "
+                "it, and NOT that the corpus records no dedication. The Atharvaveda records "
+                "its own: 5,385 HAS_DEVATA_ASCRIPTION edges over 4,665 of its 6,590 "
+                "passages, 4,816 of them on 4,160 of its 5,839 mantras and the rest on "
+                "hymn-level containers, pointing at a :DevataAscription that carries "
+                "Whitney's verbatim descriptor rather than a resolved deity. Those two "
+                "layers share no label value, by category rather than by coverage. The "
+                "bridge between them is BUILT and partial: HAS_DEVATA_DERIVED carries 882 "
+                "Atharvavedic dedications over 851 passages for 39 of the 324 descriptors -- 47 descriptors now RESOLVE but the derived dedications were not re-derived from the 8 new ones, see R4-RESIDUAL-ATTRIBUTION-002 -- "
+                "resolved from the descriptor's own morphology under Panini 4.2.24 sasya "
+                "devata, and the other 277 are refused with a typed reason each rather than "
+                "left unprocessed. Those resolved dedications DO raise this figure; an "
+                "unresolved descriptor does not, because it names no deity to raise it for. "
+                "The Samaveda and Yajurveda carry no dedication layer of any kind, which is "
+                "a source block (GAP-ATTRIBUTION-001) and not an unbuilt projection."
             ),
             "domain_model_version": DOMAIN_MODEL_VERSION,
         }

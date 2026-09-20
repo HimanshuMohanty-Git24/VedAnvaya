@@ -1,0 +1,101 @@
+{
+  "formula / parallel / variant relations": {
+    "consumer": "formula / parallel / variant relations",
+    "input_hash": "9a086879bd14d24be142ec1b082454616902e2ba16e6ee9f57f732a395da0f02",
+    "at": "2026-09-16T05:18:51.665933+00:00",
+    "graph_census": {
+      "nodes": 116825,
+      "relationships": 281290
+    },
+    "output_file": "data\\enrichment\\vedagraph_enrichment_v1\\formula_families.jsonl",
+    "output_hash": "524404d015c448fcf10fb69b6fac67d17ea616e88d142006c20df2ca2bcfaf21"
+  },
+  "entity coverage": {
+    "consumer": "entity coverage",
+    "input_hash": "48f6c58e5fb92a41ab056e333bc5fbced82ed32a7d5fa8ed26d71a6c1aaa2cfa",
+    "at": "2026-09-16T05:19:50.816004+00:00",
+    "graph_census": {
+      "nodes": 116838,
+      "relationships": 281290
+    },
+    "output_file": "data\\domain\\vedagraph_domain_v2\\veda_coverage_v3.json",
+    "output_hash": "ade0e58aefd4a59e2828263ac37d2d64d44baa9047f8d2a9df4fd5a08037eedb"
+  },
+  "quality evaluation": {
+    "consumer": "quality evaluation",
+    "input_hash": "1fe667ad90d95a4de44dae43420e58948a5779d4faea0428c00305272e505ad4",
+    "at": "2026-09-16T05:19:51.273802+00:00",
+    "graph_census": {
+      "nodes": 116838,
+      "relationships": 281290
+    },
+    "output_file": "docs\\reports\\GRAPH_QUALITY_V2_SCORECARD.md",
+    "output_hash": "a9847e4c0310bde50cdb3d8f6eac7587dbf13a6c48482e6aace24285c0079110"
+  },
+  "cross-Veda matrices": {
+    "consumer": "cross-Veda matrices",
+    "input_hash": "a1fab41628a7c4381c43f35e96b3b032a6a020a0c1f8a144eede811ccd5914cc",
+    "at": "2026-09-16T05:21:39.384029+00:00",
+    "graph_census": {
+      "nodes": 116838,
+      "relationships": 281290
+    },
+    "output_file": "data\\enrichment\\vedagraph_enrichment_v1\\manifest.json",
+    "output_hash": "9757dd1d44dd0d1c2c584452e42956b8e7f98e4506aa9157355498739df9a8f2"
+  },
+  "Visualization Lab aggregates": {
+    "consumer": "Visualization Lab aggregates",
+    "input_hash": "39e65705f56779246977f75d288e1e8d126d41d9830adbdf96871aa77dbd961a",
+    "at": "2026-09-16T05:21:54.763687+00:00",
+    "graph_census": {
+      "nodes": 116838,
+      "relationships": 281290
+    },
+    "output_file": "frontend\\.world\\world.raw.json",
+    "output_hash": "76dca4800c487eb3f2a79bf3b7e4bd452cbb6806a70e67c9c060a829db820088"
+  },
+  "Knowledge World public projection": {
+    "consumer": "Knowledge World public projection",
+    "input_hash": "369c8e941e2fc39d2aff27ea0f058166de432211b8677003347fd0cb056b46c7",
+    "at": "2026-09-16T05:21:55.428638+00:00",
+    "graph_census": {
+      "nodes": 116838,
+      "relationships": 281290
+    },
+    "output_file": "frontend\\.world\\world.raw.json",
+    "output_hash": "76dca4800c487eb3f2a79bf3b7e4bd452cbb6806a70e67c9c060a829db820088"
+  },
+  "ritual aggregates": {
+    "consumer": "ritual aggregates",
+    "input_hash": "5561283d5e65b3bd7df8db38fb4695e88ba95d70653213c1d00e5d4fb8ff70e5",
+    "at": "2026-09-16T05:22:22.600043+00:00",
+    "graph_census": {
+      "nodes": 116838,
+      "relationships": 281290
+    },
+    "not_applicable_reason": "No ritual aggregate exists. The layer arrived in Wave 3 and nothing downstream consumes it yet, so there is no artifact to rebuild -- as distinct from a rebuild that has not happened.",
+    "output_hash": null
+  },
+  "semantic resemblance": {
+    "consumer": "semantic resemblance",
+    "input_hash": "aff19bb4a419cde32a58d9110d4b07a9fe9574a78ec2b0e15a05bc00225920d8",
+    "at": "2026-09-16T05:22:58.050918+00:00",
+    "graph_census": {
+      "nodes": 116838,
+      "relationships": 281290
+    },
+    "blocked_reason": "Requires re-derivation, not a rebuild. The staged artifact is semantic-resemblance-hybrid-v2, computed before the Wave 3 import, and owner section 8 bars importing an old score artifact merely because it exists. Re-derivation needs the embedding pipeline run against the final canonical snapshot plus the full validity report (pool size, corpus-product recall, dev/test metrics, lexical-control comparison, translation-confound exclusions, threshold, refusal conditions). Not attempted here; zero rows imported.",
+    "output_hash": null
+  },
+  "Ask retrieval": {
+    "consumer": "Ask retrieval",
+    "input_hash": "acea577a1250fb5c2a4ac31828012aa4c58495d1a7bfa87c04f7ecfbef52210f",
+    "at": "2026-09-16T05:23:37.763661+00:00",
+    "graph_census": {
+      "nodes": 116838,
+      "relationships": 281290
+    },
+    "blocked_reason": "Retrieval itself reads the graph live -- there is no stored index artifact to rebuild, and its 280 contract tests pass against the final graph. What is stale is the GRADED benchmark: re-grading needs a live LLM provider and burns a daily quota, and owner section 13 bars a speculative re-grade. Blocked on a deliberate benchmark run, not on engineering.",
+    "output_hash": null
+  }
+}

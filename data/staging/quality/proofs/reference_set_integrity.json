@@ -1,0 +1,89 @@
+{
+ "how_the_address_was_established": "The treebank cites a hymn, never a verse. Each sentence was aligned to the verse of that hymn whose de-accented de-spaced skeleton best contains it, accepted only above 0.62 containment and only when the winner beat the runner-up by 0.06.",
+ "alignment_outcomes": {
+  "ṚV:ALIGNED": 4057,
+  "ṚV:BELOW_FLOOR": 56,
+  "ṚV:AMBIGUOUS_MARGIN": 239,
+  "AVŚ:ALIGNED": 1787,
+  "AVŚ:AMBIGUOUS_MARGIN": 371,
+  "AVŚ:BELOW_FLOOR": 17,
+  "VSM:AMBIGUOUS_MARGIN": 195,
+  "VSM:ALIGNED": 423,
+  "VSM:BELOW_FLOOR": 4
+ },
+ "monotonicity_check": {
+  "adjacent_pairs_checked": 5541,
+  "backwards_jumps": 90,
+  "violation_rate": 0.01624,
+  "quarantined_sentences": 176
+ },
+ "why_monotonicity": "Treebank sentences are ordered within a hymn, so the verse numbers they align to must not go backwards. A backwards jump means one of the two sentences is misaddressed. Both sides of every jump were quarantined and are not used, because the evidence does not say which of the two is wrong.",
+ "second_independent_witness": "For the Rigveda the graph already cites the Zurich/VedaWeb lemma verse by verse. A row where the treebank annotation and the Zurich citation name the same lemma for the same canonical key has been addressed identically by two unrelated annotation projects, and only those rows are typed EXACT.",
+ "verse_annotation_coverage": {
+  "mantras_with_annotation": 3072,
+  "covered_at_floor": 1074,
+  "floor": 0.8,
+  "covered_by_veda": {
+   "RV": 413,
+   "AV": 643,
+   "YV": 18
+  }
+ },
+ "treebank_size": {
+  "human_annotated_words": 206440,
+  "sentences": 27182,
+  "distinct_surface_forms": 35784
+ },
+ "bridges": {
+  "zurich_lemma_bridge": {
+   "VG:DEVATA:ADITIH": "aditi",
+   "VG:DEVATA:AGNIH": "agni",
+   "VG:DEVATA:AHIH": "ahi",
+   "VG:DEVATA:ASVINAU": "asvin",
+   "VG:DEVATA:BRHASPATIH": "br̥haspati",
+   "VG:DEVATA:DYAVAPRTHIVYAU": "dyāvāpr̥thivī",
+   "VG:DEVATA:INDRAVAYU": "indra-vāyu",
+   "VG:DEVATA:INDRAH": "indra",
+   "VG:DEVATA:INDRAGNI": "indrāgni",
+   "VG:DEVATA:MANYUH": "manyu",
+   "VG:DEVATA:MARUTAH": "marut",
+   "VG:DEVATA:MITRAH": "mitra",
+   "VG:DEVATA:MITRAVARUNAU": "mitrāvaruṇa",
+   "VG:DEVATA:NIRRTIH": "nirr̥ti",
+   "VG:DEVATA:PARJANYAH": "parjanya",
+   "VG:DEVATA:PITARAH": "pitar",
+   "VG:DEVATA:PUSA": "pūṣan",
+   "VG:DEVATA:PRTHIVI": "pr̥thivī",
+   "VG:DEVATA:RUDRAH": "rudra",
+   "VG:DEVATA:RATRIH": "rātrī",
+   "VG:DEVATA:SARASVATI": "sarasvant",
+   "VG:DEVATA:SAVITA": "savitar",
+   "VG:DEVATA:SOMAH": "soma",
+   "VG:DEVATA:SURYAH": "sūrya",
+   "VG:DEVATA:TVASTA": "tvaṣṭar",
+   "VG:DEVATA:USAH": "uṣas",
+   "VG:DEVATA:VARUNAH": "varuṇa",
+   "VG:DEVATA:VISVAKARMA": "visvakarman",
+   "VG:DEVATA:VISNUH": "viṣṇu",
+   "VG:DEVATA:VAK": "vāc",
+   "VG:DEVATA:VAYUH": "vāyu",
+   "VG:DEVATA:YAMAH": "yama",
+   "VG:DEVATA:ADITYAH": "āditya",
+   "VG:DEVATA:APAH": "ap",
+   "VG:DEVATA:RBHAVAH": "r̥bhu"
+  },
+  "curated_allomorph_bridge": {
+   "VG:CONCEPT:AP-WATERS": "ap",
+   "VG:DEVATA:APAH": "ap",
+   "VG:CONCEPT:DYAUS-HEAVEN": "div",
+   "VG:CONCEPT:AHAN-DAY": "ahar",
+   "VG:CONCEPT:PITARAH-ANCESTORS": "pitṛ",
+   "VG:DEVATA:PITARAH": "pitṛ",
+   "VG:CONCEPT:SAKHYA-FRIENDSHIP": "sakhi",
+   "VG:CONCEPT:HAVIS-OBLATION": "havya",
+   "VG:CONCEPT:VIRA-HERO": "vīrya",
+   "VG:CONCEPT:JANMAN-BIRTH": "janitr"
+  },
+  "entity_lemma_sets": 274
+ }
+}

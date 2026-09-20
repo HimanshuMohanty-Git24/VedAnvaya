@@ -28,9 +28,11 @@ from __future__ import annotations
 import argparse
 import datetime as dt
 import json
+import os
 import re
 import sys
 from collections.abc import Iterable
+from functools import lru_cache
 from pathlib import Path
 from typing import Any, Final
 
@@ -71,6 +73,28 @@ class ProvenanceError(RuntimeError):
 # is displayed without supplying any of it, and a reader who sees it listed beside the text
 # sources would reasonably conclude some of the verses came from it.
 # ---------------------------------------------------------------------------------------
+@lru_cache(maxsize=1)
+def _measured_figures() -> dict[str, str]:
+    """Figures a contribution sentence may interpolate, counted rather than written down.
+
+    One entry today and the mechanism matters more than the count: the recitation sentence
+    carried "16,834" as a literal and went on carrying it after the catalogue grew to
+    17,780, because a number inside prose is the one number no test reads. A missing
+    catalogue raises rather than substituting a guess -- this script builds a provenance
+    document, and a provenance document that quietly states a stale figure is worse than
+    one that fails to build.
+    """
+    catalogue = ROOT / "data" / "product" / "audio_catalog.jsonl"
+    if not catalogue.is_file():
+        raise ProvenanceError(
+            f"{catalogue} is missing, so the recitation count cannot be measured. "
+            "Refusing to write a provenance document with an unverified figure."
+        )
+    with catalogue.open("r", encoding="utf-8") as handle:
+        recitations = sum(1 for line in handle if line.strip())
+    return {"recitation_count": f"{recitations:,}"}
+
+
 LAYERS: Final[list[dict[str, str]]] = [
     {
         "id": "primary-text",
@@ -191,6 +215,68 @@ CONTRIBUTIONS: Final[list[dict[str, Any]]] = [
             "deliberately literal rendering."
         ),
     },
+    # The four translation sources the bulk integration round added. Declared with
+    # `source_ids` and no artifacts because they are pinned web captures and a disk
+    # snapshot rather than the checksummed per-file artifacts source_artifacts.yaml
+    # records; the per-page sha256 for each lives in the proofs file named as evidence.
+    {
+        "layer": "translation",
+        "vedas": ["AV"],
+        "artifacts": [],
+        "source_ids": ["IA_WAYBACK_GRIFFITH_AV_1895"],
+        "rights_status": "PUBLIC_DOMAIN",
+        "evidence": "data/staging/translation/proofs/source_pages.json",
+        "contributes": (
+            "The English of 871 further Atharvavedic verses, almost all of kanda 20, which "
+            "Whitney excluded from his translation because it is largely Rigvedic "
+            "redaction. 34 of them are one rendering printed across a pair of verses. A "
+            "further 18 verses from this source are in Latin, not English: Griffith put "
+            "the passages he judged too explicit for an English readership into Latin, and "
+            "those are his real published text rather than a translation into English."
+        ),
+    },
+    {
+        "layer": "translation",
+        "vedas": ["RV"],
+        "artifacts": [],
+        "source_ids": ["IA_WAYBACK_GRIFFITH_RV_1896"],
+        "rights_status": "PUBLIC_DOMAIN",
+        "evidence": "data/staging/translation/integration/translation_bulk_import_receipt.json",
+        "contributes": (
+            "The English of 7 Rigvedic verses the Wikisource transcription of the same "
+            "translation leaves out, and 6 more in Griffith's Latin rather than English."
+        ),
+    },
+    {
+        "layer": "translation",
+        "vedas": ["YV"],
+        "artifacts": [],
+        "source_ids": ["SACRED_TEXTS_WYV_SNAPSHOT_2026_09_07"],
+        "rights_status": "PUBLIC_DOMAIN",
+        "evidence": "data/staging/translation/integration/translation_bulk_import_receipt.json",
+        "contributes": (
+            "The English of 36 Yajurvedic verses whose printed labels the shipped alignment "
+            "had misread, each one re-located against the printed page and verified "
+            "independently. Three further verses were located the same way and are withheld "
+            "by owner decision rather than shown."
+        ),
+    },
+    {
+        "layer": "translation",
+        "vedas": ["SV", "AV"],
+        "artifacts": [],
+        "source_ids": ["VEDAGRAPH_CANONICAL_RV_GRIFFITH"],
+        "rights_status": "PUBLIC_DOMAIN",
+        "evidence": "data/staging/translation/integration/translation_bulk_import_receipt.json",
+        "contributes": (
+            "Griffith's Rigvedic English shown beside 173 Samavedic and 21 Atharvavedic "
+            "verses whose Sanskrit is verified character-identical to the Rigvedic verse he "
+            "was translating. Each is disclosed as a reused rendering and names the verse it "
+            "came from. None of them counts as a translation of its own corpus: the Samaveda "
+            "still has no released translation of its own, and this is the only English that "
+            "reaches it."
+        ),
+    },
     # --- traditional apparatus ----------------------------------------------------------
     {
         "layer": "traditional-apparatus",
@@ -230,10 +316,13 @@ CONTRIBUTIONS: Final[list[dict[str, Any]]] = [
         "source_ids": ["VEDSEARCH"],
         "rights_status": "UNKNOWN",
         "evidence": "data/product/audio_catalog.jsonl",
+        # The count is read from the catalogue at build time, not written here. It was
+        # "16,834" as a literal and stayed 16,834 through the admission of 946 further
+        # recordings, because prose is the one place a figure has nothing checking it.
         "contributes": (
-            "16,834 verse recitations, one file per verse, streamed from the source rather "
-            "than copied. No Samavedic recitation is catalogued, which is the gap this "
-            "layer most obviously has."
+            "{recitation_count} verse recitations, one file per verse, streamed from the "
+            "source rather than copied. No Samavedic recitation is catalogued, which is "
+            "the gap this layer most obviously has."
         ),
     },
     # --- comparison ---------------------------------------------------------------------
@@ -299,6 +388,62 @@ def _canonical_corpus_dirs(works: list[dict[str, Any]]) -> dict[str, str]:
             )
         found[work["work_id"]] = corpus
     return found
+
+
+def _refuse_undeclared_translation_sources(declared_source_ids: set[str]) -> None:
+    """Refuse if the graph serves a translation from a source this page does not name.
+
+    The check above covers the four canonical build manifests, and a translation written
+    straight to the graph is not in any of them. That gap shipped once: the bulk
+    integration round added 1,132 renderings under four new ``source_id`` values, the
+    manifests knew nothing about them, this script wrote a clean page, and a reader could
+    not resolve where a sixth of the Atharvavedic English had come from. The docstring
+    already promised that an invisible omission is worse than no sources page; this makes
+    the promise cover the surface the omission actually happened on.
+
+    Skipped, loudly, when no graph is reachable -- this script is meant to run without one
+    -- because a check that silently passes when it cannot look is the defect it guards
+    against.
+    """
+    try:
+        from neo4j import GraphDatabase
+    except ImportError:
+        print("provenance: neo4j driver absent; translation-source coverage NOT checked")
+        return
+    uri = os.environ.get("NEO4J_URI", "bolt://localhost:7687")
+    auth = (
+        os.environ.get("NEO4J_USER", "neo4j"),
+        os.environ.get("NEO4J_PASSWORD", "vedagraph_dev"),
+    )
+    try:
+        driver = GraphDatabase.driver(uri, auth=auth)
+        with driver.session(database=os.environ.get("NEO4J_DATABASE", "neo4j")) as session:
+            live = {
+                str(record["source_id"]): int(record["n"])
+                for record in session.run(
+                    "MATCH (:Mantra)-[:HAS_TRANSLATION]->(t:Translation) "
+                    "WHERE t.source_id IS NOT NULL "
+                    "RETURN t.source_id AS source_id, count(*) AS n"
+                )
+            }
+        driver.close()
+    except Exception as error:
+        print(
+            f"provenance: graph unreachable ({error.__class__.__name__}); "
+            "translation-source coverage NOT checked"
+        )
+        return
+    missing = {sid: n for sid, n in sorted(live.items()) if sid not in declared_source_ids}
+    if missing:
+        raise ProvenanceError(
+            "The graph serves translations from sources this page does not name, so a "
+            "reader could not resolve where they came from: "
+            + ", ".join(f"{sid} ({n} translations)" for sid, n in missing.items())
+        )
+    print(
+        f"provenance: all {len(live)} translation source_ids in the graph are declared "
+        f"({sum(live.values()):,} translations)"
+    )
 
 
 def _shipped_artifact_ids(corpus_dirs: Iterable[str]) -> set[str]:
@@ -415,7 +560,9 @@ def build() -> dict[str, Any]:
                     "site_rights_status": rights.get("status"),
                     "rights_url": rights.get("license_url"),
                     "vedas": contribution["vedas"],
-                    "contributes": contribution["contributes"],
+                    "contributes": contribution["contributes"].format(
+                        **_measured_figures()
+                    ),
                     "evidence": contribution["evidence"],
                     "artifacts": mine,
                 }
@@ -428,6 +575,8 @@ def build() -> dict[str, Any]:
             "declares them, so the sources page would omit them silently: "
             + ", ".join(unclassified)
         )
+
+    _refuse_undeclared_translation_sources({entry["source_id"] for entry in entries})
 
     works = [
         {

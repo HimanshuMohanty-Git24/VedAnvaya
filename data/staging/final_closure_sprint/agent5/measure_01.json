@@ -1,0 +1,20 @@
+{
+  "at": "2026-09-16T17:48:14.079250+00:00",
+  "census": {
+    "nodes": 117970
+  },
+  "rels": {
+    "rels": 282389
+  },
+  "rishi_total": 729,
+  "rishi_no_family": 427,
+  "rishi_family_nodes": 87,
+  "belongs_to_family_edges": 305,
+  "rishi_by_veda": [
+    {
+      "veda": "?",
+      "total": 732,
+      "with_family": 305
+    }
+  ]
+}

@@ -1,0 +1,70 @@
+{
+  "artifact": "FINAL_CLOSURE_SPRINT_DEPENDENCY_DECLARATION_FIX",
+  "at": "2026-09-16T17:27:01.360118+00:00",
+  "found_by": "Agent 8 (independent auditor); re-measured independently by the lead before acting",
+  "defect": {
+    "shape": "the M10 defect repeating on the INPUT side",
+    "statement": "scripts/export_graph_world.py selects MATCH (n) WHERE NOT n:Internal -- every public label -- while the two world consumers between them declared 5 labels and 5 predicate types. graph_quality_scorecard.py reads MATCH (n) and every predicate while declaring 3 labels.",
+    "lead_measurement": {
+      "public_nodes": 39664,
+      "distinct_public_labels": 45,
+      "labels_declared_by_a_consumer": 5,
+      "public_nodes_invisible_to_every_declared_hash": 15453,
+      "pct_nodes_invisible": 39.0,
+      "public_edges": 204776,
+      "distinct_public_edge_types": 69,
+      "types_declared": 5,
+      "public_edges_invisible_to_every_declared_hash": 140940,
+      "pct_edges_invisible": 68.8,
+      "note": "Agent 8 reported 89.9% of exported node ROWS; the lead measured 39.0% of distinct NODES reachable by any declared label. Both measure the same defect; the lead's is the more conservative and is the figure used."
+    },
+    "undeclared_labels_this_sprint_mutates": {
+      "Chandas": 547,
+      "Rishi": 729,
+      "Ritual": 103,
+      "RitualRole": 11,
+      "Object": 41,
+      "Epithet": 13,
+      "DevataAscription": 324,
+      "Formula": 4825,
+      "SemanticAssertion": 4865,
+      "RitualStep": 3121,
+      "FormulaFamily": 720,
+      "RishiFamily": 87
+    },
+    "consequence": "every closure landing this sprint would have read CURRENT while the bundle a browser downloads was stale"
+  },
+  "fix": {
+    "file": "scripts/dependency_state.py",
+    "change": "CONSUMER_SUBGRAPHS declares the subgraph a whole-subgraph reader actually reads, as a Cypher predicate, and subgraph_fingerprint() hashes node identities, a per-label census, and typed endpoint pairs over it.",
+    "why_a_predicate_not_a_longer_list": "an enumerated label list is correct only until the next label is added, which is precisely how this defect arose",
+    "no_apoc": "the compose file requires nothing in the pipeline depend on APOC, so the label census is computed as a census rather than by sorting each node's labels in Cypher",
+    "second_fix": "main() returned 0 unconditionally, so STALE_INPUT=5 still exited 0 and anything wired on the exit code caught nothing. --status now returns 1 on any STALE_INPUT or unexplained stale; --record deliberately still returns 0."
+  },
+  "measured_after": {
+    "status_line": "CURRENT=1 STALE_INPUT=5 BLOCKED=2 NOT_APPLICABLE=1",
+    "exit_code": 1,
+    "newly_stale_by_declaration_change": [
+      "quality evaluation",
+      "Visualization Lab aggregates",
+      "Knowledge World public projection"
+    ],
+    "newly_stale_by_specialist_activity": [
+      "cross-Veda matrices",
+      "formula / parallel / variant relations"
+    ],
+    "expected": "the three subgraph consumers are stale because a new input key is by definition moved; Wave D rebuilds and re-records them"
+  },
+  "tests": {
+    "file": "tests/unit/test_dependency_state.py",
+    "added": [
+      "test_the_subgraph_fingerprint_moves_when_only_a_label_changes",
+      "test_the_subgraph_fingerprint_sees_labels_no_consumer_enumerates",
+      "test_the_subgraph_fingerprint_is_stable_under_row_order",
+      "test_an_edge_swap_of_equal_size_still_moves_the_fingerprint",
+      "test_every_whole_graph_reader_declares_a_subgraph"
+    ],
+    "result": "26 passed",
+    "key_proof": "the first test reproduces the M10 shape exactly -- a node marked :Internal, identity and edges untouched -- which an identity digest alone cannot see and which actually shipped 28 malformed metre names to every reader"
+  }
+}

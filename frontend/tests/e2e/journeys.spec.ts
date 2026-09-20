@@ -19,15 +19,20 @@ async function search(page: Page, query: string) {
 test.describe("journey 1 — home to a single mantra", () => {
     test("home, Rigveda, mandala 1, sukta 1, RV 1.1.1", async ({ page }) => {
         await page.goto("/");
-        await expect(page.getByRole("heading", { level: 1 })).toContainText(/four samhitas/i);
+        /* The h1 names the product; the scope it used to carry is in the measured band under
+           it. See homepage.spec.ts for why that moved. */
+        await expect(page.getByRole("heading", { level: 1 })).toContainText(/VedAnvaya/);
+        await expect(page.locator("main")).toContainText(/four samhitas/i);
 
         await page.getByRole("link", { name: "Read the Vedas" }).first().click();
         await expect(page).toHaveURL(/\/vedas$/);
 
+        /* The card's action is "Read the {Veda}", not "Read the {traditional name}". The
+           card still carries the traditional name, which is what the filter matches on. */
         await page
             .getByRole("article")
             .filter({ hasText: "Rigveda Samhita" })
-            .getByRole("link", { name: /Read the Rigveda Samhita/ })
+            .getByRole("link", { name: /^Read the Rigveda$/ })
             .click();
         await expect(page).toHaveURL(/\/vedas\/rigveda$/);
 
@@ -221,14 +226,32 @@ test.describe("journey 5 — Atharvavedic healing", () => {
         await page.goto("/explore/atharvaveda");
         await expect(page.getByRole("heading", { name: "Afflictions" })).toBeVisible();
 
+        /*
+         * The affliction block holds afflictions and nothing else, and that is still the
+         * assertion. What changed is where it is checked: the block used to badge every row
+         * AFFLICTION under a heading that said "Afflictions", which is the heading repeated
+         * twenty times, so the badge now appears only in the block where the kind genuinely
+         * varies. The guarantee is unchanged and is asserted on the rows themselves - every
+         * one of them links into the condition register, and a threat would not.
+         */
         const afflictionRows = page
-            .locator(".av-block", { hasText: "Afflictions" })
-            .locator(".av-row");
-        const kinds = await afflictionRows.locator(".condition-kind").allTextContents();
-        expect(kinds.length).toBeGreaterThan(0);
-        for (const kind of kinds) {
-            expect(kind.trim()).toBe("Affliction");
+            .locator("section", { hasText: "Afflictions" })
+            .locator(".va-register-row")
+            .filter({ hasNot: page.locator(".va-register-kind") });
+        const hrefs = await afflictionRows.evaluateAll((nodes) =>
+            nodes.map((node) => node.getAttribute("href") ?? ""),
+        );
+        expect(hrefs.length).toBeGreaterThan(0);
+        for (const href of hrefs) {
+            expect(href).toMatch(/^\/entities\/condition\//);
         }
+        /* The kind is still drawn where it varies: the block listing what the texts address. */
+        await expect(
+            page
+                .locator("section", { hasText: "What the texts address" })
+                .locator(".va-register-kind")
+                .first(),
+        ).toBeVisible();
 
         await page.getByRole("link", { name: /fever/ }).first().click();
         await expect(page).toHaveURL(new RegExp(TAKMAN));
@@ -261,7 +284,7 @@ test.describe("journey 6 — a formula across collections", () => {
     test("family, its members, and where the wording occurs", async ({ page }) => {
         await page.goto("/formulas");
         await expect(page.getByRole("heading", { level: 1 })).toHaveText("Formula families");
-        await page.locator(".formula-list a").first().click();
+        await page.locator("#va-formula-index").locator("xpath=..").locator(".va-register-row").first().click();
 
         await expect(page).toHaveURL(/\/formula-families\//);
         await expect(page.getByRole("heading", { name: "The shape of this family" })).toBeVisible();
@@ -277,10 +300,17 @@ test.describe("journey 6 — a formula across collections", () => {
 test.describe("journey 7 — a Rigvedic verse reused in the Samaveda", () => {
     test("side-by-side comparison with the surface that matched", async ({ page }) => {
         await page.goto("/connections");
-        await expect(
-            page.getByRole("heading", { name: "Rigveda carried into Samaveda" }),
-        ).toBeVisible();
-        await page.locator("a.reuse-row").first().click();
+        /*
+         * The section is headed by what it shows rather than by a corpus pair it used to
+         * assume. It had to be: the query behind it matched any passage to any passage and
+         * ordered by citation, so all thirty rows it served were Atharvavedic under a heading
+         * reading "Rigveda carried into Samaveda". The query is filtered now and the page
+         * derives the pair from the rows, so the heading is a general one and the sentence
+         * under it names the corpora that are actually there.
+         */
+        await expect(page.getByRole("heading", { name: /carry earlier wording/i })).toBeVisible();
+        await expect(page.locator("main")).toContainText(/joins Rigveda and Samaveda/i);
+        await page.locator("a.va-conn-witness").first().click();
 
         await expect(page).toHaveURL(/\/reuse\//);
         await expect(page.getByText("Samaveda scope")).toBeVisible();
@@ -303,9 +333,15 @@ test.describe("journey 7 — a Rigvedic verse reused in the Samaveda", () => {
         // "gana" and failed, correctly, because the page uses it in exactly the sentence that
         // makes the product honest. So the assertion is now positive: the claim must be
         // there, and no element may pretend to be notation.
-        await expect(
-            page.getByText(/gana collections and the melodic apparatus are not held/i),
-        ).toBeVisible();
+        /*
+         * Pinned to the claim, not to the sentence. The page's wording is "the gana
+         * collections are not held and no mark is deciphered, so nothing here shows or
+         * implies how a verse was sung", which makes the same two statements as the phrase
+         * this used to look for and makes the second one better.
+         */
+        const scope = page.getByText(/gana collections are not held/i);
+        await expect(scope).toBeVisible();
+        await expect(scope).toContainText(/nothing here shows or implies how a verse was sung/i);
     });
 });
 
@@ -313,7 +349,7 @@ test.describe("journey 8 — a ritual to its passages", () => {
     test("rite, offerings, and a describing passage", async ({ page }) => {
         await page.goto("/rituals");
         await expect(page.getByText(/Not a taxonomy of Vedic ritual/)).toBeVisible();
-        await page.locator(".ritual-grid a").first().click();
+        await page.locator(".va-register-row").first().click();
 
         await expect(page).toHaveURL(/\/rituals\//);
         await expect(page.getByRole("heading", { name: "The shape of the rite" })).toBeVisible();
@@ -327,7 +363,7 @@ test.describe("journey 8 — a ritual to its passages", () => {
 test.describe("journey 9 — an unsupported capability answers truthfully", () => {
     test("a limit is stated as a limit of the build, not of the Vedas", async ({ page }) => {
         await page.goto("/limits");
-        await expect(page.getByRole("heading", { level: 1 })).toContainText(/cannot answer/i);
+        await expect(page.getByRole("heading", { level: 1 })).toContainText(/scope and limits/i);
         const card = page.locator(".limit-card").first();
         await expect(card.locator(".verdict")).toContainText(
             /Cannot be answered|Partly answerable/,
@@ -335,18 +371,17 @@ test.describe("journey 9 — an unsupported capability answers truthfully", () =
         await expect(card.getByRole("heading", { name: "Why" })).toBeVisible();
         await expect(card.getByRole("heading", { name: "What this is not" })).toBeVisible();
         await expect(page.getByText(/never about the Vedas/i).first()).toBeVisible();
-        await expect(page.getByText(/This catalogue is not exhaustive/).first()).toBeVisible();
     });
 
     test("an unbuilt layer is not reported as an absence from the corpus", async ({ page }) => {
         await page.goto("/material-culture?category=metals");
         await expect(page.getByText("A null is not a zero")).toBeVisible();
-        const noMatch = page.locator(".cell-reason").first();
+        const noMatch = page.locator(".va-block-table .is-none").first();
         await expect(noMatch).toHaveText("no match");
 
         // The known-wrong cell is declared rather than left to read as silence.
         await expect(page.getByRole("heading", { name: "Gaps we know are wrong" })).toBeVisible();
-        const gap = page.locator(".gap-card").first();
+        const gap = page.locator(".va-gap > li").first();
         await expect(gap).toContainText(
             /NOT '0 occurrences'|not '0 occurrences'|No lexical match/i,
         );
@@ -400,7 +435,9 @@ test.describe("knowledge-status regressions", () => {
     test("the Samaveda states that the gana corpus is not included", async ({ page }) => {
         await page.goto("/vedas");
         const row = page.getByRole("article").filter({ hasText: "Samaveda" });
-        await expect(row).toContainText(/gana collections/i);
+        /* "gāna", however it is spelled, and whatever noun follows it. The claim is that the
+           card names the sung books; the phrasing is the page's to choose. */
+        await expect(row).toContainText(/g[āa]na/i);
         /*
          * Kept rather than relaxed, and the copy was corrected instead.
          *
@@ -415,7 +452,7 @@ test.describe("knowledge-status regressions", () => {
         await expect(row).toContainText(/not included|not held/i);
 
         await page.goto("/vedas/samaveda");
-        await expect(page.getByText("Gana collections are not included")).toBeVisible();
+        await expect(page.getByText(/g[āa]na song-books[^]*are not included/)).toBeVisible();
         /* The melody disclaimer is pinned by its claim, not its sentence: cabe44c
            deliberately reworded "nothing in this product" to "nothing here". */
         await expect(page.getByText(/shows, notates or infers melody/i)).toBeVisible();

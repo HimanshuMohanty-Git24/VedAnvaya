@@ -1,0 +1,21 @@
+{
+ "property": "ritual_context",
+ "assessed_population": 20210,
+ "source_corpus": "18 supplementary ritual works, 61,393 cited lines",
+ "method": "EXTERNAL_RITUAL_CITATION. A named ritual text quotes the mantra by its pratika inside an instruction. Deliberately NOT proximity to ritual vocabulary, which GAP-RITUAL-006 records as circular, since the ritual vocabulary is the thing the context is meant to explain. Four precision controls: word-boundary anchoring; a two-word minimum span; the run must end where a citing word ends; and the span must be reproducible from a text form this graph stores for the mantra, which the fourth control adds here and which removes 25 of 769 EXACT rows.",
+ "values": {
+  "EMPLOYED_IN_RITE": "A named ritual work quotes this mantra by its pratika inside an instruction, the quotation is closed by `iti`, and the matched span is reproducible from a text form this graph stores for the mantra.",
+  "EMPLOYED_IN_RITE_PROBABLE": "Reached by the same matcher, but the locus is PROBABLE, or is not closed by `iti`, or its span cannot be reproduced from any stored text form. Not asserted.",
+  "RITE_NAMED_IN_THIS_MANTRA": "The mantra itself names a rite. A different claim from being employed in one.",
+  "UNRESOLVED_SHARED_OPENING": "The mantra's opening letters are shared with at least one other mantra, so a quotation of that opening cannot be attributed to it. The rivals are named. This is NOT evidence of absence.",
+  "NO_RITUAL_CITATION_FOUND": "Assessed against all 61,393 cited lines of the eighteen acquired ritual works and no quotation was found. This is NOT `non-ritual`: the mantra may be quoted in a work not acquired, or by a pratika shorter than the two-word minimum. No mantra anywhere in this artifact is marked NON_RITUAL, because nothing measured here could support that."
+ },
+ "priority_when_several_apply": [
+  "EMPLOYED_IN_RITE",
+  "RITE_NAMED_IN_THIS_MANTRA",
+  "EMPLOYED_IN_RITE_PROBABLE",
+  "UNRESOLVED_SHARED_OPENING",
+  "NO_RITUAL_CITATION_FOUND"
+ ],
+ "no_value_means_non_ritual": "NO_RITUAL_CITATION_FOUND is a measured absence against the eighteen acquired works. It is not a finding that a mantra is non-ritual, and no mantra in this artifact carries NON_RITUAL."
+}

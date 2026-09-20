@@ -1,0 +1,211 @@
+{
+  "what_this_is": "Lines that name five or more officiants at once. These are the source's own statement of the officiant set, which is what GAP-RITUAL-004's denominator needs: the classical sixteen is a Srautasutra schema and these are the Srautasutra and Brahmana lines that enumerate it.",
+  "loci": [
+    {
+      "supplementary_key": "VG:SUPP:PB:25:4:5",
+      "citation": "PB 25.4.5",
+      "evidence_source_type": "BRAHMANA",
+      "roles_named": [
+        "BRAHMAN-PRIEST",
+        "BRAHMANACCHAMSIN-PRIEST",
+        "GRAVASTUT-PRIEST",
+        "GRHAPATI-HOUSEHOLDER",
+        "HOTR-PRIEST",
+        "MAITRAVARUNA-PRIEST",
+        "NESTR-LEADER",
+        "POTR-PURIFIER",
+        "PRASTOTR-PRIEST",
+        "PRATIHARTR-PRIEST",
+        "PRATIPRASTHATR-PRIEST",
+        "SUBRAHMANYA-PRIEST",
+        "UDGATR-CHANTER",
+        "UNNETR-PRIEST"
+      ],
+      "count": 14,
+      "text_iast": "yo hotā so 'dhvaryuḥ sa potā ya udgātā sa neṣṭā so 'cchāvāko yo maitrāvaruṇaḥ sa brahmā sa pratihartāyaḥ prastotā sa brāhmaṇācchaṃsī sa grāvastut yaḥ pratiprasthātā so 'gnīt sa unnetā gṛhapatir gṛhapatiḥ subrahmaṇyassubrahmaṇyaḥ",
+      "translation": null
+    },
+    {
+      "supplementary_key": "VG:SUPP:SankhSS:13:14:1",
+      "citation": "SankhSS 13.14.1",
+      "evidence_source_type": "SRAUTASUTRA",
+      "roles_named": [
+        "BRAHMAN-PRIEST",
+        "BRAHMANACCHAMSIN-PRIEST",
+        "DIKSITA-CONSECRATED",
+        "GRHAPATI-HOUSEHOLDER",
+        "HOTR-PRIEST",
+        "MAITRAVARUNA-PRIEST",
+        "PRASTOTR-PRIEST",
+        "PRATIHARTR-PRIEST",
+        "PRATIPRASTHATR-PRIEST",
+        "SUBRAHMANYA-PRIEST",
+        "UDGATR-CHANTER"
+      ],
+      "count": 11,
+      "text_iast": "āhitāgnaya iṣṭaprathamayajñā dīkṣitā gṛhapatisaptadaśāḥ satram āsīran hotā maitrāvaruṇo 'cchāvāko grāvastud brahmā brāhmaṇācchaṃsī potāgnīdhra udgātā prastotā pratihartā subrahmaṇyo 'dhvaryuḥ pratiprasthātā neṣṭonnetā",
+      "translation": "A sattra may be performed by sixteen persons, with the grhapati as seventeenth, who all have established their sacred fires, who have performed the first sacrifice, and who have undeṛgone the consecration, viz., hotṛ, maitrāvaruṇa, acchāvāka and grāvastut; brahman, brāhmaṇacchamsin, potṛ and agnīdhra; udgātṛ, prastotṛ, pratihartṛ and subrahmanya; and adhvaryu, pratiprastatr, neṣṭṛ and unnetṛ."
+    },
+    {
+      "supplementary_key": "VG:SUPP:PB:25:15:3",
+      "citation": "PB 25.15.3",
+      "evidence_source_type": "BRAHMANA",
+      "roles_named": [
+        "BRAHMAN-PRIEST",
+        "BRAHMANACCHAMSIN-PRIEST",
+        "GRHAPATI-HOUSEHOLDER",
+        "HOTR-PRIEST",
+        "MAITRAVARUNA-PRIEST",
+        "NESTR-LEADER",
+        "PRASTOTR-PRIEST",
+        "SUBRAHMANYA-PRIEST",
+        "UDGATR-CHANTER",
+        "UNNETR-PRIEST"
+      ],
+      "count": 10,
+      "text_iast": "jarvaro gṛhapatiḥ dhṛtarāṣṭra airāvato brahmā pṛthuśvarā daureśravasa udgātā glāvaś cājagāvaś ca prastotṛpratihartārau dattastāpaso hotā śitipṛṣṭho maitrāvaruṇaḥ takṣako vaiśāleyo brāhmaṇācchaṃsī śikhānuśikhau neṣṭāpotārau aruṇa āṭocchāvākaḥ timirgho daureśruto 'gnīt kautastāv adhvaryū arimejayaś ca janamejayaś cārbudo grāvas tu dajiraḥ subrahmaṇyaḥ cakkapiśaṅgāv unnetārau ṣaṇḍakuṣaṇḍāv abhigarāpagarau",
+      "translation": null
+    },
+    {
+      "supplementary_key": "VG:SUPP:AB:7:1:2",
+      "citation": "AB 7.1.2",
+      "evidence_source_type": "BRAHMANA",
+      "roles_named": [
+        "ACCHAVAKA-PRIEST",
+        "BRAHMANACCHAMSIN-PRIEST",
+        "GRAVASTUT-PRIEST",
+        "GRHAPATI-HOUSEHOLDER",
+        "HOTR-PRIEST",
+        "MAITRAVARUNA-PRIEST",
+        "POTR-PURIFIER",
+        "PRATIPRASTHATR-PRIEST",
+        "SADASYA-PRIEST",
+        "SUBRAHMANYA-PRIEST"
+      ],
+      "count": 10,
+      "text_iast": "hanū sajihve prastotuḥ śyenaṃ vakṣa udgātuḥ kaṇṭhaḥ kākudraḥ pratihartur dakṣiṇā śroṇir hotuḥ savyā brahmaṇo dakṣiṇaṃ sakthi maitrāvaruṇasya savyam brāhmaṇācchaṃsino dakṣiṇam pārśvaṃ sāṃsam adhvaryoḥ savyam upagātṝṇāṃ savyo 'ṃsaḥ pratiprasthātur dakṣiṇaṃ dor neṣṭuḥ savyam potur dakṣiṇa ūrur achāvākasya savya āgnīdhrasya dakṣiṇo bāhur ātreyasya savyaḥ sadasyasya sadaṃ cānūkaṃ ca gṛhapater dakṣiṇau pādau gṛhapater vratapradasya savyau pādau gṛhapater bhāryāyai vratapradasyauṣṭha enayoḥ sādhāraṇo bhavati taṃ gṛhapatir eva praśiṃṣyāj jāghanīm patnībhyo haranti tām brāhmaṇāya dadyuḥ skandhyāś ca maṇikās tisraś ca kīkasā grāvastutas tisraś caiva kīkasā ardhaṃ ca vaikartasyonnetur ardhaṃ caiva vaikartasya klomā ca śamitus tad brāhmaṇāya dadyād yady abrāhmaṇaḥ syāc chiraḥ subrahmaṇyāyai yaḥ śvaḥsutyām prāha tasyājinam iḍā sarveṣāṃ hotur vā",
+      "translation": null
+    },
+    {
+      "supplementary_key": "VG:SUPP:AsvSS:4:1:6",
+      "citation": "AsvSS 4.1.6",
+      "evidence_source_type": "SRAUTASUTRA",
+      "roles_named": [
+        "ACCHAVAKA-PRIEST",
+        "ADHVARYU-PRIEST",
+        "BRAHMAN-PRIEST",
+        "BRAHMANACCHAMSIN-PRIEST",
+        "HOTR-PRIEST",
+        "MAITRAVARUNA-PRIEST",
+        "PRASTOTR-PRIEST",
+        "PRATIHARTR-PRIEST",
+        "PRATIPRASTHATR-PRIEST",
+        "SUBRAHMANYA-PRIEST"
+      ],
+      "count": 10,
+      "text_iast": "hotā maitrāvaruṇo acchāvāko grāvastud adhvaryuḥ pratiprasthātā neṣṭonnetā brahmā brāhmaṇācchaṃsy āgnīdhraḥ potodgātā prastotā pratihartā subrahmaṇya iti",
+      "translation": null
+    },
+    {
+      "supplementary_key": "VG:SUPP:PB:25:18:4",
+      "citation": "PB 25.18.4",
+      "evidence_source_type": "BRAHMANA",
+      "roles_named": [
+        "BRAHMANACCHAMSIN-PRIEST",
+        "GRHAPATI-HOUSEHOLDER",
+        "MAITRAVARUNA-PRIEST",
+        "NESTR-LEADER",
+        "PRASTOTR-PRIEST",
+        "PRATIPRASTHATR-PRIEST",
+        "SUBRAHMANYA-PRIEST",
+        "UDGATR-CHANTER",
+        "UNNETR-PRIEST"
+      ],
+      "count": 9,
+      "text_iast": "tapo gṛhapatir brahma brahmerā patny amṛtam udgātā bhūtaṃ prastotā bhaviṣyat pratihartartava upagātāra ārtavāḥ sadasyāḥ satyaṃ hotartaṃ maitrāvaruṇa ojo brāhmaṇācchaṃsī tviṣiś cāpacitiś ca neṣṭāpotārau yaśo 'cchāvāko 'gnir evāgnīd bhago grāvastud ūrg unnetā vāk subrahmaṇyaḥ prāṇo 'dhvaryur apānaḥ pratiprasthātā diṣṭir viśāstā balaṃ dhruvagopam āśā haviṣyeṣy ahorātrāv idhmavāhau mṛtyuḥ śamitaite dīkṣante",
+      "translation": null
+    },
+    {
+      "supplementary_key": "VG:SUPP:VaitS:3:1:3",
+      "citation": "VaitS 3.1.3",
+      "evidence_source_type": "SRAUTASUTRA",
+      "roles_named": [
+        "BRAHMANACCHAMSIN-PRIEST",
+        "HOTR-PRIEST",
+        "MAITRAVARUNA-PRIEST",
+        "PRASTOTR-PRIEST",
+        "PRATIHARTR-PRIEST",
+        "PRATIPRASTHATR-PRIEST",
+        "SADASYA-PRIEST",
+        "SUBRAHMANYA-PRIEST"
+      ],
+      "count": 8,
+      "text_iast": "brāhmaṇācchaṃsī potāgnīdhra iti brahmaṇo 'nucarāḥ sadasyaś ca / prastotā pratihartā subrahmaṇya ity udgātuḥ / maitrāvaruṇo 'cchāvāko grāvastud iti hotuḥ / pratiprasthātā neṣṭonnetety adhvaryoḥ",
+      "translation": "Brāhmaṇācchaṃsin, Potṛ und Āgnīdhra sind die Gehilfen des Brahman, auch der Sadasya; Prastotṛ, Pratihartṛ und Subrahmaṇya des Udgātṛ; Maitrāvaruṇa, Acchāvāka und Grāvastut des Hotṛ; Pratiprasthātṛ, Neṣṭṛ und Unnetṛ des Adhvaryu."
+    },
+    {
+      "supplementary_key": "VG:SUPP:SBM:4:3:4:22:4",
+      "citation": "SBM 4.3.4.22.4",
+      "evidence_source_type": "BRAHMANA",
+      "roles_named": [
+        "BRAHMANACCHAMSIN-PRIEST",
+        "GRAVASTUT-PRIEST",
+        "MAITRAVARUNA-PRIEST",
+        "NESTR-LEADER",
+        "POTR-PURIFIER",
+        "PRASTOTR-PRIEST",
+        "SUBRAHMANYA-PRIEST"
+      ],
+      "count": 7,
+      "text_iast": "atha punar etya prastotre 'tha maitrāvaruṇāyātha brāhmaṇācchaṃsine 'tha potre 'tha neṣṭre 'thācchāvākāyāthonnetre 'tha grāvastute 'tha subrahmaṇyāyai",
+      "translation": null
+    },
+    {
+      "supplementary_key": "VG:SUPP:KausB:17:5:15",
+      "citation": "KausB 17.5.15",
+      "evidence_source_type": "BRAHMANA",
+      "roles_named": [
+        "ADHVARYU-PRIEST",
+        "BRAHMAN-PRIEST",
+        "PRASTOTR-PRIEST",
+        "PRATIHARTR-PRIEST",
+        "SADASYA-PRIEST",
+        "YAJAMANA-SACRIFICER"
+      ],
+      "count": 6,
+      "text_iast": "tasya mana eva brahmā prāṇodgātāpānaḥ prastotā vyānaḥ pratihartā vāgghotā cakṣur adhvaryuḥ prajātiḥ sadasya ātmā yajamānaḥ",
+      "translation": null
+    },
+    {
+      "supplementary_key": "VG:SUPP:GB:1:5:24:8",
+      "citation": "GB 1.5.24.8",
+      "evidence_source_type": "BRAHMANA",
+      "roles_named": [
+        "ACCHAVAKA-PRIEST",
+        "BRAHMAN-PRIEST",
+        "GRAVASTUT-PRIEST",
+        "HOTR-PRIEST",
+        "MAITRAVARUNA-PRIEST"
+      ],
+      "count": 5,
+      "text_iast": "hotā ca maitrāvaruṇaś ca pādam acchāvākaḥ saha grāvastutaikam / ṛgbhi stuvanto 'harahaḥ pṛthivyā agniṃ pādaṃ brahmaṇā dhārayanti",
+      "translation": null
+    },
+    {
+      "supplementary_key": "VG:SUPP:VaitS:3:1:2",
+      "citation": "VaitS 3.1.2",
+      "evidence_source_type": "SRAUTASUTRA",
+      "roles_named": [
+        "ADHVARYU-PRIEST",
+        "BRAHMAN-PRIEST",
+        "HOTR-PRIEST",
+        "RTVIJ-OFFICIANT",
+        "UDGATR-CHANTER"
+      ],
+      "count": 5,
+      "text_iast": "ṛtvijo vṛṇīte / atharvāṅgirovidaṃ brahmāṇam / sāmavidam udgātāram / ṛgvidaṃ hotāram / yajurvidam adhvaryum",
+      "translation": "Er erwählt sich die Opferpriester: einen Kenner des Atharvaveda zum Brahman, einen Kenner des Sāmaveda zum Udgātṛ, einen Kenner des Ṛgveda zum Hotṛ, einen Kenner des Yajurveda zum Adhvaryu."
+    }
+  ],
+  "total_loci": 11
+}

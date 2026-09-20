@@ -29,23 +29,34 @@ import pytest
 from fastapi.testclient import TestClient
 
 from tests.api.conftest import FakeRepository
-from vedagraph.api.repositories.neo4j_repository import Neo4jRepository
 
 # ---------------------------------------------------------------------------
 # Measured constants. Every figure here was read off the live frozen graph during the
 # adversarial sweep, so a rebuild that moves one fails a test rather than quietly
 # invalidating the finding it anchors.
 # ---------------------------------------------------------------------------
+#: The frozen graph, as declared and as measured before and after the whole sweep. Imported
+#: rather than restated: two copies of one census drift, and this file's copy said 108,779
+#: for a whole import after the other was re-derived.
+from tests.api.test_app_health import (
+    FROZEN_NODES as EXPECTED_NODES,
+)
+from tests.api.test_app_health import (
+    FROZEN_RELATIONSHIPS as EXPECTED_RELATIONSHIPS,
+)
+from vedagraph.api.repositories.neo4j_repository import Neo4jRepository
 
-#: The frozen graph, as declared and as measured before and after the whole sweep.
-EXPECTED_NODES = 108_779
-EXPECTED_RELATIONSHIPS = 265_295
-
-#: Anukramani devata-slot entries that are not gods, one per non-deity structure.
+#: Anukramani devata-slot entries the recorded ruling excludes, one per exclusion class.
+#:
+#: ``VG:DEVATA:SUNAH``, the dog, used to stand here for the UNSPECIFIED structure. It is a
+#: DEITY under the ruling -- thirteen other animals are in the population and excluding this
+#: one for its structure was "excluding on a morphological accident" -- so the third row is
+#: an ABSTRACT label ruled ABSTRACTION_NOT_AN_ADDRESSEE, which is the class the superseded
+#: structure predicate admitted and this sweep therefore never tested.
 NON_DEITY_IDS: tuple[tuple[str, str], ...] = (
     ("VG:DEVATA:VASISTHAH", "HUMAN"),
     ("VG:DEVATA:DANASTUTIH", "PATRON_PRAISE"),
-    ("VG:DEVATA:SUNAH", "UNSPECIFIED"),
+    ("VG:DEVATA:BHAVAVRTTAM", "ABSTRACT"),
 )
 
 #: RV 1.4.2 carries exactly one MENTIONS_DEVATA edge and it is graded DEITY_AMBIGUOUS.
@@ -456,7 +467,11 @@ def test_f10_dimension_status_population_matches_the_documented_figure(
         "AND size(d.profile_absent_dimensions) > 0 RETURN count(d) AS c"
     )
     assert row is not None
-    assert int(row["c"]) == 25, "the graph's profile_absent_dimensions population has moved"
+    # 25 -> 152 at R4. GAP-ENTITY_COVERAGE-002 widened the profile materialisation from a
+    # top-25 union to the 157 deities the eligibility contract admits, and 152 of them are
+    # thin in at least one dimension -- which is the finding, not a defect. Re-derived from
+    # the graph and still an equality, not loosened.
+    assert int(row["c"]) == 152, "the graph's profile_absent_dimensions population has moved"
 
     keys = [
         str(item["k"])
@@ -530,18 +545,29 @@ def test_q23_deity_communities_is_a_typed_refusal_not_an_empty_list(
 
 
 @pytest.mark.neo4j
-def test_q25_ritual_layer_is_partial_and_names_its_three_step_edges(
+def test_q25_ritual_layer_is_partial_and_names_both_step_layers(
     live_client: TestClient, live_repository: Neo4jRepository
 ) -> None:
-    row = live_repository.run_one("MATCH ()-[s:HAS_STEP]->() RETURN count(s) AS c")
-    assert row is not None
-    assert int(row["c"]) == 3
+    """Both layers by their own count, and neither one standing in for the other.
+
+    The original form asserted the literal "3 step edges", which was the whole ritual
+    procedure figure at the time. Wave 3 added a second layer of 3,121 sutra-attested steps,
+    and a caveat quoting only the Samhita's 3 would state that this graph holds almost no
+    procedure while the larger layer sat beside it. So the caveat must name both, and the
+    counts are read out of the graph rather than written here.
+    """
+    samhita = live_repository.run_one("MATCH ()-[s:HAS_STEP]->() RETURN count(s) AS c")
+    sutra = live_repository.run_one("MATCH ()-[s:HAS_RITUAL_STEP]->() RETURN count(s) AS c")
+    assert samhita is not None and sutra is not None
+    assert int(samhita["c"]) == 3, "the Samhita step layer must not be widened in place"
+
     response = live_client.get("/api/v1/insights/rituals?limit=200")
     assert response.status_code == 200
     body = response.json()
     assert body["data_status"] == "PARTIAL"
     text = " ".join(caveat["text"] for caveat in body["caveats"])
-    assert "3 step edges" in text
+    assert f"{int(samhita['c'])} such edges" in text
+    assert f"{int(sutra['c']):,} steps" in text
     assert body["not_covered"]
 
 
@@ -585,7 +611,7 @@ def test_no_empty_first_page_ever_claims_supported(live_client: TestClient) -> N
         "/api/v1/devatas?structure=NOPE",
         "/api/v1/devatas?axis=NOPE",
         "/api/v1/devatas?structure=INDIVIDUAL&axis=NOPE",
-        "/api/v1/devatas/VG:DEVATA:SUNAH/passages?basis=mention",
+        "/api/v1/devatas/VG:DEVATA:BHAVAVRTTAM/passages?basis=mention",
         "/api/v1/devatas/VG:DEVATA:INDRAH/passages?basis=ascription&veda=SV",
         "/api/v1/devatas/VG:DEVATA:INDRAH/passages?basis=ascription&veda=AV",
         "/api/v1/devatas/VG:DEVATA:INDRAH/passages?basis=ascription&veda=YV",
@@ -673,21 +699,30 @@ def test_the_mention_layer_caveat_figures_still_match_the_graph(
 def test_the_deity_population_caveat_matches_the_measured_structures(
     live_client: TestClient, live_repository: Neo4jRepository
 ) -> None:
-    from vedagraph.api.models.entity import NON_DEITY_STRUCTURES
+    """The caveat's figures are measured, and measured from the ruling that decides them.
 
-    counts = {
-        str(row["s"]): int(row["c"])
+    This derived its expectation from ``structure``, which is what made the caveat say 30
+    and name a dog among the excluded. Eligibility is the recorded ruling, so the figure a
+    reader is given has to come from the same place the filter does -- otherwise the caveat
+    can be true about structures while the response is filtered on something else.
+    """
+    kinds = {
+        str(row["k"]): int(row["c"])
         for row in live_repository.run(
-            "MATCH (d:Devata) RETURN coalesce(d.structure,'UNSPECIFIED') AS s, count(*) AS c"
+            "MATCH (d:Devata) WHERE d.is_deity = false "
+            "RETURN coalesce(d.non_deity_kind,'UNTYPED') AS k, count(*) AS c"
         )
     }
-    non_deities = sum(c for s, c in counts.items() if s in NON_DEITY_STRUCTURES)
+    total = int(live_repository.run_one("MATCH (d:Devata) RETURN count(d) AS c")["c"])
+    excluded = sum(kinds.values())
+    assert "UNTYPED" not in kinds, f"a deity is excluded with no recorded kind: {kinds}"
     text = " ".join(
         caveat["text"] for caveat in live_client.get("/api/v1/devatas").json()["caveats"]
     )
-    assert f"{non_deities} of the {sum(counts.values())}" in text
-    assert f"{counts['HUMAN']} " in text
-    assert f"{counts['PATRON_PRAISE']} danastuti" in text
+    assert f"{excluded} of the {total}" in text
+    assert f"{kinds['HUMAN_PATRON']} " in text
+    assert f"{kinds['DANASTUTI_GIFT_PRAISE']} danastuti" in text
+    assert f"{kinds['ABSTRACTION_NOT_AN_ADDRESSEE']} abstractions" in text
 
 
 @pytest.mark.neo4j
@@ -1279,20 +1314,24 @@ CYPHER_CLAUSE_WORDS = ("MATCH", "RETURN", "WITH", "UNWIND", "CALL", "WHERE")
 DEITY_STRUCTURE_NAMES = frozenset({"INDIVIDUAL", "GROUP", "PAIR", "ABSTRACT"})
 
 
-def _all_devata_keys(repository: Neo4jRepository) -> list[tuple[str, str | None]]:
-    """Every ``:Devata`` key with its structure. All 214, never a sample.
+def _all_devata_keys(repository: Neo4jRepository) -> list[tuple[str, bool]]:
+    """Every ``:Devata`` key with its recorded eligibility ruling. All 214, never a sample.
 
     This project has twice certified an absence from a sample that a full sweep
     contradicted, and the deity population is 214 rows: there is no reason to sample it.
+
+    Returns the ruling, not the structure. Deriving eligibility from structure here made
+    these sweeps agree with a gate that was itself wrong about 29 nodes -- they asked about
+    the dog, whom the ruling admits, and never asked about the 28 ruled abstractions.
     """
     rows = repository.run(
-        "MATCH (d:Devata) RETURN d.entity_key AS key, d.structure AS structure "
+        "MATCH (d:Devata) RETURN d.entity_key AS key, d.is_deity AS is_deity "
         "ORDER BY d.entity_key"
     )
-    return [(str(row["key"]), row["structure"]) for row in rows]
+    return [(str(row["key"]), row["is_deity"] is True) for row in rows]
 
 
-def _devata_url(key: str, structure: str | None, base: str = "/api/v1/devatas") -> str:
+def _devata_url(key: str, is_deity: bool, base: str = "/api/v1/devatas") -> str:
     """The URL that serves ``key``, opting into the Anukramani slot only where it must.
 
     ``base`` exists because this helper was originally applied to the profile URL only,
@@ -1302,7 +1341,7 @@ def _devata_url(key: str, structure: str | None, base: str = "/api/v1/devatas") 
     this test failed for the right reason on the wrong line. Every deity surface must be
     addressed the same way, which is the whole content of G-01.
     """
-    if structure in DEITY_STRUCTURE_NAMES:
+    if is_deity:
         return f"{base}/{key}"
     return f"{base}/{key}?population=all_ascriptions"
 
@@ -1358,15 +1397,13 @@ def test_g01_the_deity_insight_route_gates_and_discloses_a_non_deity(
     halves of the same contract were open.
     """
     non_deities = [
-        (key, structure)
-        for key, structure in _all_devata_keys(live_repository)
-        if structure not in DEITY_STRUCTURE_NAMES
+        (key, ruled) for key, ruled in _all_devata_keys(live_repository) if not ruled
     ]
-    assert len(non_deities) == 30, f"the non-deity population moved: {len(non_deities)}"
+    assert len(non_deities) == 57, f"the non-deity population moved: {len(non_deities)}"
 
     served_by_default: list[str] = []
     missing_caveat: list[str] = []
-    for key, _structure in non_deities:
+    for key, _ruled in non_deities:
         response = live_client.get(f"/api/v1/insights/devatas/{key}")
         if response.status_code == 200:
             served_by_default.append(key)
@@ -1577,9 +1614,9 @@ def test_g06_both_deity_endpoints_agree_for_every_one_of_the_214(
         )
     }
     disagreements: list[str] = []
-    for key, structure in _all_devata_keys(live_repository):
-        profile = live_client.get(_devata_url(key, structure))
-        insight = live_client.get(_devata_url(key, structure, "/api/v1/insights/devatas"))
+    for key, ruled in _all_devata_keys(live_repository):
+        profile = live_client.get(_devata_url(key, ruled))
+        insight = live_client.get(_devata_url(key, ruled, "/api/v1/insights/devatas"))
         assert profile.status_code == 200, f"{key} -> {profile.status_code}"
         assert insight.status_code == 200, f"{key} -> {insight.status_code}"
         detail_total = profile.json()["mentions_included_total"]
@@ -1610,8 +1647,8 @@ def test_g07_the_certainty_triple_reconciles_with_the_edges_for_every_deity(
         tiers.setdefault(str(row["key"]), {})[str(row["tier"])] = int(row["count"])
 
     mismatches: list[str] = []
-    for key, structure in _all_devata_keys(live_repository):
-        block = live_client.get(_devata_url(key, structure)).json()["certainty"]
+    for key, ruled in _all_devata_keys(live_repository):
+        block = live_client.get(_devata_url(key, ruled)).json()["certainty"]
         graph = tiers.get(key, {})
         expected = (
             graph.get("DEITY_CERTAIN", 0),
@@ -1760,7 +1797,7 @@ def test_g10_head_matches_get_on_every_route_including_the_failures(
         "/api/v1/devatas",
         "/api/v1/devatas/VG:DEVATA:INDRAH",
         "/api/v1/devatas/VG:DEVATA:INDRAH/network",
-        "/api/v1/devatas/VG:DEVATA:SUNAH",
+        "/api/v1/devatas/VG:DEVATA:BHAVAVRTTAM",
         "/api/v1/entities/nosuchtype",
         "/api/v1/devatas?limit=99999",
         "/api/v1/search",

@@ -12,6 +12,7 @@ from dataclasses import dataclass, field
 from typing import Final
 
 from vedagraph.api.ask.models import AskMode, QueryIntent
+from vedagraph.api.services.passage_service import citation_candidate
 
 #: Passage key pattern: ``RV 1.1.1``, ``AV 2.3.4``, ``VSM 1.1``, and the Samaveda's
 #: section-named citations ``SV ARANYA 1.1`` and ``SV UTTARA 9.2.10.1``.
@@ -41,12 +42,55 @@ from vedagraph.api.ask.models import AskMode, QueryIntent
 #: ``sv_aranya_1.1`` reaches the same passage as ``SV ARANYA 1.1``. The reader endpoint's
 #: own normaliser has always accepted the underscored form; requiring whitespace here
 #: meant one pasted citation resolved in the reading surface and returned nothing in Ask.
+#:
+#: The corpus name is admitted spelled out as well as abbreviated, and that is not a
+#: convenience. A pattern accepting only the codes meant "What does Samaveda Aranyaka 1.1
+#: say?" planned no passage channel at all -- measured, 0 evidence items -- for a verse
+#: stored at ``VG:SV:KAU:ARANYA:D01:V01``. The same hole swallowed "Rigveda 1.1.1",
+#: "Yajurveda 1.1" and "Atharvaveda 2.3.4". It bites the Samaveda hardest because nobody
+#: writes a Samavedic citation in prose without spelling the corpus out, and the section
+#: token makes the abbreviated form long enough that the spelled form is the natural one.
+#:
+#: Alternation order is load-bearing, twice. Python's alternation is leftmost-first, not
+#: longest-match, so ``ARANYAKA`` must precede ``ARANYA`` and ``AVS`` must precede ``AV``
+#: or the longer spelling matches its own prefix and the remainder ("ka 1.1") fails the
+#: separator, dropping the whole citation.
 _PASSAGE_KEY_RE: Final = re.compile(
-    r"\b(?P<veda>RV|AV|AVS|SV|YV|VS|VSM)[\.\s_-]{0,2}"
-    r"(?:(?P<section>ARANYA|UTTARA|CHANDA|MAHANAMNYA)[\.\s_-]{1,2})?"
+    r"\b(?P<veda>"
+    r"RIGVEDA|RGVEDA|ṚGVEDA|RIG[\s-]?VEDA|"
+    r"SAMAVEDA|SAMA[\s-]?VEDA|"
+    r"YAJURVEDA|YAJUR[\s-]?VEDA|"
+    r"ATHARVAVEDA|ATHARVA[\s-]?VEDA|"
+    r"RV|AVS|AV|SV|YV|VSM|VS"
+    r")[\.\s_-]{0,2}"
+    r"(?:(?P<section>ARANYAKA|ARANYA|UTTARARCIKA|UTTARA|CHANDAS|CHANDA"
+    r"|MAHANAMNYA|MAHANAMNI)[\.\s_-]{1,2})?"
     r"\s*(?P<locus>\d+(?:[\.\s_-]\d+){0,3})\b",
     re.IGNORECASE,
 )
+
+#: A spelled-out corpus name, folded to the Veda code the rest of the pipeline uses.
+#: Keys are the match text with separators removed and upper-cased, so "Rig Veda",
+#: "rig-veda" and "RIGVEDA" all arrive here as one string.
+_VEDA_NAME_TO_CODE: Final[dict[str, str]] = {
+    "RIGVEDA": "RV",
+    "RGVEDA": "RV",
+    "ṚGVEDA": "RV",
+    "SAMAVEDA": "SV",
+    "YAJURVEDA": "YV",
+    "ATHARVAVEDA": "AV",
+}
+
+#: Arcika section spellings folded to the token the graph's citations carry. Spelling
+#: variance only -- ``ARANYAKA`` here is the Kauthuma arcika's *Aranya* section written
+#: the long way, and resolving it is not a claim that this graph holds an Aranyaka-genre
+#: text or the gana corpus, neither of which it does.
+_SECTION_ALIASES: Final[dict[str, str]] = {
+    "ARANYAKA": "ARANYA",
+    "UTTARARCIKA": "UTTARA",
+    "CHANDAS": "CHANDA",
+    "MAHANAMNI": "MAHANAMNYA",
+}
 
 #: Numeric parts a citation needs before it is read as a passage locus when no arcika
 #: section was named. See :data:`_PASSAGE_KEY_RE`.
@@ -197,6 +241,42 @@ _CONDITION_PATTERNS: Final[list[re.Pattern[str]]] = [
 ]
 
 
+#: Material-culture topics, each mapped to the frozen domain query that answers it.
+#:
+#: Asked "which metals appear in the Vedas?", Ask resolved neither "metals" nor "corpus"
+#: -- they name no registry entity -- so the only channel that ran was a lexical scan for
+#: the *English string* "metals", which returns zero hits in all four corpora and reports
+#: their searchable surfaces. Measured: one evidence item, about the wrong thing. Meanwhile
+#: ``/api/v1/insights/metals`` answers the same question from a graded query over the
+#: ``Metal`` registry. The topic here is the bridge: it routes the question to that query
+#: by name, so the two surfaces read the same rows and carry the same caveat.
+#:
+#: A topic is a *class* of entity, which is why it cannot be reached by entity resolution:
+#: "metals" is not a node, it is every node with the ``Metal`` label.
+_MATERIAL_TOPIC_PATTERNS: Final[dict[str, re.Pattern[str]]] = {
+    "metals": re.compile(
+        r"\b(metal|metals|metallurgy|metalwork|gold|silver|copper|bronze|iron|lead|tin"
+        r"|ayas|hiranya|hiraṇya|syama|śyāma|loha)\b",
+        re.IGNORECASE,
+    ),
+    "crops": re.compile(
+        r"\b(crop|crops|grain|grains|cereal|cereals|barley|rice|yava|agricultur\w*)\b",
+        re.IGNORECASE,
+    ),
+    "animals": re.compile(
+        r"\b(animal|animals|livestock|cattle|horse|horses|fauna)\b",
+        re.IGNORECASE,
+    ),
+}
+
+#: A question about material culture in general, with no topic named. Routed to metals
+#: because that is the only material grid this graph returns against every Veda including
+#: the cells that matched nothing -- so it is the one that can say what it did not find.
+_MATERIAL_CULTURE_PATTERN: Final = re.compile(
+    r"\b(material culture|materials)\b",
+    re.IGNORECASE,
+)
+
 #: Questions asking whether a word *occurs*, as opposed to what it means. These are the
 #: questions whose wrong answer is the dangerous one: asked "does the Yajurveda mention
 #: ayas", a system that finds no row and says "no" has asserted textual absence from a
@@ -232,6 +312,8 @@ class QueryPlan:
     passage_key: str | None = None
     lexical_terms: list[str] = field(default_factory=list)
     """Terms whose *presence* the question asks about. Drives the lexical channel."""
+    material_topics: list[str] = field(default_factory=list)
+    """Material-culture classes the question asks about. Drives the materials channel."""
     is_adversarial: bool = False
     planning_ms: float = 0.0
 
@@ -450,10 +532,21 @@ def _detect_entities(question: str) -> tuple[list[str], int]:
 
 
 def _detect_passage_key(question: str) -> str | None:
+    """The ``canonical_citation`` this question names, in the form the graph stores it.
+
+    The last step is the point. A Veda code a reader types is not always the prefix the
+    citation was built from: the Atharvaveda is cited ``AVS 1.1.1`` and the Yajurveda
+    ``VSM 1.1``, so a planned key of "AV 2.3.4" or "YV 1.1" is not a near miss -- it
+    matches nothing, the packet comes back empty, and an empty packet is what a model
+    answers from memory. The reader endpoint's normaliser has always mapped both; this
+    calls *that* function rather than restating the mapping, so the two surfaces cannot
+    drift into resolving different sets of citations.
+    """
     m = _PASSAGE_KEY_RE.search(question)
     if not m:
         return None
-    veda_prefix = m.group("veda").upper()
+    matched_veda = re.sub(r"[\s_-]", "", m.group("veda")).upper()
+    veda_prefix = _VEDA_NAME_TO_CODE.get(matched_veda, matched_veda)
     section = m.group("section")
     parts = [part for part in re.split(r"[\.\s_-]+", m.group("locus")) if part]
     if section is None and len(parts) < _MIN_LOCUS_PARTS:
@@ -462,8 +555,11 @@ def _detect_passage_key(question: str) -> str | None:
     # The graph cites a sectioned locus as "SV ARANYA 1.1" and the lookup matches
     # canonical_citation, so the section travels inside the key rather than being dropped.
     if section:
-        return f"{veda_prefix} {section.upper()} {locus}"
-    return f"{veda_prefix} {locus}"
+        folded = section.upper()
+        key = f"{veda_prefix} {_SECTION_ALIASES.get(folded, folded)} {locus}"
+    else:
+        key = f"{veda_prefix} {locus}"
+    return citation_candidate(key) or key
 
 
 def _detect_lexical_terms(question: str, entities: list[str]) -> list[str]:
@@ -635,6 +731,18 @@ def plan(
         intents.append(QueryIntent.STATISTICS)
         channels.append("statistics")
 
+    # A class of entity, not an entity: "metals" resolves to no node, so without this the
+    # question reaches only a lexical scan for the English word. See
+    # :data:`_MATERIAL_TOPIC_PATTERNS`.
+    material_topics = [
+        topic for topic, pat in _MATERIAL_TOPIC_PATTERNS.items() if pat.search(question)
+    ]
+    if not material_topics and _MATERIAL_CULTURE_PATTERN.search(question):
+        material_topics = ["metals"]
+    if material_topics:
+        intents.append(QueryIntent.MATERIAL_CULTURE)
+        channels.append("materials")
+
     # Intent fires on a *strong* nomination only -- see _detect_entities. The entity
     # channel is still added whenever anything was nominated, because resolution is
     # what decides whether a lowercase noun like "fever" names a real concept.
@@ -672,5 +780,6 @@ def plan(
         search_term=search_term,
         passage_key=passage_key,
         lexical_terms=lexical_terms,
+        material_topics=material_topics,
         planning_ms=(time.monotonic() - start) * 1000,
     )

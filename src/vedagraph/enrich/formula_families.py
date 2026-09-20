@@ -181,6 +181,7 @@ component representative does not depend on the order pairs were discovered in.
 
 from __future__ import annotations
 
+import re
 from collections.abc import Iterable, Mapping, Sequence
 from dataclasses import dataclass, field
 from enum import StrEnum
@@ -479,6 +480,58 @@ class _Family:
     links: Mapping[str, tuple[str, float]]
     depth: int
     mantras: frozenset[str] = field(default_factory=frozenset)
+
+
+#: Two adjacent anusvaras, which no Sanskrit spelling has. It is what the double-fold
+#: defect looks like on the readable surface: the Vajasaneyi cluster U+1CEA + U+0902 folded
+#: each component separately, so one nasal became two.
+_ANUSVARA_RUN = re.compile("ṃ{2,}")
+
+#: Devanagari, Vedic Extensions and the private-use area. A ``normalized`` or
+#: ``display_form`` that still carries any of them was never transliterated, and the
+#: character is about to be published as if it were IAST.
+_UNFOLDED_RANGES: Final[tuple[tuple[int, int], ...]] = (
+    (0x0900, 0x097F),  # Devanagari
+    (0x1CD0, 0x1CFF),  # Vedic Extensions
+    (0xA8E0, 0xA8FF),  # Devanagari Extended
+    (0xE000, 0xF8FF),  # Private Use Area
+)
+
+
+def assert_formula_surfaces_are_folded(formulas: Sequence[Mapping[str, Any]]) -> None:
+    """Refuse an input whose readable surfaces are not a finished transliteration.
+
+    THIS GUARD IS WHY GAP-FORMULA-003's FIGURE MOVED, and it did not exist when it did.
+
+    The Formula artifact this layer read on 2026-09-15 carried 23 rows whose ``normalized``
+    held a doubled anusvara and whose ``display_form`` held a raw U+1CEA -- the Yajurvedic
+    double-fold defect, fixed in ``vedagraph.normalize.unicode`` at commit 3f2b0d8 five
+    hours after that artifact was written. The family builder read the defective artifact
+    without complaint, counted 1,103 strict substrings over it, and those 4,825 formulas
+    are what the canonical graph still holds. Rebuilt over the corrected fold the same code
+    reads 4,729 formulas and counts 1,064, and the 39 is a population difference rather
+    than a measurement one.
+
+    A layer that silently consumes an unfolded surface will do it again, so it now raises.
+    """
+    offenders: list[tuple[str, str, str]] = []
+    for row in formulas:
+        for field_name in ("normalized", "display_form"):
+            value = str(row.get(field_name, ""))
+            if _ANUSVARA_RUN.search(value):
+                offenders.append((str(row.get("formula_id", "?")), field_name, value))
+                continue
+            for char in value:
+                if any(low <= ord(char) <= high for low, high in _UNFOLDED_RANGES):
+                    offenders.append((str(row.get("formula_id", "?")), field_name, value))
+                    break
+    if offenders:
+        formula_id, field_name, value = offenders[0]
+        raise ValueError(
+            f"{len(offenders)} formula surfaces are not a finished transliteration; first "
+            f"is {formula_id} {field_name}={value!r}. Rebuild the Formula artifact over the "
+            "corrected fold rather than reading this one."
+        )
 
 
 def _identity(normalized: str) -> str:
@@ -906,6 +959,7 @@ def build_formula_families(
     formula upstream does not reshuffle the whole artifact and destroy the diff.
     """
     report = RunReport(stage=STAGE)
+    assert_formula_surfaces_are_folded(formulas)
     members, occurrence_counts = _index_members(formulas, occurrences)
     identifier = run_id(STAGE, len(members), len(occurrences), DERIVATION_METHOD)
     by_identity = {member.identity: member for member in members}

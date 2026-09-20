@@ -1,0 +1,98 @@
+{
+  "method": "For each of RV 1.65's ten verses, a distinctive English phrase and a distinctive Sanskrit fragment were chosen by hand. The test is whether the English appears in the unit the corrected mapping predicts, and the Sanskrit in the verse it is said to render. Chosen by hand deliberately: an automatic alignment here would risk the same class of error as the defect under repair.",
+  "checks": [
+    {
+      "verse": "RV 1.65.1",
+      "predicted_unit": 1,
+      "english_anchor": "like a thief lurking in dark cave",
+      "english_found_in_predicted_unit": true,
+      "sanskrit_anchor": "tāyuṁ",
+      "sanskrit_found_in_verse": true,
+      "verified": true
+    },
+    {
+      "verse": "RV 1.65.2",
+      "predicted_unit": 1,
+      "english_anchor": "sate all the Holy Ones",
+      "english_found_in_predicted_unit": true,
+      "sanskrit_anchor": "sīdan",
+      "sanskrit_found_in_verse": true,
+      "verified": true
+    },
+    {
+      "verse": "RV 1.65.3",
+      "predicted_unit": 2,
+      "english_anchor": "The Gods approached the ways of holy Law",
+      "english_found_in_predicted_unit": true,
+      "sanskrit_anchor": "vratā",
+      "sanskrit_found_in_verse": true,
+      "verified": true
+    },
+    {
+      "verse": "RV 1.65.4",
+      "predicted_unit": 2,
+      "english_anchor": "waters feed with praise the growing Babe",
+      "english_found_in_predicted_unit": true,
+      "sanskrit_anchor": "āpaḥ",
+      "sanskrit_found_in_verse": true,
+      "verified": true
+    },
+    {
+      "verse": "RV 1.65.5",
+      "predicted_unit": 3,
+      "english_anchor": "like a fruit-bearing hill",
+      "english_found_in_predicted_unit": true,
+      "sanskrit_anchor": "girir",
+      "sanskrit_found_in_verse": true,
+      "verified": true
+    },
+    {
+      "verse": "RV 1.65.6",
+      "predicted_unit": 3,
+      "english_anchor": "rushing like Sindhu",
+      "english_found_in_predicted_unit": true,
+      "sanskrit_anchor": "sindhur",
+      "sanskrit_found_in_verse": true,
+      "verified": true
+    },
+    {
+      "verse": "RV 1.65.7",
+      "predicted_unit": 4,
+      "english_anchor": "Kin as a brother to his sister floods",
+      "english_found_in_predicted_unit": true,
+      "sanskrit_anchor": "bhrāte",
+      "sanskrit_found_in_verse": true,
+      "verified": true
+    },
+    {
+      "verse": "RV 1.65.8",
+      "predicted_unit": 4,
+      "english_anchor": "shears the hair of earth",
+      "english_found_in_predicted_unit": true,
+      "sanskrit_anchor": "vātajūto",
+      "sanskrit_found_in_verse": true,
+      "verified": true
+    },
+    {
+      "verse": "RV 1.65.9",
+      "predicted_unit": 5,
+      "english_anchor": "Like a swan sitting in the floods",
+      "english_found_in_predicted_unit": true,
+      "sanskrit_anchor": "haṁso",
+      "sanskrit_found_in_verse": true,
+      "verified": true
+    },
+    {
+      "verse": "RV 1.65.10",
+      "predicted_unit": 5,
+      "english_anchor": "A Sage like Soma, sprung from Law",
+      "english_found_in_predicted_unit": true,
+      "sanskrit_anchor": "ṛtaprajātaḥ",
+      "sanskrit_found_in_verse": true,
+      "verified": true
+    }
+  ],
+  "all_verified": true,
+  "verified_count": 10,
+  "total": 10
+}

@@ -33,6 +33,14 @@ from fastapi.testclient import TestClient
 from pydantic import ValidationError
 
 from tests.api.conftest import FakeRepository, build_client
+
+# Imported rather than restated. The rite inventory moved from 8 to 103 in one import and
+# four files asserted it independently; the one that is about rites owns the figure.
+from tests.api.test_rituals import (
+    HAS_STEP_TOTAL,
+    PROCEDURE_STEP_TOTAL,
+    RITUAL_TOTAL,
+)
 from tests.api.test_stats import FORBIDDEN_IN_BODY, _population_row, _works_rows
 from vedagraph.api.models.common import CaveatView, KnowledgeStatus, PaginationMeta
 from vedagraph.api.models.entity import NON_DEITY_STRUCTURES
@@ -523,8 +531,22 @@ def test_q23_is_a_typed_refusal_and_not_an_empty_list(live_client: TestClient) -
     assert measured["deities_with_a_community_assignment"]["value"] == 0
     assert "about the graph" in measured["deities_with_a_community_assignment"]["means"]
     assert measured["pairwise_co_occurrence_edges"]["value"] == 306
-    assert measured["eligible_deities"]["value"] == 192
+    # Was pinned at 192, which is what the query published while it excluded
+    # structure='HUMAN' alone -- 7 danastuti gift-praise labels and one non-divine subject
+    # above even the crude figure, on the endpoint whose whole job is to refuse a deity
+    # table contaminated by patrons. GAP-ENTITY_COVERAGE-008 replaced the predicate. The
+    # assertion is expressed against the row's OWN pending count rather than against a
+    # literal, so it stays true across the mutation that lands the ruling instead of having
+    # to be edited again the day the data changes.
+    unruled = measured["devatas_without_an_eligibility_ruling"]["value"]
+    expected_eligible = 185 if unruled else 157
+    assert measured["eligible_deities"]["value"] == expected_eligible, (
+        f"{unruled} Devata carry no is_deity ruling, so eligible_deities must read "
+        f"{expected_eligible}"
+    )
+    assert measured["eligible_deities"]["value"] != 192
     assert "denominator" in measured["eligible_deities"]["means"]
+    assert "danastuti" in measured["eligible_deities"]["means"]
     # Every measurement must say what it means; a bare figure is what this endpoint refuses.
     assert all(row["means"] for row in limit["measurements"])
 
@@ -549,7 +571,13 @@ def test_capability_catalogue_is_enumerable_and_states_its_own_incompleteness(
     assert body["total_available"] == len(body["limits"]) >= 5
     numbers = {limit["question_number"] for limit in body["limits"]}
     assert {23, 25} <= numbers
-    assert any("not exhaustive" in caveat["text"] for caveat in body["caveats"])
+    # The load-bearing clause, not the old wording. The catalogue used to say "this
+    # catalogue is not exhaustive" while publishing 7 cards against 21 graded questions;
+    # it now covers all 21 and says instead that the benchmark is a hundred questions
+    # rather than every question. Both sentences make the same promise and only this
+    # clause is common to them, so the test asserts the promise.
+    assert any("not thereby answerable" in caveat["text"] for caveat in body["caveats"])
+    assert body["unpublished_not_answerable"] == []
     for limit in body["limits"]:
         assert limit["verdict"] in set(CapabilityVerdict)
         assert limit["data_status"] != KnowledgeStatus.SUPPORTED
@@ -585,13 +613,33 @@ def test_q25_is_labelled_partial_with_what_is_and_is_not_covered(
     assert "vajra" not in labels
 
     coverage = body["coverage_view"]
-    assert coverage["rituals_modelled"] == 8
-    assert coverage["step_edges"] == 3
+    assert coverage["rituals_modelled"] == RITUAL_TOTAL
+    assert coverage["step_edges"] == HAS_STEP_TOTAL
+    assert coverage["procedure_step_edges"] == PROCEDURE_STEP_TOTAL
+    # The layers are reported apart and never summed. Reporting only the Samhita figure made
+    # this view state that one rite of 103 carried "any procedure at all", and that no rite
+    # had a recoverable sequence, while 3,121 located sutra steps sat in the graph.
+    assert coverage["step_edges"] != coverage["procedure_step_edges"]
+    assert coverage["procedure_partial_steps"] < coverage["procedure_step_edges"], (
+        "if every step were partial the share would stop discriminating; if none were, the "
+        "caveat about non-contiguous runs would be describing nothing"
+    )
+    assert coverage["procedure_source_works"] > 1, (
+        "the per-work grouping only means something if more than one work is cited"
+    )
     assert coverage["statement"]
+    assert str(HAS_STEP_TOTAL + PROCEDURE_STEP_TOTAL) not in coverage["statement"].replace(
+        ",", ""
+    ), "the two step layers must not be added together anywhere in the prose"
+
     assert body["not_covered"], "a partial layer must say what it omits"
     omitted = " ".join(body["not_covered"]).lower()
     assert "chariot" in omitted and "thunderbolt" in omitted
     assert "brahmana" in omitted
+    assert "do not compose" in omitted or "independently numbered" in omitted, (
+        "the sutra layer is large enough now that omitting to say it does not compose into "
+        "a procedure would read as procedural coverage"
+    )
 
 
 @pytest.mark.neo4j
@@ -605,10 +653,18 @@ def test_q25_partial_semantics_are_reachable_through_the_capability_catalogue(
     assert limit["data_status"] == KnowledgeStatus.PARTIAL
     assert limit["endpoint"] == RITUALS
     measured = {row["name"]: row["value"] for row in limit["measurements"]}
-    assert measured["rituals_modelled"] == 8
-    assert measured["step_edges"] == 3
-    assert measured["curated_implements"] == 14
-    assert measured["objects_in_the_registry"] == 23
+    assert measured["rituals_modelled"] == RITUAL_TOTAL
+    assert measured["step_edges"] == HAS_STEP_TOTAL
+    assert measured["procedure_step_edges"] == PROCEDURE_STEP_TOTAL
+    # 15 since the ritual-object adjudication landed; was 14. The figure is a snapshot and
+    # the assertion below is the actual guard.
+    assert measured["curated_implements"] == 15
+    # Grew from 23 with the Wave 3 object registry. The curation ceiling is the point of the
+    # pair, so what matters is that the registry stays the larger of the two.
+    assert measured["objects_in_the_registry"] == 41
+    assert measured["curated_implements"] < measured["objects_in_the_registry"], (
+        "if these ever match, the curation ceiling this measurement exists to expose is gone"
+    )
     assert "NOT a census" in limit["what_this_is_not"]
 
 
@@ -675,10 +731,15 @@ def test_directed_reuse_absence_is_typed_and_carries_the_parallels_that_disprove
 ) -> None:
     """The single most dangerous zero in this graph, and how the matrix defuses it.
 
-    Directed textual reuse exists for RV-SV alone. Rendered as ``0`` for the other five
-    pairs it says the Atharvaveda reuses no Rigvedic text -- and the same pair carries
-    hundreds of undirected parallels in this very graph. So those cells are
-    NOT_ESTABLISHED_FOR_PAIR, and each carries the measured parallel count for its own pair.
+    Directed textual reuse reaches two pairs, RV-SV and AV-RV. Rendered as ``0`` for the
+    other four it would say the Yajurveda reuses no Rigvedic text -- and RV-YV carries 662
+    undirected parallels in this very graph. So those cells are NOT_ESTABLISHED_FOR_PAIR,
+    and each carries the measured parallel count for its own pair.
+
+    The absent example used to be AV-RV. It gained 311 directed edges when the reuse
+    direction layer was extended, so it is asserted here as the *second measured* pair and
+    the guard moves to a pair that still has none. Bumping the expected status instead
+    would have deleted the guard rather than updated it.
     """
     body = live_client.get(CROSS_VEDA).json()
     cells = {
@@ -690,23 +751,40 @@ def test_directed_reuse_absence_is_typed_and_carries_the_parallels_that_disprove
     assert measured["status"] == CrossVedaCellStatus.MEASURED
     assert measured["edges"] == 1684
 
-    absent = cells[("AV-RV", "REUSES_TEXT_FROM")]
-    assert absent["status"] == CrossVedaCellStatus.NOT_ESTABLISHED_FOR_PAIR
-    assert absent["edges"] is None
-    assert absent["related_edges_on_pair"] and absent["related_edges_on_pair"] > 1_000
-    assert "not a statement about the texts" in absent["note"]
+    also_measured = cells[("AV-RV", "REUSES_TEXT_FROM")]
+    assert also_measured["status"] == CrossVedaCellStatus.MEASURED
+    assert also_measured["edges"] and also_measured["edges"] > 0
+
+    # The four pairs with no directed reuse are MEASURED_ZERO now rather than
+    # NOT_ESTABLISHED_FOR_PAIR, because a typed refusal was computed for each: the zero is a
+    # decision that the instrument does not apply, not an unrun measurement. What this test
+    # guards is unchanged and asserted on the note -- the zero may not travel naked, it must
+    # name its refusal and carry the undirected parallels that disprove a reading of "these
+    # two corpora share no text".
+    refused = cells[("RV-YV", "REUSES_TEXT_FROM")]
+    assert refused["status"] == CrossVedaCellStatus.MEASURED_ZERO
+    assert refused["related_edges_on_pair"] and refused["related_edges_on_pair"] > 500
+    assert "REFUSED_UNIT_GRANULARITY_INCOMPARABLE" in refused["note"]
+    assert "measured refusal and not an unbuilt cell" in refused["note"]
+    assert "undirected parallel edges are unaffected" in refused["note"]
 
 
 @pytest.mark.neo4j
 def test_semantic_assertion_layer_contributes_no_cross_veda_count(
     live_client: TestClient,
 ) -> None:
-    """Every assertion is Rigvedic, so the layer has no non-Rigvedic endpoint to pair with.
+    """The layer contributes no *pair* count, and that is not the same as not existing.
 
-    Present as a row in all six pairs and NOT_BUILT in all six. Omitting the row would leave
-    a reader with a table of built classes and no way to know that the semantic layer cannot
-    speak to a cross-corpus question at all; reporting it as 0 would say the corpora share
-    no semantic structure.
+    This test asserted NOT_BUILT and required the word "Rigvedic" in the note, on the
+    premise that every assertion is Rigvedic. That premise was false when it was written
+    or became false soon after: the layer reaches AV, YV and SV as well, and the same cell
+    carried a measured total saying so. The row still appears in all six pairs and still
+    carries no count -- an assertion is a predication about one passage, so it has no
+    second endpoint -- but the reason is CLASS_NOT_CROSS_VEDA, not absence.
+
+    Omitting the row would leave a reader with a table of built classes and no way to know
+    the semantic layer cannot speak to a cross-corpus question; reporting it as 0 would say
+    the corpora share no semantic structure.
     """
     body = live_client.get(CROSS_VEDA).json()
     rows = [
@@ -717,9 +795,9 @@ def test_semantic_assertion_layer_contributes_no_cross_veda_count(
     ]
     assert len(rows) == 6
     for cell in rows:
-        assert cell["status"] == CrossVedaCellStatus.NOT_BUILT
+        assert cell["status"] == CrossVedaCellStatus.CLASS_NOT_CROSS_VEDA
         assert cell["edges"] is None
-        assert "Rigvedic" in cell["note"]
+        assert "every one of its assertions is Rigvedic" not in cell["note"]
 
 
 @pytest.mark.neo4j
@@ -742,7 +820,8 @@ def test_class_reaching_only_one_pair_is_visible_in_the_class_summary(
 ) -> None:
     body = live_client.get(CROSS_VEDA).json()
     views = {view["relationship_class"]: view for view in body["relationship_classes"]}
-    assert views["REUSES_TEXT_FROM"]["pairs_reached"] == ["RV-SV"]
+    # Two pairs since the direction layer was extended; was ["RV-SV"].
+    assert views["REUSES_TEXT_FROM"]["pairs_reached"] == ["AV-RV", "RV-SV"]
     assert len(views["NEAR_PARALLEL_OF"]["pairs_reached"]) == 6
     # A class entirely inside one corpus reports no pair and is typed as such per cell.
     assert views["PARALLEL_TO"]["pairs_reached"] == []
@@ -761,20 +840,48 @@ def test_deity_naming_and_ascription_are_separate_fields_with_separate_scopes(
     """The distinction the whole deity surface rests on.
 
     Naming is what the verse says and spans four corpora. Ascription is the traditional
-    apparatus dedicating a hymn and exists for the Rigveda alone. Summed they would add a
-    statement of the text to a projection over a container, for the one corpus that has the
-    container labels -- so they are separate fields, separately scoped, and the response
-    says the sum is not available.
+    apparatus dedicating a hymn and reaches the corpora an apparatus was ingested for --
+    the Rigveda directly, the Atharvaveda through the morphological resolution of its
+    descriptors. Summed they would add a statement of the text to a projection over a
+    container -- so they are separate fields, separately scoped, and the response says the
+    sum is not available.
+
+    ``ascribed_scope`` was pinned to ``["RV"]``, which was this field reading HAS_DEVATA
+    alone while 851 Atharvavedic passages carried a resolved dedication under
+    HAS_DEVATA_DERIVED. GAP-ATTRIBUTION-002 clause 2 asks for exactly the corrected form:
+    "returns AV in ascribed_scope with its method stated".
     """
     body = live_client.get(DEVATA).json()
     assert body["named_by_veda"]["by_veda"]["av"] is not None
-    assert body["ascribed_scope"] == ["RV"]
+    assert body["ascribed_scope"] == ["RV", "AV"]
     assert body["ascribed_total"] is not None
     assert body["named_total"] != body["ascribed_total"]
     assert "missing apparatus" in body["ascription_note"]
     assert body["mention_surplus"] == body["named_total"] - body["ascribed_total"]
-    # The corpora the ascription layer does not reach are named rather than left as zeros.
-    assert set(body["coverage"]["vedas_not_covered"]) == {"AV", "YV", "SV"}
+    # The method travels with the figure, per the clause. Both routes are present even where
+    # one reaches nothing, so a zero is distinguishable from a route the response omitted.
+    methods = {row["predicate"]: row["method"] for row in body["ascription_routes"]}
+    assert methods == {
+        "HAS_DEVATA": "SOURCE_STATED_ANUKRAMANI_DEDICATION",
+        "HAS_DEVATA_DERIVED": "TADDHITA_SASYA_DEVATA_DERIVATION",
+    }
+    # The corpora the ascription layer does not reach are named rather than left as zeros --
+    # in the *ascription* dimension. They used to be named in the response's single coverage
+    # block, beside naming figures for the same three corpora, which told a machine consumer
+    # that AV 635, YV 221 and SV 405 were all uncovered. See
+    # tests/api/test_coverage_dimensions.py.
+    #
+    # Two now, not three: the Atharvaveda IS reached, through HAS_DEVATA_DERIVED. The
+    # Samavedic and Yajurvedic zeros are the layer being absent outright -- the gana join key
+    # and pratika-keyed sutra prose, GAP-ATTRIBUTION-001 -- and must stay named.
+    ascription = next(
+        dim for dim in body["coverage"]["dimensions"] if dim["dimension"] == "ascription"
+    )
+    assert set(ascription["vedas_not_covered"]) == {"YV", "SV"}
+    # The figure and its scope label cannot disagree about which routes they cover: the
+    # per-Veda figures sum to the total, over one pattern rather than two.
+    assert sum(ascription["measured"].values()) == body["ascribed_total"]
+    assert body["coverage"]["vedas_not_covered"] == []
     assert body["named_by_veda"]["per_1000_by_veda"]
 
 
@@ -782,7 +889,7 @@ def test_deity_naming_and_ascription_are_separate_fields_with_separate_scopes(
 def test_g01_default_population_refuses_every_non_deity(
     live_client: TestClient, live_repository: Neo4jRepository
 ) -> None:
-    """The deity gate, on this route, for all 30 of them.
+    """The deity gate, on this route, for all 57 of them.
 
     This endpoint had the machine-readable half right -- ``is_resolved_deity: false`` and
     ``structure`` on the row -- and still served the dog at 200 with no disclosure under a
@@ -793,12 +900,10 @@ def test_g01_default_population_refuses_every_non_deity(
     non_deities = [
         str(row["k"])
         for row in live_repository.run(
-            "MATCH (d:Devata) WHERE coalesce(d.structure, 'UNSPECIFIED') IN $structures "
-            "RETURN d.entity_key AS k ORDER BY k",
-            structures=sorted(NON_DEITY_STRUCTURES),
+            "MATCH (d:Devata) WHERE d.is_deity = false RETURN d.entity_key AS k ORDER BY k"
         )
     ]
-    assert len(non_deities) == 30, "the non-deity population has moved; re-read this test"
+    assert len(non_deities) == 57, "the non-deity population has moved; re-read this test"
     for entity_key in non_deities:
         response = live_client.get(f"/api/v1/insights/devatas/{entity_key}")
         assert response.status_code == 404, entity_key
@@ -818,10 +923,11 @@ def test_g01_non_deity_under_all_ascriptions_carries_both_disclosure_halves(
     same error as omitting the caveat, one field along.
     """
     body = live_client.get(
-        "/api/v1/insights/devatas/VG:DEVATA:SUNAH", params={"population": "all_ascriptions"}
+        "/api/v1/insights/devatas/VG:DEVATA:BHAVAVRTTAM",
+        params={"population": "all_ascriptions"},
     ).json()
     assert body["is_resolved_deity"] is False
-    assert body["structure"] == "UNSPECIFIED"
+    assert body["structure"] == "ABSTRACT"
     disclosure = next(
         caveat for caveat in body["caveats"] if caveat["source"] == "deity_population_contract"
     )
@@ -1070,8 +1176,16 @@ def test_g04_civilization_overrun_keeps_the_real_total_and_carries_the_paging_ca
     sections = {section["section_kind"]: section for section in body["sections"]}
     assert sections[SectionKind.DATA]["returned"] == 0
     assert sections[SectionKind.DATA]["total_available"] == 22
-    # 900 is inside 1,072, so this section is genuinely non-empty and keeps its total.
-    assert sections[SectionKind.DERIVED_METRIC]["total_available"] == 1072
+    # 900 is inside 1,481, so this section is genuinely non-empty and keeps its total.
+    # 1,072 -> 1,085 -> 1,481. The last move is R4's: GAP-ENTITY_COVERAGE-002 widened the
+    # deity-profile materialisation from a top-25 union to the 157 deities the eligibility
+    # contract admits, creating 399 metrics and deleting the 3 that had landed on a
+    # danastuti gift-praise label. This assertion exists to prove the paging caveat reports
+    # the REAL total rather than the page, so the figure is expected to track the metric
+    # layer -- re-derived, not loosened.
+    # 1,481 -> 1,485. R5 added 2 (GAP-RITUAL-006's precision and material-culture rows)
+    # and the entity-coverage rebuild the dependency report then required added 2 more.
+    assert sections[SectionKind.DERIVED_METRIC]["total_available"] == 1485
     assert sections[SectionKind.DERIVED_METRIC]["returned"] > 0
 
 
@@ -1174,10 +1288,19 @@ def test_every_ritual_collection_has_bounds_that_describe_itself(
     assert "pagination" not in body
     bounds = body["collections"]
     assert set(bounds) == {"objects", "rituals"}
-    assert bounds["objects"]["returned"] == len(body["objects"]) == 14
-    assert bounds["rituals"]["returned"] == len(body["rituals"]) == 8
-    assert bounds["objects"]["total"] == 14
-    assert bounds["rituals"]["total"] == 8
+    assert bounds["objects"]["returned"] == len(body["objects"]) == 15
+    assert bounds["objects"]["total"] == 15
+    assert not bounds["objects"]["has_more"]
+
+    # The rite collection now overruns its page, which is the case this block was built for:
+    # `returned` describes the page and `total` describes the collection, and one shared
+    # block once reported returned=0 beside eight rites in the body.
+    assert bounds["rituals"]["returned"] == len(body["rituals"])
+    assert bounds["rituals"]["total"] == RITUAL_TOTAL
+    assert bounds["rituals"]["returned"] < bounds["rituals"]["total"]
+    assert bounds["rituals"]["has_more"], (
+        "a truncated collection that does not say so reads as the whole collection"
+    )
 
 
 @pytest.mark.neo4j
@@ -1185,7 +1308,20 @@ def test_every_ritual_collection_has_bounds_that_describe_itself(
     ("path", "expected"),
     [
         (RITUALS, {"objects", "rituals"}),
-        (CONCERNS, {"concerns", "afflictions", "protection_and_treatment", "social_rites"}),
+        # ``stated_remedy`` joined this endpoint with GAP-ENTITY_COVERAGE-003. The
+        # endpoint had published "the registry has no healing entity -- bhesaja was
+        # never curated" while VG:CONCEPT:BHESAJA-HEALING sat in the registry with 7
+        # registered Sanskrit aliases and 108 evidenced mention edges.
+        (
+            CONCERNS,
+            {
+                "concerns",
+                "afflictions",
+                "protection_and_treatment",
+                "social_rites",
+                "stated_remedy",
+            },
+        ),
         (FORMULAS, {"span_census", "widest_families", "reuse_witnesses"}),
     ],
 )

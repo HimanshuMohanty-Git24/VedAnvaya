@@ -1,0 +1,289 @@
+{
+ "artifact": "AGENT_4_RITUAL_FINAL_CLOSURE",
+ "agent": "AGENT_4_RITUAL",
+ "at": "2026-09-16T18:33:24.389949+00:00",
+ "code_commit": "b4b1b0beba1c499e832150b0b9363d7258e40a26",
+ "sprint_baseline": "data/staging/final_closure_sprint/baseline.json",
+ "source_snapshot": {
+  "dcs_commit": "8aeed5a1343d0e48b64eb32af8c00e8c6eb29359",
+  "vpc_source_map": {
+   "SBM.txt": {
+    "repo_path": "corpus/VPC/Brahmana texts/ŚBM.txt",
+    "bytes": 975819,
+    "sha256": "32c6259844a7a4500b3e4d8ef9dee627659c339f0979327ecfbbc97a38ddcf99"
+   },
+   "KatySS.txt": {
+    "repo_path": "corpus/VPC/Srauta texts/KātyŚS.txt",
+    "bytes": 330557,
+    "sha256": "64e344191de24f72022cf1f9d3b58107152e8f9450b849fc52a1831c232fd426"
+   },
+   "ParGS.txt": {
+    "repo_path": "corpus/VPC/Grhya texts/PārGS.txt",
+    "bytes": 70828,
+    "sha256": "b8db046b4ef0b1171302ee160377a997f9f4a3c9cf81ae479b0aae2e22b94624"
+   },
+   "GB.txt": {
+    "repo_path": "corpus/VPC/Brahmana texts/GB.txt",
+    "bytes": 282318,
+    "sha256": "bd3b8da29f242305398d7752a27ec3d49cff1c6a4c494db02d15ba32176d71a1"
+   },
+   "VaitS.txt": {
+    "repo_path": "corpus/VPC/Srauta texts/VaitS.txt",
+    "bytes": 86268,
+    "sha256": "7575d16ee6739f0c727c7ed1f8cdc5e8ab878a60def099e3f87e37f3a34a47ce"
+   },
+   "KausS.txt": {
+    "repo_path": "corpus/VPC/Grhya texts/KauśS.txt",
+    "bytes": 213734,
+    "sha256": "23d10f02e55c4e527b52ba64db2d16fe0ac52f68635f99c6232efa6e868fdd94"
+   },
+   "PB.txt": {
+    "repo_path": "corpus/VPC/Brahmana texts/PB.txt",
+    "bytes": 419386,
+    "sha256": "50eb3d8aef5ffd7209842f2c133b4eccf74e6248082587b8a5c0a7b505c99c82"
+   },
+   "SadvB.txt": {
+    "repo_path": "corpus/VPC/Brahmana texts/ṢB.txt",
+    "bytes": 63547,
+    "sha256": "26760d27e1dfb5a4b3417006a878438707b1136ac11a6da0211a2c66f120fe31"
+   },
+   "SVidhB.txt": {
+    "repo_path": "corpus/VPC/Brahmana texts/SVidhB.txt",
+    "bytes": 43859,
+    "sha256": "99c2d12da38d183d1aa3f2064a9e95aa6885520e5f34b1cc1c2d43fcf811bad3"
+   },
+   "LatSS.txt": {
+    "repo_path": "corpus/VPC/Srauta texts/LāṭŚS.txt",
+    "bytes": 195732,
+    "sha256": "7ac6a7c509b31316f3fb03dad1a5c1a848e2b798638083a30b0bdfabf68e533c"
+   },
+   "GobhGS.txt": {
+    "repo_path": "corpus/VPC/Grhya texts/GobhGS.txt",
+    "bytes": 69474,
+    "sha256": "aed32ad071c02b187d080c50203754e243cc4b6bcf37108515ed1ae8c78639d5"
+   },
+   "AB.txt": {
+    "repo_path": "corpus/VPC/Brahmana texts/AB.txt",
+    "bytes": 447205,
+    "sha256": "a7cdcfb0170d5174564d81e8c53f4e28b0f6530e09c551a1272314e39a669729"
+   },
+   "KausB.txt": {
+    "repo_path": "corpus/VPC/Brahmana texts/KauṣB.txt",
+    "bytes": 349855,
+    "sha256": "d809d57a731274d83f414d6088d634576dbbb17575eac02308756a5ea049f299"
+   },
+   "AsvSS.txt": {
+    "repo_path": "corpus/VPC/Srauta texts/ĀśvŚS.txt",
+    "bytes": 269290,
+    "sha256": "cdf7873ceff69aa22f9df8e09170c6eeb0f19511ee15fcf5c027727efd0857d5"
+   },
+   "SankhSS.txt": {
+    "repo_path": "corpus/VPC/Srauta texts/ŚāṅkhŚS.txt",
+    "bytes": 380762,
+    "sha256": "e3f357d38ca7bc06d7f1b59d0fd5c5d3666f257a49f6e6267e94b1504748c0fc"
+   },
+   "AsvGS.txt": {
+    "repo_path": "corpus/VPC/Grhya texts/ĀśvGS.txt",
+    "bytes": 64061,
+    "sha256": "71c4dde7425776958db96c39ce4eea27022316e0d5d8085bf08cc5a18b4c88f3"
+   },
+   "SankhGS.txt": {
+    "repo_path": "corpus/VPC/Grhya texts/ŚāṅkhGS.txt",
+    "bytes": 76725,
+    "sha256": "1dfc71adce4409c6c48a302aaade7e54baca1513cf353fe0946e24381296c148"
+   },
+   "KausGS.txt": {
+    "repo_path": "corpus/VPC/Grhya texts/KauṣGS.txt",
+    "bytes": 78483,
+    "sha256": "3c9e1fa4a1577063883de1204bcb901ea5cff54d836ba80e9ed4f10b41c1aeaf"
+   },
+   "VaitS-Caland.txt": {
+    "repo_path": "corpus/VPC/Srauta texts/translation/VaitS-Caland.txt",
+    "bytes": 178499,
+    "sha256": "7a0f8aa542f39642c21ec4a302168f6546f7a753ea5fda4c9cb369f53630643e"
+   },
+   "PB-Caland.txt": {
+    "repo_path": "corpus/VPC/Brahmana texts/translation/PB-Caland.txt",
+    "bytes": 138736,
+    "sha256": "009ac1985e27da3dea9924b33aff24df73b54728c07e512cb86d0c3863b47420"
+   },
+   "SankhSS-Caland.txt": {
+    "repo_path": "corpus/VPC/Srauta texts/translation/ŚāṅkhŚS-Caland.txt",
+    "bytes": 542901,
+    "sha256": "193d41a970c25ac3228091d795962829697e3d79b8a4ad9154a1b3dc441a480b"
+   },
+   "SankhGS-Oldenberg.txt": {
+    "repo_path": "corpus/VPC/Grhya texts/translation/ŚāṅkhGS-Oldenberg.txt",
+    "bytes": 122769,
+    "sha256": "8ef89fbe1ba3778b9897319a8584bac6e305427e3bdd9fab68b342e7580a36a2"
+   },
+   "GobhGS-Oldenberg.txt": {
+    "repo_path": "translations/GobhGS-Oldenberg.txt",
+    "bytes": 126277,
+    "sha256": "e3b6e87d5794bc04cba81d72e7846902b003347250d1ce4fc2b4d8c9189f4dea"
+   },
+   "ParGS-Oldenberg.txt": {
+    "repo_path": "translations/ParGS-Oldenberg.txt",
+    "bytes": 111608,
+    "sha256": "3e7d3980ce05cce35ac321e37b18ad1366daebd51d387cb4758864214c5ca51a"
+   }
+  }
+ },
+ "graph_census_at_read": {
+  "nodes": 127404,
+  "relationships": 295700
+ },
+ "sealed_artifact_untouched": {
+  "path": "data/staging/ritual",
+  "statement": "Not one byte of the Wave 2 artifact was rewritten. Its manifest carries a sha256 for every file beside it and every one still matches.",
+  "corrections_that_fall_inside_it": "applied as an overlay outside the seal -- agent4_overlay.py, with its measured effect in ritual_registry_overlay.json -- never in place"
+ },
+ "rights": {
+  "source": "DCS Vedic Prose Corpus, corpus/VPC/, commit 8aeed5a1343d0e48b64eb32af8c00e8c6eb29359",
+  "basis": "PUBLIC_DOMAIN_BY_AGE",
+  "basis_is_not": "CC_BY_4_0",
+  "why_not_cc_by": "The DCS repository's express CC BY 4.0 grant lives in dcs/data/readme.md and is scoped to 'the data of the DCS and any data in child directories'. corpus/VPC/ is not a child of dcs/data/, so no express licence covers the digitisation. Recording CC BY 4.0 here would attribute a grant to a party without standing to make it, and a wrong licence recorded is worse than none.",
+  "underlying_editions_public_domain_by_age": [
+   "Weber's Satapatha",
+   "Vedantavagisa's Latyayana, Bibliotheca Indica",
+   "Vishva Bandhu's Vaitana",
+   "Caland 1910 / 1931",
+   "Oldenberg, SBE 29 / 30"
+  ],
+  "second_basis_facts_are_not_copyrightable": "What lands in the graph is facts -- that a role exists, that a deity receives an offering, that a mantra is cited in a rite. A fact is not copyrightable whatever the licence of the source it was read from.",
+  "third_basis_bounded_evidential_quotation": "Each edge carries one cited line and, where held, one attributed translation sentence, with its citation. This is what the project already does for Whitney and Griffith.",
+  "the_bound": "NO BULK VPC TEXT LANDS IN THE CANONICAL GRAPH. The proposed delta carries 21 evidential quotes across 24 distinct cited lines, out of 61,393 in the corpus, and no property update carries any supplementary text at all -- the 20,210 ritual_context rows carry a citation and a work key, never a line.",
+  "distinct_cited_lines_quoted": [
+   "AB 7.6.1",
+   "AB 7.6.2",
+   "AB 7.6.3",
+   "AB 7.6.4",
+   "AB 7.7.1",
+   "AB 7.7.2",
+   "AB 7.7.3",
+   "AB 7.7.4",
+   "AB 7.8.1",
+   "AB 7.8.2",
+   "AB 7.8.3",
+   "AB 7.8.4",
+   "AB 7.9.1",
+   "AB 7.9.3",
+   "AB 7.9.4",
+   "AB 7.9.6",
+   "AB 7.9.7",
+   "AB 7.9.8",
+   "GB 2.1.12.9",
+   "GobhGS 3.8.6",
+   "KausB 4.1.3",
+   "SankhSS 13.14.1",
+   "SankhSS 14.2.17",
+   "SankhSS 16.1.13"
+  ]
+ },
+ "generators": [
+  {
+   "path": "build_agent4_ritual_closure.py",
+   "sha256": "ce8033c3846bf2e7bd06c6fd4d70de4d3b43539ee1191f5a31c6ca980b6c05bf"
+  },
+  {
+   "path": "agent4_build_body.py",
+   "sha256": "d9e7dbbcd5a1f6d0ebcb3bcc716da3dc54b1be17ca601c70f9481068c04f6ae1"
+  },
+  {
+   "path": "agent4_verdicts.py",
+   "sha256": "52876adfeb69e8fdc034357cb9af0dec82d2e13fbe7926a639e44b8053a73da2"
+  },
+  {
+   "path": "agent4_overlay.py",
+   "sha256": "5c1d7d377993865206d6d3978f4882816d0625e21e6621ef6428d4d449b60f26"
+  }
+ ],
+ "files": [
+  {
+   "path": "audumbara_sense_audit.json",
+   "sha256": "b0323ef2cd91fbdb87306a3c714435d02e66d205e785deb7d57bf114b14716b7",
+   "bytes": 1877
+  },
+  {
+   "path": "closure_report.json",
+   "sha256": "c7187f7b1080ed4069d666c514a0543332f01f3893ecdf9b831eeb6b0a286856",
+   "bytes": 7282
+  },
+  {
+   "path": "material_culture_by_ritual_context.json",
+   "sha256": "562bf5fd5fb67809d60e0fd26a25bfa89ab74651bba9c758261323dc43a0aa34",
+   "bytes": 5768
+  },
+  {
+   "path": "measurements.json",
+   "sha256": "fbed8eec858ab0394e9032ee3db5a7cd9d7e68da18ffcf2eeb7cf948a5dd8adb",
+   "bytes": 12607
+  },
+  {
+   "path": "performed_by.jsonl",
+   "sha256": "f4ad82bcee76411038f28b86121ea3f7be534fd2e494104fd448030fc687dab6",
+   "bytes": 39776
+  },
+  {
+   "path": "proposed_mutations.json",
+   "sha256": "58d3cdb3620ee41712520c40ddc943ca90adb3cd65692cacef1c8a45d9bb1a07",
+   "bytes": 62650
+  },
+  {
+   "path": "receives_offering.jsonl",
+   "sha256": "647c98dacd5c5a9abe02e5da3d343cb034cd874ef0fc392c76a455d459d5fb5c",
+   "bytes": 14880
+  },
+  {
+   "path": "receives_offering_rejected.jsonl",
+   "sha256": "7514787419963ab230eaabd66e365529b14dda0f5625dce479a286d20f0f256f",
+   "bytes": 9959
+  },
+  {
+   "path": "ritual_context.jsonl",
+   "sha256": "0ae5a662ccfd962c6b36dab8af0212f584db9c0d0e093a5066304fd692eda499",
+   "bytes": 5711669
+  },
+  {
+   "path": "ritual_context_precision.json",
+   "sha256": "b11bfcf6772c4d3ffc4a50c22f49a22bd7cf334b0c9b6d5e376fc92cfe3db2f3",
+   "bytes": 9837
+  },
+  {
+   "path": "ritual_context_vocabulary.json",
+   "sha256": "2040e0168234c41f99123d03c81ffcb9941f514d712b536e080a6f0835f74bc0",
+   "bytes": 2251
+  },
+  {
+   "path": "ritual_registry_overlay.json",
+   "sha256": "9c5440dc69d37346c120dd1005af2295555295ac935e7819ea3a2a8bdb3f6ebb",
+   "bytes": 11573
+  },
+  {
+   "path": "ritual_roles.jsonl",
+   "sha256": "c292cb4ca1d0fb48fa368da81b1527e88675fe3559145f82a41a13b2defc069d",
+   "bytes": 62114
+  },
+  {
+   "path": "uses_object_adjudication.jsonl",
+   "sha256": "52a7cdc7035ce007b987bc96843d8803f446d8616b5095f05d0cdcbe4fbdfaf9",
+   "bytes": 4220
+  },
+  {
+   "path": "yupa_alias_fix.json",
+   "sha256": "1b0b05b5ef433a14e29f368a4fe724aa962f16dcdabc857916c1fc035d4dff40",
+   "bytes": 5076
+  }
+ ],
+ "closes_gaps": [],
+ "proposes_closure_for": [
+  "GAP-RITUAL-004",
+  "GAP-RITUAL-006"
+ ],
+ "advances_gaps": [
+  "GAP-RITUAL-003",
+  "GAP-RITUAL-005"
+ ],
+ "human_reviewed": 0,
+ "human_review_note": "NO HUMAN READ ANY LOCUS. Every read verdict in this artifact is an agent's, single-reader, and every row says so in its own review_level field."
+}

@@ -1,0 +1,178 @@
+{
+ "artifact": "AGENT7_EMBEDDED_LABEL_SWEEP",
+ "translations_scanned": 18415,
+ "by_alignment_level": {
+  "MANTRA": 18193,
+  "HYMN": 158,
+  "MANTRA_RANGE": 64
+ },
+ "rule": "a mid-literal standalone token that reads, under at most one glyph substitution, as the successor verse number of the key it is attached to",
+ "hits": 11,
+ "rows": [
+  {
+   "canonical_key": "VG:RV:SAK:M02:S012:V014",
+   "veda": "RV",
+   "translation_id": "8487b2a4-4ee3-5678-a0cb-3e2639f8de2e",
+   "alignment_level": "MANTRA",
+   "source_id": "WIKISOURCE_GRIFFITH_RV",
+   "embedded_token": "Is",
+   "reads_as": [
+    15
+   ],
+   "successor_verse": 15,
+   "char_offset": 166,
+   "head": "Who aids with favour him who pours the Soma and him who brews it, sacrificer, singer. Whom prayer exalts, and pouring forth of Soma, and this our gift, He, O ye men,",
+   "tail": "Indra."
+  },
+  {
+   "canonical_key": "VG:RV:SAK:M08:S093:V028",
+   "veda": "RV",
+   "translation_id": "238aa74f-a50e-53ea-8fca-a93ad9aae6b2",
+   "alignment_level": "HYMN",
+   "source_id": "WIKISOURCE_GRIFFITH_RV",
+   "embedded_token": "2§",
+   "reads_as": [
+    29
+   ],
+   "successor_verse": 29,
+   "char_offset": 99,
+   "head": "Bring to us all things excellent, O Satakratu, food and strength: For, Indra, thou art kind to us.",
+   "tail": "O Satakratu, bring to us all blessings, all felicity: Fbr, Indra, thou art kind to us."
+  },
+  {
+   "canonical_key": "VG:RV:SAK:M08:S102:V014",
+   "veda": "RV",
+   "translation_id": "e4054147-6234-5447-96f9-3c9e9ed5188b",
+   "alignment_level": "MANTRA",
+   "source_id": "WIKISOURCE_GRIFFITH_RV",
+   "embedded_token": "Is",
+   "reads_as": [
+    15
+   ],
+   "successor_verse": 15,
+   "char_offset": 72,
+   "head": "The waters find their place in him, for whom the threefold sacred grass",
+   "tail": "spread unbound, unlimited."
+  },
+  {
+   "canonical_key": "VG:AV:SAU:K15:S002:V001",
+   "veda": "AV",
+   "translation_id": "bd238f94-dead-5930-8438-fe84392221c2",
+   "alignment_level": "MANTRA",
+   "source_id": "VEDAWEB",
+   "embedded_token": "2",
+   "reads_as": [
+    2
+   ],
+   "successor_verse": 2,
+   "char_offset": 84,
+   "head": "''a.''' 1. He arose; he moved out (''vi-cal'') toward the eastern quarter; '''b.'''",
+   "tail": "after him moved out both the ''bṛhát'' and the ''rathaṁtará'' and the Ādityas and all the gods; '''c.''' 3. against both the ''bṛhát'' and the ''rathaṁtará'' and the Ādityas and all the gods doth he offend (''ā-vraçc'') who revileth a thus-knowing Vrātya; '''d.''' 4. of both the ''bṛhát'' and the ''rathaṁtará'' and of the Ādityas and of all the gods doth he become the dear abode (''dhā́man'') [who knoweth thus]. Of him in the eastern quarter '''e.''' 5. faith is the harlot, Mitra the ''māgadhá'' (bard?), discernment the garment, day the turban, night the hair, yellow the two ''pravartás'', ''kalmalí'' the jewel (''maṇí''), '''f.''' 6. both what is and what is to be the two footmen (''pariṣkandá''), mind the rough vehicle (''vipathá''), '''g.''' 7. Mātariçvan and Pavamāna (the 'cleansing' wind) the two drawers (''-vāhá'') of the rough vehicle, the wind the charioteer, the whirlwind the goad, '''h.''' 8. both fame and glory the two forerunners: to him cometh fame, cometh glory, who knoweth thus."
+  },
+  {
+   "canonical_key": "VG:AV:SAU:K15:S004:V001",
+   "veda": "AV",
+   "translation_id": "fe46e724-e510-55b8-a6f4-be82865f3e1f",
+   "alignment_level": "MANTRA",
+   "source_id": "VEDAWEB",
+   "embedded_token": "2",
+   "reads_as": [
+    2
+   ],
+   "successor_verse": 2,
+   "char_offset": 38,
+   "head": "1. For him, from the eastern quarter,",
+   "tail": "they made the two spring months guardians, and ''bṛhát'' and ''rathaṁtará'' attendants. 3. The two spring months guard from the eastern quarter, and ''bṛhát'' and ''rathaṁtará'' attend (''anu-sthā''), him who knoweth thus."
+  },
+  {
+   "canonical_key": "VG:AV:SAU:K15:S005:V001",
+   "veda": "AV",
+   "translation_id": "41e80b7c-562b-5c5b-8f06-c7e9d8e195c2",
+   "alignment_level": "MANTRA",
+   "source_id": "VEDAWEB",
+   "embedded_token": "2",
+   "reads_as": [
+    2
+   ],
+   "successor_verse": 2,
+   "char_offset": 119,
+   "head": "1. For him, from the intermediate direction of the eastern quarter, they made the archer (''iṣvāsá'') Bhava attendant.",
+   "tail": "The archer Bhava attends him [as] attendant from the intermediate direction of the eastern quarter; not Çarva, not Bhava, not Īçāna ('the lord') 3. injures him nor his cattle nor his fellows who knoweth thus."
+  },
+  {
+   "canonical_key": "VG:AV:SAU:K15:S006:V001",
+   "veda": "AV",
+   "translation_id": "1f1adac5-4826-5109-93b6-cc5b1426ab3d",
+   "alignment_level": "MANTRA",
+   "source_id": "VEDAWEB",
+   "embedded_token": "2",
+   "reads_as": [
+    2
+   ],
+   "successor_verse": 2,
+   "char_offset": 42,
+   "head": "1. He moved out toward the fixed quarter;",
+   "tail": "after him moved out both earth and fire and herbs and forest trees and they of forest trees and plants. 3. Verily both of earth and of fire and of herbs and of forest trees and of them of forest trees and of plants doth he become the dear abode who knoweth thus."
+  },
+  {
+   "canonical_key": "VG:AV:SAU:K15:S013:V001",
+   "veda": "AV",
+   "translation_id": "64572704-ff0c-5830-9e48-bb348b4c0de8",
+   "alignment_level": "MANTRA",
+   "source_id": "VEDAWEB",
+   "embedded_token": "2",
+   "reads_as": [
+    2
+   ],
+   "successor_verse": 2,
+   "char_offset": 77,
+   "head": "1. Now in whosesoever house a thus-knowing Vrātya abides one night as guest,",
+   "tail": "he thereby gains possession of those pure (''púṇya'') worlds that are on the earth."
+  },
+  {
+   "canonical_key": "VG:AV:SAU:K15:S014:V001",
+   "veda": "AV",
+   "translation_id": "1735d3ae-99e5-5ef1-b160-b6acbaaf6c81",
+   "alignment_level": "MANTRA",
+   "source_id": "VEDAWEB",
+   "embedded_token": "2",
+   "reads_as": [
+    2
+   ],
+   "successor_verse": 2,
+   "char_offset": 164,
+   "head": "1. As he moved out toward the eastern quarter, the troop (''çárdhas'') of Maruts, coming into being (''bhūtvā́''), moved out after, making mind [their] food-eater;",
+   "tail": "with mind as food-eater doth he eat food who knoweth thus."
+  },
+  {
+   "canonical_key": "VG:AV:SAU:K16:S005:V001",
+   "veda": "AV",
+   "translation_id": "339bcace-ebee-5bff-87f2-fa2340c96677",
+   "alignment_level": "MANTRA",
+   "source_id": "VEDAWEB",
+   "embedded_token": "2",
+   "reads_as": [
+    2
+   ],
+   "successor_verse": 2,
+   "char_offset": 107,
+   "head": "1. We know thy place of birth (''janítra''), O sleep; thou art son of seizure (''grā́hi''), agent of Yama;",
+   "tail": "ender art thou, death art thou; 3. so, O sleep, do we comprehend thee here; do thou, O sleep, protect us from evil-dreaming."
+  },
+  {
+   "canonical_key": "VG:AV:SAU:K16:S008:V001",
+   "veda": "AV",
+   "translation_id": "8844555e-7036-553c-a3ac-15a943e0dd80",
+   "alignment_level": "MANTRA",
+   "source_id": "VEDAWEB",
+   "embedded_token": "2",
+   "reads_as": [
+    2
+   ],
+   "successor_verse": 2,
+   "char_offset": 196,
+   "head": "1. Ours [is] what is conquered, ours what has shot up, ours right (''ṛtá''), ours brilliancy, ours ''bráhman'', ours heaven (''svàr''), ours the sacrifice, ours cattle, ours progeny, ours heroes.",
+   "tail": "From that we disportion him yonder: so-and-so, of such-and-such lineage, son of such-and-such mother, who is yonder; 3. let him not be released from the fetter of seizure. 4. Of him now (''idám'') I involve the splendor, brilliancy, breath, lifetime; now I make him fall downward."
+  }
+ ]
+}

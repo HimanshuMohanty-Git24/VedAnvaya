@@ -1,0 +1,159 @@
+{
+  "artifact": "DEPENDENCY_STATUS",
+  "at": "2026-09-19T00:12:41.979582+00:00",
+  "graph_census": {
+    "nodes": 165737,
+    "relationships": 510905
+  },
+  "consumers": [
+    {
+      "consumer": "semantic resemblance",
+      "status": "BLOCKED",
+      "declared_inputs": 11,
+      "inputs_that_moved": [],
+      "reason": "Requires re-derivation from the final canonical snapshot, not a rebuild: the staged artifact is pre-Wave-3 semantic-resemblance-hybrid-v2 and owner section 5 bars importing an old score artifact. See PHASE E in the round-four report for the refusal and its evidence.",
+      "output_file": null,
+      "output_hash": null,
+      "declared_outputs": [],
+      "built_at": "2026-09-16T06:06:39.974394+00:00",
+      "rebuilt_by": "the domain's own pipeline, from the post-import snapshot",
+      "current_input_digest": "eaaa604edaa2247d5bd5be46a328e73be026a7596e6af64b26ef94bd119ed877",
+      "recorded_input_digest": "f3fca6d10150c0a1a8e0b310751aaa18b708b5deb7f37cc3a622f725e5a089a4"
+    },
+    {
+      "consumer": "cross-Veda matrices",
+      "status": "CURRENT",
+      "declared_inputs": 7,
+      "inputs_that_moved": [],
+      "reason": null,
+      "output_file": null,
+      "output_hash": null,
+      "declared_outputs": [
+        "data/enrichment/vedagraph_enrichment_v1/manifest.json"
+      ],
+      "built_at": "2026-09-17T15:35:51.953590+00:00",
+      "rebuilt_by": "vedagraph.enrich.crossveda over the canonical corpora",
+      "current_input_digest": "b8f985331fa98a3b9ff4a952ac5bef5427593dc0266123da4fe29c14576ba641",
+      "recorded_input_digest": "b8f985331fa98a3b9ff4a952ac5bef5427593dc0266123da4fe29c14576ba641"
+    },
+    {
+      "consumer": "formula / parallel / variant relations",
+      "status": "BLOCKED",
+      "declared_inputs": 9,
+      "inputs_that_moved": [],
+      "reason": "FORMULA_FAMILY_REBUILD_BARRED_BY_FROZEN_IDENTITY_POLICY. The declared input data/enrichment/vedagraph_enrichment_v1/manifest.json moved (058439bd -> d6e33b63) because the enrichment layer was rebuilt from the canonical corpus, and its formula population is now 4,729 while the frozen graph holds 4,825 :Formula, 720 :FormulaFamily and 2,037 MEMBER_OF_FAMILY edges. The declared output formula_families.jsonl (cc1ff965, unmoved) carries 702 families and 1,969 member rows, so artifact and graph already disagree by 18 families and 68 member rows. Rebuilding it means running scripts/build_formula_families.py over the changed population, which re-derives family identity for a layer already published in a graph that must not change: data/staging/final_stabilization/formula_identity_impact.json records migration_permitted=false under the owner rule that formula_id is a published stable product ID which a recomputation cannot silently re-key, and all 217 affected formulas are verified in place with 0 re-keys, 0 dangling ids, 0 duplicate stable ids and 0 unresolved FormulaFamily references (data/staging/release_blocker_r1/formula_identity_verification_receipt.json). The exact unresolved blocker is therefore the GAP-FORMULA-003 miner population question, resolved and owned outside this pass; rebuilding here would move the artifact further from the frozen graph, not closer. Nothing served reads this artifact: the API and the frontend read the graph :FormulaFamily nodes, and the JSONL is consumed only by graph importers (scripts/build_knowledge_model_v3.py, vedagraph.domain.v3_loader), which cannot run while the census is frozen. The release-critical formula consumer is instead the read-only snapshot data/derived/release_blocker_r1/formula_consumer.json, CURRENT at 164,201/508,042 with 5,545 nodes and byte-identical output over four builds.",
+      "output_file": null,
+      "output_hash": null,
+      "declared_outputs": [],
+      "built_at": "2026-09-17T15:36:25.939077+00:00",
+      "rebuilt_by": "scripts/build_formula_families.py",
+      "current_input_digest": "11464c3d8fb8bb42117ffc2e807f5f910fbafcb037fa7944dc7919f731764309",
+      "recorded_input_digest": "11464c3d8fb8bb42117ffc2e807f5f910fbafcb037fa7944dc7919f731764309"
+    },
+    {
+      "consumer": "entity coverage",
+      "status": "CURRENT",
+      "declared_inputs": 13,
+      "inputs_that_moved": [],
+      "reason": null,
+      "output_file": null,
+      "output_hash": null,
+      "declared_outputs": [
+        "data/domain/vedagraph_domain_v2/veda_coverage_v3.json"
+      ],
+      "built_at": "2026-09-18T15:14:06.017212+00:00",
+      "rebuilt_by": "scripts/build_veda_coverage_and_metrics.py",
+      "current_input_digest": "4de106180a2e7c02489a92d46d84bb4f0a6de6d8fdb80e0ecca910fba3ce2233",
+      "recorded_input_digest": "4de106180a2e7c02489a92d46d84bb4f0a6de6d8fdb80e0ecca910fba3ce2233"
+    },
+    {
+      "consumer": "ritual aggregates",
+      "status": "NOT_APPLICABLE",
+      "declared_inputs": 14,
+      "inputs_that_moved": [],
+      "reason": "NOT_REQUIRED for this release, with the previous ruling corrected rather than restated. The earlier reason said \"no ritual aggregate artifact exists\"; one now does, at data/staging/final_closure_sprint/agent4/material_culture_by_ritual_context.json (sha256 562bf5fd5fb67809d60e0fd26a25bfa89ab74651bba9c758261323dc43a0aa34), so that half of the ruling has expired and is withdrawn here. The load-bearing half holds: nothing downstream consumes it. Every reference to the filename in the repository is the dependency machinery itself (scripts/dependency_state.py, scripts/wave3_dependency_invalidation.py, the status and starting-worktree receipts) or its own producer directory; no API route, no world export and no frontend file reads it. It was produced at graph census 116,838 / 281,290, two graph generations before the frozen release state of 164,201 / 508,042, so its figures must not be read as current, and re-deriving it would mean running data/staging/final_closure_sprint/agent4/build_agent4_ritual_closure.py, which is outside this read-only pass and is not release-critical.",
+      "output_file": null,
+      "output_hash": null,
+      "declared_outputs": [],
+      "built_at": "2026-09-17T15:36:26.872019+00:00",
+      "rebuilt_by": "data/staging/final_closure_sprint/agent4/build_agent4_ritual_closure.py, which produces material_culture_by_ritual_context.json",
+      "current_input_digest": "722e4e54adf988d76ce90b8e2c0f58b5a57270e070058cde7f18c9300a1c849a",
+      "recorded_input_digest": "9b4abea99f3a5c20f5e3acc59b3188eb86550d64def828483ead59890f8d6359"
+    },
+    {
+      "consumer": "quality evaluation",
+      "status": "CURRENT",
+      "declared_inputs": 7,
+      "inputs_that_moved": [],
+      "reason": null,
+      "output_file": null,
+      "output_hash": null,
+      "declared_outputs": [
+        "docs/reports/GRAPH_QUALITY_V2_SCORECARD.md"
+      ],
+      "built_at": "2026-09-18T18:17:38.738064+00:00",
+      "rebuilt_by": "scripts/graph_quality_scorecard.py",
+      "current_input_digest": "9f28f568a56efe5654c037c244f14e57b1f1a5bad8d2dd34bb9002b92922f95b",
+      "recorded_input_digest": "9f28f568a56efe5654c037c244f14e57b1f1a5bad8d2dd34bb9002b92922f95b"
+    },
+    {
+      "consumer": "Ask retrieval",
+      "status": "BLOCKED",
+      "declared_inputs": 10,
+      "inputs_that_moved": [],
+      "reason": "ASK_FORMAL_60_GATE_PASSES_REBUILD_NEEDS_A_PROVIDER_ALLOWANCE. The gate this consumer was blocked on is met. The effective result is 60 of 60 acceptable at MISLEADING 0 and HALLUCINATED 0 -- the immutable 60-question run at de7195c, run_id openrouter-nvidia_nemotron-3-ultra-550b-a55b:free-dddb14430cac6c58, plus one formally graded remediation delta for Q38 at 2b74525, run_id openrouter-nvidia_nemotron-3-ultra-550b-a55b:free-07997da672f3155b, graded SUPPORTED_CORRECT with 0 quantitative findings, 6 resolving citations, 0 invented and 0 Sanskrit absent from the packet. Measurement: data/staging/release_prep/ask_formal_60_post_remediation.json. This consumer nevertheless stays BLOCKED, and the reason is now a plain one rather than a failing gate: it declares no output artifact, so it can never read CURRENT, and its only rebuild is a fresh sixty provider questions. That rebuild is not runnable today -- the free daily allowance was exhausted before the Q38 delta and the delta itself was answered on the allowance that reset at 00:00Z. Nothing in the graph or in the declared inputs moved: 10 of 10 input hashes are unchanged. SUPERSEDED REASON, kept because it was true when written: ASK_FORMAL_60_GRADED_GATE_FAILED -- MISLEADING = 1 against a required 0, at Q38, which asserted two deity rankings the live graph contradicts while every figure it printed was real and correctly cited; retrieval was not implicated then either, with 60 of 60 packets replaying to identical item counts and 304 citations all resolving. SUPERSEDED EARLIER REASON, likewise kept: a fresh commit-keyed run at b986193 reached 0 of 60 and stopped at Q01 with LLMRateLimitError, the daily allowance being exhausted.",
+      "output_file": null,
+      "output_hash": null,
+      "declared_outputs": [],
+      "built_at": "2026-09-19T00:12:06.098201+00:00",
+      "rebuilt_by": "the search index build, then scripts/run_ask_benchmark.py to re-grade",
+      "current_input_digest": "f07f0b0c30d3b8663c2caad8a2f00616acc8fd3a865b851a5bcc61b38aaab378",
+      "recorded_input_digest": "f07f0b0c30d3b8663c2caad8a2f00616acc8fd3a865b851a5bcc61b38aaab378"
+    },
+    {
+      "consumer": "Visualization Lab aggregates",
+      "status": "CURRENT",
+      "declared_inputs": 13,
+      "inputs_that_moved": [],
+      "reason": null,
+      "output_file": null,
+      "output_hash": null,
+      "declared_outputs": [
+        "frontend/.world/constellations.json",
+        "frontend/public/world/world.bin",
+        "frontend/public/world/world.json",
+        "frontend/public/world/world.labels.json"
+      ],
+      "built_at": "2026-09-18T15:14:29.791645+00:00",
+      "rebuilt_by": "scripts/export_graph_world.py and the metrics build",
+      "current_input_digest": "f03408e047077e0ab8793d66bdffcdb082e3e71d520b3222045ca868ecfb5baa",
+      "recorded_input_digest": "f03408e047077e0ab8793d66bdffcdb082e3e71d520b3222045ca868ecfb5baa"
+    },
+    {
+      "consumer": "Knowledge World public projection",
+      "status": "CURRENT",
+      "declared_inputs": 12,
+      "inputs_that_moved": [],
+      "reason": null,
+      "output_file": null,
+      "output_hash": null,
+      "declared_outputs": [
+        "frontend/.world/world.raw.json",
+        "frontend/public/data/home-world.json",
+        "frontend/public/world/world.predicates.json"
+      ],
+      "built_at": "2026-09-18T15:14:23.123853+00:00",
+      "rebuilt_by": "scripts/export_graph_world.py",
+      "current_input_digest": "ac00202465b7dd1cfebcf28d291157e9fa84b7b4ae44e4f2b1207cd1d3dbf5e5",
+      "recorded_input_digest": "ac00202465b7dd1cfebcf28d291157e9fa84b7b4ae44e4f2b1207cd1d3dbf5e5"
+    }
+  ],
+  "counts": {
+    "CURRENT": 5,
+    "STALE_INPUT": 0,
+    "BLOCKED": 3,
+    "NOT_APPLICABLE": 1
+  },
+  "model": "Content-addressed. Each declared input -- graph label, graph predicate, file, builder source -- is hashed separately, so a STALE_INPUT report names which one moved. Label and predicate fingerprints digest sorted identity keys and endpoint pairs rather than counting, because a count is unchanged by a swap of equal size. built_at is metadata and is never read when deciding status.",
+  "unexplained_stale": []
+}

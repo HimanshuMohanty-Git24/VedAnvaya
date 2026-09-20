@@ -1,0 +1,344 @@
+{
+  "schema_version": "1.0",
+  "gap_id": "CROSS_VEDA_DEVATA_IDENTITY_BRIDGE",
+  "owner_decision": "section 9 -- treat as a separate implementation gap; bridge through canonical Devata identity, never through display labels; retain the unresolved form where resolution is not deterministic; do not guess",
+  "mode": "PROBE_NO_WRITE",
+  "the_defect_verified": {
+    "has_devata_distinct_display_labels": 210,
+    "has_devata_ascription_distinct_display_labels": 324,
+    "shared_values": 0,
+    "edges": {
+      "HAS_DEVATA": 10558,
+      "HAS_DEVATA_ASCRIPTION": 5385
+    },
+    "why_zero_is_structural": "HAS_DEVATA points at a :Devata whose display_label is an English deity name; HAS_DEVATA_ASCRIPTION points at a :DevataAscription whose display_label is a Sanskrit adjective meaning 'having X as its deity'. No normalisation of either label can close that, so the zero is a category difference rather than a coverage accident."
+  },
+  "deterministic_resolution": {
+    "ascriptions": 324,
+    "resolved_to_exactly_one_devata": 8,
+    "resolved_share": 0.0247,
+    "ambiguous_two_or_more_devatas": 0,
+    "unresolved": 316,
+    "ascription_occurrences_total": 569,
+    "ascription_occurrences_resolved": 9,
+    "occurrence_share_resolved": 0.0158
+  },
+  "unresolved_by_reason": {
+    "COMPOUND_TWO_ASCRIPTIONS": 61,
+    "NAMES_A_PLURALITY_NOT_A_DEITY": 1,
+    "NOT_A_DEITY_ASCRIPTION": 2,
+    "NO_RECOGNISED_DEITY_ADJECTIVE_SUFFIX": 167,
+    "STEM_MATCHES_NO_CANONICAL_DEVATA": 85
+  },
+  "resolved_sample": [
+    {
+      "ascription_key": "VG:ASCRIPTION:AV:ADITIDEVATYAM-3567",
+      "label": "aditidevatyam",
+      "occurrences": 1,
+      "stem": "aditi",
+      "suffix": "devatyam",
+      "resolves_to": "VG:DEVATA:ADITIH"
+    },
+    {
+      "ascription_key": "VG:ASCRIPTION:AV:BRHASPATIDEVATYAM-D60A",
+      "label": "bṛhaspatidevatyam",
+      "occurrences": 1,
+      "stem": "bhaspati",
+      "suffix": "devatyam",
+      "resolves_to": "VG:DEVATA:BRHASPATIH"
+    },
+    {
+      "ascription_key": "VG:ASCRIPTION:AV:MANYUDEVATYAM-67B8",
+      "label": "manyudevatyam",
+      "occurrences": 1,
+      "stem": "manyu",
+      "suffix": "devatyam",
+      "resolves_to": "VG:DEVATA:MANYUH"
+    },
+    {
+      "ascription_key": "VG:ASCRIPTION:AV:PURUSADEVATYAM-9875",
+      "label": "puruṣadevatyam",
+      "occurrences": 1,
+      "stem": "puruṣa",
+      "suffix": "devatyam",
+      "resolves_to": "VG:DEVATA:PURUSAH"
+    },
+    {
+      "ascription_key": "VG:ASCRIPTION:AV:SITADEVATYAM-360F",
+      "label": "sītādevatyam",
+      "occurrences": 1,
+      "stem": "sītā",
+      "suffix": "devatyam",
+      "resolves_to": "VG:DEVATA:SITA"
+    },
+    {
+      "ascription_key": "VG:ASCRIPTION:AV:TARKSYADEVATYAM-8D27",
+      "label": "tārkṣyadevatyam",
+      "occurrences": 1,
+      "stem": "tārkṣya",
+      "suffix": "devatyam",
+      "resolves_to": "VG:DEVATA:TARKSYAH"
+    },
+    {
+      "ascription_key": "VG:ASCRIPTION:AV:USODEVATYA-397E",
+      "label": "uṣodevatya",
+      "occurrences": 1,
+      "stem": "uṣo",
+      "suffix": "devatya",
+      "resolves_to": "VG:DEVATA:USAH"
+    },
+    {
+      "ascription_key": "VG:ASCRIPTION:AV:ADITYADEVATYA-C9FA",
+      "label": "ādityadevatya",
+      "occurrences": 2,
+      "stem": "āditya",
+      "suffix": "devatya",
+      "resolves_to": "VG:DEVATA:ADITYAH"
+    }
+  ],
+  "ambiguous": [],
+  "unresolved_detail": {
+    "COMPOUND_TWO_ASCRIPTIONS": [
+      {
+        "ascription_key": "VG:ASCRIPTION:AV:BAHUDEVATYAM-UTA-BRAHMADEVATYAM-7F0F",
+        "label": "bahudevatyam uta brahmadevatyam",
+        "occurrences": 1
+      },
+      {
+        "ascription_key": "VG:ASCRIPTION:AV:BAHUDEVATYAM-UTA-CANDRAMASAM-DCDD",
+        "label": "bahudevatyam uta cāndramasam",
+        "occurrences": 1
+      },
+      {
+        "ascription_key": "VG:ASCRIPTION:AV:BAHUDEVATYAM-UTA-GNEYAM-0CEE",
+        "label": "bahudevatyam utā ”gneyam",
+        "occurrences": 1
+      },
+      {
+        "ascription_key": "VG:ASCRIPTION:AV:BAHUDAIVATAM-UTA-CANDRAMASAM-7F72",
+        "label": "bahudāivatam uta cāndramasam",
+        "occurrences": 1
+      },
+      {
+        "ascription_key": "VG:ASCRIPTION:AV:BHAISAJYAYUSYAM-UTA-MANTROKTAUSADHIDEVATAKAM-9D17",
+        "label": "bhāiṣajyāyuṣyam uta mantroktāuṣadhidevatākam",
+        "occurrences": 1
+      },
+      {
+        "ascription_key": "VG:ASCRIPTION:AV:BRAHMANASPATYAM-UTA-MANTROKTADANTADEVATYAM-2E98",
+        "label": "brāhmaṇaspatyam uta mantroktadantadevatyam",
+        "occurrences": 1
+      },
+      {
+        "ascription_key": "VG:ASCRIPTION:AV:BARHASPATYAM-UTA-BAHUDEVATYAM-7D34",
+        "label": "bārhaspatyam uta bahudevatyam",
+        "occurrences": 1
+      },
+      {
+        "ascription_key": "VG:ASCRIPTION:AV:BARHASPATYAM-UTA-VAICVADEVAM-E065",
+        "label": "bārhaspatyam uta vāiçvadevam",
+        "occurrences": 2
+      },
+      {
+        "ascription_key": "VG:ASCRIPTION:AV:BARHASPATYAM-UTA-DITYADAIVATAM-2380",
+        "label": "bārhaspatyam utā ”dityadāivatam",
+        "occurrences": 1
+      },
+      {
+        "ascription_key": "VG:ASCRIPTION:AV:BARHASPATYAM-UTA-CVINAM-310C",
+        "label": "bārhaspatyam utā ”çvinam",
+        "occurrences": 1
+      },
+      {
+        "ascription_key": "VG:ASCRIPTION:AV:BRHASPATIDEVATYAM-UTA-TVISIDEVATYAM-AC68",
+        "label": "bṛhaspatidevatyam uta tviṣidevatyam",
+        "occurrences": 1
+      },
+      {
+        "ascription_key": "VG:ASCRIPTION:AV:CANDRAMASAM-UTA-JANGIDADEVATAKAM-EB3D",
+        "label": "cāndramasam uta jan̄giḍadevatākam",
+        "occurrences": 1
+      }
+    ],
+    "NAMES_A_PLURALITY_NOT_A_DEITY": [
+      {
+        "ascription_key": "VG:ASCRIPTION:AV:BAHUDEVATYAM-AC40",
+        "label": "bahudevatyam",
+        "occurrences": 6,
+        "stem": "bahu",
+        "suffix": "devatyam"
+      }
+    ],
+    "NOT_A_DEITY_ASCRIPTION": [
+      {
+        "ascription_key": "VG:ASCRIPTION:AV:MANTROKTAMANYA-DI-VINACANADEVATYAM-B11C",
+        "label": "mantroktamanyā[di]vināçanadevatyam",
+        "occurrences": 1
+      },
+      {
+        "ascription_key": "VG:ASCRIPTION:AV:MANTROKTAMARUDDEVATAKAM-89B0",
+        "label": "mantroktamaruddevatākam",
+        "occurrences": 1
+      }
+    ],
+    "NO_RECOGNISED_DEITY_ADJECTIVE_SUFFIX": [
+      {
+        "ascription_key": "VG:ASCRIPTION:AV:ABHIVARTAMANISUKTAM-C947",
+        "label": "abhīvartamaṇisūktam",
+        "occurrences": 1
+      },
+      {
+        "ascription_key": "VG:ASCRIPTION:AV:ADHYATMAMANYUDAIVATAM-1D10",
+        "label": "adhyātmamanyudāivatam",
+        "occurrences": 1
+      },
+      {
+        "ascription_key": "VG:ASCRIPTION:AV:AGNIDAIVATAM-DFA1",
+        "label": "agnidāivatam",
+        "occurrences": 2
+      },
+      {
+        "ascription_key": "VG:ASCRIPTION:AV:AGNINDRAM-0189",
+        "label": "agnīndram",
+        "occurrences": 1
+      },
+      {
+        "ascription_key": "VG:ASCRIPTION:AV:AGNISOMIYAM-213E",
+        "label": "agnīṣomīyam",
+        "occurrences": 1
+      },
+      {
+        "ascription_key": "VG:ASCRIPTION:AV:AMAVASYADEVATAKAM-F193",
+        "label": "amāvāsyādevatākam",
+        "occurrences": 1
+      },
+      {
+        "ascription_key": "VG:ASCRIPTION:AV:APONAPTRIYANI-C8F9",
+        "label": "aponaptrīyāṇi",
+        "occurrences": 1
+      },
+      {
+        "ascription_key": "VG:ASCRIPTION:AV:ARINACANAMANTROKTADEVATAKAM-3E29",
+        "label": "arināçanamantroktadevatākam",
+        "occurrences": 1
+      },
+      {
+        "ascription_key": "VG:ASCRIPTION:AV:ASTRTAMANIDAIVATAM-4961",
+        "label": "astṛtamaṇidāivatam",
+        "occurrences": 1
+      },
+      {
+        "ascription_key": "VG:ASCRIPTION:AV:BAHUDEVATYAM-UTAI-NDRAGNAM-12C9",
+        "label": "bahudevatyam utāi ”ndrāgnam",
+        "occurrences": 2
+      },
+      {
+        "ascription_key": "VG:ASCRIPTION:AV:BALASADEVATYATN-FDF6",
+        "label": "balāsadevatyatn",
+        "occurrences": 1
+      },
+      {
+        "ascription_key": "VG:ASCRIPTION:AV:BHAISAJYAM-EF8D",
+        "label": "bhāiṣajyam",
+        "occurrences": 1
+      }
+    ],
+    "STEM_MATCHES_NO_CANONICAL_DEVATA": [
+      {
+        "ascription_key": "VG:ASCRIPTION:AV:ABDEVATYAM-AFCD",
+        "label": "abdevatyam",
+        "occurrences": 2,
+        "stem": "ab",
+        "suffix": "devatyam"
+      },
+      {
+        "ascription_key": "VG:ASCRIPTION:AV:ADHYATMADEVATYAM-4F00",
+        "label": "adhyātmadevatyam",
+        "occurrences": 1,
+        "stem": "adhyātma",
+        "suffix": "devatyam"
+      },
+      {
+        "ascription_key": "VG:ASCRIPTION:AV:AGNYADIBAHUDEVATYAM-F8EE",
+        "label": "agnyādibahudevatyam",
+        "occurrences": 1,
+        "stem": "agnyādibahu",
+        "suffix": "devatyam"
+      },
+      {
+        "ascription_key": "VG:ASCRIPTION:AV:AJACRNGYAPSARODEVATYAM-497D",
+        "label": "ajaçṛn̄gyapsarodevatyam",
+        "occurrences": 1,
+        "stem": "ajaçn̄gyapsaro",
+        "suffix": "devatyam"
+      },
+      {
+        "ascription_key": "VG:ASCRIPTION:AV:APAMARGAVANASPATIDEVATYAM-C295",
+        "label": "apāmārgavanaspatidevatyam",
+        "occurrences": 1,
+        "stem": "apāmārgavanaspati",
+        "suffix": "devatyam"
+      },
+      {
+        "ascription_key": "VG:ASCRIPTION:AV:APAMARGAVIRUDDDIVATAM-B9AF",
+        "label": "apāmārgavīrudddivatam",
+        "occurrences": 1,
+        "stem": "apāmārgavīrud",
+        "suffix": "ddivatam"
+      },
+      {
+        "ascription_key": "VG:ASCRIPTION:AV:BHAGADEVATYAM-83F6",
+        "label": "bhagadevatyam",
+        "occurrences": 1,
+        "stem": "bhaga",
+        "suffix": "devatyam"
+      },
+      {
+        "ascription_key": "VG:ASCRIPTION:AV:BHAISAJYAYURDHANVANTARIDDIVATAM-8CE0",
+        "label": "bhāiṣajyāyurdhanvantariddivatam",
+        "occurrences": 1,
+        "stem": "bhāiṣajyāyurdhanvantari",
+        "suffix": "ddivatam"
+      },
+      {
+        "ascription_key": "VG:ASCRIPTION:AV:BRAHMAGAVIDEVATYAM-E3F4",
+        "label": "brahmagavīdevatyam",
+        "occurrences": 2,
+        "stem": "brahmagavī",
+        "suffix": "devatyam"
+      },
+      {
+        "ascription_key": "VG:ASCRIPTION:AV:BRAHMAJAYADEVATYAM-CB7D",
+        "label": "brahmajāyādevatyam",
+        "occurrences": 1,
+        "stem": "brahmajāyā",
+        "suffix": "devatyam"
+      },
+      {
+        "ascription_key": "VG:ASCRIPTION:AV:BRAHMAKARMATMADEVATYAM-3D29",
+        "label": "brahmakarmātmadevatyam",
+        "occurrences": 1,
+        "stem": "brahmakarmātma",
+        "suffix": "devatyam"
+      },
+      {
+        "ascription_key": "VG:ASCRIPTION:AV:DUHSVAPNANACANADEVATYA-09F9",
+        "label": "duḥsvapnanāçanadevatya",
+        "occurrences": 2,
+        "stem": "duḥsvapnanāçana",
+        "suffix": "devatya"
+      }
+    ]
+  },
+  "what_must_not_happen": [
+    "joining the two dedication layers on display_label",
+    "resolving an ambiguous stem by picking the more frequent Devata",
+    "resolving a plurality ascription such as bahudevatyam to a single deity",
+    "resolving a subject descriptor such as bhaisajyam to a deity at all"
+  ],
+  "blocks": [
+    "semantic_resemblance TIER_B",
+    "cross-Veda deity analytics"
+  ],
+  "verdict": "GAP_SIZED_NOT_CLOSED"
+}

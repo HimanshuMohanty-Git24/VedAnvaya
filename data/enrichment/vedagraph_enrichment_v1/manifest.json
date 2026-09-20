@@ -6,18 +6,18 @@
     "YV": 1975
   },
   "counts": {
-    "concept_assertions": 46508,
+    "concept_assertions": 46439,
     "concepts": 91,
-    "cross_veda_parallels": 6271,
-    "formula_occurrences": 22686,
-    "formulas": 4825
+    "cross_veda_parallels": 6285,
+    "formula_occurrences": 22422,
+    "formulas": 4729
   },
   "digests": {
-    "concept_assertions.jsonl": "fd593e24baaeace7c4473fe6958a8d7a6a04a974f566e7e9a174c49afc87516f",
-    "concepts.jsonl": "e87b7233a8059b183930070916dd070a31377474e727bdd062a4c9ade573b8ff",
-    "cross_veda_parallels.jsonl": "13f1c256aab0f40f76010d12dbd8735a655a30af55dea82bd6a51922e4ed1674",
-    "formula_occurrences.jsonl": "0d489c093e6bf26572e724079992420c9ebd44dec7f63596079db78f909f0e01",
-    "formulas.jsonl": "da9378647ca6ac583bd27c8508a2fd96593ee6e5cdeaad358ecee43232fcf52e"
+    "concept_assertions.jsonl": "48b43e09d3eaffa6d64a808b914d6319988a34ca62741af6e5d1079b58e79631",
+    "concepts.jsonl": "ef504f60fa6b86b1b0b92fe0c9e6d0cabdd6f911d41b06526545cf52930b945b",
+    "cross_veda_parallels.jsonl": "35ec6a82e0444c8497b22308ef8c610413ce79986936991ff198fa8e21311028",
+    "formula_occurrences.jsonl": "787dcdc0a7e57e16540bc75d34b5f81b578369967a56c762e5d4524573531d6a",
+    "formulas.jsonl": "e7bc710ab9b3194a01a2c83251dc65b7d34298d71afbfac4469eb6d7db002671"
   },
   "pipeline_version": "vedagraph-graph-enrichment-v1",
   "stage_reports": [
@@ -26,7 +26,7 @@
         "near_parallels_per_mantra": 13
       },
       "notes": {
-        "candidate_pairs": 17951,
+        "candidate_pairs": 17981,
         "comparable_mantras": 20095,
         "corpus_counts": {
           "AV": 5839,
@@ -34,12 +34,12 @@
           "SV": 1844,
           "YV": 1975
         },
-        "distinct_ngrams": 67616,
+        "distinct_ngrams": 67200,
         "identity_pairs_by_level": {
           "ACCENT_INSENSITIVE": 150,
           "PUNCTUATION_NORMALIZED": 0,
-          "SANDHI_INSENSITIVE": 1538,
-          "SCRIPT_FOLDED": 750,
+          "SANDHI_INSENSITIVE": 1735,
+          "SCRIPT_FOLDED": 795,
           "SOURCE_EXACT": 0,
           "UNICODE_NORMALIZED": 0
         },
@@ -55,42 +55,42 @@
         "near_parallel_edge_ceiling_hit": false,
         "policy_version": "vedagraph-crossveda-parallel-v1",
         "rows_by_match_level": {
-          "": 4229,
+          "": 4045,
           "ACCENT_INSENSITIVE": 150,
-          "SANDHI_INSENSITIVE": 1203,
-          "SCRIPT_FOLDED": 689
+          "SANDHI_INSENSITIVE": 1355,
+          "SCRIPT_FOLDED": 735
         },
         "rows_by_predicate": {
-          "EXACT_PARALLEL_OF": 750,
-          "NEAR_PARALLEL_OF": 3049,
+          "EXACT_PARALLEL_OF": 795,
+          "NEAR_PARALLEL_OF": 2866,
           "REUSES_TEXT_FROM": 1684,
-          "VARIANT_OF": 788
+          "VARIANT_OF": 940
         },
         "rows_by_veda_pair": {
           "AV-RV": 1325,
           "AV-SV": 467,
-          "AV-YV": 210,
+          "AV-YV": 216,
           "RV-SV": 3368,
-          "RV-YV": 662,
-          "SV-YV": 239
+          "RV-YV": 668,
+          "SV-YV": 241
         },
         "run_id": "vedagraph-graph-enrichment-v1:crossveda-parallels:5bf3c9ce73209098",
         "surface_contract": "893 of 1,975 Yajurveda mantras write visarga as an ASCII colon. vedagraph.enrich.surfaces folds it to U+0903 before transliterating; without that fold the identical cross-Veda total is 1,404 rather than 1,538.",
         "timings": {
-          "candidate_seconds": 10.071,
-          "guard_seconds": 0.029,
-          "identity_seconds": 0.109,
-          "scoring_seconds": 1.163,
-          "total_seconds": 12.153
+          "candidate_seconds": 18.207,
+          "guard_seconds": 0.056,
+          "identity_seconds": 0.245,
+          "scoring_seconds": 1.895,
+          "total_seconds": 21.867
         }
       },
-      "produced": 6271,
+      "produced": 6285,
       "rejected": {
-        "below_floor_by_length_bound": 2,
-        "below_floor_by_ngram_bound": 12954,
+        "below_floor_by_length_bound": 3,
+        "below_floor_by_ngram_bound": 12971,
         "below_min_comparable_length": 115,
-        "below_near_parallel_floor": 395,
-        "candidate_already_identical": 1538
+        "below_near_parallel_floor": 393,
+        "candidate_already_identical": 1735
       },
       "stage": "crossveda-parallels"
     },
@@ -98,106 +98,106 @@
       "capped": {},
       "notes": {
         "candidate_mining_floor": 2,
-        "candidates_after_char_floor": 117334,
+        "candidates_after_char_floor": 118883,
         "corpus_counts": {
           "AV": 5839,
           "RV": 10552,
           "SV": 1844,
           "YV": 1975
         },
-        "cross_veda_formulas": 3643,
+        "cross_veda_formulas": 3558,
         "derivation": "word-ngram-apriori-then-sandhi-substring-v1",
-        "forms_with_any_hit_including_probes": 124949,
-        "formulas_before_maximality": 36371,
+        "forms_with_any_hit_including_probes": 126665,
+        "formulas_before_maximality": 37852,
         "formulas_by_veda": {
-          "AV": 2733,
-          "RV": 3954,
-          "SV": 1961,
-          "YV": 1652
+          "AV": 2676,
+          "RV": 3867,
+          "SV": 1893,
+          "YV": 1641
         },
-        "formulas_collapsed_by_maximality": 31546,
-        "mantras_covered": 10574,
-        "maximality_probe_forms": 7615,
-        "maximality_probe_ngrams": 7744,
-        "ngrams_mined": 142710,
-        "occurrence_edges": 22686,
+        "formulas_collapsed_by_maximality": 33123,
+        "mantras_covered": 10584,
+        "maximality_probe_forms": 7782,
+        "maximality_probe_ngrams": 7930,
+        "ngrams_mined": 144450,
+        "occurrence_edges": 22422,
         "occurrences_by_method": {
-          "sandhi_substring": 2109,
-          "word_aligned": 20577
+          "sandhi_substring": 2026,
+          "word_aligned": 20396
         },
         "occurrences_by_veda": {
           "AV": {
-            "sandhi_substring": 304,
-            "word_aligned": 6540
+            "sandhi_substring": 306,
+            "word_aligned": 6477
           },
           "RV": {
-            "sandhi_substring": 584,
-            "word_aligned": 9145
+            "sandhi_substring": 587,
+            "word_aligned": 9037
           },
           "SV": {
             "sandhi_substring": 555,
-            "word_aligned": 2481
+            "word_aligned": 2397
           },
           "YV": {
-            "sandhi_substring": 666,
-            "word_aligned": 2411
+            "sandhi_substring": 578,
+            "word_aligned": 2485
           }
         },
         "run_id": "vedagraph-graph-enrichment-v1:formulas:5f3a96b6a04a2557"
       },
-      "produced": 4825,
+      "produced": 4729,
       "rejected": {
-        "below_occurrence_floor": 80963,
-        "candidate_below_char_floor": 23863,
-        "ngram_below_mining_floor": 212305,
-        "subsumed_by_maximal_formula": 29260,
-        "truncated_by_word_ceiling": 2286
+        "below_occurrence_floor": 81031,
+        "candidate_below_char_floor": 23943,
+        "ngram_below_mining_floor": 211412,
+        "subsumed_by_maximal_formula": 30637,
+        "truncated_by_word_ceiling": 2486
       },
       "stage": "formulas"
     },
     {
       "capped": {
-        "concepts_per_passage": 4859,
+        "concepts_per_passage": 4849,
         "concepts_per_passage:AV": 569,
-        "concepts_per_passage:RV": 3657,
-        "concepts_per_passage:SV": 14,
-        "concepts_per_passage:YV": 619
+        "concepts_per_passage:RV": 3634,
+        "concepts_per_passage:SV": 13,
+        "concepts_per_passage:YV": 633
       },
       "notes": {
         "aliases": {
           "english": 253,
-          "sanskrit_sandhi": 620,
-          "sanskrit_token": 954
+          "sanskrit_sandhi": 613,
+          "sanskrit_token": 946
         },
         "assertions_by_evidence_path": {
-          "english": 34593,
+          "english": 34606,
           "sanskrit-sandhi": 476,
-          "sanskrit-token": 24493
+          "sanskrit-token": 24437
         },
         "concepts": 91,
         "coverage_by_veda": {
           "AV": {
-            "coverage": 0.813,
+            "coverage": 0.8123,
             "mantras": 5839,
-            "with_concept": 4747,
+            "with_concept": 4743,
             "with_translation": 4878
           },
           "RV": {
-            "coverage": 0.9567,
+            "coverage": 0.9565,
             "mantras": 10552,
-            "with_concept": 10095,
+            "with_concept": 10093,
             "with_translation": 10500
           },
           "SV": {
-            "coverage": 0.6871,
+            "coverage": 0.6838,
             "mantras": 1844,
-            "with_concept": 1267,
+            "with_concept": 1261,
             "with_translation": 0
           },
           "YV": {
-            "coverage": 0.9154,
+            "coverage": 0.917,
             "mantras": 1975,
-            "with_concept": 1808,
+            "with_concept": 1811,
             "with_translation": 1903
           }
         },
@@ -206,16 +206,16 @@
           "SV"
         ]
       },
-      "produced": 46508,
+      "produced": 46439,
       "rejected": {},
       "stage": "concepts"
     }
   ],
   "timings_seconds": {
-    "analytics": 0.1,
-    "concepts": 3.96,
-    "cross_veda_parallels": 12.31,
-    "formulas": 7.41,
-    "load_corpus": 5.55
+    "analytics": 0.36,
+    "concepts": 4.61,
+    "cross_veda_parallels": 22.0,
+    "formulas": 15.6,
+    "load_corpus": 14.03
   }
 }

@@ -1,0 +1,153 @@
+{
+  "claim_under_test": "source-reconnaissance.md section 5 table: sa.wikisource gana pages carry notation in 'real Unicode Vedic Extensions, not a font hack'",
+  "population": {
+    "pages_snapshotted": 667,
+    "characters_examined": 1750419,
+    "gana_unit_pages": 657
+  },
+  "verdict": {
+    "real_unicode_not_a_font_hack": "CONFIRMED",
+    "block_is_vedic_extensions": "WRONG",
+    "why": "98.09% of the cantillation marks are in DEVANAGARI EXTENDED U+A8E0-U+A8F1 (106,094 of 108,160); only 1.91% (2,066) are Vedic Extensions tone marks U+1CD0 and U+1CD2. A validator or extractor scoped to the Vedic Extensions block would find 2,066 tone marks and miss 106,094. (The Vedic Extensions block holds 2,200 characters here, but 134 of them are U+1CF2 ARDHAVISARGA, a spacing sign and not a tone.) The project's own data/canonical/samaveda_arcika_v1/source_artifacts.jsonl already recorded the correct block -- 'Devanagari Extended U+A8E1-U+A8E5' -- so it is the reconnaissance table that drifted, not the project's knowledge."
+  },
+  "by_block": {
+    "Devanagari U+0900-097F": 1183089,
+    "Devanagari Extended U+A8E0-A8FF": 107978,
+    "Vedic Extensions U+1CD0-1CFF": 2200,
+    "PRIVATE USE AREA": 14
+  },
+  "by_codepoint": {
+    "U+1CD0": {
+      "count": 601,
+      "name": "VEDIC TONE KARSHANA",
+      "category": "Mn",
+      "counted_as_tone": true
+    },
+    "U+1CD2": {
+      "count": 1465,
+      "name": "VEDIC TONE PRENKHA",
+      "category": "Mn",
+      "counted_as_tone": true
+    },
+    "U+1CF2": {
+      "count": 134,
+      "name": "VEDIC SIGN ARDHAVISARGA",
+      "category": "Lo",
+      "counted_as_tone": false
+    },
+    "U+A8E1": {
+      "count": 26740,
+      "name": "COMBINING DEVANAGARI DIGIT ONE",
+      "category": "Mn",
+      "counted_as_tone": true
+    },
+    "U+A8E2": {
+      "count": 34922,
+      "name": "COMBINING DEVANAGARI DIGIT TWO",
+      "category": "Mn",
+      "counted_as_tone": true
+    },
+    "U+A8E3": {
+      "count": 21533,
+      "name": "COMBINING DEVANAGARI DIGIT THREE",
+      "category": "Mn",
+      "counted_as_tone": true
+    },
+    "U+A8E4": {
+      "count": 779,
+      "name": "COMBINING DEVANAGARI DIGIT FOUR",
+      "category": "Mn",
+      "counted_as_tone": true
+    },
+    "U+A8E5": {
+      "count": 2070,
+      "name": "COMBINING DEVANAGARI DIGIT FIVE",
+      "category": "Mn",
+      "counted_as_tone": true
+    },
+    "U+A8EA": {
+      "count": 78,
+      "name": "COMBINING DEVANAGARI LETTER A",
+      "category": "Mn",
+      "counted_as_tone": true
+    },
+    "U+A8EB": {
+      "count": 551,
+      "name": "COMBINING DEVANAGARI LETTER U",
+      "category": "Mn",
+      "counted_as_tone": true
+    },
+    "U+A8EC": {
+      "count": 134,
+      "name": "COMBINING DEVANAGARI LETTER KA",
+      "category": "Mn",
+      "counted_as_tone": true
+    },
+    "U+A8ED": {
+      "count": 29,
+      "name": "COMBINING DEVANAGARI LETTER NA",
+      "category": "Mn",
+      "counted_as_tone": true
+    },
+    "U+A8EE": {
+      "count": 9,
+      "name": "COMBINING DEVANAGARI LETTER PA",
+      "category": "Mn",
+      "counted_as_tone": true
+    },
+    "U+A8EF": {
+      "count": 19205,
+      "name": "COMBINING DEVANAGARI LETTER RA",
+      "category": "Mn",
+      "counted_as_tone": true
+    },
+    "U+A8F0": {
+      "count": 23,
+      "name": "COMBINING DEVANAGARI LETTER VI",
+      "category": "Mn",
+      "counted_as_tone": true
+    },
+    "U+A8F1": {
+      "count": 21,
+      "name": "COMBINING DEVANAGARI SIGN AVAGRAHA",
+      "category": "Mn",
+      "counted_as_tone": true
+    },
+    "U+A8F2": {
+      "count": 162,
+      "name": "DEVANAGARI SIGN SPACING CANDRABINDU",
+      "category": "Lo",
+      "counted_as_tone": false
+    },
+    "U+A8F3": {
+      "count": 1722,
+      "name": "DEVANAGARI SIGN CANDRABINDU VIRAMA",
+      "category": "Lo",
+      "counted_as_tone": false
+    }
+  },
+  "deliberate_exclusions_tested_by_meaning_not_by_block": {
+    "U+A8F2": "DEVANAGARI SIGN SPACING CANDRABINDU, category Lo. A nasal LETTER. Occurs 162 times. Counting it as tone inflates the count and stripping it corrupts the text.",
+    "U+A8F3": "DEVANAGARI SIGN CANDRABINDU VIRAMA, category Lo. The Samavedic nasal. Occurs 1,722 times. Same hazard.",
+    "U+1CF2": "VEDIC SIGN ARDHAVISARGA, category Lo, 134 occurrences. A sign, not a tone.",
+    "U+1CEA": "VEDIC SIGN ANUSVARA BAHIRGOMUKHA - anusvara, not tone. 0 occurrences here.",
+    "U+1CEC": "VEDIC SIGN ANUSVARA VAMAGOMUKHA WITH TAIL - anusvara, not tone. 0 here.",
+    "U+0301": "COMBINING ACUTE ACCENT - udatta in IAST AND the s-acute consonant in transliteration. 0 occurrences in this Devanagari witness, so the ambiguity does not fire; excluded anyway so it cannot fire later."
+  },
+  "notation_the_codepoint_census_cannot_see": {
+    "finding": "A large part of Kauthuma notation is written INLINE as ordinary Devanagari or ASCII digits after an avagraha, e.g. प्रचो꣢ऽ१२१२ - the melodic figure 1-2-1-2. These are U+0967..U+096F, not combining marks.",
+    "avagraha_digit_runs_in_corpus": 17928,
+    "consequence": "Counting combining marks alone UNDERSTATES the notation. This is the same failure mode as counting a codepoint instead of testing meaning, in the opposite direction."
+  },
+  "private_use_defects_located": {
+    "total_occurrences": 14,
+    "note": "Isolated transcription slips, not an architecture. On the 662 gana pages there are 3; the rest are on the three ancillary word-list pages."
+  },
+  "tone_mark_totals": {
+    "devanagari_extended_U+A8E0_A8F1": 106094,
+    "vedic_extensions_tone_U+1CD0_U+1CD2": 2066,
+    "total_tone_marks": 108160,
+    "devanagari_extended_share_pct": 98.09,
+    "vedic_extensions_share_pct": 1.91
+  }
+}

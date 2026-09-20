@@ -1,0 +1,380 @@
+{
+  "TEST_A2_the_generalisation_that_should_have_been_written_first": {
+    "assumption": "Implicit in TEST A: that five hand-picked pairs are a fair test of whether the partition respects deity identity. Five pairs answer a question about five pairs.",
+    "effect_on_the_refusal": "STRENGTHENS IT, though not via the contradiction. The registry conflict is neutral. The identity-blindness above is not: a deity-community surface would scatter a deity's own declared variant names across different communities, and it would do so structurally rather than occasionally.",
+    "finding_name": "PROJECTION_IDENTITY_BLINDNESS",
+    "no_shared_dedication": 10,
+    "outcome": {
+      "declared_identity_pairs": 10,
+      "pairs": [
+        {
+          "canonical": "VG:DEVATA:AGNIH",
+          "canonical_eligibility": "ELIGIBLE",
+          "canonical_label": "Agni",
+          "outcome": "NOT_TESTABLE_ONE_OR_BOTH_OUTSIDE_THE_PARTITION",
+          "per_method": {
+            "leiden|COSINE": "ONE_OR_BOTH_NOT_PLACED",
+            "leiden|JACCARD": "ONE_OR_BOTH_NOT_PLACED",
+            "leiden|RAW": "ONE_OR_BOTH_NOT_PLACED",
+            "louvain|COSINE": "ONE_OR_BOTH_NOT_PLACED",
+            "louvain|JACCARD": "ONE_OR_BOTH_NOT_PLACED",
+            "louvain|RAW": "ONE_OR_BOTH_NOT_PLACED"
+          },
+          "shared_hymns": 1,
+          "variant": "VG:DEVATA:AGNERATMA",
+          "variant_eligibility": "EXCLUDED_BY_ABSTRACT_RULING",
+          "variant_label": "the self of Agni"
+        },
+        {
+          "canonical": "VG:DEVATA:BHAVAVRTTAM",
+          "canonical_eligibility": "EXCLUDED_BY_ABSTRACT_RULING",
+          "canonical_label": "the course of becoming",
+          "outcome": "NOT_TESTABLE_ONE_OR_BOTH_OUTSIDE_THE_PARTITION",
+          "per_method": {
+            "leiden|COSINE": "ONE_OR_BOTH_NOT_PLACED",
+            "leiden|JACCARD": "ONE_OR_BOTH_NOT_PLACED",
+            "leiden|RAW": "ONE_OR_BOTH_NOT_PLACED",
+            "louvain|COSINE": "ONE_OR_BOTH_NOT_PLACED",
+            "louvain|JACCARD": "ONE_OR_BOTH_NOT_PLACED",
+            "louvain|RAW": "ONE_OR_BOTH_NOT_PLACED"
+          },
+          "shared_hymns": 0,
+          "variant": "VG:DEVATA:BHAVAVRTTHAM",
+          "variant_eligibility": "EXCLUDED_BY_ABSTRACT_RULING",
+          "variant_label": "the course of becoming"
+        },
+        {
+          "canonical": "VG:DEVATA:DADHIKRA",
+          "canonical_eligibility": "ELIGIBLE",
+          "canonical_label": "Dadhikra",
+          "outcome": "SPLIT_BY_EVERY_METHOD",
+          "per_method": {
+            "leiden|COSINE": "SEPARATED",
+            "leiden|JACCARD": "SEPARATED",
+            "leiden|RAW": "SEPARATED",
+            "louvain|COSINE": "SEPARATED",
+            "louvain|JACCARD": "SEPARATED",
+            "louvain|RAW": "SEPARATED"
+          },
+          "shared_hymns": 0,
+          "variant": "VG:DEVATA:DADHIKRAH",
+          "variant_eligibility": "ELIGIBLE",
+          "variant_label": "Dadhikra"
+        },
+        {
+          "canonical": "VG:DEVATA:DAIVYAU-HOTARAU",
+          "canonical_eligibility": "ELIGIBLE",
+          "canonical_label": "the two divine Hotrs",
+          "outcome": "KEPT_TOGETHER_BY_EVERY_METHOD",
+          "per_method": {
+            "leiden|COSINE": "SAME",
+            "leiden|JACCARD": "SAME",
+            "leiden|RAW": "SAME",
+            "louvain|COSINE": "SAME",
+            "louvain|JACCARD": "SAME",
+            "louvain|RAW": "SAME"
+          },
+          "shared_hymns": 0,
+          "variant": "VG:DEVATA:DEVYAU-HOTARAU",
+          "variant_eligibility": "ELIGIBLE",
+          "variant_label": "the two divine Hotrs"
+        },
+        {
+          "canonical": "VG:DEVATA:AGNIH",
+          "canonical_eligibility": "ELIGIBLE",
+          "canonical_label": "Agni",
+          "outcome": "NOT_TESTABLE_ONE_OR_BOTH_OUTSIDE_THE_PARTITION",
+          "per_method": {
+            "leiden|COSINE": "ONE_OR_BOTH_NOT_PLACED",
+            "leiden|JACCARD": "ONE_OR_BOTH_NOT_PLACED",
+            "leiden|RAW": "ONE_OR_BOTH_NOT_PLACED",
+            "louvain|COSINE": "ONE_OR_BOTH_NOT_PLACED",
+            "louvain|JACCARD": "ONE_OR_BOTH_NOT_PLACED",
+            "louvain|RAW": "ONE_OR_BOTH_NOT_PLACED"
+          },
+          "shared_hymns": 0,
+          "variant": "VG:DEVATA:JATAVEDA-AGNIH",
+          "variant_eligibility": "ELIGIBLE",
+          "variant_label": "Agni Jatavedas"
+        },
+        {
+          "canonical": "VG:DEVATA:INDRAH",
+          "canonical_eligibility": "ELIGIBLE",
+          "canonical_label": "Indra",
+          "outcome": "KEPT_TOGETHER_BY_EVERY_METHOD",
+          "per_method": {
+            "leiden|COSINE": "SAME",
+            "leiden|JACCARD": "SAME",
+            "leiden|RAW": "SAME",
+            "louvain|COSINE": "SAME",
+            "louvain|JACCARD": "SAME",
+            "louvain|RAW": "SAME"
+          },
+          "shared_hymns": 0,
+          "variant": "VG:DEVATA:MARUTVANINDRAH",
+          "variant_eligibility": "ELIGIBLE",
+          "variant_label": "Indra accompanied by the Maruts"
+        },
+        {
+          "canonical": "VG:DEVATA:AGNIH",
+          "canonical_eligibility": "ELIGIBLE",
+          "canonical_label": "Agni",
+          "outcome": "SPLIT_BY_EVERY_METHOD",
+          "per_method": {
+            "leiden|COSINE": "SEPARATED",
+            "leiden|JACCARD": "SEPARATED",
+            "leiden|RAW": "SEPARATED",
+            "louvain|COSINE": "SEPARATED",
+            "louvain|JACCARD": "SEPARATED",
+            "louvain|RAW": "SEPARATED"
+          },
+          "shared_hymns": 0,
+          "variant": "VG:DEVATA:PAVAMANO-AGNIH",
+          "variant_eligibility": "ELIGIBLE",
+          "variant_label": "Agni Pavamana"
+        },
+        {
+          "canonical": "VG:DEVATA:AGNIH",
+          "canonical_eligibility": "ELIGIBLE",
+          "canonical_label": "Agni",
+          "outcome": "NOT_TESTABLE_ONE_OR_BOTH_OUTSIDE_THE_PARTITION",
+          "per_method": {
+            "leiden|COSINE": "ONE_OR_BOTH_NOT_PLACED",
+            "leiden|JACCARD": "ONE_OR_BOTH_NOT_PLACED",
+            "leiden|RAW": "ONE_OR_BOTH_NOT_PLACED",
+            "louvain|COSINE": "ONE_OR_BOTH_NOT_PLACED",
+            "louvain|JACCARD": "ONE_OR_BOTH_NOT_PLACED",
+            "louvain|RAW": "ONE_OR_BOTH_NOT_PLACED"
+          },
+          "shared_hymns": 0,
+          "variant": "VG:DEVATA:RAKSOHAGNIH",
+          "variant_eligibility": "ELIGIBLE",
+          "variant_label": "Agni the slayer of demons"
+        },
+        {
+          "canonical": "VG:DEVATA:VAK",
+          "canonical_eligibility": "ELIGIBLE",
+          "canonical_label": "Vac, Speech",
+          "outcome": "SPLIT_BY_EVERY_METHOD",
+          "per_method": {
+            "leiden|COSINE": "SEPARATED",
+            "leiden|JACCARD": "SEPARATED",
+            "leiden|RAW": "SEPARATED",
+            "louvain|COSINE": "SEPARATED",
+            "louvain|JACCARD": "SEPARATED",
+            "louvain|RAW": "SEPARATED"
+          },
+          "shared_hymns": 0,
+          "variant": "VG:DEVATA:SASARPARI-VAK",
+          "variant_eligibility": "ELIGIBLE",
+          "variant_label": "Sasarpari, the Voice"
+        },
+        {
+          "canonical": "VG:DEVATA:VISVEDEVAH",
+          "canonical_eligibility": "ELIGIBLE",
+          "canonical_label": "the All-Gods",
+          "outcome": "NOT_TESTABLE_ONE_OR_BOTH_OUTSIDE_THE_PARTITION",
+          "per_method": {
+            "leiden|COSINE": "ONE_OR_BOTH_NOT_PLACED",
+            "leiden|JACCARD": "ONE_OR_BOTH_NOT_PLACED",
+            "leiden|RAW": "ONE_OR_BOTH_NOT_PLACED",
+            "louvain|COSINE": "ONE_OR_BOTH_NOT_PLACED",
+            "louvain|JACCARD": "ONE_OR_BOTH_NOT_PLACED",
+            "louvain|RAW": "ONE_OR_BOTH_NOT_PLACED"
+          },
+          "shared_hymns": 0,
+          "variant": "VG:DEVATA:VISVE-DEVAH",
+          "variant_eligibility": "ELIGIBLE",
+          "variant_label": "the All-Gods"
+        }
+      ],
+      "split_by_every_method": 3
+    },
+    "pairs_sharing_zero_hymns": 9,
+    "population": 11,
+    "probe": "Sweep EVERY pair the graph declares to be one deity via EPITHET_VARIANT_OF -- all 11 of them -- against all six method consensuses.",
+    "shared_dedication": 1,
+    "the_structural_finding": "10 of the 11 declared-identity pairs share NO hymn at all, so no edge exists between a deity and its own declared epithet-variant. That is not an accident of sparsity, it is what the dedication layer is: a name and its variant are alternative labels for the same slot, so the Anukramani never dedicates a hymn to both. THE CO-DEDICATION PROJECTION IS THEREFORE BLIND TO DEITY IDENTITY BY CONSTRUCTION -- a variant can only ever be joined to its canonical form by coincidence of neighbourhood, and 4 of the 6 testable pairs are not. This is a stronger and entirely model-internal version of the argument the withdrawn Brhaspati claim was reaching for, and it rests on the graph's own EPITHET_VARIANT_OF rather than on any scholarly prior.",
+    "verdict": "A NEW FINDING THE HAND-PICKED TEST MISSED, AND IT CUTS BOTH WAYS. Soma Pavamana is linked to Soma by EPITHET_VARIANT_OF -- the graph's own assertion that they are one deity -- and every method separates them. So by the graph's identity model there IS a real split-identity case, and it is not the one the report claimed. But the registry contradicts itself here: DEVATA_TAXONOMY_V1 states that Soma and Soma Pavamana 'differ substantively, not just by key', that Pavamana carries RITUAL_SUBSTANCE alone while Soma adds COSMIC_SOVEREIGN, and that their aliases are 'partitioned deliberately so the two do not silently collect each other's mantras'. The curation overlay holds them apart; the graph edge declares them the same. Both cannot be followed, and which one is right decides whether this is a partition defect or correct behaviour. Handed to the lead as a registry contradiction of exactly the shape DEVATA_TAXONOMY_V1 already flagged for Mitravarunau."
+  },
+  "TEST_A_the_load_bearing_one": {
+    "ORIGINAL CLAIM": "withdrawn",
+    "REASON": "contradicted by the graph's own HIGH-confidence curation note",
+    "assumption": "That Brhaspati and Brahmanaspati are one deity, so a partition separating them is defective. This single check was what moved the verdict from 'unstable' to 'do not publish'.",
+    "curation_confidence_on_both_nodes": "HIGH",
+    "effect_on_the_refusal": "SURVIVES, on better evidence and one fewer claim.",
+    "expectation": "If they share no hymn and have disjoint neighbourhoods, no co-dedication method could join them and the diagnostic is measuring the projection's blindness rather than the method's failure.",
+    "outcome": {
+      "brahmanaspati_curation_note_verbatim": "The name states both axes directly. The tradition largely identifies him with Brhaspati; the registry pins them as two entities and this overlay keeps them apart rather than asserting the identification. The bare stem brahmanaspati scores zero token hits and is not listed.",
+      "brahmanaspati_dedications": 48,
+      "brahmanaspati_hymns": 8,
+      "brahmanaspati_partners_from_the_weapons_hymn_RV_6_75": 15,
+      "brahmanaspati_partners_in_the_reference_projection": 18,
+      "brhaspati_curation_note_verbatim": "PRIESTLY and SPEECH are his standing character as the brahman of the gods. WARRIOR is not padding: the splitting of Vala by his roar is one of the two myths he is defined by, and it is an act of force. The bare stem brhaspati scores zero token hits and is not listed. No epithets are given: ganapati was probed and returns zero token hits, and brahmanaspati is a separate registry entity rather than an epithet slot.",
+      "epithet_variant_of_edge_between_them": false,
+      "epithet_variant_of_edges_that_do_exist": 10,
+      "neighbourhood_jaccard": 0.0667,
+      "registry_declares_them_distinct_on_purpose": true,
+      "shared_hymn_keys": [
+        "VG:RV:SAK:M02:S023",
+        "VG:RV:SAK:M02:S024"
+      ],
+      "shared_hymns": 2
+    },
+    "probe": "Read both nodes' curated structure, aliases and curation_note; look for any declared relation between them; enumerate every EPITHET_VARIANT_OF edge in the graph; measure their shared hymns and the Jaccard overlap of their co-dedication neighbourhoods.",
+    "verdict": "THE ASSUMPTION WAS WRONG AND THE CLAIM IS WITHDRAWN. A direct edge does exist (RV 2.23 and 2.24), so it is not that no method could join them. But the registry pins the two as separate entities deliberately and says so in the node's own curation_note, the graph has a declared EPITHET_VARIANT_OF vocabulary for deity identity from which these two are deliberately absent, and the dedication evidence separates them on its own terms: neighbourhood Jaccard 0.0645, 2 shared partners out of 31. Grading the partition defective for respecting the project's own model was an imported prior masquerading as a measurement. This is the sixth case, and it was ours.",
+    "what_the_probe_established_instead": "11 of Brahmanaspati's 18 co-dedication partners come from the single hymn RV 6.75. A deity with 48 dedications across 8 hymns has his community decided by one of them. That is the single-hymn finding demonstrated on a well-attested individual deity rather than on a two-member community, it needs no identity claim, and it is a stronger plank than the one it replaces.",
+    "why_it_carries_most_weight": "It is an ENTITY IDENTITY assumption, and it was the only plank of the refusal that needed no statistics, so it was doing the most rhetorical work with the least measurement behind it."
+  },
+  "TEST_B_degree_zero_collateral": {
+    "assumption": "That the 34 degree-zero eligible deities are genuinely isolated in the source, rather than isolated because cleaning removed their only partners.",
+    "outcome": {
+      "cases": [
+        {
+          "dedications": 1,
+          "devata_key": "VG:DEVATA:AGNISUYAU",
+          "label_en": "Agni and Surya",
+          "partners_lost": [
+            {
+              "devata_key": "VG:DEVATA:DANASTUTIH",
+              "label_en": "praise of a patron's gift",
+              "removed_because": "EXCLUDED_NOT_A_DEITY"
+            }
+          ]
+        },
+        {
+          "dedications": 4,
+          "devata_key": "VG:DEVATA:AKSAH",
+          "label_en": "the dice",
+          "partners_lost": [
+            {
+              "devata_key": "VG:DEVATA:AKSAKITAVANINDA",
+              "label_en": "censure of the dice and the gambler",
+              "removed_because": "EXCLUDED_BY_ABSTRACT_RULING"
+            },
+            {
+              "devata_key": "VG:DEVATA:KRSIH",
+              "label_en": "ploughing",
+              "removed_because": "EXCLUDED_BY_ABSTRACT_RULING"
+            }
+          ]
+        },
+        {
+          "dedications": 9,
+          "devata_key": "VG:DEVATA:URVASI",
+          "label_en": "Urvasi",
+          "partners_lost": [
+            {
+              "devata_key": "VG:DEVATA:PURURAVAH",
+              "label_en": "Pururavas",
+              "removed_because": "EXCLUDED_NOT_A_DEITY"
+            }
+          ]
+        }
+      ],
+      "collateral_of_our_own_filters": 3,
+      "degree_zero_under_the_reference_variant": 34,
+      "genuinely_isolated_in_every_variant": 31
+    },
+    "probe": "Rebuild the projection over the UNCLEANED 214-node population and ask, for each of the 34, whether it had any partner there.",
+    "verdict": "PARTLY CONFIRMED, and it is a real correction. 3 of the 34 are collateral: Urvasi's only co-dedicatee in the entire Rigveda is Pururavas, a HUMAN exclusion; Agni-Surya's only partner was the danastuti label; and Aksah, the dice, lost both of its partners to this agent's own abstract rulings. For those three, 'unplaceable' is a consequence of our filter, not a silence in the source, and they are now typed apart from the other 31."
+  },
+  "TEST_C_projection_uniformity": {
+    "assumption": "That hymn-scope co-dedication recovers the source's granularity evenly, so the projection describes the Rigveda rather than part of it.",
+    "finding_name": "PROJECTION_CORPUS_SECTION_IMBALANCE",
+    "mandala_9_is_not_absent": "All 114 of its hymns are present, dedicated and assessed. What is low is the projection's usable signal there. Calling the mandala absent would be the false zero this campaign exists to prevent.",
+    "outcome": {
+      "max_share": 0.2069,
+      "min_share": 0.0263,
+      "per_mandala": {
+        "M01": {
+          "hymns": 191,
+          "multi_dedicatee_hymns": 22,
+          "share": 0.1152
+        },
+        "M02": {
+          "hymns": 43,
+          "multi_dedicatee_hymns": 8,
+          "share": 0.186
+        },
+        "M03": {
+          "hymns": 62,
+          "multi_dedicatee_hymns": 6,
+          "share": 0.0968
+        },
+        "M04": {
+          "hymns": 58,
+          "multi_dedicatee_hymns": 12,
+          "share": 0.2069
+        },
+        "M05": {
+          "hymns": 87,
+          "multi_dedicatee_hymns": 9,
+          "share": 0.1034
+        },
+        "M06": {
+          "hymns": 75,
+          "multi_dedicatee_hymns": 4,
+          "share": 0.0533
+        },
+        "M07": {
+          "hymns": 104,
+          "multi_dedicatee_hymns": 21,
+          "share": 0.2019
+        },
+        "M08": {
+          "hymns": 103,
+          "multi_dedicatee_hymns": 18,
+          "share": 0.1748
+        },
+        "M09": {
+          "hymns": 114,
+          "multi_dedicatee_hymns": 3,
+          "share": 0.0263
+        },
+        "M10": {
+          "hymns": 191,
+          "multi_dedicatee_hymns": 24,
+          "share": 0.1257
+        }
+      },
+      "spread_ratio": 7.9
+    },
+    "probe": "Multi-dedicatee hymn share per mandala.",
+    "recorded_figures_the_lead_s_measurement_over_all_214_devata": {
+      "mandala_9": {
+        "hymns": 114,
+        "multi_dedicatee_hymns": 3
+      },
+      "maximum": 0.272,
+      "maximum_section": "mandala 8",
+      "minimum": 0.026,
+      "minimum_section": "mandala 9",
+      "spread": "approximately tenfold"
+    },
+    "verdict": "CONFIRMED AS A REAL LIMIT, recorded as PROJECTION_CORPUS_SECTION_IMBALANCE. The recorded figures are the lead's independent measurement over all 214 :Devata: maximum 0.272 at mandala 8, minimum 0.026 at mandala 9, an approximately tenfold spread, with mandala 9 carrying 114 hymns and 3 multi-dedicatee hymns. Over the 157 eligible deities the maximum moves to mandala 4 at 0.207 and mandala 8 falls to 0.175, a 7.9-fold spread against the same minimum -- both correct over their own population. The difference is itself a finding: cleaning removes 10 multi-dedicatee hymns from mandala 8, where the danastuti labels concentrate, and none at all from mandala 9. The projection has very low usable signal in mandala 9 -- NOT an absent mandala; all 114 hymns are present, dedicated and assessed."
+  },
+  "TEST_D_the_null_marker": {
+    "assumption": "That excluding VG:DEVATA:LINGOKTAH -- the Anukramani's own lingokta deferral marker, materialised as a deity node -- was a precaution rather than a necessity.",
+    "outcome": {
+      "community_in_V_ALL": 5,
+      "degree_in_V_ALL": 5,
+      "distinct_communities_among_its_partners": 3,
+      "hymns": [
+        "VG:RV:SAK:M01:S136",
+        "VG:RV:SAK:M02:S032"
+      ],
+      "partners": [
+        "VG:DEVATA:DYAVAPRTHIVYAU",
+        "VG:DEVATA:INDRAH",
+        "VG:DEVATA:MITRAVARUNAU",
+        "VG:DEVATA:RAKA",
+        "VG:DEVATA:SINIVALI"
+      ]
+    },
+    "probe": "Place it in the V-ALL projection, where it is not excluded, and see whether it joins a community and how many communities its partners span.",
+    "verdict": "CONFIRMED AND WORSE THAN STATED. It is not a stray singleton: it carries 5 edges and its partners span 3 different communities, so a null value sits in the projection as an inter-community BRIDGE -- the position where a spurious node does the most damage to a partition. It is excluded from the reference partition, so no published figure here is affected, but retiring the node is now a stronger recommendation than it was."
+  },
+  "net_effect": "One claim withdrawn, three new limits found, and the refusal ends up on firmer ground than it started. The publication verdict is unchanged and now rests on: ARI 0.013 between the dedication and mention projections; weighting sensitivity 0.584 to 0.879; 6 of 12 communities being one hymn's cast list and 5 of 12 being whole connected components; a well-attested deity's community decided by 1 of his 8 hymns (15 of Brahmanaspati's 18 partners come from RV 6.75); PROJECTION_CORPUS_SECTION_IMBALANCE, an approximately tenfold spread in usable signal across the mandalas, 0.272 at mandala 8 against 0.026 at mandala 9; and PROJECTION_IDENTITY_BLINDNESS, population 11 / no_shared_dedication 10 / shared_dedication 1. Not one of those is a scholarly prior: the last is entailed by the graph's own identity vocabulary and this projection's definition, which is precisely why it replaces the withdrawn claim rather than restating it.",
+  "why": "Mandatory preflight before Wave 3. The campaign has found five cases where an apparent source absence was our own addressing or modelling error, and the instruction was to assume a sixth. There was one, and it was in this agent's own headline."
+}

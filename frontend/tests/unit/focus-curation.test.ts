@@ -81,7 +81,9 @@ function realWorld(): Promise<{ world: World; labels: WorldLabels }> {
 
         const previous = globalThis.fetch;
         globalThis.fetch = (async (url: RequestInfo | URL) => {
-            const path = String(url);
+            /* The loader versions these addresses with the export hash, so the stub matches the
+               filename rather than the whole URL. */
+            const path = String(url).split("?")[0];
             if (path.endsWith("world.bin")) {
                 return { ok: true, arrayBuffer: async () => buffer } as unknown as Response;
             }
@@ -112,6 +114,8 @@ function nodeById(labels: WorldLabels, id: string): number {
 }
 
 const INDRA = "VG:DEVATA:INDRAH";
+/* The worst case for coverage, and not the same node as the busiest one. */
+const AGNI = "VG:DEVATA:AGNIH";
 
 /* ------------------------------------------------------------------ the families - */
 
@@ -170,9 +174,19 @@ describe("the budgets", () => {
          */
         expect(focusBudgetForBand(390, 434.4)).toBe(FOCUS_BUDGET_COMPACT);
         expect(focusBudgetForBand(390, 183.1)).toBe(FOCUS_BUDGET_CRAMPED);
-        // The ring arithmetic the drop is derived from, not a hardcoded 250px threshold.
+        /* The ring arithmetic the drop is derived from, and no hardcoded threshold at all.
+           The band at which the compact budget first becomes seatable is found by walking the
+           arithmetic, so it moves when the budget is re-derived. The literal 250px that used
+           to stand here went stale the moment the coverage floor moved off 16, and a literal
+           asserts nothing about derivation anyway - the inverse below is what does. */
         expect(focusRingSeats(183.1)).toBe(11);
-        expect(focusRingSeats(250)).toBeGreaterThanOrEqual(FOCUS_BUDGET_COMPACT);
+        let compactBand = 1;
+        while (focusRingSeats(compactBand) < FOCUS_BUDGET_COMPACT) compactBand += 1;
+        expect(focusRingSeats(compactBand)).toBeGreaterThanOrEqual(FOCUS_BUDGET_COMPACT);
+        expect(focusRingSeats(compactBand - 1)).toBeLessThan(FOCUS_BUDGET_COMPACT);
+        // At that band the coverage floor binds; one pixel below it, geometry binds instead.
+        expect(focusBudgetForBand(1440, compactBand)).toBe(FOCUS_BUDGET_COMPACT);
+        expect(focusBudgetForBand(1440, compactBand - 1)).toBeLessThan(FOCUS_BUDGET_COMPACT);
 
         // No phone is assumed: a short band on a wide window is still a short band.
         expect(focusBudgetForBand(1440, 900)).toBe(FOCUS_BUDGET);
@@ -192,23 +206,47 @@ describe("the budgets", () => {
         expect(expandFocusBudget(FOCUS_BUDGET_MAX - 1)).toBe(FOCUS_BUDGET_MAX);
     });
 
-    it("shows every relationship kind Indra has at the compact budget", async () => {
+    it("shows every relationship kind and group the worst case has at the compact budget", async () => {
         /*
-         * 16 is the measured coverage floor: over the 335 nodes the curation engages on, the
-         * smallest budget still showing every predicate, family and node group is 4 at the
-         * median, 12 at the 99th percentile, and 16 at the single worst case, which is Indra.
-         * If this fails, 16 has stopped being the floor and the constant is no longer derived.
+         * 22 is the measured coverage floor: over the 471 nodes the curation engages on, the
+         * smallest budget still showing every predicate, family and node group is 3 at the
+         * median, 14 at the 99th percentile, and 22 at the single worst case, which is Agni.
+         * If this fails, 22 has stopped being the floor and the constant is no longer derived.
+         *
+         * Both deities are asserted because they bind on different axes and only one of them
+         * is the floor. Indra and Agni each lose HAS_DEVATA at 16, so predicate coverage on
+         * its own would put the budget at 17; Agni additionally has `thing` and
+         * `unresolved-deity` neighbours that no scene below 22 reaches. Asserting Indra alone
+         * is what let the budget sit at 17 while Agni was quietly missing two whole groups.
          */
         const { world, labels } = await realWorld();
-        const root = nodeById(labels, INDRA);
-        const everyPredicate = new Set<string>();
-        for (const edge of edgesOf(world, root)) {
-            everyPredicate.add(world.manifest.edgeTypes[world.edgeType[edge]]);
+        for (const id of [INDRA, AGNI]) {
+            const root = nodeById(labels, id);
+            const everyPredicate = new Set<string>();
+            for (const edge of edgesOf(world, root)) {
+                everyPredicate.add(world.manifest.edgeTypes[world.edgeType[edge]]);
+            }
+            const everyGroup = new Set<string>();
+            for (const neighbour of neighboursOf(world, root)) {
+                everyGroup.add(world.manifest.groups[world.nodeGroup[neighbour]]);
+            }
+            const selection = selectFocus(world, labels, root, FOCUS_BUDGET_COMPACT);
+            const covered = new Set(selection.shown.flatMap((n) => n.predicates));
+            const coveredGroups = new Set(selection.shown.map((n) => n.group));
+            for (const predicate of everyPredicate) expect(covered, id).toContain(predicate);
+            for (const group of everyGroup) expect(coveredGroups, id).toContain(group);
+            expect(everyPredicate.size).toBeGreaterThanOrEqual(13);
         }
-        const selection = selectFocus(world, labels, root, FOCUS_BUDGET_COMPACT);
-        const covered = new Set(selection.shown.flatMap((neighbour) => neighbour.predicates));
-        for (const predicate of everyPredicate) expect(covered).toContain(predicate);
-        expect(everyPredicate.size).toBeGreaterThanOrEqual(13);
+        /* Derived, not merely sufficient. One budget lower and the worst case loses a group;
+           without this the constant could drift upward unnoticed and still pass. */
+        const agni = nodeById(labels, AGNI);
+        const groups = new Set<string>();
+        for (const neighbour of neighboursOf(world, agni)) {
+            groups.add(world.manifest.groups[world.nodeGroup[neighbour]]);
+        }
+        const tighter = selectFocus(world, labels, agni, FOCUS_BUDGET_COMPACT - 1);
+        const reached = new Set(tighter.shown.map((neighbour) => neighbour.group));
+        expect([...groups].some((group) => !reached.has(group))).toBe(true);
     });
 });
 
@@ -309,6 +347,106 @@ describe("choosing what to draw", () => {
         for (const neighbour of derived) {
             expect(["PREDICATE", "CATEGORY", "CONSTELLATION", "PINNED"]).toContain(neighbour.reason);
         }
+    });
+
+    /*
+     * ------------------------------------------------------------------------------------
+     * The scene a reader gets when they click a deity.
+     *
+     * Reported after the completeness campaign: "clicking Indra yields approximately one
+     * useful connection where the older product used to expose many". Measured, the
+     * neighbourhood was never one node - it was forty, of which twenty-one were verses and
+     * evidence records and six were other deities. That is a faithful picture of the degree
+     * distribution and a poor answer to "what is Indra connected to", and it got worse
+     * rather than better when the public-identity repair restored 35,131 semantic-assertion
+     * nodes to the export and handed the fill round 820 new candidates on Indra alone.
+     *
+     * These pin the shape of the repair rather than its numbers: subjects outnumber
+     * apparatus, the apparatus keeps its tighter ceilings, and the sparse case still fills.
+     * ------------------------------------------------------------------------------------
+     */
+
+    /** Groups that are Vedic subject matter, as opposed to apparatus around it. */
+    const SUBJECT_GROUPS = new Set([
+        "deity",
+        "person",
+        "idea",
+        "rite",
+        "thing",
+        "wording",
+        "unresolved-deity",
+    ]);
+
+    const MAJOR_DEITIES = [
+        "VG:DEVATA:INDRAH",
+        "VG:DEVATA:VARUNAH",
+        "VG:DEVATA:AGNIH",
+        "VG:DEVATA:SOMAH",
+        "VG:DEVATA:MARUTAH",
+    ];
+
+    for (const id of MAJOR_DEITIES) {
+        it(`${id} is drawn as a neighbourhood of subjects, not of verses`, async () => {
+            const { world, labels } = await realWorld();
+            const selection = selectFocus(
+                world,
+                labels,
+                nodeById(labels, id),
+                FOCUS_BUDGET,
+            );
+            const counts = new Map<string, number>();
+            for (const neighbour of selection.shown) {
+                counts.set(neighbour.group, (counts.get(neighbour.group) ?? 0) + 1);
+            }
+            const subjects = [...counts.entries()]
+                .filter(([group]) => SUBJECT_GROUPS.has(group))
+                .reduce((total, [, count]) => total + count, 0);
+
+            const shape = [...counts.entries()].map(([g, c]) => `${g}:${c}`).join(" ");
+            expect(subjects, `${id} drew ${shape}`).toBeGreaterThan(selection.shown.length / 2);
+
+            /*
+             * Against the general ceiling, not the tight one.
+             *
+             * `groupCeiling("passage")` is 0.15 and governs the *fill* round; the rank
+             * round that follows it deliberately relaxes to GROUP_CEILING once every
+             * subject group is at its own cap, because leaving seats empty beside four
+             * thousand available verses is not a better scene. Asserting the tight figure
+             * here would pin an internal round rather than what a reader sees, and it
+             * fails on Varuna, who has 12 deities, 12 ideas and nothing else to give the
+             * remaining seats to.
+             */
+            const general = Math.floor(FOCUS_BUDGET * GROUP_CEILING);
+            expect(counts.get("passage") ?? 0, shape).toBeLessThanOrEqual(general);
+            expect(counts.get("record") ?? 0, shape).toBeLessThanOrEqual(general);
+
+            /* More than one *kind* of subject, which is the assertion a count survives: a
+               scene of forty deities would pass the line above and still be a star. */
+            const subjectKinds = [...counts.keys()].filter((group) =>
+                SUBJECT_GROUPS.has(group),
+            );
+            expect(subjectKinds.length, shape).toBeGreaterThan(1);
+
+            /* And more than one kind of relationship, for the same reason. */
+            const predicates = new Set(
+                selection.shown.flatMap((neighbour) => neighbour.predicates),
+            );
+            expect(predicates.size, `${id} drew predicates ${[...predicates]}`).toBeGreaterThan(1);
+        });
+    }
+
+    it("still fills the scene for a subject whose neighbours are all of one kind", async () => {
+        /*
+         * Every one of the 729 seers is attached to passages and to nothing else, and so are
+         * the metres. A ceiling meant to protect diversity has nothing to protect there, and
+         * an early version of this repair drew such a subject twelve neighbours out of a
+         * possible forty while reporting the other 824 as hidden.
+         */
+        const { world, labels } = await realWorld();
+        const root = nodeById(labels, "VG:RISHI:MAITRAVARUNIRVASISTHAH");
+        const selection = selectFocus(world, labels, root, FOCUS_BUDGET);
+        expect(selection.total).toBeGreaterThan(FOCUS_BUDGET);
+        expect(selection.shown.length).toBe(FOCUS_BUDGET);
     });
 
     it("only ever adds when the reader asks for more", async () => {
@@ -513,8 +651,8 @@ describe("the lines drawn", () => {
 describe("the family rows", () => {
     it("renders an absent family as an absent row rather than omitting it", async () => {
         /*
-         * The hard requirement. Five of the twelve families are absent on Indra - PARALLEL,
-         * FORMULA, RITE, PROSODY and CONTAINMENT - and a sidebar listing only his seven present
+         * The hard requirement. Four of the twelve families are absent on Indra - PARALLEL,
+         * FORMULA, PROSODY and CONTAINMENT - and a sidebar listing only his present
          * families reads as a complete account, from which a reader infers that Indra has no
          * metre. What is true is that metre is a property of a passage and no deity node in this
          * graph carries one: a fact about the shape of the record, not about Indra.
@@ -533,7 +671,7 @@ describe("the family rows", () => {
         }
         const absent = rows.filter((row) => !row.present);
         expect(absent.map((row) => row.family).sort()).toEqual(
-            ["CONTAINMENT", "FORMULA", "PARALLEL", "PROSODY", "RITE"].sort(),
+            ["CONTAINMENT", "FORMULA", "PARALLEL", "PROSODY"].sort(),
         );
         for (const row of absent) {
             expect(row.edges).toBe(0);

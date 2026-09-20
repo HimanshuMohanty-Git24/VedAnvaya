@@ -1,0 +1,273 @@
+{
+  "proof_id": "DEVATA_ONLY_ROLE_ENDPOINT_COST",
+  "claim": "The :Devata-only range on ASSERTION_AGENT and ASSERTION_TARGET, and the absence of any relationship type for the other three declared roles, make most of a semantic-role layer unrepresentable.",
+  "measured_at": "2026-09-15",
+  "side_one_the_live_graph": {
+    "existing_rule_layer": {
+      "assertions": 2406,
+      "patient_string": 1364,
+      "instrument_string": 366,
+      "beneficiary_string": 356,
+      "location_string": 225,
+      "target_edges": 0,
+      "agent_edges": 2406
+    },
+    "assertion_role_relationship_types_in_schema": [
+      "ASSERTION_AGENT",
+      "ASSERTION_PREDICATE",
+      "ASSERTION_TARGET"
+    ],
+    "endpoint_labels_observed": {
+      "ASSERTION_AGENT": [
+        {
+          "labels": [
+            "Devata"
+          ],
+          "edges": 2502
+        }
+      ],
+      "ASSERTION_TARGET": [
+        {
+          "labels": [
+            "Devata"
+          ],
+          "edges": 799
+        }
+      ],
+      "ASSERTION_PREDICATE": [
+        {
+          "labels": [
+            "ActionPredicate"
+          ],
+          "edges": 2672
+        }
+      ]
+    },
+    "current_slot_matrix": [
+      {
+        "agent": true,
+        "target": false,
+        "predicate": true,
+        "c": 2406
+      },
+      {
+        "agent": false,
+        "target": false,
+        "predicate": false,
+        "c": 1522
+      },
+      {
+        "agent": false,
+        "target": true,
+        "predicate": false,
+        "c": 575
+      },
+      {
+        "agent": false,
+        "target": true,
+        "predicate": true,
+        "c": 156
+      },
+      {
+        "agent": false,
+        "target": false,
+        "predicate": true,
+        "c": 110
+      },
+      {
+        "agent": true,
+        "target": false,
+        "predicate": false,
+        "c": 89
+      },
+      {
+        "agent": true,
+        "target": true,
+        "predicate": false,
+        "c": 7
+      }
+    ]
+  },
+  "side_one_reading": "The layer already in the graph hit this wall and worked around it in the worst possible way. Its 2,406 MORPHOLOGY_RULE assertions carry 1,364 patients, 366 instruments, 356 beneficiaries and 225 locations as opaque STRING PROPERTIES on the assertion node, and 0 edges for any of them, because there is no relationship type that could hold them and ASSERTION_TARGET would have required the filler to be a deity. 2,311 role fillers are therefore present in the data and reachable by no traversal. That is not a data gap; it is the schema telling a pipeline to write prose.",
+  "side_two_this_artifact": {
+    "total_role_fillers": 51231,
+    "by_filler_class": {
+      "DEITY": 4138,
+      "UNREGISTERED_NOMINAL": 31828,
+      "PRONOUN_UNRESOLVED": 6168,
+      "CONCEPT_NODE": 5681,
+      "RITUAL_PARTICIPANT_PRONOUN": 3416
+    },
+    "by_role": {
+      "PATIENT": 18345,
+      "AGENT": 16539,
+      "INSTRUMENT": 4728,
+      "LOCATION": 3352,
+      "GOAL": 3072,
+      "BENEFICIARY": 4182,
+      "SOURCE": 1013
+    },
+    "role_by_class": {
+      "PATIENT|DEITY": 898,
+      "PATIENT|UNREGISTERED_NOMINAL": 11299,
+      "AGENT|PRONOUN_UNRESOLVED": 2250,
+      "INSTRUMENT|DEITY": 162,
+      "PATIENT|CONCEPT_NODE": 2235,
+      "LOCATION|UNREGISTERED_NOMINAL": 2501,
+      "AGENT|UNREGISTERED_NOMINAL": 10628,
+      "INSTRUMENT|UNREGISTERED_NOMINAL": 2895,
+      "AGENT|DEITY": 2544,
+      "GOAL|RITUAL_PARTICIPANT_PRONOUN": 255,
+      "BENEFICIARY|CONCEPT_NODE": 385,
+      "BENEFICIARY|UNREGISTERED_NOMINAL": 1902,
+      "PATIENT|RITUAL_PARTICIPANT_PRONOUN": 1501,
+      "GOAL|UNREGISTERED_NOMINAL": 1882,
+      "INSTRUMENT|CONCEPT_NODE": 1108,
+      "GOAL|CONCEPT_NODE": 416,
+      "LOCATION|CONCEPT_NODE": 398,
+      "BENEFICIARY|PRONOUN_UNRESOLVED": 310,
+      "BENEFICIARY|DEITY": 266,
+      "BENEFICIARY|RITUAL_PARTICIPANT_PRONOUN": 1319,
+      "AGENT|CONCEPT_NODE": 1037,
+      "PATIENT|PRONOUN_UNRESOLVED": 2412,
+      "LOCATION|PRONOUN_UNRESOLVED": 244,
+      "GOAL|DEITY": 133,
+      "SOURCE|CONCEPT_NODE": 102,
+      "GOAL|PRONOUN_UNRESOLVED": 386,
+      "SOURCE|UNREGISTERED_NOMINAL": 721,
+      "INSTRUMENT|PRONOUN_UNRESOLVED": 509,
+      "LOCATION|RITUAL_PARTICIPANT_PRONOUN": 112,
+      "SOURCE|RITUAL_PARTICIPANT_PRONOUN": 95,
+      "LOCATION|DEITY": 97,
+      "SOURCE|DEITY": 38,
+      "INSTRUMENT|RITUAL_PARTICIPANT_PRONOUN": 54,
+      "SOURCE|PRONOUN_UNRESOLVED": 57,
+      "AGENT|RITUAL_PARTICIPANT_PRONOUN": 80
+    },
+    "distinct_entity_keys_referenced": 118
+  },
+  "side_two_reading": {
+    "total_role_fillers": 51231,
+    "representable_today": 4138,
+    "representable_today_share": 0.0808,
+    "unrepresentable_today": 47093,
+    "unrepresentable_today_share": 0.9192,
+    "layer_one_no_relationship_type_exists_for_the_role": {
+      "fillers": 16347,
+      "share": 0.3191,
+      "roles": {
+        "BENEFICIARY": 4182,
+        "INSTRUMENT": 4728,
+        "LOCATION": 3352,
+        "SOURCE": 1013,
+        "GOAL": 3072
+      },
+      "note": "BENEFICIARY, INSTRUMENT and LOCATION are declared roles in data/registry/action_predicates.yaml and appear in the argument_frame of GRANTS, SLAYS, POURS, ESTABLISHES, CREATES, CARRIES, OFFERS, SPEAKS, MOVES_TO, FLOWS, SHINES and DWELLS. The schema has no relationship type for any of them, whatever the endpoint. SOURCE and GOAL are this agent's proposals and are counted apart."
+    },
+    "layer_two_the_edge_type_exists_but_the_range_is_Devata": {
+      "agent_and_patient_fillers": 34884,
+      "of_which_a_deity": 3442,
+      "unattachable": 31442,
+      "share_unattachable": 0.9013
+    },
+    "what_a_wider_range_would_immediately_reach": {
+      "fillers_resolving_to_an_existing_Concept_or_DomainEntity_node": 5681,
+      "distinct_entity_keys": 118,
+      "devata_keys_resolved_in_the_live_graph": "37 of 37",
+      "concept_keys_resolved_in_the_live_graph": "81 of 81",
+      "concept_node_label_sets": {
+        "Concept": 21,
+        "Animal|Concept": 2,
+        "Concept|PhilosophicalConcept": 12,
+        "Concept|Offering|Substance": 2,
+        "Concept|CosmicEntity": 2,
+        "Concept|Object": 4,
+        "Animal|Concept|Offering": 3,
+        "Concept|Object|Weapon": 2,
+        "Concept|NaturalPhenomenon": 8,
+        "Concept|Offering": 2,
+        "Action|Concept": 5,
+        "Concept|Place": 3,
+        "Concept|Metal|Substance": 1,
+        "Concept|RitualRole": 1,
+        "Concept|Quality": 3,
+        "Concept|Substance": 2,
+        "Concept|Plant": 2,
+        "Concept|Condition": 1,
+        "Concept|Place|River": 1,
+        "Concept|Ritual": 2,
+        "Concept|State": 1,
+        "Concept|Condition|State": 1
+      },
+      "note": "Every entity key this artifact references was resolved against the live graph. None is invented; all 118 already exist. The endpoints a widened range would need are already in the database."
+    },
+    "the_class_the_range_cannot_express_at_all": {
+      "ritual_participant_pronoun_fillers": 3416,
+      "of_which_BENEFICIARY": 1319,
+      "of_which_PATIENT": 1501,
+      "of_which_GOAL": 255,
+      "reading": "These are the first- and second-person participants: the worshipper and the addressed god. 'Grant to us' has a recipient and it is not a deity. A role layer whose endpoints are deities can say that a god acts, and never that a god acts FOR SOMEONE, which is most of what the Samhitas say."
+    }
+  },
+  "proposed_additive_extension": {
+    "principle": "Additive only. No existing relationship type changes name, direction or range; no existing edge is rewritten. The current 4,865 assertions and their 5,973 role and predicate edges keep working unchanged.",
+    "one_new_label": {
+      "label": ":RoleFiller",
+      "why": "The alternative is widening ASSERTION_AGENT's range to a union of Devata, Concept, DomainEntity and something to hold a pronoun, which leaves the range open-ended and unenforceable -- and an unenforceable range is how the attribution axis in this project came to have three disagreeing writers. One reified node per filler keeps the range closed at a single label and carries the evidence the role rests on, including the surface and case that make it auditable.",
+      "properties": [
+        "role",
+        "surface",
+        "lemma",
+        "case",
+        "upos",
+        "filler_type",
+        "proposed_role",
+        "evidence",
+        "derivation"
+      ]
+    },
+    "new_relationship_types": [
+      {
+        "type": "ASSERTION_ROLE",
+        "from": ":SemanticAssertion",
+        "to": ":RoleFiller",
+        "cardinality": "0..n",
+        "note": "one per filler. The role is a property of the node, so adding SOURCE, GOAL or any later role needs no schema change and no migration."
+      },
+      {
+        "type": "ROLE_FILLER_ENTITY",
+        "from": ":RoleFiller",
+        "to": ":Devata or :Concept or :DomainEntity",
+        "cardinality": "0..1",
+        "note": "present only where the filler resolved: 4138 deity and 5681 concept fillers today. The remaining 41412 carry surface and lemma and no entity, which records an unresolved reference rather than dropping the role."
+      }
+    ],
+    "new_properties_on_SemanticAssertion": [
+      {
+        "property": "polarity",
+        "values": [
+          "POSITIVE",
+          "NEGATED",
+          "UNKNOWN"
+        ],
+        "why": "defect QA-3. Without it a prohibition reads as a command: 'ma apah ma osadhih himsih' becomes a requested SLAYS with the plants as PATIENT. 2,061 assertions in this artifact sit in the scope of a negation or prohibition particle and are currently only flagged in a caution string."
+      },
+      {
+        "property": "role_derivation",
+        "values": [
+          "MORPHOLOGY_RULE_CASE",
+          "TREEBANK_DEPREL",
+          "CROSS_VEDA_TEXT_IDENTITY",
+          "MORPHOLOGY_RULE",
+          "MODEL_EXTRACTION"
+        ],
+        "why": "so the five instruments are never summed. The existing derivation property already carries MORPHOLOGY_RULE and MODEL_EXTRACTION; the three new values must not be folded into the first, and no product surface may add them."
+      }
+    ],
+    "what_this_does_not_propose": [
+      "Changing the range of ASSERTION_AGENT or ASSERTION_TARGET. They stay Devata-only and keep their edges, so a consumer that wants only deity-to-deity events keeps working.",
+      "Deleting the assertion node's patient / instrument / beneficiary / location string properties. They are the record of what the earlier pipeline could not express, and they are evidence.",
+      "Any change to the closed predicate vocabulary. 41 ActionPredicate nodes, untouched."
+    ]
+  }
+}

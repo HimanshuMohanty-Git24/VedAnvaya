@@ -45,6 +45,7 @@ export function WorldView({
     onInspectEdge,
     inspectedEdge = null,
     safeArea,
+    chromeBoxes,
     paused = false,
 }: {
     /**
@@ -74,6 +75,14 @@ export function WorldView({
     onRendererLost?: (detail: string) => void;
     /** Canvas edges covered by chrome, so the camera frames into what is actually visible. */
     safeArea?: { top?: number; right?: number; bottom?: number; left?: number };
+    /**
+     * Where the chrome is standing on the stage, so no label is placed under it.
+     *
+     * Rectangles in canvas coordinates. Distinct from `safeArea`, which is what the camera
+     * centres inside and is top-and-bottom only on purpose: a phrase behind the right-hand
+     * rail is not off-centre, it is gone, and only the label layer can do anything about it.
+     */
+    chromeBoxes?: ReadonlyArray<{ x: number; y: number; w: number; h: number }>;
     /** A relationship label was clicked. The index is into the world edge arrays. */
     onInspectEdge?: (edge: number) => void;
     /**
@@ -316,6 +325,11 @@ export function WorldView({
         engineRef.current?.setSafeArea(safeArea ?? {});
     }, [safeArea]);
 
+    /* The chrome's boxes, so no phrase and no name is laid behind a panel. */
+    useEffect(() => {
+        labelViewRef.current?.setObstacles(chromeBoxes ?? []);
+    }, [chromeBoxes]);
+
     /* Re-measured on both of its causes: the canvas changing size, and the chrome over it
        changing height. In PATH the band carries two fields and a paragraph of caveats, so the
        second happens without the first. */
@@ -420,7 +434,23 @@ export function WorldView({
         const current = engineRef.current;
         if (!current) return;
         current.setPath(pathNodes ?? []);
-        if (pathNodes && pathNodes.length > 1) current.fitNodes(pathNodes);
+        if (pathNodes && pathNodes.length > 1) {
+            /*
+             * A closer floor than `fitNodes` defaults to, and the reason is what PATH does to
+             * the rest of the scene.
+             *
+             * The 700 default exists so that framing two subjects which happen to sit near
+             * each other does not put the camera inside the cloud, where every edge crosses
+             * the viewport. In PATH there is no cloud: `setPath` drops every node off the
+             * route to alpha 0.06 and draws only the hops. Measured on Agni to takman, a
+             * three-node route whose world positions span well under the default's 269-unit
+             * threshold: at 700 the whole route drew inside 40 px with its two hop phrases
+             * stacked on top of each other, which is the route being *rendered* and not being
+             * *shown*. At 240 the same route fills the stage and both phrases sit on their
+             * own line.
+             */
+            current.fitNodes(pathNodes, 900, { spread: 3.4, floor: 240 });
+        }
     }, [pathNodes]);
 
     /*

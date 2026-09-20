@@ -1,0 +1,316 @@
+{
+ "domain": "translation",
+ "agent": 7,
+ "agent_role": "AGENT_7_TRANSLATION_RESIDUALS_SOURCE_COMPLETENESS",
+ "schema_version": "1.0",
+ "algorithm_version": "agent7-residual-closure-v1",
+ "created_at": "2026-09-16T17:53:38.864787+00:00",
+ "code_commit": "b4b1b0beba1c499e832150b0b9363d7258e40a26",
+ "source_snapshot_ids": [
+  "WIKISOURCE_GRIFFITH_RV",
+  "SACRED_TEXTS_WYV_SNAPSHOT_2026_09_07",
+  "VEDAGRAPH_CANONICAL_RV_GRIFFITH"
+ ],
+ "files": [
+  {
+   "path": "alignment_confidence.json",
+   "sha256": "a54ba6c8e3414f79122df19c9fbe192bb6e45124beb27531d6370fc085b0777c",
+   "bytes": 3951,
+   "rows": null
+  },
+  {
+   "path": "alignment_confidence.py",
+   "sha256": "391a6bbc7f41ed6bf99ad97199f571f90df9a1cac2c7978668fb848d120ed2f2",
+   "bytes": 10325,
+   "rows": null
+  },
+  {
+   "path": "alignment_confidence_rows.jsonl",
+   "sha256": "e589647ce400f477ef6855db2ecc6f00cc85740ee5b1bf7c6313ab679a5c2f97",
+   "bytes": 4996104,
+   "rows": 18415
+  },
+  {
+   "path": "av_residual_full.py",
+   "sha256": "be38c27b51514242a8968b3c43d31b159effacff9eff8193b96fab0c2c9f87a8",
+   "bytes": 5760,
+   "rows": null
+  },
+  {
+   "path": "av_residual_scan.json",
+   "sha256": "e1a689f0c7058798ae160adc067d77ea1df70a8400ececdced030b6aa05f3706",
+   "bytes": 31886,
+   "rows": null
+  },
+  {
+   "path": "build_closure_report.py",
+   "sha256": "6cbb470582ae988e55145fe515edc125bdd14d8b247a993df155fbb7e07f8fb0",
+   "bytes": 21334,
+   "rows": null
+  },
+  {
+   "path": "build_manifest.py",
+   "sha256": "39d079838502cc1c81e55ce07f120d8eebc67df519935238accd043b2a6aecfe",
+   "bytes": 4918,
+   "rows": null
+  },
+  {
+   "path": "build_proposed_mutations.py",
+   "sha256": "345f73f166e451072a93ed72bbf05dadcbb12d1e373120149ca2438d5fa75da9",
+   "bytes": 8720,
+   "rows": null
+  },
+  {
+   "path": "build_residual_disposition.py",
+   "sha256": "9c792fc560dfeffd503e99a34abae86c03176c3894404f5a04fa34dfdaa06ed4",
+   "bytes": 14621,
+   "rows": null
+  },
+  {
+   "path": "build_rows.py",
+   "sha256": "4bcf1bc49617d79b549604dc41e8b0fdc5e98a94d368e44a93ba4673392ed99d",
+   "bytes": 12751,
+   "rows": null
+  },
+  {
+   "path": "closure_report.json",
+   "sha256": "1bc23e7adf6a5f3288e8d00e5b024560a279823018e1677a4f87dee248a6e441",
+   "bytes": 18059,
+   "rows": null
+  },
+  {
+   "path": "defects_found.json",
+   "sha256": "d185646aa913755b1db54212f371bb89a5d2b5f4338852dd0bd20fb5c1e5a197",
+   "bytes": 8105,
+   "rows": null
+  },
+  {
+   "path": "embedded_label_sweep.json",
+   "sha256": "14491580ee5ab249166eeefc96003a18ba036ca0bf1fc6510424949ed8ff6376",
+   "bytes": 7737,
+   "rows": null
+  },
+  {
+   "path": "embedded_label_sweep.py",
+   "sha256": "5d547d71a67e2ec3ab7a513d50a59bbc8cad63c36d6a7d530fafa84c652b7948",
+   "bytes": 3933,
+   "rows": null
+  },
+  {
+   "path": "gate_regression.json",
+   "sha256": "a498a000a0880b8ed769d6b52cc80af4579ff37a84c7c3b86facba39945f8f64",
+   "bytes": 3215,
+   "rows": null
+  },
+  {
+   "path": "gate_regression.py",
+   "sha256": "c8d0d2aee64ee08035a10fa3ddef1f18ad5e908052f9fd05ecca4da013544c1c",
+   "bytes": 4131,
+   "rows": null
+  },
+  {
+   "path": "proposed_mutations.json",
+   "sha256": "2e8e46997a267c0ffdceef80838091175fd18957ccf936454dee88ff3a2569f0",
+   "bytes": 22880,
+   "rows": null
+  },
+  {
+   "path": "rejected.jsonl",
+   "sha256": "5068cf89dc0cba362d9c426b4136a97d73863d2be7136352b3ba999dd7064000",
+   "bytes": 3104,
+   "rows": 1
+  },
+  {
+   "path": "residual_disposition.json",
+   "sha256": "7b13bbac80769c4f7e3b2353bc9954e543ec44e4f692b0a9cd35c7171dcf54a8",
+   "bytes": 57408,
+   "rows": null
+  },
+  {
+   "path": "rows.jsonl",
+   "sha256": "e81d01320edc0d1161b3f276d881ad3ad274a0c53975f82462c680db19807103",
+   "bytes": 28558,
+   "rows": 13
+  },
+  {
+   "path": "rv_addressing_probe.json",
+   "sha256": "fe43928401c979ebf52ed43ff3e12f6ef5cf941f01e507a45b9c69ff8c5df08a",
+   "bytes": 14243,
+   "rows": null
+  },
+  {
+   "path": "rv_addressing_probe.py",
+   "sha256": "2d36e2f452f09ae4bedd90f748c8c1f279d531b585ff3dadcf17b2916cf54df9",
+   "bytes": 5982,
+   "rows": null
+  },
+  {
+   "path": "sv_running_number_derivation.json",
+   "sha256": "57e05b43f579a52f4ca15784f6dd7aeaa14f312ad49d57c5c861d0511732d318",
+   "bytes": 7258,
+   "rows": null
+  },
+  {
+   "path": "sv_running_number_derivation.py",
+   "sha256": "7bcf3e4710ce2aa891db6417f86b6930f2fec402adb11ed9617c1d237cae0745",
+   "bytes": 4971,
+   "rows": null
+  },
+  {
+   "path": "sv_running_number_probe.json",
+   "sha256": "ade32d5cc94843ce4b38e73d8ad4d243c474f8b427b95bd035532e4894b383be",
+   "bytes": 2564,
+   "rows": null
+  },
+  {
+   "path": "sv_running_number_probe.py",
+   "sha256": "0c521b4d7d9b1378be1773b304fe8510793c541fab077bd04c99e058537b4b13",
+   "bytes": 3307,
+   "rows": null
+  },
+  {
+   "path": "uncovered_sets.json",
+   "sha256": "cea3082f08b14899d24bffbcd92dfe4e47d84447fc41bcc27250640455f4febc",
+   "bytes": 64360,
+   "rows": null
+  },
+  {
+   "path": "yv_provenance_rederivation.json",
+   "sha256": "ca6ebcb4b4a7223da5d15095eec56ebcedae070467d3fc3da23851cadaa53e73",
+   "bytes": 8308,
+   "rows": null
+  },
+  {
+   "path": "yv_provenance_rederivation.py",
+   "sha256": "c65b26cd43888254bd1a8d87ed9a6a76baa25bedce25889e7245d83d7707424c",
+   "bytes": 4970,
+   "rows": null
+  },
+  {
+   "path": "gate_run_control/gate_b_failures.jsonl",
+   "sha256": "7a1b48c9dc27e7f5b9ec29902cecca69d3cdac0dd23c6027a21c71d4bdbc4d97",
+   "bytes": 7792601,
+   "rows": 2147
+  },
+  {
+   "path": "gate_run_control/gate_b_rows.jsonl",
+   "sha256": "dfea6f42f7f70a79331115eccaf00abb699bdc0114ea2335c898fb8d56ff87e1",
+   "bytes": 8134410,
+   "rows": 2254
+  },
+  {
+   "path": "gate_run_control/gate_b_summary.json",
+   "sha256": "6ca22164a16864a37e7e70ce1ba1e62e0252e16ec6138b6be9d25a9e09b066e9",
+   "bytes": 9648,
+   "rows": null
+  },
+  {
+   "path": "gate_run_control/gate_c_findings.jsonl",
+   "sha256": "faa0f0ff70237fb739bbe3b85dfd793f123616f9fe426bf39cd4934237ebddbb",
+   "bytes": 2102,
+   "rows": 4
+  },
+  {
+   "path": "gate_run_control/gate_c_rows.jsonl",
+   "sha256": "91fadfa947ee48e128782d35b3a24343eb48ff24263ea8abeb678b64047b7137",
+   "bytes": 5892556,
+   "rows": 2254
+  },
+  {
+   "path": "gate_run_control/gate_c_summary.json",
+   "sha256": "53d693d10fb05a1e1d75333baf7c5017d87d9504dc6a5a84e61b0e535f63bcc0",
+   "bytes": 5686,
+   "rows": null
+  },
+  {
+   "path": "gate_run_treatment/gate_b_failures.jsonl",
+   "sha256": "3f9fabf9b9077179d34c1718b69e3a0a245189a32c3d5c3c8a2ff9c80a3465ba",
+   "bytes": 7760903,
+   "rows": 2136
+  },
+  {
+   "path": "gate_run_treatment/gate_b_rows.jsonl",
+   "sha256": "e7f4e1223dd2f363cc75ed1a5882058aec5232d52c0f58cbc22f257793c2964e",
+   "bytes": 8137272,
+   "rows": 2255
+  },
+  {
+   "path": "gate_run_treatment/gate_b_summary.json",
+   "sha256": "9a59f35456a7009f1dd61d660a9c967c8e2eeca8ddac45e965808b9346a8bd30",
+   "bytes": 9659,
+   "rows": null
+  },
+  {
+   "path": "gate_run_treatment/gate_c_findings.jsonl",
+   "sha256": "faa0f0ff70237fb739bbe3b85dfd793f123616f9fe426bf39cd4934237ebddbb",
+   "bytes": 2102,
+   "rows": 4
+  },
+  {
+   "path": "gate_run_treatment/gate_c_rows.jsonl",
+   "sha256": "92c55d4e8b6ae42ac5ae4f3663ddc867a508a7b69aa3461d225673588e0de346",
+   "bytes": 5894063,
+   "rows": 2255
+  },
+  {
+   "path": "gate_run_treatment/gate_c_summary.json",
+   "sha256": "2b40e4c436a340bd355a58d2574174a4aa628780627b864b0b4d0cfabe92a624",
+   "bytes": 6144,
+   "rows": null
+  }
+ ],
+ "counts": {
+  "candidates_considered": 14,
+  "accepted": 12,
+  "rejected": 1,
+  "unresolved": 1,
+  "verified_zero": 0,
+  "not_applicable": 0
+ },
+ "counts_balance": true,
+ "closes_gaps": [],
+ "advances_gaps": [
+  "GAP-TRANSLATION-003",
+  "GAP-TRANSLATION-004",
+  "GAP-TRANSLATION-005",
+  "GAP-SAMAVEDA_MUSIC-003"
+ ],
+ "blocks_recorded": [
+  "GAP-TRANSLATION-001",
+  "GAP-TRANSLATION-002"
+ ],
+ "gate": {
+  "gates_run": [
+   "gate_bc_gate_b",
+   "gate_bc_gate_c"
+  ],
+  "gates_modified": false,
+  "control_run": "gate_run_control (Agent 3's population, untouched)",
+  "treatment_run": "gate_run_treatment (with Agent 7's rows)",
+  "regressions_on_untouched_rows": []
+ },
+ "test_results": {
+  "command_prescribed": "pytest tests/unit tests/api tests/domain -q",
+  "command_prescribed_is_defective": "it collects 349 of 3,169 and exits 0; see defects_found.json D7. The suites were run separately instead.",
+  "tests/unit": "1316 passed, 41 skipped",
+  "tests/domain": "1 failed, 308 passed, 31 skipped",
+  "tests/api": "3 failed, 1520 passed, 1 skipped",
+  "failures_not_owned_by_agent_7": [
+   "tests/domain/test_deity_eligibility.py::test_the_shipped_capability_query_uses_the_documented_predicate",
+   "tests/api/test_cypher_property_hygiene.py::test_every_referenced_property_exists_in_the_graph",
+   "tests/api/test_insights.py::test_q23_is_a_typed_refusal_and_not_an_empty_list",
+   "tests/api/test_insights.py::test_capability_catalogue_is_enumerable_and_states_its_own_incompleteness"
+  ],
+  "failures_basis": "all four read src/vedagraph/domain/queries.py, domain/deity_eligibility.py, capability_probes.py or insight_service.py, none of which Agent 7 touched; all four are modified in the working tree by concurrent agents"
+ },
+ "qa": {
+  "tests_added": [
+   "tests/unit/test_ocr_labels.py",
+   "tests/unit/test_translation_alignment_confidence.py"
+  ],
+  "mutation_tested": true,
+  "mutants_killed": 7,
+  "mutants_survived": 0,
+  "human_reviewed": 0
+ }
+}

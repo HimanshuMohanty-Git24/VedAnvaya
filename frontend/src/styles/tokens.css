@@ -277,7 +277,34 @@
     --va-ease-enter: cubic-bezier(0.05, 0.7, 0.1, 1);
     --va-ease-exit: cubic-bezier(0.3, 0, 0.8, 0.15);
 
-    /* --- Z-index. Six rungs. No component may write a numeric z-index. ------ */
+    /* ========================================================================
+       Z-index.
+
+       Two scales, and the distinction between them is the whole point. The page
+       rungs below order surfaces against each other across the whole document.
+       The local rungs order layers *inside* one component that has declared
+       `isolation: isolate`, where the numbers never meet the page scale at all.
+
+       Writing a bare integer anywhere else is a contract violation, and
+       `scripts/audit-z-index.mjs` fails the build on one. A raw number in a
+       stylesheet is a claim about what it sits above that nothing can check, and
+       the header at 40, the drawer at 61 and the skip link at 100 were three
+       such claims that happened to agree by luck rather than by design.
+       ======================================================================== */
+
+    /* --- Local rungs. Only inside an isolated stacking context. ------------- */
+    /* A decorative plate behind its own component's content. */
+    --va-z-beneath: -1;
+    /* A plate on a component that paints its own background, so -1 would hide it. */
+    --va-z-ground: 0;
+    /* The content that plate sits under. */
+    --va-z-content: 1;
+    /* An annotation drawn over the content: an edge label over a canvas. */
+    --va-z-annotation: 2;
+    /* A panel over both: the relationship inspector over the graph stage. */
+    --va-z-panel: 3;
+
+    /* --- Page rungs. Seven, and no component may write a numeric z-index. --- */
     --va-z-base: 0;
     --va-z-raised: 10;
     --va-z-sticky: 100;

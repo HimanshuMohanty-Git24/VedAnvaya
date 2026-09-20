@@ -1,0 +1,129 @@
+{
+  "GAP-RITUAL-001": {
+    "closure_test": "The Ritual class holds the rites the four Samhitas name, each with its mention evidence, and inventory_coverage reports the new denominator.",
+    "verdict": "ADVANCED_NOT_CLOSED",
+    "rites_attested": 103,
+    "rites_samhita_attested": 45,
+    "rites_supplementary_only": 58,
+    "the_four_named_absent": {
+      "VAJAPEYA": {
+        "attested": true,
+        "samhita_attested": true,
+        "supplementary_loci": 39
+      },
+      "RAJASUYA": {
+        "attested": true,
+        "samhita_attested": true,
+        "supplementary_loci": 12
+      },
+      "DARSAPURNAMASA": {
+        "attested": true,
+        "samhita_attested": true,
+        "supplementary_loci": 283
+      },
+      "CATURMASYA": {
+        "attested": true,
+        "samhita_attested": true,
+        "supplementary_loci": 60
+      }
+    },
+    "why_not_closed": "The denominator is still not knowable. This artifact measures a NAMED candidate space of 108 rites; it does not enumerate every rite the corpus could be said to name, and the registry is right that deciding what counts is a curation question rather than a count."
+  },
+  "GAP-RITUAL-002": {
+    "closure_test": "Either a describing corpus is ingested and HAS_STEP grows with per-step citations, or the absence is restated as a scope consequence.",
+    "verdict": "ADVANCED_NOT_CLOSED",
+    "describing_corpus_ingested": true,
+    "sutra_works": 11,
+    "steps_before": 3,
+    "steps_anchored_source_explicit": 3123,
+    "steps_section_expanded_probable": 6150,
+    "every_step_carries_a_citation": true,
+    "why_not_closed": "Not one step has been read by a human, and the section-expanded tier rests on a segmentation this build imposed rather than on a statement."
+  },
+  "GAP-RITUAL-003": {
+    "closure_test": "USES_OBJECT reaches mani, dundubhi and the udumbara amulet, and yupa's vedas_with_matches reads 3 with VSM 19.17 and 25.29 both matched.",
+    "verdict": "TEST_SATISFIED_IN_STAGING",
+    "mani_reached": true,
+    "dundubhi_reached": true,
+    "audumbara_reached": true,
+    "mani_uses_object_edges": 1,
+    "dundubhi_uses_object_edges": 2,
+    "audumbara_uses_object_edges": 1,
+    "yupa_vedas_with_matches": 3,
+    "yupa_vedas": [
+      "AV",
+      "RV",
+      "YV"
+    ],
+    "yupa_yajurvedic_mantras": [
+      "VG:YV:VSM:A19:V017",
+      "VG:YV:VSM:A25:V029"
+    ],
+    "vsm_19_17_matched": true,
+    "vsm_25_29_matched": true,
+    "implements_total": 47,
+    "caveat": "The USES_OBJECT edges are PROBABLE co-occurrence derivations, staged and NOT importable. The alias half of the gap is genuinely closed; the wiring half is staged for a read."
+  },
+  "GAP-RITUAL-004": {
+    "closure_test": "RitualRole holds the classical sixteen with their source stated, the hotr carries PERFORMED_BY edges, and any completeness figure names the schema its denominator comes from.",
+    "verdict": "TEST_SATISFIED_IN_STAGING",
+    "roles_total": 27,
+    "classical_sixteen_attested": 16,
+    "classical_sixteen_missing": [],
+    "hotr_role_assignments": 27,
+    "hotr_rites": [
+      "VG:CONCEPT:AGNIHOTRA",
+      "VG:CONCEPT:AGNISTOMA",
+      "VG:CONCEPT:AHINA",
+      "VG:CONCEPT:ATIRATRA",
+      "VG:CONCEPT:BAHISPAVAMANA",
+      "VG:CONCEPT:DARSAPURNAMASA",
+      "VG:CONCEPT:DIKSA-CONSECRATION",
+      "VG:CONCEPT:GRAHA-SOMA-DRAWING",
+      "VG:CONCEPT:ISTI",
+      "VG:CONCEPT:SODASIN",
+      "VG:CONCEPT:SOMA-PRESSING",
+      "VG:CONCEPT:STHALIPAKA",
+      "VG:CONCEPT:TANUNAPTRA",
+      "VG:CONCEPT:UKTHYA",
+      "VG:CONCEPT:UPASAD",
+      "VG:CONCEPT:VAISVADEVA-PARVAN",
+      "VG:CONCEPT:VAISVANARA-ISTI",
+      "VG:CONCEPT:VASATIVARI",
+      "VG:CONCEPT:YAJNA-SACRIFICE"
+    ],
+    "denominator_schema_named": true,
+    "enumerating_loci": 11,
+    "caveat": "PERFORMED_BY is derived from a sutra naming both rite and officiant, and is PROBABLE. The sixteen are attested as officiant TERMS with citations; assigning each to each rite is not done."
+  },
+  "GAP-RITUAL-005": {
+    "closure_test": "A typed deity-to-offering predicate exists with per-edge verse evidence, every modelled rite carries its offerings, and no surface presents co-occurrence as an asserted offering.",
+    "verdict": "ADVANCED_NOT_CLOSED",
+    "typed_predicate_proposed": "RECEIVES_OFFERING",
+    "deity_offering_edges": 27,
+    "edges_source_explicit": 27,
+    "rites_with_at_least_one_offering_edge": 58,
+    "cooccurrence_is_labelled_as_such": true,
+    "why_not_closed": "The predicate is PROPOSED; minting it is an ontology change and the lead's to make. And the rite-to-offering edges are co-occurrence, labelled PROBABLE and kept out of the import for exactly the reason this gap records."
+  },
+  "GAP-RITUAL-006": {
+    "closure_test": "Passages carry a ritual_context assignment with its method declared and its precision measured against a reviewed sample, and material-culture counts are reported split by context.",
+    "verdict": "ADVANCED_NOT_CLOSED",
+    "key_absent_before": true,
+    "method": "EXTERNAL_RITUAL_CITATION",
+    "method_avoids_the_recorded_circularity": "The registry warns that assigning context by proximity to ritual vocabulary is circular. This does not use proximity: the evidence is that a named ritual text quotes the mantra by its pratika inside an instruction, which is external to the mantra's own wording.",
+    "mantras_with_a_context": 1717,
+    "of_assessed_population": 20210,
+    "importable_exact": 769,
+    "unresolved_shared_opening": 7851,
+    "no_quotation_found": 10642,
+    "why_not_closed": "The assignment is positive-only. A mantra with no citation found is NOT thereby non-ritual: it may be quoted in a work not acquired, or quoted by a pratika this matcher's rules refuse. So the absence is typed in the row -- no mantra is marked NON_RITUAL anywhere in this artifact -- and the material-culture split the closure test asks for is therefore not yet reportable, because a split needs both sides."
+  },
+  "GAP-RITUAL-007": {
+    "closure_test": "No campaign artifact lists asvamedha among the absent rites.",
+    "verdict": "CONFIRMED_STALE",
+    "asvamedha_present": true,
+    "asvamedha_supplementary_loci": 14,
+    "asvamedha_samhita_attested": true
+  }
+}

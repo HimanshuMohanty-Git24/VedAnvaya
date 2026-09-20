@@ -1,0 +1,35 @@
+{
+ "relations subject+object -> :Passage": {
+  "distinct_keys": 7214,
+  "resolved": 7214
+ },
+ "uses_formula_match_level.passage_key -> :Passage": {
+  "distinct_keys": 10574,
+  "resolved": 10574
+ },
+ "uses_formula_match_level.formula_id -> :Formula": {
+  "distinct_keys": 4825,
+  "resolved": 4825
+ },
+ "shares_formula_with a+b -> :Passage": {
+  "distinct_keys": 4491,
+  "resolved": 4491
+ },
+ "shares_formula_with.shared_formula_ids -> :Formula": {
+  "distinct_keys": 3663,
+  "resolved": 3663
+ },
+ "formula_nesting.formula_id -> :Formula": {
+  "distinct_keys": 4825,
+  "resolved": 4825
+ },
+ "formula_families.family_id -> :FormulaFamily": {
+  "distinct_keys": 720,
+  "resolved": 720
+ },
+ "match_level_rows_targeting_a_live_edge": {
+  "rows": 22686,
+  "edges_found": 22686
+ },
+ "note": "kept from the previous round at the coordinator's request. The gate now resolves Formula and FormulaFamily subjects directly via subject_id_property (5,545/5,545), so this proof is no longer the only check on them -- but the flat sidecars are still published, and the 22,686 backfill rows proven to target a LIVE USES_FORMULA edge is a check the gate still does not perform. A backfill naming a (passage, formula) pair with no edge behind it would be a write with nowhere to land."
+}

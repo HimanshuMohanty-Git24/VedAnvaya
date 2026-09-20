@@ -1,0 +1,937 @@
+{
+  "QUALITY_003": {
+    "conf_edges": 25470,
+    "conf_without_calibration_status": 0,
+    "calibration_status_dist": [
+      {
+        "v": "NOT_CALIBRATED_NO_HUMAN_LABELLED_SAMPLE",
+        "t": "ABOUT_CONCEPT",
+        "c": 24861
+      },
+      {
+        "v": "NOT_CALIBRATED_NO_HUMAN_LABELLED_SAMPLE",
+        "t": "INVOKES",
+        "c": 207
+      },
+      {
+        "v": "NOT_CALIBRATED_NO_HUMAN_LABELLED_SAMPLE",
+        "t": "DESCRIBES",
+        "c": 199
+      },
+      {
+        "v": "NOT_CALIBRATED_NO_HUMAN_LABELLED_SAMPLE",
+        "t": "REQUESTS",
+        "c": 89
+      },
+      {
+        "v": "NOT_CALIBRATED_NO_HUMAN_LABELLED_SAMPLE",
+        "t": "PRAISES",
+        "c": 38
+      },
+      {
+        "v": "NOT_CALIBRATED_NO_HUMAN_LABELLED_SAMPLE",
+        "t": "DESCRIBES_ACTION",
+        "c": 35
+      },
+      {
+        "v": "NOT_CALIBRATED_NO_HUMAN_LABELLED_SAMPLE",
+        "t": "INVOLVES_OFFERING",
+        "c": 11
+      },
+      {
+        "v": "NOT_CALIBRATED_NO_HUMAN_LABELLED_SAMPLE",
+        "t": "INVOLVES_RITUAL",
+        "c": 9
+      },
+      {
+        "v": "NOT_CALIBRATED_NO_HUMAN_LABELLED_SAMPLE",
+        "t": "HAS_THEME",
+        "c": 8
+      },
+      {
+        "v": "NOT_CALIBRATED_NO_HUMAN_LABELLED_SAMPLE",
+        "t": "CONTRASTS_WITH",
+        "c": 8
+      },
+      {
+        "v": "NOT_CALIBRATED_NO_HUMAN_LABELLED_SAMPLE",
+        "t": "REFERS_TO_NATURAL_PHENOMENON",
+        "c": 5
+      }
+    ],
+    "per_type_conf_profile": [
+      {
+        "t": "ABOUT_CONCEPT",
+        "n": 24861,
+        "distinct_vals": 10,
+        "mn": 0.55,
+        "mx": 0.95
+      },
+      {
+        "t": "CONTRASTS_WITH",
+        "n": 8,
+        "distinct_vals": 4,
+        "mn": 0.6,
+        "mx": 0.75
+      },
+      {
+        "t": "DESCRIBES",
+        "n": 199,
+        "distinct_vals": 7,
+        "mn": 0.6,
+        "mx": 0.9
+      },
+      {
+        "t": "DESCRIBES_ACTION",
+        "n": 35,
+        "distinct_vals": 5,
+        "mn": 0.65,
+        "mx": 0.85
+      },
+      {
+        "t": "HAS_THEME",
+        "n": 8,
+        "distinct_vals": 4,
+        "mn": 0.55,
+        "mx": 0.85
+      },
+      {
+        "t": "INVOKES",
+        "n": 207,
+        "distinct_vals": 6,
+        "mn": 0.7,
+        "mx": 0.95
+      },
+      {
+        "t": "INVOLVES_OFFERING",
+        "n": 11,
+        "distinct_vals": 4,
+        "mn": 0.75,
+        "mx": 0.9
+      },
+      {
+        "t": "INVOLVES_RITUAL",
+        "n": 9,
+        "distinct_vals": 3,
+        "mn": 0.7,
+        "mx": 0.8
+      },
+      {
+        "t": "PRAISES",
+        "n": 38,
+        "distinct_vals": 4,
+        "mn": 0.7,
+        "mx": 0.9
+      },
+      {
+        "t": "REFERS_TO_NATURAL_PHENOMENON",
+        "n": 5,
+        "distinct_vals": 3,
+        "mn": 0.7,
+        "mx": 0.85
+      },
+      {
+        "t": "REQUESTS",
+        "n": 89,
+        "distinct_vals": 5,
+        "mn": 0.7,
+        "mx": 0.9
+      }
+    ],
+    "type_total_vs_conf": [
+      {
+        "t": "ABOUT_CONCEPT",
+        "total": 24861,
+        "withconf": 24861
+      },
+      {
+        "t": "CONTRASTS_WITH",
+        "total": 8,
+        "withconf": 8
+      },
+      {
+        "t": "DESCRIBES",
+        "total": 199,
+        "withconf": 199
+      },
+      {
+        "t": "DESCRIBES_ACTION",
+        "total": 35,
+        "withconf": 35
+      },
+      {
+        "t": "HAS_THEME",
+        "total": 8,
+        "withconf": 8
+      },
+      {
+        "t": "INVOKES",
+        "total": 207,
+        "withconf": 207
+      },
+      {
+        "t": "INVOLVES_OFFERING",
+        "total": 11,
+        "withconf": 11
+      },
+      {
+        "t": "INVOLVES_RITUAL",
+        "total": 9,
+        "withconf": 9
+      },
+      {
+        "t": "PRAISES",
+        "total": 38,
+        "withconf": 38
+      },
+      {
+        "t": "REFERS_TO_NATURAL_PHENOMENON",
+        "total": 5,
+        "withconf": 5
+      },
+      {
+        "t": "REQUESTS",
+        "total": 89,
+        "withconf": 89
+      }
+    ],
+    "tier_marker": [
+      {
+        "t": "HAS_RISHI",
+        "c": 17889,
+        "vals": [
+          1.0
+        ]
+      },
+      {
+        "t": "HAS_CHANDAS",
+        "c": 16298,
+        "vals": [
+          1.0
+        ]
+      },
+      {
+        "t": "HAS_DEVATA",
+        "c": 10558,
+        "vals": [
+          1.0
+        ]
+      },
+      {
+        "t": "HAS_DEVATA_ASCRIPTION",
+        "c": 5385,
+        "vals": [
+          1.0
+        ]
+      },
+      {
+        "t": "HAS_DEVATA_DERIVED",
+        "c": 882,
+        "vals": [
+          1.0
+        ]
+      },
+      {
+        "t": "BELONGS_TO_FAMILY",
+        "c": 305,
+        "vals": [
+          1.0
+        ]
+      },
+      {
+        "t": "ASCRIBES_TO_DEVATA",
+        "c": 47,
+        "vals": [
+          1.0
+        ]
+      }
+    ],
+    "tier_marker_total": 51364,
+    "tier_marker_and_confidence_both": 0,
+    "uncal": [
+      {
+        "t": "REFERS_TO_PLACE",
+        "v": 0.75,
+        "c": 1
+      },
+      {
+        "t": "INVOLVES_SUBSTANCE",
+        "v": 0.85,
+        "c": 3
+      }
+    ],
+    "human_gold_nodes": 0,
+    "human_gold_any": [
+      {
+        "v": false,
+        "c": 1
+      }
+    ],
+    "reference_set_class": [
+      {
+        "v": "INDEPENDENT_SOURCE_ADJUDICATED_REFERENCE_SET",
+        "c": 1
+      }
+    ]
+  },
+  "TRANSLATION_004": {
+    "state_null": 0,
+    "dist": [
+      {
+        "v": "AV",
+        "st": "DEDICATED_TRANSLATION",
+        "c": 5715
+      },
+      {
+        "v": "AV",
+        "st": "RANGE_COVERED",
+        "c": 52
+      },
+      {
+        "v": "AV",
+        "st": "RANGE_TRANSLATION_ANCHOR",
+        "c": 34
+      },
+      {
+        "v": "AV",
+        "st": "REUSED_RENDERING",
+        "c": 21
+      },
+      {
+        "v": "AV",
+        "st": "UNCOVERED_NO_RENDERING_REACHES_IT",
+        "c": 11
+      },
+      {
+        "v": "AV",
+        "st": "UNCOVERED_REUSABLE_PARALLEL_AVAILABLE",
+        "c": 6
+      },
+      {
+        "v": "RV",
+        "st": "DEDICATED_TRANSLATION",
+        "c": 10322
+      },
+      {
+        "v": "RV",
+        "st": "CONTAINER_TRANSLATION",
+        "c": 158
+      },
+      {
+        "v": "RV",
+        "st": "RANGE_COVERED",
+        "c": 36
+      },
+      {
+        "v": "RV",
+        "st": "RANGE_TRANSLATION_ANCHOR",
+        "c": 30
+      },
+      {
+        "v": "RV",
+        "st": "UNCOVERED_NO_RENDERING_REACHES_IT",
+        "c": 6
+      },
+      {
+        "v": "SV",
+        "st": "UNCOVERED_REUSABLE_PARALLEL_AVAILABLE",
+        "c": 1488
+      },
+      {
+        "v": "SV",
+        "st": "UNCOVERED_NO_RENDERING_REACHES_IT",
+        "c": 183
+      },
+      {
+        "v": "SV",
+        "st": "REUSED_RENDERING",
+        "c": 173
+      },
+      {
+        "v": "YV",
+        "st": "DEDICATED_TRANSLATION",
+        "c": 1950
+      },
+      {
+        "v": "YV",
+        "st": "UNCOVERED_NO_RENDERING_REACHES_IT",
+        "c": 25
+      }
+    ],
+    "rv_no_edge": 36,
+    "rv_no_edge_keys": [
+      {
+        "k": "VG:RV:SAK:M01:S065:V002",
+        "st": "RANGE_COVERED"
+      },
+      {
+        "k": "VG:RV:SAK:M01:S065:V004",
+        "st": "RANGE_COVERED"
+      },
+      {
+        "k": "VG:RV:SAK:M01:S065:V006",
+        "st": "RANGE_COVERED"
+      },
+      {
+        "k": "VG:RV:SAK:M01:S065:V008",
+        "st": "RANGE_COVERED"
+      },
+      {
+        "k": "VG:RV:SAK:M01:S065:V010",
+        "st": "RANGE_COVERED"
+      },
+      {
+        "k": "VG:RV:SAK:M01:S066:V002",
+        "st": "RANGE_COVERED"
+      },
+      {
+        "k": "VG:RV:SAK:M01:S066:V004",
+        "st": "RANGE_COVERED"
+      },
+      {
+        "k": "VG:RV:SAK:M01:S066:V006",
+        "st": "RANGE_COVERED"
+      },
+      {
+        "k": "VG:RV:SAK:M01:S066:V008",
+        "st": "RANGE_COVERED"
+      },
+      {
+        "k": "VG:RV:SAK:M01:S066:V010",
+        "st": "RANGE_COVERED"
+      },
+      {
+        "k": "VG:RV:SAK:M01:S067:V002",
+        "st": "RANGE_COVERED"
+      },
+      {
+        "k": "VG:RV:SAK:M01:S067:V004",
+        "st": "RANGE_COVERED"
+      },
+      {
+        "k": "VG:RV:SAK:M01:S067:V006",
+        "st": "RANGE_COVERED"
+      },
+      {
+        "k": "VG:RV:SAK:M01:S067:V008",
+        "st": "RANGE_COVERED"
+      },
+      {
+        "k": "VG:RV:SAK:M01:S067:V010",
+        "st": "RANGE_COVERED"
+      },
+      {
+        "k": "VG:RV:SAK:M01:S068:V002",
+        "st": "RANGE_COVERED"
+      },
+      {
+        "k": "VG:RV:SAK:M01:S068:V004",
+        "st": "RANGE_COVERED"
+      },
+      {
+        "k": "VG:RV:SAK:M01:S068:V006",
+        "st": "RANGE_COVERED"
+      },
+      {
+        "k": "VG:RV:SAK:M01:S068:V008",
+        "st": "RANGE_COVERED"
+      },
+      {
+        "k": "VG:RV:SAK:M01:S068:V010",
+        "st": "RANGE_COVERED"
+      },
+      {
+        "k": "VG:RV:SAK:M01:S069:V002",
+        "st": "RANGE_COVERED"
+      },
+      {
+        "k": "VG:RV:SAK:M01:S069:V004",
+        "st": "RANGE_COVERED"
+      },
+      {
+        "k": "VG:RV:SAK:M01:S069:V006",
+        "st": "RANGE_COVERED"
+      },
+      {
+        "k": "VG:RV:SAK:M01:S069:V008",
+        "st": "RANGE_COVERED"
+      },
+      {
+        "k": "VG:RV:SAK:M01:S069:V010",
+        "st": "RANGE_COVERED"
+      },
+      {
+        "k": "VG:RV:SAK:M01:S070:V002",
+        "st": "RANGE_COVERED"
+      },
+      {
+        "k": "VG:RV:SAK:M01:S070:V004",
+        "st": "RANGE_COVERED"
+      },
+      {
+        "k": "VG:RV:SAK:M01:S070:V006",
+        "st": "RANGE_COVERED"
+      },
+      {
+        "k": "VG:RV:SAK:M01:S070:V008",
+        "st": "RANGE_COVERED"
+      },
+      {
+        "k": "VG:RV:SAK:M01:S070:V010",
+        "st": "RANGE_COVERED"
+      },
+      {
+        "k": "VG:RV:SAK:M05:S055:V008",
+        "st": "UNCOVERED_NO_RENDERING_REACHES_IT"
+      },
+      {
+        "k": "VG:RV:SAK:M09:S007:V009",
+        "st": "UNCOVERED_NO_RENDERING_REACHES_IT"
+      },
+      {
+        "k": "VG:RV:SAK:M10:S048:V007",
+        "st": "UNCOVERED_NO_RENDERING_REACHES_IT"
+      },
+      {
+        "k": "VG:RV:SAK:M10:S086:V016",
+        "st": "UNCOVERED_NO_RENDERING_REACHES_IT"
+      },
+      {
+        "k": "VG:RV:SAK:M10:S086:V017",
+        "st": "UNCOVERED_NO_RENDERING_REACHES_IT"
+      },
+      {
+        "k": "VG:RV:SAK:M10:S132:V005",
+        "st": "UNCOVERED_NO_RENDERING_REACHES_IT"
+      }
+    ],
+    "rv_uncovered": [
+      {
+        "k": "VG:RV:SAK:M05:S055:V008"
+      },
+      {
+        "k": "VG:RV:SAK:M09:S007:V009"
+      },
+      {
+        "k": "VG:RV:SAK:M10:S048:V007"
+      },
+      {
+        "k": "VG:RV:SAK:M10:S086:V016"
+      },
+      {
+        "k": "VG:RV:SAK:M10:S086:V017"
+      },
+      {
+        "k": "VG:RV:SAK:M10:S132:V005"
+      }
+    ],
+    "sv_independent_english": 173,
+    "sv_translation_edges": 173,
+    "sv_reused": 173,
+    "m165_170": [
+      {
+        "k": "VG:RV:SAK:M01:S065:V001",
+        "st": "RANGE_TRANSLATION_ANCHOR",
+        "edges": 1
+      },
+      {
+        "k": "VG:RV:SAK:M01:S065:V002",
+        "st": "RANGE_COVERED",
+        "edges": 0
+      },
+      {
+        "k": "VG:RV:SAK:M01:S065:V003",
+        "st": "RANGE_TRANSLATION_ANCHOR",
+        "edges": 1
+      },
+      {
+        "k": "VG:RV:SAK:M01:S065:V004",
+        "st": "RANGE_COVERED",
+        "edges": 0
+      },
+      {
+        "k": "VG:RV:SAK:M01:S065:V005",
+        "st": "RANGE_TRANSLATION_ANCHOR",
+        "edges": 1
+      },
+      {
+        "k": "VG:RV:SAK:M01:S065:V006",
+        "st": "RANGE_COVERED",
+        "edges": 0
+      },
+      {
+        "k": "VG:RV:SAK:M01:S065:V007",
+        "st": "RANGE_TRANSLATION_ANCHOR",
+        "edges": 1
+      },
+      {
+        "k": "VG:RV:SAK:M01:S065:V008",
+        "st": "RANGE_COVERED",
+        "edges": 0
+      },
+      {
+        "k": "VG:RV:SAK:M01:S065:V009",
+        "st": "RANGE_TRANSLATION_ANCHOR",
+        "edges": 1
+      },
+      {
+        "k": "VG:RV:SAK:M01:S065:V010",
+        "st": "RANGE_COVERED",
+        "edges": 0
+      },
+      {
+        "k": "VG:RV:SAK:M01:S066:V001",
+        "st": "RANGE_TRANSLATION_ANCHOR",
+        "edges": 1
+      },
+      {
+        "k": "VG:RV:SAK:M01:S066:V002",
+        "st": "RANGE_COVERED",
+        "edges": 0
+      },
+      {
+        "k": "VG:RV:SAK:M01:S066:V003",
+        "st": "RANGE_TRANSLATION_ANCHOR",
+        "edges": 1
+      },
+      {
+        "k": "VG:RV:SAK:M01:S066:V004",
+        "st": "RANGE_COVERED",
+        "edges": 0
+      },
+      {
+        "k": "VG:RV:SAK:M01:S066:V005",
+        "st": "RANGE_TRANSLATION_ANCHOR",
+        "edges": 1
+      },
+      {
+        "k": "VG:RV:SAK:M01:S066:V006",
+        "st": "RANGE_COVERED",
+        "edges": 0
+      },
+      {
+        "k": "VG:RV:SAK:M01:S066:V007",
+        "st": "RANGE_TRANSLATION_ANCHOR",
+        "edges": 1
+      },
+      {
+        "k": "VG:RV:SAK:M01:S066:V008",
+        "st": "RANGE_COVERED",
+        "edges": 0
+      },
+      {
+        "k": "VG:RV:SAK:M01:S066:V009",
+        "st": "RANGE_TRANSLATION_ANCHOR",
+        "edges": 1
+      },
+      {
+        "k": "VG:RV:SAK:M01:S066:V010",
+        "st": "RANGE_COVERED",
+        "edges": 0
+      },
+      {
+        "k": "VG:RV:SAK:M01:S067:V001",
+        "st": "RANGE_TRANSLATION_ANCHOR",
+        "edges": 1
+      },
+      {
+        "k": "VG:RV:SAK:M01:S067:V002",
+        "st": "RANGE_COVERED",
+        "edges": 0
+      },
+      {
+        "k": "VG:RV:SAK:M01:S067:V003",
+        "st": "RANGE_TRANSLATION_ANCHOR",
+        "edges": 1
+      },
+      {
+        "k": "VG:RV:SAK:M01:S067:V004",
+        "st": "RANGE_COVERED",
+        "edges": 0
+      },
+      {
+        "k": "VG:RV:SAK:M01:S067:V005",
+        "st": "RANGE_TRANSLATION_ANCHOR",
+        "edges": 1
+      },
+      {
+        "k": "VG:RV:SAK:M01:S067:V006",
+        "st": "RANGE_COVERED",
+        "edges": 0
+      },
+      {
+        "k": "VG:RV:SAK:M01:S067:V007",
+        "st": "RANGE_TRANSLATION_ANCHOR",
+        "edges": 1
+      },
+      {
+        "k": "VG:RV:SAK:M01:S067:V008",
+        "st": "RANGE_COVERED",
+        "edges": 0
+      },
+      {
+        "k": "VG:RV:SAK:M01:S067:V009",
+        "st": "RANGE_TRANSLATION_ANCHOR",
+        "edges": 1
+      },
+      {
+        "k": "VG:RV:SAK:M01:S067:V010",
+        "st": "RANGE_COVERED",
+        "edges": 0
+      },
+      {
+        "k": "VG:RV:SAK:M01:S068:V001",
+        "st": "RANGE_TRANSLATION_ANCHOR",
+        "edges": 1
+      },
+      {
+        "k": "VG:RV:SAK:M01:S068:V002",
+        "st": "RANGE_COVERED",
+        "edges": 0
+      },
+      {
+        "k": "VG:RV:SAK:M01:S068:V003",
+        "st": "RANGE_TRANSLATION_ANCHOR",
+        "edges": 1
+      },
+      {
+        "k": "VG:RV:SAK:M01:S068:V004",
+        "st": "RANGE_COVERED",
+        "edges": 0
+      },
+      {
+        "k": "VG:RV:SAK:M01:S068:V005",
+        "st": "RANGE_TRANSLATION_ANCHOR",
+        "edges": 1
+      },
+      {
+        "k": "VG:RV:SAK:M01:S068:V006",
+        "st": "RANGE_COVERED",
+        "edges": 0
+      },
+      {
+        "k": "VG:RV:SAK:M01:S068:V007",
+        "st": "RANGE_TRANSLATION_ANCHOR",
+        "edges": 1
+      },
+      {
+        "k": "VG:RV:SAK:M01:S068:V008",
+        "st": "RANGE_COVERED",
+        "edges": 0
+      },
+      {
+        "k": "VG:RV:SAK:M01:S068:V009",
+        "st": "RANGE_TRANSLATION_ANCHOR",
+        "edges": 1
+      },
+      {
+        "k": "VG:RV:SAK:M01:S068:V010",
+        "st": "RANGE_COVERED",
+        "edges": 0
+      },
+      {
+        "k": "VG:RV:SAK:M01:S069:V001",
+        "st": "RANGE_TRANSLATION_ANCHOR",
+        "edges": 1
+      },
+      {
+        "k": "VG:RV:SAK:M01:S069:V002",
+        "st": "RANGE_COVERED",
+        "edges": 0
+      },
+      {
+        "k": "VG:RV:SAK:M01:S069:V003",
+        "st": "RANGE_TRANSLATION_ANCHOR",
+        "edges": 1
+      },
+      {
+        "k": "VG:RV:SAK:M01:S069:V004",
+        "st": "RANGE_COVERED",
+        "edges": 0
+      },
+      {
+        "k": "VG:RV:SAK:M01:S069:V005",
+        "st": "RANGE_TRANSLATION_ANCHOR",
+        "edges": 1
+      },
+      {
+        "k": "VG:RV:SAK:M01:S069:V006",
+        "st": "RANGE_COVERED",
+        "edges": 0
+      },
+      {
+        "k": "VG:RV:SAK:M01:S069:V007",
+        "st": "RANGE_TRANSLATION_ANCHOR",
+        "edges": 1
+      },
+      {
+        "k": "VG:RV:SAK:M01:S069:V008",
+        "st": "RANGE_COVERED",
+        "edges": 0
+      },
+      {
+        "k": "VG:RV:SAK:M01:S069:V009",
+        "st": "RANGE_TRANSLATION_ANCHOR",
+        "edges": 1
+      },
+      {
+        "k": "VG:RV:SAK:M01:S069:V010",
+        "st": "RANGE_COVERED",
+        "edges": 0
+      },
+      {
+        "k": "VG:RV:SAK:M01:S070:V001",
+        "st": "RANGE_TRANSLATION_ANCHOR",
+        "edges": 1
+      },
+      {
+        "k": "VG:RV:SAK:M01:S070:V002",
+        "st": "RANGE_COVERED",
+        "edges": 0
+      },
+      {
+        "k": "VG:RV:SAK:M01:S070:V003",
+        "st": "RANGE_TRANSLATION_ANCHOR",
+        "edges": 1
+      },
+      {
+        "k": "VG:RV:SAK:M01:S070:V004",
+        "st": "RANGE_COVERED",
+        "edges": 0
+      },
+      {
+        "k": "VG:RV:SAK:M01:S070:V005",
+        "st": "RANGE_TRANSLATION_ANCHOR",
+        "edges": 1
+      },
+      {
+        "k": "VG:RV:SAK:M01:S070:V006",
+        "st": "RANGE_COVERED",
+        "edges": 0
+      },
+      {
+        "k": "VG:RV:SAK:M01:S070:V007",
+        "st": "RANGE_TRANSLATION_ANCHOR",
+        "edges": 1
+      },
+      {
+        "k": "VG:RV:SAK:M01:S070:V008",
+        "st": "RANGE_COVERED",
+        "edges": 0
+      },
+      {
+        "k": "VG:RV:SAK:M01:S070:V009",
+        "st": "RANGE_TRANSLATION_ANCHOR",
+        "edges": 1
+      },
+      {
+        "k": "VG:RV:SAK:M01:S070:V010",
+        "st": "RANGE_COVERED",
+        "edges": 0
+      },
+      {
+        "k": "VG:RV:SAK:M01:S070:V011",
+        "st": "DEDICATED_TRANSLATION",
+        "edges": 1
+      }
+    ]
+  },
+  "SAMAVEDA_MUSIC_003": {
+    "null": 0,
+    "range": [
+      {
+        "lo": 1,
+        "hi": 1875,
+        "distinct": 1844
+      }
+    ],
+    "contract": [
+      {
+        "c": "VG:SV_RUNNING_SAMHITA_NUMBER:V1"
+      }
+    ],
+    "first20": [
+      {
+        "k": "VG:SV:KAU:CHANDA:P01:D01:V01",
+        "n": 1
+      },
+      {
+        "k": "VG:SV:KAU:CHANDA:P01:D01:V02",
+        "n": 2
+      },
+      {
+        "k": "VG:SV:KAU:CHANDA:P01:D01:V03",
+        "n": 3
+      },
+      {
+        "k": "VG:SV:KAU:CHANDA:P01:D01:V04",
+        "n": 4
+      },
+      {
+        "k": "VG:SV:KAU:CHANDA:P01:D01:V05",
+        "n": 5
+      },
+      {
+        "k": "VG:SV:KAU:CHANDA:P01:D01:V06",
+        "n": 6
+      },
+      {
+        "k": "VG:SV:KAU:CHANDA:P01:D01:V07",
+        "n": 7
+      },
+      {
+        "k": "VG:SV:KAU:CHANDA:P01:D01:V08",
+        "n": 8
+      },
+      {
+        "k": "VG:SV:KAU:CHANDA:P01:D01:V09",
+        "n": 9
+      },
+      {
+        "k": "VG:SV:KAU:CHANDA:P01:D01:V10",
+        "n": 10
+      },
+      {
+        "k": "VG:SV:KAU:CHANDA:P01:D02:V01",
+        "n": 11
+      },
+      {
+        "k": "VG:SV:KAU:CHANDA:P01:D02:V02",
+        "n": 12
+      },
+      {
+        "k": "VG:SV:KAU:CHANDA:P01:D02:V03",
+        "n": 13
+      },
+      {
+        "k": "VG:SV:KAU:CHANDA:P01:D02:V04",
+        "n": 14
+      },
+      {
+        "k": "VG:SV:KAU:CHANDA:P01:D02:V05",
+        "n": 15
+      },
+      {
+        "k": "VG:SV:KAU:CHANDA:P01:D02:V06",
+        "n": 16
+      },
+      {
+        "k": "VG:SV:KAU:CHANDA:P01:D02:V07",
+        "n": 17
+      },
+      {
+        "k": "VG:SV:KAU:CHANDA:P01:D02:V08",
+        "n": 18
+      },
+      {
+        "k": "VG:SV:KAU:CHANDA:P01:D02:V09",
+        "n": 19
+      },
+      {
+        "k": "VG:SV:KAU:CHANDA:P01:D02:V10",
+        "n": 20
+      }
+    ],
+    "musicalized": 0
+  }
+}

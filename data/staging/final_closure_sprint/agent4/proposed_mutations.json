@@ -1,0 +1,1311 @@
+{
+ "artifact": "AGENT_4_PROPOSED_CANONICAL_MUTATIONS",
+ "at": "2026-09-16T18:33:24.389949+00:00",
+ "agent": "AGENT_4_RITUAL",
+ "nothing_here_has_been_applied": true,
+ "baseline_census": {
+  "nodes": 127404,
+  "relationships": 295700
+ },
+ "counts": {
+  "CREATE_NODE": 9,
+  "CREATE_RELATIONSHIP": 27,
+  "SET_NODE_PROPERTY": 20211,
+  "SET_NODE_PROPERTY_ritual_context": 20210,
+  "SET_NODE_PROPERTY_corrections": 1,
+  "EDIT_REGISTRY_FILE": 1,
+  "APPLY_OVERLAY": 1,
+  "DELETE": 0
+ },
+ "relationship_creates_by_type": {
+  "PERFORMED_BY": 16,
+  "RECEIVES_OFFERING": 4,
+  "USES_OBJECT": 1,
+  "MENTIONS_ENTITY": 6
+ },
+ "expected_census_delta": {
+  "nodes": 9,
+  "relationships": 27,
+  "nodes_after": 127413,
+  "relationships_after": 295727,
+  "core_corpus_unchanged": true,
+  "core_corpus_note": "No mantra, Work or TextVersion is created, deleted or relabelled. RV 10552 / SV 1844 / YV 1975 / AV 5839 = 20210 is untouched; 20,210 of them gain one property.",
+  "the_absolute_census_is_volatile_this_sprint": "baseline_census is read live at build time and other agents are importing concurrently: the sprint baseline recorded 117,970 / 282,389 and this build read 127404 / 295700. Verify this delta as a DELTA -- +9 nodes, +27 relationships -- against whatever the census reads immediately before the apply, not against the absolute figures below. The ritual layer itself has not moved: Ritual 103, Object 41, Offering 21, RitualRole 11, USES_OBJECT 23, PERFORMED_BY 16, RECEIVES_OFFERING 0, ritual_context 0, yupa 6 mantras over 2 Vedas -- every figure this artifact rests on was re-read at build time."
+ },
+ "two_step_layers_untouched": {
+  "HAS_STEP": 3,
+  "HAS_RITUAL_STEP": 3121,
+  "statement": "Neither layer is written, merged or cross-populated by anything here. HAS_STEP remains the Samhita's own numbering and HAS_RITUAL_STEP the Sutra procedural layer."
+ },
+ "no_rite_global_sequence": "No ordering relation is proposed. Procedure order stays source-work local, and the PERFORMED_BY edges carry no position.",
+ "probable_material_withheld": {
+  "rite_edges_probable": 685,
+  "role_assignments_probable": 179,
+  "statement": "Not one PROBABLE row is promoted. The four PROBABLE rite-object rows touching the three objects GAP-RITUAL-003 names were read individually and one of the four survived the read."
+ },
+ "predicate_declaration": {
+  "predicate": "RECEIVES_OFFERING",
+  "file": "src/vedagraph/domain/ontology.py",
+  "declared_signature": "(Devata) -> (Offering)",
+  "previous_signature": "(Devata) -> (Offering | Substance | Animal | Plant)",
+  "changed_in_the_same_change_as_the_edges": true,
+  "why": "The type was already declared and carried zero edges, so nothing had ever measured its range. The wider range admitted exactly the wrong-endpoint error that cost HELD_BY 2,052 edges. Measured before narrowing: all 21 registry offerings carry :Offering, and the nine that are also :Animal or :Substance carry both, so the narrow range removes no reachable recipient.",
+  "pinned_by": "tests/domain/test_agent4_ritual_closure.py"
+ },
+ "rights": {
+  "source": "DCS Vedic Prose Corpus, corpus/VPC/, commit 8aeed5a1343d0e48b64eb32af8c00e8c6eb29359",
+  "basis": "PUBLIC_DOMAIN_BY_AGE",
+  "basis_is_not": "CC_BY_4_0",
+  "why_not_cc_by": "The DCS repository's express CC BY 4.0 grant lives in dcs/data/readme.md and is scoped to 'the data of the DCS and any data in child directories'. corpus/VPC/ is not a child of dcs/data/, so no express licence covers the digitisation. Recording CC BY 4.0 here would attribute a grant to a party without standing to make it, and a wrong licence recorded is worse than none.",
+  "underlying_editions_public_domain_by_age": [
+   "Weber's Satapatha",
+   "Vedantavagisa's Latyayana, Bibliotheca Indica",
+   "Vishva Bandhu's Vaitana",
+   "Caland 1910 / 1931",
+   "Oldenberg, SBE 29 / 30"
+  ],
+  "second_basis_facts_are_not_copyrightable": "What lands in the graph is facts -- that a role exists, that a deity receives an offering, that a mantra is cited in a rite. A fact is not copyrightable whatever the licence of the source it was read from.",
+  "third_basis_bounded_evidential_quotation": "Each edge carries one cited line and, where held, one attributed translation sentence, with its citation. This is what the project already does for Whitney and Griffith.",
+  "the_bound": "NO BULK VPC TEXT LANDS IN THE CANONICAL GRAPH. The proposed delta carries 21 evidential quotes across 24 distinct cited lines, out of 61,393 in the corpus, and no property update carries any supplementary text at all -- the 20,210 ritual_context rows carry a citation and a work key, never a line.",
+  "distinct_cited_lines_quoted": [
+   "AB 7.6.1",
+   "AB 7.6.2",
+   "AB 7.6.3",
+   "AB 7.6.4",
+   "AB 7.7.1",
+   "AB 7.7.2",
+   "AB 7.7.3",
+   "AB 7.7.4",
+   "AB 7.8.1",
+   "AB 7.8.2",
+   "AB 7.8.3",
+   "AB 7.8.4",
+   "AB 7.9.1",
+   "AB 7.9.3",
+   "AB 7.9.4",
+   "AB 7.9.6",
+   "AB 7.9.7",
+   "AB 7.9.8",
+   "GB 2.1.12.9",
+   "GobhGS 3.8.6",
+   "KausB 4.1.3",
+   "SankhSS 13.14.1",
+   "SankhSS 14.2.17",
+   "SankhSS 16.1.13"
+  ]
+ },
+ "node_creates": [
+  {
+   "op": "CREATE_NODE",
+   "labels": [
+    "RitualRole",
+    "Concept",
+    "DomainEntity"
+   ],
+   "key_property": "entity_key",
+   "entity_key": "VG:CONCEPT:MAITRAVARUNA-PRIEST",
+   "properties": {
+    "entity_key": "VG:CONCEPT:MAITRAVARUNA-PRIEST",
+    "concept_key": "VG:CONCEPT:MAITRAVARUNA-PRIEST",
+    "node_type": "RITUAL_ROLE",
+    "display_type": "RitualRole",
+    "display_label": "maitravaruna (maitrāvaruṇa)",
+    "preferred_label_en": "maitravaruna",
+    "preferred_label_sa": "maitrāvaruṇa",
+    "label_en": "maitravaruna",
+    "label_sa": "maitrāvaruṇa",
+    "officiant_group": "HOTR",
+    "in_classical_sixteen": true,
+    "denominator_schema": "SRAUTASUTRA_RTVIJ_SCHEMA_OF_SIXTEEN",
+    "existence_evidence_type": "SRAUTASUTRA",
+    "existence_evidence_citation": "SankhSS 13.14.1",
+    "existence_evidence_supplementary_key": "VG:SUPP:SankhSS:13:14:1",
+    "existence_evidence_translation_citation": "W. Caland, Sankhayana-Srautasutra",
+    "samhita_attested": true,
+    "samhita_attestation_by_veda": "{\"RV\": 1, \"YV\": 3, \"AV\": 1}",
+    "samhita_attestation_examples": "{\"RV\": [\"VG:RV:SAK:M07:S033:V011\"], \"YV\": [\"VG:YV:VSM:A18:V019\", \"VG:YV:VSM:A24:V002\", \"VG:YV:VSM:A24:V008\"], \"AV\": [\"VG:AV:SAU:K05:S019:V015\"]}",
+    "supplementary_attestation_count": 283,
+    "sprint": "FINAL_CLOSURE_SPRINT",
+    "agent": "AGENT_4"
+   },
+   "why": "GAP-RITUAL-004 asks that RitualRole hold the classical sixteen with their source stated. The source is carried on the node as properties, exactly as M7's RitualStep nodes carry their supplementary_key: no SupplementaryPassage node is needed and none is proposed. Wave 3's BATCH_2 deleted two roles because roles.jsonl had no attestation-example field; every node here carries samhita_attestation_examples, so that objection is answered."
+  },
+  {
+   "op": "CREATE_NODE",
+   "labels": [
+    "RitualRole",
+    "Concept",
+    "DomainEntity"
+   ],
+   "key_property": "entity_key",
+   "entity_key": "VG:CONCEPT:ACCHAVAKA-PRIEST",
+   "properties": {
+    "entity_key": "VG:CONCEPT:ACCHAVAKA-PRIEST",
+    "concept_key": "VG:CONCEPT:ACCHAVAKA-PRIEST",
+    "node_type": "RITUAL_ROLE",
+    "display_type": "RitualRole",
+    "display_label": "acchavaka (acchāvāka)",
+    "preferred_label_en": "acchavaka",
+    "preferred_label_sa": "acchāvāka",
+    "label_en": "acchavaka",
+    "label_sa": "acchāvāka",
+    "officiant_group": "HOTR",
+    "in_classical_sixteen": true,
+    "denominator_schema": "SRAUTASUTRA_RTVIJ_SCHEMA_OF_SIXTEEN",
+    "existence_evidence_type": "SRAUTASUTRA",
+    "existence_evidence_citation": "SankhSS 13.14.1",
+    "existence_evidence_supplementary_key": "VG:SUPP:SankhSS:13:14:1",
+    "existence_evidence_translation_citation": "W. Caland, Sankhayana-Srautasutra",
+    "samhita_attested": false,
+    "samhita_attestation_by_veda": "{}",
+    "samhita_attestation_examples": "{}",
+    "supplementary_attestation_count": 152,
+    "sprint": "FINAL_CLOSURE_SPRINT",
+    "agent": "AGENT_4"
+   },
+   "why": "GAP-RITUAL-004 asks that RitualRole hold the classical sixteen with their source stated. The source is carried on the node as properties, exactly as M7's RitualStep nodes carry their supplementary_key: no SupplementaryPassage node is needed and none is proposed. Wave 3's BATCH_2 deleted two roles because roles.jsonl had no attestation-example field; every node here carries samhita_attestation_examples, so that objection is answered."
+  },
+  {
+   "op": "CREATE_NODE",
+   "labels": [
+    "RitualRole",
+    "Concept",
+    "DomainEntity"
+   ],
+   "key_property": "entity_key",
+   "entity_key": "VG:CONCEPT:GRAVASTUT-PRIEST",
+   "properties": {
+    "entity_key": "VG:CONCEPT:GRAVASTUT-PRIEST",
+    "concept_key": "VG:CONCEPT:GRAVASTUT-PRIEST",
+    "node_type": "RITUAL_ROLE",
+    "display_type": "RitualRole",
+    "display_label": "gravastut (grāvastut)",
+    "preferred_label_en": "gravastut",
+    "preferred_label_sa": "grāvastut",
+    "label_en": "gravastut",
+    "label_sa": "grāvastut",
+    "officiant_group": "HOTR",
+    "in_classical_sixteen": true,
+    "denominator_schema": "SRAUTASUTRA_RTVIJ_SCHEMA_OF_SIXTEEN",
+    "existence_evidence_type": "SRAUTASUTRA",
+    "existence_evidence_citation": "SankhSS 13.14.1",
+    "existence_evidence_supplementary_key": "VG:SUPP:SankhSS:13:14:1",
+    "existence_evidence_translation_citation": "W. Caland, Sankhayana-Srautasutra",
+    "samhita_attested": false,
+    "samhita_attestation_by_veda": "{}",
+    "samhita_attestation_examples": "{}",
+    "supplementary_attestation_count": 15,
+    "sprint": "FINAL_CLOSURE_SPRINT",
+    "agent": "AGENT_4"
+   },
+   "why": "GAP-RITUAL-004 asks that RitualRole hold the classical sixteen with their source stated. The source is carried on the node as properties, exactly as M7's RitualStep nodes carry their supplementary_key: no SupplementaryPassage node is needed and none is proposed. Wave 3's BATCH_2 deleted two roles because roles.jsonl had no attestation-example field; every node here carries samhita_attestation_examples, so that objection is answered."
+  },
+  {
+   "op": "CREATE_NODE",
+   "labels": [
+    "RitualRole",
+    "Concept",
+    "DomainEntity"
+   ],
+   "key_property": "entity_key",
+   "entity_key": "VG:CONCEPT:PRATIPRASTHATR-PRIEST",
+   "properties": {
+    "entity_key": "VG:CONCEPT:PRATIPRASTHATR-PRIEST",
+    "concept_key": "VG:CONCEPT:PRATIPRASTHATR-PRIEST",
+    "node_type": "RITUAL_ROLE",
+    "display_type": "RitualRole",
+    "display_label": "pratiprasthatr (pratiprasthātṛ)",
+    "preferred_label_en": "pratiprasthatr",
+    "preferred_label_sa": "pratiprasthātṛ",
+    "label_en": "pratiprasthatr",
+    "label_sa": "pratiprasthātṛ",
+    "officiant_group": "ADHVARYU",
+    "in_classical_sixteen": true,
+    "denominator_schema": "SRAUTASUTRA_RTVIJ_SCHEMA_OF_SIXTEEN",
+    "existence_evidence_type": "SRAUTASUTRA",
+    "existence_evidence_citation": "SankhSS 13.14.1",
+    "existence_evidence_supplementary_key": "VG:SUPP:SankhSS:13:14:1",
+    "existence_evidence_translation_citation": "W. Caland, Sankhayana-Srautasutra",
+    "samhita_attested": false,
+    "samhita_attestation_by_veda": "{}",
+    "samhita_attestation_examples": "{}",
+    "supplementary_attestation_count": 115,
+    "sprint": "FINAL_CLOSURE_SPRINT",
+    "agent": "AGENT_4"
+   },
+   "why": "GAP-RITUAL-004 asks that RitualRole hold the classical sixteen with their source stated. The source is carried on the node as properties, exactly as M7's RitualStep nodes carry their supplementary_key: no SupplementaryPassage node is needed and none is proposed. Wave 3's BATCH_2 deleted two roles because roles.jsonl had no attestation-example field; every node here carries samhita_attestation_examples, so that objection is answered."
+  },
+  {
+   "op": "CREATE_NODE",
+   "labels": [
+    "RitualRole",
+    "Concept",
+    "DomainEntity"
+   ],
+   "key_property": "entity_key",
+   "entity_key": "VG:CONCEPT:UNNETR-PRIEST",
+   "properties": {
+    "entity_key": "VG:CONCEPT:UNNETR-PRIEST",
+    "concept_key": "VG:CONCEPT:UNNETR-PRIEST",
+    "node_type": "RITUAL_ROLE",
+    "display_type": "RitualRole",
+    "display_label": "unnetr (unnetṛ)",
+    "preferred_label_en": "unnetr",
+    "preferred_label_sa": "unnetṛ",
+    "label_en": "unnetr",
+    "label_sa": "unnetṛ",
+    "officiant_group": "ADHVARYU",
+    "in_classical_sixteen": true,
+    "denominator_schema": "SRAUTASUTRA_RTVIJ_SCHEMA_OF_SIXTEEN",
+    "existence_evidence_type": "SRAUTASUTRA",
+    "existence_evidence_citation": "SankhSS 13.14.1",
+    "existence_evidence_supplementary_key": "VG:SUPP:SankhSS:13:14:1",
+    "existence_evidence_translation_citation": "W. Caland, Sankhayana-Srautasutra",
+    "samhita_attested": false,
+    "samhita_attestation_by_veda": "{}",
+    "samhita_attestation_examples": "{}",
+    "supplementary_attestation_count": 15,
+    "sprint": "FINAL_CLOSURE_SPRINT",
+    "agent": "AGENT_4"
+   },
+   "why": "GAP-RITUAL-004 asks that RitualRole hold the classical sixteen with their source stated. The source is carried on the node as properties, exactly as M7's RitualStep nodes carry their supplementary_key: no SupplementaryPassage node is needed and none is proposed. Wave 3's BATCH_2 deleted two roles because roles.jsonl had no attestation-example field; every node here carries samhita_attestation_examples, so that objection is answered."
+  },
+  {
+   "op": "CREATE_NODE",
+   "labels": [
+    "RitualRole",
+    "Concept",
+    "DomainEntity"
+   ],
+   "key_property": "entity_key",
+   "entity_key": "VG:CONCEPT:PRASTOTR-PRIEST",
+   "properties": {
+    "entity_key": "VG:CONCEPT:PRASTOTR-PRIEST",
+    "concept_key": "VG:CONCEPT:PRASTOTR-PRIEST",
+    "node_type": "RITUAL_ROLE",
+    "display_type": "RitualRole",
+    "display_label": "prastotr (prastotṛ)",
+    "preferred_label_en": "prastotr",
+    "preferred_label_sa": "prastotṛ",
+    "label_en": "prastotr",
+    "label_sa": "prastotṛ",
+    "officiant_group": "UDGATR",
+    "in_classical_sixteen": true,
+    "denominator_schema": "SRAUTASUTRA_RTVIJ_SCHEMA_OF_SIXTEEN",
+    "existence_evidence_type": "SRAUTASUTRA",
+    "existence_evidence_citation": "SankhSS 13.14.1",
+    "existence_evidence_supplementary_key": "VG:SUPP:SankhSS:13:14:1",
+    "existence_evidence_translation_citation": "W. Caland, Sankhayana-Srautasutra",
+    "samhita_attested": false,
+    "samhita_attestation_by_veda": "{}",
+    "samhita_attestation_examples": "{}",
+    "supplementary_attestation_count": 47,
+    "sprint": "FINAL_CLOSURE_SPRINT",
+    "agent": "AGENT_4"
+   },
+   "why": "GAP-RITUAL-004 asks that RitualRole hold the classical sixteen with their source stated. The source is carried on the node as properties, exactly as M7's RitualStep nodes carry their supplementary_key: no SupplementaryPassage node is needed and none is proposed. Wave 3's BATCH_2 deleted two roles because roles.jsonl had no attestation-example field; every node here carries samhita_attestation_examples, so that objection is answered."
+  },
+  {
+   "op": "CREATE_NODE",
+   "labels": [
+    "RitualRole",
+    "Concept",
+    "DomainEntity"
+   ],
+   "key_property": "entity_key",
+   "entity_key": "VG:CONCEPT:PRATIHARTR-PRIEST",
+   "properties": {
+    "entity_key": "VG:CONCEPT:PRATIHARTR-PRIEST",
+    "concept_key": "VG:CONCEPT:PRATIHARTR-PRIEST",
+    "node_type": "RITUAL_ROLE",
+    "display_type": "RitualRole",
+    "display_label": "pratihartr (pratihartṛ)",
+    "preferred_label_en": "pratihartr",
+    "preferred_label_sa": "pratihartṛ",
+    "label_en": "pratihartr",
+    "label_sa": "pratihartṛ",
+    "officiant_group": "UDGATR",
+    "in_classical_sixteen": true,
+    "denominator_schema": "SRAUTASUTRA_RTVIJ_SCHEMA_OF_SIXTEEN",
+    "existence_evidence_type": "SRAUTASUTRA",
+    "existence_evidence_citation": "SankhSS 13.14.1",
+    "existence_evidence_supplementary_key": "VG:SUPP:SankhSS:13:14:1",
+    "existence_evidence_translation_citation": "W. Caland, Sankhayana-Srautasutra",
+    "samhita_attested": false,
+    "samhita_attestation_by_veda": "{}",
+    "samhita_attestation_examples": "{}",
+    "supplementary_attestation_count": 39,
+    "sprint": "FINAL_CLOSURE_SPRINT",
+    "agent": "AGENT_4"
+   },
+   "why": "GAP-RITUAL-004 asks that RitualRole hold the classical sixteen with their source stated. The source is carried on the node as properties, exactly as M7's RitualStep nodes carry their supplementary_key: no SupplementaryPassage node is needed and none is proposed. Wave 3's BATCH_2 deleted two roles because roles.jsonl had no attestation-example field; every node here carries samhita_attestation_examples, so that objection is answered."
+  },
+  {
+   "op": "CREATE_NODE",
+   "labels": [
+    "RitualRole",
+    "Concept",
+    "DomainEntity"
+   ],
+   "key_property": "entity_key",
+   "entity_key": "VG:CONCEPT:SUBRAHMANYA-PRIEST",
+   "properties": {
+    "entity_key": "VG:CONCEPT:SUBRAHMANYA-PRIEST",
+    "concept_key": "VG:CONCEPT:SUBRAHMANYA-PRIEST",
+    "node_type": "RITUAL_ROLE",
+    "display_type": "RitualRole",
+    "display_label": "subrahmanya (subrahmaṇya)",
+    "preferred_label_en": "subrahmanya",
+    "preferred_label_sa": "subrahmaṇya",
+    "label_en": "subrahmanya",
+    "label_sa": "subrahmaṇya",
+    "officiant_group": "UDGATR",
+    "in_classical_sixteen": true,
+    "denominator_schema": "SRAUTASUTRA_RTVIJ_SCHEMA_OF_SIXTEEN",
+    "existence_evidence_type": "SRAUTASUTRA",
+    "existence_evidence_citation": "SankhSS 13.14.1",
+    "existence_evidence_supplementary_key": "VG:SUPP:SankhSS:13:14:1",
+    "existence_evidence_translation_citation": "W. Caland, Sankhayana-Srautasutra",
+    "samhita_attested": true,
+    "samhita_attestation_by_veda": "{\"RV\": 1}",
+    "samhita_attestation_examples": "{\"RV\": [\"VG:RV:SAK:M10:S062:V004\"]}",
+    "supplementary_attestation_count": 71,
+    "sprint": "FINAL_CLOSURE_SPRINT",
+    "agent": "AGENT_4"
+   },
+   "why": "GAP-RITUAL-004 asks that RitualRole hold the classical sixteen with their source stated. The source is carried on the node as properties, exactly as M7's RitualStep nodes carry their supplementary_key: no SupplementaryPassage node is needed and none is proposed. Wave 3's BATCH_2 deleted two roles because roles.jsonl had no attestation-example field; every node here carries samhita_attestation_examples, so that objection is answered."
+  },
+  {
+   "op": "CREATE_NODE",
+   "labels": [
+    "RitualRole",
+    "Concept",
+    "DomainEntity"
+   ],
+   "key_property": "entity_key",
+   "entity_key": "VG:CONCEPT:BRAHMANACCHAMSIN-PRIEST",
+   "properties": {
+    "entity_key": "VG:CONCEPT:BRAHMANACCHAMSIN-PRIEST",
+    "concept_key": "VG:CONCEPT:BRAHMANACCHAMSIN-PRIEST",
+    "node_type": "RITUAL_ROLE",
+    "display_type": "RitualRole",
+    "display_label": "brahmanacchamsin (brāhmaṇācchaṃsin)",
+    "preferred_label_en": "brahmanacchamsin",
+    "preferred_label_sa": "brāhmaṇācchaṃsin",
+    "label_en": "brahmanacchamsin",
+    "label_sa": "brāhmaṇācchaṃsin",
+    "officiant_group": "BRAHMAN",
+    "in_classical_sixteen": true,
+    "denominator_schema": "SRAUTASUTRA_RTVIJ_SCHEMA_OF_SIXTEEN",
+    "existence_evidence_type": "SRAUTASUTRA",
+    "existence_evidence_citation": "SankhSS 13.14.1",
+    "existence_evidence_supplementary_key": "VG:SUPP:SankhSS:13:14:1",
+    "existence_evidence_translation_citation": "W. Caland, Sankhayana-Srautasutra",
+    "samhita_attested": false,
+    "samhita_attestation_by_veda": "{}",
+    "samhita_attestation_examples": "{}",
+    "supplementary_attestation_count": 159,
+    "sprint": "FINAL_CLOSURE_SPRINT",
+    "agent": "AGENT_4"
+   },
+   "why": "GAP-RITUAL-004 asks that RitualRole hold the classical sixteen with their source stated. The source is carried on the node as properties, exactly as M7's RitualStep nodes carry their supplementary_key: no SupplementaryPassage node is needed and none is proposed. Wave 3's BATCH_2 deleted two roles because roles.jsonl had no attestation-example field; every node here carries samhita_attestation_examples, so that objection is answered."
+  }
+ ],
+ "relationship_creates": [
+  {
+   "op": "CREATE_RELATIONSHIP",
+   "type": "PERFORMED_BY",
+   "from": {
+    "label": "Ritual",
+    "entity_key": "VG:CONCEPT:SATTRA"
+   },
+   "to": {
+    "label": "RitualRole",
+    "entity_key": "VG:CONCEPT:HOTR-PRIEST"
+   },
+   "properties": {
+    "evidence_layer": "SOURCE_EXPLICIT",
+    "mapping_confidence": "EXACT",
+    "evidence_citation": "SankhSS 13.14.1",
+    "evidence_supplementary_key": "VG:SUPP:SankhSS:13:14:1",
+    "evidence_source_type": "SRAUTASUTRA",
+    "evidence_quote": "ahitagnaya istaprathamayajna diksita grhapatisaptadasah satram asiran hota maitravaruno 'cchavako gravastud brahma brahmanacchamsi potagnidhra udgata prastota pratiharta subrahmanyo 'dhvaryuh pratiprasthata nestonneta",
+    "evidence_translation": "A sattra may be performed by sixteen persons, with the grhapati as seventeenth, who all have established their sacred fires, who have performed the first sacrifice, and who have undergone the consecration, viz., hotr, maitravaruna, acchavaka and gravastut; brahman, brahmanacchamsin, potr and agnidhra; udgatr, prastotr, pratihartr and subrahmanya; and adhvaryu, pratiprasthatr, nestr and unnetr.",
+    "evidence_translator": "Caland",
+    "reader": "AGENT_4_FINAL_CLOSURE_SPRINT",
+    "human_reviewed": 0,
+    "sprint": "FINAL_CLOSURE_SPRINT",
+    "agent": "AGENT_4"
+   },
+   "why": "One line states the officiant set of a named rite. GAP-RITUAL-004 requires the hotr to carry PERFORMED_BY edges; this is the only basis in the acquired apparatus that is a statement rather than co-occurrence."
+  },
+  {
+   "op": "CREATE_RELATIONSHIP",
+   "type": "PERFORMED_BY",
+   "from": {
+    "label": "Ritual",
+    "entity_key": "VG:CONCEPT:SATTRA"
+   },
+   "to": {
+    "label": "RitualRole",
+    "entity_key": "VG:CONCEPT:MAITRAVARUNA-PRIEST"
+   },
+   "properties": {
+    "evidence_layer": "SOURCE_EXPLICIT",
+    "mapping_confidence": "EXACT",
+    "evidence_citation": "SankhSS 13.14.1",
+    "evidence_supplementary_key": "VG:SUPP:SankhSS:13:14:1",
+    "evidence_source_type": "SRAUTASUTRA",
+    "evidence_quote": "ahitagnaya istaprathamayajna diksita grhapatisaptadasah satram asiran hota maitravaruno 'cchavako gravastud brahma brahmanacchamsi potagnidhra udgata prastota pratiharta subrahmanyo 'dhvaryuh pratiprasthata nestonneta",
+    "evidence_translation": "A sattra may be performed by sixteen persons, with the grhapati as seventeenth, who all have established their sacred fires, who have performed the first sacrifice, and who have undergone the consecration, viz., hotr, maitravaruna, acchavaka and gravastut; brahman, brahmanacchamsin, potr and agnidhra; udgatr, prastotr, pratihartr and subrahmanya; and adhvaryu, pratiprasthatr, nestr and unnetr.",
+    "evidence_translator": "Caland",
+    "reader": "AGENT_4_FINAL_CLOSURE_SPRINT",
+    "human_reviewed": 0,
+    "sprint": "FINAL_CLOSURE_SPRINT",
+    "agent": "AGENT_4"
+   },
+   "why": "One line states the officiant set of a named rite. GAP-RITUAL-004 requires the hotr to carry PERFORMED_BY edges; this is the only basis in the acquired apparatus that is a statement rather than co-occurrence."
+  },
+  {
+   "op": "CREATE_RELATIONSHIP",
+   "type": "PERFORMED_BY",
+   "from": {
+    "label": "Ritual",
+    "entity_key": "VG:CONCEPT:SATTRA"
+   },
+   "to": {
+    "label": "RitualRole",
+    "entity_key": "VG:CONCEPT:ACCHAVAKA-PRIEST"
+   },
+   "properties": {
+    "evidence_layer": "SOURCE_EXPLICIT",
+    "mapping_confidence": "EXACT",
+    "evidence_citation": "SankhSS 13.14.1",
+    "evidence_supplementary_key": "VG:SUPP:SankhSS:13:14:1",
+    "evidence_source_type": "SRAUTASUTRA",
+    "evidence_quote": "ahitagnaya istaprathamayajna diksita grhapatisaptadasah satram asiran hota maitravaruno 'cchavako gravastud brahma brahmanacchamsi potagnidhra udgata prastota pratiharta subrahmanyo 'dhvaryuh pratiprasthata nestonneta",
+    "evidence_translation": "A sattra may be performed by sixteen persons, with the grhapati as seventeenth, who all have established their sacred fires, who have performed the first sacrifice, and who have undergone the consecration, viz., hotr, maitravaruna, acchavaka and gravastut; brahman, brahmanacchamsin, potr and agnidhra; udgatr, prastotr, pratihartr and subrahmanya; and adhvaryu, pratiprasthatr, nestr and unnetr.",
+    "evidence_translator": "Caland",
+    "reader": "AGENT_4_FINAL_CLOSURE_SPRINT",
+    "human_reviewed": 0,
+    "sprint": "FINAL_CLOSURE_SPRINT",
+    "agent": "AGENT_4"
+   },
+   "why": "One line states the officiant set of a named rite. GAP-RITUAL-004 requires the hotr to carry PERFORMED_BY edges; this is the only basis in the acquired apparatus that is a statement rather than co-occurrence."
+  },
+  {
+   "op": "CREATE_RELATIONSHIP",
+   "type": "PERFORMED_BY",
+   "from": {
+    "label": "Ritual",
+    "entity_key": "VG:CONCEPT:SATTRA"
+   },
+   "to": {
+    "label": "RitualRole",
+    "entity_key": "VG:CONCEPT:GRAVASTUT-PRIEST"
+   },
+   "properties": {
+    "evidence_layer": "SOURCE_EXPLICIT",
+    "mapping_confidence": "EXACT",
+    "evidence_citation": "SankhSS 13.14.1",
+    "evidence_supplementary_key": "VG:SUPP:SankhSS:13:14:1",
+    "evidence_source_type": "SRAUTASUTRA",
+    "evidence_quote": "ahitagnaya istaprathamayajna diksita grhapatisaptadasah satram asiran hota maitravaruno 'cchavako gravastud brahma brahmanacchamsi potagnidhra udgata prastota pratiharta subrahmanyo 'dhvaryuh pratiprasthata nestonneta",
+    "evidence_translation": "A sattra may be performed by sixteen persons, with the grhapati as seventeenth, who all have established their sacred fires, who have performed the first sacrifice, and who have undergone the consecration, viz., hotr, maitravaruna, acchavaka and gravastut; brahman, brahmanacchamsin, potr and agnidhra; udgatr, prastotr, pratihartr and subrahmanya; and adhvaryu, pratiprasthatr, nestr and unnetr.",
+    "evidence_translator": "Caland",
+    "reader": "AGENT_4_FINAL_CLOSURE_SPRINT",
+    "human_reviewed": 0,
+    "sprint": "FINAL_CLOSURE_SPRINT",
+    "agent": "AGENT_4"
+   },
+   "why": "One line states the officiant set of a named rite. GAP-RITUAL-004 requires the hotr to carry PERFORMED_BY edges; this is the only basis in the acquired apparatus that is a statement rather than co-occurrence."
+  },
+  {
+   "op": "CREATE_RELATIONSHIP",
+   "type": "PERFORMED_BY",
+   "from": {
+    "label": "Ritual",
+    "entity_key": "VG:CONCEPT:SATTRA"
+   },
+   "to": {
+    "label": "RitualRole",
+    "entity_key": "VG:CONCEPT:ADHVARYU-PRIEST"
+   },
+   "properties": {
+    "evidence_layer": "SOURCE_EXPLICIT",
+    "mapping_confidence": "EXACT",
+    "evidence_citation": "SankhSS 13.14.1",
+    "evidence_supplementary_key": "VG:SUPP:SankhSS:13:14:1",
+    "evidence_source_type": "SRAUTASUTRA",
+    "evidence_quote": "ahitagnaya istaprathamayajna diksita grhapatisaptadasah satram asiran hota maitravaruno 'cchavako gravastud brahma brahmanacchamsi potagnidhra udgata prastota pratiharta subrahmanyo 'dhvaryuh pratiprasthata nestonneta",
+    "evidence_translation": "A sattra may be performed by sixteen persons, with the grhapati as seventeenth, who all have established their sacred fires, who have performed the first sacrifice, and who have undergone the consecration, viz., hotr, maitravaruna, acchavaka and gravastut; brahman, brahmanacchamsin, potr and agnidhra; udgatr, prastotr, pratihartr and subrahmanya; and adhvaryu, pratiprasthatr, nestr and unnetr.",
+    "evidence_translator": "Caland",
+    "reader": "AGENT_4_FINAL_CLOSURE_SPRINT",
+    "human_reviewed": 0,
+    "sprint": "FINAL_CLOSURE_SPRINT",
+    "agent": "AGENT_4"
+   },
+   "why": "One line states the officiant set of a named rite. GAP-RITUAL-004 requires the hotr to carry PERFORMED_BY edges; this is the only basis in the acquired apparatus that is a statement rather than co-occurrence."
+  },
+  {
+   "op": "CREATE_RELATIONSHIP",
+   "type": "PERFORMED_BY",
+   "from": {
+    "label": "Ritual",
+    "entity_key": "VG:CONCEPT:SATTRA"
+   },
+   "to": {
+    "label": "RitualRole",
+    "entity_key": "VG:CONCEPT:PRATIPRASTHATR-PRIEST"
+   },
+   "properties": {
+    "evidence_layer": "SOURCE_EXPLICIT",
+    "mapping_confidence": "EXACT",
+    "evidence_citation": "SankhSS 13.14.1",
+    "evidence_supplementary_key": "VG:SUPP:SankhSS:13:14:1",
+    "evidence_source_type": "SRAUTASUTRA",
+    "evidence_quote": "ahitagnaya istaprathamayajna diksita grhapatisaptadasah satram asiran hota maitravaruno 'cchavako gravastud brahma brahmanacchamsi potagnidhra udgata prastota pratiharta subrahmanyo 'dhvaryuh pratiprasthata nestonneta",
+    "evidence_translation": "A sattra may be performed by sixteen persons, with the grhapati as seventeenth, who all have established their sacred fires, who have performed the first sacrifice, and who have undergone the consecration, viz., hotr, maitravaruna, acchavaka and gravastut; brahman, brahmanacchamsin, potr and agnidhra; udgatr, prastotr, pratihartr and subrahmanya; and adhvaryu, pratiprasthatr, nestr and unnetr.",
+    "evidence_translator": "Caland",
+    "reader": "AGENT_4_FINAL_CLOSURE_SPRINT",
+    "human_reviewed": 0,
+    "sprint": "FINAL_CLOSURE_SPRINT",
+    "agent": "AGENT_4"
+   },
+   "why": "One line states the officiant set of a named rite. GAP-RITUAL-004 requires the hotr to carry PERFORMED_BY edges; this is the only basis in the acquired apparatus that is a statement rather than co-occurrence."
+  },
+  {
+   "op": "CREATE_RELATIONSHIP",
+   "type": "PERFORMED_BY",
+   "from": {
+    "label": "Ritual",
+    "entity_key": "VG:CONCEPT:SATTRA"
+   },
+   "to": {
+    "label": "RitualRole",
+    "entity_key": "VG:CONCEPT:NESTR-LEADER"
+   },
+   "properties": {
+    "evidence_layer": "SOURCE_EXPLICIT",
+    "mapping_confidence": "EXACT",
+    "evidence_citation": "SankhSS 13.14.1",
+    "evidence_supplementary_key": "VG:SUPP:SankhSS:13:14:1",
+    "evidence_source_type": "SRAUTASUTRA",
+    "evidence_quote": "ahitagnaya istaprathamayajna diksita grhapatisaptadasah satram asiran hota maitravaruno 'cchavako gravastud brahma brahmanacchamsi potagnidhra udgata prastota pratiharta subrahmanyo 'dhvaryuh pratiprasthata nestonneta",
+    "evidence_translation": "A sattra may be performed by sixteen persons, with the grhapati as seventeenth, who all have established their sacred fires, who have performed the first sacrifice, and who have undergone the consecration, viz., hotr, maitravaruna, acchavaka and gravastut; brahman, brahmanacchamsin, potr and agnidhra; udgatr, prastotr, pratihartr and subrahmanya; and adhvaryu, pratiprasthatr, nestr and unnetr.",
+    "evidence_translator": "Caland",
+    "reader": "AGENT_4_FINAL_CLOSURE_SPRINT",
+    "human_reviewed": 0,
+    "sprint": "FINAL_CLOSURE_SPRINT",
+    "agent": "AGENT_4"
+   },
+   "why": "One line states the officiant set of a named rite. GAP-RITUAL-004 requires the hotr to carry PERFORMED_BY edges; this is the only basis in the acquired apparatus that is a statement rather than co-occurrence."
+  },
+  {
+   "op": "CREATE_RELATIONSHIP",
+   "type": "PERFORMED_BY",
+   "from": {
+    "label": "Ritual",
+    "entity_key": "VG:CONCEPT:SATTRA"
+   },
+   "to": {
+    "label": "RitualRole",
+    "entity_key": "VG:CONCEPT:UNNETR-PRIEST"
+   },
+   "properties": {
+    "evidence_layer": "SOURCE_EXPLICIT",
+    "mapping_confidence": "EXACT",
+    "evidence_citation": "SankhSS 13.14.1",
+    "evidence_supplementary_key": "VG:SUPP:SankhSS:13:14:1",
+    "evidence_source_type": "SRAUTASUTRA",
+    "evidence_quote": "ahitagnaya istaprathamayajna diksita grhapatisaptadasah satram asiran hota maitravaruno 'cchavako gravastud brahma brahmanacchamsi potagnidhra udgata prastota pratiharta subrahmanyo 'dhvaryuh pratiprasthata nestonneta",
+    "evidence_translation": "A sattra may be performed by sixteen persons, with the grhapati as seventeenth, who all have established their sacred fires, who have performed the first sacrifice, and who have undergone the consecration, viz., hotr, maitravaruna, acchavaka and gravastut; brahman, brahmanacchamsin, potr and agnidhra; udgatr, prastotr, pratihartr and subrahmanya; and adhvaryu, pratiprasthatr, nestr and unnetr.",
+    "evidence_translator": "Caland",
+    "reader": "AGENT_4_FINAL_CLOSURE_SPRINT",
+    "human_reviewed": 0,
+    "sprint": "FINAL_CLOSURE_SPRINT",
+    "agent": "AGENT_4"
+   },
+   "why": "One line states the officiant set of a named rite. GAP-RITUAL-004 requires the hotr to carry PERFORMED_BY edges; this is the only basis in the acquired apparatus that is a statement rather than co-occurrence."
+  },
+  {
+   "op": "CREATE_RELATIONSHIP",
+   "type": "PERFORMED_BY",
+   "from": {
+    "label": "Ritual",
+    "entity_key": "VG:CONCEPT:SATTRA"
+   },
+   "to": {
+    "label": "RitualRole",
+    "entity_key": "VG:CONCEPT:UDGATR-CHANTER"
+   },
+   "properties": {
+    "evidence_layer": "SOURCE_EXPLICIT",
+    "mapping_confidence": "EXACT",
+    "evidence_citation": "SankhSS 13.14.1",
+    "evidence_supplementary_key": "VG:SUPP:SankhSS:13:14:1",
+    "evidence_source_type": "SRAUTASUTRA",
+    "evidence_quote": "ahitagnaya istaprathamayajna diksita grhapatisaptadasah satram asiran hota maitravaruno 'cchavako gravastud brahma brahmanacchamsi potagnidhra udgata prastota pratiharta subrahmanyo 'dhvaryuh pratiprasthata nestonneta",
+    "evidence_translation": "A sattra may be performed by sixteen persons, with the grhapati as seventeenth, who all have established their sacred fires, who have performed the first sacrifice, and who have undergone the consecration, viz., hotr, maitravaruna, acchavaka and gravastut; brahman, brahmanacchamsin, potr and agnidhra; udgatr, prastotr, pratihartr and subrahmanya; and adhvaryu, pratiprasthatr, nestr and unnetr.",
+    "evidence_translator": "Caland",
+    "reader": "AGENT_4_FINAL_CLOSURE_SPRINT",
+    "human_reviewed": 0,
+    "sprint": "FINAL_CLOSURE_SPRINT",
+    "agent": "AGENT_4"
+   },
+   "why": "One line states the officiant set of a named rite. GAP-RITUAL-004 requires the hotr to carry PERFORMED_BY edges; this is the only basis in the acquired apparatus that is a statement rather than co-occurrence."
+  },
+  {
+   "op": "CREATE_RELATIONSHIP",
+   "type": "PERFORMED_BY",
+   "from": {
+    "label": "Ritual",
+    "entity_key": "VG:CONCEPT:SATTRA"
+   },
+   "to": {
+    "label": "RitualRole",
+    "entity_key": "VG:CONCEPT:PRASTOTR-PRIEST"
+   },
+   "properties": {
+    "evidence_layer": "SOURCE_EXPLICIT",
+    "mapping_confidence": "EXACT",
+    "evidence_citation": "SankhSS 13.14.1",
+    "evidence_supplementary_key": "VG:SUPP:SankhSS:13:14:1",
+    "evidence_source_type": "SRAUTASUTRA",
+    "evidence_quote": "ahitagnaya istaprathamayajna diksita grhapatisaptadasah satram asiran hota maitravaruno 'cchavako gravastud brahma brahmanacchamsi potagnidhra udgata prastota pratiharta subrahmanyo 'dhvaryuh pratiprasthata nestonneta",
+    "evidence_translation": "A sattra may be performed by sixteen persons, with the grhapati as seventeenth, who all have established their sacred fires, who have performed the first sacrifice, and who have undergone the consecration, viz., hotr, maitravaruna, acchavaka and gravastut; brahman, brahmanacchamsin, potr and agnidhra; udgatr, prastotr, pratihartr and subrahmanya; and adhvaryu, pratiprasthatr, nestr and unnetr.",
+    "evidence_translator": "Caland",
+    "reader": "AGENT_4_FINAL_CLOSURE_SPRINT",
+    "human_reviewed": 0,
+    "sprint": "FINAL_CLOSURE_SPRINT",
+    "agent": "AGENT_4"
+   },
+   "why": "One line states the officiant set of a named rite. GAP-RITUAL-004 requires the hotr to carry PERFORMED_BY edges; this is the only basis in the acquired apparatus that is a statement rather than co-occurrence."
+  },
+  {
+   "op": "CREATE_RELATIONSHIP",
+   "type": "PERFORMED_BY",
+   "from": {
+    "label": "Ritual",
+    "entity_key": "VG:CONCEPT:SATTRA"
+   },
+   "to": {
+    "label": "RitualRole",
+    "entity_key": "VG:CONCEPT:PRATIHARTR-PRIEST"
+   },
+   "properties": {
+    "evidence_layer": "SOURCE_EXPLICIT",
+    "mapping_confidence": "EXACT",
+    "evidence_citation": "SankhSS 13.14.1",
+    "evidence_supplementary_key": "VG:SUPP:SankhSS:13:14:1",
+    "evidence_source_type": "SRAUTASUTRA",
+    "evidence_quote": "ahitagnaya istaprathamayajna diksita grhapatisaptadasah satram asiran hota maitravaruno 'cchavako gravastud brahma brahmanacchamsi potagnidhra udgata prastota pratiharta subrahmanyo 'dhvaryuh pratiprasthata nestonneta",
+    "evidence_translation": "A sattra may be performed by sixteen persons, with the grhapati as seventeenth, who all have established their sacred fires, who have performed the first sacrifice, and who have undergone the consecration, viz., hotr, maitravaruna, acchavaka and gravastut; brahman, brahmanacchamsin, potr and agnidhra; udgatr, prastotr, pratihartr and subrahmanya; and adhvaryu, pratiprasthatr, nestr and unnetr.",
+    "evidence_translator": "Caland",
+    "reader": "AGENT_4_FINAL_CLOSURE_SPRINT",
+    "human_reviewed": 0,
+    "sprint": "FINAL_CLOSURE_SPRINT",
+    "agent": "AGENT_4"
+   },
+   "why": "One line states the officiant set of a named rite. GAP-RITUAL-004 requires the hotr to carry PERFORMED_BY edges; this is the only basis in the acquired apparatus that is a statement rather than co-occurrence."
+  },
+  {
+   "op": "CREATE_RELATIONSHIP",
+   "type": "PERFORMED_BY",
+   "from": {
+    "label": "Ritual",
+    "entity_key": "VG:CONCEPT:SATTRA"
+   },
+   "to": {
+    "label": "RitualRole",
+    "entity_key": "VG:CONCEPT:SUBRAHMANYA-PRIEST"
+   },
+   "properties": {
+    "evidence_layer": "SOURCE_EXPLICIT",
+    "mapping_confidence": "EXACT",
+    "evidence_citation": "SankhSS 13.14.1",
+    "evidence_supplementary_key": "VG:SUPP:SankhSS:13:14:1",
+    "evidence_source_type": "SRAUTASUTRA",
+    "evidence_quote": "ahitagnaya istaprathamayajna diksita grhapatisaptadasah satram asiran hota maitravaruno 'cchavako gravastud brahma brahmanacchamsi potagnidhra udgata prastota pratiharta subrahmanyo 'dhvaryuh pratiprasthata nestonneta",
+    "evidence_translation": "A sattra may be performed by sixteen persons, with the grhapati as seventeenth, who all have established their sacred fires, who have performed the first sacrifice, and who have undergone the consecration, viz., hotr, maitravaruna, acchavaka and gravastut; brahman, brahmanacchamsin, potr and agnidhra; udgatr, prastotr, pratihartr and subrahmanya; and adhvaryu, pratiprasthatr, nestr and unnetr.",
+    "evidence_translator": "Caland",
+    "reader": "AGENT_4_FINAL_CLOSURE_SPRINT",
+    "human_reviewed": 0,
+    "sprint": "FINAL_CLOSURE_SPRINT",
+    "agent": "AGENT_4"
+   },
+   "why": "One line states the officiant set of a named rite. GAP-RITUAL-004 requires the hotr to carry PERFORMED_BY edges; this is the only basis in the acquired apparatus that is a statement rather than co-occurrence."
+  },
+  {
+   "op": "CREATE_RELATIONSHIP",
+   "type": "PERFORMED_BY",
+   "from": {
+    "label": "Ritual",
+    "entity_key": "VG:CONCEPT:SATTRA"
+   },
+   "to": {
+    "label": "RitualRole",
+    "entity_key": "VG:CONCEPT:BRAHMAN-PRIEST"
+   },
+   "properties": {
+    "evidence_layer": "SOURCE_EXPLICIT",
+    "mapping_confidence": "EXACT",
+    "evidence_citation": "SankhSS 13.14.1",
+    "evidence_supplementary_key": "VG:SUPP:SankhSS:13:14:1",
+    "evidence_source_type": "SRAUTASUTRA",
+    "evidence_quote": "ahitagnaya istaprathamayajna diksita grhapatisaptadasah satram asiran hota maitravaruno 'cchavako gravastud brahma brahmanacchamsi potagnidhra udgata prastota pratiharta subrahmanyo 'dhvaryuh pratiprasthata nestonneta",
+    "evidence_translation": "A sattra may be performed by sixteen persons, with the grhapati as seventeenth, who all have established their sacred fires, who have performed the first sacrifice, and who have undergone the consecration, viz., hotr, maitravaruna, acchavaka and gravastut; brahman, brahmanacchamsin, potr and agnidhra; udgatr, prastotr, pratihartr and subrahmanya; and adhvaryu, pratiprasthatr, nestr and unnetr.",
+    "evidence_translator": "Caland",
+    "reader": "AGENT_4_FINAL_CLOSURE_SPRINT",
+    "human_reviewed": 0,
+    "sprint": "FINAL_CLOSURE_SPRINT",
+    "agent": "AGENT_4"
+   },
+   "why": "One line states the officiant set of a named rite. GAP-RITUAL-004 requires the hotr to carry PERFORMED_BY edges; this is the only basis in the acquired apparatus that is a statement rather than co-occurrence."
+  },
+  {
+   "op": "CREATE_RELATIONSHIP",
+   "type": "PERFORMED_BY",
+   "from": {
+    "label": "Ritual",
+    "entity_key": "VG:CONCEPT:SATTRA"
+   },
+   "to": {
+    "label": "RitualRole",
+    "entity_key": "VG:CONCEPT:BRAHMANACCHAMSIN-PRIEST"
+   },
+   "properties": {
+    "evidence_layer": "SOURCE_EXPLICIT",
+    "mapping_confidence": "EXACT",
+    "evidence_citation": "SankhSS 13.14.1",
+    "evidence_supplementary_key": "VG:SUPP:SankhSS:13:14:1",
+    "evidence_source_type": "SRAUTASUTRA",
+    "evidence_quote": "ahitagnaya istaprathamayajna diksita grhapatisaptadasah satram asiran hota maitravaruno 'cchavako gravastud brahma brahmanacchamsi potagnidhra udgata prastota pratiharta subrahmanyo 'dhvaryuh pratiprasthata nestonneta",
+    "evidence_translation": "A sattra may be performed by sixteen persons, with the grhapati as seventeenth, who all have established their sacred fires, who have performed the first sacrifice, and who have undergone the consecration, viz., hotr, maitravaruna, acchavaka and gravastut; brahman, brahmanacchamsin, potr and agnidhra; udgatr, prastotr, pratihartr and subrahmanya; and adhvaryu, pratiprasthatr, nestr and unnetr.",
+    "evidence_translator": "Caland",
+    "reader": "AGENT_4_FINAL_CLOSURE_SPRINT",
+    "human_reviewed": 0,
+    "sprint": "FINAL_CLOSURE_SPRINT",
+    "agent": "AGENT_4"
+   },
+   "why": "One line states the officiant set of a named rite. GAP-RITUAL-004 requires the hotr to carry PERFORMED_BY edges; this is the only basis in the acquired apparatus that is a statement rather than co-occurrence."
+  },
+  {
+   "op": "CREATE_RELATIONSHIP",
+   "type": "PERFORMED_BY",
+   "from": {
+    "label": "Ritual",
+    "entity_key": "VG:CONCEPT:SATTRA"
+   },
+   "to": {
+    "label": "RitualRole",
+    "entity_key": "VG:CONCEPT:AGNIDH-FIRE-KINDLER"
+   },
+   "properties": {
+    "evidence_layer": "SOURCE_EXPLICIT",
+    "mapping_confidence": "EXACT",
+    "evidence_citation": "SankhSS 13.14.1",
+    "evidence_supplementary_key": "VG:SUPP:SankhSS:13:14:1",
+    "evidence_source_type": "SRAUTASUTRA",
+    "evidence_quote": "ahitagnaya istaprathamayajna diksita grhapatisaptadasah satram asiran hota maitravaruno 'cchavako gravastud brahma brahmanacchamsi potagnidhra udgata prastota pratiharta subrahmanyo 'dhvaryuh pratiprasthata nestonneta",
+    "evidence_translation": "A sattra may be performed by sixteen persons, with the grhapati as seventeenth, who all have established their sacred fires, who have performed the first sacrifice, and who have undergone the consecration, viz., hotr, maitravaruna, acchavaka and gravastut; brahman, brahmanacchamsin, potr and agnidhra; udgatr, prastotr, pratihartr and subrahmanya; and adhvaryu, pratiprasthatr, nestr and unnetr.",
+    "evidence_translator": "Caland",
+    "reader": "AGENT_4_FINAL_CLOSURE_SPRINT",
+    "human_reviewed": 0,
+    "sprint": "FINAL_CLOSURE_SPRINT",
+    "agent": "AGENT_4"
+   },
+   "why": "One line states the officiant set of a named rite. GAP-RITUAL-004 requires the hotr to carry PERFORMED_BY edges; this is the only basis in the acquired apparatus that is a statement rather than co-occurrence."
+  },
+  {
+   "op": "CREATE_RELATIONSHIP",
+   "type": "PERFORMED_BY",
+   "from": {
+    "label": "Ritual",
+    "entity_key": "VG:CONCEPT:SATTRA"
+   },
+   "to": {
+    "label": "RitualRole",
+    "entity_key": "VG:CONCEPT:POTR-PURIFIER"
+   },
+   "properties": {
+    "evidence_layer": "SOURCE_EXPLICIT",
+    "mapping_confidence": "EXACT",
+    "evidence_citation": "SankhSS 13.14.1",
+    "evidence_supplementary_key": "VG:SUPP:SankhSS:13:14:1",
+    "evidence_source_type": "SRAUTASUTRA",
+    "evidence_quote": "ahitagnaya istaprathamayajna diksita grhapatisaptadasah satram asiran hota maitravaruno 'cchavako gravastud brahma brahmanacchamsi potagnidhra udgata prastota pratiharta subrahmanyo 'dhvaryuh pratiprasthata nestonneta",
+    "evidence_translation": "A sattra may be performed by sixteen persons, with the grhapati as seventeenth, who all have established their sacred fires, who have performed the first sacrifice, and who have undergone the consecration, viz., hotr, maitravaruna, acchavaka and gravastut; brahman, brahmanacchamsin, potr and agnidhra; udgatr, prastotr, pratihartr and subrahmanya; and adhvaryu, pratiprasthatr, nestr and unnetr.",
+    "evidence_translator": "Caland",
+    "reader": "AGENT_4_FINAL_CLOSURE_SPRINT",
+    "human_reviewed": 0,
+    "sprint": "FINAL_CLOSURE_SPRINT",
+    "agent": "AGENT_4"
+   },
+   "why": "One line states the officiant set of a named rite. GAP-RITUAL-004 requires the hotr to carry PERFORMED_BY edges; this is the only basis in the acquired apparatus that is a statement rather than co-occurrence."
+  },
+  {
+   "op": "CREATE_RELATIONSHIP",
+   "type": "RECEIVES_OFFERING",
+   "from": {
+    "label": "Devata",
+    "entity_key": "VG:DEVATA:AGNIH"
+   },
+   "to": {
+    "label": "Offering",
+    "entity_key": "VG:CONCEPT:PURODASA-CAKE"
+   },
+   "properties": {
+    "evidence_layer": "SOURCE_EXPLICIT",
+    "mapping_confidence": "EXACT",
+    "loci": 19,
+    "evidence_citations": [
+     "AB 7.6.1",
+     "AB 7.6.2",
+     "AB 7.6.3",
+     "AB 7.6.4",
+     "AB 7.7.1",
+     "AB 7.7.2",
+     "AB 7.7.3",
+     "AB 7.7.4",
+     "AB 7.8.1",
+     "AB 7.8.2",
+     "AB 7.8.3",
+     "AB 7.8.4",
+     "AB 7.9.1",
+     "AB 7.9.3",
+     "AB 7.9.4",
+     "AB 7.9.6",
+     "AB 7.9.7",
+     "AB 7.9.8",
+     "SankhSS 14.2.17"
+    ],
+    "evidence_supplementary_keys": [
+     "VG:SUPP:AB:7:6:1",
+     "VG:SUPP:AB:7:6:2",
+     "VG:SUPP:AB:7:6:3",
+     "VG:SUPP:AB:7:6:4",
+     "VG:SUPP:AB:7:7:1",
+     "VG:SUPP:AB:7:7:2",
+     "VG:SUPP:AB:7:7:3",
+     "VG:SUPP:AB:7:7:4",
+     "VG:SUPP:AB:7:8:1",
+     "VG:SUPP:AB:7:8:2",
+     "VG:SUPP:AB:7:8:3",
+     "VG:SUPP:AB:7:8:4",
+     "VG:SUPP:AB:7:9:1",
+     "VG:SUPP:AB:7:9:3",
+     "VG:SUPP:AB:7:9:4",
+     "VG:SUPP:AB:7:9:6",
+     "VG:SUPP:AB:7:9:7",
+     "VG:SUPP:AB:7:9:8",
+     "VG:SUPP:SankhSS:14:2:17"
+    ],
+    "evidence_quote": "tad āhur yasyāgnāv agnim uddhareyuḥ kā tatra prāyaścittir iti sa yady anupaśyed udūhya pūrvam aparaṃ nidadhyād yady u nānupaśyet so 'gnaye 'gnivate 'ṣṭākapālam puroḍāśaṃ nirvapet tasya yājyānuvākye agnināgniḥ samidhyate tvaṃ hy agne agninety āhutiṃ vāhavanīye juhuyād agnaye 'gnivate svāheti sā tatra prāyaścittiḥ",
+    "reader": "AGENT_4_FINAL_CLOSURE_SPRINT",
+    "human_reviewed": 0,
+    "basis": "One line of a named ritual work carries this deity in the dative, this offering as a noun, and a verb of offering, with no second theonym-dative and no second offering to pair with; and the line was read.",
+    "sprint": "FINAL_CLOSURE_SPRINT",
+    "agent": "AGENT_4"
+   },
+   "why": "GAP-RITUAL-005 asks for a typed deity-to-offering predicate with per-edge verse evidence. RECEIVES_OFFERING is declared in the ontology and carries zero edges; these are the first, and every locus behind every one of them was read."
+  },
+  {
+   "op": "CREATE_RELATIONSHIP",
+   "type": "RECEIVES_OFFERING",
+   "from": {
+    "label": "Devata",
+    "entity_key": "VG:DEVATA:INDRAH"
+   },
+   "to": {
+    "label": "Offering",
+    "entity_key": "VG:CONCEPT:PURODASA-CAKE"
+   },
+   "properties": {
+    "evidence_layer": "SOURCE_EXPLICIT",
+    "mapping_confidence": "EXACT",
+    "loci": 1,
+    "evidence_citations": [
+     "KausB 4.1.3"
+    ],
+    "evidence_supplementary_keys": [
+     "VG:SUPP:KausB:4:1:3"
+    ],
+    "evidence_quote": "sa vā indrāya vimṛdha ekādaśakapālaṃ puroḍāśaṃ nirvapati",
+    "reader": "AGENT_4_FINAL_CLOSURE_SPRINT",
+    "human_reviewed": 0,
+    "basis": "One line of a named ritual work carries this deity in the dative, this offering as a noun, and a verb of offering, with no second theonym-dative and no second offering to pair with; and the line was read.",
+    "sprint": "FINAL_CLOSURE_SPRINT",
+    "agent": "AGENT_4"
+   },
+   "why": "GAP-RITUAL-005 asks for a typed deity-to-offering predicate with per-edge verse evidence. RECEIVES_OFFERING is declared in the ontology and carries zero edges; these are the first, and every locus behind every one of them was read."
+  },
+  {
+   "op": "CREATE_RELATIONSHIP",
+   "type": "RECEIVES_OFFERING",
+   "from": {
+    "label": "Devata",
+    "entity_key": "VG:DEVATA:PUSA"
+   },
+   "to": {
+    "label": "Offering",
+    "entity_key": "VG:CONCEPT:CARU-GRUEL"
+   },
+   "properties": {
+    "evidence_layer": "SOURCE_EXPLICIT",
+    "mapping_confidence": "EXACT",
+    "loci": 1,
+    "evidence_citations": [
+     "SankhSS 16.1.13"
+    ],
+    "evidence_supplementary_keys": [
+     "VG:SUPP:SankhSS:16:1:13"
+    ],
+    "evidence_quote": "atha pūṣṇe pathikṛte caruṃ nirvapati",
+    "reader": "AGENT_4_FINAL_CLOSURE_SPRINT",
+    "human_reviewed": 0,
+    "basis": "One line of a named ritual work carries this deity in the dative, this offering as a noun, and a verb of offering, with no second theonym-dative and no second offering to pair with; and the line was read.",
+    "sprint": "FINAL_CLOSURE_SPRINT",
+    "agent": "AGENT_4"
+   },
+   "why": "GAP-RITUAL-005 asks for a typed deity-to-offering predicate with per-edge verse evidence. RECEIVES_OFFERING is declared in the ontology and carries zero edges; these are the first, and every locus behind every one of them was read."
+  },
+  {
+   "op": "CREATE_RELATIONSHIP",
+   "type": "RECEIVES_OFFERING",
+   "from": {
+    "label": "Devata",
+    "entity_key": "VG:DEVATA:SARASVATI"
+   },
+   "to": {
+    "label": "Offering",
+    "entity_key": "VG:CONCEPT:CARU-GRUEL"
+   },
+   "properties": {
+    "evidence_layer": "SOURCE_EXPLICIT",
+    "mapping_confidence": "EXACT",
+    "loci": 1,
+    "evidence_citations": [
+     "GB 2.1.12.9"
+    ],
+    "evidence_supplementary_keys": [
+     "VG:SUPP:GB:2:1:12:9"
+    ],
+    "evidence_quote": "tad yat paurṇamāsam ārabhamāṇaḥ sarasvatyai caruṃ nirvapet sarasvate dvādaśakapālam amāvāsyā vai sarasvatī paurṇamāsaḥ sarasvān iti",
+    "reader": "AGENT_4_FINAL_CLOSURE_SPRINT",
+    "human_reviewed": 0,
+    "basis": "One line of a named ritual work carries this deity in the dative, this offering as a noun, and a verb of offering, with no second theonym-dative and no second offering to pair with; and the line was read.",
+    "sprint": "FINAL_CLOSURE_SPRINT",
+    "agent": "AGENT_4"
+   },
+   "why": "GAP-RITUAL-005 asks for a typed deity-to-offering predicate with per-edge verse evidence. RECEIVES_OFFERING is declared in the ontology and carries zero edges; these are the first, and every locus behind every one of them was read."
+  },
+  {
+   "op": "CREATE_RELATIONSHIP",
+   "type": "USES_OBJECT",
+   "from": {
+    "label": "Ritual",
+    "entity_key": "VG:CONCEPT:SVASTYAYANA"
+   },
+   "to": {
+    "label": "Object",
+    "entity_key": "VG:CONCEPT:MANI-AMULET"
+   },
+   "properties": {
+    "evidence_layer": "SOURCE_EXPLICIT",
+    "mapping_confidence": "EXACT",
+    "evidence_citation": "GobhGS 3.8.6",
+    "evidence_supplementary_key": "VG:SUPP:GobhGS:3:8:6",
+    "evidence_source_type": "GRHYASUTRA",
+    "independent_witness": "Oldenberg, The Grihya-sutras, SBE 30",
+    "reader": "AGENT_4_FINAL_CLOSURE_SPRINT",
+    "human_reviewed": 0,
+    "sprint": "FINAL_CLOSURE_SPRINT",
+    "agent": "AGENT_4"
+   },
+   "why": "GAP-RITUAL-003 asks that USES_OBJECT reach the amulet. GobhGS 3.8.6 names the rite as the purpose of tying the manis, and Oldenberg's attributed translation says the same, so this is a statement rather than the co-occurrence the sibling gap forbids."
+  },
+  {
+   "op": "CREATE_RELATIONSHIP",
+   "type": "MENTIONS_ENTITY",
+   "from": {
+    "label": "Passage",
+    "canonical_key": "VG:AV:SAU:K12:S001:V038"
+   },
+   "to": {
+    "label": "Object",
+    "entity_key": "VG:CONCEPT:YUPA-SACRIFICIAL-POST"
+   },
+   "properties": {
+    "method": "domain-mention-v1:sanskrit-token",
+    "matched_aliases": [
+     "yūpo"
+    ],
+    "alias_count": 1,
+    "pipeline_version": "vedagraph-graph-enrichment-v1",
+    "sprint": "FINAL_CLOSURE_SPRINT",
+    "agent": "AGENT_4"
+   },
+   "why": "GAP-RITUAL-003's closure test requires yupa's vedas_with_matches to read 3 with VSM 19.17 and 25.29 both matched. These are the edges the registered aliases produce; the simulation was validated by reproducing the live graph's existing edges exactly before adding any alias."
+  },
+  {
+   "op": "CREATE_RELATIONSHIP",
+   "type": "MENTIONS_ENTITY",
+   "from": {
+    "label": "Passage",
+    "canonical_key": "VG:RV:SAK:M01:S162:V006"
+   },
+   "to": {
+    "label": "Object",
+    "entity_key": "VG:CONCEPT:YUPA-SACRIFICIAL-POST"
+   },
+   "properties": {
+    "method": "domain-mention-v1:sanskrit-token",
+    "matched_aliases": [
+     "yūpavraskā",
+     "yūpavāhāś"
+    ],
+    "alias_count": 2,
+    "pipeline_version": "vedagraph-graph-enrichment-v1",
+    "sprint": "FINAL_CLOSURE_SPRINT",
+    "agent": "AGENT_4"
+   },
+   "why": "GAP-RITUAL-003's closure test requires yupa's vedas_with_matches to read 3 with VSM 19.17 and 25.29 both matched. These are the edges the registered aliases produce; the simulation was validated by reproducing the live graph's existing edges exactly before adding any alias."
+  },
+  {
+   "op": "CREATE_RELATIONSHIP",
+   "type": "MENTIONS_ENTITY",
+   "from": {
+    "label": "Passage",
+    "canonical_key": "VG:RV:SAK:M04:S033:V003"
+   },
+   "to": {
+    "label": "Object",
+    "entity_key": "VG:CONCEPT:YUPA-SACRIFICIAL-POST"
+   },
+   "properties": {
+    "method": "domain-mention-v1:sanskrit-token",
+    "matched_aliases": [
+     "yūpeva"
+    ],
+    "alias_count": 1,
+    "pipeline_version": "vedagraph-graph-enrichment-v1",
+    "sprint": "FINAL_CLOSURE_SPRINT",
+    "agent": "AGENT_4"
+   },
+   "why": "GAP-RITUAL-003's closure test requires yupa's vedas_with_matches to read 3 with VSM 19.17 and 25.29 both matched. These are the edges the registered aliases produce; the simulation was validated by reproducing the live graph's existing edges exactly before adding any alias."
+  },
+  {
+   "op": "CREATE_RELATIONSHIP",
+   "type": "MENTIONS_ENTITY",
+   "from": {
+    "label": "Passage",
+    "canonical_key": "VG:RV:SAK:M05:S002:V007"
+   },
+   "to": {
+    "label": "Object",
+    "entity_key": "VG:CONCEPT:YUPA-SACRIFICIAL-POST"
+   },
+   "properties": {
+    "method": "domain-mention-v1:sanskrit-token",
+    "matched_aliases": [
+     "yūpād"
+    ],
+    "alias_count": 1,
+    "pipeline_version": "vedagraph-graph-enrichment-v1",
+    "sprint": "FINAL_CLOSURE_SPRINT",
+    "agent": "AGENT_4"
+   },
+   "why": "GAP-RITUAL-003's closure test requires yupa's vedas_with_matches to read 3 with VSM 19.17 and 25.29 both matched. These are the edges the registered aliases produce; the simulation was validated by reproducing the live graph's existing edges exactly before adding any alias."
+  },
+  {
+   "op": "CREATE_RELATIONSHIP",
+   "type": "MENTIONS_ENTITY",
+   "from": {
+    "label": "Passage",
+    "canonical_key": "VG:YV:VSM:A19:V017"
+   },
+   "to": {
+    "label": "Object",
+    "entity_key": "VG:CONCEPT:YUPA-SACRIFICIAL-POST"
+   },
+   "properties": {
+    "method": "domain-mention-v1:sanskrit-token",
+    "matched_aliases": [
+     "yūpa",
+     "yūpena"
+    ],
+    "alias_count": 2,
+    "pipeline_version": "vedagraph-graph-enrichment-v1",
+    "sprint": "FINAL_CLOSURE_SPRINT",
+    "agent": "AGENT_4"
+   },
+   "why": "GAP-RITUAL-003's closure test requires yupa's vedas_with_matches to read 3 with VSM 19.17 and 25.29 both matched. These are the edges the registered aliases produce; the simulation was validated by reproducing the live graph's existing edges exactly before adding any alias."
+  },
+  {
+   "op": "CREATE_RELATIONSHIP",
+   "type": "MENTIONS_ENTITY",
+   "from": {
+    "label": "Passage",
+    "canonical_key": "VG:YV:VSM:A25:V029"
+   },
+   "to": {
+    "label": "Object",
+    "entity_key": "VG:CONCEPT:YUPA-SACRIFICIAL-POST"
+   },
+   "properties": {
+    "method": "domain-mention-v1:sanskrit-token",
+    "matched_aliases": [
+     "yūpavraskā",
+     "yūpavāhāś"
+    ],
+    "alias_count": 2,
+    "pipeline_version": "vedagraph-graph-enrichment-v1",
+    "sprint": "FINAL_CLOSURE_SPRINT",
+    "agent": "AGENT_4"
+   },
+   "why": "GAP-RITUAL-003's closure test requires yupa's vedas_with_matches to read 3 with VSM 19.17 and 25.29 both matched. These are the edges the registered aliases produce; the simulation was validated by reproducing the live graph's existing edges exactly before adding any alias."
+  }
+ ],
+ "property_corrections": [
+  {
+   "op": "SET_NODE_PROPERTY",
+   "match": {
+    "label": "Object",
+    "entity_key": "VG:CONCEPT:AUDUMBARA-AMULET"
+   },
+   "properties": {
+    "supplementary_attestation_count": 0,
+    "supplementary_lines_assessed": 91,
+    "supplementary_attestation_outcome": "ASSESSED_ZERO_EVERY_LINE_IS_UDUMBARA_WOOD",
+    "supplementary_attestation_note": "91 lines of the eighteen acquired ritual works carry an audumbara- form and 0 of them attest the amulet. Every one is udumbara WOOD: the audumbari post of the sadas, the audumbara camasa, the audumbari asandi, the audumbara danda, the audumbara paridhi, the audumbara plough. The previous value, 91, was correct for the alias and wrong for this node, which is the AVS 19.31 amulet. This is an assessed zero, not an unexamined one.",
+    "supplementary_attestation_assessed_corpus": "18 supplementary ritual works, 61,393 cited lines",
+    "sprint": "FINAL_CLOSURE_SPRINT",
+    "agent": "AGENT_4"
+   },
+   "why": "A4-RITUAL-D5. This is the one defect in this domain a user can currently see: a live property asserting 91 lines of corroboration the corpus does not give.",
+   "nodes_created": 0,
+   "relationships_created": 0
+  }
+ ],
+ "registry_edits": [
+  {
+   "op": "EDIT_REGISTRY_FILE",
+   "file": "data/domain/vedagraph_domain_v2/domain_entities_material.yaml",
+   "entity": "VG:CONCEPT:YUPA-SACRIFICIAL-POST",
+   "field": "aliases_sa",
+   "from": [
+    "yūpaḥ",
+    "yūpe",
+    "yūpān",
+    "svaravaḥ"
+   ],
+   "to": [
+    "svaravaḥ",
+    "yūpa",
+    "yūpavraskā",
+    "yūpavāhāś",
+    "yūpaḥ",
+    "yūpe",
+    "yūpena",
+    "yūpeva",
+    "yūpo",
+    "yūpād",
+    "yūpān"
+   ],
+   "why": "The mention layer reads aliases_sa; the graph node property mirrors it."
+  },
+  {
+   "op": "APPLY_OVERLAY",
+   "overlay_module": "data/staging/final_closure_sprint/agent4/agent4_overlay.py",
+   "overlay_evidence": "data/staging/final_closure_sprint/agent4/ritual_registry_overlay.json",
+   "overlay_version": "agent4-ritual-registry-overlay-1.0.0",
+   "corrects": "ritual_registries.RITE_CANDIDATES SATTRA exact forms",
+   "adds": [
+    "satram",
+    "satraṃ",
+    "satre",
+    "satrasya",
+    "satrāṇi"
+   ],
+   "removes": [],
+   "why": "ritual_registries.RITE_CANDIDATES registers SATTRA with the prefix `sattrayan` and the exact forms sattram / sattrasya / sattre / sattrani / sattranam, all double-t. The Sankhayana edition prints the single-t `satram`, which no registered form reaches, so the only rite alias that fired on the line was `diksit`.",
+   "why_an_overlay_and_not_an_edit": "data/staging/ritual/manifest.json carries a sha256 for every file beside it. A correction made in place would break 25 hashes and the seal's only value is that they still verify. The overlay is consulted after the sealed registry, is additive by construction, and a test re-hashes the sealed files to prove they did not move.",
+   "measured_effect": {
+    "supplementary_lines_reached": 18,
+    "lines_that_gain_a_rite": 18,
+    "host_forms_per_added_token": {
+     "satram": 11,
+     "satre": 4,
+     "satraṃ": 2,
+     "satrāṇi": 1
+    }
+   },
+   "the_sealed_artifact_is_byte_identical": true
+  }
+ ],
+ "property_updates_sample": [
+  {
+   "op": "SET_NODE_PROPERTY",
+   "match": {
+    "label": "Mantra",
+    "canonical_key": "VG:RV:SAK:M01:S001:V001"
+   },
+   "properties": {
+    "ritual_context": "RITE_NAMED_IN_THIS_MANTRA",
+    "ritual_context_method": "EXTERNAL_RITUAL_CITATION",
+    "ritual_context_assessed_population": 20210
+   }
+  },
+  {
+   "op": "SET_NODE_PROPERTY",
+   "match": {
+    "label": "Mantra",
+    "canonical_key": "VG:RV:SAK:M01:S001:V002"
+   },
+   "properties": {
+    "ritual_context": "NO_RITUAL_CITATION_FOUND",
+    "ritual_context_method": "EXTERNAL_RITUAL_CITATION",
+    "ritual_context_assessed_population": 20210
+   }
+  },
+  {
+   "op": "SET_NODE_PROPERTY",
+   "match": {
+    "label": "Mantra",
+    "canonical_key": "VG:RV:SAK:M01:S001:V003"
+   },
+   "properties": {
+    "ritual_context": "EMPLOYED_IN_RITE_PROBABLE",
+    "ritual_context_method": "EXTERNAL_RITUAL_CITATION",
+    "ritual_context_assessed_population": 20210
+   }
+  },
+  {
+   "op": "SET_NODE_PROPERTY",
+   "match": {
+    "label": "Mantra",
+    "canonical_key": "VG:RV:SAK:M01:S001:V004"
+   },
+   "properties": {
+    "ritual_context": "RITE_NAMED_IN_THIS_MANTRA",
+    "ritual_context_method": "EXTERNAL_RITUAL_CITATION",
+    "ritual_context_assessed_population": 20210
+   }
+  },
+  {
+   "op": "SET_NODE_PROPERTY",
+   "match": {
+    "label": "Mantra",
+    "canonical_key": "VG:RV:SAK:M01:S001:V005"
+   },
+   "properties": {
+    "ritual_context": "NO_RITUAL_CITATION_FOUND",
+    "ritual_context_method": "EXTERNAL_RITUAL_CITATION",
+    "ritual_context_assessed_population": 20210
+   }
+  }
+ ],
+ "property_updates_file": "ritual_context.jsonl",
+ "property_updates_count": 20210
+}

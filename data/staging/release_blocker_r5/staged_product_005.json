@@ -1,0 +1,1088 @@
+{
+  "gap_id": "GAP-PRODUCT_SURFACE-005",
+  "backlog_id": "SV-APPARATUS-LIFT-01",
+  "proposal": "data/staging/final_closure_sprint/agent6/gap005_sv_apparatus_corrections.json",
+  "keys": [
+    "VG:SV:KAU:ARANYA:D01:V04",
+    "VG:SV:KAU:CHANDA:P01:D08:V04",
+    "VG:SV:KAU:CHANDA:P02:D07:V07",
+    "VG:SV:KAU:CHANDA:P04:D05:V06"
+  ],
+  "preflight": [
+    {
+      "key": "VG:SV:KAU:ARANYA:D01:V04",
+      "role": "PRIMARY_TEXT",
+      "live_sha_matches_proposal_current": true,
+      "live_text_starts_with_the_apparatus": true,
+      "proposal_new_sha256_reproduces": true,
+      "recomputed_new_sha256": "aced94b37144c070c87e3061170abb78aba6e57183019fe7c73cb3bff51ed287",
+      "declared_new_sha256": "aced94b37144c070c87e3061170abb78aba6e57183019fe7c73cb3bff51ed287"
+    },
+    {
+      "key": "VG:SV:KAU:CHANDA:P01:D08:V04",
+      "role": "PRIMARY_TEXT",
+      "live_sha_matches_proposal_current": true,
+      "live_text_starts_with_the_apparatus": true,
+      "proposal_new_sha256_reproduces": true,
+      "recomputed_new_sha256": "f9459f7dfdd606d011f6134189edd6eb2fc679dd3dd566d21dba441181b49d4e",
+      "declared_new_sha256": "f9459f7dfdd606d011f6134189edd6eb2fc679dd3dd566d21dba441181b49d4e"
+    },
+    {
+      "key": "VG:SV:KAU:CHANDA:P02:D07:V07",
+      "role": "PRIMARY_TEXT",
+      "live_sha_matches_proposal_current": true,
+      "live_text_starts_with_the_apparatus": true,
+      "proposal_new_sha256_reproduces": true,
+      "recomputed_new_sha256": "b30f7f409718efb2db27a3b9136d421a5230b940a1de0591ba56f39fced49e93",
+      "declared_new_sha256": "b30f7f409718efb2db27a3b9136d421a5230b940a1de0591ba56f39fced49e93"
+    },
+    {
+      "key": "VG:SV:KAU:CHANDA:P04:D05:V06",
+      "role": "PRIMARY_TEXT",
+      "live_sha_matches_proposal_current": true,
+      "live_text_starts_with_the_apparatus": true,
+      "proposal_new_sha256_reproduces": true,
+      "recomputed_new_sha256": "8363fd84fed182056da27a1c523a4141f4fd75a10e327268fc872b6337c11003",
+      "declared_new_sha256": "8363fd84fed182056da27a1c523a4141f4fd75a10e327268fc872b6337c11003"
+    }
+  ],
+  "preflight_all_pass": true,
+  "text_version_updates": [
+    {
+      "text_id": "11871cc7-720a-55da-9750-666de346a457",
+      "artifact_id": "WIKISOURCE_SA.SV.KAU.ARCIKA_MULA",
+      "canonical_key": "VG:SV:KAU:ARANYA:D01:V04",
+      "role": "PRIMARY_TEXT",
+      "old_sha256": "85ce20a26dfbff0039220cff4ddb1c2c29733b3f4925fe9619df8172bd7fcfef",
+      "new_text_nfc": "उदुत्तमं वरुण पाशमस्मदवाधमं वि मध्यमं श्रथाय । अथादित्य व्रते वयं तवानागसो अदितये स्याम",
+      "new_sha256": "aced94b37144c070c87e3061170abb78aba6e57183019fe7c73cb3bff51ed287",
+      "codepoints_removed": 44
+    },
+    {
+      "text_id": "e57913ca-22c4-55da-b1f9-f0c0ed7e32c1",
+      "artifact_id": "VEDAGRAPH.SV.SEARCH_NORMALIZED",
+      "canonical_key": "VG:SV:KAU:ARANYA:D01:V04",
+      "role": "SEARCH_DERIVATIVE",
+      "old_sha256": "b59963bbf1d2b3b693c15777dc17561bf20f7cf42440e4f67e79616e4fa77363",
+      "new_text_nfc": "uduttama varuṇa pāśamasmadavādhama vi madhyama śrathāya athāditya vrate vaya tavānāgaso aditaye syāma",
+      "new_sha256": "354c1a4778d438ad1188e44b0f2d6cf3455618fbb7c8496f2fb6d74861bd2417",
+      "rederived_surface": "script_folded",
+      "rederived_from": "the corrected PRIMARY_TEXT via enrich.surfaces"
+    },
+    {
+      "text_id": "8b9854cb-55eb-5947-96ec-0fa1b0584a6d",
+      "artifact_id": "WIKISOURCE_SA.SV.KAU.ARCIKA_MULA",
+      "canonical_key": "VG:SV:KAU:CHANDA:P01:D08:V04",
+      "role": "PRIMARY_TEXT",
+      "old_sha256": "fa4f67688ead62938d12d7d65a916e0fd86963c91735738a28ae4d1594697dde",
+      "new_text_nfc": "इडामग्ने पुरुदंसं सनिं गोः शश्वत्तमं हवमानाय साध । स्यान्नः सूनुस्तनयो विजावाग्ने सा ते सुमतिर्भूत्वस्मे",
+      "new_sha256": "f9459f7dfdd606d011f6134189edd6eb2fc679dd3dd566d21dba441181b49d4e",
+      "codepoints_removed": 5
+    },
+    {
+      "text_id": "7a497a76-0bfa-514f-aa51-e40b45b39f08",
+      "artifact_id": "VEDAGRAPH.SV.SEARCH_NORMALIZED",
+      "canonical_key": "VG:SV:KAU:CHANDA:P01:D08:V04",
+      "role": "SEARCH_DERIVATIVE",
+      "old_sha256": "457d364cdea0eed2b8a29477edf726682d0883a74168c7de0dbbd8fe25c5d9a2",
+      "new_text_nfc": "iḍāmagne purudasa sani goḥ śaśvattama havamānāya sādha syānnaḥ sūnustanayo vijāvāgne sā te sumatirbhūtvasme",
+      "new_sha256": "72a27adaff9068b55dfa3185167f345afc91e455eed6bb8a425d210d6e82ea7b",
+      "rederived_surface": "script_folded",
+      "rederived_from": "the corrected PRIMARY_TEXT via enrich.surfaces"
+    },
+    {
+      "text_id": "99cd5caf-88e6-59d1-a34d-cdb821296835",
+      "artifact_id": "WIKISOURCE_SA.SV.KAU.ARCIKA_MULA",
+      "canonical_key": "VG:SV:KAU:CHANDA:P02:D07:V07",
+      "role": "PRIMARY_TEXT",
+      "old_sha256": "7aac8a3e6079dbfe8f133b2750f8f3d689e60845ccaa97fa186317dcc85e2f0a",
+      "new_text_nfc": "अभि त्वा वृषभा सुते सुतं सृजामि पीतये । तृम्पा व्यश्नुही मदं",
+      "new_sha256": "b30f7f409718efb2db27a3b9136d421a5230b940a1de0591ba56f39fced49e93",
+      "codepoints_removed": 11
+    },
+    {
+      "text_id": "83dc63dc-2196-57da-a4ed-703d47f95cf9",
+      "artifact_id": "VEDAGRAPH.SV.SEARCH_NORMALIZED",
+      "canonical_key": "VG:SV:KAU:CHANDA:P02:D07:V07",
+      "role": "SEARCH_DERIVATIVE",
+      "old_sha256": "b19fea276dbf71c8a466112a17337a06ebeb73cce95d3ea9c2da3db2a5b34fad",
+      "new_text_nfc": "abhi tvā vṣabhā sute suta sjāmi pītaye tmpā vyaśnuhī mada",
+      "new_sha256": "21fd7ecee8ca281ea5e7a3e4430702ce9520eb7106f05cbdd89da25cb2f6a072",
+      "rederived_surface": "script_folded",
+      "rederived_from": "the corrected PRIMARY_TEXT via enrich.surfaces"
+    },
+    {
+      "text_id": "a6749316-5598-5393-b769-aa510c75422b",
+      "artifact_id": "WIKISOURCE_SA.SV.KAU.ARCIKA_MULA",
+      "canonical_key": "VG:SV:KAU:CHANDA:P04:D05:V06",
+      "role": "PRIMARY_TEXT",
+      "old_sha256": "506e5940ec5792020292b0c2e2c4f0cff22fbf028b7dc8c0a5f2dc7977a98827",
+      "new_text_nfc": "यं वृत्रेषु क्षितय स्पर्धमाना यं युक्तेषु तुरयन्तो हवन्ते । यं शूरसातौ यमपामुपज्मन्यं विप्रासो वाजयन्ते स इन्द्रः",
+      "new_sha256": "8363fd84fed182056da27a1c523a4141f4fd75a10e327268fc872b6337c11003",
+      "codepoints_removed": 14
+    },
+    {
+      "text_id": "3ab492b5-a563-59aa-858f-5477c0b1abde",
+      "artifact_id": "VEDAGRAPH.SV.SEARCH_NORMALIZED",
+      "canonical_key": "VG:SV:KAU:CHANDA:P04:D05:V06",
+      "role": "SEARCH_DERIVATIVE",
+      "old_sha256": "385e8d9a5c7a25aeb96d9fb91e9301bf43e77c202b7eb9b1af8c78f6d3860efe",
+      "new_text_nfc": "ya vtreṣu kṣitaya spardhamānā ya yukteṣu turayanto havante ya śūrasātau yamapāmupajmanya viprāso vājayante sa indraḥ",
+      "new_sha256": "2c27e5559eb9b9c1f17bd9decf5328f28b00611167fba42413ba338f3b6a77fb",
+      "rederived_surface": "script_folded",
+      "rederived_from": "the corrected PRIMARY_TEXT via enrich.surfaces"
+    }
+  ],
+  "derivative_surface_proofs": [
+    {
+      "key": "VG:SV:KAU:ARANYA:D01:V04",
+      "role": "SEARCH_DERIVATIVE",
+      "surface_established_by_reproduction": "script_folded"
+    },
+    {
+      "key": "VG:SV:KAU:CHANDA:P01:D08:V04",
+      "role": "SEARCH_DERIVATIVE",
+      "surface_established_by_reproduction": "script_folded"
+    },
+    {
+      "key": "VG:SV:KAU:CHANDA:P02:D07:V07",
+      "role": "SEARCH_DERIVATIVE",
+      "surface_established_by_reproduction": "script_folded"
+    },
+    {
+      "key": "VG:SV:KAU:CHANDA:P04:D05:V06",
+      "role": "SEARCH_DERIVATIVE",
+      "surface_established_by_reproduction": "script_folded"
+    }
+  ],
+  "derivative_surface_failures": [],
+  "parallel_edges_found": 14,
+  "parallel_edges_reproduced": 13,
+  "parallel_edge_reproduction": [
+    {
+      "subject": "VG:AV:SAU:K20:S022:V001",
+      "rel": "NEAR_PARALLEL_OF",
+      "object": "VG:SV:KAU:CHANDA:P02:D07:V07",
+      "reproduced_on_contaminated_text": true,
+      "stored": {
+        "lcs_ratio": 0.83871,
+        "similarity": 0.827688,
+        "edit_ratio": 0.904348,
+        "token_jaccard": 0.571429,
+        "ngram_jaccard": 0.816667
+      },
+      "recomputed": {
+        "lcs_ratio": 0.83871,
+        "similarity": 0.827688,
+        "edit_ratio": 0.904348,
+        "token_jaccard": 0.571429,
+        "ngram_jaccard": 0.816667
+      }
+    },
+    {
+      "subject": "VG:RV:SAK:M03:S001:V023",
+      "rel": "NEAR_PARALLEL_OF",
+      "object": "VG:SV:KAU:CHANDA:P01:D08:V04",
+      "reproduced_on_contaminated_text": true,
+      "stored": {
+        "lcs_ratio": 0.960784,
+        "similarity": 0.945392,
+        "edit_ratio": 0.975124,
+        "token_jaccard": 0.391304,
+        "ngram_jaccard": 0.93
+      },
+      "recomputed": {
+        "lcs_ratio": 0.960784,
+        "similarity": 0.945392,
+        "edit_ratio": 0.975124,
+        "token_jaccard": 0.391304,
+        "ngram_jaccard": 0.93
+      }
+    },
+    {
+      "subject": "VG:RV:SAK:M03:S005:V011",
+      "rel": "NEAR_PARALLEL_OF",
+      "object": "VG:SV:KAU:CHANDA:P01:D08:V04",
+      "reproduced_on_contaminated_text": true,
+      "stored": {
+        "lcs_ratio": 0.960784,
+        "similarity": 0.945392,
+        "edit_ratio": 0.975124,
+        "token_jaccard": 0.391304,
+        "ngram_jaccard": 0.93
+      },
+      "recomputed": {
+        "lcs_ratio": 0.960784,
+        "similarity": 0.945392,
+        "edit_ratio": 0.975124,
+        "token_jaccard": 0.391304,
+        "ngram_jaccard": 0.93
+      }
+    },
+    {
+      "subject": "VG:RV:SAK:M03:S006:V011",
+      "rel": "NEAR_PARALLEL_OF",
+      "object": "VG:SV:KAU:CHANDA:P01:D08:V04",
+      "reproduced_on_contaminated_text": true,
+      "stored": {
+        "lcs_ratio": 0.960784,
+        "similarity": 0.945392,
+        "edit_ratio": 0.975124,
+        "token_jaccard": 0.391304,
+        "ngram_jaccard": 0.93
+      },
+      "recomputed": {
+        "lcs_ratio": 0.960784,
+        "similarity": 0.945392,
+        "edit_ratio": 0.975124,
+        "token_jaccard": 0.391304,
+        "ngram_jaccard": 0.93
+      }
+    },
+    {
+      "subject": "VG:RV:SAK:M03:S007:V011",
+      "rel": "NEAR_PARALLEL_OF",
+      "object": "VG:SV:KAU:CHANDA:P01:D08:V04",
+      "reproduced_on_contaminated_text": true,
+      "stored": {
+        "lcs_ratio": 0.960784,
+        "similarity": 0.945392,
+        "edit_ratio": 0.975124,
+        "token_jaccard": 0.391304,
+        "ngram_jaccard": 0.93
+      },
+      "recomputed": {
+        "lcs_ratio": 0.960784,
+        "similarity": 0.945392,
+        "edit_ratio": 0.975124,
+        "token_jaccard": 0.391304,
+        "ngram_jaccard": 0.93
+      }
+    },
+    {
+      "subject": "VG:RV:SAK:M03:S015:V007",
+      "rel": "NEAR_PARALLEL_OF",
+      "object": "VG:SV:KAU:CHANDA:P01:D08:V04",
+      "reproduced_on_contaminated_text": true,
+      "stored": {
+        "lcs_ratio": 0.960784,
+        "similarity": 0.945392,
+        "edit_ratio": 0.975124,
+        "token_jaccard": 0.391304,
+        "ngram_jaccard": 0.93
+      },
+      "recomputed": {
+        "lcs_ratio": 0.960784,
+        "similarity": 0.945392,
+        "edit_ratio": 0.975124,
+        "token_jaccard": 0.391304,
+        "ngram_jaccard": 0.93
+      }
+    },
+    {
+      "subject": "VG:RV:SAK:M08:S045:V022",
+      "rel": "NEAR_PARALLEL_OF",
+      "object": "VG:SV:KAU:CHANDA:P02:D07:V07",
+      "reproduced_on_contaminated_text": true,
+      "stored": {
+        "lcs_ratio": 0.83871,
+        "similarity": 0.827688,
+        "edit_ratio": 0.904348,
+        "token_jaccard": 0.571429,
+        "ngram_jaccard": 0.816667
+      },
+      "recomputed": {
+        "lcs_ratio": 0.83871,
+        "similarity": 0.827688,
+        "edit_ratio": 0.904348,
+        "token_jaccard": 0.571429,
+        "ngram_jaccard": 0.816667
+      }
+    },
+    {
+      "subject": "VG:SV:KAU:CHANDA:P01:D08:V04",
+      "rel": "REUSES_TEXT_FROM",
+      "object": "VG:RV:SAK:M03:S001:V023",
+      "reproduced_on_contaminated_text": true,
+      "stored": {
+        "lcs_ratio": 0.960784,
+        "similarity": 0.945392,
+        "edit_ratio": 0.975124,
+        "token_jaccard": 0.391304,
+        "ngram_jaccard": 0.93
+      },
+      "recomputed": {
+        "lcs_ratio": 0.960784,
+        "similarity": 0.945392,
+        "edit_ratio": 0.975124,
+        "token_jaccard": 0.391304,
+        "ngram_jaccard": 0.93
+      }
+    },
+    {
+      "subject": "VG:SV:KAU:CHANDA:P01:D08:V04",
+      "rel": "REUSES_TEXT_FROM",
+      "object": "VG:RV:SAK:M03:S005:V011",
+      "reproduced_on_contaminated_text": true,
+      "stored": {
+        "lcs_ratio": 0.960784,
+        "similarity": 0.945392,
+        "edit_ratio": 0.975124,
+        "token_jaccard": 0.391304,
+        "ngram_jaccard": 0.93
+      },
+      "recomputed": {
+        "lcs_ratio": 0.960784,
+        "similarity": 0.945392,
+        "edit_ratio": 0.975124,
+        "token_jaccard": 0.391304,
+        "ngram_jaccard": 0.93
+      }
+    },
+    {
+      "subject": "VG:SV:KAU:CHANDA:P01:D08:V04",
+      "rel": "REUSES_TEXT_FROM",
+      "object": "VG:RV:SAK:M03:S006:V011",
+      "reproduced_on_contaminated_text": true,
+      "stored": {
+        "lcs_ratio": 0.960784,
+        "similarity": 0.945392,
+        "edit_ratio": 0.975124,
+        "token_jaccard": 0.391304,
+        "ngram_jaccard": 0.93
+      },
+      "recomputed": {
+        "lcs_ratio": 0.960784,
+        "similarity": 0.945392,
+        "edit_ratio": 0.975124,
+        "token_jaccard": 0.391304,
+        "ngram_jaccard": 0.93
+      }
+    },
+    {
+      "subject": "VG:SV:KAU:CHANDA:P01:D08:V04",
+      "rel": "REUSES_TEXT_FROM",
+      "object": "VG:RV:SAK:M03:S007:V011",
+      "reproduced_on_contaminated_text": true,
+      "stored": {
+        "lcs_ratio": 0.960784,
+        "similarity": 0.945392,
+        "edit_ratio": 0.975124,
+        "token_jaccard": 0.391304,
+        "ngram_jaccard": 0.93
+      },
+      "recomputed": {
+        "lcs_ratio": 0.960784,
+        "similarity": 0.945392,
+        "edit_ratio": 0.975124,
+        "token_jaccard": 0.391304,
+        "ngram_jaccard": 0.93
+      }
+    },
+    {
+      "subject": "VG:SV:KAU:CHANDA:P01:D08:V04",
+      "rel": "REUSES_TEXT_FROM",
+      "object": "VG:RV:SAK:M03:S015:V007",
+      "reproduced_on_contaminated_text": true,
+      "stored": {
+        "lcs_ratio": 0.960784,
+        "similarity": 0.945392,
+        "edit_ratio": 0.975124,
+        "token_jaccard": 0.391304,
+        "ngram_jaccard": 0.93
+      },
+      "recomputed": {
+        "lcs_ratio": 0.960784,
+        "similarity": 0.945392,
+        "edit_ratio": 0.975124,
+        "token_jaccard": 0.391304,
+        "ngram_jaccard": 0.93
+      }
+    },
+    {
+      "subject": "VG:SV:KAU:CHANDA:P02:D07:V07",
+      "rel": "REUSES_TEXT_FROM",
+      "object": "VG:RV:SAK:M08:S045:V022",
+      "reproduced_on_contaminated_text": true,
+      "stored": {
+        "lcs_ratio": 0.83871,
+        "similarity": 0.827688,
+        "edit_ratio": 0.904348,
+        "token_jaccard": 0.571429,
+        "ngram_jaccard": 0.816667
+      },
+      "recomputed": {
+        "lcs_ratio": 0.83871,
+        "similarity": 0.827688,
+        "edit_ratio": 0.904348,
+        "token_jaccard": 0.571429,
+        "ngram_jaccard": 0.816667
+      }
+    }
+  ],
+  "parallel_edges_skipped": [
+    {
+      "subject": "VG:SV:KAU:CHANDA:P01:D08:V04",
+      "rel": "NEAR_PARALLEL_OF",
+      "object": "VG:YV:VSM:A12:V051",
+      "why": "one end carries no PRIMARY_TEXT TextVersion, so the pair cannot be rescored. Reported rather than skipped silently.",
+      "subject_has_primary": true,
+      "object_has_primary": false
+    }
+  ],
+  "parallel_edges_accounted_for": true,
+  "parallel_edge_updates": [
+    {
+      "subject": "VG:AV:SAU:K20:S022:V001",
+      "object": "VG:SV:KAU:CHANDA:P02:D07:V07",
+      "rel": "NEAR_PARALLEL_OF",
+      "parallel_id": "VG:ENRICH:PARALLEL:1bf343bc67f1aa3cbc27948389e27ec8",
+      "properties": {
+        "lcs_ratio": 0.981132,
+        "similarity": 0.970958,
+        "score": 0.970958,
+        "edit_ratio": 0.981132,
+        "token_jaccard": 0.615385,
+        "ngram_jaccard": 0.960784,
+        "cross_veda_stored_similarity": 0.970958,
+        "evidence": "[{\"locator\": \"VG:AV:SAU:K20:S022:V001\", \"quote\": \"abhitvāvṣabhāsutesutasjāmipītayetmpāvyaśnuhīmadam\", \"surface\": \"SANDHI_INSENSITIVE\"}, {\"locator\": \"VG:SV:KAU:CHANDA:P02:D07:V07\", \"quote\": \"abhitvāvṣabhāsutesutasjāmipītayetmpāvyaśnuhīmada\", \"surface\": \"SANDHI_INSENSITIVE\"}]",
+        "cross_veda_metrics_recomputed_by": "R5 SV-APPARATUS-LIFT-01",
+        "cross_veda_metrics_recomputed_because": "The stored metrics and the published evidence quote were computed over a Wikisource apparatus line the parser attached to this verse. Recomputed by vedagraph.enrich.crossveda.score_pair, which reproduced every stored metric exactly on the contaminated text before being trusted on the corrected one.",
+        "r5_contract": "VG:R5_CLOSURE:V1",
+        "cross_veda_transformation_status": "STALE_RECOMPUTE_REQUIRED_TEXT_CORRECTED",
+        "cross_veda_transformation_superseded": "TWO_CONTIGUOUS_SUBSTITUTIONS",
+        "cross_veda_transformation_superseded_basis": "two edit operations: ['insert', 'replace']",
+        "cross_veda_transformation_stale_reason": "The class was derived from a text carrying an apparatus prefix that has now been removed. The 16-value transformation vocabulary is produced by the cross-Veda staging build and not by anything in src, so a value inferred here would be a guess. The old value is preserved beside this marker rather than published as current, and the class is re-derived when the cross-Veda stage next runs."
+      },
+      "metric_delta": {
+        "lcs_ratio": [
+          0.83871,
+          0.981132
+        ],
+        "similarity": [
+          0.827688,
+          0.970958
+        ],
+        "edit_ratio": [
+          0.904348,
+          0.981132
+        ],
+        "token_jaccard": [
+          0.571429,
+          0.615385
+        ],
+        "ngram_jaccard": [
+          0.816667,
+          0.960784
+        ]
+      }
+    },
+    {
+      "subject": "VG:RV:SAK:M03:S001:V023",
+      "object": "VG:SV:KAU:CHANDA:P01:D08:V04",
+      "rel": "NEAR_PARALLEL_OF",
+      "parallel_id": "VG:ENRICH:PARALLEL:4890ac9e793b658a56533fbb3affecd4",
+      "properties": {
+        "lcs_ratio": 0.989899,
+        "similarity": 0.974331,
+        "score": 0.974331,
+        "edit_ratio": 0.989899,
+        "token_jaccard": 0.409091,
+        "ngram_jaccard": 0.958763,
+        "cross_veda_stored_similarity": 0.974331,
+        "evidence": "[{\"locator\": \"VG:RV:SAK:M03:S001:V023\", \"quote\": \"iāmagnepurudasasanigoḥśaśvattamahavamānāyasādhasyānnaḥsūnustanayovijāvāgnesātesumatirbhūtvasme\", \"surface\": \"SANDHI_INSENSITIVE\"}, {\"locator\": \"VG:SV:KAU:CHANDA:P01:D08:V04\", \"quote\": \"iḍāmagnepurudasasanigoḥśaśvattamahavamānāyasādhasyānnaḥsūnustanayovijāvāgnesātesumatirbhūtvasme\", \"surface\": \"SANDHI_INSENSITIVE\"}]",
+        "cross_veda_metrics_recomputed_by": "R5 SV-APPARATUS-LIFT-01",
+        "cross_veda_metrics_recomputed_because": "The stored metrics and the published evidence quote were computed over a Wikisource apparatus line the parser attached to this verse. Recomputed by vedagraph.enrich.crossveda.score_pair, which reproduced every stored metric exactly on the contaminated text before being trusted on the corrected one.",
+        "r5_contract": "VG:R5_CLOSURE:V1",
+        "cross_veda_transformation_status": "STALE_RECOMPUTE_REQUIRED_TEXT_CORRECTED",
+        "cross_veda_transformation_superseded": "TWO_CONTIGUOUS_SUBSTITUTIONS",
+        "cross_veda_transformation_superseded_basis": "two edit operations: ['insert', 'replace']",
+        "cross_veda_transformation_stale_reason": "The class was derived from a text carrying an apparatus prefix that has now been removed. The 16-value transformation vocabulary is produced by the cross-Veda staging build and not by anything in src, so a value inferred here would be a guess. The old value is preserved beside this marker rather than published as current, and the class is re-derived when the cross-Veda stage next runs."
+      },
+      "metric_delta": {
+        "lcs_ratio": [
+          0.960784,
+          0.989899
+        ],
+        "similarity": [
+          0.945392,
+          0.974331
+        ],
+        "edit_ratio": [
+          0.975124,
+          0.989899
+        ],
+        "token_jaccard": [
+          0.391304,
+          0.409091
+        ],
+        "ngram_jaccard": [
+          0.93,
+          0.958763
+        ]
+      }
+    },
+    {
+      "subject": "VG:RV:SAK:M03:S005:V011",
+      "object": "VG:SV:KAU:CHANDA:P01:D08:V04",
+      "rel": "NEAR_PARALLEL_OF",
+      "parallel_id": "VG:ENRICH:PARALLEL:56294473a9eb1dbaceceed2cde8c36df",
+      "properties": {
+        "lcs_ratio": 0.989899,
+        "similarity": 0.974331,
+        "score": 0.974331,
+        "edit_ratio": 0.989899,
+        "token_jaccard": 0.409091,
+        "ngram_jaccard": 0.958763,
+        "cross_veda_stored_similarity": 0.974331,
+        "evidence": "[{\"locator\": \"VG:RV:SAK:M03:S005:V011\", \"quote\": \"iāmagnepurudasasanigoḥśaśvattamahavamānāyasādhasyānnaḥsūnustanayovijāvāgnesātesumatirbhūtvasme\", \"surface\": \"SANDHI_INSENSITIVE\"}, {\"locator\": \"VG:SV:KAU:CHANDA:P01:D08:V04\", \"quote\": \"iḍāmagnepurudasasanigoḥśaśvattamahavamānāyasādhasyānnaḥsūnustanayovijāvāgnesātesumatirbhūtvasme\", \"surface\": \"SANDHI_INSENSITIVE\"}]",
+        "cross_veda_metrics_recomputed_by": "R5 SV-APPARATUS-LIFT-01",
+        "cross_veda_metrics_recomputed_because": "The stored metrics and the published evidence quote were computed over a Wikisource apparatus line the parser attached to this verse. Recomputed by vedagraph.enrich.crossveda.score_pair, which reproduced every stored metric exactly on the contaminated text before being trusted on the corrected one.",
+        "r5_contract": "VG:R5_CLOSURE:V1",
+        "cross_veda_transformation_status": "STALE_RECOMPUTE_REQUIRED_TEXT_CORRECTED",
+        "cross_veda_transformation_superseded": "TWO_CONTIGUOUS_SUBSTITUTIONS",
+        "cross_veda_transformation_superseded_basis": "two edit operations: ['insert', 'replace']",
+        "cross_veda_transformation_stale_reason": "The class was derived from a text carrying an apparatus prefix that has now been removed. The 16-value transformation vocabulary is produced by the cross-Veda staging build and not by anything in src, so a value inferred here would be a guess. The old value is preserved beside this marker rather than published as current, and the class is re-derived when the cross-Veda stage next runs."
+      },
+      "metric_delta": {
+        "lcs_ratio": [
+          0.960784,
+          0.989899
+        ],
+        "similarity": [
+          0.945392,
+          0.974331
+        ],
+        "edit_ratio": [
+          0.975124,
+          0.989899
+        ],
+        "token_jaccard": [
+          0.391304,
+          0.409091
+        ],
+        "ngram_jaccard": [
+          0.93,
+          0.958763
+        ]
+      }
+    },
+    {
+      "subject": "VG:RV:SAK:M03:S006:V011",
+      "object": "VG:SV:KAU:CHANDA:P01:D08:V04",
+      "rel": "NEAR_PARALLEL_OF",
+      "parallel_id": "VG:ENRICH:PARALLEL:c1e028dd7180dbf1aefa750ddceebec5",
+      "properties": {
+        "lcs_ratio": 0.989899,
+        "similarity": 0.974331,
+        "score": 0.974331,
+        "edit_ratio": 0.989899,
+        "token_jaccard": 0.409091,
+        "ngram_jaccard": 0.958763,
+        "cross_veda_stored_similarity": 0.974331,
+        "evidence": "[{\"locator\": \"VG:RV:SAK:M03:S006:V011\", \"quote\": \"iāmagnepurudasasanigoḥśaśvattamahavamānāyasādhasyānnaḥsūnustanayovijāvāgnesātesumatirbhūtvasme\", \"surface\": \"SANDHI_INSENSITIVE\"}, {\"locator\": \"VG:SV:KAU:CHANDA:P01:D08:V04\", \"quote\": \"iḍāmagnepurudasasanigoḥśaśvattamahavamānāyasādhasyānnaḥsūnustanayovijāvāgnesātesumatirbhūtvasme\", \"surface\": \"SANDHI_INSENSITIVE\"}]",
+        "cross_veda_metrics_recomputed_by": "R5 SV-APPARATUS-LIFT-01",
+        "cross_veda_metrics_recomputed_because": "The stored metrics and the published evidence quote were computed over a Wikisource apparatus line the parser attached to this verse. Recomputed by vedagraph.enrich.crossveda.score_pair, which reproduced every stored metric exactly on the contaminated text before being trusted on the corrected one.",
+        "r5_contract": "VG:R5_CLOSURE:V1",
+        "cross_veda_transformation_status": "STALE_RECOMPUTE_REQUIRED_TEXT_CORRECTED",
+        "cross_veda_transformation_superseded": "TWO_CONTIGUOUS_SUBSTITUTIONS",
+        "cross_veda_transformation_superseded_basis": "two edit operations: ['insert', 'replace']",
+        "cross_veda_transformation_stale_reason": "The class was derived from a text carrying an apparatus prefix that has now been removed. The 16-value transformation vocabulary is produced by the cross-Veda staging build and not by anything in src, so a value inferred here would be a guess. The old value is preserved beside this marker rather than published as current, and the class is re-derived when the cross-Veda stage next runs."
+      },
+      "metric_delta": {
+        "lcs_ratio": [
+          0.960784,
+          0.989899
+        ],
+        "similarity": [
+          0.945392,
+          0.974331
+        ],
+        "edit_ratio": [
+          0.975124,
+          0.989899
+        ],
+        "token_jaccard": [
+          0.391304,
+          0.409091
+        ],
+        "ngram_jaccard": [
+          0.93,
+          0.958763
+        ]
+      }
+    },
+    {
+      "subject": "VG:RV:SAK:M03:S007:V011",
+      "object": "VG:SV:KAU:CHANDA:P01:D08:V04",
+      "rel": "NEAR_PARALLEL_OF",
+      "parallel_id": "VG:ENRICH:PARALLEL:7531e58385aa26f7ac4481440e6ac738",
+      "properties": {
+        "lcs_ratio": 0.989899,
+        "similarity": 0.974331,
+        "score": 0.974331,
+        "edit_ratio": 0.989899,
+        "token_jaccard": 0.409091,
+        "ngram_jaccard": 0.958763,
+        "cross_veda_stored_similarity": 0.974331,
+        "evidence": "[{\"locator\": \"VG:RV:SAK:M03:S007:V011\", \"quote\": \"iāmagnepurudasasanigoḥśaśvattamahavamānāyasādhasyānnaḥsūnustanayovijāvāgnesātesumatirbhūtvasme\", \"surface\": \"SANDHI_INSENSITIVE\"}, {\"locator\": \"VG:SV:KAU:CHANDA:P01:D08:V04\", \"quote\": \"iḍāmagnepurudasasanigoḥśaśvattamahavamānāyasādhasyānnaḥsūnustanayovijāvāgnesātesumatirbhūtvasme\", \"surface\": \"SANDHI_INSENSITIVE\"}]",
+        "cross_veda_metrics_recomputed_by": "R5 SV-APPARATUS-LIFT-01",
+        "cross_veda_metrics_recomputed_because": "The stored metrics and the published evidence quote were computed over a Wikisource apparatus line the parser attached to this verse. Recomputed by vedagraph.enrich.crossveda.score_pair, which reproduced every stored metric exactly on the contaminated text before being trusted on the corrected one.",
+        "r5_contract": "VG:R5_CLOSURE:V1",
+        "cross_veda_transformation_status": "STALE_RECOMPUTE_REQUIRED_TEXT_CORRECTED",
+        "cross_veda_transformation_superseded": "TWO_CONTIGUOUS_SUBSTITUTIONS",
+        "cross_veda_transformation_superseded_basis": "two edit operations: ['insert', 'replace']",
+        "cross_veda_transformation_stale_reason": "The class was derived from a text carrying an apparatus prefix that has now been removed. The 16-value transformation vocabulary is produced by the cross-Veda staging build and not by anything in src, so a value inferred here would be a guess. The old value is preserved beside this marker rather than published as current, and the class is re-derived when the cross-Veda stage next runs."
+      },
+      "metric_delta": {
+        "lcs_ratio": [
+          0.960784,
+          0.989899
+        ],
+        "similarity": [
+          0.945392,
+          0.974331
+        ],
+        "edit_ratio": [
+          0.975124,
+          0.989899
+        ],
+        "token_jaccard": [
+          0.391304,
+          0.409091
+        ],
+        "ngram_jaccard": [
+          0.93,
+          0.958763
+        ]
+      }
+    },
+    {
+      "subject": "VG:RV:SAK:M03:S015:V007",
+      "object": "VG:SV:KAU:CHANDA:P01:D08:V04",
+      "rel": "NEAR_PARALLEL_OF",
+      "parallel_id": "VG:ENRICH:PARALLEL:54db550957b3c3ceae42356abafe709a",
+      "properties": {
+        "lcs_ratio": 0.989899,
+        "similarity": 0.974331,
+        "score": 0.974331,
+        "edit_ratio": 0.989899,
+        "token_jaccard": 0.409091,
+        "ngram_jaccard": 0.958763,
+        "cross_veda_stored_similarity": 0.974331,
+        "evidence": "[{\"locator\": \"VG:RV:SAK:M03:S015:V007\", \"quote\": \"iāmagnepurudasasanigoḥśaśvattamahavamānāyasādhasyānnaḥsūnustanayovijāvāgnesātesumatirbhūtvasme\", \"surface\": \"SANDHI_INSENSITIVE\"}, {\"locator\": \"VG:SV:KAU:CHANDA:P01:D08:V04\", \"quote\": \"iḍāmagnepurudasasanigoḥśaśvattamahavamānāyasādhasyānnaḥsūnustanayovijāvāgnesātesumatirbhūtvasme\", \"surface\": \"SANDHI_INSENSITIVE\"}]",
+        "cross_veda_metrics_recomputed_by": "R5 SV-APPARATUS-LIFT-01",
+        "cross_veda_metrics_recomputed_because": "The stored metrics and the published evidence quote were computed over a Wikisource apparatus line the parser attached to this verse. Recomputed by vedagraph.enrich.crossveda.score_pair, which reproduced every stored metric exactly on the contaminated text before being trusted on the corrected one.",
+        "r5_contract": "VG:R5_CLOSURE:V1",
+        "cross_veda_transformation_status": "STALE_RECOMPUTE_REQUIRED_TEXT_CORRECTED",
+        "cross_veda_transformation_superseded": "TWO_CONTIGUOUS_SUBSTITUTIONS",
+        "cross_veda_transformation_superseded_basis": "two edit operations: ['insert', 'replace']",
+        "cross_veda_transformation_stale_reason": "The class was derived from a text carrying an apparatus prefix that has now been removed. The 16-value transformation vocabulary is produced by the cross-Veda staging build and not by anything in src, so a value inferred here would be a guess. The old value is preserved beside this marker rather than published as current, and the class is re-derived when the cross-Veda stage next runs."
+      },
+      "metric_delta": {
+        "lcs_ratio": [
+          0.960784,
+          0.989899
+        ],
+        "similarity": [
+          0.945392,
+          0.974331
+        ],
+        "edit_ratio": [
+          0.975124,
+          0.989899
+        ],
+        "token_jaccard": [
+          0.391304,
+          0.409091
+        ],
+        "ngram_jaccard": [
+          0.93,
+          0.958763
+        ]
+      }
+    },
+    {
+      "subject": "VG:RV:SAK:M08:S045:V022",
+      "object": "VG:SV:KAU:CHANDA:P02:D07:V07",
+      "rel": "NEAR_PARALLEL_OF",
+      "parallel_id": "VG:ENRICH:PARALLEL:7087c3f87ed5c262d431e01a0e87d1c8",
+      "properties": {
+        "lcs_ratio": 0.981132,
+        "similarity": 0.970958,
+        "score": 0.970958,
+        "edit_ratio": 0.981132,
+        "token_jaccard": 0.615385,
+        "ngram_jaccard": 0.960784,
+        "cross_veda_stored_similarity": 0.970958,
+        "evidence": "[{\"locator\": \"VG:RV:SAK:M08:S045:V022\", \"quote\": \"abhitvāvṣabhāsutesutasjāmipītayetmpāvyaśnuhīmadam\", \"surface\": \"SANDHI_INSENSITIVE\"}, {\"locator\": \"VG:SV:KAU:CHANDA:P02:D07:V07\", \"quote\": \"abhitvāvṣabhāsutesutasjāmipītayetmpāvyaśnuhīmada\", \"surface\": \"SANDHI_INSENSITIVE\"}]",
+        "cross_veda_metrics_recomputed_by": "R5 SV-APPARATUS-LIFT-01",
+        "cross_veda_metrics_recomputed_because": "The stored metrics and the published evidence quote were computed over a Wikisource apparatus line the parser attached to this verse. Recomputed by vedagraph.enrich.crossveda.score_pair, which reproduced every stored metric exactly on the contaminated text before being trusted on the corrected one.",
+        "r5_contract": "VG:R5_CLOSURE:V1",
+        "cross_veda_transformation_status": "STALE_RECOMPUTE_REQUIRED_TEXT_CORRECTED",
+        "cross_veda_transformation_superseded": "TWO_CONTIGUOUS_SUBSTITUTIONS",
+        "cross_veda_transformation_superseded_basis": "two edit operations: ['insert', 'replace']",
+        "cross_veda_transformation_stale_reason": "The class was derived from a text carrying an apparatus prefix that has now been removed. The 16-value transformation vocabulary is produced by the cross-Veda staging build and not by anything in src, so a value inferred here would be a guess. The old value is preserved beside this marker rather than published as current, and the class is re-derived when the cross-Veda stage next runs."
+      },
+      "metric_delta": {
+        "lcs_ratio": [
+          0.83871,
+          0.981132
+        ],
+        "similarity": [
+          0.827688,
+          0.970958
+        ],
+        "edit_ratio": [
+          0.904348,
+          0.981132
+        ],
+        "token_jaccard": [
+          0.571429,
+          0.615385
+        ],
+        "ngram_jaccard": [
+          0.816667,
+          0.960784
+        ]
+      }
+    },
+    {
+      "subject": "VG:SV:KAU:CHANDA:P01:D08:V04",
+      "object": "VG:RV:SAK:M03:S001:V023",
+      "rel": "REUSES_TEXT_FROM",
+      "parallel_id": "VG:ENRICH:PARALLEL:5a9864fe43c6447aba2008dca4abe5da",
+      "properties": {
+        "lcs_ratio": 0.989899,
+        "similarity": 0.974331,
+        "score": 0.974331,
+        "edit_ratio": 0.989899,
+        "token_jaccard": 0.409091,
+        "ngram_jaccard": 0.958763,
+        "cross_veda_stored_similarity": 0.974331,
+        "evidence": "[{\"locator\": \"VG:SV:KAU:CHANDA:P01:D08:V04\", \"quote\": \"iḍāmagnepurudasasanigoḥśaśvattamahavamānāyasādhasyānnaḥsūnustanayovijāvāgnesātesumatirbhūtvasme\", \"surface\": \"SANDHI_INSENSITIVE\"}, {\"locator\": \"VG:RV:SAK:M03:S001:V023\", \"quote\": \"iāmagnepurudasasanigoḥśaśvattamahavamānāyasādhasyānnaḥsūnustanayovijāvāgnesātesumatirbhūtvasme\", \"surface\": \"SANDHI_INSENSITIVE\"}]",
+        "cross_veda_metrics_recomputed_by": "R5 SV-APPARATUS-LIFT-01",
+        "cross_veda_metrics_recomputed_because": "The stored metrics and the published evidence quote were computed over a Wikisource apparatus line the parser attached to this verse. Recomputed by vedagraph.enrich.crossveda.score_pair, which reproduced every stored metric exactly on the contaminated text before being trusted on the corrected one.",
+        "r5_contract": "VG:R5_CLOSURE:V1",
+        "cross_veda_transformation_status": "STALE_RECOMPUTE_REQUIRED_TEXT_CORRECTED",
+        "cross_veda_transformation_superseded": "TWO_CONTIGUOUS_SUBSTITUTIONS",
+        "cross_veda_transformation_superseded_basis": "two edit operations: ['delete', 'replace']",
+        "cross_veda_transformation_stale_reason": "The class was derived from a text carrying an apparatus prefix that has now been removed. The 16-value transformation vocabulary is produced by the cross-Veda staging build and not by anything in src, so a value inferred here would be a guess. The old value is preserved beside this marker rather than published as current, and the class is re-derived when the cross-Veda stage next runs."
+      },
+      "metric_delta": {
+        "lcs_ratio": [
+          0.960784,
+          0.989899
+        ],
+        "similarity": [
+          0.945392,
+          0.974331
+        ],
+        "edit_ratio": [
+          0.975124,
+          0.989899
+        ],
+        "token_jaccard": [
+          0.391304,
+          0.409091
+        ],
+        "ngram_jaccard": [
+          0.93,
+          0.958763
+        ]
+      }
+    },
+    {
+      "subject": "VG:SV:KAU:CHANDA:P01:D08:V04",
+      "object": "VG:RV:SAK:M03:S005:V011",
+      "rel": "REUSES_TEXT_FROM",
+      "parallel_id": "VG:ENRICH:PARALLEL:d1e3d1fd4e5f07ecee922b83dedfdc31",
+      "properties": {
+        "lcs_ratio": 0.989899,
+        "similarity": 0.974331,
+        "score": 0.974331,
+        "edit_ratio": 0.989899,
+        "token_jaccard": 0.409091,
+        "ngram_jaccard": 0.958763,
+        "cross_veda_stored_similarity": 0.974331,
+        "evidence": "[{\"locator\": \"VG:SV:KAU:CHANDA:P01:D08:V04\", \"quote\": \"iḍāmagnepurudasasanigoḥśaśvattamahavamānāyasādhasyānnaḥsūnustanayovijāvāgnesātesumatirbhūtvasme\", \"surface\": \"SANDHI_INSENSITIVE\"}, {\"locator\": \"VG:RV:SAK:M03:S005:V011\", \"quote\": \"iāmagnepurudasasanigoḥśaśvattamahavamānāyasādhasyānnaḥsūnustanayovijāvāgnesātesumatirbhūtvasme\", \"surface\": \"SANDHI_INSENSITIVE\"}]",
+        "cross_veda_metrics_recomputed_by": "R5 SV-APPARATUS-LIFT-01",
+        "cross_veda_metrics_recomputed_because": "The stored metrics and the published evidence quote were computed over a Wikisource apparatus line the parser attached to this verse. Recomputed by vedagraph.enrich.crossveda.score_pair, which reproduced every stored metric exactly on the contaminated text before being trusted on the corrected one.",
+        "r5_contract": "VG:R5_CLOSURE:V1",
+        "cross_veda_transformation_status": "STALE_RECOMPUTE_REQUIRED_TEXT_CORRECTED",
+        "cross_veda_transformation_superseded": "TWO_CONTIGUOUS_SUBSTITUTIONS",
+        "cross_veda_transformation_superseded_basis": "two edit operations: ['delete', 'replace']",
+        "cross_veda_transformation_stale_reason": "The class was derived from a text carrying an apparatus prefix that has now been removed. The 16-value transformation vocabulary is produced by the cross-Veda staging build and not by anything in src, so a value inferred here would be a guess. The old value is preserved beside this marker rather than published as current, and the class is re-derived when the cross-Veda stage next runs."
+      },
+      "metric_delta": {
+        "lcs_ratio": [
+          0.960784,
+          0.989899
+        ],
+        "similarity": [
+          0.945392,
+          0.974331
+        ],
+        "edit_ratio": [
+          0.975124,
+          0.989899
+        ],
+        "token_jaccard": [
+          0.391304,
+          0.409091
+        ],
+        "ngram_jaccard": [
+          0.93,
+          0.958763
+        ]
+      }
+    },
+    {
+      "subject": "VG:SV:KAU:CHANDA:P01:D08:V04",
+      "object": "VG:RV:SAK:M03:S006:V011",
+      "rel": "REUSES_TEXT_FROM",
+      "parallel_id": "VG:ENRICH:PARALLEL:e39c0ca6bec9ba5b6a61a595932f4d64",
+      "properties": {
+        "lcs_ratio": 0.989899,
+        "similarity": 0.974331,
+        "score": 0.974331,
+        "edit_ratio": 0.989899,
+        "token_jaccard": 0.409091,
+        "ngram_jaccard": 0.958763,
+        "cross_veda_stored_similarity": 0.974331,
+        "evidence": "[{\"locator\": \"VG:SV:KAU:CHANDA:P01:D08:V04\", \"quote\": \"iḍāmagnepurudasasanigoḥśaśvattamahavamānāyasādhasyānnaḥsūnustanayovijāvāgnesātesumatirbhūtvasme\", \"surface\": \"SANDHI_INSENSITIVE\"}, {\"locator\": \"VG:RV:SAK:M03:S006:V011\", \"quote\": \"iāmagnepurudasasanigoḥśaśvattamahavamānāyasādhasyānnaḥsūnustanayovijāvāgnesātesumatirbhūtvasme\", \"surface\": \"SANDHI_INSENSITIVE\"}]",
+        "cross_veda_metrics_recomputed_by": "R5 SV-APPARATUS-LIFT-01",
+        "cross_veda_metrics_recomputed_because": "The stored metrics and the published evidence quote were computed over a Wikisource apparatus line the parser attached to this verse. Recomputed by vedagraph.enrich.crossveda.score_pair, which reproduced every stored metric exactly on the contaminated text before being trusted on the corrected one.",
+        "r5_contract": "VG:R5_CLOSURE:V1",
+        "cross_veda_transformation_status": "STALE_RECOMPUTE_REQUIRED_TEXT_CORRECTED",
+        "cross_veda_transformation_superseded": "TWO_CONTIGUOUS_SUBSTITUTIONS",
+        "cross_veda_transformation_superseded_basis": "two edit operations: ['delete', 'replace']",
+        "cross_veda_transformation_stale_reason": "The class was derived from a text carrying an apparatus prefix that has now been removed. The 16-value transformation vocabulary is produced by the cross-Veda staging build and not by anything in src, so a value inferred here would be a guess. The old value is preserved beside this marker rather than published as current, and the class is re-derived when the cross-Veda stage next runs."
+      },
+      "metric_delta": {
+        "lcs_ratio": [
+          0.960784,
+          0.989899
+        ],
+        "similarity": [
+          0.945392,
+          0.974331
+        ],
+        "edit_ratio": [
+          0.975124,
+          0.989899
+        ],
+        "token_jaccard": [
+          0.391304,
+          0.409091
+        ],
+        "ngram_jaccard": [
+          0.93,
+          0.958763
+        ]
+      }
+    },
+    {
+      "subject": "VG:SV:KAU:CHANDA:P01:D08:V04",
+      "object": "VG:RV:SAK:M03:S007:V011",
+      "rel": "REUSES_TEXT_FROM",
+      "parallel_id": "VG:ENRICH:PARALLEL:c890c7f39c46604e918289cf821ae120",
+      "properties": {
+        "lcs_ratio": 0.989899,
+        "similarity": 0.974331,
+        "score": 0.974331,
+        "edit_ratio": 0.989899,
+        "token_jaccard": 0.409091,
+        "ngram_jaccard": 0.958763,
+        "cross_veda_stored_similarity": 0.974331,
+        "evidence": "[{\"locator\": \"VG:SV:KAU:CHANDA:P01:D08:V04\", \"quote\": \"iḍāmagnepurudasasanigoḥśaśvattamahavamānāyasādhasyānnaḥsūnustanayovijāvāgnesātesumatirbhūtvasme\", \"surface\": \"SANDHI_INSENSITIVE\"}, {\"locator\": \"VG:RV:SAK:M03:S007:V011\", \"quote\": \"iāmagnepurudasasanigoḥśaśvattamahavamānāyasādhasyānnaḥsūnustanayovijāvāgnesātesumatirbhūtvasme\", \"surface\": \"SANDHI_INSENSITIVE\"}]",
+        "cross_veda_metrics_recomputed_by": "R5 SV-APPARATUS-LIFT-01",
+        "cross_veda_metrics_recomputed_because": "The stored metrics and the published evidence quote were computed over a Wikisource apparatus line the parser attached to this verse. Recomputed by vedagraph.enrich.crossveda.score_pair, which reproduced every stored metric exactly on the contaminated text before being trusted on the corrected one.",
+        "r5_contract": "VG:R5_CLOSURE:V1",
+        "cross_veda_transformation_status": "STALE_RECOMPUTE_REQUIRED_TEXT_CORRECTED",
+        "cross_veda_transformation_superseded": "TWO_CONTIGUOUS_SUBSTITUTIONS",
+        "cross_veda_transformation_superseded_basis": "two edit operations: ['delete', 'replace']",
+        "cross_veda_transformation_stale_reason": "The class was derived from a text carrying an apparatus prefix that has now been removed. The 16-value transformation vocabulary is produced by the cross-Veda staging build and not by anything in src, so a value inferred here would be a guess. The old value is preserved beside this marker rather than published as current, and the class is re-derived when the cross-Veda stage next runs."
+      },
+      "metric_delta": {
+        "lcs_ratio": [
+          0.960784,
+          0.989899
+        ],
+        "similarity": [
+          0.945392,
+          0.974331
+        ],
+        "edit_ratio": [
+          0.975124,
+          0.989899
+        ],
+        "token_jaccard": [
+          0.391304,
+          0.409091
+        ],
+        "ngram_jaccard": [
+          0.93,
+          0.958763
+        ]
+      }
+    },
+    {
+      "subject": "VG:SV:KAU:CHANDA:P01:D08:V04",
+      "object": "VG:RV:SAK:M03:S015:V007",
+      "rel": "REUSES_TEXT_FROM",
+      "parallel_id": "VG:ENRICH:PARALLEL:78dda78649750a65b4ca57607e4e727a",
+      "properties": {
+        "lcs_ratio": 0.989899,
+        "similarity": 0.974331,
+        "score": 0.974331,
+        "edit_ratio": 0.989899,
+        "token_jaccard": 0.409091,
+        "ngram_jaccard": 0.958763,
+        "cross_veda_stored_similarity": 0.974331,
+        "evidence": "[{\"locator\": \"VG:SV:KAU:CHANDA:P01:D08:V04\", \"quote\": \"iḍāmagnepurudasasanigoḥśaśvattamahavamānāyasādhasyānnaḥsūnustanayovijāvāgnesātesumatirbhūtvasme\", \"surface\": \"SANDHI_INSENSITIVE\"}, {\"locator\": \"VG:RV:SAK:M03:S015:V007\", \"quote\": \"iāmagnepurudasasanigoḥśaśvattamahavamānāyasādhasyānnaḥsūnustanayovijāvāgnesātesumatirbhūtvasme\", \"surface\": \"SANDHI_INSENSITIVE\"}]",
+        "cross_veda_metrics_recomputed_by": "R5 SV-APPARATUS-LIFT-01",
+        "cross_veda_metrics_recomputed_because": "The stored metrics and the published evidence quote were computed over a Wikisource apparatus line the parser attached to this verse. Recomputed by vedagraph.enrich.crossveda.score_pair, which reproduced every stored metric exactly on the contaminated text before being trusted on the corrected one.",
+        "r5_contract": "VG:R5_CLOSURE:V1",
+        "cross_veda_transformation_status": "STALE_RECOMPUTE_REQUIRED_TEXT_CORRECTED",
+        "cross_veda_transformation_superseded": "TWO_CONTIGUOUS_SUBSTITUTIONS",
+        "cross_veda_transformation_superseded_basis": "two edit operations: ['delete', 'replace']",
+        "cross_veda_transformation_stale_reason": "The class was derived from a text carrying an apparatus prefix that has now been removed. The 16-value transformation vocabulary is produced by the cross-Veda staging build and not by anything in src, so a value inferred here would be a guess. The old value is preserved beside this marker rather than published as current, and the class is re-derived when the cross-Veda stage next runs."
+      },
+      "metric_delta": {
+        "lcs_ratio": [
+          0.960784,
+          0.989899
+        ],
+        "similarity": [
+          0.945392,
+          0.974331
+        ],
+        "edit_ratio": [
+          0.975124,
+          0.989899
+        ],
+        "token_jaccard": [
+          0.391304,
+          0.409091
+        ],
+        "ngram_jaccard": [
+          0.93,
+          0.958763
+        ]
+      }
+    },
+    {
+      "subject": "VG:SV:KAU:CHANDA:P02:D07:V07",
+      "object": "VG:RV:SAK:M08:S045:V022",
+      "rel": "REUSES_TEXT_FROM",
+      "parallel_id": "VG:ENRICH:PARALLEL:311fa5315eb891a12af42257962270d2",
+      "properties": {
+        "lcs_ratio": 0.981132,
+        "similarity": 0.970958,
+        "score": 0.970958,
+        "edit_ratio": 0.981132,
+        "token_jaccard": 0.615385,
+        "ngram_jaccard": 0.960784,
+        "cross_veda_stored_similarity": 0.970958,
+        "evidence": "[{\"locator\": \"VG:SV:KAU:CHANDA:P02:D07:V07\", \"quote\": \"abhitvāvṣabhāsutesutasjāmipītayetmpāvyaśnuhīmada\", \"surface\": \"SANDHI_INSENSITIVE\"}, {\"locator\": \"VG:RV:SAK:M08:S045:V022\", \"quote\": \"abhitvāvṣabhāsutesutasjāmipītayetmpāvyaśnuhīmadam\", \"surface\": \"SANDHI_INSENSITIVE\"}]",
+        "cross_veda_metrics_recomputed_by": "R5 SV-APPARATUS-LIFT-01",
+        "cross_veda_metrics_recomputed_because": "The stored metrics and the published evidence quote were computed over a Wikisource apparatus line the parser attached to this verse. Recomputed by vedagraph.enrich.crossveda.score_pair, which reproduced every stored metric exactly on the contaminated text before being trusted on the corrected one.",
+        "r5_contract": "VG:R5_CLOSURE:V1",
+        "cross_veda_transformation_status": "STALE_RECOMPUTE_REQUIRED_TEXT_CORRECTED",
+        "cross_veda_transformation_superseded": "TWO_CONTIGUOUS_SUBSTITUTIONS",
+        "cross_veda_transformation_superseded_basis": "two edit operations: ['delete', 'replace']",
+        "cross_veda_transformation_stale_reason": "The class was derived from a text carrying an apparatus prefix that has now been removed. The 16-value transformation vocabulary is produced by the cross-Veda staging build and not by anything in src, so a value inferred here would be a guess. The old value is preserved beside this marker rather than published as current, and the class is re-derived when the cross-Veda stage next runs."
+      },
+      "metric_delta": {
+        "lcs_ratio": [
+          0.83871,
+          0.981132
+        ],
+        "similarity": [
+          0.827688,
+          0.970958
+        ],
+        "edit_ratio": [
+          0.904348,
+          0.981132
+        ],
+        "token_jaccard": [
+          0.571429,
+          0.615385
+        ],
+        "ngram_jaccard": [
+          0.816667,
+          0.960784
+        ]
+      }
+    }
+  ],
+  "transformation_classes_marked_stale": 13,
+  "formula_layer": {
+    "apparatus_tokens": [
+      "bhāṣyam",
+      "dra",
+      "āraṇyakagānam",
+      "āraṇyakam",
+      "ārṣeyabrāhmaṇam"
+    ],
+    "apparatus_tokens_by_key": {
+      "VG:SV:KAU:ARANYA:D01:V04": [
+        "bhāṣyam",
+        "dra",
+        "āraṇyakagānam",
+        "ārṣeyabrāhmaṇam"
+      ],
+      "VG:SV:KAU:CHANDA:P01:D08:V04": [
+        "dra"
+      ],
+      "VG:SV:KAU:CHANDA:P02:D07:V07": [
+        "āraṇyakam"
+      ],
+      "VG:SV:KAU:CHANDA:P04:D05:V06": [
+        "āraṇyakagānam"
+      ]
+    },
+    "apparatus_tokens_are_in_the_same_surface_as_formula_normalized": true,
+    "formulas_scanned": 4825,
+    "formulas_containing_an_apparatus_token": 0,
+    "match_is_whole_token_not_substring": true,
+    "why_no_rebuild": "0 of the formulas hold an apparatus token, and the corrected text is a strict suffix of the contaminated text, so the token n-gram set can only lose n-grams that contain one. No formula can gain or lose a member. Measured on whole tokens: a substring test reports 30+ false hits because 'dra' sits inside 'indra'."
+  },
+  "canonical_artifact": {
+    "text_versions": "data/canonical/samaveda_arcika_v1/text_versions.jsonl",
+    "referent_bindings": "data/canonical/samaveda_arcika_v1/referent_bindings.jsonl",
+    "manifest": "data/canonical/samaveda_arcika_v1/manifest.json",
+    "manifest_is_tracked_in_git": true,
+    "referent_binding_rows_keyed_on_an_old_sha256": 4,
+    "referent_binding_keys": [
+      "canonical_key",
+      "canonical_urn",
+      "comparison_sha256",
+      "entity_id",
+      "parser_version",
+      "referent_class",
+      "schema_version",
+      "segmentation_policy_version",
+      "source_artifact_id",
+      "source_id",
+      "source_locator",
+      "source_revision_id",
+      "source_snapshot_sha256",
+      "source_verse_marker",
+      "structural_coordinates",
+      "text_sha256",
+      "work_id"
+    ]
+  },
+  "promised": {
+    "text_version_nodes_updated": 8,
+    "parallel_edges_updated": 13,
+    "nodes_created": 0,
+    "relationships_created": 0,
+    "relationships_deleted": 0,
+    "canonical_records_updated": 4,
+    "referent_binding_records_updated": 4
+  }
+}

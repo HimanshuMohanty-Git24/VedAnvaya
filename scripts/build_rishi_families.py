@@ -94,7 +94,8 @@ def main() -> int:
     # Rewrapped here and not at import time. The IAST in this artifact cannot survive a
     # cp1252 console, but a module that swaps sys.stdout on import is not importable from a
     # test without breaking the runner's output capture -- which is exactly what happened.
-    sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8", errors="replace")
+    if hasattr(sys.stdout, "reconfigure"):  # pragma: no cover - stream setup
+        sys.stdout.reconfigure(encoding="utf-8", errors="replace")
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--check", action="store_true", help="measure, write nothing")
     args = parser.parse_args()

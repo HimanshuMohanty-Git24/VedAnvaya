@@ -1,0 +1,40 @@
+{
+  "artifact": "R5_INCREMENT_5",
+  "at": "2026-09-18T14:51:46.236422+00:00",
+  "edge": {
+    "subject": "VG:SV:KAU:CHANDA:P01:D08:V04",
+    "rel": "NEAR_PARALLEL_OF",
+    "object": "VG:YV:VSM:A12:V051"
+  },
+  "before": {
+    "transformation": "HEAD_TRUNCATION",
+    "status": null,
+    "similarity": 0.913866,
+    "lcs_ratio": 0.970588,
+    "ngram_jaccard": 0.857143,
+    "anusvara_corrected": true,
+    "wave3_group": "FORMULA_RELATION_TYPOLOGY",
+    "method": "crossveda-parallels:near:minhash-char4+lcs:SANDHI_INSENSITIVE",
+    "evidence_head": "[{\"locator\":\"VG:SV:KAU:CHANDA:P01:D08:V04\",\"quote\":\"draiḍāma",
+    "formula_evidence_head": ""
+  },
+  "edges_written": 1,
+  "after": {
+    "transformation": "STALE_PENDING_REDERIVATION",
+    "status": "STALE_RECOMPUTE_REQUIRED_TEXT_CORRECTED",
+    "superseded": "HEAD_TRUNCATION",
+    "metrics_status": "UNVERIFIABLE_AGAINST_THE_CORRECTED_TEXT",
+    "evidence": null,
+    "formula_evidence": null,
+    "evidence_superseded_head": "[{\"locator\":\"VG:SV:KAU:CHANDA:P01:D08:V0"
+  },
+  "metrics_recomputed": false,
+  "why_metrics_not_recomputed": "score_pair reproduces none of them; see the stored reason",
+  "verification": {
+    "head_truncation_anywhere": 1,
+    "head_truncation_on_a_corrected_verse": 0,
+    "parallel_edges_on_the_four_without_a_status": 0,
+    "edges_publishing_a_contaminated_quote": 0,
+    "apparatus_in_any_text_field_of_the_four": 0
+  }
+}

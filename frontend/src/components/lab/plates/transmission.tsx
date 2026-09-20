@@ -25,11 +25,18 @@ import { count, PLATES_BY_SLUG } from "@/lib/lab";
  * all. Then one pair, drawn as the pairing it is: a Samavedic verse and the Rigvedic verse it
  * reuses, both clickable, in the order the endpoint returned them.
  *
- * The matrix is the part worth defending. Twelve of its 48 cells were never built and five
- * were never established for that pair, and a grid that rendered those as `0` would state
- * that the Atharvaveda reuses no Rigvedic text while the same graph holds 551 exact parallels
- * between them. So every cell carries its own status and prints a mark that says which kind
- * of non-number it is.
+ * The matrix is the part worth defending. Most of its 48 cells are not a measurement: six
+ * were never built, twelve hold a relationship class that cannot enter a corpus pair at all,
+ * and four were measured and came back zero. A grid that rendered those alike as `0` would
+ * state that the Atharvaveda reuses no Rigvedic text while the same graph holds 551 exact
+ * parallels between them. So every cell carries its own status and prints a mark that says
+ * which kind of non-number it is.
+ *
+ * Every count in this file is read from `shape.cells_by_status` and `pairs_reached` rather
+ * than typed. The prose here used to name "twelve NOT_BUILT and five never established", and
+ * both figures went stale the moment the graph moved -- twelve is now the
+ * CLASS_NOT_CROSS_VEDA count and NOT_BUILT is six. The cells beside the sentence had
+ * self-corrected; only the sentence had not.
  */
 
 const plate = PLATES_BY_SLUG.transmission;
@@ -66,7 +73,11 @@ const CLASS_LABEL: Record<string, { short: string; long: string }> = {
     },
     SEMANTIC_ASSERTION: {
         short: "Semantic assertion",
-        long: "Model-extracted statements about a verse. Every one of them is Rigvedic, so none can join a pair.",
+        // Said twice wrongly before: "model-extracted" of a layer that is mostly rule-derived
+        // (2,459 of 35,131 are model extractions), and "every one of them is Rigvedic" of a
+        // layer that reaches all four collections. The reason it joins no pair is structural
+        // and has nothing to do with how much of it was built.
+        long: "A statement about a single verse, so it relates no two collections. The layer reaches all four.",
     },
 };
 
@@ -137,6 +148,12 @@ export async function TransmissionPlate() {
         .sort((a, b) => (b.cross_veda_edges ?? 0) - (a.cross_veda_edges ?? 0))[0];
     const unbuilt = classes.filter((row) => row.population_status === "NOT_BUILT");
     const measuredCells = shape?.cells_by_status?.MEASURED ?? 0;
+    /* Directed reuse reaches TWO pairs, not one: RV-SV 1,684 plus AV-RV 311. Derived, never
+     * typed -- the hardcoded "one pair" survived the AV-RV import and sat beside a measured
+     * edge count that already included the 311 edges it said did not exist. */
+    const directedPairs = directed?.pairs_reached ?? [];
+    const directedPairNames = directedPairs.join(" and ");
+    const otherPairs = Math.max(pairs.length - directedPairs.length, 0);
     const usedMarks = new Set(
         pairs.flatMap((pair) => (pair.cells ?? []).map((cell) => cell.status)),
     );
@@ -230,7 +247,7 @@ export async function TransmissionPlate() {
             </PlateFigure>
 
             <PlateFigure
-                description={`The Rigveda-to-Samaveda pair is the only one for which direction was established. ${count(directed?.cross_veda_edges)} directed reuse edges exist and they all join this pair; below are ${resolved.length} of them, as the two verses they connect.`}
+                description={`Direction was established for ${directedPairs.length === 1 ? "one corpus pair" : `${count(directedPairs.length)} corpus pairs`}${directedPairNames ? ` — ${directedPairNames}` : ""}. ${count(directed?.cross_veda_edges)} directed reuse edges exist across ${directedPairs.length === 1 ? "it" : "them"}; below are ${resolved.length} Rigveda-to-Samaveda ones, as the two verses they connect.`}
                 footnote={
                     <>
                         The order of these rows is the order the endpoint returned, which is the
@@ -245,8 +262,13 @@ export async function TransmissionPlate() {
                     <Figure
                         note={
                             <>
-                                All of them on one corpus pair. The other five pairs have no
-                                directed reuse, which means nobody established one.
+                                Across{" "}
+                                {directedPairs.length === 1
+                                    ? "one corpus pair"
+                                    : `${count(directedPairs.length)} corpus pairs`}
+                                {directedPairNames ? ` (${directedPairNames})` : ""}. The other{" "}
+                                {count(otherPairs)} have no directed reuse, which means nobody
+                                established one.
                             </>
                         }
                         unit="directed reuse edges"
@@ -305,9 +327,10 @@ export async function TransmissionPlate() {
                     <>
                         That the Samaveda reuses Rigvedic verses is not a discovery of this graph —
                         it is the oldest thing anyone says about the Samaveda. What the matrix adds
-                        is the shape of the claim: the direction is recorded for this pair and not
-                        for the other five, so a reader comparing pairs is comparing what was
-                        measured rather than what happened.
+                        is the shape of the claim: direction is recorded for{" "}
+                        {directedPairNames || "no pair"} and not for the other {count(otherPairs)},
+                        so a reader comparing pairs is comparing what was measured rather than what
+                        happened.
                     </>
                 }
                 observation={

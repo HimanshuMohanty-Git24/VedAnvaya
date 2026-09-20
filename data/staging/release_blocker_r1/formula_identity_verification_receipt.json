@@ -1,0 +1,90 @@
+{
+  "artifact": "FORMULA_IDENTITY_VERIFICATION",
+  "graph_mutation": false,
+  "graph_census": {
+    "nodes": 164201,
+    "relationships": 508042
+  },
+  "populations": {
+    "formula_nodes": 4825,
+    "formula_family_nodes": 720,
+    "affected_formula_ids_declared": 217,
+    "affected_formula_ids_read": 217,
+    "affected_distinct": 217
+  },
+  "rekey_check": {
+    "method": "dependency_state.label_fingerprint (sorted identity keys, digested) against the digest persisted in dependency_ledger.json before this sprint",
+    "formula_baseline": "n=4825;keyless=0;keys=a2821991639882b6cf84b845ede27de8d7838c84f3c647c238a65f5640949705",
+    "formula_now": "n=4825;keyless=0;keys=a2821991639882b6cf84b845ede27de8d7838c84f3c647c238a65f5640949705",
+    "formula_family_baseline": "n=720;keyless=0;keys=9855069860f5ce30abef0302cf2be6da893b29f01efae542c664da502b4af04c",
+    "formula_family_now": "n=720;keyless=0;keys=9855069860f5ce30abef0302cf2be6da893b29f01efae542c664da502b4af04c",
+    "formula_identical": true,
+    "formula_family_identical": true
+  },
+  "per_formula_examples": [
+    {
+      "formula_id": "VG:ENRICH:FORMULA:004487e1b58efabc10da925b77cbd1ea",
+      "resolves": true,
+      "edges": 6,
+      "families": [
+        "VG:ENRICH:FORMULA-FAMILY:004487e1b58efabc10da925b77cbd1ea"
+      ]
+    },
+    {
+      "formula_id": "VG:ENRICH:FORMULA:01f3e702cadafc7fc62edacbfcdd6853",
+      "resolves": true,
+      "edges": 3,
+      "families": []
+    },
+    {
+      "formula_id": "VG:ENRICH:FORMULA:0799a2e0def37ce4d5ed4a689cf1a3ab",
+      "resolves": true,
+      "edges": 3,
+      "families": []
+    },
+    {
+      "formula_id": "VG:ENRICH:FORMULA:08f4150082c3a8bfcde6217bcb9832e5",
+      "resolves": true,
+      "edges": 5,
+      "families": [
+        "VG:ENRICH:FORMULA-FAMILY:5f4e3606649d25ea2defb0788d3bda88"
+      ]
+    },
+    {
+      "formula_id": "VG:ENRICH:FORMULA:096e709f961bb307a40e33a443dd77b5",
+      "resolves": true,
+      "edges": 6,
+      "families": [
+        "VG:ENRICH:FORMULA-FAMILY:254ceb3d19b14e17c85ae7a6117e7839"
+      ]
+    }
+  ],
+  "verified": {
+    "FORMULA_AFFECTED_VERIFIED": 217,
+    "FORMULA_UNRESOLVED_IDS": 0,
+    "FORMULA_DANGLING_IDS": 0,
+    "FORMULA_DUPLICATE_STABLE_IDS": 0,
+    "FORMULA_REKEYS": 0,
+    "FORMULA_FAMILY_REFERENCES_UNRESOLVED": 0,
+    "FORMULA_IDS_ABSENT_FROM_PUBLIC_EXPORT_SET": 0,
+    "FORMULA_FAMILY_IDS_ABSENT_FROM_PUBLIC_EXPORT_SET": 0,
+    "MEMBER_OF_FAMILY_EDGES": 2037,
+    "DISTINCT_FAMILIES_REFERENCED": 720,
+    "MEMBER_OF_FAMILY_EDGES_TO_A_NON_FAMILY": 0
+  },
+  "examples": {
+    "unresolved": [],
+    "dangling": [],
+    "duplicate_stable": [],
+    "family_unresolved": [],
+    "not_public": [],
+    "family_ids_missing_public": []
+  },
+  "policy": {
+    "owner_rule": "formula_id is a published stable product ID; content-hash/recomputation cannot silently re-key it",
+    "migration_permitted": false,
+    "disposition": "KEEP_CURRENT_PUBLISHED_STABLE_ID; no re-keying performed or proposed",
+    "source_impact_artifact": "data/staging/final_stabilization/formula_identity_impact.json",
+    "scope_note": "The GAP-FORMULA-003 miner/population question is resolved elsewhere and is out of this receipt's scope. This receipt verifies identity only."
+  }
+}

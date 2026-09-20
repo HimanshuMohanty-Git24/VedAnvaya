@@ -1,0 +1,455 @@
+{
+ "checks": {
+  "off_by_one_numbering": {
+   "eligible": 1088,
+   "evaluated": 1088,
+   "defects": 0,
+   "examples": []
+  },
+  "structural_shift_monotonic": {
+   "eligible": 1069,
+   "evaluated": 1069,
+   "defects": 0,
+   "examples": []
+  },
+  "merged_verses_undeclared": {
+   "eligible": 2254,
+   "evaluated": 2254,
+   "defects": 3,
+   "examples": [
+    {
+     "keys": [
+      "VG:AV:SAU:K20:S038:V004",
+      "VG:AV:SAU:K20:S070:V007"
+     ],
+     "alignments": [
+      "EXACT_MANTRA_ALIGNMENT"
+     ],
+     "text": "Indra the singers with high praise, Indra reciters with their lauds, I",
+     "distinct_sanskrit_surfaces": 2
+    },
+    {
+     "keys": [
+      "VG:AV:SAU:K20:S047:V009",
+      "VG:SV:KAU:UTTARA:P01:R01:D06:V03"
+     ],
+     "alignments": [
+      "EXACT_MANTRA_ALIGNMENT"
+     ],
+     "text": "We Soma-bearing Brahmans call thee Soma-drinker with thy friend, We, I",
+     "distinct_sanskrit_surfaces": 2
+    },
+    {
+     "keys": [
+      "VG:AV:SAU:K20:S108:V002",
+      "VG:SV:KAU:UTTARA:P04:R02:D13:V02"
+     ],
+     "alignments": [
+      "EXACT_MANTRA_ALIGNMENT"
+     ],
+     "text": "For, gracious Satakratu, thou hast ever been a mother and a sire to us",
+     "distinct_sanskrit_surfaces": 2
+    }
+   ]
+  },
+  "expected_corpus_repetition_same_sanskrit": {
+   "eligible": 2254,
+   "evaluated": 2254,
+   "defects": 0,
+   "informational_groups": 72,
+   "examples": [
+    {
+     "keys": [
+      "VG:AV:SAU:K20:S020:V007",
+      "VG:AV:SAU:K20:S057:V010"
+     ],
+     "alignments": [
+      "EXACT_MANTRA_ALIGNMENT"
+     ],
+     "text": "From all the regions of the world let Indra send security. The foe-sub"
+    },
+    {
+     "keys": [
+      "VG:AV:SAU:K20:S022:V005",
+      "VG:AV:SAU:K20:S092:V002"
+     ],
+     "alignments": [
+      "EXACT_MANTRA_ALIGNMENT"
+     ],
+     "text": "Hither his bay steeds have been sent, red steeds are on the sacred gra"
+    },
+    {
+     "keys": [
+      "VG:AV:SAU:K20:S028:V001",
+      "VG:AV:SAU:K20:S039:V002"
+     ],
+     "alignments": [
+      "EXACT_MANTRA_ALIGNMENT"
+     ],
+     "text": "In Soma's ecstasy Indra spread the firmament and realms of light. When"
+    },
+    {
+     "keys": [
+      "VG:AV:SAU:K20:S047:V004",
+      "VG:SV:KAU:CHANDA:P03:D01:V05",
+      "VG:SV:KAU:UTTARA:P02:R01:D08:V01"
+     ],
+     "alignments": [
+      "EXACT_MANTRA_ALIGNMENT"
+     ],
+     "text": "INDRA the singers with high praise, Indra reciters with their lauds, I"
+    },
+    {
+     "keys": [
+      "VG:AV:SAU:K20:S057:V003",
+      "VG:AV:SAU:K20:S068:V003"
+     ],
+     "alignments": [
+      "EXACT_MANTRA_ALIGNMENT"
+     ],
+     "text": "So may we be acquainted with thine innermost benevolence: Neglect us n"
+    }
+   ]
+  },
+  "split_verse_containment": {
+   "eligible": 2254,
+   "evaluated": 2254,
+   "defects": 1,
+   "examples": [
+    {
+     "contained": "VG:AV:SAU:K20:S017:V010",
+     "container": "VG:AV:SAU:K20:S094:V010"
+    }
+   ]
+  },
+  "recension_and_attribution_typing": {
+   "eligible": 2254,
+   "evaluated": 2254,
+   "defects": 0,
+   "examples": []
+  },
+  "footnote_or_chrome_leakage": {
+   "eligible": 2254,
+   "evaluated": 2254,
+   "defects": 0,
+   "examples": []
+  },
+  "ocr_contamination": {
+   "eligible": 2254,
+   "evaluated": 2254,
+   "defects": 2,
+   "examples": [
+    {
+     "key": "VG:SV:KAU:UTTARA:P04:R01:D17:V03",
+     "match": "'d6'",
+     "text": "All-d6ties of one accorcl have come that they may drink of thee: All-bounteous a"
+    },
+    {
+     "key": "VG:SV:KAU:UTTARA:P05:R02:D14:V02",
+     "match": "'4r'",
+     "text": "Praise him who sends us wealth, prompt with his liberal boons Good 4re the gifts"
+    }
+   ]
+  },
+  "source_compositor_artifact": {
+   "eligible": 2254,
+   "evaluated": 2254,
+   "defects": 0,
+   "informational_rows": 66,
+   "examples": [
+    {
+     "key": "VG:AV:SAU:K10:S008:V030",
+     "match": "','",
+     "text": "the Morn, refulgent with one eye, looketh round with one that winketh,"
+    },
+    {
+     "key": "VG:AV:SAU:K20:S020:V006",
+     "match": "','",
+     "text": " sin shall not reach us afterward . And good shall be before us still,"
+    },
+    {
+     "key": "VG:AV:SAU:K20:S025:V004",
+     "match": "','",
+     "text": "ni's hoarded wealth, the cattle, and the wealth in horses and in kine,"
+    },
+    {
+     "key": "VG:AV:SAU:K20:S027:V002",
+     "match": "','",
+     "text": ", to strengthen and enrich the sage, Were I the lord of herds of kine,"
+    },
+    {
+     "key": "VG:AV:SAU:K20:S035:V006",
+     "match": "','",
+     "text": "vital parts of Vritra, striking—the vast, the mighty—with the striker,"
+    }
+   ]
+  },
+  "text_too_short": {
+   "eligible": 2254,
+   "evaluated": 2254,
+   "defects": 0,
+   "examples": []
+  },
+  "rejected_reason_substantive": {
+   "eligible": 673,
+   "evaluated": 673,
+   "defects": 0,
+   "examples": []
+  }
+ },
+ "random_sample_by_source": {
+  "IA_WAYBACK_GRIFFITH_AV_1895": [
+   "VG:AV:SAU:K20:S005:V002",
+   "VG:AV:SAU:K20:S019:V001",
+   "VG:AV:SAU:K20:S019:V002",
+   "VG:AV:SAU:K20:S034:V015",
+   "VG:AV:SAU:K20:S057:V006",
+   "VG:AV:SAU:K20:S096:V001",
+   "VG:AV:SAU:K20:S107:V014",
+   "VG:AV:SAU:K20:S126:V006",
+   "VG:AV:SAU:K20:S127:V001",
+   "VG:AV:SAU:K20:S128:V001",
+   "VG:AV:SAU:K20:S136:V012",
+   "VG:AV:SAU:K20:S139:V005"
+  ],
+  "VEDAGRAPH_CANONICAL_RV_GRIFFITH": [
+   "VG:AV:SAU:K20:S062:V004",
+   "VG:AV:SAU:K20:S069:V011",
+   "VG:SV:KAU:ARANYA:D05:V11",
+   "VG:SV:KAU:CHANDA:P01:D01:V04",
+   "VG:SV:KAU:CHANDA:P02:D01:V03",
+   "VG:SV:KAU:CHANDA:P02:D02:V01",
+   "VG:SV:KAU:CHANDA:P02:D07:V02",
+   "VG:SV:KAU:CHANDA:P04:D06:V06",
+   "VG:SV:KAU:CHANDA:P06:D09:V01",
+   "VG:SV:KAU:UTTARA:P01:R02:D05:V01",
+   "VG:SV:KAU:UTTARA:P04:R01:D09:V01",
+   "VG:SV:KAU:UTTARA:P08:R01:D13:V01"
+  ],
+  "IA_WAYBACK_GRIFFITH_RV_1896": [
+   "VG:RV:SAK:M01:S053:V001",
+   "VG:RV:SAK:M01:S073:V001",
+   "VG:RV:SAK:M01:S179:V001",
+   "VG:RV:SAK:M01:S179:V002",
+   "VG:RV:SAK:M01:S179:V003",
+   "VG:RV:SAK:M01:S179:V006",
+   "VG:RV:SAK:M05:S055:V008",
+   "VG:RV:SAK:M09:S007:V009",
+   "VG:RV:SAK:M10:S048:V007",
+   "VG:RV:SAK:M10:S061:V005",
+   "VG:RV:SAK:M10:S061:V006",
+   "VG:RV:SAK:M10:S061:V007"
+  ],
+  "IA_WAYBACK_GRIFFITH_SV_1893": [
+   "VG:SV:KAU:CHANDA:P06:D02:V03",
+   "VG:SV:KAU:UTTARA:P01:R01:D09:V02",
+   "VG:SV:KAU:UTTARA:P01:R02:D01:V03",
+   "VG:SV:KAU:UTTARA:P01:R02:D06:V03",
+   "VG:SV:KAU:UTTARA:P02:R01:D02:V03",
+   "VG:SV:KAU:UTTARA:P03:R01:D05:V03",
+   "VG:SV:KAU:UTTARA:P04:R01:D04:V10",
+   "VG:SV:KAU:UTTARA:P05:R01:D04:V03",
+   "VG:SV:KAU:UTTARA:P05:R01:D06:V03",
+   "VG:SV:KAU:UTTARA:P05:R01:D15:V01",
+   "VG:SV:KAU:UTTARA:P05:R02:D02:V01",
+   "VG:SV:KAU:UTTARA:P08:R02:D18:V03"
+  ],
+  "SACRED_TEXTS_WYV_SNAPSHOT_2026_09_07": [
+   "VG:YV:VSM:A06:V023",
+   "VG:YV:VSM:A12:V014",
+   "VG:YV:VSM:A12:V074",
+   "VG:YV:VSM:A12:V107",
+   "VG:YV:VSM:A12:V111",
+   "VG:YV:VSM:A16:V034",
+   "VG:YV:VSM:A26:V023",
+   "VG:YV:VSM:A27:V012",
+   "VG:YV:VSM:A28:V021",
+   "VG:YV:VSM:A29:V021",
+   "VG:YV:VSM:A29:V050",
+   "VG:YV:VSM:A36:V021"
+  ]
+ },
+ "adversarial_sample": {
+  "first_and_last_verse_of_a_hymn": [
+   "VG:AV:SAU:K20:S001:V001",
+   "VG:AV:SAU:K20:S002:V001",
+   "VG:AV:SAU:K20:S003:V001",
+   "VG:AV:SAU:K20:S004:V001",
+   "VG:AV:SAU:K20:S005:V001",
+   "VG:AV:SAU:K20:S006:V001",
+   "VG:AV:SAU:K20:S007:V001",
+   "VG:AV:SAU:K20:S008:V001",
+   "VG:AV:SAU:K20:S009:V001",
+   "VG:AV:SAU:K20:S010:V001"
+  ],
+  "address_recovered_from_a_corrupt_label": [
+   "VG:AV:SAU:K20:S039:V005",
+   "VG:AV:SAU:K20:S068:V011",
+   "VG:AV:SAU:K20:S069:V006",
+   "VG:AV:SAU:K20:S131:V018",
+   "VG:AV:SAU:K20:S131:V019",
+   "VG:AV:SAU:K20:S131:V020",
+   "VG:AV:SAU:K20:S136:V008",
+   "VG:RV:SAK:M05:S055:V008",
+   "VG:RV:SAK:M09:S007:V009",
+   "VG:RV:SAK:M10:S048:V007",
+   "VG:RV:SAK:M10:S132:V005",
+   "VG:YV:VSM:A06:V023",
+   "VG:YV:VSM:A06:V025",
+   "VG:YV:VSM:A08:V017",
+   "VG:YV:VSM:A08:V027",
+   "VG:YV:VSM:A12:V014",
+   "VG:YV:VSM:A12:V044",
+   "VG:YV:VSM:A12:V071",
+   "VG:YV:VSM:A12:V074",
+   "VG:YV:VSM:A16:V031"
+  ],
+  "printed_multi_verse_ranges": [
+   "VG:AV:SAU:K20:S129:V003",
+   "VG:AV:SAU:K20:S129:V004",
+   "VG:AV:SAU:K20:S129:V005",
+   "VG:AV:SAU:K20:S129:V006",
+   "VG:AV:SAU:K20:S129:V007",
+   "VG:AV:SAU:K20:S129:V008",
+   "VG:AV:SAU:K20:S129:V009",
+   "VG:AV:SAU:K20:S129:V010",
+   "VG:AV:SAU:K20:S129:V011",
+   "VG:AV:SAU:K20:S129:V012",
+   "VG:AV:SAU:K20:S129:V013",
+   "VG:AV:SAU:K20:S129:V014",
+   "VG:AV:SAU:K20:S129:V015",
+   "VG:AV:SAU:K20:S129:V016",
+   "VG:AV:SAU:K20:S129:V017",
+   "VG:AV:SAU:K20:S129:V018",
+   "VG:AV:SAU:K20:S129:V019",
+   "VG:AV:SAU:K20:S129:V020",
+   "VG:AV:SAU:K20:S130:V001",
+   "VG:AV:SAU:K20:S130:V002"
+  ],
+  "cross_corpus_rigveda_reuse": [
+   "VG:AV:SAU:K20:S006:V009",
+   "VG:AV:SAU:K20:S029:V001",
+   "VG:AV:SAU:K20:S047:V004",
+   "VG:AV:SAU:K20:S047:V006",
+   "VG:AV:SAU:K20:S047:V008",
+   "VG:AV:SAU:K20:S047:V009",
+   "VG:AV:SAU:K20:S057:V011",
+   "VG:AV:SAU:K20:S057:V012",
+   "VG:AV:SAU:K20:S062:V001",
+   "VG:AV:SAU:K20:S062:V002",
+   "VG:AV:SAU:K20:S062:V004",
+   "VG:AV:SAU:K20:S068:V001",
+   "VG:AV:SAU:K20:S068:V002",
+   "VG:AV:SAU:K20:S068:V003",
+   "VG:AV:SAU:K20:S069:V010",
+   "VG:AV:SAU:K20:S069:V011",
+   "VG:AV:SAU:K20:S071:V004",
+   "VG:AV:SAU:K20:S071:V005",
+   "VG:AV:SAU:K20:S071:V006",
+   "VG:AV:SAU:K20:S105:V004"
+  ],
+  "weakest_english_control_accepted": [
+   "VG:SV:KAU:CHANDA:P01:D01:V05",
+   "VG:SV:KAU:CHANDA:P02:D10:V05",
+   "VG:SV:KAU:CHANDA:P04:D03:V02",
+   "VG:SV:KAU:UTTARA:P05:R02:D04:V01",
+   "VG:SV:KAU:CHANDA:P01:D03:V09",
+   "VG:SV:KAU:UTTARA:P03:R02:D18:V03",
+   "VG:SV:KAU:UTTARA:P07:R02:D03:V01",
+   "VG:SV:KAU:UTTARA:P07:R02:D03:V03",
+   "VG:SV:KAU:UTTARA:P04:R01:D03:V08",
+   "VG:SV:KAU:UTTARA:P06:R02:D01:V01",
+   "VG:SV:KAU:CHANDA:P03:D09:V05",
+   "VG:SV:KAU:UTTARA:P06:R03:D14:V02",
+   "VG:SV:KAU:CHANDA:P03:D03:V04",
+   "VG:SV:KAU:CHANDA:P05:D02:V03",
+   "VG:SV:KAU:CHANDA:P06:D05:V05"
+  ],
+  "lowest_sanskrit_similarity_at_tier_3": [
+   "VG:SV:KAU:CHANDA:P01:D08:V05",
+   "VG:SV:KAU:CHANDA:P01:D10:V05",
+   "VG:SV:KAU:UTTARA:P04:R02:D01:V02",
+   "VG:SV:KAU:UTTARA:P07:R01:D08:V02",
+   "VG:SV:KAU:CHANDA:P06:D05:V03",
+   "VG:SV:KAU:UTTARA:P03:R02:D08:V03",
+   "VG:SV:KAU:UTTARA:P04:R02:D13:V03",
+   "VG:SV:KAU:UTTARA:P04:R01:D04:V08",
+   "VG:SV:KAU:CHANDA:P05:D02:V03",
+   "VG:SV:KAU:UTTARA:P05:R02:D04:V01",
+   "VG:SV:KAU:UTTARA:P03:R02:D03:V03",
+   "VG:SV:KAU:UTTARA:P03:R02:D07:V01",
+   "VG:SV:KAU:UTTARA:P05:R01:D04:V01",
+   "VG:SV:KAU:UTTARA:P03:R01:D11:V02",
+   "VG:SV:KAU:UTTARA:P01:R01:D21:V02"
+  ],
+  "adhyaya_12_offset_boundary": [
+   "VG:YV:VSM:A12:V106",
+   "VG:YV:VSM:A12:V107",
+   "VG:YV:VSM:A12:V108",
+   "VG:YV:VSM:A12:V109",
+   "VG:YV:VSM:A12:V110",
+   "VG:YV:VSM:A12:V111",
+   "VG:YV:VSM:A12:V112",
+   "VG:YV:VSM:A12:V113",
+   "VG:YV:VSM:A12:V114",
+   "VG:YV:VSM:A12:V115",
+   "VG:YV:VSM:A12:V116",
+   "VG:YV:VSM:A12:V117"
+  ]
+ },
+ "defect_detail": {
+  "merged_verses_undeclared": [
+   {
+    "keys": [
+     "VG:AV:SAU:K20:S038:V004",
+     "VG:AV:SAU:K20:S070:V007"
+    ],
+    "alignments": [
+     "EXACT_MANTRA_ALIGNMENT"
+    ],
+    "text": "Indra the singers with high praise, Indra reciters with their lauds, I",
+    "distinct_sanskrit_surfaces": 2
+   },
+   {
+    "keys": [
+     "VG:AV:SAU:K20:S047:V009",
+     "VG:SV:KAU:UTTARA:P01:R01:D06:V03"
+    ],
+    "alignments": [
+     "EXACT_MANTRA_ALIGNMENT"
+    ],
+    "text": "We Soma-bearing Brahmans call thee Soma-drinker with thy friend, We, I",
+    "distinct_sanskrit_surfaces": 2
+   },
+   {
+    "keys": [
+     "VG:AV:SAU:K20:S108:V002",
+     "VG:SV:KAU:UTTARA:P04:R02:D13:V02"
+    ],
+    "alignments": [
+     "EXACT_MANTRA_ALIGNMENT"
+    ],
+    "text": "For, gracious Satakratu, thou hast ever been a mother and a sire to us",
+    "distinct_sanskrit_surfaces": 2
+   }
+  ],
+  "split_verse_containment": [
+   {
+    "contained": "VG:AV:SAU:K20:S017:V010",
+    "container": "VG:AV:SAU:K20:S094:V010"
+   }
+  ],
+  "ocr_contamination": [
+   {
+    "key": "VG:SV:KAU:UTTARA:P04:R01:D17:V03",
+    "match": "'d6'",
+    "text": "All-d6ties of one accorcl have come that they may drink of thee: All-bounteous a"
+   },
+   {
+    "key": "VG:SV:KAU:UTTARA:P05:R02:D14:V02",
+    "match": "'4r'",
+    "text": "Praise him who sends us wealth, prompt with his liberal boons Good 4re the gifts"
+   }
+  ]
+ }
+}

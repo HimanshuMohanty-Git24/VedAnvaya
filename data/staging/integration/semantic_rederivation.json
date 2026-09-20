@@ -1,0 +1,139 @@
+{
+  "artifact": "SEMANTIC_REDERIVATION",
+  "owner_phase": "E",
+  "graph_fingerprint": "8ea89224ce3d14446da67fab99005ecd8693ac7c2e9bf1b6981440740d06e13d",
+  "graph_census": {
+    "nodes": 116838,
+    "relationships": 281290,
+    "core_corpus": {
+      "AV": 5839,
+      "RV": 10552,
+      "SV": 1844,
+      "YV": 1975
+    }
+  },
+  "prior_artifact_trust": {
+    "prior_algorithm_version": "semantic-resemblance-hybrid-v2",
+    "prior_source_snapshots": [
+      "VEDAGRAPH_CANONICAL_GRAPH_2026_09_15",
+      "HF_ONNX_MULTILINGUAL_E5_SMALL",
+      "HF_ONNX_PARAPHRASE_MULTILINGUAL_MINILM_L12",
+      "HF_ONNX_ALL_MINILM_L6_V2",
+      "OPENROUTER_NEMOTRON_3_ULTRA_ADJUDICATION",
+      "VEDAGRAPH_RV_COORDINATE_REPAIR_TABLE",
+      "VEDAGRAPH_STAGING_FORMULA_AGENT_12",
+      "VEDAWEB_ZURICH_RIGVEDA_LEXICAL_V1"
+    ],
+    "prior_graph_snapshot_node_count": 108779,
+    "current_graph_node_count": 116838,
+    "inputs_hash_identical": false,
+    "why": "The prior run declares VEDAGRAPH_CANONICAL_GRAPH_2026_09_15, a 108,779-node graph. This one holds 116,838 after Wave 3, the attribution census and M8. The owner's condition for trusting an old pool or score is hash-identical inputs, and these are not."
+  },
+  "representations_declared": {
+    "C_LEXICAL_CHAR4": {
+      "kind": "LEXICAL_CONTROL",
+      "channel": "SANSKRIT",
+      "runtime": "none -- pure string processing"
+    },
+    "R1_LEMMA_TFIDF": {
+      "kind": "LEXICAL",
+      "channel": "SANSKRIT_LEMMA",
+      "runtime": "the Rigvedic morphological layer, which covers one corpus of four"
+    },
+    "R3_TRANSLATION_TFIDF": {
+      "kind": "LEXICAL",
+      "channel": "TRANSLATION",
+      "runtime": "excluded by the confound rule, not by availability"
+    },
+    "R5_MULTILING_SANSKRIT": {
+      "kind": "SEMANTIC",
+      "channel": "SANSKRIT",
+      "runtime": "paraphrase-multilingual-MiniLM-L12 via onnxruntime"
+    },
+    "R6_E5_SANSKRIT": {
+      "kind": "SEMANTIC",
+      "channel": "SANSKRIT",
+      "runtime": "multilingual-e5-small via onnxruntime"
+    },
+    "R7_E5_TRANSLATION": {
+      "kind": "SEMANTIC",
+      "channel": "TRANSLATION",
+      "runtime": "multilingual-e5-small via onnxruntime, and confounded regardless"
+    }
+  },
+  "runtime_available": {
+    "onnxruntime": false,
+    "transformers": false,
+    "sentence_transformers": false,
+    "any_onnx_file_in_checkout": false
+  },
+  "representations_computable_here": {
+    "C_LEXICAL_CHAR4": true,
+    "R1_LEMMA_TFIDF": false,
+    "R3_TRANSLATION_TFIDF": false,
+    "R5_MULTILING_SANSKRIT": false,
+    "R6_E5_SANSKRIT": false,
+    "R7_E5_TRANSLATION": false
+  },
+  "control": {
+    "name": "C_LEXICAL_CHAR4",
+    "definition": "Jaccard over character 4-grams of accent-stripped NFC Sanskrit primary text. No model, no translation channel.",
+    "gold_pairs": 486,
+    "pairs_with_text_on_both_sides": 370,
+    "pairs_missing_text": 116,
+    "matches_the_prior_score_exactly": 6,
+    "within_0_05_of_the_prior_score": 292,
+    "of_compared": 370,
+    "reproduces_the_prior_implementation": false,
+    "reproduction_note": "This is a re-implementation, not a reproduction. 6 of 370 gold pairs match the stored C_LEXICAL_CHAR4 exactly and 292 fall within 0.05; using the unaccented PARALLEL_TEXT instead gives 7 and 281, so the text role is not the difference. The prior formulation was probably cosine over term-frequency vectors rather than Jaccard over gram sets. No prior number is therefore carried forward -- the AUC below is measured here, on the current canonical corpus, and is the baseline a candidate must beat."
+  },
+  "control_evaluation": {
+    "positive_class": [
+      "SAME_CONTENT",
+      "SAME_TOPIC_DIFFERENT_CLAIM"
+    ],
+    "negative_class": [
+      "SHARED_PHRASING_ONLY",
+      "UNRELATED"
+    ],
+    "adjudicated_labels_used": {
+      "UNRELATED": 109,
+      "SAME_TOPIC_DIFFERENT_CLAIM": 122,
+      "SAME_CONTENT": 41,
+      "SHARED_PHRASING_ONLY": 7
+    },
+    "auc_by_split": {
+      "dev": 0.7742,
+      "test": 0.7356,
+      "all": 0.7541
+    },
+    "adjudicator_was_a_model": true,
+    "adjudication_caveat": "The gold labels were produced by an LLM adjudicator, and 162 of 486 pairs were left UNADJUDICATED_QUOTA_EXHAUSTED. This is not a human gold standard and is not reported as one."
+  },
+  "candidate_pool": {
+    "corpus_mantras": 20210,
+    "corpus_product_unordered_pairs": 204211945,
+    "prior_accepted_rows": 19088,
+    "prior_pool_recall_against_corpus_product": 0.0079,
+    "recall_note": "The prior pool's recall against the corpus product was measured at about 0.0079. No new pool is generated here: a pool is only worth building for a representation that can be evaluated, and none can."
+  },
+  "translation_confounds_excluded": {
+    "SV_reuses_Griffith_RV_renderings": true,
+    "RV_YV_groups_with_reused_Griffith_translation": 146,
+    "how": "By excluding the translation channel entirely rather than filtering it. The control reads Sanskrit, so a reused rendering cannot reach it."
+  },
+  "predicate_semantics_preserved": {
+    "SAME_CONTENT": "kept distinct; not collapsed into topical similarity",
+    "SHARED_PHRASING_ONLY": "WITHHELD. The prior run adjudicated 8 pairs into this class out of 486, and the owner's established finding is that its boundary was not reproducible enough to carry assertion authority. 8 labels cannot establish one.",
+    "GENERIC_TOPICAL_SIMILARITY": "not a predicate in this ontology and not created as one"
+  },
+  "outcome": "C_VERIFIED_ZERO_REFUSED",
+  "imported_assertions": 0,
+  "refusal_reasons": [
+    "No embedding runtime in this checkout (onnxruntime, transformers and sentence_transformers all absent, no .onnx file), so every semantic representation the prior run evaluated is uncomputable here. A representation that cannot be computed cannot be shown to add value over the control.",
+    "The owner's established finding is that the character 4-gram control previously beat every semantic candidate. With no semantic candidate computable, that finding stands unchallenged rather than retested.",
+    "Importing the prior artifact is barred: its declared graph snapshot is a 108,779-node graph and this one holds 116,838. The inputs are not hash-identical."
+  ],
+  "control_is_the_baseline": "AUC 0.7541 over 279 adjudicated pairs (dev 0.7742, test 0.7356), measured on the current canonical corpus with no model and no translation channel. A semantic representation has to beat this on the same split to be worth importing.",
+  "what_would_change_it": "An embedding runtime in the checkout, plus adjudication capacity for the 162 unadjudicated gold pairs, would make a real comparison possible. The control is already reproducible from canonical inputs, so it is the baseline any candidate must beat on the same dev/test split."
+}

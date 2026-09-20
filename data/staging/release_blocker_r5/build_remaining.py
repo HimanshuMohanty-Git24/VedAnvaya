@@ -1,0 +1,427 @@
+"""Write data/staging/release_blocker_r5/remaining.json.
+
+Every ``current_measured_value`` here was read from the live store at HEAD bba9e8e by
+``probe_11.py`` and the follow-up probes beside it, not copied from R4's receipt. The
+``exact_reason_still_open`` field states what the clause asks for and what the graph
+actually holds, per clause, because a row that names only the aggregate cannot be
+checked by the next pass.
+"""
+
+from __future__ import annotations
+
+import json
+import pathlib
+
+HERE = pathlib.Path(__file__).resolve().parent
+
+GAPS: list[dict[str, object]] = [
+    {
+        "gap_id": "GAP-ENTITY_COVERAGE-004",
+        "domain": "entity_coverage",
+        "closure_measure": "MATCH (n:DomainEntity) WHERE n.expected_source IS NULL RETURN count(n)",
+        "current_measured_value": 384,
+        "required_value": 0,
+        "closure_condition": (
+            "Entity nodes carry an expected_source, and a coverage report names entities the "
+            "expectation lists but the registry lacks - the query that would have found trapu "
+            "without a human reading the text."
+        ),
+        "generator": 8,
+        "affected_artifacts": [
+            "graph :DomainEntity, 384 nodes",
+            "GET /api/v1/entities caveat",
+            "benchmark V3_3 Q78",
+        ],
+        "exact_reason_still_open": (
+            "The property key expected_source does not exist in the database. All 384 "
+            ":DomainEntity nodes are keyed VG:CONCEPT:* and carry no expectation provenance of "
+            "any kind, so the coverage query the clause describes cannot be written."
+        ),
+        "exact_next_action": (
+            "Partition all 384 by actual origin into a typed expectation_origin, set "
+            "expected_source ONLY where a real external citation exists, and build the coverage "
+            "report. Assigned AGENT_A slice 2."
+        ),
+    },
+    {
+        "gap_id": "GAP-ENTITY_COVERAGE-006",
+        "domain": "entity_coverage",
+        "closure_measure": (
+            "MATCH (m:Mantra {veda:'YV'})-[:MENTIONS_ENTITY]->(e) "
+            "WHERE e.entity_key='VG:CONCEPT:AYAS-METAL' RETURN count(DISTINCT m)"
+        ),
+        "current_measured_value": 0,
+        "required_value": 0,
+        "closure_condition": (
+            "Every entity carries a measured recall figure with its sample size, the ayas YV cell "
+            "matches VSM 18.13, and no cell is known-false without being typed."
+        ),
+        "generator": 8,
+        "affected_artifacts": [
+            "graph :DomainEntity lexical_recall_*",
+            "GET /api/v1/insights/metals",
+            "frontend /material-culture",
+            "tests/api/test_adversarial.py:484-499",
+        ],
+        "exact_reason_still_open": (
+            "Clause 1 is unmet: 164 of 384 entities carry a lexical_recall figure with a sample "
+            "size; 220 carry only an UNMEASURED status (155 UNMEASURED_NO_REGISTERED_SANSKRIT_"
+            "ALIAS, 65 UNMEASURED_NO_ANNOTATION_ANCHOR). The declared denominator 384 mixes "
+            "applicability classes, so a single recall figure over it would be a coverage claim "
+            "the layer cannot support. Clause 2's measure is 0 and MUST stay 0: ayas is "
+            "source-attested at VG:YV:VSM:A18:V013 and lexically unrecoverable, because the token "
+            "is a sandhi-elided avagraha plus yas, indistinguishable from the relative pronoun "
+            "and from the -ayas plural stems standing in the same line."
+        ),
+        "exact_next_action": (
+            "Add a per-row applicability classification, and a typed recall metric that separates "
+            "eligible denominator, tested population, true positives, and source attestations "
+            "outside lexical recoverability. Do not force the ayas cell positive."
+        ),
+    },
+    {
+        "gap_id": "GAP-ENTITY_COVERAGE-007",
+        "domain": "entity_coverage",
+        "closure_measure": (
+            "MATCH (n:NaturalPhenomenon) WHERE n.personification_status IS NULL RETURN count(n)"
+        ),
+        "current_measured_value": 0,
+        "required_value": 0,
+        "closure_condition": (
+            "Phrase matching reaches multi-word entities, and every entity that could be "
+            "personified carries a resolution status distinguishing refusal from absence."
+        ),
+        "generator": 8,
+        "affected_artifacts": [
+            "docs/reports/MATERIAL_CULTURE_LEXICON_V1.md:527",
+            "benchmark V3_3 Q41 and Q86",
+            "graph :NaturalPhenomenon, 13 nodes",
+        ],
+        "exact_reason_still_open": (
+            "Clause 2 CLOSED at R4: all 13 :NaturalPhenomenon carry a personification_status from "
+            "a typed vocabulary (6 PERSONIFIED_AS_A_REGISTERED_DEVATA, 6 REFUSED_NO_REGISTERED_"
+            "DEITY_COUNTERPART, 1 REFUSED_ALIAS_REACHES_A_DIFFERENT_THEONYM) and 0 are null. "
+            "Clause 1 is untouched: exactly 2 :DomainEntity carry a multi-word Sanskrit label "
+            "(madhyandina savana, trtiya savana), 0 multi-word aliases are registered anywhere, "
+            "and the mention layer matches whole single tokens only, so no phrase can ever fire."
+        ),
+        "exact_next_action": (
+            "Implement deterministic multi-word phrase matching over held Sanskrit, evidence the "
+            "13 personification rows with their phrase and passage spans, and type the match "
+            "basis per row."
+        ),
+    },
+    {
+        "gap_id": "GAP-PRODUCT_SURFACE-005",
+        "domain": "product_surface",
+        "closure_measure": "staged-but-not-product-visible SV apparatus corrections",
+        "current_measured_value": 4,
+        "required_value": 0,
+        "closure_condition": (
+            "Every canonical release artifact is either tracked or covered by a verified external "
+            "snapshot with a recorded checksum, and the 4 apparatus-contaminated SV verses are "
+            "corrected."
+        ),
+        "generator": 16,
+        "affected_artifacts": [
+            "data/canonical/samaveda_arcika_v1/text_versions.jsonl",
+            "data/canonical/samaveda_arcika_v1/manifest.json",
+            "data/canonical/samaveda_arcika_v1/referent_bindings.jsonl",
+            "graph TextVersion.text_nfc and .content_sha256",
+            "data/source_registry/four_veda_backlog.jsonl",
+            "API SV passage surfaces and the public frontend artifacts",
+        ],
+        "exact_reason_still_open": (
+            "Clause 1 passes: .gitignore now re-includes every release manifest, so each "
+            "release's per-file sha256 is tracked even while the verse text is not. Clause 2 is "
+            "staged and unapplied. The four corrections are fully specified with old and new "
+            "sha256 and exact Cypher at data/staging/final_closure_sprint/agent6/"
+            "gap005_sv_apparatus_corrections.json, recorded OPEN_CORRECTION_STAGED, withheld by a "
+            "permission boundary rather than by missing evidence."
+        ),
+        "exact_next_action": (
+            "Apply the four corrections through the canonical artifact and the graph, reconcile "
+            "the manifest sha256 and the referent bindings, prove the derived-edge consequence "
+            "rather than rebuilding blindly, and read back from canonical, API and the public "
+            "artifact."
+        ),
+    },
+    {
+        "gap_id": "GAP-QUALITY-003",
+        "domain": "quality",
+        "closure_measure": "predicates carrying a single constant confidence on every edge",
+        "current_measured_value": 7,
+        "required_value": 0,
+        "closure_condition": (
+            "Each predicate carrying a confidence has a calibration curve measured against a "
+            "human-labelled sample, and no predicate carries a single constant confidence on "
+            "every edge."
+        ),
+        "generator": 16,
+        "affected_artifacts": [
+            "GET /api/v1/insights/capabilities limit calibrated_confidence",
+            "frontend /limits",
+            "51,356 relationship rows across 7 predicates",
+        ],
+        "exact_reason_still_open": (
+            "Clause 1 requires a human-labelled sample per predicate. No such annotation exists "
+            "in this repository; the available reference set is an INDEPENDENT_SOURCE_ADJUDICATED_"
+            "REFERENCE_SET and must not be relabelled HUMAN_GOLD. Clause 2 is internal and "
+            "undone: 7 predicates carry a constant 1.0 on every edge (HAS_RISHI 17,889, "
+            "HAS_CHANDAS 16,298, HAS_DEVATA 10,558, HAS_DEVATA_ASCRIPTION 5,385, "
+            "HAS_DEVATA_DERIVED 882, BELONGS_TO_FAMILY 305, ASCRIBES_TO_DEVATA 39), presenting a "
+            "filterable quality signal that selects everything or nothing. Those 1.0s stand for "
+            "source-explicit, which is a tier and not a probability."
+        ),
+        "exact_next_action": (
+            "Remove or rename the constant confidence on the 7 predicates so a tier cannot be "
+            "read as a probability; prove the absence of a human-labelled sample; and represent "
+            "that absence as a product and evidence state rather than manufacturing review."
+        ),
+    },
+    {
+        "gap_id": "GAP-RITUAL-003",
+        "domain": "ritual",
+        "closure_measure": "MATCH ()-[r:USES_OBJECT]->() RETURN count(r)",
+        "current_measured_value": 24,
+        "required_value": 24,
+        "closure_condition": (
+            "USES_OBJECT reaches mani, dundubhi and the udumbara amulet, and yupa's "
+            "vedas_with_matches reads 3 with VSM 19.17 and 25.29 both matched."
+        ),
+        "generator": 13,
+        "affected_artifacts": [
+            "GET /api/v1/insights/rituals caveat ritual_objects_recurring",
+            "GET /api/v1/insights/capabilities limit recurring_ritual_objects",
+            "docs/reports/V3_3_FINAL_CLOSURE.md:134",
+        ],
+        "exact_reason_still_open": (
+            "Clause 2's SUBSTANCE already holds and is not exposed: yupa reaches 12 mantras over "
+            "3 Vedas including VG:YV:VSM:A19:V017 and VG:YV:VSM:A25:V029, but the node carries no "
+            "vedas_with_matches property and its aliases_sa still lists only the original 4, so "
+            "the 12 edges are not reproducible from the registry that is supposed to generate "
+            "them. Clause 1: mani is wired to SVASTYAYANA on GobhGS 3.8.6, read, with Oldenberg "
+            "as an independent witness. dundubhi and audumbara are REFUSED on read evidence: the "
+            "single dundubhi candidate is a simile inside a quoted mantra, and every one of the "
+            "91 audumbara apparatus lines is udumbara WOOD against a graph node defined as an AV "
+            "amulet. Neither refusal is typed on the graph, so a reader cannot tell a refused "
+            "object from an unattempted one."
+        ),
+        "exact_next_action": (
+            "Register the 7 audited yupa aliases and set a measured vedas_with_matches; type the "
+            "dundubhi and audumbara refusals with their verbatim source reasons. Do not mint an "
+            "edge the source does not state."
+        ),
+    },
+    {
+        "gap_id": "GAP-RITUAL-005",
+        "domain": "ritual",
+        "closure_measure": "MATCH ()-[r:RECEIVES_OFFERING]->() RETURN count(r)",
+        "current_measured_value": 4,
+        "required_value": 4,
+        "closure_condition": (
+            "A typed deity-to-offering predicate exists with per-edge verse evidence, every "
+            "modelled rite carries its offerings, and no surface presents co-occurrence as an "
+            "asserted offering."
+        ),
+        "generator": 13,
+        "affected_artifacts": [
+            "GET /api/v1/insights/rituals",
+            "benchmark V3_3 Q61, Q4 and Q31",
+            "103 :Ritual nodes",
+        ],
+        "exact_reason_still_open": (
+            "Clause 1 passes with 4 RECEIVES_OFFERING edges, each carrying per-edge verse "
+            "evidence over 22 read loci. Clause 3 passes. Clause 2 fails at 4 of 103 rites, and "
+            "it fails BECAUSE of clause 3: the only rite-to-offering evidence in the acquired "
+            "apparatus is 258 rows staged PROBABLE, each resting on one sutra naming both a rite "
+            "and an offering, which clause 3 forbids asserting. That is a conflict inside the "
+            "test, not unfinished implementation."
+        ),
+        "exact_next_action": (
+            "Type per-rite offering status so clause 2 becomes evaluable under clause 3 -- "
+            "asserted, refused as co-occurrence, or not attested in the held apparatus -- and "
+            "leave the 258 PROBABLE rows unimported."
+        ),
+    },
+    {
+        "gap_id": "GAP-RITUAL-006",
+        "domain": "ritual",
+        "closure_measure": "MATCH (m:Mantra) WHERE m.ritual_context IS NOT NULL RETURN count(m)",
+        "current_measured_value": 20210,
+        "required_value": 20210,
+        "closure_condition": (
+            "Passages carry a ritual_context assignment with its method declared and its "
+            "precision measured against a reviewed sample, and material-culture counts are "
+            "reported split by context."
+        ),
+        "generator": 13,
+        "affected_artifacts": [
+            "benchmark V3_3 Q84",
+            "20,210 :Mantra ritual_context_*",
+            "material-culture surfaces",
+        ],
+        "exact_reason_still_open": (
+            "Clauses 1 and 2 pass: all 20,210 mantras carry a five-valued ritual_context with the "
+            "absence typed in the row, and all 20,210 carry ritual_context_method = "
+            "EXTERNAL_RITUAL_CITATION. Clause 3 fails: ritual_context_precision does not exist on "
+            "any node, so the 0.7917 and 0.95 figures measured over a 24-row sample live only in "
+            "a staging file. Clause 4 fails: no material-culture surface reports counts split by "
+            "context, though the 1,777-mention split is computed in staging."
+        ),
+        "exact_next_action": (
+            "Land the precision figures with their review level stated honestly "
+            "(AGENT_ADJUDICATED_SINGLE_READER_NO_HUMAN_REVIEW, human_reviewed = 0) and land the "
+            "by-context material-culture split."
+        ),
+    },
+    {
+        "gap_id": "GAP-SAMAVEDA_MUSIC-003",
+        "domain": "samaveda_music",
+        "closure_measure": (
+            "MATCH (m:Mantra {veda:'SV'}) WHERE m.running_samhita_number IS NULL RETURN count(m)"
+        ),
+        "current_measured_value": 1844,
+        "required_value": 0,
+        "closure_condition": (
+            "Every Samavedic mantra exposes its running Samhita number, and re-deriving the "
+            "MUSICALIZED_AS edges from the graph alone reproduces all 495."
+        ),
+        "generator": 5,
+        "affected_artifacts": [
+            "1,844 SV :Mantra",
+            "1,844 SV :TextVersion source_locator",
+            "MUSICALIZED_AS, 0 edges, relationship type absent from the database",
+            "data/staging/samaveda_music/*",
+        ],
+        "exact_reason_still_open": (
+            "Clause 1: 0 of 1,844 SV mantras carry a running_samhita_number and the property key "
+            "does not exist. The SV TextVersion source_locator holds ONE distinct value across "
+            "all 1,844, a derivation recipe rather than a locator. Clause 2: MUSICALIZED_AS "
+            "carries 0 edges and the relationship type does not exist; its gana half sits behind "
+            "OWNER_DECISION_E_AUDIO_GATE on GAP-SAMAVEDA_MUSIC-002."
+        ),
+        "exact_next_action": (
+            "Establish whether the source provides an independently alignable running number, or "
+            "whether the gap's substance is notation rather than numbering. Do NOT derive a "
+            "number from our own array order. Assigned AGENT_A slice 1."
+        ),
+    },
+    {
+        "gap_id": "GAP-SEMANTICS-003",
+        "domain": "semantics",
+        "closure_measure": (
+            "MATCH (a:SemanticAssertion)-[:ASSERTION_TARGET]->(x) WHERE NOT x:Devata RETURN count(*)"
+        ),
+        "current_measured_value": 0,
+        "required_value": "non-zero",
+        "closure_condition": (
+            "MATCH (a:SemanticAssertion) with all three slots present returns a non-zero count, "
+            "and at least one assertion has a non-Devata target."
+        ),
+        "generator": 15,
+        "affected_artifacts": [
+            "35,131 :SemanticAssertion",
+            "ASSERTION_AGENT 2,502 and ASSERTION_TARGET 799",
+            "src/vedagraph/domain/queries.py",
+            "src/vedagraph/api/services/graph_service.py",
+            "docs/reports/data-completeness/quality.md:509",
+            "docs/reports/data-completeness/SCHEMA_MIGRATION_CARDS.md:30",
+        ],
+        "exact_reason_still_open": (
+            "Both clauses read 0. No assertion carries agent, predicate and target together, and "
+            "every ASSERTION_AGENT (2,502) and ASSERTION_TARGET (799) edge lands on :Devata. The "
+            "ontology range ALREADY admits :DomainEntity on both predicates, so this is "
+            "unpopulated rather than undeclared. The resolution exists one hop away and was never "
+            "projected: 2,052 :RoleFiller nodes carry 348 REFERS_TO edges to registered entities, "
+            "245 of them non-Devata, derived TREEBANK_DEPREL from DCS dependency relations at "
+            "TIER_B."
+        ),
+        "exact_next_action": (
+            "Project the existing RoleFiller REFERS_TO resolution onto the assertion as "
+            "ASSERTION_AGENT (role AGENT) and ASSERTION_TARGET (role PATIENT) at the RoleFiller's "
+            "own tier, without blending derivations, and widen the Devata-typed consumer queries "
+            "that would otherwise silently under-report."
+        ),
+    },
+    {
+        "gap_id": "GAP-TRANSLATION-004",
+        "domain": "translation",
+        "closure_measure": (
+            "MATCH (m:Mantra {veda:'RV'}) WHERE NOT (m)-[:HAS_TRANSLATION]->() RETURN count(m)"
+        ),
+        "current_measured_value": 36,
+        "required_value": 0,
+        "closure_condition": (
+            "MATCH (p:Mantra) WHERE p.veda='RV' AND NOT (p)-[:HAS_TRANSLATION]->() "
+            "RETURN count(p) returns 0."
+        ),
+        "generator": 16,
+        "affected_artifacts": [
+            "36 RV :Mantra in M01 S065-S070",
+            "64 MANTRA_RANGE :Translation covering 128 keys",
+            "the GAP-TRANSLATION-006 import invariant",
+            "data/canonical/rigveda_full_v1/translations.jsonl",
+        ],
+        "exact_reason_still_open": (
+            "The measure asks for an EDGE on every RV mantra and 36 lack one: every even verse of "
+            "RV 1.65-1.70. Those six hymns are PAIRED_DVIPADA -- Griffith prints one unit per "
+            "verse PAIR, and GAP-TRANSLATION-006 anchored unit N on verse 2N-1 with "
+            "covers_canonical_keys = [2N-1, 2N] precisely so one rendering is not presented twice "
+            "as two independent per-verse translations. Satisfying 004's metric by attaching an "
+            "own edge to each even verse reintroduces 006's defect exactly. Measured falsifier: "
+            "of the 36, 30 ARE named in a MANTRA_RANGE translation's covers_canonical_keys and 6 "
+            "are covered by nothing. The entry's source_dependency claim that 'the ingested "
+            "Griffith RV covers the Sakala Samhita in full' is FALSE: 52 of 10,552 RV mantras "
+            "have no row in data/canonical/rigveda_full_v1/translations.jsonl."
+        ),
+        "exact_next_action": (
+            "Replace the contradictory metric with a typed translation-coverage state per mantra, "
+            "regression-proving that the bad interpretation FAILS and the truthful one PASSES; "
+            "keep the 6 genuinely uncovered rows visible rather than erased; and correct the "
+            "entry's false source claim."
+        ),
+    },
+]
+
+BRIEF_IDS = {
+    "GAP-RITUAL-003",
+    "GAP-RITUAL-005",
+    "GAP-RITUAL-006",
+    "GAP-SEMANTICS-003",
+    "GAP-SAMAVEDA_MUSIC-003",
+    "GAP-ENTITY_COVERAGE-004",
+    "GAP-ENTITY_COVERAGE-006",
+    "GAP-ENTITY_COVERAGE-007",
+    "GAP-QUALITY-003",
+    "GAP-TRANSLATION-004",
+    "GAP-PRODUCT_SURFACE-005",
+}
+
+
+def main() -> None:
+    measured = {g["gap_id"] for g in GAPS}
+    out = {
+        "artifact": "RELEASE_BLOCKER_R5_REMAINING",
+        "at": "2026-09-18T00:00:00+00:00",
+        "head": "bba9e8ebdfebf7ec7f5d2be5093327576bb35919",
+        "count": len(GAPS),
+        "asserted_by_brief": 11,
+        "measured_live": len(GAPS),
+        "count_matches_brief": len(GAPS) == 11,
+        "ids_match_brief": sorted(measured) == sorted(BRIEF_IDS),
+        "audit_source": (
+            "scripts/wave4_registry_closure_audit.py, run live against bolt://localhost:7687 at "
+            "HEAD bba9e8e. 11 entries read STILL_IMPLEMENTATION_FIXABLE and the set is identical "
+            "to the brief's list, so the brief's count is confirmed rather than assumed."
+        ),
+        "gaps": GAPS,
+    }
+    path = HERE / "remaining.json"
+    path.write_text(json.dumps(out, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+    print(f"wrote {path.name}: {len(GAPS)} gaps")
+    print(f"count_matches_brief={out['count_matches_brief']} ids_match_brief={out['ids_match_brief']}")
+
+
+if __name__ == "__main__":
+    main()

@@ -1,0 +1,120 @@
+{
+  "artifact": "RITUAL_STEP_IDENTITY_PROBE",
+  "source": "data\\staging\\ritual\\steps.jsonl",
+  "rows_staged": 9273,
+  "rows_importable": 3123,
+  "rows_withheld": 6150,
+  "graph": {
+    "nodes": 3121,
+    "with_step_key": 3121,
+    "with_urn": 3121,
+    "with_entity_id": 3121,
+    "with_display_type": 0,
+    "distinct_step_keys": 3121,
+    "distinct_urns": 3121,
+    "distinct_entity_ids": 3121,
+    "edges": 3121,
+    "steps_under_more_than_one_rite": 0,
+    "graph_keys_match_importable_rows": false
+  },
+  "grain_analysis": {
+    "SOURCE_OCCURRENCE": {
+      "distinct_values_over_importable_rows": 2767,
+      "rows": 3123,
+      "values_covering_more_than_one_row": 308,
+      "values_covering_rows_that_disagree": 308,
+      "examples_of_disagreement": [
+        "('VG:SUPPWORK:AsvGS', 'AsvGS 1.13.1')",
+        "('VG:SUPPWORK:AsvGS', 'AsvGS 2.1.1')",
+        "('VG:SUPPWORK:AsvGS', 'AsvGS 2.9.9')",
+        "('VG:SUPPWORK:AsvSS', 'AsvSS 1.3.13')",
+        "('VG:SUPPWORK:AsvSS', 'AsvSS 1.3.23')"
+      ]
+    },
+    "RITE_SPECIFIC_OCCURRENCE": {
+      "distinct_values_over_importable_rows": 3122,
+      "rows": 3123,
+      "values_covering_more_than_one_row": 1,
+      "values_covering_rows_that_disagree": 1,
+      "examples_of_disagreement": [
+        "('VG:CONCEPT:VISVAJIT', 'VG:SUPPWORK:SankhSS', 'SankhSS 16.15.13')"
+      ]
+    },
+    "POSITION_BASED": {
+      "distinct_values_over_importable_rows": 1137,
+      "rows": 3123,
+      "values_covering_more_than_one_row": 680,
+      "values_covering_rows_that_disagree": 680,
+      "examples_of_disagreement": [
+        "('VG:CONCEPT:ABHICARA', 1)",
+        "('VG:CONCEPT:ABHIPLAVA', 1)",
+        "('VG:CONCEPT:ABHIPLAVA', 10)",
+        "('VG:CONCEPT:ABHIPLAVA', 11)",
+        "('VG:CONCEPT:ABHIPLAVA', 12)"
+      ]
+    },
+    "SUPPLEMENTARY_KEY": {
+      "distinct_values_over_importable_rows": 2767,
+      "rows": 3123,
+      "values_covering_more_than_one_row": 308,
+      "values_covering_rows_that_disagree": 308,
+      "examples_of_disagreement": [
+        "VG:SUPP:AsvGS:1:13:1",
+        "VG:SUPP:AsvGS:2:1:1",
+        "VG:SUPP:AsvGS:2:9:9",
+        "VG:SUPP:AsvSS:10:1:12",
+        "VG:SUPP:AsvSS:10:4:1"
+      ]
+    },
+    "STAGED_STEP_KEY": {
+      "distinct_values_over_importable_rows": 3122,
+      "rows": 3123,
+      "values_covering_more_than_one_row": 1,
+      "values_covering_rows_that_disagree": 1,
+      "examples_of_disagreement": [
+        "VG:RITESTEP:VISVAJIT:SankhSS:16:15:13"
+      ]
+    },
+    "STAGED_CANONICAL_URN": {
+      "distinct_values_over_importable_rows": 3122,
+      "rows": 3123,
+      "values_covering_more_than_one_row": 1,
+      "values_covering_rows_that_disagree": 1,
+      "examples_of_disagreement": [
+        "urn:vedagraph:ritual-step:visvajit:sankhayanasrautasutra:16:15:13"
+      ]
+    },
+    "STAGED_ENTITY_ID": {
+      "distinct_values_over_importable_rows": 3122,
+      "rows": 3123,
+      "values_covering_more_than_one_row": 1,
+      "values_covering_rows_that_disagree": 1,
+      "examples_of_disagreement": [
+        "84b30721-fabe-5df8-b4a8-38c3e62d1946"
+      ]
+    }
+  },
+  "uuid_derivation": {
+    "namespace": "7c8cde94-2bc0-50e2-8819-568ae65a3ec4",
+    "rule": "uuid5(VEDAGRAPH_NAMESPACE_UUID, canonical_urn)",
+    "rows_checked": 3123,
+    "rows_whose_entity_id_does_not_match_the_rule": 0,
+    "examples": []
+  },
+  "locator_coverage": {
+    "rows_missing_work_key_or_citation": 0,
+    "examples": []
+  },
+  "stability": {
+    "components_of_the_staged_key": [
+      "ritual_key",
+      "work_key",
+      "source coordinate"
+    ],
+    "depends_on_display_label": false,
+    "depends_on_text_iast": false,
+    "depends_on_a_normalizer": false,
+    "depends_on_step_position": false,
+    "why_position_is_excluded": "step_position restarts at 1 inside every work: the POSITION_BASED grain above shows how many rows it cannot separate."
+  }
+}

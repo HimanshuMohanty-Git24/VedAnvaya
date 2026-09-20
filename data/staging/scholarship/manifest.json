@@ -1,0 +1,355 @@
+{
+  "agent": 14,
+  "algorithm_version": "scholarship-v1",
+  "closes_gaps": [
+    "GAP-SCHOLARSHIP-001"
+  ],
+  "code_commit": "5a9af5547f253f4b66f0d4dcf974409d48e90ad2",
+  "config": {
+    "algorithm_version": "scholarship-v1",
+    "av_builder": "scholarship-whitney-lanman-av-v2",
+    "av_families": [
+      "F1_READING_COMM_VS_VULGATE",
+      "F2_EDITIONS_DIFFER",
+      "F3_ANALYSIS_WHITNEY_VS_COMM",
+      "F4_COMM_JUDGED_UNTENABLE",
+      "F5_REFERENT_OR_ADDRESSEE",
+      "F6_METRE_ANUKRAMANI_NAMED",
+      "F7_METRE_ANUKRAMANI_REFUSES",
+      "F8_TRANSLATORS_ON_A_FORM",
+      "F9_SCHOLAR_JUDGED_WRONG",
+      "F10_ASCRIPTION_DISPUTED"
+    ],
+    "av_lexicon": {
+      "allows": [
+        "perhaps better",
+        "perhaps preferable",
+        "perhaps to be preferred",
+        "very possibly to be preferred",
+        "possibly to be preferred",
+        "may be questioned",
+        "is doubtful",
+        "are doubtful",
+        "is questionable",
+        "of course possible",
+        "is perhaps",
+        "perhaps possible",
+        "doubtless its virtual meaning",
+        "probably its etymological sense",
+        "its virtual meaning",
+        "is probably",
+        "probably",
+        "perhaps",
+        "possibly"
+      ],
+      "endorses": [
+        "doubtless the right",
+        "doubtless the true",
+        "is doubtless true",
+        "doubtless true",
+        "correctly",
+        "rightly",
+        "is certainly right",
+        "is right",
+        "is an improvement",
+        "is to be preferred",
+        "which is better",
+        "is better"
+      ],
+      "negated": [
+        "not unacceptable",
+        "not impossible",
+        "not improbable",
+        "not implausible",
+        "not absurd",
+        "not a bad",
+        "not without",
+        "not far from correct",
+        "not bad"
+      ],
+      "rejects": [
+        "wholly without authority",
+        "without any authority",
+        "without authority",
+        "has no grammatical standing",
+        "no grammatical standing",
+        "etymologically absurd",
+        "is to be rejected",
+        "to be rejected",
+        "of no authority",
+        "no such root",
+        "no such word",
+        "is not what the line actually says",
+        "cannot well be right",
+        "cannot be right",
+        "is not possible",
+        "quite impossible",
+        "equally impossible",
+        "is impossible",
+        "utterly implausible",
+        "extremely implausible",
+        "very implausible",
+        "implausible",
+        "very unacceptable",
+        "unacceptable",
+        "very unsatisfactory",
+        "unsatisfactory",
+        "extremely artificial",
+        "plainly wrong",
+        "of course wrong",
+        "quite wrong",
+        "wrongly",
+        "senseless",
+        "worthless",
+        "absurdly",
+        "absurd",
+        "indefensible",
+        "untenable",
+        "is silly",
+        "is a blunder",
+        "wild guesses",
+        "a wild guess",
+        "much more probably",
+        "it is rather",
+        "we have no",
+        "no such",
+        "against the accent",
+        "against the pada",
+        "is very questionable",
+        "very questionable",
+        "is a detriment",
+        "falsely",
+        "no authority nor occasion",
+        "is no authority",
+        "nor occasion"
+      ]
+    },
+    "av_refused_families": [
+      "R1_ANUKRAMANI_SILENCE",
+      "R2_PAIPPALADA_VARIANT",
+      "R3_TRANSLATORS_DIFFERENT_WORDING",
+      "R4_MSS_VARY_NO_POSITION"
+    ],
+    "curated_row_ids": [
+      "CUR-01",
+      "CUR-02",
+      "CUR-03",
+      "CUR-04",
+      "CUR-05",
+      "CUR-06",
+      "CUR-07",
+      "CUR-08",
+      "CUR-09",
+      "CUR-10",
+      "CUR-11",
+      "CUR-12",
+      "CUR-13",
+      "CUR-14",
+      "CUR-15"
+    ],
+    "rv_builder": "scholarship-sbe-rigveda-v1",
+    "rv_families": [
+      "RV1_SCHOLAR_VS_COMMENTATOR",
+      "RV2_COMMENTATOR_VS_SCHOLAR",
+      "RV3_SCHOLAR_AND_VERDICT",
+      "RV4_TWO_NAMED_SCHOLARS"
+    ],
+    "rv_lexicon": {
+      "allows": [
+        "a possible meaning",
+        "is possible",
+        "perhaps",
+        "probably",
+        "doubtful",
+        "tentatively"
+      ],
+      "endorses": [
+        "is perfectly right",
+        "perfectly right",
+        "explains well",
+        "is certainly right",
+        "quite right",
+        "is correct",
+        "rightly"
+      ],
+      "rejects": [
+        "cannot be right",
+        "is impossible",
+        "is untenable",
+        "is inadmissible",
+        "is wrong",
+        "wrongly",
+        "is no longer",
+        "can hardly be said",
+        "can hardly mean",
+        "hardly",
+        "cannot well",
+        "see no reason",
+        "do not think",
+        "cannot consider",
+        "cannot agree",
+        "this does not appear to be the case",
+        "is not tenable",
+        "no doubt"
+      ]
+    }
+  },
+  "config_hash": "1133a5ae5482c6ca2c5f677cee1ae505b5f0f7d2427e8d8591e19b16e4de97a6",
+  "counts": {
+    "accepted": 113,
+    "candidates_considered": 2461,
+    "not_applicable": 0,
+    "rejected": 2348,
+    "unresolved": 0,
+    "verified_zero": 2
+  },
+  "created_at": "2026-09-15T09:36:38.259008+00:00",
+  "does_not_close_gaps": [
+    "GAP-SCHOLARSHIP-002"
+  ],
+  "domain": "scholarship",
+  "files": [
+    {
+      "bytes": 671039,
+      "path": "rows.jsonl",
+      "rows": 113,
+      "sha256": "97456b52ac565fad5226d627241ae23575c4ffa6ae9217ee0160bb6d44a0e926"
+    },
+    {
+      "bytes": 7508,
+      "path": "sources.jsonl",
+      "rows": 13,
+      "sha256": "21048fab76c7d3cd2471938b4183ada8757cca7035d5a82cf2db1b8dab098889"
+    },
+    {
+      "bytes": 1678208,
+      "path": "rejected.jsonl",
+      "rows": 2348,
+      "sha256": "cc69427f840d1b80e256e6018c7a208210af8f6820219983230ab7fd2137c483"
+    },
+    {
+      "bytes": 3436,
+      "path": "scholars.jsonl",
+      "rows": 17,
+      "sha256": "4d67c2ee4826778c375f303b8cb5005c0f084e02f6e436176072b3b47e0e444b"
+    },
+    {
+      "bytes": 4229,
+      "path": "works.jsonl",
+      "rows": 17,
+      "sha256": "599128f8171a5d8c059df6f5b65b378fd0762eb696e84ed1414e3c1156b262d0"
+    },
+    {
+      "bytes": 4338,
+      "path": "graph_proposal.json",
+      "rows": 0,
+      "sha256": "4cdc4b70d3bdc34d17f8103db075d26586b17c60db881def6bfb13a714d49b3a"
+    },
+    {
+      "bytes": 859,
+      "path": "proofs/archive_org_ocr_is_unfit_for_sanskrit_quotation.json",
+      "rows": 0,
+      "sha256": "c1ae3b9f9723fcebcfecb635b13809b99b0bec7d0002cc94363eed9ef05d78b3"
+    },
+    {
+      "bytes": 807,
+      "path": "proofs/graph_baseline_before_any_write.json",
+      "rows": 0,
+      "sha256": "a9e0cf6afe34ded3eb19efc1e57a1742f0ff3e5e9ecbdc41ba4f69a175acfef6"
+    },
+    {
+      "bytes": 499,
+      "path": "proofs/llm_provider_probe.json",
+      "rows": 0,
+      "sha256": "a6396a7973c5144647d8e209ea2a69dc717c741a9da1929ad7fe2b28f940a918"
+    },
+    {
+      "bytes": 2322,
+      "path": "proofs/qa_dissent_adjudicated.json",
+      "rows": 0,
+      "sha256": "22dcb8ca31f30f5521d920c3caba1f483aced91d7fc8762fd3921435b31aca1f"
+    },
+    {
+      "bytes": 11403,
+      "path": "proofs/qa_llm_adjudication.json",
+      "rows": 0,
+      "sha256": "523e6f2828ab155b82b7f3ed9547e33b6c1c5f2182f76aba20e1d29c78e47839"
+    },
+    {
+      "bytes": 692,
+      "path": "proofs/sacred_texts_403_and_the_wayback_route.json",
+      "rows": 0,
+      "sha256": "0e969ebf465752798b068b2e7ecad0c34dffea0d58d923be1ebba0d20f6e4954"
+    },
+    {
+      "bytes": 690,
+      "path": "proofs/selfcheck.json",
+      "rows": 0,
+      "sha256": "79b38d06e199fb90db607b57404890cd29cae8e0bc0acc445afe7ca4806c1a20"
+    },
+    {
+      "bytes": 2096,
+      "path": "proofs/yv_sv_verified_zero.json",
+      "rows": 0,
+      "sha256": "df165db12d1294a3e81733088f26e4f14a5527b9156072efd2f0c394cd2e7873"
+    }
+  ],
+  "partially_addresses_gaps": [
+    "GAP-SEMANTICS-004"
+  ],
+  "population_and_coverage": {
+    "av_population": 4933,
+    "av_positive_count": 108,
+    "av_processed_count": 4933,
+    "curated_count": 15,
+    "deduped_out": 15,
+    "rv_population": 526,
+    "rv_positive_count": 6,
+    "rv_processed_count": 526,
+    "sv_positive_count": 0,
+    "yv_positive_count": 0
+  },
+  "qa": {
+    "defects_found": 1,
+    "defects_found_and_fixed_during_the_build": 21,
+    "human_reviewed": 114,
+    "llm_adjudicated": 12,
+    "llm_calls": 4,
+    "llm_dissent_adjudicated_in": "proofs/qa_dissent_adjudicated.json",
+    "llm_model_id": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "llm_verdicts": {
+      "NOT_A_DISAGREEMENT": 7,
+      "REAL_DISAGREEMENT": 5
+    },
+    "note": "human_reviewed is 114 because every accepted row was read by the agent; there are still ZERO third-party human annotations, consistent with the rest of this project's gold sets.",
+    "quote_verification": "proofs/selfcheck.json; 0 failures over 114 rows",
+    "sample_method": "both",
+    "sampled": 24
+  },
+  "schema_version": "1.0",
+  "source_snapshot_ids": [
+    "AVS_BHASYA_SAYANA_ASCRIBED",
+    "BOMBAY_EDITION_ASCRIPTION",
+    "BRHATSARVANUKRAMANI_AV",
+    "GRASSMANN_RIGVEDA",
+    "LUDWIG_RIGVEDA",
+    "MULLER_SBE32",
+    "OLDENBERG_SBE46",
+    "ROTH_LEXICON_AND_NOTES",
+    "SAYANA_RIGVEDA_BHASYA",
+    "SPP_BOMBAY_EDITION_1895",
+    "WEBER_INDISCHE_STUDIEN",
+    "WIKISOURCE_WHITNEY_AV",
+    "WILSON_RIGVEDA_SANHITA"
+  ],
+  "lead_corrections": [
+    {
+      "correction_id": "LEAD-SCHOLARSHIP-01",
+      "found_by": "lead adversarial test, owner attack list section 14",
+      "defect": "1 of 92 SCHOLARLY_DISAGREEMENT rows carried the same asserter_id on both sides -- the owner's 'same author's two works' attack.",
+      "fix": "Withdrawn to rejected.jsonl with the whole row preserved under withdrawn_row.",
+      "unchanged_and_verified_clean": "The other 91 satisfy the contract in full: two named asserters, two claims, two page-precise work_locator values and a stated incompatible_about. The attribution_status vocabulary also pre-empts the reporting-source attack, with 73 rows typed ASCRIPTION_DISPUTED_BY_THE_REPORTING_SOURCE.",
+      "lead_probe_error_recorded": "The lead's first attack reported all 92 rows as missing an attributed position. That was the lead's error: it guessed the field name 'attributed_to' where the schema uses 'asserter_name'. The rows were right and the probe was wrong."
+    }
+  ]
+}

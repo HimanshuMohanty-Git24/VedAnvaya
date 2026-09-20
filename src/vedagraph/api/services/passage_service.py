@@ -83,6 +83,7 @@ from vedagraph.api.models.passage import (
     AgentiveAssertionView,
     AssertionModality,
     AttestedSet,
+    FormulaPhraseView,
     AudioAvailability,
     BreadcrumbView,
     MentionedDevataSet,
@@ -115,7 +116,7 @@ from vedagraph.api.models.work import (
     WorkSummary,
 )
 from vedagraph.api.repositories.neo4j_repository import named_query_caveat
-from vedagraph.domain import layer_figures, theonyms
+from vedagraph.domain import layer_figures, theonyms, translation_semantics
 
 
 class Repository(Protocol):
@@ -216,11 +217,25 @@ _TEXT_SURFACE_BY_ROLE: Final[dict[str, str]] = {
     "PARALLEL_TEXT": "PARALLEL_WITNESS",
     "SEARCH_DERIVATIVE": "NORMALIZED_FOR_SEARCH",
     "EXTRACTED_FROM_CONTAINER": "EXTRACTED_FROM_CONTAINER",
+    # The 139 Yajurvedic verses that gained an unaccented Devanagari comparison form in the
+    # search-derivative pass. It was unmapped and fell through to a surface named after its
+    # own role, which happened to be excluded from _DISPLAYABLE_SURFACES and so happened to
+    # behave correctly. Mapped explicitly, because "correct by accident" is the state this
+    # project treats as a defect: a fifth role landing tomorrow would have been rendered as
+    # the text.
+    "NORMALIZED": "NORMALIZED_FOR_SEARCH",
 }
 
 #: Surfaces a reader may be shown. A search derivative is real data and not the text.
 _DISPLAYABLE_SURFACES: Final[frozenset[str]] = frozenset(
     {"PRIMARY", "PARALLEL_WITNESS", "EXTRACTED_FROM_CONTAINER"}
+)
+
+#: The graph ``text_role`` values whose surface a reader may be shown. Derived from the two
+#: maps above rather than listed, so a role added to one cannot go missing from the other --
+#: which is exactly how the work-level script list came to count the search derivative.
+_DISPLAYABLE_TEXT_ROLES: Final[tuple[str, ...]] = tuple(
+    sorted(role for role, surface in _TEXT_SURFACE_BY_ROLE.items() if surface in _DISPLAYABLE_SURFACES)
 )
 
 #: Preference order when choosing the single witness a reader view renders.
@@ -335,14 +350,26 @@ _LAYER_SPECS: Final[tuple[LayerSpec, ...]] = (
     LayerSpec(
         "AGENTIVE_ASSERTION",
         "HAS_SEMANTIC_ASSERTION",
-        "Rigveda only. Who does what to whom is derived from the Rigveda-only lemma "
-        "annotation, so the other three corpora are absent from it entirely.",
+        # This said "Rigveda only ... the other three corpora are absent from it entirely"
+        # while the same route reported 6,167 edges over 3,295 Atharvavedic passages in the
+        # cell beside it. The note described the ASSERTION_AGENT sub-layer and the figure
+        # measured HAS_SEMANTIC_ASSERTION, which is a different and much larger population.
+        "Reaches all four corpora unevenly -- RV 27,057 assertions, AV 6,167, YV 1,543, "
+        "SV 364 -- and the agentive reading inside it reaches three. 2,660 assertions carry "
+        "an agent: 2,406 Rigvedic from the morphological annotation, and 124 Atharvavedic "
+        "plus 34 Yajurvedic projected from the DCS dependency annotation's own role "
+        "resolution. The Samaveda carries no agent, so 'who does what to whom' is "
+        "unanswerable there, and its 364 assertions are projected from letter-identical "
+        "Rigvedic verses rather than annotated in their own corpus.",
     ),
     LayerSpec(
         "CONCEPT_ASSERTION",
         "ABOUT_CONCEPT",
         "Reaches all four corpora, partly through the English translation, so its reach "
-        "into the Samaveda is bounded by that corpus having no translation at all.",
+        "into the Samaveda is bounded by that corpus having no translation of its own. The "
+        "173 reused Rigvedic renderings do not lift that bound: this layer was built before "
+        "them, and a rendering of the Rigvedic parallel is not independent evidence about "
+        "the Samavedic verse.",
     ),
     LayerSpec(
         "ENTITY_MENTION",
@@ -359,8 +386,12 @@ _LAYER_SPECS: Final[tuple[LayerSpec, ...]] = (
     LayerSpec(
         "TRANSLATION",
         "HAS_TRANSLATION",
-        "Three corpora. The Samaveda has zero released translations, so every "
-        "translation-derived layer is empty for it and none of those zeros is textual.",
+        "Counts the HAS_TRANSLATION relation, which reaches all four corpora and does "
+        "not mean all four are translated. The Samaveda still has zero released "
+        "translations of its own: the 173 verses this layer reaches there carry "
+        "Griffith's Rigvedic rendering of text verified character-identical, disclosed "
+        "as reuse, so every translation-derived layer is still empty for that corpus and "
+        "none of those zeros is textual.",
     ),
 )
 
@@ -552,18 +583,59 @@ CALL (w) {
     RETURN count(p) AS passage_count,
            count(CASE WHEN p.display_type = 'MANTRA' THEN 1 END) AS mantra_count
 }
+// Scoped to the population `translated` counts, so the two agree. Collecting from every
+// HAS_TRANSLATION edge put "Ralph T. H. Griffith" beside a Samavedic `translated: 0`,
+// which reads as a contradiction: his name is there because 173 of its verses show his
+// Rigvedic rendering, and that is disclosed in a caveat rather than by listing him as a
+// translator of the Samaveda.
 CALL (w) {
     MATCH (p:Passage {work_id: w.work_id, display_type: 'MANTRA'})
           -[:HAS_TRANSLATION]->(t:Translation)
-    RETURN count(DISTINCT p) AS translated_count,
-           collect(DISTINCT t.translator) AS translators
+    WHERE t.reuse_kind IS NULL AND t.language = 'en'
+    RETURN collect(DISTINCT t.translator) AS translators
+}
+CALL (w) {
+    MATCH (p:Passage {work_id: w.work_id, display_type: 'MANTRA'})
+          -[:HAS_TRANSLATION]->(t:Translation)
+    WHERE t.reuse_kind IS NOT NULL
+    RETURN collect(DISTINCT t.translator) AS reused_translators
+}
+// The four coverage populations, each on its own definition. A single
+// `count(DISTINCT p)` over HAS_TRANSLATION was the whole measurement until
+// GAP-TRANSLATION-006, and it answers "is some rendering attached here?" -- which stopped
+// being the same question as "does this verse have its own translation?" the moment one
+// print unit could span two verses and one corpus's English could be another's.
+CALL (w) {
+    MATCH (:Passage {work_id: w.work_id})-[:HAS_TRANSLATION]->(r:Translation)
+    WHERE r.alignment_level = 'MANTRA_RANGE'
+    UNWIND r.covers_canonical_keys AS key
+    RETURN collect(DISTINCT key) AS range_keys
+}
+CALL (w, range_keys) {
+    MATCH (p:Passage {work_id: w.work_id, display_type: 'MANTRA'})
+    OPTIONAL MATCH (p)-[:HAS_TRANSLATION]->(t:Translation)
+    WITH p, range_keys, collect(t) AS ts
+    RETURN
+      count(CASE WHEN any(x IN ts WHERE x.language = 'en' AND x.reuse_kind IS NULL
+                            AND x.alignment_level <> 'MANTRA_RANGE')
+                 THEN 1 END) AS dedicated_count,
+      count(CASE WHEN p.canonical_key IN range_keys THEN 1 END) AS range_covered_count,
+      count(CASE WHEN any(x IN ts WHERE x.reuse_kind = 'REUSED_RENDERING')
+                 THEN 1 END) AS reused_count,
+      count(CASE WHEN any(x IN ts WHERE x.language <> 'en')
+                  AND none(x IN ts WHERE x.language = 'en')
+                 THEN 1 END) AS other_language_count,
+      count(CASE WHEN size(ts) > 0 OR p.canonical_key IN range_keys
+                 THEN 1 END) AS any_coverage_count
 }
 RETURN w.work_id AS work_id, w.veda AS veda, w.abbreviation AS abbreviation,
        w.display_label AS display_label, w.work_name AS work_name, w.scope AS scope,
        w.scope_source AS scope_source, w.scope_evidence AS scope_evidence,
        w.completeness AS completeness, w.excluded_corpora AS excluded_corpora,
        w.rights AS rights,
-       passage_count, mantra_count, translated_count, translators
+       passage_count, mantra_count, translators, reused_translators,
+       dedicated_count, range_covered_count, reused_count, other_language_count,
+       any_coverage_count
 ORDER BY w.work_id
 """
 
@@ -609,8 +681,18 @@ RETURN type(r) AS relation, count(r) AS edges,
 ORDER BY relation
 """
 
+# DISPLAYABLE surfaces only, bound as a parameter from _DISPLAYABLE_SURFACES so this list and
+# the per-passage `is_displayable` flag cannot fall out of step.
+#
+# `text_scripts` answers "what scripts is this work readable in". Unscoped, it read the
+# NORMALIZED_FOR_SEARCH derivative too, and that surface is IAST on all 20,210 mantras -- so
+# the Yajurveda, which holds no romanised reader-facing text at all, published
+# ["DEVANAGARI", "IAST"], and the corpus stopped looking script-disjoint on the very field
+# whose caveat asserts that it is. The layer is real data and is disclosed per passage as
+# `normalized_for_search`; it is not a script a reader can be shown.
 _WORK_SCRIPTS: Final = """
 MATCH (:Passage {work_id: $work_id})-[:HAS_TEXT_VERSION]->(tv:TextVersion)
+WHERE tv.text_role IN $displayable_roles
 RETURN collect(DISTINCT tv.script) AS scripts
 """
 
@@ -729,8 +811,35 @@ CALL (p) {
         work_edition: t.work_edition, quality_status: t.quality_status,
         alignment_level: t.alignment_level, rights_status: t.rights_status,
         source_id: t.source_id, upstream_correction_id: t.upstream_correction_id,
-        upstream_correction_reason: t.upstream_correction_reason
+        upstream_correction_reason: t.upstream_correction_reason,
+        covers_canonical_keys: t.covers_canonical_keys, source_unit: t.source_unit,
+        reuse_kind: t.reuse_kind, reused_from_veda: t.reused_from_veda,
+        reused_from_passage_key: t.reused_from_passage_key,
+        reused_from_citation: t.reused_from_citation,
+        reused_from_translation_id: t.reused_from_translation_id,
+        reuse_basis: t.reuse_basis,
+        anchor_canonical_key: p.canonical_key
     }) AS translations
+}
+CALL (p) {
+    MATCH (anchor:Passage)-[:HAS_TRANSLATION]->(t:Translation)
+    WHERE t.alignment_level = 'MANTRA_RANGE'
+      AND p.canonical_key IN t.covers_canonical_keys
+      AND anchor.canonical_key <> p.canonical_key
+    RETURN collect({
+        text: t.text, translator: t.translator, language: t.language, year: t.year,
+        work_edition: t.work_edition, quality_status: t.quality_status,
+        alignment_level: t.alignment_level, rights_status: t.rights_status,
+        source_id: t.source_id, upstream_correction_id: t.upstream_correction_id,
+        upstream_correction_reason: t.upstream_correction_reason,
+        covers_canonical_keys: t.covers_canonical_keys, source_unit: t.source_unit,
+        reuse_kind: t.reuse_kind, reused_from_veda: t.reused_from_veda,
+        reused_from_passage_key: t.reused_from_passage_key,
+        reused_from_citation: t.reused_from_citation,
+        reused_from_translation_id: t.reused_from_translation_id,
+        reuse_basis: t.reuse_basis,
+        anchor_canonical_key: anchor.canonical_key
+    }) AS range_translations
 }
 """
 
@@ -848,6 +957,11 @@ CALL (p) {
         quality_tier: a.quality_tier, evidence_basis: a.evidence_basis,
         attribution_precision: a.attribution_precision,
         knowledge_layer: a.knowledge_layer,
+        // The node's own cautions. All 364 Samavedic assertions carry
+        // ANALYSIS_IS_OF_A_LETTER_IDENTICAL_RIGVEDIC_VERSE_NOT_OF_A_SAMAVEDIC_ANNOTATION
+        // and this projection did not read it, so the route served a Samavedic verse its
+        // own semantic reading with no indication the analysis is of a Rigvedic one.
+        cautions: a.cautions,
         agent: CASE WHEN agent IS NULL THEN NULL ELSE
             {type: 'DEVATA', id: agent.entity_key, display_label: agent.display_label}
         END,
@@ -871,7 +985,8 @@ RETURN {_P} AS passage,
        w.display_label AS work_display_label, w.work_name AS work_traditional_name,
        w.rights AS work_rights,
        CASE WHEN parent IS NULL THEN NULL ELSE {_summary_projection("parent")} END AS parent,
-       text_versions, translations, rishis, devatas, chandas, mentioned_devatas,
+       text_versions, translations, range_translations,
+       rishis, devatas, chandas, mentioned_devatas,
        concepts, concept_total, mentioned_entities, mention_total,
        formulas, formula_total, semantic_relations, relation_total,
        agentive_assertions, assertion_total, child_count
@@ -904,12 +1019,33 @@ CALL (p) {
     WHERE NOT o:Internal AND type(r) <> 'CONTAINS'
     RETURN count(DISTINCT o) AS graph_neighbour_count
 }
+// Collected without a grouping key for the same reason the parallel block above is: most
+// passages carry no formula, and a subquery returning no rows would eliminate the reader
+// row and turn a formula-less verse into a 404.
+CALL (p) {
+    MATCH (p)-[r:USES_FORMULA]->(f:Formula)
+    WHERE NOT f:Internal
+    WITH f, r
+    ORDER BY coalesce(f.occurrence_count, 0) DESC, f.formula_id
+    RETURN collect({
+        formula_id: f.formula_id,
+        display_form: f.display_form,
+        source_form: coalesce(r.formula_source_form, r.source_form),
+        occurrence_count: f.occurrence_count,
+        vedas: f.vedas,
+        cross_veda: f.cross_veda,
+        match_level: coalesce(r.formula_match_level, r.match_level)
+    })[0..$entity_limit] AS formulas,
+      count(f) AS formula_total
+}
 """
     + f"""
 RETURN {_P} AS passage, w.display_label AS work_display_label,
        w.work_name AS work_traditional_name,
-       text_versions, translations, rishis, devatas, chandas, mentioned_devatas,
-       concepts, concept_total, parallel_counts, graph_neighbour_count
+       text_versions, translations, range_translations,
+       rishis, devatas, chandas, mentioned_devatas,
+       concepts, concept_total, formulas, formula_total,
+       parallel_counts, graph_neighbour_count
 """
 )
 
@@ -1205,17 +1341,33 @@ def _text_availability(rows: object, *, is_container: bool) -> TextAvailability:
                 )
             ],
         )
-    scripts = {surface.script for surface in surfaces}
+    # DISPLAYABLE surfaces only, and the distinction is the whole of these two fields.
+    #
+    # `devanagari` and `transliteration` answer "can this verse be RENDERED in that script",
+    # and the search-derivative layer landed a NORMALIZED_FOR_SEARCH surface on all 20,210
+    # mantras whose script is IAST, `is_displayable=False`, and whose text carries private-use
+    # sentinels (U+E000-E003) standing in for the vocalic r, the lateral series and the
+    # anusvara. Counting it made every Devanagari-only corpus report
+    # `transliteration: SUPPORTED`: the Yajurveda has no romanised reader-facing text at all,
+    # and the product said one was available. A client that trusted the field and rendered the
+    # surface would print tofu boxes.
+    #
+    # `normalized_for_search` below is the field that reports the search layer, and it reports
+    # it for what it is. So the search surface is disclosed, never counted as a script a reader
+    # can be shown.
+    displayable_scripts = {surface.script for surface in surfaces if surface.is_displayable}
     caveats = [CaveatView(text=_SCRIPT_DISJOINT_CAVEAT, source="measured")]
     return TextAvailability(
         surfaces=surfaces,
         devanagari=(
             KnowledgeStatus.SUPPORTED
-            if TextScript.DEVANAGARI in scripts
+            if TextScript.DEVANAGARI in displayable_scripts
             else KnowledgeStatus.NOT_BUILT
         ),
         transliteration=(
-            KnowledgeStatus.SUPPORTED if TextScript.IAST in scripts else KnowledgeStatus.NOT_BUILT
+            KnowledgeStatus.SUPPORTED
+            if TextScript.IAST in displayable_scripts
+            else KnowledgeStatus.NOT_BUILT
         ),
         normalized_for_search=(
             KnowledgeStatus.SUPPORTED
@@ -1227,20 +1379,61 @@ def _text_availability(rows: object, *, is_container: bool) -> TextAvailability:
     )
 
 
-def _translations(rows: object) -> list[TranslationView]:
+def _coverage_phrase() -> str:
+    """ "10,480 of 10,552 for the Rigveda, ..." read from the figures module.
+
+    Built rather than typed. The three figures this sentence quotes were typed into it
+    once, and the import that moved them would have left a caveat asserting a coverage the
+    same database contradicted -- which is the one failure mode a caveat cannot have.
+    """
+    parts = []
+    for veda, name in (("RV", "Rigveda"), ("YV", "Yajurveda"), ("AV", "Atharvaveda")):
+        dedicated = layer_figures.DEDICATED_ENGLISH_MANTRAS[veda]
+        corpus = layer_figures.CORPUS_MANTRAS[veda]
+        parts.append(f"{dedicated:,} of {corpus:,} for the {name}")
+    return ", ".join(parts[:-1]) + " and " + parts[-1]
+
+
+def _translations(rows: object, *, asked_about: str | None = None) -> list[TranslationView]:
+    """Project translation rows, classifying what kind of coverage each one gives.
+
+    ``asked_about`` is the canonical key the caller is rendering. It is what makes the
+    difference between "this verse's translation" and "a translation whose span reaches
+    this verse" visible, and the classification comes from
+    :mod:`vedagraph.domain.translation_semantics` rather than from a test repeated here,
+    because the reader, the coverage figures and Ask all have to agree about it.
+    """
     out: list[TranslationView] = []
     for row in rows if isinstance(rows, list) else []:
         if not isinstance(row, dict) or not row.get("text"):
             continue
+        anchor = _nonempty(row.get("anchor_canonical_key"))
+        covers = translation_semantics.covered_keys(row, anchor)
+        kind = translation_semantics.classify(row, asked_about=asked_about)
+        own = asked_about is None or anchor is None or anchor == asked_about
         out.append(
             TranslationView(
                 text=str(row["text"]),
                 translator=_nonempty(row.get("translator")),
                 language=str(row.get("language") or "en"),
+                language_name=translation_semantics.language_name(str(row.get("language") or "en")),
                 year=_as_int(row.get("year")),
                 work_edition=_nonempty(row.get("work_edition")),
                 quality_status=_nonempty(row.get("quality_status")),
                 alignment_level=_nonempty(row.get("alignment_level")),
+                coverage_kind=kind,
+                covers_canonical_keys=covers,
+                anchor_canonical_key=anchor,
+                is_this_passages_own=own,
+                source_unit=_nonempty(row.get("source_unit")),
+                independent_translation=translation_semantics.is_independent(row),
+                reuse_kind=_nonempty(row.get("reuse_kind")),
+                reused_from_veda=_nonempty(row.get("reused_from_veda")),
+                reused_from_passage_key=_nonempty(row.get("reused_from_passage_key")),
+                reused_from_citation=_nonempty(row.get("reused_from_citation")),
+                reused_from_translation_id=_nonempty(row.get("reused_from_translation_id")),
+                reuse_basis=_nonempty(row.get("reuse_basis")),
+                disclosure=translation_semantics.disclosure(row),
                 rights_status=_nonempty(row.get("rights_status")),
                 source_id=_nonempty(row.get("source_id")),
                 upstream_correction_id=_nonempty(row.get("upstream_correction_id")),
@@ -1424,6 +1617,46 @@ def paged_meaning[T](
     return status, caveats
 
 
+def _formula_set(
+    rows: list[dict[str, Any]] | None, total: Any
+) -> AttestedSet[FormulaPhraseView]:
+    """The verse's shared phrases, or an empty set that says why it is empty.
+
+    Empty is the common case - 9,636 of the corpus's 20,210 mantras carry no formula edge -
+    and an empty ``SUPPORTED`` set would assert that the verse shares no wording with any
+    other, which is a statement about the matcher and not about the text. So an empty set
+    carries the caveat that makes it readable, which is also what ``AttestedSet`` requires.
+    """
+    items = [
+        FormulaPhraseView(
+            formula_id=str(row["formula_id"]),
+            display_form=str(row.get("display_form") or row["formula_id"]),
+            source_form=_nonempty(row.get("source_form")),
+            occurrence_count=_as_int(row.get("occurrence_count")),
+            vedas=[str(veda) for veda in row.get("vedas") or []],
+            cross_veda=row["cross_veda"] if isinstance(row.get("cross_veda"), bool) else None,
+            match_level=_nonempty(row.get("match_level")),
+        )
+        for row in rows or []
+        if isinstance(row, dict) and row.get("formula_id")
+    ]
+    if not items:
+        return AttestedSet[FormulaPhraseView](
+            caveats=[
+                CaveatView(
+                    text=(
+                        "No fixed phrase from the formula layer was matched in this verse. "
+                        "The layer is a normalised-string match over the corpus, so this is "
+                        "a statement about what that match found and not a finding that the "
+                        "verse shares no wording with any other."
+                    ),
+                    source="measured",
+                )
+            ]
+        )
+    return AttestedSet[FormulaPhraseView](items=items, total=_as_int(total))
+
+
 def _parallel_counts(rows: list[dict[str, Any]]) -> ParallelCounts:
     by_predicate = {
         str(row.get("predicate")): _as_int(row.get("edges")) or 0
@@ -1531,7 +1764,11 @@ class PassageService:
         split_rows = self._repository.run(
             _WORK_ATTRIBUTION_SPLITS, work_id=work_id, split_relations=list(_SPLIT_RELATIONS)
         )
-        script_row = self._repository.run_one(_WORK_SCRIPTS, work_id=work_id)
+        script_row = self._repository.run_one(
+            _WORK_SCRIPTS,
+            work_id=work_id,
+            displayable_roles=list(_DISPLAYABLE_TEXT_ROLES),
+        )
         measured = {str(item.get("relation")): item for item in layer_rows}
         splits = {str(item.get("relation")): item for item in split_rows}
         mantra_count = summary.mantra_count or 0
@@ -1618,7 +1855,13 @@ class PassageService:
         """Build the summary, keeping the honest label and the traditional name apart."""
         work_id = str(row.get("work_id") or "")
         mantra_count = _as_int(row.get("mantra_count"))
-        translated = _as_int(row.get("translated_count"))
+        # `translated_mantra_count` is the dedicated population and says so in its own
+        # field description. It deliberately narrowed when the other three populations
+        # became measurable: a verse the translator rendered inside a two-verse print unit
+        # is covered and does not have a translation of its own, and the field was being
+        # read as the second thing while counting the first.
+        translated = _as_int(row.get("dedicated_count"))
+        reused = _as_int(row.get("reused_count"))
         caveats: list[CaveatView] = []
         status = KnowledgeStatus.SUPPORTED
         if mantra_count and translated == 0:
@@ -1626,9 +1869,16 @@ class PassageService:
             caveats.append(
                 CaveatView(
                     text=(
-                        f"This work has {mantra_count:,} mantras and zero released "
-                        "translations, so every translation-derived layer is empty for it. "
-                        "None of those empty results is a statement about the text."
+                        f"This work has {mantra_count:,} mantras and no translation of its "
+                        "own, so every translation-derived layer is empty for it. "
+                        + (
+                            f"{reused:,} of its verses show another corpus's published "
+                            "rendering of text verified identical; that is disclosed as "
+                            "reuse and is not this work's English. "
+                            if reused
+                            else ""
+                        )
+                        + "None of those empty results is a statement about the text."
                     ),
                     source="measured",
                 )
@@ -1748,17 +1998,30 @@ class PassageService:
 
     @staticmethod
     def _translation_coverage(row: dict[str, Any], summary: WorkSummary) -> TranslationCoverage:
-        """Translation coverage, with the percentage computed here and not transcribed.
+        """Translation coverage, split into the four populations it is made of.
 
-        The percentage is divided from the two counts in the same response. Copying the
-        figure out of the work's ``completeness`` prose is what let three caveats in this
+        The percentage is divided from two counts in the same response. Copying the figure
+        out of the work's ``completeness`` prose is what let three caveats in this
         repository drift from the data they described.
+
+        The split is the substantive part. One percentage used to carry four claims: a
+        verse with its own rendering, a verse inside a multi-verse print unit, a verse
+        showing another corpus's rendering of identical text, and a verse whose only
+        rendering is Griffith's Latin. Those move a single number in the same direction
+        while meaning four different things, and the Samaveda is the case that makes it
+        matter -- every English string that will ever reach it is Rigvedic, so a
+        conflating percentage would report a translated Samaveda.
         """
         mantras = summary.mantra_count
-        translated = summary.translated_mantra_count
-        percent = (
-            round(100 * translated / mantras, 2) if mantras and translated is not None else None
+        dedicated = _as_int(row.get("dedicated_count"))
+        range_covered = _as_int(row.get("range_covered_count"))
+        reused = _as_int(row.get("reused_count"))
+        other_language = _as_int(row.get("other_language_count"))
+        any_coverage = _as_int(row.get("any_coverage_count"))
+        uncovered = (
+            mantras - any_coverage if mantras is not None and any_coverage is not None else None
         )
+        percent = round(100 * dedicated / mantras, 2) if mantras and dedicated is not None else None
         caveats = [
             CaveatView(
                 text=(
@@ -1770,25 +2033,71 @@ class PassageService:
             )
         ]
         status = KnowledgeStatus.SUPPORTED
-        if translated == 0:
+        if dedicated == 0:
             status = KnowledgeStatus.NOT_BUILT
             caveats.append(
                 CaveatView(
                     text=(
-                        f"Zero of this work's {mantras:,} mantras carry a translation. "
-                        "Every layer derived from the English translation is therefore "
-                        "empty for this corpus, and none of those absences is textual."
+                        f"Zero of this work's {mantras:,} mantras carry a translation of "
+                        "their own. Every layer derived from this corpus's English "
+                        "translation is therefore empty, and none of those absences is "
+                        "textual."
                     ),
                     source="measured",
                 )
             )
         elif percent is not None and percent < 100:
             status = KnowledgeStatus.PARTIAL
+        if range_covered:
+            caveats.append(
+                CaveatView(
+                    text=(
+                        f"{range_covered:,} verses are covered by a multi-verse print unit "
+                        "rather than by a rendering of their own, and are counted in "
+                        "`range_covered` rather than in `translated`. Adding the two would "
+                        "assert that each of them has a 1:1 translation."
+                    ),
+                    source="measured",
+                )
+            )
+        if reused:
+            caveats.append(
+                CaveatView(
+                    text=(
+                        f"{reused:,} verses show another corpus's published rendering of "
+                        "text verified character-identical. It is disclosed as reuse, is "
+                        "excluded from `translated`, and is not independent evidence about "
+                        "this corpus."
+                    ),
+                    source="measured",
+                )
+            )
+        if other_language:
+            caveats.append(
+                CaveatView(
+                    text=(
+                        f"{other_language:,} verses have no English rendering at all: "
+                        "Griffith put the passages he judged too explicit into Latin. Those "
+                        "are his real published text and they are not the English layer, so "
+                        "they are counted in `other_language`."
+                    ),
+                    source="measured",
+                )
+            )
         return TranslationCoverage(
             mantras=mantras,
-            translated=translated,
+            translated=dedicated,
             percent=percent,
+            dedicated=dedicated,
+            range_covered=range_covered,
+            reused_rendering=reused,
+            other_language=other_language,
+            uncovered=uncovered,
+            any_coverage=any_coverage,
             translators=sorted(str(item) for item in row.get("translators") or []),
+            reused_from_translators=sorted(
+                str(item) for item in row.get("reused_translators") or []
+            ),
             status=status,
             caveats=caveats,
         )
@@ -1871,7 +2180,9 @@ class PassageService:
             child_count=_as_int(row.get("child_count")),
             sequence_in_parent=passage.sequence_in_parent,
             text=text,
-            translations=self._translation_set(row.get("translations"), passage),
+            translations=self._translation_set(
+                row.get("translations"), row.get("range_translations"), passage
+            ),
             rishis=self._attribution_set("HAS_RISHI", row.get("rishis"), passage),
             devatas=self._attribution_set("HAS_DEVATA", row.get("devatas"), passage),
             chandas=self._attribution_set("HAS_CHANDAS", row.get("chandas"), passage),
@@ -1905,7 +2216,9 @@ class PassageService:
                 translation_sources=sorted(
                     {
                         item.source_id
-                        for item in _translations(row.get("translations"))
+                        for item in _translations(
+                            row.get("translations"), asked_about=passage.canonical_key
+                        )
                         if item.source_id
                     }
                 ),
@@ -2161,7 +2474,9 @@ class PassageService:
                 (surface for surface in text.surfaces if surface.is_displayable), None
             ),
             text=text,
-            translations=self._translation_set(row.get("translations"), passage),
+            translations=self._translation_set(
+                row.get("translations"), row.get("range_translations"), passage
+            ),
             rishis=self._attribution_set("HAS_RISHI", row.get("rishis"), passage),
             devatas=self._attribution_set("HAS_DEVATA", row.get("devatas"), passage),
             chandas=self._attribution_set("HAS_CHANDAS", row.get("chandas"), passage),
@@ -2169,6 +2484,7 @@ class PassageService:
             major_concepts=self._entity_set(
                 row.get("concepts"), row.get("concept_total"), "ABOUT_CONCEPT", is_container
             ),
+            formulas=_formula_set(row.get("formulas"), row.get("formula_total")),
             previous=previous,
             next=following,
             neighbour_note=neighbour_note,
@@ -2411,18 +2727,77 @@ class PassageService:
     # -- set builders ------------------------------------------------------
 
     def _translation_set(
-        self, rows: object, passage: PassageSummary
+        self, rows: object, range_rows: object, passage: PassageSummary
     ) -> AttestedSet[TranslationView]:
         """Translations, with the Samavedic zero named as a corpus fact.
 
-        The whole reason this is not a bare list: the Samaveda has 0 translations from
-        1,844 verses, so ``[]`` there means no translation was ever released for the
-        corpus. For the other three it means this particular verse is unaligned, which is
-        ``INSUFFICIENT_EVIDENCE`` rather than ``NOT_BUILT``.
+        The whole reason this is not a bare list: the Samaveda has no translation of its
+        own from 1,844 verses, so ``[]`` there means no translation was ever released for
+        the corpus. For the other three it means this particular verse is unaligned, which
+        is ``INSUFFICIENT_EVIDENCE`` rather than ``NOT_BUILT``.
+
+        ``range_rows`` carries the translations that reach this verse through another
+        verse's print unit. They are appended rather than merged, and the ``items`` list is
+        never empty while one exists: that emptiness is what told 30 real verses of RV
+        1.65-1.70 that no released translation covered them, when a ``MANTRA_RANGE`` on the
+        paired verse did.
         """
-        items = _translations(rows)
-        if items:
-            return AttestedSet[TranslationView](items=items, total=len(items))
+        items = _translations(rows, asked_about=passage.canonical_key)
+        covered_by_range = _translations(range_rows, asked_about=passage.canonical_key)
+        if items or covered_by_range:
+            every = items + covered_by_range
+            caveats = []
+            if covered_by_range and not items:
+                caveats.append(
+                    CaveatView(
+                        text=(
+                            "This verse has no rendering aligned to it alone. The "
+                            f"{len(covered_by_range)} shown "
+                            + (
+                                "translation covers"
+                                if len(covered_by_range) == 1
+                                else "translations cover"
+                            )
+                            + " it as part of a multi-verse print unit anchored on "
+                            + ", ".join(
+                                sorted(
+                                    {
+                                        item.anchor_canonical_key
+                                        for item in covered_by_range
+                                        if item.anchor_canonical_key
+                                    }
+                                )
+                            )
+                            + "."
+                        ),
+                        source="measured",
+                    )
+                )
+            if any(not item.independent_translation for item in every):
+                caveats.append(
+                    CaveatView(
+                        text=(
+                            "At least one rendering here is reused from another corpus's "
+                            "published translation of verified-identical text. It is not "
+                            f"an independent translation of the {passage.veda}, and it is "
+                            "excluded from this corpus's translated count and from "
+                            "independent semantic evidence."
+                        ),
+                        source="measured",
+                    )
+                )
+            if any(item.language != "en" for item in every):
+                caveats.append(
+                    CaveatView(
+                        text=(
+                            "At least one rendering here is not in English. Griffith put "
+                            "passages he judged too explicit into Latin, and those are "
+                            "his real published text but are not the English layer."
+                        ),
+                        source="measured",
+                    )
+                )
+            return AttestedSet[TranslationView](items=every, total=len(every), caveats=caveats)
         if passage.passage_type != "MANTRA":
             return AttestedSet[TranslationView](
                 items=[],
@@ -2449,9 +2824,19 @@ class PassageService:
                 caveats=[
                     CaveatView(
                         text=(
-                            "Zero translations are released for the Samaveda: none of its "
-                            "1,844 verses carries one. This empty list is an unbuilt layer "
-                            "for the whole corpus and says nothing about this verse."
+                            "No independent Samavedic translation is released: none of the "
+                            f"corpus's {layer_figures.CORPUS_MANTRAS['SV']:,} verses carries "
+                            "one of its own. "
+                            + (
+                                f"{layer_figures.REUSED_RENDERING_MANTRAS['SV']:,} of them "
+                                "show Griffith's Rigvedic rendering of text verified "
+                                "identical, which is disclosed as reuse and is not this "
+                                "corpus's own English; this verse is not one of them. "
+                                if layer_figures.REUSED_RENDERING_MANTRAS["SV"]
+                                else ""
+                            )
+                            + "This empty list is an unbuilt layer for the whole corpus and "
+                            "says nothing about this verse."
                         ),
                         source="measured",
                     )
@@ -2464,10 +2849,11 @@ class PassageService:
             caveats=[
                 CaveatView(
                     text=(
-                        "No translation is aligned to this verse, although its corpus is "
-                        "translated: coverage is 10,502 of 10,552 for the Rigveda, 1,903 "
-                        "of 1,975 for the Yajurveda and 4,878 of 5,839 for the "
-                        "Atharvaveda. This is an alignment gap, not an untranslated verse."
+                        "No translation of any kind reaches this verse, although its corpus "
+                        "is translated: verses with their own English rendering number "
+                        + _coverage_phrase()
+                        + ". No multi-verse print unit covers it either. This is an "
+                        "alignment gap, not an untranslated verse."
                     ),
                     source="measured",
                 )
@@ -2685,10 +3071,12 @@ class PassageService:
     def _assertion_set(
         rows: object, total: object, passage: PassageSummary
     ) -> AttestedSet[AgentiveAssertionView]:
-        """The agentive layer, whose absence outside the Rigveda is the layer's shape.
+        """The assertion layer, whose unevenness across the four corpora is its shape.
 
-        All 4,865 assertions hang off Rigvedic passages, so an empty set for the other
-        three corpora is ``NOT_BUILT`` and carries the frozen action-scope caveat.
+        This said all 4,865 assertions hang off Rigvedic passages. The layer holds 35,131
+        and reaches AV, YV and SV as well, so an empty set is a verse the layer did not
+        reach rather than a corpus outside it. The Rigveda-only claim survives one level
+        down, on the agentive reading, and the caveat carries it there.
         """
         items: list[AgentiveAssertionView] = []
         for item in rows if isinstance(rows, list) else []:
@@ -2717,6 +3105,10 @@ class PassageService:
                     quality_tier=_nonempty(item.get("quality_tier")),
                     evidence_basis=_nonempty(item.get("evidence_basis")),
                     knowledge_layer=_nonempty(item.get("knowledge_layer")),
+                    cautions=[
+                        str(c) for c in (item.get("cautions") or [])
+                        if isinstance(c, str) and c
+                    ],
                 )
             )
         if items:
@@ -2727,6 +3119,16 @@ class PassageService:
             caveats = (
                 [CaveatView(text=_MODALITY_ABSENT_NOTE, source="measured")] if without_frame else []
             )
+            # Every caution the rows themselves carry, surfaced once per distinct code. The
+            # graph records these on 30,266 assertions -- among them
+            # ANALYSIS_IS_OF_A_LETTER_IDENTICAL_RIGVEDIC_VERSE_NOT_OF_A_SAMAVEDIC_ANNOTATION
+            # on all 364 Samavedic rows -- and this route dropped every one of them. A
+            # Samavedic verse was served its own semantic reading with quality_tier,
+            # evidence_basis and knowledge_layer all null and nothing at all to say the
+            # analysis is of a Rigvedic verse. The translation layer discloses its Rigvedic
+            # reuse; this layer had the same fact on the node and was not reading it.
+            for code in sorted({c for item in items for c in item.cautions}):
+                caveats.append(CaveatView(text=_caution_sentence(code), source="measured"))
             return AttestedSet[AgentiveAssertionView](
                 items=items, total=_as_int(total) or len(items), caveats=caveats
             )
@@ -2734,31 +3136,101 @@ class PassageService:
             items=[],
             total=0,
             data_status=KnowledgeStatus.NOT_BUILT,
+            # In scope for all four. The layer reaches AV, YV and SV -- this very route
+            # serves their assertions -- so declaring three corpora "not covered" told a
+            # reader an empty set was a missing layer when it is a verse the layer did not
+            # reach. What IS Rigveda-only is the agentive sub-layer, and the caveat says so.
             coverage=CoverageView(
-                vedas_in_scope=["RV"],
-                vedas_not_covered=[veda for veda in layer_figures.CORPUS_MANTRAS if veda != "RV"],
+                vedas_in_scope=sorted(layer_figures.CORPUS_MANTRAS),
+                vedas_not_covered=[],
                 denominator=dict(layer_figures.CORPUS_MANTRAS),
             ),
             caveats=[
+                # Written here, unconditionally. This read
+                # `named_query_caveat("action_predicate_breadth") or "..."`, and the left
+                # operand is NOT empty -- so the rewritten sentence was dead code and the
+                # registry string shipped instead. That string is true and it is about a
+                # DIFFERENT relation: it describes PERFORMS_ACTION and IS_ASKED_TO, 665
+                # edges aggregated from the 2,406 MORPHOLOGY_RULE assertions, and it ends
+                # "the Samaveda, Yajurveda and Atharvaveda are absent entirely". Beside a
+                # coverage block naming all four corpora in scope that was a flat
+                # self-contradiction inside one payload, and CoverageView cannot catch it:
+                # it validates its own two fields against each other and cannot see a
+                # caveat.
                 CaveatView(
-                    text=named_query_caveat("action_predicate_breadth")
-                    or (
-                        "The agentive assertion layer is Rigveda-only: all 4,865 assertions "
-                        "hang off Rigvedic passages, because the layer is derived from a "
-                        "morphological annotation that covers the Rigveda alone."
+                    text=(
+                        "The semantic assertion layer reaches this corpus and did not reach "
+                        "this verse, so this empty set is a gap in the annotation and not a "
+                        "corpus outside the layer. Two narrower readings do stop at the "
+                        "Rigveda and neither is what this block reports: only Rigvedic "
+                        "assertions carry an explicit agent, and the PERFORMS_ACTION and "
+                        "IS_ASKED_TO aggregates are Rigvedic in all 665 of their edges."
                     ),
-                    source="action_predicate_breadth",
+                    source="measured",
                 )
                 if passage.veda != "RV"
                 else CaveatView(
-                    text="No agentive assertion was extracted from this Rigvedic verse. The "
-                    "layer covers 2,542 of the Rigveda's 10,552 mantras, so most Rigvedic "
-                    "verses are outside it.",
+                    text="No semantic assertion was extracted from this Rigvedic verse. "
+                    "The layer covers 10,173 of the Rigveda's 10,552 mantras, so a verse "
+                    "without one is unusual rather than typical. This sentence read '2,542 "
+                    "... so most Rigvedic verses are outside it', which inverted the fact: "
+                    "the same API's /works route reported 0.9641 for the same relation.",
                     source="measured",
                 )
             ],
         )
 
+
+#: Every caution family the assertion nodes carry, in words, keyed on the part before the
+#: colon. 30,266 assertions carry a ``cautions`` list and the API read none of it.
+#:
+#: Keyed by FAMILY and not by whole value on purpose: 37 distinct codes exist and most are
+#: parameterised -- PREDICATE_VIA_PREVERB_STRIP:pra,
+#: POLARITY_NOT_MODELLED_NEGATION_PARTICLE_IN_SCOPE:ma,na -- so a map keyed on the whole
+#: string would cover the one code someone happened to look at and silently drop the other
+#: 36. The parameter is appended to the sentence rather than discarded, and an unrecognised
+#: family still ships verbatim: a caution nobody has written prose for must not become a
+#: caution nobody sees.
+_ASSERTION_CAUTIONS: Final[dict[str, str]] = {
+    "ANALYSIS_IS_OF_A_LETTER_IDENTICAL_RIGVEDIC_VERSE_NOT_OF_A_SAMAVEDIC_ANNOTATION": (
+        "At least one assertion here was derived from a letter-identical Rigvedic verse "
+        "rather than from an annotation of this corpus. The reading is carried across on "
+        "textual identity; no independent analysis of this verse in its own collection "
+        "exists. All 364 Samavedic assertions in this graph are of that kind."
+    ),
+    "FIRST_PERSON_AGENT_IS_THE_UNNAMED_SPEAKER": (
+        "The agent is a first-person verb form, so the actor is the verse's own unnamed "
+        "speaker and not a named deity. Do not read the agent slot as a person."
+    ),
+    "POLARITY_NOT_MODELLED_NEGATION_PARTICLE_IN_SCOPE": (
+        "A negation particle stands in the clause and polarity is NOT modelled, so the "
+        "assertion may state the opposite of what the verse says. Particle in scope"
+    ),
+    "FRAME_MAY_INVERT_NONACTIVE_VOICE_ON_FLAGGED_ROOT": (
+        "The verb is non-active on a root flagged for voice ambiguity, so the agent and the "
+        "patient may be the wrong way round."
+    ),
+    "FOLD_CARRIES_AN_UNMAPPED_MINORITY_SENSE": (
+        "The root was folded onto a predicate that does not cover all of its senses, so a "
+        "minority reading has been mapped to the majority one. Root"
+    ),
+    "PREDICATE_VIA_PREVERB_STRIP": (
+        "The predicate was reached by stripping a preverb, which can change the sense of "
+        "the verb materially. Preverb stripped"
+    ),
+    "PREDICATE_VIA_SECONDARY_STEM": (
+        "The predicate was reached through a secondary stem and not the primary root. Stem"
+    ),
+}
+
+
+def _caution_sentence(code: str) -> str:
+    """One caution code as a sentence, with its parameter carried rather than dropped."""
+    family, _, parameter = code.partition(":")
+    prose = _ASSERTION_CAUTIONS.get(family)
+    if prose is None:
+        return code
+    return f"{prose}: {parameter}." if parameter else prose
 
 #: Frozen domain queries whose caveat already states each attribution layer's reach. Reused
 #: rather than retyped: V3.1 and V3.2 both found hand-copied caveat prose that had drifted

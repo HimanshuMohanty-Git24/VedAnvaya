@@ -1,0 +1,264 @@
+{
+ "finding": "morphological_roles carries two disjoint spellings of the same case values, split by which branch wrote the edge.",
+ "the_two_vocabularies": {
+  "AV": {
+   "VOCATIVE": 109,
+   "NOMINATIVE": 103,
+   "ACCUSATIVE": 56,
+   "UNKNOWN": 44,
+   "PLURAL_OBLIQUE": 37,
+   "GENITIVE": 34,
+   "INSTRUMENTAL": 28,
+   "COMPOUND_INITIAL": 27,
+   "SANDHI_FUSED": 15,
+   "LOCATIVE": 12,
+   "DATIVE": 10,
+   "DUAL": 2,
+   "COMPOUND_FINAL": 2,
+   "ABLATIVE": 1
+  },
+  "RV": {
+   "NOM": 682,
+   "VOCATIVE": 597,
+   "ACC": 420,
+   "GEN": 241,
+   "DAT": 76,
+   "LOC": 56,
+   "INS": 47,
+   "ABL": 15
+  },
+  "YV": {
+   "SANDHI_FUSED": 42,
+   "GENITIVE": 29,
+   "VOCATIVE": 20,
+   "COMPOUND_INITIAL": 16,
+   "NOMINATIVE": 16,
+   "ACCUSATIVE": 15,
+   "DATIVE": 11,
+   "INSTRUMENTAL": 10,
+   "LOCATIVE": 3,
+   "PLURAL_OBLIQUE": 3,
+   "UNKNOWN": 2
+  }
+ },
+ "agreement_against_human_case": {
+  "as_the_strings_stand": {
+   "pairs": 1951,
+   "agree": 1202,
+   "agreement": 0.6161
+  },
+  "after_folding_the_two_vocabularies": {
+   "pairs": 1921,
+   "agree": 1897,
+   "agreement": 0.9875
+  },
+  "the_gap_is_the_vocabulary_problem": "Everything between those two numbers is one case under two names. None of it is a wrong case, and all of it breaks a value filter."
+ },
+ "values_that_are_not_a_case_at_all": {
+  "SANDHI_FUSED": 5,
+  "UNKNOWN": 3,
+  "COMPOUND_INITIAL": 4,
+  "PLURAL_OBLIQUE": 17,
+  "COMPOUND_FINAL": 1
+ },
+ "residual_real_disagreement": {
+  "count": 24,
+  "classes": {
+   "ACC claimed, human says NOM": 5,
+   "VOCATIVE claimed, human says NOM": 7,
+   "ACC claimed, human says VOC": 1,
+   "ABL claimed, human says GEN": 2,
+   "NOM claimed, human says GEN": 1,
+   "NOMINATIVE claimed, human says GEN": 1,
+   "GENITIVE claimed, human says NOM": 2,
+   "GEN claimed, human says NOM": 2,
+   "INSTRUMENTAL claimed, human says NOM": 1,
+   "ACC claimed, human says GEN": 1,
+   "NOMINATIVE claimed, human says VOC": 1
+  },
+  "examples": [
+   {
+    "canonical_key": "VG:RV:SAK:M10:S035:V006",
+    "veda": "RV",
+    "devata": "VG:DEVATA:AGNIH",
+    "claimed": "ACC",
+    "human_case": "NOM",
+    "human_feats": "Case=Nom|Gender=Masc|Number=Plur",
+    "form": "agnayaḥ"
+   },
+   {
+    "canonical_key": "VG:AV:SAU:K03:S004:V004",
+    "veda": "AV",
+    "devata": "VG:DEVATA:ASVINAU",
+    "claimed": "VOCATIVE",
+    "human_case": "NOM",
+    "human_feats": "Case=Nom|Gender=Masc|Number=Dual",
+    "form": "asvinā"
+   },
+   {
+    "canonical_key": "VG:RV:SAK:M08:S054:V002",
+    "veda": "RV",
+    "devata": "VG:DEVATA:INDRAH",
+    "claimed": "ACC",
+    "human_case": "VOC",
+    "human_feats": "Case=Voc|Gender=Masc|Number=Sing",
+    "form": "indra"
+   },
+   {
+    "canonical_key": "VG:RV:SAK:M05:S060:V007",
+    "veda": "RV",
+    "devata": "VG:DEVATA:MARUTAH",
+    "claimed": "VOCATIVE",
+    "human_case": "NOM",
+    "human_feats": "Case=Nom|Gender=Masc|Number=Plur",
+    "form": "marutaḥ"
+   },
+   {
+    "canonical_key": "VG:RV:SAK:M02:S034:V003",
+    "veda": "RV",
+    "devata": "VG:DEVATA:MARUTAH",
+    "claimed": "VOCATIVE",
+    "human_case": "NOM",
+    "human_feats": "Case=Nom|Gender=Masc|Number=Plur",
+    "form": "marutaḥ"
+   },
+   {
+    "canonical_key": "VG:AV:SAU:K07:S077:V003",
+    "veda": "AV",
+    "devata": "VG:DEVATA:MARUTAH",
+    "claimed": "VOCATIVE",
+    "human_case": "NOM",
+    "human_feats": "Case=Nom|Gender=Masc|Number=Plur",
+    "form": "marutaḥ"
+   },
+   {
+    "canonical_key": "VG:AV:SAU:K06:S003:V001",
+    "veda": "AV",
+    "devata": "VG:DEVATA:MARUTAH",
+    "claimed": "VOCATIVE",
+    "human_case": "NOM",
+    "human_feats": "Case=Nom|Gender=Masc|Number=Plur",
+    "form": "marutaḥ"
+   },
+   {
+    "canonical_key": "VG:AV:SAU:K16:S004:V007",
+    "veda": "AV",
+    "devata": "VG:DEVATA:MITRAVARUNAU",
+    "claimed": "VOCATIVE",
+    "human_case": "NOM",
+    "human_feats": "Case=Nom|Gender=Masc|Number=Dual",
+    "form": "mitrāvaruṇau"
+   },
+   {
+    "canonical_key": "VG:RV:SAK:M10:S031:V010",
+    "veda": "RV",
+    "devata": "VG:DEVATA:PITARAH",
+    "claimed": "ABL",
+    "human_case": "GEN",
+    "human_feats": "Case=Gen|Gender=Masc|Number=Dual",
+    "form": "pitroḥ"
+   },
+   {
+    "canonical_key": "VG:RV:SAK:M08:S006:V010",
+    "veda": "RV",
+    "devata": "VG:DEVATA:PITARAH",
+    "claimed": "ABL",
+    "human_case": "GEN",
+    "human_feats": "Case=Gen|Gender=Masc|Number=Sing",
+    "form": "pituḥ"
+   },
+   {
+    "canonical_key": "VG:RV:SAK:M03:S036:V003",
+    "veda": "RV",
+    "devata": "VG:DEVATA:SOMAH",
+    "claimed": "ACC",
+    "human_case": "NOM",
+    "human_feats": "Case=Nom|Gender=Masc|Number=Plur",
+    "form": "somāsaḥ"
+   },
+   {
+    "canonical_key": "VG:RV:SAK:M05:S059:V003",
+    "veda": "RV",
+    "devata": "VG:DEVATA:SURYAH",
+    "claimed": "NOM",
+    "human_case": "GEN",
+    "human_feats": "Case=Gen|Gender=Masc|Number=Sing",
+    "form": "sūryaḥ"
+   },
+   {
+    "canonical_key": "VG:AV:SAU:K15:S006:V002",
+    "veda": "AV",
+    "devata": "VG:DEVATA:SURYAH",
+    "claimed": "NOMINATIVE",
+    "human_case": "GEN",
+    "human_feats": "Case=Gen|Gender=Masc|Number=Sing",
+    "form": "sūryasya"
+   },
+   {
+    "canonical_key": "VG:AV:SAU:K11:S008:V018",
+    "veda": "AV",
+    "devata": "VG:DEVATA:TVASTA",
+    "claimed": "GENITIVE",
+    "human_case": "NOM",
+    "human_feats": "Case=Nom|Gender=Masc|Number=Sing",
+    "form": "tvaṣṭā"
+   },
+   {
+    "canonical_key": "VG:RV:SAK:M10:S039:V001",
+    "veda": "RV",
+    "devata": "VG:DEVATA:USAH",
+    "claimed": "GEN",
+    "human_case": "NOM",
+    "human_feats": "Case=Nom|Gender=Masc|Number=Plur",
+    "form": "uṣāsaḥ"
+   },
+   {
+    "canonical_key": "VG:RV:SAK:M02:S002:V002",
+    "veda": "RV",
+    "devata": "VG:DEVATA:USAH",
+    "claimed": "GEN",
+    "human_case": "NOM",
+    "human_feats": "Case=Nom|Gender=Fem|Number=Plur",
+    "form": "uṣasaḥ"
+   },
+   {
+    "canonical_key": "VG:AV:SAU:K17:S001:V030",
+    "veda": "AV",
+    "devata": "VG:DEVATA:USAH",
+    "claimed": "GENITIVE",
+    "human_case": "NOM",
+    "human_feats": "Case=Nom|Gender=Fem|Number=Plur",
+    "form": "uṣasaḥ"
+   },
+   {
+    "canonical_key": "VG:AV:SAU:K08:S009:V012",
+    "veda": "AV",
+    "devata": "VG:DEVATA:USAH",
+    "claimed": "INSTRUMENTAL",
+    "human_case": "NOM",
+    "human_feats": "Case=Nom|Gender=Fem|Number=Dual",
+    "form": "uṣasā"
+   },
+   {
+    "canonical_key": "VG:RV:SAK:M01:S106:V002",
+    "veda": "RV",
+    "devata": "VG:DEVATA:ADITYAH",
+    "claimed": "VOCATIVE",
+    "human_case": "NOM",
+    "human_feats": "Case=Nom|Gender=Masc|Number=Plur",
+    "form": "ādityāḥ"
+   },
+   {
+    "canonical_key": "VG:RV:SAK:M08:S094:V007",
+    "veda": "RV",
+    "devata": "VG:DEVATA:APAH",
+    "claimed": "ACC",
+    "human_case": "NOM",
+    "human_feats": "Case=Nom|Gender=Fem|Number=Plur",
+    "form": "āpaḥ"
+   }
+  ]
+ },
+ "why_this_matters_beyond_tidiness": "This is the third time in this project's recorded history that a value space nobody enumerated produced a false reading: the attribution axis written by three disagreeing mechanisms, the stale-claim audit that grepped for the value it expected, and now this. A query filtering on 'NOM' returns the Rigveda and reports an Atharvavedic zero.",
+ "measurement_limit": "Only edges whose claimed surface form matches exactly one human-annotated token of that verse are counted, so no edge gets the benefit of the doubt from an ambiguous match. That is why the pair count is well below the edge count."
+}

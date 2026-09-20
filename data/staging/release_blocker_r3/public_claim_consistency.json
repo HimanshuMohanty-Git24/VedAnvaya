@@ -1,0 +1,474 @@
+{
+ "artifact": "RELEASE_BLOCKER_R3_PUBLIC_CLAIM_CONSISTENCY",
+ "author": "AGENT B (independent closure auditor)",
+ "head": "47a6dcc",
+ "branch": "phase-data-completeness-v2",
+ "graph_access": "READ-ONLY. Agent A was mutating additively during this audit; movements consistent with that are flagged rather than assumed to be my error.",
+ "surfaces_enumerated": [
+  "src/ (all .py)",
+  "frontend/src/ (all .ts/.tsx, including the generated frontend/src/lib/api-schema.ts)",
+  "frontend/scripts/ (all .mjs, plus world-groups.json)",
+  "frontend/public/world/{world.json,world.labels.json,world.predicates.json,world.bin}",
+  "frontend/public/data/{home-world.json,provenance.json}",
+  "frontend/public/manifest.webmanifest",
+  "frontend/.world/{world.raw.json,constellations.json}",
+  "data/canonical/** (grep swept; every hit was a hex id false positive)",
+  "docs/reports/** (judged per R2 F14: a dated wave report is not a live public claim)"
+ ],
+ "generated_product_artifacts_found": [
+  "frontend/public/world/world.json (frontend/scripts/build-world.mjs)",
+  "frontend/public/world/world.labels.json (build-world.mjs)",
+  "frontend/public/world/world.bin (build-world.mjs)",
+  "frontend/public/world/world.predicates.json (scripts/export_predicate_semantics.py, from graph_service.PREDICATE_SEMANTICS)",
+  "frontend/public/data/home-world.json (frontend/scripts/build-home-world.mjs)",
+  "frontend/public/data/provenance.json (scripts/build_frontend_provenance.py)",
+  "frontend/src/lib/api-schema.ts (generated from the live OpenAPI)",
+  "frontend/.world/constellations.json (build-constellations.mjs; outside public/, never fetched - R2 F13 stands)"
+ ],
+ "claims": [
+  {
+   "claim_family": "semantic_assertion_coverage",
+   "authoritative_measurement": "35,131 :SemanticAssertion nodes. By corpus of the bearing passage: RV 27,057, AV 6,167, YV 1,543, SV 364 (sums to 35,131). By derivation: MORPHOLOGY_RULE_PREDICATE_ONLY 28,370, MODEL_EXTRACTION 2,459, MORPHOLOGY_RULE 2,406, TREEBANK_DEPREL 1,532, CROSS_VEDA_TEXT_IDENTITY 364. Agentive reading (ASSERTION_AGENT) 2,502 assertions over 2,254 RV passages. HAS_SEMANTIC_ASSERTION edge count 35,131. Measured: MATCH (a:SemanticAssertion) RETURN count(a); MATCH (p:Passage)-[:HAS_SEMANTIC_ASSERTION]->(a) RETURN p.veda, count(DISTINCT a); MATCH (a:SemanticAssertion) RETURN a.derivation, count(*); and vedagraph.domain.layer_figures.measure(session) for the edge total.",
+   "source_locations": [
+    "src/vedagraph/api/models/passage.py:582 - corrective note; states 35,131 and the four-corpus split. CORRECT.",
+    "src/vedagraph/api/services/passage_service.py:2968 - corrective note. CORRECT.",
+    "src/vedagraph/api/services/graph_service.py:1122-1131 - PREDICATE_SEMANTICS HAS_SEMANTIC_ASSERTION caveat; five derivations and the four-corpus split. CORRECT.",
+    "src/vedagraph/domain/queries.py:188-200 - _ASSERTION_LAYER_CAVEAT; five derivations, four corpora, 'none of the 35,131 has been reviewed by a human'. CORRECT.",
+    "src/vedagraph/graph/insight_queries.py:28-38 - module docstring; 35,131 across five derivations. CORRECT.",
+    "src/vedagraph/api/models/insight.py:515-534 - CrossVedaMatrixResponse; CLASS_NOT_CROSS_VEDA and 35,131. CORRECT.",
+    "src/vedagraph/api/routes/insights.py:79-86 - endpoint description; CLASS_NOT_CROSS_VEDA and 35,131. CORRECT.",
+    "src/vedagraph/api/services/insight_service.py:606-614 - _NON_PAIRING_CROSS_VEDA_ROWS docstring. CORRECT.",
+    "src/vedagraph/api/services/insight_service.py:1293-1302 - assertion_note is built from the live measurement and always carries the derivation split, so no surface publishes a blended total alone. GAP-SEMANTICS-001 clause 3 holds.",
+    "frontend/src/app/sources/page.tsx:80 - '2,459 of them, a small share of a 35,131-assertion layer that itself spans all four collections'. CORRECT.",
+    "frontend/src/components/lab/plates/transmission.tsx:70 - SEMANTIC_ASSERTION column label: 'The layer reaches all four.' CORRECT.",
+    "src/vedagraph/domain/layer_figures.py:101 - PREDICATE_TOTALS['HAS_SEMANTIC_ASSERTION'] = 4_865. STALE.",
+    "src/vedagraph/domain/layer_figures.py:137-140 - ASSERTION_LAYERS holds only MORPHOLOGY_RULE 2,406 and MODEL_EXTRACTION 2,459. STALE.",
+    "src/vedagraph/api/services/insight_service.py:248-250 - '...the cross-Veda matrix, whose assertion row is NOT_BUILT for every pair'. STALE."
+   ],
+   "generated_locations": [
+    "frontend/public/world/world.predicates.json - HAS_SEMANTIC_ASSERTION.limit carries the five-derivation split, 'reaches all four corpora unevenly -- RV 27,057, AV 6,167, YV 1,543, SV 364', and an explicit self-correction of the old 'All 4,865 are Rigvedic'. CORRECT.",
+    "frontend/src/lib/api-schema.ts:961, :1342, :2572 - all three carry 35,131 and the four-corpus reach. CORRECT.",
+    "frontend/public/world/world.labels.json - the '4865' substring matches only hex node ids. NOT a claim.",
+    "frontend/public/data/provenance.json - 0 occurrences of 4,865 / Rigveda-only / 184 / NOT_BUILT / one dog.",
+    "frontend/public/data/home-world.json - 0 occurrences."
+   ],
+   "stale_contradictions": [
+    {
+     "file": "src/vedagraph/domain/layer_figures.py",
+     "line": 101,
+     "quote": "\"HAS_SEMANTIC_ASSERTION\": 4_865,",
+     "why_stale": "The live HAS_SEMANTIC_ASSERTION edge total is 35,131. This is the module whose stated contract is that no caveat types its own number, so the pre-migration 4,865 survives in the one place every future caveat would quote it from. layer_figures.measure(session) vs declared() differs on this field by exactly 30,266 - the count R1's identity repair restored.",
+     "severity": "MAJOR"
+    },
+    {
+     "file": "src/vedagraph/domain/layer_figures.py",
+     "line": 137,
+     "quote": "ASSERTION_LAYERS: Final[dict[str, int]] = {\"MORPHOLOGY_RULE\": 2_406, \"MODEL_EXTRACTION\": 2_459,}",
+     "why_stale": "The label has five derivations, not two. measure() returns keys declared() does not have: MORPHOLOGY_RULE_PREDICATE_ONLY 28,370, TREEBANK_DEPREL 1,532, CROSS_VEDA_TEXT_IDENTITY 364. tests/domain/test_layer_figures.py::test_assertion_layers_sum_to_the_assertion_total currently PASSES only because both sides are stale (2,406+2,459=4,865), so the offline test actively pins the defect: fixing PREDICATE_TOTALS alone will turn it red. 2,406+2,459+28,370+1,532+364 = 35,131.",
+     "severity": "MAJOR"
+    },
+    {
+     "file": "src/vedagraph/api/services/insight_service.py",
+     "line": 250,
+     "quote": "#: Read for the cross-Veda matrix, whose assertion row is NOT_BUILT for every pair, and this is the measurement that establishes it rather than asserts it.",
+     "why_stale": "The same file at :628-635 types that row CLASS_NOT_CROSS_VEDA, and :611-614 records NOT_BUILT as the R2 defect. The sentence R2 F1 removed from six surfaces survives here, 380 lines above the code that contradicts it. Source-only: it reaches no response body.",
+     "severity": "MINOR",
+     "line_at_audit_time": 249
+    }
+   ],
+   "final_count": 3
+  },
+  {
+   "claim_family": "rigveda_only_semantic_claims",
+   "authoritative_measurement": "Genuinely Rigveda-only: HAS_DEVATA (10,558 edges, 8,329 CONTAINER_INHERITED + 2,229 PER_PASSAGE, all RV); PERFORMS_ACTION 441 and IS_ASKED_TO 224 (aggregates over the 2,406 MORPHOLOGY_RULE assertions); the agentive reading (2,502 assertions over 2,254 RV passages). NOT Rigveda-only: the semantic assertion layer (four corpora); ABOUT_CONCEPT (RV 14,470 / AV 6,423 / SV 2,007 / YV 1,961); MENTIONS_DEVATA (17,165 edges; RV 10,284 / AV 3,582 / YV 1,964 / SV 1,335). Measured per predicate with MATCH (p:Passage)-[:X]->() RETURN p.veda, count(*).",
+   "source_locations": [
+    "Enumerated all 60 'Rigveda-only'/'Rigveda only' occurrences under src/ and frontend/src/. 58 are true of the predicate or layer they name, or are explicit corrective notes.",
+    "src/vedagraph/api/services/entity_service.py:198 - 'The object dimension is derived from the Rigveda-only semantic assertion layer.' FALSE twice over.",
+    "src/vedagraph/api/services/entity_service.py:202 - 'The concept dimension is derived from the Rigveda-only annotation layers.' Imprecise; never served.",
+    "src/vedagraph/domain/profiles.py:178-180 - the source of record, and it states the truth: 'Objects and substances, counted over the passages that *mention* the deity rather than over the Rigveda-only attribution layer, so this dimension spans four Vedas.'"
+   ],
+   "generated_locations": [
+    "frontend/public/world/world.predicates.json - three 'Rigveda-only' strings: HAS_DEVATA (10,558, true), PERFORMS_ACTION (441, true), IS_ASKED_TO (224, true).",
+    "frontend/src/lib/api-schema.ts - 11 occurrences, every one scoped to the Anukramani ascription layer or the morphology layer. No occurrence attributes Rigveda-only-ness to the semantic assertion layer.",
+    "Served response: /api/v1/devatas/{id} profile_absent_dimensions. 'top_objects' appears on 3 :Devata nodes, so entity_service.py:198 is published live on three deity profiles."
+   ],
+   "stale_contradictions": [
+    {
+     "file": "src/vedagraph/api/services/entity_service.py",
+     "line": 198,
+     "quote": "\"top_objects\": (KnowledgeStatus.NOT_BUILT, \"The object dimension is derived from the Rigveda-only semantic assertion layer.\",),",
+     "why_stale": "Two independent falsehoods in one served sentence. (1) top_objects is not derived from the assertion layer at all: src/vedagraph/domain/profiles.py:505-517 computes it as MATCH (p:Passage)-[m:MENTIONS_DEVATA]->(deity) WHERE m.referent_certainty IN tiers, MATCH (p)-[:ABOUT_CONCEPT]->(c:DomainEntity). (2) The assertion layer is not Rigveda-only. Both contributing layers span four corpora (MENTIONS_DEVATA RV 10,284 / AV 3,582 / YV 1,964 / SV 1,335; ABOUT_CONCEPT RV 14,470 / AV 6,423 / SV 2,007 / YV 1,961), so the published reason for the absence is the opposite of the measurement. It is SERVED: 'top_objects' is in profile_absent_dimensions on 3 of the 30 profiled :Devata nodes. This is a false absence explanation, the single defect class this product exists to prevent.",
+     "severity": "CRITICAL"
+    },
+    {
+     "file": "src/vedagraph/api/services/entity_service.py",
+     "line": 202,
+     "quote": "\"top_concepts\": (KnowledgeStatus.NOT_BUILT, \"The concept dimension is derived from the Rigveda-only annotation layers.\",),",
+     "why_stale": "top_concepts is HAS_DEVATA (Rigveda-only, correct) joined to ABOUT_CONCEPT (four corpora). 'the Rigveda-only annotation layers', plural, generalises from the one gating predicate to a set containing a four-corpus one - the same over-generalisation _SCOPE_CAVEAT exists to refuse. Never served: 0 of 30 profiled deities has an empty profile_top_concepts, so 'top_concepts' never appears in profile_absent_dimensions. Enumerated value space of that field: co_devatas 25, top_actions 6, top_requested_actions 6, co_mentioned 5, mentions 3, top_objects 3, formula_count 1.",
+     "severity": "MINOR"
+    }
+   ],
+   "final_count": 2
+  },
+  {
+   "claim_family": "deity_population",
+   "authoritative_measurement": "214 :Devata nodes. is_deity=true 157, is_deity=false 57. deity_eligibility_ruling: DEITY 152, NOT_DEITY 57, UNDECIDED 5 (the 5 UNDECIDED sit inside the 157). non_deity_kind on exactly the 57: ABSTRACTION_NOT_AN_ADDRESSEE 28, HUMAN_PATRON 22, DANASTUTI_GIFT_PRAISE 7. 22+7+28=57; 214-57=157; 152+5=157. Measured by enumerating the value space of is_deity, deity_eligibility_ruling and non_deity_kind over all 214 nodes rather than by grepping an expected value.",
+   "source_locations": [
+    "src/vedagraph/domain/queries.py:418-436 - deity_community_capability caveat: 22 + 7 + 28, keeps the 5 UNDECIDED, records the old 192. CORRECT.",
+    "src/vedagraph/api/services/insight_service.py:2875-2890 - eligible_deities; names the 5 UNDECIDED and the old 192. CORRECT.",
+    "src/vedagraph/api/models/graph.py:120 - 22/7/28 and 'The dog is NOT among'. CORRECT.",
+    "src/vedagraph/api/services/entity_service.py:1281 and :1580 - 'which 184 of the 214 nodes do not carry' / 'INSUFFICIENT_EVIDENCE for all four corpora on 184 of them'. ATTACKED AND SURVIVED: this 184 is 214 minus the 30 profiled nodes, not the superseded deity count. Verified: exactly 30 :Devata carry profile_* properties.",
+    "src/vedagraph/api/services/entity_service.py:1533 - quotes the old 'This response excludes all 30' caveat as a recorded historical defect. CORRECT.",
+    "src/vedagraph/domain/deity_eligibility.py:13 - records the old 'eligible_deities: 192'. Corrective. CORRECT."
+   ],
+   "generated_locations": [
+    "frontend/src/components/lab/plates/deities.tsx:324 - label 'All 157 deities' (was 'All 184'). CORRECT.",
+    "frontend/src/app/visualizations/page.tsx:101-102 - figure read from stats.data.deities.resolved_deities (live 157); unit 'The traditional index also names 57 subjects that are not gods, and they are refused.' CORRECT.",
+    "frontend/src/lib/api-schema.ts:296, :436, :482, :561, :1063, :4177 - all publish 22 + 7 + 28 and 'excludes all 57'. 0 occurrences of 'excludes all 30', 'All 184 deities' or 'and one dog' as a live claim; the 4 'the dog' strings are corrective notes or the is_resolved_deity field description.",
+    "frontend/public/world/world.predicates.json - carries NO deity population figure at all (0 occurrences of 214, 157, '22 human', '28 abstraction', 'dog').",
+    "frontend/.world/world.raw.json replayed through build-world.mjs groupOf(): deity 157 / unresolved-deity 57. Matches the authoritative population exactly."
+   ],
+   "stale_contradictions": [],
+   "final_count": 0
+  },
+  {
+   "claim_family": "ritual_context",
+   "authoritative_measurement": "All 20,210 :Mantra carry ritual_context, five-valued: NO_RITUAL_CITATION_FOUND 10,538, UNRESOLVED_SHARED_OPENING 7,769, EMPLOYED_IN_RITE_PROBABLE 1,275, EMPLOYED_IN_RITE 416, RITE_NAMED_IN_THIS_MANTRA 212; sums to 20,210. ritual_context_method on all 20,210, single-valued EXTERNAL_RITUAL_CITATION. Placed in a rite = 212+416+1,275 = 1,903; typed absence = 10,538+7,769 = 18,307; 1,903+18,307 = 20,210. Measured by enumerating the value space of m.ritual_context over every :Mantra, and CALL db.propertyKeys() for the key.",
+   "source_locations": [
+    "src/vedagraph/api/services/capability_probes.py:826-838 - the Q84 probe enumerates all five values across two buckets (3 placed + 2 typed absence). No value omitted. CORRECT.",
+    "src/vedagraph/api/services/capability_probes.py:95-109 - ritual_context is out of PROBED_ABSENT_PROPERTIES with the reason recorded; the remaining five names are all still absent from the full 728-key db.propertyKeys() list. CORRECT.",
+    "src/vedagraph/api/services/capability_probes.py:872-881 - 'no product surface reads ritual_context'. VERIFIED by enumeration: ritual_context is read nowhere in src/ or frontend/src/ outside capability_probes.py. R2 F7 holds.",
+    "src/vedagraph/api/services/capability_probes.py what_would_change_it - no longer hardcodes 7,769. R2 F16 holds."
+   ],
+   "generated_locations": [
+    "frontend/public/** - 0 occurrences of ritual_context in any shipped artifact.",
+    "frontend/src/lib/api-schema.ts - 0 occurrences of ritual_context."
+   ],
+   "stale_contradictions": [],
+   "judged_not_stale": [
+    "docs/reports/data-completeness/ritual.md:40 'the ritual_context key is absent from db.propertyKeys() entirely'. R2 F14 left it open as a dated report. Re-judged and CONFIRMED not a live public claim: headed 'Agent 13, Wave 2', states 'Nothing was imported', pins the graph at 108,779 nodes / 265,295 relationships against today's 164,201 / 508,042.",
+    "docs/reports/V3_2_FINAL_100_QUESTION_BENCHMARK.{md,jsonl} Q84 and V3_3_FINAL_100_QUESTION_BENCHMARK.jsonl Q84 'Zero passages carry a ritual_context property'. Version-named benchmark artifacts. Same judgement."
+   ],
+   "final_count": 0
+  },
+  {
+   "claim_family": "cross_veda_directed_reuse_pair_count",
+   "authoritative_measurement": "REUSES_TEXT_FROM holds 1,995 edges, all cross-corpus, over TWO corpus pairs: r.veda_pair='RV-SV' 1,684 and 'AV-RV' 311. The AV-RV edges carry pipeline_version='vedagraph-agent1-final-closure-v1', method='crossveda-direction:compilation-asymmetry-v1', cross_veda_direction_status='DIRECTED', state='ACCEPTED' - e.g. AVS 20.84.1 -> RV 1.3.4. So FOUR pairs lack directed reuse, not five. Measured: MATCH ()-[r:REUSES_TEXT_FROM]->() RETURN r.veda_pair, count(*).",
+   "source_locations": [
+    "src/vedagraph/api/routes/insights.py:75-76 - 'directed textual reuse exists for two corpus pairs only, and a table that rendered the other four as 0...'. CORRECT, and it is the surface the frontend now contradicts.",
+    "src/vedagraph/api/services/insight_service.py:1584-1607 - cell typing derives from view.pairs_reached and is never hardcoded. CORRECT."
+   ],
+   "generated_locations": [
+    "frontend/src/lib/api-schema.ts - the cross-veda endpoint description carries the 'two corpus pairs' wording. CORRECT.",
+    "frontend/src/components/lab/plates/transmission.tsx PlateTakeaway observation - MEASURED: branches on directed?.pairs_reached?.length === 1 and will render '2 corpus pairs'. CORRECT, and it now contradicts the hardcoded interpretation immediately beneath it in the same component."
+   ],
+   "stale_contradictions": [
+    {
+     "file": "frontend/src/lib/lab.ts",
+     "line": 112,
+     "quote": "\"Directed reuse - one verse carrying another's wording, in that direction - was established for one corpus pair. A pair without it is an unmeasured pair.\"",
+     "why_stale": "Two pairs are established (RV-SV 1,684, AV-RV 311). Shipped Lab plate caution text, and it contradicts the OpenAPI description of the very endpoint the plate reads.",
+     "severity": "CRITICAL"
+    },
+    {
+     "file": "frontend/src/lib/lab.ts",
+     "line": 143,
+     "quote": "\"That a family crossing four collections proves one borrowed from another. The census records co-occurrence of a wording, and direction is only established separately, for one pair.\"",
+     "why_stale": "Same defect on the formulas plate. Two pairs.",
+     "severity": "MAJOR"
+    },
+    {
+     "file": "frontend/src/components/lab/plates/transmission.tsx",
+     "line": 237,
+     "quote": "description={`The Rigveda-to-Samaveda pair is the only one for which direction was established. ${count(directed?.cross_veda_edges)} directed reuse edges exist and they all join this pair; ...`}",
+     "why_stale": "The interpolated figure is MEASURED and is now 1,995 (1,684 RV-SV + 311 AV-RV) while the prose around it asserts they all join one pair. The sentence ships a correct number attached to a false claim, and 311 of the edges it counts join AV-RV.",
+     "severity": "CRITICAL",
+     "line_at_audit_time": 238
+    },
+    {
+     "file": "frontend/src/components/lab/plates/transmission.tsx",
+     "line": 252,
+     "quote": "note={<>All of them on one corpus pair. The other five pairs have no directed reuse, which means nobody established one.</>}",
+     "why_stale": "Two pairs; the other four. It sits directly under a Figure whose value is the measured 1,995.",
+     "severity": "CRITICAL",
+     "line_at_audit_time": 255
+    },
+    {
+     "file": "frontend/src/components/lab/plates/transmission.tsx",
+     "line": 312,
+     "quote": "interpretation={<>... the direction is recorded for this pair and not for the other five, so a reader comparing pairs is comparing what was measured rather than what happened.</>}",
+     "why_stale": "Two pairs; the other four. This renders in the same PlateTakeaway component whose measured observation prints '2 corpus pairs', so the plate contradicts itself on screen.",
+     "severity": "CRITICAL",
+     "line_at_audit_time": 311
+    },
+    {
+     "file": "frontend/src/app/sources/page.tsx",
+     "line": 115,
+     "quote": "body: \"One verse carries another's wording, with the direction recorded. Direction is expensive to establish and exists here for one corpus pair.\"",
+     "why_stale": "Two pairs. Shipped /sources method copy.",
+     "severity": "MAJOR"
+    },
+    {
+     "file": "frontend/src/components/lab/plates/transmission.tsx",
+     "line": 28,
+     "quote": "* The matrix is the part worth defending. Twelve of its 48 cells were never built and five were never established for that pair, ...",
+     "why_stale": "Source comment carrying both wrong figures (see cross_veda_matrix_cell_statuses). Not served, but it is the comment a maintainer reads before touching the plate.",
+     "severity": "MINOR"
+    }
+   ],
+   "final_count": 7
+  },
+  {
+   "claim_family": "cross_veda_matrix_cell_statuses",
+   "authoritative_measurement": "6 pairs x 8 classes = 48 cells. Reconstructed from the live graph against insight_service._cross_veda_cell: MEASURED 26 (EXACT_PARALLEL_OF 6, NEAR_PARALLEL_OF 6, VARIANT_OF 6, SHARES_ENTITY_VOCABULARY_WITH 6, REUSES_TEXT_FROM 2); NOT_ESTABLISHED_FOR_PAIR 4 (REUSES_TEXT_FROM's other four pairs: pairs_reached=2 != 6 and no direction-refusal row exists for them); CLASS_NOT_CROSS_VEDA 12 (PARALLEL_TO 6 - all 69 edges intra-corpus, veda_pair null on every one, 0 cross-corpus; SEMANTIC_ASSERTION 6); NOT_BUILT 6 (SEMANTIC_RESEMBLANCE only - no embedding, vector, bridge_score or betweenness key exists in the 728-key property space). 26+4+12+6 = 48. Cross-corpus edges carrying a null veda_pair = 0 for every parallel class, so no cell is UNRECONCILED.",
+   "source_locations": [
+    "src/vedagraph/api/services/insight_service.py:615-637 - SEMANTIC_RESEMBLANCE NOT_BUILT, SEMANTIC_ASSERTION CLASS_NOT_CROSS_VEDA. CORRECT.",
+    "src/vedagraph/api/models/insight.py:492-495 - MatrixShape docstring 'a matrix that states 48 cells and ships 41 fails a client-side assertion'. CORRECT."
+   ],
+   "generated_locations": [
+    "frontend/src/components/lab/plates/transmission.tsx matrix table and key - every cell status and the 'N of 48 cells carry a measured count' line are read from shape.cells_by_status. MEASURED, CORRECT.",
+    "frontend/src/components/lab/plates/transmission.tsx:94 - CELL_MARK.NOT_BUILT means 'The layer does not exist anywhere in this graph.' CORRECT for SEMANTIC_RESEMBLANCE, which is now its only occupant."
+   ],
+   "stale_contradictions": [
+    {
+     "file": "frontend/src/lib/lab.ts",
+     "line": 122,
+     "quote": "\"That an empty cell means the two collections share nothing. Twelve of the 48 cells are NOT_BUILT and five were never established for that pair, and those are facts about the graph.\"",
+     "why_stale": "Both figures are wrong, and the first is the arithmetic residue of the exact defect R2 F1 closed. NOT_BUILT is 6, not 12: the twelve counted SEMANTIC_RESEMBLANCE's 6 plus SEMANTIC_ASSERTION's 6 from when the assertion row was published NOT_BUILT 'because every semantic assertion is Rigvedic'. That row is now CLASS_NOT_CROSS_VEDA, so 12 is the CLASS_NOT_CROSS_VEDA count and 6 is the NOT_BUILT count. 'five were never established' is 4, because REUSES_TEXT_FROM now reaches two pairs. This is the shipped 'do not infer' line on the transmission plate - the one sentence whose whole job is to stop a reader misreading an empty cell.",
+     "severity": "CRITICAL"
+    }
+   ],
+   "final_count": 1
+  },
+  {
+   "claim_family": "atharvavedic_deity_ascription_scope",
+   "authoritative_measurement": "HAS_DEVATA_ASCRIPTION: 5,385 edges total, every source node Atharvavedic, over 4,665 distinct :Passage nodes - of which 4,160 are :Mantra (4,816 edges) and 505 are non-mantra :Passage containers (569 edges). AV holds 5,839 mantras and 6,590 passages. 324 :DevataAscription nodes, all registry_namespace AV_WHITNEY_ANUKRAMANI. SV and YV carry 0 edges of either deity-attribution predicate. HAS_DEVATA: 10,558 edges, all RV. Measured: MATCH (s)-[:HAS_DEVATA_ASCRIPTION]->() RETURN labels(s), s.veda, count(*), count(DISTINCT s).",
+   "source_locations": [
+    "src/vedagraph/domain/profiles.py:20 - 'Measured: 4,160 Atharvavedic mantras carry 4,816 HAS_DEVATA_ASCRIPTION edges'. CORRECT: numerator and denominator are both mantra-scoped.",
+    "src/vedagraph/domain/profiles.py:60 - '4,160 of its mantras carry ascription descriptors'. CORRECT.",
+    "src/vedagraph/api/models/entity.py:296-298 - 'NOT the same as the Anukramani is Rigveda-only, which is false: the Atharvaveda has one, and 4,160 of its mantras carry ascription descriptors from it'. CORRECT.",
+    "src/vedagraph/domain/queries.py:1510 - 'A top-25 of 324 descriptors over 5,385 edges, all Atharvavedic'. CORRECT.",
+    "src/vedagraph/domain/queries.py:141 - '5,385 HAS_DEVATA_ASCRIPTION edges over 4,665 of its 5,839 mantras'. STALE SCOPE.",
+    "src/vedagraph/domain/queries.py:146-147 - the same string inside the served _SCOPE_CAVEAT. STALE SCOPE.",
+    "src/vedagraph/domain/taxonomy.py:143 - the same string, written into Devata.attribution_scope_note. STALE SCOPE."
+   ],
+   "generated_locations": [
+    "Live graph: Devata.attribution_scope_note carries the '4,665 of its 5,839 mantras' string on all 214 :Devata nodes. src/vedagraph/api/ask/retriever.py:219 selects it and src/vedagraph/api/ask/evidence.py:352 passes it through as the qualifier on an absence, so it reaches /api/v1/ask answers.",
+    "frontend/src/lib/api-schema.ts:3212 - publishes the mantra-scoped 4,160, and therefore contradicts the graph property a reader of /api/v1/ask is shown.",
+    "frontend/public/world/world.predicates.json HAS_DEVATA.limit - 'Rigveda-only -- all 10,558 edges -- and 8,329 of them are inherited from a hymn label...'. Figures verified (CONTAINER_INHERITED 8,329 / PER_PASSAGE 2,229), but it carries no Atharvavedic disclosure.",
+    "frontend/public/world/world.predicates.json - 0 occurrences of '4,665'."
+   ],
+   "stale_contradictions": [
+    {
+     "file": "src/vedagraph/domain/taxonomy.py",
+     "line": 143,
+     "quote": "\"The Atharvaveda records its own: 5,385 HAS_DEVATA_ASCRIPTION edges over 4,665 of its 5,839 mantras, \"",
+     "why_stale": "A passage-scoped numerator against a mantra-scoped denominator. 4,665 is the distinct :Passage count and includes 505 non-mantra containers; the mantra figure is 4,160 of 5,839 carrying 4,816 edges. The sentence overstates Atharvavedic mantra-level dedication coverage by 505 verses and labels a passage count as a mantra count. It is written onto all 214 :Devata nodes and is quoted verbatim by /api/v1/ask as the qualifier on a HAS_DEVATA absence. It also contradicts profiles.py:20 and api-schema.ts:3212, which publish the mantra-scoped figures. Correct form: '5,385 HAS_DEVATA_ASCRIPTION edges over 4,665 of its 6,590 passages, 4,816 of them on 4,160 of its 5,839 mantras'.",
+     "severity": "MAJOR"
+    },
+    {
+     "file": "src/vedagraph/domain/queries.py",
+     "line": 147,
+     "quote": "\"4,665 of its 5,839 mantras -- which points at a :DevataAscription carrying Whitney's \"",
+     "why_stale": "The same defect inside _SCOPE_CAVEAT, which is attached to every HAS_DEVATA query, so it ships on those responses.",
+     "severity": "MAJOR"
+    },
+    {
+     "file": "src/vedagraph/domain/queries.py",
+     "line": 141,
+     "quote": "#: edges over 4,665 of its 5,839 mantras -- so a reader asking which Vedas record dedications",
+     "why_stale": "The comment above _SCOPE_CAVEAT repeats it, so a maintainer correcting the served string has a second copy to miss. This is the R2 shape exactly.",
+     "severity": "MINOR"
+    },
+    {
+     "file": "frontend/public/world/world.predicates.json",
+     "line": 1,
+     "quote": "\"HAS_DEVATA_ASCRIPTION\": {\"phrase\": \"carries the deity ascription\", \"asserts\": \"The passage carries this Anukramani ascription descriptor.\", \"limit\": \"A descriptor of the ascription's form, not a second deity attribution.\"}",
+     "why_stale": "Two shipped public surfaces give opposite answers about the same predicate. _SCOPE_CAVEAT, served on every HAS_DEVATA query, opens 'TWO DEITY-ATTRIBUTION PREDICATES, NEITHER COMPLETE' and calls this the Atharvaveda's own layer under a different predicate; api-schema.ts:3212 calls it the Atharvaveda's Anukramani. The Lab's predicate table denies it is a second deity attribution, gives no corpus scope and no figure, and the HAS_DEVATA entry beside it says 'Rigveda-only -- all 10,558 edges' with no AV disclosure at all. A Lab reader is left with exactly the inference _SCOPE_CAVEAT was written to prevent: that only the Rigveda records dedications. Fix at src/vedagraph/api/services/graph_service.py:1006-1010 (HAS_DEVATA_ASCRIPTION) and :999-1005 (HAS_DEVATA), then regenerate world.predicates.json.",
+     "severity": "MAJOR"
+    }
+   ],
+   "final_count": 4
+  },
+  {
+   "claim_family": "vedas_not_covered_and_samavedic_translation",
+   "authoritative_measurement": "Enumerated every vedas_not_covered writer: 10 sites in src/. Nine derive the list from the request's own measurement; one hardcodes ['SV'] at passage_service.py:2713, and that one is TRUE. DEDICATED_ENGLISH_MANTRAS['SV'] = 0 and measure() agrees. The 173 SV passages that do carry HAS_TRANSLATION are all reuse rows (Translation.reuse_kind set on 194 nodes; REUSED_RENDERING_MANTRAS['SV'] = 173, matched by measure()), and the SV branch is only reached when both items and range-covered items are empty, so those 173 take the earlier branch and receive the reuse caveat instead. models/common.py:157-195 raises on a Veda appearing in both vedas_in_scope and vedas_not_covered. Measured: MATCH (p:Passage)-[:HAS_TRANSLATION]->(t) RETURN p.veda, count(*) -> RV 10,516 / AV 5,788 / YV 1,950 / SV 173.",
+   "source_locations": [
+    "src/vedagraph/api/services/passage_service.py:2706-2736 - the SV NOT_BUILT branch, its CoverageView and its caveat. VERIFIED CORRECT, including 'this verse is not one of them', which is only reachable on a verse with no rendering at all.",
+    "src/vedagraph/api/services/passage_service.py:2620-2627 - 'the Samaveda has no translation of its own from 1,844 verses'. CORRECT: CORPUS_MANTRAS['SV'] = 1,844, measured 1,844.",
+    "src/vedagraph/domain/layer_figures.py:40-92 - CORPUS_MANTRAS, RANGE_COVERED_MANTRAS, REUSED_RENDERING_MANTRAS and NON_ENGLISH_MANTRAS all match measure() exactly."
+   ],
+   "generated_locations": [
+    "frontend/src/lib/api-schema.ts:2425, :2470, :6231 - vedas_not_covered is a response field with no hardcoded value."
+   ],
+   "stale_contradictions": [
+    {
+     "file": "src/vedagraph/domain/layer_figures.py",
+     "line": 56,
+     "quote": "DEDICATED_ENGLISH_MANTRAS: Final[dict[str, int]] = {\"RV\": 10_479, \"AV\": 5_715, \"YV\": 1_939, \"SV\": 0,}",
+     "why_stale": "measure() returns RV 10,480 and YV 1,950 against declared 10,479 and 1,939. Both movements are upward and small (+1, +11), consistent with Agent A's concurrent additive translation work rather than with pre-existing drift - reported rather than assumed. AV and SV agree. Agent A should re-run layer_figures.measure() at the end of its run and reconcile these two rather than editing them blind.",
+     "severity": "MINOR"
+    }
+   ],
+   "final_count": 1
+  },
+  {
+   "claim_family": "layer_figures_declared_vs_measured",
+   "authoritative_measurement": "Ran vedagraph.domain.layer_figures.measure(live session) and diffed it field by field against declared(). 10 fields differ. PREDICATE_TOTALS: MENTIONS_LEMMA 9,000 -> 154,261; HAS_SEMANTIC_ASSERTION 4,865 -> 35,131; MENTIONS_ENTITY 28,227 -> 28,116; ABOUT_CONCEPT 24,969 -> 24,861; HAS_CHANDAS 16,331 -> 16,298. DEDICATED_ENGLISH_MANTRAS: RV 10,479 -> 10,480; YV 1,939 -> 1,950. ASSERTION_LAYERS: three measured keys absent from declared (MORPHOLOGY_RULE_PREDICATE_ONLY 28,370, TREEBANK_DEPREL 1,532, CROSS_VEDA_TEXT_IDENTITY 364). Everything else matches exactly: CORPUS_MANTRAS, RANGE_COVERED_MANTRAS, REUSED_RENDERING_MANTRAS, NON_ENGLISH_MANTRAS, MENTIONS_DEVATA_BY_VEDA, REFERENT_CERTAINTY, MULTI_DEVATA_MANTRAS, AGNI_INDRA_CO_MENTION_BY_VEDA, REVIEW_POPULATION, FORMULA_NESTING.",
+   "source_locations": [
+    "src/vedagraph/domain/layer_figures.py:95-104 PREDICATE_TOTALS; :119-124 MENTIONS_DEVATA_BY_VEDA (correct at 17,165 = 10,284+3,582+1,964+1,335); :137-140 ASSERTION_LAYERS.",
+    "tests/domain/test_layer_figures.py:96-121 test_declared_figures_match_the_live_graph - the guard for exactly this, gated behind @pytest.mark.live and skipif not os.environ.get('VEDAGRAPH_LIVE_NEO4J'). It is skipped by default and would fail on 10 fields if run. Its own docstring: 'If this fails, do NOT edit the constant to make it green.'"
+   ],
+   "generated_locations": [
+    "Only PREDICATE_TOTALS['MENTIONS_DEVATA'] is interpolated into served prose (passage_service.py:447; queries.py:154, :167, :180, :713) and it is CORRECT at 17,165. ASSERTION_LAYERS' two declared keys are interpolated into _MODALITY_ABSENT_NOTE (passage_service.py:400-402) and are individually correct. The five drifted PREDICATE_TOTALS entries have no f-string consumer, so none is published today - which is why they are MAJOR and not CRITICAL."
+   ],
+   "stale_contradictions": [
+    {
+     "file": "src/vedagraph/domain/layer_figures.py",
+     "line": 100,
+     "quote": "\"MENTIONS_LEMMA\": 9_000,",
+     "why_stale": "Live MENTIONS_LEMMA edge count is 154,261 - off by a factor of 17. The 9,000 is the count of the deity-duplicating edges that MENTIONS_DEVATA replaced (src/vedagraph/domain/ontology.py:827), not the predicate total this dict declares.",
+     "severity": "MAJOR"
+    },
+    {
+     "file": "src/vedagraph/domain/layer_figures.py",
+     "line": 99,
+     "quote": "\"HAS_CHANDAS\": 16_331,",
+     "why_stale": "Live 16,298. graph_service.py:995 already ships the correct denominator to the Lab ('10,399 of 16,298 arrive by projecting a hymn's label downward'), so the product currently holds two different live values for one quantity and the one in the figures module is the wrong one.",
+     "severity": "MAJOR"
+    },
+    {
+     "file": "src/vedagraph/domain/layer_figures.py",
+     "line": 109,
+     "quote": "\"MENTIONS_ENTITY\": 28_227,  (line 109)  and  \"ABOUT_CONCEPT\": 24_969,  (line 114)",
+     "why_stale": "Live 28,116 and 24,861. Both are DECREASES, of 111 and 108, so neither can be explained by Agent A's additive work; these are real pre-existing drift. The MENTIONS_ENTITY constant carries a four-line comment justifying 28,227 over 28,223 edge by edge, which is what makes the unexplained 111-edge gap worth naming.",
+     "severity": "MAJOR",
+     "line_at_audit_time": 98,
+     "also_at_line": 114
+    }
+   ],
+   "final_count": 3,
+   "note": "HAS_SEMANTIC_ASSERTION 4,865 and the ASSERTION_LAYERS gap are counted once, under semantic_assertion_coverage, and are not double-counted here."
+  },
+  {
+   "claim_family": "display_type_single_spelling",
+   "authoritative_measurement": "CALL db.propertyKeys() contains exactly one display_type key; the other nine display* keys are display_form, display_label, representative_display_form, display_label_override, wave3_proposed_display_label, display_form_corroboration, display_form_basis, display_form_basis_evidence. 81,139 of 164,201 nodes carry display_type, 45 distinct values, no case-variant duplicate (SemanticAssertion 35,131; MANTRA 20,210; Lemma 10,031; PADA_PARALLEL_GROUP 1,434; Devata 214; ...). world.json declares 47 types, a superset of the 45 because the public export also emits Scholar, ScholarlyWork, ScholarlyDisagreement and Work. Enumerated via the full property-key list and a full value-space count, not by grepping an expected spelling.",
+   "source_locations": [
+    "src/vedagraph/api/services/graph_service.py:549-558 - the corrective note recording the two-spelling state and the 4,865/30,266 split. Historical, and explicitly marked so."
+   ],
+   "generated_locations": [
+    "frontend/public/world/world.json 'types' - 47 entries, no duplicate spelling.",
+    "No surface in src/ or frontend/src/ publishes a display_type cardinality figure. The '47 product types' claim exists only inside data/staging/release_blocker_r2/agent_b_receipt.json, which is a receipt and not a product surface."
+   ],
+   "stale_contradictions": [],
+   "final_count": 0
+  },
+  {
+   "claim_family": "probed_absences_and_false_zeroes",
+   "authoritative_measurement": "PROBED_ABSENT_PROPERTIES has five names. All five verified absent against the complete 728-entry db.propertyKeys() list: bridge_score, betweenness, embedding, vector, expected_count. Corroborating measurements for the false-zero caveats resting on them: DeityCommunity nodes 12, with 0 relationships of any type and 0 :Devata carrying community/louvain/partition. HAS_STEP edges 3. :Chandas 575. :Ritual 103. MENTIONS_DEVATA DEITY_AMBIGUOUS 6,806. HAS_DEVATA 8,329 CONTAINER_INHERITED + 2,229 PER_PASSAGE = 10,558. PERFORMS_ACTION 441, IS_ASKED_TO 224. ASSERTION_AGENT on 2,502 assertions over 2,254 passages.",
+   "source_locations": [
+    "src/vedagraph/api/services/capability_probes.py:95-102 - the five names. VERIFIED ABSENT by enumerating the whole key space.",
+    "src/vedagraph/api/routes/insights.py:79 - 'Resemblance is NOT_BUILT: no non-lexical measure exists anywhere in this graph.' VERIFIED.",
+    "src/vedagraph/api/routes/entities.py:109 - 'centrality.bridging is null and says NOT_BUILT rather than 0.' VERIFIED: no bridge_score or betweenness key exists.",
+    "src/vedagraph/api/routes/passages.py:206 - 'audio.status is always NOT_BUILT.' NOT re-measured; outside the claim families R1/R2/R3 touched. Named here so the gap in my coverage is on the record."
+   ],
+   "generated_locations": [
+    "frontend/src/lib/lab.ts:236 - 'its twelve community records are stored, and not one of them has a member'. VERIFIED CORRECT.",
+    "frontend/src/lib/lab.ts:184 - 'there are three step edges in the whole layer'. VERIFIED CORRECT.",
+    "frontend/src/lib/lab.ts:230 - 'The 575 metre names in the registry'. VERIFIED CORRECT.",
+    "frontend/src/components/lab/plates/ritual.tsx:87 - rites-modelled figure read from the API (103 :Ritual live). MEASURED."
+   ],
+   "stale_contradictions": [],
+   "final_count": 0
+  },
+  {
+   "claim_family": "world_artifact_lineage",
+   "authoritative_measurement": "sha256(frontend/.world/world.raw.json) = a28bac85a71bcac178b4ab13bb95ff7517d51f4f4469a3776fa6f68539a52f87, recomputed independently. inputPublicExportHash equals it in all five consumers: world.json, world.labels.json, world.predicates.json, home-world.json, constellations.json. sha256(frontend/public/world/world.bin) = d451169cf5a15357f68b5504ee9083c21606c1a8750b82b8fb6db18366340317, size 3,991,198 bytes, matching world.json's worldBinSha256 and worldBinBytes exactly. R2 F6 and F12 both hold.",
+   "source_locations": [
+    "frontend/scripts/build-world.mjs:129-133 - refuses a constellation partition whose input hash differs. Present and enforced."
+   ],
+   "generated_locations": [
+    "All five artifacts agree. The 4ffe27f7... hash recorded in data/staging/release_blocker_r1/frontend_consumer_receipt.json is a superseded earlier export, not a live claim."
+   ],
+   "stale_contradictions": [],
+   "final_count": 0
+  },
+  {
+   "claim_family": "world_type_group_mapping",
+   "authoritative_measurement": "frontend/scripts/world-groups.json holds 43 entries. Replaying build-world.mjs groupOf() over all 71,373 nodes of frontend/.world/world.raw.json: SEVEN exported types have no mapping and fall to 'other' - RITUAL_STEP 3,121, PADA_PARALLEL_GROUP 1,434, ScholarlyDisagreement 113, Scholar 17, ScholarlyWork 17, Work 4, DeityGroup 2 = 4,708 nodes, 6.6% of the shipped world. Group totals: record 35,455, passage 22,537, wording 6,092, other 4,708, derived 1,091, person 821, idea 335, thing 86, unresolved-deity 57, deity 157, rite 34. Enumerated by replaying the mapping over the export rather than by grepping for the one type R2 named.",
+   "source_locations": [
+    "frontend/scripts/build-world.mjs:91-94 groupOf(); :86-88 TYPE_TO_GROUP loaded from world-groups.json.",
+    "frontend/scripts/world-groups.json - 43 entries, three of which (PASSAGE, Passage, AgentiveAssertion) match no exported type, and one of which (Devata) is dead because groupOf special-cases it."
+   ],
+   "generated_locations": [
+    "frontend/public/world/world.json 'groups' includes 'other'; 'types' lists all 47 exported types including PADA_PARALLEL_GROUP and RITUAL_STEP.",
+    "frontend/src/components/world/graph-shell.tsx:51 and frontend/src/lib/world/palette.ts:26 consume the eleven group names, so an unmapped type is drawn and legended as 'other'."
+   ],
+   "stale_contradictions": [
+    {
+     "file": "frontend/scripts/world-groups.json",
+     "line": 1,
+     "quote": "(43 entries; no key for RITUAL_STEP, PADA_PARALLEL_GROUP, ScholarlyDisagreement, Scholar, ScholarlyWork, Work or DeityGroup)",
+     "why_stale": "R2 F10 was accepted FIXED_AS_DISCLOSURE with the residual named as PadaParallelGroup's 1,434 nodes and the remedy identified as a missing group mapping. The mapping is still missing, and the defect is 3.3x larger than reported: RITUAL_STEP's 3,121 nodes are the bigger half and 4,708 nodes in total are legended 'other' in the shipped world. A rite step drawn in the same undifferentiated group as a scholarly disagreement is the harm R2 cited to justify the assertion migration, still shipping.",
+     "severity": "MAJOR"
+    }
+   ],
+   "final_count": 1
+  },
+  {
+   "claim_family": "dated_reports_judged_not_stale",
+   "authoritative_measurement": "Applied R2 F14's rule - a dated historical report describing what was true then is not a stale public claim; an undated live document or a shipped product artifact is. Every docs/ hit was checked for a date, a wave/agent attribution and a pinned graph census.",
+   "source_locations": [
+    "docs/reports/data-completeness/ritual.md:40 'the ritual_context key is absent from db.propertyKeys() entirely'. Headed 'Agent 13, Wave 2', 'Nothing was imported', graph pinned at 108,779 nodes / 265,295 relationships vs today's 164,201 / 508,042. NOT STALE.",
+    "docs/reports/data-completeness/attribution.md:222 reports Devata.attribution_scope_note as an OPEN defect carrying 'The Anukramani attribution layer covers the Rigveda only. A zero for SV, YV or AV means that corpus has no attribution layer...'. That property has since been rewritten with the AV disclosure added, so the defect it reports is closed. Headed 'Agent 8, Wave 1 - baseline commit 564d43f' with the same 108,779-node census. NOT STALE.",
+    "docs/reports/data-completeness/gap-census.md:81, :90, :91, :436 - '4,865 semantic assertions', 'the semantic assertion layer is Rigveda-only and covers 2,542 of 10,552 RV mantras'. A dated wave census. NOT STALE as a public claim, but it is the document a reader reaches for first, so a superseding header would be cheap insurance.",
+    "docs/reports/data-completeness/semantic-roles.md:3 already opens 'The semantic layer was Rigveda-only. It now reaches all four Samhitas'. CORRECT.",
+    "docs/reports/V3_2_FINAL_100_QUESTION_BENCHMARK.{md,jsonl} Q84 and V3_3_FINAL_100_QUESTION_BENCHMARK.jsonl Q84 'Zero passages carry a ritual_context property'. Version-named benchmark artifacts. NOT STALE.",
+    "docs/reports/GRAPH_ADVERSARIAL_QA_V2.md:51, :231; docs/reports/data-completeness/BASELINE.md:109-126; corpus-audit.md:181; communities.md:109. All dated QA/baseline reports. NOT STALE."
+   ],
+   "generated_locations": [],
+   "stale_contradictions": [],
+   "final_count": 0
+  }
+ ],
+ "total_stale_contradictory_public_claims": 22,
+ "severity_rollup": {
+  "MAJOR": 11,
+  "MINOR": 5,
+  "CRITICAL": 6
+ },
+ "target": 0,
+ "verdict": "NOT_CLOSED",
+ "claims_that_survived_attack": [
+  "deity_population: every figure (214 / 157 / 57 = 22+7+28 / 5 UNDECIDED) verified by enumerating three property value spaces; every published surface agrees; the two remaining '184' figures are 214-30 profiled nodes and are correct.",
+  "ritual_context: five values summing to 20,210, method on all 20,210, Q84 enumerates all five, and no product surface reads it - R2 F7 and F16 both hold.",
+  "probed absences: all five PROBED_ABSENT_PROPERTIES verified against the complete 728-key space.",
+  "display_type: one key live, 45 values, no case-variant duplicate, and no surface publishes a cardinality.",
+  "world artifact lineage: one export hash across five artifacts plus a matching world.bin hash and byte count.",
+  "Samavedic translation NOT_BUILT: the hardcoded vedas_not_covered=['SV'] is true, and the 173 reuse rows never reach that branch.",
+  "GAP-SEMANTICS-001 clause 3: no surface publishes a blended assertion total alone; every one carries the derivation split.",
+  "world.predicates.json semantic-assertion caveat: the four-corpus split is exact and self-corrects the old 4,865 claim.",
+  "transmission plate matrix table and takeaway observation: fully measured from shape.cells_by_status and directed.pairs_reached, so they self-corrected when the graph moved. Only the hardcoded prose around them did not."
+ ],
+ "reverified_after_agent_a_mutation": {
+  "mutation": "RELEASE_BLOCKER_R3_MUTATION_RECEIPT_ATTRIBUTION_002 (2026-09-18T05:32Z, nodes_delta 0, relationships_delta 0)",
+  "effect_on_this_audit": "None of the 22 findings moved. Re-measured after it landed: assertions 35,131; Devata 214 / is_deity=true 157; HAS_DEVATA_ASCRIPTION 5,385 total = 4,816 over 4,160 AV mantras + 569 over 505 AV containers; HAS_DEVATA 10,558 all RV; REUSES_TEXT_FROM RV-SV 1,684 + AV-RV 311; attribution_scope_note still one distinct value carrying '4,665 of its 5,839 mantras' on all 214 nodes.",
+  "new_fact_that_strengthens_one_finding": "The mutation wrote resolution_status onto all 324 :DevataAscription nodes and 39 of them are now RESOLVED_TO_CANONICAL_DEVATA. world.predicates.json's HAS_DEVATA_ASCRIPTION limit -- 'A descriptor of the ascription's form, not a second deity attribution.' -- is now false of 39 nodes on its own terms, not merely inconsistent with _SCOPE_CAVEAT."
+ },
+ "line_numbers": "Line numbers re-confirmed against the working tree at the end of the audit. Agent A concurrently modified src/vedagraph/api/models/insight.py and src/vedagraph/api/services/insight_service.py, so anchors in those two files shifted; the shifted ones carry line_at_audit_time. Anchor by the quoted string, not by the number.",
+ "other_current_anchors": {
+  "src/vedagraph/api/services/insight_service.py:669": "_NON_PAIRING_CROSS_VEDA_ROWS definition",
+  "src/vedagraph/api/services/insight_service.py:1604": "_cross_veda_cell",
+  "src/vedagraph/api/services/insight_service.py:1690": "the NOT_ESTABLISHED_FOR_PAIR branch",
+  "src/vedagraph/api/models/insight.py:494": "MatrixShape docstring",
+  "src/vedagraph/api/services/graph_service.py:999": "PREDICATE_SEMANTICS HAS_DEVATA",
+  "src/vedagraph/api/services/graph_service.py:1006": "PREDICATE_SEMANTICS HAS_DEVATA_ASCRIPTION",
+  "src/vedagraph/domain/layer_figures.py:56": "DEDICATED_ENGLISH_MANTRAS",
+  "src/vedagraph/domain/layer_figures.py:99": "HAS_CHANDAS 16_331",
+  "src/vedagraph/domain/layer_figures.py:100": "MENTIONS_LEMMA 9_000",
+  "src/vedagraph/domain/layer_figures.py:101": "HAS_SEMANTIC_ASSERTION 4_865",
+  "src/vedagraph/domain/layer_figures.py:109": "MENTIONS_ENTITY 28_227",
+  "src/vedagraph/domain/layer_figures.py:114": "ABOUT_CONCEPT 24_969",
+  "src/vedagraph/domain/layer_figures.py:137": "ASSERTION_LAYERS"
+ }
+}

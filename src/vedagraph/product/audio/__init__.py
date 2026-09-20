@@ -13,6 +13,8 @@ from vedagraph.product.audio.catalog import (
     ancestor_keys,
     scope_label,
     scope_plural,
+    tier_label,
+    tier_note,
     work_id_for_veda,
     write_catalog,
 )
@@ -25,6 +27,7 @@ from vedagraph.product.audio.models import (
     Availability,
     MappingConfidence,
     PlaybackMode,
+    PublicationTier,
 )
 
 __all__ = [
@@ -40,9 +43,12 @@ __all__ = [
     "Availability",
     "MappingConfidence",
     "PlaybackMode",
+    "PublicationTier",
     "ancestor_keys",
     "scope_label",
     "scope_plural",
+    "tier_label",
+    "tier_note",
     "work_id_for_veda",
     "write_catalog",
 ]

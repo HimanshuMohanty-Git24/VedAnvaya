@@ -25,7 +25,8 @@ import io
 import pathlib
 import sys
 
-sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8", errors="replace")
+if hasattr(sys.stdout, "reconfigure"):  # pragma: no cover - stream setup
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 
 PROJECT_ROOT = pathlib.Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(PROJECT_ROOT / "src"))

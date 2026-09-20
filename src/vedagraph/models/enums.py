@@ -66,12 +66,21 @@ class AlignmentLevel(StrEnum):
     ``STRUCTURAL_CONTAINER`` exists so a translation aligned to a container that is
     neither a section nor a hymn (a Samaveda Dasati, a Vajasaneyi Adhyaya) is not
     forced to claim ``HYMN`` alignment it does not have.
+
+    ``MANTRA_RANGE`` exists for the same reason one step finer, and it was added because its
+    absence was half of ``GAP-TRANSLATION-006``. Griffith's edition renders each pair of our
+    dvipada verses in RV 1.65-1.70 as one unit, so his translation is aligned to a span of two
+    mantras: neither ``MANTRA``, which claims a precision the unit does not have and is what
+    those 31 rows wrongly claimed, nor ``HYMN``, which understates it by a factor of five. The
+    word matches ``ScopeType.MANTRA_RANGE``, which the project already uses for a scope
+    covering a run of mantras.
     """
 
     WORK = "WORK"
     SECTION = "SECTION"
     HYMN = "HYMN"
     STRUCTURAL_CONTAINER = "STRUCTURAL_CONTAINER"
+    MANTRA_RANGE = "MANTRA_RANGE"
     MANTRA = "MANTRA"
 
 

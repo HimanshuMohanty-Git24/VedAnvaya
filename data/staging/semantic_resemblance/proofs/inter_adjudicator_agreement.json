@@ -1,0 +1,305 @@
+{
+ "raw": {
+  "pairs": 26,
+  "adjudicator_1": "nvidia/nemotron-3-ultra-550b-a55b:free via OpenRouter",
+  "adjudicator_2": "claude-opus-5 (this agent), labels written before the first adjudicator's were revealed",
+  "independence": "adjudicator 1 built none of the representations. Adjudicator 2 is the same model family that authored the representation code, so it is a second opinion on the labels and not an independent validation. Neither is a human; this project has no human gold.",
+  "sampling": "seeded, stratified by adjudicator 1's label (6 SAME_CONTENT, 8 SAME_TOPIC_DIFFERENT_CLAIM, 4 SHARED_PHRASING_ONLY, 8 UNRELATED), then shuffled so display order carried no signal",
+  "four_way_agreement": 0.6923,
+  "four_way_agreements": 18,
+  "four_way_cohens_kappa": 0.5667,
+  "binary_positive_agreement": 0.6923,
+  "binary_agreements": 18,
+  "binary_cohens_kappa": 0.3659,
+  "adjudicator_1_label_counts": {
+   "SAME_TOPIC_DIFFERENT_CLAIM": 8,
+   "SHARED_PHRASING_ONLY": 4,
+   "UNRELATED": 8,
+   "SAME_CONTENT": 6
+  },
+  "adjudicator_2_label_counts": {
+   "SAME_TOPIC_DIFFERENT_CLAIM": 12,
+   "UNRELATED": 8,
+   "SAME_CONTENT": 6
+  },
+  "confusion": {
+   "SAME_TOPIC_DIFFERENT_CLAIM -> SAME_TOPIC_DIFFERENT_CLAIM": 6,
+   "SHARED_PHRASING_ONLY -> SAME_TOPIC_DIFFERENT_CLAIM": 4,
+   "UNRELATED -> UNRELATED": 6,
+   "SAME_CONTENT -> SAME_CONTENT": 6,
+   "UNRELATED -> SAME_TOPIC_DIFFERENT_CLAIM": 2,
+   "SAME_TOPIC_DIFFERENT_CLAIM -> UNRELATED": 2
+  },
+  "rows": [
+   {
+    "pair_id": "c1c7c44defdbe1e1",
+    "a": "VG:AV:SAU:K10:S010:V011",
+    "b": "VG:RV:SAK:M06:S017:V006",
+    "adjudicator_1": "SAME_TOPIC_DIFFERENT_CLAIM",
+    "adjudicator_2_claude_opus_5": "SAME_TOPIC_DIFFERENT_CLAIM",
+    "four_way_agree": true,
+    "binary_agree": true
+   },
+   {
+    "pair_id": "638f2ceae22fbeda",
+    "a": "VG:AV:SAU:K07:S109:V002",
+    "b": "VG:RV:SAK:M07:S002:V002",
+    "adjudicator_1": "SAME_TOPIC_DIFFERENT_CLAIM",
+    "adjudicator_2_claude_opus_5": "SAME_TOPIC_DIFFERENT_CLAIM",
+    "four_way_agree": true,
+    "binary_agree": true
+   },
+   {
+    "pair_id": "c76e4ed833190a50",
+    "a": "VG:AV:SAU:K12:S002:V034",
+    "b": "VG:AV:SAU:K14:S001:V025",
+    "adjudicator_1": "SHARED_PHRASING_ONLY",
+    "adjudicator_2_claude_opus_5": "SAME_TOPIC_DIFFERENT_CLAIM",
+    "four_way_agree": false,
+    "binary_agree": false
+   },
+   {
+    "pair_id": "295a946a74f32d11",
+    "a": "VG:AV:SAU:K06:S045:V001",
+    "b": "VG:RV:SAK:M09:S049:V002",
+    "adjudicator_1": "UNRELATED",
+    "adjudicator_2_claude_opus_5": "UNRELATED",
+    "four_way_agree": true,
+    "binary_agree": true
+   },
+   {
+    "pair_id": "6c1d58f40c104496",
+    "a": "VG:AV:SAU:K20:S047:V002",
+    "b": "VG:AV:SAU:K20:S137:V013",
+    "adjudicator_1": "SAME_CONTENT",
+    "adjudicator_2_claude_opus_5": "SAME_CONTENT",
+    "four_way_agree": true,
+    "binary_agree": true
+   },
+   {
+    "pair_id": "65314fe259635f7a",
+    "a": "VG:AV:SAU:K11:S009:V020",
+    "b": "VG:AV:SAU:K19:S047:V008",
+    "adjudicator_1": "UNRELATED",
+    "adjudicator_2_claude_opus_5": "SAME_TOPIC_DIFFERENT_CLAIM",
+    "four_way_agree": false,
+    "binary_agree": false
+   },
+   {
+    "pair_id": "fabe13d7a64722be",
+    "a": "VG:AV:SAU:K19:S023:V005",
+    "b": "VG:AV:SAU:K19:S023:V019",
+    "adjudicator_1": "SHARED_PHRASING_ONLY",
+    "adjudicator_2_claude_opus_5": "SAME_TOPIC_DIFFERENT_CLAIM",
+    "four_way_agree": false,
+    "binary_agree": false
+   },
+   {
+    "pair_id": "8189ce09e511f8a8",
+    "a": "VG:AV:SAU:K07:S021:V001",
+    "b": "VG:RV:SAK:M10:S022:V007",
+    "adjudicator_1": "SAME_TOPIC_DIFFERENT_CLAIM",
+    "adjudicator_2_claude_opus_5": "UNRELATED",
+    "four_way_agree": false,
+    "binary_agree": false
+   },
+   {
+    "pair_id": "3ac58cc70f8f910b",
+    "a": "VG:RV:SAK:M07:S104:V015",
+    "b": "VG:RV:SAK:M08:S081:V006",
+    "adjudicator_1": "UNRELATED",
+    "adjudicator_2_claude_opus_5": "UNRELATED",
+    "four_way_agree": true,
+    "binary_agree": true
+   },
+   {
+    "pair_id": "13776ea993eb5fff",
+    "a": "VG:RV:SAK:M01:S127:V003",
+    "b": "VG:RV:SAK:M01:S127:V004",
+    "adjudicator_1": "SAME_TOPIC_DIFFERENT_CLAIM",
+    "adjudicator_2_claude_opus_5": "SAME_TOPIC_DIFFERENT_CLAIM",
+    "four_way_agree": true,
+    "binary_agree": true
+   },
+   {
+    "pair_id": "bb27ea3e2443c5b7",
+    "a": "VG:AV:SAU:K01:S004:V003",
+    "b": "VG:AV:SAU:K09:S005:V011",
+    "adjudicator_1": "UNRELATED",
+    "adjudicator_2_claude_opus_5": "UNRELATED",
+    "four_way_agree": true,
+    "binary_agree": true
+   },
+   {
+    "pair_id": "dc5c0c7444a6270c",
+    "a": "VG:RV:SAK:M01:S028:V001",
+    "b": "VG:RV:SAK:M01:S169:V006",
+    "adjudicator_1": "SAME_TOPIC_DIFFERENT_CLAIM",
+    "adjudicator_2_claude_opus_5": "UNRELATED",
+    "four_way_agree": false,
+    "binary_agree": false
+   },
+   {
+    "pair_id": "219513344b40bb5f",
+    "a": "VG:RV:SAK:M07:S083:V010",
+    "b": "VG:RV:SAK:M09:S085:V008",
+    "adjudicator_1": "UNRELATED",
+    "adjudicator_2_claude_opus_5": "SAME_TOPIC_DIFFERENT_CLAIM",
+    "four_way_agree": false,
+    "binary_agree": false
+   },
+   {
+    "pair_id": "3a33f15f5bda6cfd",
+    "a": "VG:AV:SAU:K07:S082:V001",
+    "b": "VG:AV:SAU:K18:S001:V031",
+    "adjudicator_1": "SHARED_PHRASING_ONLY",
+    "adjudicator_2_claude_opus_5": "SAME_TOPIC_DIFFERENT_CLAIM",
+    "four_way_agree": false,
+    "binary_agree": false
+   },
+   {
+    "pair_id": "756776cea8e7c4fb",
+    "a": "VG:RV:SAK:M02:S023:V010",
+    "b": "VG:RV:SAK:M07:S030:V005",
+    "adjudicator_1": "SHARED_PHRASING_ONLY",
+    "adjudicator_2_claude_opus_5": "SAME_TOPIC_DIFFERENT_CLAIM",
+    "four_way_agree": false,
+    "binary_agree": false
+   },
+   {
+    "pair_id": "3cf79b217e76ee5b",
+    "a": "VG:AV:SAU:K20:S011:V007",
+    "b": "VG:RV:SAK:M03:S034:V007",
+    "adjudicator_1": "SAME_CONTENT",
+    "adjudicator_2_claude_opus_5": "SAME_CONTENT",
+    "four_way_agree": true,
+    "binary_agree": true
+   },
+   {
+    "pair_id": "c36e8012ec07379f",
+    "a": "VG:AV:SAU:K06:S113:V002",
+    "b": "VG:RV:SAK:M06:S048:V012",
+    "adjudicator_1": "UNRELATED",
+    "adjudicator_2_claude_opus_5": "UNRELATED",
+    "four_way_agree": true,
+    "binary_agree": true
+   },
+   {
+    "pair_id": "6d0138c1060327a7",
+    "a": "VG:AV:SAU:K07:S092:V001",
+    "b": "VG:AV:SAU:K20:S125:V007",
+    "adjudicator_1": "SAME_CONTENT",
+    "adjudicator_2_claude_opus_5": "SAME_CONTENT",
+    "four_way_agree": true,
+    "binary_agree": true
+   },
+   {
+    "pair_id": "3de86bda21e7228d",
+    "a": "VG:RV:SAK:M02:S040:V005",
+    "b": "VG:RV:SAK:M08:S085:V002",
+    "adjudicator_1": "SAME_TOPIC_DIFFERENT_CLAIM",
+    "adjudicator_2_claude_opus_5": "SAME_TOPIC_DIFFERENT_CLAIM",
+    "four_way_agree": true,
+    "binary_agree": true
+   },
+   {
+    "pair_id": "8354cee95edf18ab",
+    "a": "VG:RV:SAK:M07:S021:V001",
+    "b": "VG:RV:SAK:M09:S074:V007",
+    "adjudicator_1": "UNRELATED",
+    "adjudicator_2_claude_opus_5": "UNRELATED",
+    "four_way_agree": true,
+    "binary_agree": true
+   },
+   {
+    "pair_id": "70d2598c77f1a1c3",
+    "a": "VG:AV:SAU:K12:S002:V005",
+    "b": "VG:YV:VSM:A10:V015",
+    "adjudicator_1": "UNRELATED",
+    "adjudicator_2_claude_opus_5": "UNRELATED",
+    "four_way_agree": true,
+    "binary_agree": true
+   },
+   {
+    "pair_id": "fd3717a3b3f7ee2c",
+    "a": "VG:AV:SAU:K09:S010:V017",
+    "b": "VG:RV:SAK:M01:S164:V036",
+    "adjudicator_1": "SAME_CONTENT",
+    "adjudicator_2_claude_opus_5": "SAME_CONTENT",
+    "four_way_agree": true,
+    "binary_agree": true
+   },
+   {
+    "pair_id": "0703f15a3dad4fdd",
+    "a": "VG:RV:SAK:M03:S032:V007",
+    "b": "VG:RV:SAK:M06:S047:V013",
+    "adjudicator_1": "SAME_TOPIC_DIFFERENT_CLAIM",
+    "adjudicator_2_claude_opus_5": "SAME_TOPIC_DIFFERENT_CLAIM",
+    "four_way_agree": true,
+    "binary_agree": true
+   },
+   {
+    "pair_id": "331c92f5825d12b1",
+    "a": "VG:AV:SAU:K20:S019:V004",
+    "b": "VG:RV:SAK:M03:S037:V004",
+    "adjudicator_1": "SAME_CONTENT",
+    "adjudicator_2_claude_opus_5": "SAME_CONTENT",
+    "four_way_agree": true,
+    "binary_agree": true
+   },
+   {
+    "pair_id": "0814c07bb43e98ba",
+    "a": "VG:AV:SAU:K20:S052:V001",
+    "b": "VG:AV:SAU:K20:S057:V014",
+    "adjudicator_1": "SAME_CONTENT",
+    "adjudicator_2_claude_opus_5": "SAME_CONTENT",
+    "four_way_agree": true,
+    "binary_agree": true
+   },
+   {
+    "pair_id": "6e1f8a7ed858f71f",
+    "a": "VG:RV:SAK:M04:S021:V003",
+    "b": "VG:RV:SAK:M07:S039:V005",
+    "adjudicator_1": "SAME_TOPIC_DIFFERENT_CLAIM",
+    "adjudicator_2_claude_opus_5": "SAME_TOPIC_DIFFERENT_CLAIM",
+    "four_way_agree": true,
+    "binary_agree": true
+   }
+  ]
+ },
+ "population_reweighted": {
+  "per_label": {
+   "SAME_CONTENT": {
+    "sampled": 6,
+    "population": 50,
+    "four_way_agreement": 1.0,
+    "binary_agreement": 1.0
+   },
+   "SAME_TOPIC_DIFFERENT_CLAIM": {
+    "sampled": 8,
+    "population": 138,
+    "four_way_agreement": 0.75,
+    "binary_agreement": 0.75
+   },
+   "SHARED_PHRASING_ONLY": {
+    "sampled": 4,
+    "population": 8,
+    "four_way_agreement": 0.0,
+    "binary_agreement": 0.0
+   },
+   "UNRELATED": {
+    "sampled": 8,
+    "population": 128,
+    "four_way_agreement": 0.75,
+    "binary_agreement": 0.75
+   }
+  },
+  "sample_share_shared_phrasing_only": 0.1538,
+  "population_share_shared_phrasing_only": 0.0247,
+  "population_reweighted_four_way_agreement": 0.7701,
+  "population_reweighted_binary_agreement": 0.7701,
+  "raw_binary_kappa_on_the_stratified_sample": 0.3659,
+  "raw_four_way_kappa_on_the_stratified_sample": 0.5667,
+  "reading": "the two adjudicators agree on every SAME_CONTENT pair and disagree on every SHARED_PHRASING_ONLY pair. The label boundary that is not reproducible is exactly the one between a shared-phrasing negative and a same-topic positive, which is the boundary this layer sits on."
+ }
+}

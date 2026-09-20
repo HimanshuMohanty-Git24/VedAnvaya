@@ -5,13 +5,13 @@
   "CONDITION_TREATMENT_DISTRIBUTION": 23,
   "CROP_MENTION_DISTRIBUTION": 10,
   "DEVATA_ACTION_DISTRIBUTION": 441,
-  "DEVATA_RELATIVE_FREQUENCY_BY_VEDA": 153,
+  "DEVATA_RELATIVE_FREQUENCY_BY_VEDA": 155,
   "DEVATA_REQUESTED_ACTION_DISTRIBUTION": 224,
-  "EVIDENCE_BASIS_BY_VEDA": 15,
+  "EVIDENCE_BASIS_BY_VEDA": 18,
   "HUMAN_CONCERN_DISTRIBUTION": 20,
-  "METAL_MENTION_DISTRIBUTION": 11,
-  "RITUAL_ENTITY_DENSITY": 31,
-  "THEONYM_CERTAINTY_BY_VEDA": 8
+  "METAL_MENTION_DISTRIBUTION": 15,
+  "RITUAL_ENTITY_DENSITY": 33,
+  "THEONYM_CERTAINTY_BY_VEDA": 12
  },
  "dimensions": [
   "devata_attribution",
@@ -30,7 +30,7 @@
  ],
  "vedas": {
   "AV": {
-   "coverage_score": 51.6,
+   "coverage_score": 54.1,
    "dimensions": {
     "agentive_assertion": {
      "covered_mantras": 0,
@@ -39,15 +39,15 @@
      "status": "ABSENT_FROM_SOURCE"
     },
     "chandas_attribution": {
-     "covered_mantras": 4075,
+     "covered_mantras": 4068,
      "reason": "",
-     "share": 0.6979,
+     "share": 0.6967,
      "status": "PRESENT"
     },
     "concept_salience": {
-     "covered_mantras": 3820,
+     "covered_mantras": 3781,
      "reason": "",
-     "share": 0.6542,
+     "share": 0.6475,
      "status": "PRESENT"
     },
     "cross_veda_reuse": {
@@ -57,9 +57,9 @@
      "status": "PRESENT"
     },
     "devata_ascription_index": {
-     "covered_mantras": 4163,
+     "covered_mantras": 4160,
      "reason": "",
-     "share": 0.713,
+     "share": 0.7125,
      "status": "PRESENT"
     },
     "devata_attribution": {
@@ -69,9 +69,9 @@
      "status": "ABSENT_FROM_SOURCE"
     },
     "entity_mention": {
-     "covered_mantras": 4291,
+     "covered_mantras": 4288,
      "reason": "",
-     "share": 0.7349,
+     "share": 0.7344,
      "status": "PRESENT"
     },
     "formula": {
@@ -81,9 +81,9 @@
      "status": "PRESENT"
     },
     "human_concern": {
-     "covered_mantras": 734,
+     "covered_mantras": 1093,
      "reason": "",
-     "share": 0.1257,
+     "share": 0.1872,
      "status": "PRESENT"
     },
     "model_semantic_assertion": {
@@ -99,15 +99,15 @@
      "status": "PRESENT"
     },
     "theonym_mention": {
-     "covered_mantras": 2216,
+     "covered_mantras": 2616,
      "reason": "",
-     "share": 0.3795,
+     "share": 0.448,
      "status": "PRESENT"
     },
     "translation": {
-     "covered_mantras": 4878,
+     "covered_mantras": 5783,
      "reason": "",
-     "share": 0.8354,
+     "share": 0.9904,
      "status": "PRESENT"
     }
    },
@@ -118,7 +118,7 @@
    "work_id": "VG:WORK:AV:SAU"
   },
   "RV": {
-   "coverage_score": 60.3,
+   "coverage_score": 60.1,
    "dimensions": {
     "agentive_assertion": {
      "covered_mantras": 2228,
@@ -133,9 +133,9 @@
      "status": "PRESENT"
     },
     "concept_salience": {
-     "covered_mantras": 8226,
+     "covered_mantras": 7946,
      "reason": "",
-     "share": 0.7796,
+     "share": 0.753,
      "status": "PRESENT"
     },
     "cross_veda_reuse": {
@@ -157,9 +157,9 @@
      "status": "PRESENT"
     },
     "entity_mention": {
-     "covered_mantras": 8141,
+     "covered_mantras": 8121,
      "reason": "",
-     "share": 0.7715,
+     "share": 0.7696,
      "status": "PRESENT"
     },
     "formula": {
@@ -193,9 +193,9 @@
      "status": "PRESENT"
     },
     "translation": {
-     "covered_mantras": 10502,
+     "covered_mantras": 10540,
      "reason": "",
-     "share": 0.9953,
+     "share": 0.9989,
      "status": "PRESENT"
     }
    },
@@ -206,7 +206,7 @@
    "work_id": "VG:WORK:RV:SAK"
   },
   "SV": {
-   "coverage_score": 60.3,
+   "coverage_score": 59.7,
    "dimensions": {
     "agentive_assertion": {
      "covered_mantras": 0,
@@ -221,9 +221,9 @@
      "status": "ABSENT_FROM_SOURCE"
     },
     "concept_salience": {
-     "covered_mantras": 1322,
+     "covered_mantras": 1262,
      "reason": "",
-     "share": 0.7169,
+     "share": 0.6844,
      "status": "PRESENT"
     },
     "cross_veda_reuse": {
@@ -245,9 +245,9 @@
      "status": "ABSENT_FROM_SOURCE"
     },
     "entity_mention": {
-     "covered_mantras": 1306,
+     "covered_mantras": 1302,
      "reason": "",
-     "share": 0.7082,
+     "share": 0.7061,
      "status": "PRESENT"
     },
     "formula": {
@@ -282,7 +282,7 @@
     },
     "translation": {
      "covered_mantras": 0,
-     "reason": "No complete translation of the Kauthuma arcika is ingested; the only one located is Ranayaniya and does not align.",
+     "reason": "No complete translation of the Kauthuma arcika is ingested; the only one located is Ranayaniya and does not align. 173 Samavedic verses do now show Griffith's Rigvedic English on text verified character-identical, disclosed as a reused rendering; that is translation assistance and not a Samavedic translation, so it is deliberately not counted here.",
      "share": 0.0,
      "status": "ABSENT_FROM_SOURCE"
     }
@@ -294,7 +294,7 @@
    "work_id": "VG:WORK:SV:KAU"
   },
   "YV": {
-   "coverage_score": 54.9,
+   "coverage_score": 55.3,
    "dimensions": {
     "agentive_assertion": {
      "covered_mantras": 0,
@@ -309,9 +309,9 @@
      "status": "ABSENT_FROM_SOURCE"
     },
     "concept_salience": {
-     "covered_mantras": 1282,
+     "covered_mantras": 1236,
      "reason": "",
-     "share": 0.6491,
+     "share": 0.6258,
      "status": "PRESENT"
     },
     "cross_veda_reuse": {
@@ -333,9 +333,9 @@
      "status": "ABSENT_FROM_SOURCE"
     },
     "entity_mention": {
-     "covered_mantras": 1358,
+     "covered_mantras": 1359,
      "reason": "",
-     "share": 0.6876,
+     "share": 0.6881,
      "status": "PRESENT"
     },
     "formula": {
@@ -363,15 +363,15 @@
      "status": "PRESENT"
     },
     "theonym_mention": {
-     "covered_mantras": 1102,
+     "covered_mantras": 1167,
      "reason": "",
-     "share": 0.558,
+     "share": 0.5909,
      "status": "PRESENT"
     },
     "translation": {
-     "covered_mantras": 1903,
+     "covered_mantras": 1950,
      "reason": "",
-     "share": 0.9635,
+     "share": 0.9873,
      "status": "PRESENT"
     }
    },

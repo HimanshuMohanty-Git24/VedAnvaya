@@ -1,0 +1,14 @@
+{
+  "artifact": "RELEASE_BLOCKER_R3_LOGICAL_BACKUP",
+  "at": "2026-09-18T05:29:30.146367+00:00",
+  "kind": "FULL_LOGICAL_EXPORT",
+  "why_not_neo4j_admin_dump": "neo4j:5.26-community refuses `neo4j-admin database dump` while the database is in use, and stopping it would have broken the concurrent read-only audit run. A full logical export of every node (labels + properties) and every relationship (type + endpoints + properties) is restorable and was taken without interrupting the service. The prior physical dump at data/staging/final_stabilization/neo4j_backup_20260917/neo4j.dump is untouched and remains held.",
+  "nodes_exported": 164201,
+  "relationships_exported": 508042,
+  "nodes_file": "data/staging/release_blocker_r3/backup/nodes.jsonl",
+  "relationships_file": "data/staging/release_blocker_r3/backup/relationships.jsonl",
+  "nodes_sha256": "8b004b91d13fb59c1f4de9663530f14255b210590766179b24c235096e46d86b",
+  "relationships_sha256": "625eb1e98e6feb25f0cb7c15c1407ef9a8c2518c7c93f7e047c51d6bdb64136b",
+  "nodes_bytes": 179440497,
+  "relationships_bytes": 314874467
+}

@@ -41,6 +41,17 @@ export type WorldManifest = {
      * renderer falls back to drawing everything.
      */
     semanticEdges?: number;
+    /**
+     * The hash of the public export all four artifact files were built from.
+     *
+     * Present in `world.json`, `world.labels.json` and `world.predicates.json`, and the reason
+     * a browser can be told it is holding a mismatched set rather than quietly drawing one.
+     */
+    inputPublicExportHash?: string;
+    /** `world.bin`'s length in bytes, as written. */
+    worldBinBytes?: number;
+    /** `world.bin`'s SHA-256, as written. Not verified at runtime; see `readWorld`. */
+    worldBinSha256?: string;
     /** Semantic group names, indexed by `nodeGroup`. Colour comes from `--va-group-*`. */
     groups: string[];
     types: string[];
@@ -118,6 +129,8 @@ export type World = {
 };
 
 export type WorldLabels = {
+    /** The export hash this label set was built from. Checked against the manifest's. */
+    inputPublicExportHash?: string;
     ids: string[];
     labels: string[];
 };
@@ -277,16 +290,70 @@ export function loadWorld(signal?: AbortSignal): Promise<World> {
     });
 }
 
+/**
+ * The manifest, always fresh, and the address every other artifact file is fetched from.
+ *
+ * The four files under `/world` have stable names and are served
+ * `Cache-Control: public, max-age=31536000, immutable`, which is correct about their contents
+ * and wrong about their names: a rebuilt artifact is a new set of bytes at the same URL, so a
+ * browser holding last week's `world.bin` has no reason to ever ask again. Worse, the entries
+ * are evicted independently and `world.bin` is 4 MB against the manifest's 28 KB, so the pair
+ * a reader ends up with is not guaranteed to be a pair at all. A mismatched pair does not
+ * error: the section offsets still resolve, and `nodeGroup[i]` returns the group of whichever
+ * node happened to sit at that index in the other build. Every label in the graph is then
+ * confidently the wrong kind of thing.
+ *
+ * So the manifest is fetched with `cache: "no-cache"` - revalidated every time, 28 KB - and
+ * its `inputPublicExportHash` is appended to the addresses of the files that are large enough
+ * to be worth caching hard. A rebuilt artifact changes the hash, which changes those URLs,
+ * which is a cache miss by construction rather than by header.
+ */
+async function readManifest(): Promise<WorldManifest> {
+    const response = await fetch("/world/world.json", { cache: "no-cache" });
+    if (!response.ok) throw new Error("The world could not be read.");
+    return (await response.json()) as WorldManifest;
+}
+
+let manifestCache: Promise<WorldManifest> | null = null;
+
+function sharedManifest(): Promise<WorldManifest> {
+    if (!manifestCache) {
+        manifestCache = readManifest().catch((reason) => {
+            manifestCache = null;
+            throw reason;
+        });
+    }
+    return manifestCache;
+}
+
+/** An artifact file's address, versioned by the export every file was built from. */
+export function artifactUrl(file: string, manifest: Pick<WorldManifest, "inputPublicExportHash">) {
+    const version = manifest.inputPublicExportHash;
+    return version ? `/world/${file}?v=${version}` : `/world/${file}`;
+}
+
 async function readWorld(): Promise<World> {
-    const [manifestResponse, binaryResponse] = await Promise.all([
-        fetch("/world/world.json"),
-        fetch("/world/world.bin"),
-    ]);
-    if (!manifestResponse.ok || !binaryResponse.ok) {
+    const manifest = await sharedManifest();
+    const binaryResponse = await fetch(artifactUrl("world.bin", manifest));
+    if (!binaryResponse.ok) {
         throw new Error("The world could not be read.");
     }
-    const manifest = (await manifestResponse.json()) as WorldManifest;
     const buffer = await binaryResponse.arrayBuffer();
+
+    /*
+     * The cheap half of the integrity check, and it is the half that catches the real failure.
+     * A stale `world.bin` is a different length from the one this manifest describes, and
+     * saying so is better than drawing 71,773 subjects out of 35,648 nodes' worth of bytes.
+     * The manifest also carries `worldBinSha256`; hashing 4 MB in the browser would catch
+     * corruption as well as staleness, and is deliberately not done on the critical path -
+     * `tests/unit/public-identity.test.ts` verifies the digest where the cost is free.
+     */
+    if (manifest.worldBinBytes !== undefined && buffer.byteLength !== manifest.worldBinBytes) {
+        throw new Error(
+            `The world is out of step with itself: world.bin is ${buffer.byteLength} bytes, ` +
+                `and this build describes ${manifest.worldBinBytes}. Reload to fetch it again.`,
+        );
+    }
 
     const sections = new Map(manifest.sections.map((s) => [s.name, s]));
     const need = (name: string) => {
@@ -328,9 +395,121 @@ export function loadWorldLabels(signal?: AbortSignal): Promise<WorldLabels> {
 }
 
 async function readWorldLabels(): Promise<WorldLabels> {
-    const response = await fetch("/world/world.labels.json");
+    const manifest = await sharedManifest();
+    const response = await fetch(artifactUrl("world.labels.json", manifest));
     if (!response.ok) throw new Error("The world labels could not be read.");
-    return (await response.json()) as WorldLabels;
+    const raw = (await response.json()) as WorldLabels;
+
+    /*
+     * Labels and geometry have to be the same build, and until this check they simply were not
+     * required to be. Both files carry the hash of the public export they were written from,
+     * and both are already asserted equal at build time - but a build-time assertion says
+     * nothing about which two files a given browser is holding.
+     *
+     * The count is checked too, because an artifact predating the hash field would otherwise
+     * pass unverified, and a label array of a different length than the node array is the same
+     * defect announcing itself in a way that does not need the hash.
+     */
+    const expected = manifest.inputPublicExportHash;
+    if (expected && raw.inputPublicExportHash && raw.inputPublicExportHash !== expected) {
+        throw new Error(
+            "The world labels are from a different build than the world. Reload to fetch them again.",
+        );
+    }
+    if (raw.ids.length !== manifest.counts.nodes) {
+        throw new Error(
+            `The world labels are out of step with the world: ${raw.ids.length} names for ` +
+                `${manifest.counts.nodes} subjects. Reload to fetch them again.`,
+        );
+    }
+
+    return {
+        inputPublicExportHash: raw.inputPublicExportHash,
+        ids: raw.ids,
+        labels: readableLabels(raw.labels, raw.ids),
+    };
+}
+
+/** A pipeline vocabulary constant, written the way it is stored: BINDS, IS_OR_BECOMES. */
+const SHOUTED = /^[A-Z][A-Z0-9]*(?:_[A-Z0-9]+)*$/;
+/** A metric label carrying the graph id of what it measures, in either stored shape. */
+const METRIC_WITH_ID = /^([A-Z][A-Z0-9_]*)\s*(?:\(([^)]*)\)|\/\s*(\S+))$/;
+
+function humanise(constant: string): string {
+    const words = constant.toLowerCase().replaceAll("_", " ");
+    return words.charAt(0).toUpperCase() + words.slice(1);
+}
+
+/**
+ * Two label families in this artifact are pipeline vocabulary rather than words.
+ *
+ * Measured over the shipped 71,773 labels: exactly 40 are a shouted constant and all 40 are
+ * `:ActionPredicate` nodes - `BINDS`, `IS_OR_BECOMES`, `MOVES_TO`. Exactly 746 carry a raw
+ * graph id and all 746 are `:DerivedMetric` - `DEVATA_ATTRIBUTION_BY_VEDA (VG:DEVATA:INDRAH)`,
+ * `ANIMAL_MENTION_DISTRIBUTION / VG:WORK:AV:SAU`. Nothing else in the file matches either
+ * shape, so this rewrite is total over those two families and touches no other label.
+ *
+ * They matter because they are not rare on screen. Eight of the twelve idea seats in Indra's
+ * focus scene are action predicates, so a reader who clicked a deity met `IS_OR_BECOMES` and
+ * `ESTABLISHES` shouting beside `the Maruts`; and a bare `VG:DEVATA:INDRAH` in a drawn row is
+ * an internal identifier on a normal product page.
+ *
+ * Done here, once, at the single point the labels are read, rather than at the six places they
+ * are rendered - the canvas, the search hits, the hub list, the path endpoints, the edge
+ * labels and the focus rows - because five of the six would have been fixed and one forgotten.
+ *
+ * ## Why the id is not simply dropped
+ *
+ * A metric's name is not unique: `ANIMAL_MENTION_DISTRIBUTION` is recorded once per work, so
+ * dropping the id would give four rows one name. The focus rounds deduplicate by label, so
+ * three of those four would silently stop being drawable. Colliding names therefore keep a
+ * scope, and only genuinely unique ones lose it.
+ *
+ * The scope is the *label* of the thing the id names, not the id: every one of those ids is
+ * itself a node in this artifact, so `DEVATA_ATTRIBUTION_BY_VEDA (VG:DEVATA:INDRAH)` resolves
+ * to "Devata attribution by veda - Indra" rather than trading one identifier for a tidier one.
+ * An id that does not resolve keeps its segments, because a scope a reader cannot read still
+ * beats two rows that claim to be the same measurement.
+ */
+export function readableLabels(labels: readonly string[], ids: readonly string[]): string[] {
+    const out = labels.slice();
+    const metricAt: number[] = [];
+    const nameCount = new Map<string, number>();
+
+    for (let i = 0; i < out.length; i += 1) {
+        const label = out[i];
+        if (!label) continue;
+        if (SHOUTED.test(label)) {
+            out[i] = humanise(label);
+            continue;
+        }
+        const metric = METRIC_WITH_ID.exec(label);
+        if (!metric) continue;
+        metricAt.push(i);
+        const name = humanise(metric[1]);
+        nameCount.set(name, (nameCount.get(name) ?? 0) + 1);
+    }
+
+    const indexOfId = new Map<string, number>();
+    for (let i = 0; i < ids.length; i += 1) indexOfId.set(ids[i], i);
+
+    for (const i of metricAt) {
+        const metric = METRIC_WITH_ID.exec(out[i]);
+        if (!metric) continue;
+        const name = humanise(metric[1]);
+        if ((nameCount.get(name) ?? 0) <= 1) {
+            out[i] = name;
+            continue;
+        }
+        const id = (metric[2] ?? metric[3] ?? "").trim();
+        const named = indexOfId.get(id);
+        const scope =
+            named === undefined || !labels[named]
+                ? id.split(":").filter(Boolean).slice(1).join(" ")
+                : labels[named];
+        out[i] = scope ? `${name} - ${scope}` : name;
+    }
+    return out;
 }
 
 /** Edge indices touching a node. A slice of the CSR array, not a scan. */

@@ -1,14 +1,15 @@
 {
   "version": 1,
-  "generated": "2026-09-14T08:50:08Z",
+  "generated": "2026-09-18T15:13:44Z",
+  "inputPublicExportHash": "dee0876531490c48939d456b586b2cb0fd66dc487617a4cb44ad20a17326ae40",
   "source": "vedagraph.api.services.graph_service.PREDICATE_SEMANTICS",
   "counts": {
-    "predicates": 60,
-    "curated": 57,
-    "derived": 3,
-    "symmetric": 3,
-    "directed": 5,
-    "undeclared": 52
+    "predicates": 74,
+    "curated": 66,
+    "derived": 8,
+    "symmetric": 4,
+    "directed": 17,
+    "undeclared": 53
   },
   "predicates": {
     "ABOUT_CONCEPT": {
@@ -25,9 +26,23 @@
       "direction": "UNDECLARED",
       "basis": "CURATED"
     },
+    "ASCRIBES_TO_DEVATA": {
+      "phrase": "is derived from the deity",
+      "asserts": "This ascription descriptor is morphologically derived from that deity's name.",
+      "limit": "A grammatical fact, not a reading: aagneyam is the vrddhi taddhita of agni under Panini 4.2.24 sasya devata. 47 of 324 descriptors resolve; the other 277 keep their descriptor form and a typed reason, and are NOT silently absent.",
+      "direction": "UNDECLARED",
+      "basis": "CURATED"
+    },
     "ASSERTION_AGENT": {
       "phrase": "assertion agent",
       "asserts": "The graph records a assertion agent relationship between these two.",
+      "limit": "This API carries no curated explanation for this predicate, so what the edge does and does not establish is not stated here. Treat it as unexplained rather than as unqualified.",
+      "direction": "UNDECLARED",
+      "basis": "DERIVED_FROM_NAME"
+    },
+    "ASSERTION_PREDICATE": {
+      "phrase": "assertion predicate",
+      "asserts": "The graph records a assertion predicate relationship between these two.",
       "limit": "This API carries no curated explanation for this predicate, so what the edge does and does not establish is not stated here. Treat it as unexplained rather than as unqualified.",
       "direction": "UNDECLARED",
       "basis": "DERIVED_FROM_NAME"
@@ -38,6 +53,13 @@
       "limit": "This API carries no curated explanation for this predicate, so what the edge does and does not establish is not stated here. Treat it as unexplained rather than as unqualified.",
       "direction": "UNDECLARED",
       "basis": "DERIVED_FROM_NAME"
+    },
+    "ATTESTED_IN": {
+      "phrase": "is attested in",
+      "asserts": "The registry records this passage as an attestation of the entity.",
+      "limit": "An attestation locator taken from the entity registry, not a re-reading of the passage. Absence means the registry recorded no example, not that the passage does not name the entity.",
+      "direction": "UNDECLARED",
+      "basis": "CURATED"
     },
     "BELONGS_TO_FAMILY": {
       "phrase": "belongs to the seer family",
@@ -85,7 +107,7 @@
       "phrase": "contrasts with",
       "asserts": "A model reading found the passage setting these in contrast.",
       "limit": "Eight edges, model-extracted over a translation.",
-      "direction": "UNDECLARED",
+      "direction": "DIRECTED",
       "basis": "CURATED"
     },
     "CO_OCCURS_WITH": {
@@ -98,7 +120,7 @@
     "DESCRIBED_IN": {
       "phrase": "is described in",
       "asserts": "This rite or role is described in the passage.",
-      "limit": "A curated pointer for the eight modelled rites, not a concordance.",
+      "limit": "A curated pointer for the modelled rites, not a concordance.",
       "direction": "UNDECLARED",
       "basis": "CURATED"
     },
@@ -106,14 +128,14 @@
       "phrase": "describes",
       "asserts": "A model reading of the passage found it describing this target.",
       "limit": "Model-extracted and model-adjudicated. A plausible-sounding reason is not a checked one, and the edge records whether the reviewer was shown the Sanskrit.",
-      "direction": "UNDECLARED",
+      "direction": "DIRECTED",
       "basis": "CURATED"
     },
     "DESCRIBES_ACTION": {
       "phrase": "describes the action",
       "asserts": "A model reading found the passage describing this action.",
       "limit": "Model-extracted and model-adjudicated, over a translation.",
-      "direction": "UNDECLARED",
+      "direction": "DIRECTED",
       "basis": "CURATED"
     },
     "DEVATA_ASSOCIATED_WITH": {
@@ -147,21 +169,28 @@
     "HAS_CHANDAS": {
       "phrase": "is in the metre",
       "asserts": "The Anukramani names this metre for this passage.",
-      "limit": "10,388 of 16,331 arrive by projecting a hymn's label downward. The Samaveda carries no metre layer at all, so its absence there is a missing layer.",
+      "limit": "10,399 of 16,298 arrive by projecting a hymn's label downward. The Samaveda carries no metre layer at all, so its absence there is a missing layer.",
       "direction": "UNDECLARED",
       "basis": "CURATED"
     },
     "HAS_DEVATA": {
       "phrase": "is ascribed to the deity",
       "asserts": "The Anukramani names this deity as the passage's addressee.",
-      "limit": "Rigveda-only -- all 10,558 edges -- and 8,329 of them are inherited from a hymn label. The devata slot is also not a theological claim: it holds human patrons and praise of a gift as well as gods.",
+      "limit": "Rigveda-only -- all 10,558 edges -- and 8,329 of them are inherited from a hymn label. This predicate's Rigvedic bound is NOT the corpus's: the Atharvaveda records its dedications under HAS_DEVATA_ASCRIPTION and HAS_DEVATA_DERIVED, so a reader must not take a zero here as a corpus that names no addressee. The devata slot is also not a theological claim: it holds human patrons and praise of a gift as well as gods.",
       "direction": "UNDECLARED",
       "basis": "CURATED"
     },
     "HAS_DEVATA_ASCRIPTION": {
       "phrase": "carries the deity ascription",
       "asserts": "The passage carries this Anukramani ascription descriptor.",
-      "limit": "A descriptor of the ascription's form, not a second deity attribution.",
+      "limit": "The Atharvaveda's own dedication layer, 5,385 edges over 4,665 of its 6,590 passages, holding Whitney's verbatim descriptor rather than a deity name. It is a descriptor of the dedication's FORM and not itself an attribution to a named god -- but 47 of its 324 descriptors now resolve to one through ASCRIBES_TO_DEVATA, and the other 277 are refused with a typed reason each rather than unprocessed.",
+      "direction": "UNDECLARED",
+      "basis": "CURATED"
+    },
+    "HAS_DEVATA_DERIVED": {
+      "phrase": "is dedicated by resolved ascription",
+      "asserts": "The Atharvavedic index dedicates this passage's hymn to that deity.",
+      "limit": "Separate from HAS_DEVATA on purpose: HAS_DEVATA is the Rigvedic Anukramani naming a deity directly, this is the Atharvavedic apparatus naming an adjective that a morphological derivation resolves. Every edge is CONTAINER_INHERITED at SUKTA_WIDE scope -- the index states a deity for the hymn, and no Atharvavedic verse is ascribed differently from its sukta. The resolution being exact does not make the scope per-verse; read `ascription_resolution_*` for that axis.",
       "direction": "UNDECLARED",
       "basis": "CURATED"
     },
@@ -179,6 +208,13 @@
       "direction": "UNDECLARED",
       "basis": "CURATED"
     },
+    "HAS_PARALLEL_PADA": {
+      "phrase": "has parallel pada",
+      "asserts": "The graph records a has parallel pada relationship between these two.",
+      "limit": "This API carries no curated explanation for this predicate, so what the edge does and does not establish is not stated here. Treat it as unexplained rather than as unqualified.",
+      "direction": "UNDECLARED",
+      "basis": "DERIVED_FROM_NAME"
+    },
     "HAS_RISHI": {
       "phrase": "is ascribed to the seer",
       "asserts": "The Anukramani names this seer for this passage.",
@@ -186,17 +222,24 @@
       "direction": "UNDECLARED",
       "basis": "CURATED"
     },
+    "HAS_RITUAL_STEP": {
+      "phrase": "has the procedural step",
+      "asserts": "A Srautasutra or Grhyasutra prints this step as part of the rite.",
+      "limit": "Not the Samhita's own numbering -- that is HAS_STEP, and the two are never summed. Each source work numbers its own sequence from 1, so these edges do not compose into one procedure, and most state a position without printing the run it falls in. Read /api/v1/rituals/{id}, which returns them grouped by source work.",
+      "direction": "UNDECLARED",
+      "basis": "CURATED"
+    },
     "HAS_SEMANTIC_ASSERTION": {
       "phrase": "carries the semantic assertion",
       "asserts": "This passage carries a reified assertion about who does what.",
-      "limit": "One label over two layers of unequal strength that must not be summed: 2,406 assertions derived by rule from the Sanskrit annotation, and 2,459 extracted unreviewed by a model from an English translation. All 4,865 are Rigvedic. Read the assertion's own `derivation` before using it.",
+      "limit": "One label over five derivations of unequal strength that must not be summed: 28,370 and 2,406 derived by rule from the Sanskrit annotation, 1,532 from the treebank dependency layer, 364 projected from a letter-identical Rigvedic verse rather than annotated in their own corpus, and 2,459 extracted unreviewed by a model from an English translation. The layer reaches all four corpora unevenly -- RV 27,057, AV 6,167, YV 1,543, SV 364 -- and none of it is human-reviewed. This said 'All 4,865 are Rigvedic', which was true of an earlier state of the layer and is now false in both halves. Read the assertion's own `derivation` before using it.",
       "direction": "UNDECLARED",
       "basis": "CURATED"
     },
     "HAS_STEP": {
       "phrase": "has the step",
-      "asserts": "This action is a step of the rite.",
-      "limit": "Three steps exist across the whole layer, so a rite without them is unmodelled rather than stepless.",
+      "asserts": "This action is a step of the rite, in the Samhita text's own numbering.",
+      "limit": "Three steps exist across the whole layer, all on the soma pressing, so a rite without them is unmodelled rather than stepless. The sutra-attested procedure is a separate predicate, HAS_RITUAL_STEP, and the two must not be added together.",
       "direction": "UNDECLARED",
       "basis": "CURATED"
     },
@@ -204,20 +247,20 @@
       "phrase": "has the theme",
       "asserts": "A model reading assigned this theme to the passage.",
       "limit": "Eight edges, model-extracted. Not a thematic index of the corpus.",
-      "direction": "UNDECLARED",
+      "direction": "DIRECTED",
       "basis": "CURATED"
     },
     "INVOKES": {
       "phrase": "invokes",
       "asserts": "A model reading of the passage found it invoking this target.",
       "limit": "Model-extracted from an English translation and adjudicated by a second model. MODEL_ADJUDICATED is the strongest review state anywhere in this graph; nothing in it is human-reviewed.",
-      "direction": "UNDECLARED",
+      "direction": "DIRECTED",
       "basis": "CURATED"
     },
     "INVOKES_DEVATA": {
       "phrase": "invokes the deity",
       "asserts": "The rite invokes this deity.",
-      "limit": "Curated for the eight modelled rites only.",
+      "limit": "Curated for the modelled rites only.",
       "direction": "UNDECLARED",
       "basis": "CURATED"
     },
@@ -225,21 +268,21 @@
       "phrase": "involves the offering",
       "asserts": "A model reading found the passage involving this offering.",
       "limit": "Eleven edges, model-extracted over a translation.",
-      "direction": "UNDECLARED",
+      "direction": "DIRECTED",
       "basis": "CURATED"
     },
     "INVOLVES_RITUAL": {
       "phrase": "involves the ritual",
       "asserts": "A model reading found the passage involving this rite.",
       "limit": "Nine edges, model-extracted over a translation.",
-      "direction": "UNDECLARED",
+      "direction": "DIRECTED",
       "basis": "CURATED"
     },
     "INVOLVES_SUBSTANCE": {
       "phrase": "involves the substance",
       "asserts": "A model reading found the passage involving this substance.",
       "limit": "Three edges. A single confidence value across three edges is a sample size, not a measurement.",
-      "direction": "UNDECLARED",
+      "direction": "DIRECTED",
       "basis": "CURATED"
     },
     "IS_ASKED_TO": {
@@ -284,6 +327,13 @@
       "direction": "UNDECLARED",
       "basis": "CURATED"
     },
+    "MENTIONS_EPITHET": {
+      "phrase": "attests the epithet",
+      "asserts": "The passage attests this epithet, per the Rigvedic morphological annotation.",
+      "limit": "RIGVEDA ONLY, and the bound is a property of the evidence rather than of the epithets: the annotation layer covers the Rigveda's 10,552 mantras and none of the other 9,658, so an epithet with no Samavedic edge is UNANNOTATED there and not absent. Read `epithet_match_tier`: STEM_LEMMA edges come from the annotator's own lemma and cover every inflection of it, while ATTESTED_SURFACE_FORM edges cover one attested word form because the epithet is itself an inflected form -- the duals dasrā, nāsatyā and rudravartanī, whose stems the annotator names and whose wider inflection is deliberately not claimed.",
+      "direction": "UNDECLARED",
+      "basis": "CURATED"
+    },
     "NEAR_PARALLEL_OF": {
       "phrase": "is a near parallel of",
       "asserts": "The two passages resemble each other closely on a normalised textual surface.",
@@ -319,11 +369,25 @@
       "direction": "UNDECLARED",
       "basis": "CURATED"
     },
+    "POSITION_ASSERTED_BY": {
+      "phrase": "position asserted by",
+      "asserts": "The graph records a position asserted by relationship between these two.",
+      "limit": "This API carries no curated explanation for this predicate, so what the edge does and does not establish is not stated here. Treat it as unexplained rather than as unqualified.",
+      "direction": "UNDECLARED",
+      "basis": "DERIVED_FROM_NAME"
+    },
+    "POSITION_STATED_IN": {
+      "phrase": "position stated in",
+      "asserts": "The graph records a position stated in relationship between these two.",
+      "limit": "This API carries no curated explanation for this predicate, so what the edge does and does not establish is not stated here. Treat it as unexplained rather than as unqualified.",
+      "direction": "UNDECLARED",
+      "basis": "DERIVED_FROM_NAME"
+    },
     "PRAISES": {
       "phrase": "praises",
       "asserts": "A model reading found the passage praising this target.",
       "limit": "Model-extracted and model-adjudicated, over a translation.",
-      "direction": "UNDECLARED",
+      "direction": "DIRECTED",
       "basis": "CURATED"
     },
     "PROTECTS_FROM": {
@@ -333,25 +397,39 @@
       "direction": "UNDECLARED",
       "basis": "CURATED"
     },
+    "RECEIVES_OFFERING": {
+      "phrase": "receives the offering",
+      "asserts": "The deity is named as the recipient of this offering.",
+      "limit": "Four edges, on 3 of the 103 modelled rites. Each carries its cited verse loci, so an edge can be checked; the layer is too sparse to support a count over deities.",
+      "direction": "UNDECLARED",
+      "basis": "CURATED"
+    },
     "REFERS_TO_NATURAL_PHENOMENON": {
       "phrase": "refers to the natural phenomenon",
       "asserts": "A model reading found the passage referring to this phenomenon.",
       "limit": "Five edges, model-extracted over a translation.",
-      "direction": "UNDECLARED",
+      "direction": "DIRECTED",
       "basis": "CURATED"
     },
     "REFERS_TO_PLACE": {
       "phrase": "refers to the place",
       "asserts": "A model reading found the passage referring to this place.",
       "limit": "One edge. It is an example of the layer, not a finding about the corpus.",
-      "direction": "UNDECLARED",
+      "direction": "DIRECTED",
       "basis": "CURATED"
+    },
+    "REPORTED_IN": {
+      "phrase": "reported in",
+      "asserts": "The graph records a reported in relationship between these two.",
+      "limit": "This API carries no curated explanation for this predicate, so what the edge does and does not establish is not stated here. Treat it as unexplained rather than as unqualified.",
+      "direction": "UNDECLARED",
+      "basis": "DERIVED_FROM_NAME"
     },
     "REQUESTS": {
       "phrase": "requests",
       "asserts": "A model reading found the passage requesting this.",
       "limit": "Model-extracted and model-adjudicated, over a translation.",
-      "direction": "UNDECLARED",
+      "direction": "DIRECTED",
       "basis": "CURATED"
     },
     "REUSES_TEXT_FROM": {
@@ -361,10 +439,31 @@
       "direction": "DIRECTED",
       "basis": "CURATED"
     },
+    "SCHOLARLY_CLAIM_ABOUT": {
+      "phrase": "is a scholarly claim about",
+      "asserts": "A named scholar's recorded position concerns this passage.",
+      "limit": "A position held, not a finding accepted. The graph records that someone argued it and where; it takes no view on whether they were right, and a passage with several of these has a disagreement rather than an answer.",
+      "direction": "UNDECLARED",
+      "basis": "CURATED"
+    },
     "SHARES_ENTITY_VOCABULARY_WITH": {
       "phrase": "shares entity vocabulary with",
       "asserts": "Both passages name the same registry entities.",
       "limit": "THIS IS NOT A CONCEPTUAL-SIMILARITY CLAIM. It measures shared vocabulary, and no non-lexical resemblance measure exists anywhere in this graph. Read `distinctiveness`, not the count: three shared entities are weak evidence when they are heaven, sacrifice and soma, and strong when one is the altar.",
+      "direction": "UNDECLARED",
+      "basis": "CURATED"
+    },
+    "SHARES_FORMULA_WITH": {
+      "phrase": "shares a formula with",
+      "asserts": "Both mantras contain the same registered formula.",
+      "limit": "Derived from the formula layer rather than stated by any source: nothing in a text says these two are related. A shared formula is a shared phrase, which is weaker than a parallel and much weaker than textual reuse.",
+      "direction": "SYMMETRIC",
+      "basis": "CURATED"
+    },
+    "SPECIALIZED_FORM_OF": {
+      "phrase": "is a specialized form of",
+      "asserts": "This deity name is a narrower form of the broader one.",
+      "limit": "Narrower than the broader name, not an alias for it: unlike EPITHET_VARIANT_OF it does not assert the two are the same referent under two names.",
       "direction": "UNDECLARED",
       "basis": "CURATED"
     },
@@ -406,21 +505,21 @@
     "USES_OBJECT": {
       "phrase": "uses the object",
       "asserts": "The rite uses this object.",
-      "limit": "Curated for the eight modelled rites only.",
+      "limit": "Curated for the modelled rites only.",
       "direction": "UNDECLARED",
       "basis": "CURATED"
     },
     "USES_OFFERING": {
       "phrase": "uses the offering",
       "asserts": "The rite uses this offering.",
-      "limit": "Curated for the eight modelled rites only.",
+      "limit": "Curated for the modelled rites only.",
       "direction": "UNDECLARED",
       "basis": "CURATED"
     },
     "USES_SUBSTANCE": {
       "phrase": "uses the substance",
       "asserts": "The rite uses this substance.",
-      "limit": "Curated for the eight modelled rites only.",
+      "limit": "Curated for the modelled rites only.",
       "direction": "UNDECLARED",
       "basis": "CURATED"
     },

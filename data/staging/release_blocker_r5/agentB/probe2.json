@@ -1,0 +1,418 @@
+{
+  "propertyKeys_count": 863,
+  "keys_with_r5": [
+    "r5_contract"
+  ],
+  "keys_with_contract": [
+    "ascription_resolution_contract",
+    "deity_eligibility_contract_version",
+    "epithet_occurrence_contract",
+    "execution_contract_version",
+    "expectation_origin_contract",
+    "lexical_recall_contract",
+    "occurrence_contract",
+    "occurrence_contract_version",
+    "offering_status_contract",
+    "personification_contract",
+    "personification_evidence_contract",
+    "phrase_alias_contract",
+    "r5_contract",
+    "recall_applicability_contract",
+    "ritual_use_contract",
+    "running_samhita_number_contract",
+    "translation_coverage_contract"
+  ],
+  "new_ish_keys": [
+    "calibration_status",
+    "cross_veda_transformation_status",
+    "expectation_origin",
+    "expected_source",
+    "externally_expected",
+    "offering_status",
+    "personification_match_basis",
+    "personification_status",
+    "recall_applicability",
+    "ritual_context_precision",
+    "ritual_context_precision_review_level",
+    "running_samhita_number",
+    "source_explicit_tier_marker",
+    "translation_coverage_state",
+    "uncalibrated_pipeline_score",
+    "vedas_with_matches"
+  ],
+  "derived_metric_total": 1485,
+  "derived_metric_r5": [
+    {
+      "id": "VG:METRIC:RITUAL_CONTEXT_PRECISION:VG:LAYER:RITUAL_CONTEXT",
+      "ks": [
+        "subject_key",
+        "method",
+        "reviewer",
+        "r5_contract",
+        "scope_note",
+        "human_reviewed",
+        "draw",
+        "is_human_gold",
+        "values_json",
+        "domain_model_version",
+        "knowledge_layer",
+        "grade_basis",
+        "quality_tier",
+        "review_level",
+        "reference_set_class",
+        "subject",
+        "metric_name",
+        "metric_id",
+        "display_type",
+        "display_label"
+      ]
+    },
+    {
+      "id": "VG:METRIC:MATERIAL_CULTURE_BY_RITUAL_CONTEXT:VG:LAYER:MATERIAL_CULTURE",
+      "ks": [
+        "subject",
+        "r5_contract",
+        "domain_model_version",
+        "grade_basis",
+        "subject_key",
+        "method",
+        "knowledge_layer",
+        "metric_name",
+        "values_json",
+        "quality_tier",
+        "scope_note",
+        "metric_id",
+        "display_type",
+        "display_label"
+      ]
+    }
+  ],
+  "dm_recent": [],
+  "dm_keys_sample": [
+    {
+      "ks": [
+        "domain_model_version",
+        "subject_key",
+        "metric_name",
+        "method",
+        "values_json",
+        "scope_note",
+        "metric_id",
+        "display_type",
+        "display_label"
+      ]
+    },
+    {
+      "ks": [
+        "domain_model_version",
+        "scope_note",
+        "subject_key",
+        "method",
+        "metric_name",
+        "values_json",
+        "metric_id",
+        "display_type",
+        "display_label"
+      ]
+    },
+    {
+      "ks": [
+        "domain_model_version",
+        "scope_note",
+        "subject_key",
+        "method",
+        "values_json",
+        "metric_name",
+        "metric_id",
+        "display_type",
+        "display_label"
+      ]
+    }
+  ],
+  "nodes_with_any_r5_key": 20596,
+  "labels_with_r5_key": [
+    {
+      "l": [
+        "Passage",
+        "Mantra"
+      ],
+      "c": 20210
+    },
+    {
+      "l": [
+        "Concept",
+        "DomainEntity"
+      ],
+      "c": 22
+    },
+    {
+      "l": [
+        "Concept",
+        "DomainEntity",
+        "NaturalPhenomenon"
+      ],
+      "c": 13
+    },
+    {
+      "l": [
+        "Concept",
+        "DomainEntity",
+        "Animal"
+      ],
+      "c": 11
+    },
+    {
+      "l": [
+        "Concept",
+        "DomainEntity",
+        "PhilosophicalConcept"
+      ],
+      "c": 13
+    },
+    {
+      "l": [
+        "Concept",
+        "DomainEntity",
+        "Offering",
+        "Substance"
+      ],
+      "c": 7
+    },
+    {
+      "l": [
+        "Concept",
+        "DomainEntity",
+        "CosmicEntity"
+      ],
+      "c": 4
+    },
+    {
+      "l": [
+        "Concept",
+        "DomainEntity",
+        "Object"
+      ],
+      "c": 36
+    },
+    {
+      "l": [
+        "Concept",
+        "DomainEntity",
+        "Animal",
+        "Offering"
+      ],
+      "c": 4
+    },
+    {
+      "l": [
+        "Concept",
+        "DomainEntity",
+        "Object",
+        "Weapon"
+      ],
+      "c": 5
+    },
+    {
+      "l": [
+        "Concept",
+        "DomainEntity",
+        "Offering"
+      ],
+      "c": 10
+    },
+    {
+      "l": [
+        "Concept",
+        "DomainEntity",
+        "Action"
+      ],
+      "c": 26
+    },
+    {
+      "l": [
+        "Concept",
+        "DomainEntity",
+        "Place"
+      ],
+      "c": 3
+    },
+    {
+      "l": [
+        "Concept",
+        "DomainEntity",
+        "Substance",
+        "Metal"
+      ],
+      "c": 7
+    },
+    {
+      "l": [
+        "Concept",
+        "DomainEntity",
+        "RitualRole"
+      ],
+      "c": 20
+    },
+    {
+      "l": [
+        "Concept",
+        "DomainEntity",
+        "Quality"
+      ],
+      "c": 3
+    },
+    {
+      "l": [
+        "Concept",
+        "DomainEntity",
+        "Plant"
+      ],
+      "c": 17
+    },
+    {
+      "l": [
+        "Concept",
+        "DomainEntity",
+        "Condition"
+      ],
+      "c": 35
+    },
+    {
+      "l": [
+        "Concept",
+        "DomainEntity",
+        "Place",
+        "River"
+      ],
+      "c": 8
+    },
+    {
+      "l": [
+        "Concept",
+        "DomainEntity",
+        "Ritual"
+      ],
+      "c": 100
+    },
+    {
+      "l": [
+        "Concept",
+        "DomainEntity",
+        "State"
+      ],
+      "c": 2
+    },
+    {
+      "l": [
+        "Concept",
+        "DomainEntity",
+        "State",
+        "Condition"
+      ],
+      "c": 1
+    },
+    {
+      "l": [
+        "Concept",
+        "DomainEntity",
+        "Plant",
+        "Crop"
+      ],
+      "c": 1
+    },
+    {
+      "l": [
+        "Concept",
+        "DomainEntity",
+        "Plant",
+        "Substance",
+        "Crop"
+      ],
+      "c": 4
+    },
+    {
+      "l": [
+        "Concept",
+        "DomainEntity",
+        "HumanConcern"
+      ],
+      "c": 7
+    },
+    {
+      "l": [
+        "Concept",
+        "DomainEntity",
+        "Ritual",
+        "SocialRite"
+      ],
+      "c": 3
+    },
+    {
+      "l": [
+        "Concept",
+        "DomainEntity",
+        "SocialRite"
+      ],
+      "c": 2
+    },
+    {
+      "l": [
+        "Concept",
+        "DomainEntity",
+        "Tribe"
+      ],
+      "c": 5
+    },
+    {
+      "l": [
+        "DerivedMetric"
+      ],
+      "c": 2
+    },
+    {
+      "l": [
+        "Concept",
+        "DomainEntity",
+        "Substance"
+      ],
+      "c": 15
+    }
+  ],
+  "sem003": {
+    "assertion_agent": 2660,
+    "assertion_target": 918,
+    "agent_nondevata": 58,
+    "target_nondevata": 103,
+    "all_three": 10,
+    "agent_edge_props": [
+      {
+        "deriv": null,
+        "tier": null,
+        "eb": "SANSKRIT",
+        "c": 2502
+      },
+      {
+        "deriv": "TREEBANK_DEPREL_ROLE_PROJECTION",
+        "tier": null,
+        "eb": "SANSKRIT",
+        "c": 158
+      }
+    ],
+    "target_edge_props": [
+      {
+        "deriv": null,
+        "tier": null,
+        "c": 799
+      },
+      {
+        "deriv": "TREEBANK_DEPREL_ROLE_PROJECTION",
+        "tier": null,
+        "c": 119
+      }
+    ],
+    "dup_agent": 0,
+    "assertions_with_2plus_agents": 0,
+    "rolefiller_refers_to": 387,
+    "rf_refers_nondevata": 245
+  }
+}

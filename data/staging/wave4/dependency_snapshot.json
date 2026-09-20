@@ -1,0 +1,85 @@
+{
+  "artifact": "WAVE4_DEPENDENCY_SNAPSHOT",
+  "at": "2026-09-16T07:54:55.303328+00:00",
+  "counts": {
+    "CURRENT": 6,
+    "STALE_INPUT": 0,
+    "BLOCKED": 2,
+    "NOT_APPLICABLE": 1
+  },
+  "unexplained_stale": [],
+  "consumers": [
+    {
+      "consumer": "semantic resemblance",
+      "status": "BLOCKED",
+      "current_input_digest": "f3fca6d10150c0a1a8e0b310751aaa18b708b5deb7f37cc3a622f725e5a089a4",
+      "recorded_input_digest": "f3fca6d10150c0a1a8e0b310751aaa18b708b5deb7f37cc3a622f725e5a089a4",
+      "output_hash": null,
+      "reason": "Requires re-derivation from the final canonical snapshot, not a rebuild: the staged artifact is pre-Wave-3 semantic-resemblance-hybrid-v2 and owner section 5 bars importing an old score artifact. See PHASE E in the round-four report for the refusal and its evidence."
+    },
+    {
+      "consumer": "cross-Veda matrices",
+      "status": "CURRENT",
+      "current_input_digest": "d17f0e8ae2688f2761d6ebd97150356f33fe7e85822261f233d51b0246558027",
+      "recorded_input_digest": "d17f0e8ae2688f2761d6ebd97150356f33fe7e85822261f233d51b0246558027",
+      "output_hash": "058439bd121d39caaab3b9396e8eeed541d2d7251afdfce45193fe928f36d1fb",
+      "reason": null
+    },
+    {
+      "consumer": "formula / parallel / variant relations",
+      "status": "CURRENT",
+      "current_input_digest": "cf9a830fa9c6ddcdb5d6e652147b2147f7fb854ee713929acb6a58bcc454a591",
+      "recorded_input_digest": "cf9a830fa9c6ddcdb5d6e652147b2147f7fb854ee713929acb6a58bcc454a591",
+      "output_hash": "cc1ff965df087692a091604cf7c80cb39ed32bdf308afa35ac916b4cd499b945",
+      "reason": null
+    },
+    {
+      "consumer": "entity coverage",
+      "status": "CURRENT",
+      "current_input_digest": "8f3a5fba2bf708a9eb195b4e3c75c250ad4f24258292219a75aa3de82e72c7ff",
+      "recorded_input_digest": "8f3a5fba2bf708a9eb195b4e3c75c250ad4f24258292219a75aa3de82e72c7ff",
+      "output_hash": "3ec8b28f704eb65ad96b0a9dd45f6f8fd58719d81ec77142daed4e1597096f46",
+      "reason": null
+    },
+    {
+      "consumer": "ritual aggregates",
+      "status": "NOT_APPLICABLE",
+      "current_input_digest": "cfd4ef2bcffc278d7ca7507efdc38e8353a99cac2aa5fa54c8b6235f8e01fcfe",
+      "recorded_input_digest": "cfd4ef2bcffc278d7ca7507efdc38e8353a99cac2aa5fa54c8b6235f8e01fcfe",
+      "output_hash": null,
+      "reason": "No ritual aggregate artifact exists. The layer arrived in Wave 3, nothing downstream consumes it, and there is therefore nothing to rebuild -- as distinct from a rebuild that has not happened."
+    },
+    {
+      "consumer": "quality evaluation",
+      "status": "CURRENT",
+      "current_input_digest": "80f34c13361e0f9af03e7e23448e02732de8445a70ea304d1f48f2f9dead61d4",
+      "recorded_input_digest": "80f34c13361e0f9af03e7e23448e02732de8445a70ea304d1f48f2f9dead61d4",
+      "output_hash": "9438cca1cfe69729b9c96f2a2977fa4a7e95e4316efbd34581368d81113f90c5",
+      "reason": null
+    },
+    {
+      "consumer": "Ask retrieval",
+      "status": "BLOCKED",
+      "current_input_digest": "1d6bd21c84f8ecca59befc49b655ac072219cc231651039e2ac659a5ad620eb4",
+      "recorded_input_digest": "1d6bd21c84f8ecca59befc49b655ac072219cc231651039e2ac659a5ad620eb4",
+      "output_hash": null,
+      "reason": "ASK_FORMAL_REGRADE_BLOCKED_EXTERNAL_QUOTA. The fresh commit-keyed run at b98d988 reached 19 of 60 and stopped at Q20 with vedagraph.llm.errors.LLMRateLimitError: 'Rate limit reached for provider openrouter. The daily allowance is exhausted; waiting will not clear it.' Only OpenRouter is credentialed -- Gemini and Anthropic providers exist in code with no keys -- and switching model would produce a different grade rather than a resumption. The earlier 31/60 run is diagnostic only and is NOT combined with this one, per owner instruction. Resume with a fresh run when the daily allowance resets. On the 19: 94 citations, 0 invented citations surviving, 0 invalid, 1 uncited answer (Q03, a reasoning-preamble leak). misleading/hallucinated NOT certified."
+    },
+    {
+      "consumer": "Visualization Lab aggregates",
+      "status": "CURRENT",
+      "current_input_digest": "1c461291907acef7faa4523ef167aa2ff9e1967ea7ee97c0fa95386198bbb09e",
+      "recorded_input_digest": "1c461291907acef7faa4523ef167aa2ff9e1967ea7ee97c0fa95386198bbb09e",
+      "output_hash": "2e59ff42c3844e4191a26052f6944368e7514c7289705dcf8ebaf797f85fd05c",
+      "reason": null
+    },
+    {
+      "consumer": "Knowledge World public projection",
+      "status": "CURRENT",
+      "current_input_digest": "c8ffa1dcc9dc2c9e912986cb9e2b89f542d0a730f296bfe5ba250b8f4b5d288c",
+      "recorded_input_digest": "c8ffa1dcc9dc2c9e912986cb9e2b89f542d0a730f296bfe5ba250b8f4b5d288c",
+      "output_hash": "2e59ff42c3844e4191a26052f6944368e7514c7289705dcf8ebaf797f85fd05c",
+      "reason": null
+    }
+  ]
+}

@@ -1,0 +1,46 @@
+{
+ "node": "VG:CONCEPT:AUDUMBARA-AMULET",
+ "node_definition_in_the_graph": "The amulet of udumbara wood, worn in AVS 19.31 for prosperity, cattle and fatness in the cow-stall, and addressed as prosperity itself. All seven occurrences are in that one hymn.",
+ "property_as_held": {
+  "supplementary_attestation_count": 91
+ },
+ "supplementary_lines_assessed": 91,
+ "of_those_attesting_the_amulet": 0,
+ "sense_of_every_line": "Udumbara WOOD. The audumbari post of the sadas, the audumbara camasa, the audumbari asandi, the audumbara danda, the audumbara paridhi, the audumbara plough. Not one line is an amulet.",
+ "why_this_is_not_a_count_error": "The count is correct for the alias and wrong for the node. `audumbara` in the ritual apparatus is the wood; the node is the AVS 19.31 amulet, whose own definition says all seven occurrences are in that one hymn. Re-deriving the count from the same alias would reproduce the same 91.",
+ "absence_is_typed_not_zeroed": "The corrected properties record that 91 lines were assessed and 0 attest the amulet, so a reader can tell an assessed zero from an unexamined one. Setting the count to 0 alone would read as `nobody looked`.",
+ "examples": [
+  {
+   "citation": "SBM 3.2.1.33.1",
+   "quote": "audumbaro bhavati"
+  },
+  {
+   "citation": "SBM 3.2.1.33.3",
+   "quote": "tasmād audumbaro bhavati"
+  },
+  {
+   "citation": "SBM 3.3.4.27.1",
+   "quote": "audumbarī bhavati"
+  },
+  {
+   "citation": "SBM 3.3.4.27.4",
+   "quote": "tasmād audumbarī bhavati"
+  },
+  {
+   "citation": "SBM 3.6.1.2.1",
+   "quote": "tanmadhya audumbarīm minoti"
+  },
+  {
+   "citation": "SBM 3.6.1.2.5",
+   "quote": "tasmān madhya audumbarīm minoti"
+  },
+  {
+   "citation": "SBM 7.2.2.3.1",
+   "quote": "audumbaram bhavati"
+  },
+  {
+   "citation": "SBM 7.2.4.2.4",
+   "quote": "audumbareṇa camasena"
+  }
+ ]
+}

@@ -1,0 +1,307 @@
+{
+ "phase": 1,
+ "rule_applied": "2,254 rows are not one population. Each partition is cut on alignment semantics -- what kind of evidence ties the source unit to the canonical verse -- rather than on Veda or on count, because an owner decision over a mixed population cannot be answered: approving it approves the worst row in it.",
+ "partitions_are_overlapping": true,
+ "why_overlapping": "a row can sit in several partitions at once -- a Samavedic row is both mapped through a Rigvedic control and addressed by a running index -- and forcing one bucket per row would hide exactly the compounding this analysis is looking for. The counts therefore do not sum to 2,254, and that is deliberate.",
+ "total_rows": 2254,
+ "partitions": [
+  {
+   "partition_id": "P1_DIRECT_EXACT_CANONICAL_VERSE_ALIGNMENT",
+   "alignment_semantics_question": "does the source print this verse's own label and its own translation?",
+   "rows": 855,
+   "by_veda": {
+    "AV": 855
+   },
+   "by_source": {
+    "IA_WAYBACK_GRIFFITH_AV_1895": 855
+   },
+   "by_confidence": {
+    "EXACT": 855
+   },
+   "gate_b": {
+    "B_PASS": 855
+   },
+   "gate_c": {
+    "C_PASS": 838,
+    "C_WITHHOLD_AMBIGUOUS": 17
+   },
+   "note": "Griffith's Atharvaveda and Rigveda volumes, addressed by the page's own hymn number and printed verse label. The page's HTML anchors are deliberately not used: av20120.htm is headed HYMN CXX and carries anchors reading 121.01, so an anchor-led parse invents a verse in hymn 121 and loses hymn 120 entirely."
+  },
+  {
+   "partition_id": "P2_EXPLICIT_MULTI_VERSE_SOURCE_SPAN",
+   "alignment_semantics_question": "is the print unit explicitly numbered as covering several canonical verses?",
+   "rows": 68,
+   "by_veda": {
+    "AV": 68
+   },
+   "by_source": {
+    "IA_WAYBACK_GRIFFITH_AV_1895": 68
+   },
+   "by_confidence": {
+    "VERIFIED_SEGMENT": 68
+   },
+   "gate_b": {
+    "B_PASS": 68
+   },
+   "gate_c": {
+    "C_PASS": 68
+   },
+   "note": "68 rows where Griffith prints one numbered unit over a span. The same English attaches to every verse of the span, and every span is complete over its printed range."
+  },
+  {
+   "partition_id": "P3_CROSS_CORPUS_REUSED_RENDERING",
+   "alignment_semantics_question": "is the translation text taken from another corpus's rendering?",
+   "rows": 194,
+   "by_veda": {
+    "AV": 21,
+    "SV": 173
+   },
+   "by_source": {
+    "VEDAGRAPH_CANONICAL_RV_GRIFFITH": 194
+   },
+   "by_confidence": {
+    "VERIFIED_SEGMENT": 194
+   },
+   "gate_b": {
+    "B_PASS": 194
+   },
+   "gate_c": {
+    "C_WITHHOLD_REUSED_RENDERING_POLICY": 194
+   },
+   "note": "194 rows applying Griffith's Rigveda English to a Samavedic or Atharvavedic verse verified character-identical. Truthfully disclosed in every row's own mapping_method, and never independent semantic evidence for the target corpus."
+  },
+  {
+   "partition_id": "P4_SAMAVEDA_MAPPED_THROUGH_A_RIGVEDA_CONTROL",
+   "alignment_semantics_question": "was the source unit identified by matching another corpus's translation?",
+   "rows": 334,
+   "by_veda": {
+    "SV": 334
+   },
+   "by_source": {
+    "IA_WAYBACK_GRIFFITH_SV_1893": 334
+   },
+   "by_confidence": {
+    "EXACT": 334
+   },
+   "gate_b": {
+    "B_FAIL_SOURCE_COORDINATE": 285,
+    "B_PASS": 49
+   },
+   "gate_c": {
+    "C_FAIL_ARCHIVE_EVIDENCE": 334
+   },
+   "note": "Griffith's Samaveda is RANAYANIYA and this corpus is KAUTHUMA. The unit is pinned by comparing its English to Griffith's own Rigveda rendering of a cited parallel, then the canonical verse's Sanskrit is compared to that parallel. A two-hop inference through Rigvedic identity."
+  },
+  {
+   "partition_id": "P5_SAMAVEDA_CROSS_RECENSION_PROBABLE",
+   "alignment_semantics_question": "same as P4, but without verified textual identity",
+   "rows": 735,
+   "by_veda": {
+    "SV": 735
+   },
+   "by_source": {
+    "IA_WAYBACK_GRIFFITH_SV_1893": 735
+   },
+   "by_confidence": {
+    "PROBABLE": 735
+   },
+   "gate_b": {
+    "B_FAIL_POLICY": 735
+   },
+   "gate_c": {
+    "C_FAIL_ARCHIVE_EVIDENCE": 735
+   },
+   "note": "735 tier-3 rows. A positional join was available for these and the staging agent refused it, measuring the drift from offset 0 at the head to -81. All PROBABLE and withheld by the central policy."
+  },
+  {
+   "partition_id": "P6_YAJURVEDA_FORCED_ADDRESS_DECLARING_NO_CONTENT_CONTROL",
+   "alignment_semantics_question": "was the canonical address forced rather than read from the source?",
+   "rows": 31,
+   "by_veda": {
+    "YV": 31
+   },
+   "by_source": {
+    "SACRED_TEXTS_WYV_SNAPSHOT_2026_09_07": 31
+   },
+   "by_confidence": {
+    "EXACT": 31
+   },
+   "gate_b": {
+    "B_NEEDS_INDEPENDENT_CONTENT_CONTROL": 31
+   },
+   "gate_c": {
+    "C_PASS": 28,
+    "C_FAIL_UNVERIFIED_FORCED_ADDRESS": 2,
+    "C_FAIL_SOURCE_GRANULARITY": 1
+   },
+   "note": "31 rows, all staged EXACT, so the central policy does not withhold them. Independent verification against the pinned snapshot finds the source prints a correct label for 15 and uniquely brackets the canonical slot for 14 more."
+  },
+  {
+   "partition_id": "P7_YAJURVEDA_LABEL_DEFECT_WITH_A_CONTENT_CONTROL",
+   "alignment_semantics_question": "label defect, but is there an independent content control?",
+   "rows": 8,
+   "by_veda": {
+    "YV": 8
+   },
+   "by_source": {
+    "SACRED_TEXTS_WYV_SNAPSHOT_2026_09_07": 8
+   },
+   "by_confidence": {
+    "EXACT": 8
+   },
+   "gate_b": {
+    "B_PASS": 8
+   },
+   "gate_c": {
+    "C_PASS": 8
+   },
+   "note": "8 rows carrying both a printed-source control and a Rigvedic English parallel control at 0.92-1.00. The strongest rows in the artifact."
+  },
+  {
+   "partition_id": "P8_YAJURVEDA_ADHYAYA_12_CONSTANT_OFFSET_SPINE",
+   "alignment_semantics_question": "does a whole adhyaya sit at a verified constant offset?",
+   "rows": 12,
+   "by_veda": {
+    "YV": 12
+   },
+   "by_source": {
+    "SACRED_TEXTS_WYV_SNAPSHOT_2026_09_07": 12
+   },
+   "by_confidence": {
+    "EXACT": 11,
+    "PROBABLE": 1
+   },
+   "gate_b": {
+    "B_FAIL_PROVENANCE": 11,
+    "B_FAIL_POLICY": 1
+   },
+   "gate_c": {
+    "C_PASS": 12
+   },
+   "note": "12 rows where Griffith prints 118 verse numbers against 117 canonical mantras. 11 are verified per verse against a Rigvedic English control and the printed label is canonical mantra + 1 throughout. None of the 12 pins its own source bytes."
+  },
+  {
+   "partition_id": "P9_ADDRESSED_BY_A_SOURCE_LOCAL_RUNNING_INDEX",
+   "alignment_semantics_question": "is the only source-side anchor a running ordinal?",
+   "rows": 1069,
+   "by_veda": {
+    "SV": 1069
+   },
+   "by_source": {
+    "IA_WAYBACK_GRIFFITH_SV_1893": 1069
+   },
+   "by_confidence": {
+    "EXACT": 334,
+    "PROBABLE": 735
+   },
+   "gate_b": {
+    "B_FAIL_POLICY": 735,
+    "B_FAIL_SOURCE_COORDINATE": 285,
+    "B_PASS": 49
+   },
+   "gate_c": {
+    "C_FAIL_ARCHIVE_EVIDENCE": 1069
+   },
+   "note": "1,069 rows. This is the M13 failure class: a source-local ordinal standing in for a canonical coordinate. 800 of them have a printed locator that cannot re-find the unit, because 'Part 2 Book 1 Chapter 1 verse 2' omits the dasati and addresses 22 canonical keys."
+  },
+  {
+   "partition_id": "P10_ARCHIVE_CITATION_WITH_NO_CONTENT_HASH",
+   "alignment_semantics_question": "can the archive capture be shown to have held this text?",
+   "rows": 1069,
+   "by_veda": {
+    "SV": 1069
+   },
+   "by_source": {
+    "IA_WAYBACK_GRIFFITH_SV_1893": 1069
+   },
+   "by_confidence": {
+    "EXACT": 334,
+    "PROBABLE": 735
+   },
+   "gate_b": {
+    "B_FAIL_POLICY": 735,
+    "B_FAIL_SOURCE_COORDINATE": 285,
+    "B_PASS": 49
+   },
+   "gate_c": {
+    "C_FAIL_ARCHIVE_EVIDENCE": 1069
+   },
+   "note": "1,069 Samavedic rows cite one index URL with no page hash, and proofs/source_pages.json records zero Samavedic pages against 147 Atharvavedic and 16 Rigvedic."
+  },
+  {
+   "partition_id": "P11_TARGET_ALREADY_TRANSLATED",
+   "alignment_semantics_question": "does the target already carry English?",
+   "rows": 0,
+   "by_veda": {},
+   "by_source": {},
+   "by_confidence": {},
+   "gate_b": {},
+   "gate_c": {},
+   "note": "empty. Gate B measured the live state of all 2,254 targets and none is already translated, so this task cannot overwrite live text even by accident."
+  },
+  {
+   "partition_id": "P12_HYMN_OR_SECTION_LEVEL_MATERIAL",
+   "alignment_semantics_question": "is hymn-level text being offered as verse-level?",
+   "rows": 0,
+   "by_veda": {},
+   "by_source": {},
+   "by_confidence": {},
+   "gate_b": {},
+   "gate_c": {},
+   "note": "empty after the granularity classifier was corrected. The 194 cross-corpus rows first landed here because the classifier had no pattern for a canonical-key coordinate and returned OTHER for all of them, which was the classifier's defect and not the rows'."
+  },
+  {
+   "partition_id": "P13_NO_SANSKRIT_SIDE_CONTROL_AVAILABLE",
+   "alignment_semantics_question": "is there any Sanskrit-side control at all?",
+   "rows": 991,
+   "by_veda": {
+    "AV": 923,
+    "RV": 17,
+    "YV": 51
+   },
+   "by_source": {
+    "IA_WAYBACK_GRIFFITH_AV_1895": 923,
+    "SACRED_TEXTS_WYV_SNAPSHOT_2026_09_07": 51,
+    "IA_WAYBACK_GRIFFITH_RV_1896": 17
+   },
+   "by_confidence": {
+    "EXACT": 918,
+    "PROBABLE": 5,
+    "VERIFIED_SEGMENT": 68
+   },
+   "gate_b": {
+    "B_PASS": 944,
+    "B_NEEDS_INDEPENDENT_CONTENT_CONTROL": 31,
+    "B_FAIL_PROVENANCE": 11,
+    "B_FAIL_POLICY": 5
+   },
+   "gate_c": {
+    "C_PASS": 966,
+    "C_WITHHOLD_AMBIGUOUS": 22,
+    "C_FAIL_UNVERIFIED_FORCED_ADDRESS": 2,
+    "C_FAIL_SOURCE_GRANULARITY": 1
+   },
+   "note": "the Atharvavedic, Rigvedic and Yajurvedic printed populations, which do not need one: their evidence is the source's own printed coordinate in the same recension as the canonical text."
+  }
+ ],
+ "populations_hidden_inside_a_single_owner_gate": [
+  {
+   "was_gated_on": "OWNER_DECISION_A_RV_SPAN + OWNER_DECISION_C_FORCED_ADDRESSES",
+   "actually_a_separate_question": "P3_CROSS_CORPUS_REUSED_RENDERING",
+   "rows": 194,
+   "recommended_new_decision": "OWNER_DECISION_D_REUSED_RENDERING_POLICY"
+  },
+  {
+   "was_gated_on": "OWNER_DECISION_A_RV_SPAN",
+   "actually_a_separate_question": "Griffith's Latin substitution for explicit passages",
+   "rows": 22,
+   "recommended_new_decision": "OWNER_DECISION_F_LATIN_SUBSTITUTION"
+  },
+  {
+   "was_gated_on": "OWNER_DECISION_C_FORCED_ADDRESSES",
+   "actually_a_separate_question": "P7 and P8 already carry independent controls and are not forced-without-control at all",
+   "rows": 20,
+   "recommended_new_decision": null
+  }
+ ]
+}

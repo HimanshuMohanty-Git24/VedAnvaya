@@ -1,0 +1,161 @@
+{
+  "note": "Counts of :Mantra passages by typed state, per Veda per dimension. SOURCE_EXPLICIT_PRESENT and DERIVED_PRESENT together are 'has a value'; reporting only their sum as coverage is the misreading this table exists to prevent. ASSESSED_SOURCE_ABSENT is a measured zero. NEVER_ASSESSED is unknown, and is not a zero.",
+  "mantra_scope": {
+    "AV": {
+      "chandas": {
+        "DERIVED_PRESENT": 2494,
+        "SOURCE_EXPLICIT_PRESENT": 1588,
+        "ASSESSED_SOURCE_ABSENT": 799,
+        "NEVER_ASSESSED": 958
+      },
+      "devata": {
+        "DERIVED_PRESENT": 4160,
+        "ASSESSED_SOURCE_ABSENT": 721,
+        "NEVER_ASSESSED": 958
+      },
+      "rishi": {
+        "DERIVED_PRESENT": 4542,
+        "ASSESSED_SOURCE_ABSENT": 339,
+        "NEVER_ASSESSED": 958
+      }
+    },
+    "RV": {
+      "chandas": {
+        "DERIVED_PRESENT": 6276,
+        "SOURCE_EXPLICIT_PRESENT": 4242,
+        "ASSESSED_SOURCE_ABSENT": 34
+      },
+      "devata": {
+        "DERIVED_PRESENT": 8329,
+        "SOURCE_EXPLICIT_PRESENT": 2223
+      },
+      "rishi": {
+        "DERIVED_PRESENT": 10067,
+        "SOURCE_EXPLICIT_PRESENT": 467,
+        "ASSESSED_SOURCE_ABSENT": 18
+      }
+    },
+    "SV": {
+      "chandas": {
+        "NEVER_ASSESSED": 1844
+      },
+      "devata": {
+        "NEVER_ASSESSED": 1844
+      },
+      "rishi": {
+        "NEVER_ASSESSED": 1844
+      }
+    },
+    "YV": {
+      "chandas": {
+        "NEVER_ASSESSED": 1975
+      },
+      "devata": {
+        "NEVER_ASSESSED": 1975
+      },
+      "rishi": {
+        "SOURCE_EXPLICIT_PRESENT": 1960,
+        "ASSESSED_SOURCE_ABSENT": 15
+      }
+    }
+  },
+  "container_scope": {
+    "AV": {
+      "chandas": {
+        "NOT_APPLICABLE_AT_THIS_GRANULARITY": 20,
+        "DERIVED_PRESENT": 403,
+        "SOURCE_EXPLICIT_PRESENT": 62,
+        "ASSESSED_SOURCE_ABSENT": 123,
+        "NEVER_ASSESSED": 143
+      },
+      "devata": {
+        "NOT_APPLICABLE_AT_THIS_GRANULARITY": 20,
+        "DERIVED_PRESENT": 505,
+        "ASSESSED_SOURCE_ABSENT": 83,
+        "NEVER_ASSESSED": 143
+      },
+      "rishi": {
+        "NOT_APPLICABLE_AT_THIS_GRANULARITY": 20,
+        "DERIVED_PRESENT": 542,
+        "ASSESSED_SOURCE_ABSENT": 46,
+        "NEVER_ASSESSED": 143
+      }
+    },
+    "RV": {
+      "chandas": {
+        "NOT_APPLICABLE_AT_THIS_GRANULARITY": 10,
+        "ASSESSED_SOURCE_ABSENT": 1028
+      },
+      "devata": {
+        "NOT_APPLICABLE_AT_THIS_GRANULARITY": 10,
+        "ASSESSED_SOURCE_ABSENT": 1028
+      },
+      "rishi": {
+        "NOT_APPLICABLE_AT_THIS_GRANULARITY": 10,
+        "ASSESSED_SOURCE_ABSENT": 1028
+      }
+    },
+    "SV": {
+      "chandas": {
+        "NOT_APPLICABLE_AT_THIS_GRANULARITY": 498
+      },
+      "devata": {
+        "NOT_APPLICABLE_AT_THIS_GRANULARITY": 498
+      },
+      "rishi": {
+        "NOT_APPLICABLE_AT_THIS_GRANULARITY": 498
+      }
+    },
+    "YV": {
+      "chandas": {
+        "NOT_APPLICABLE_AT_THIS_GRANULARITY": 40
+      },
+      "devata": {
+        "NOT_APPLICABLE_AT_THIS_GRANULARITY": 40
+      },
+      "rishi": {
+        "NOT_APPLICABLE_AT_THIS_GRANULARITY": 40
+      }
+    }
+  },
+  "absence_reason_histogram": {
+    "YV|devata|YV_KATYAYANA_IS_NOT_MECHANICALLY_RESOLVABLE": 1975,
+    "YV|chandas|YV_KATYAYANA_IS_NOT_MECHANICALLY_RESOLVABLE": 1975,
+    "SV|devata|SV_ATTRIBUTION_IS_AT_SAMAN_SCOPE_NOT_VERSE_SCOPE": 1844,
+    "SV|rishi|SV_ATTRIBUTION_IS_AT_SAMAN_SCOPE_NOT_VERSE_SCOPE": 1844,
+    "SV|chandas|SV_ATTRIBUTION_IS_AT_SAMAN_SCOPE_NOT_VERSE_SCOPE": 1844,
+    "AV|devata|ABSENT_AT_SOURCE_KANDA_20": 1101,
+    "AV|rishi|ABSENT_AT_SOURCE_KANDA_20": 1101,
+    "AV|chandas|ABSENT_AT_SOURCE_KANDA_20": 1101,
+    "RV|devata|CONTAINER_EMPTY_BY_INGEST_DESIGN": 1028,
+    "RV|rishi|CONTAINER_EMPTY_BY_INGEST_DESIGN": 1028,
+    "RV|chandas|CONTAINER_EMPTY_BY_INGEST_DESIGN": 1028,
+    "AV|chandas|SOURCE_STATES_NO_DEFAULT_METRE_FOR_THIS_HYMN": 719,
+    "AV|devata|SOURCE_STATES_NO_DEVATA_FOR_THIS_HYMN": 601,
+    "SV|devata|SOURCE_DOES_NOT_ASSERT_AT_THIS_GRANULARITY": 498,
+    "SV|rishi|SOURCE_DOES_NOT_ASSERT_AT_THIS_GRANULARITY": 498,
+    "SV|chandas|SOURCE_DOES_NOT_ASSERT_AT_THIS_GRANULARITY": 498,
+    "AV|rishi|SOURCE_STATES_NO_RSI_FOR_THIS_HYMN": 182,
+    "AV|devata|BRACKET_REFUSED_BY_ALIGNMENT_GATE": 128,
+    "AV|rishi|BRACKET_REFUSED_BY_ALIGNMENT_GATE": 128,
+    "AV|chandas|BRACKET_REFUSED_BY_ALIGNMENT_GATE": 128,
+    "AV|devata|SOURCE_MULTI_PART_ASCRIPTION_OUTSIDE_THE_PARSED_ANCHOR": 51,
+    "AV|rishi|SOURCE_MULTI_PART_ASCRIPTION_OUTSIDE_THE_PARSED_ANCHOR": 51,
+    "AV|chandas|SOURCE_MULTI_PART_ASCRIPTION_OUTSIDE_THE_PARSED_ANCHOR": 51,
+    "YV|devata|SOURCE_DOES_NOT_ASSERT_AT_THIS_GRANULARITY": 40,
+    "YV|rishi|SOURCE_DOES_NOT_ASSERT_AT_THIS_GRANULARITY": 40,
+    "YV|chandas|SOURCE_DOES_NOT_ASSERT_AT_THIS_GRANULARITY": 40,
+    "RV|chandas|INDEX_READ_FOR_THIS_VEDA_AND_DIMENSION_BUT_IT_STATES_NOTHING_AT_THIS_KEY": 34,
+    "AV|devata|SOURCE_BACK_REFERENCE_NO_BRACKET_PRINTED": 24,
+    "AV|rishi|SOURCE_BACK_REFERENCE_NO_BRACKET_PRINTED": 24,
+    "AV|chandas|SOURCE_BACK_REFERENCE_NO_BRACKET_PRINTED": 24,
+    "AV|devata|SOURCE_DOES_NOT_ASSERT_AT_THIS_GRANULARITY": 20,
+    "AV|rishi|SOURCE_DOES_NOT_ASSERT_AT_THIS_GRANULARITY": 20,
+    "AV|chandas|SOURCE_DOES_NOT_ASSERT_AT_THIS_GRANULARITY": 20,
+    "RV|rishi|INDEX_READ_FOR_THIS_VEDA_AND_DIMENSION_BUT_IT_STATES_NOTHING_AT_THIS_KEY": 18,
+    "YV|rishi|INDEX_READ_FOR_THIS_VEDA_AND_DIMENSION_BUT_IT_STATES_NOTHING_AT_THIS_KEY": 15,
+    "RV|devata|SOURCE_DOES_NOT_ASSERT_AT_THIS_GRANULARITY": 10,
+    "RV|rishi|SOURCE_DOES_NOT_ASSERT_AT_THIS_GRANULARITY": 10,
+    "RV|chandas|SOURCE_DOES_NOT_ASSERT_AT_THIS_GRANULARITY": 10
+  }
+}

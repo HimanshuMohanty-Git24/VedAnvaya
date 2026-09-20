@@ -57,7 +57,12 @@ TAGS_METADATA: Final[list[dict[str, Any]]] = [
     {"name": "Search", "description": "Unified search across text, entities and translations."},
     {"name": "Devatas", "description": "Deities, with the ambiguity contract applied."},
     {"name": "Entities", "description": "Rishis, concepts, rituals, conditions and the rest."},
-    {"name": "Rituals", "description": "The eight modelled rites. Not a taxonomy of Vedic ritual."},
+    {
+        "name": "Rituals",
+        "description": "The modelled rites. Not a taxonomy of Vedic ritual, and the count is "
+        "served by the endpoint rather than stated here: this line said 'eight' for a whole "
+        "release after the layer grew past it.",
+    },
     {
         "name": "Formulas",
         "description": "Fixed verbal formulae and the families they group into. A family's "

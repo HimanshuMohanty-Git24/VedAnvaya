@@ -137,14 +137,15 @@ export function RelationshipInspector({
 
             {/*
              * Set as a sentence with the two subjects in it, in stored order. That order is the
-             * reading order and nothing more: of the sixty predicates the exported vocabulary
-             * declares, eight declare a direction at all - five DIRECTED and three SYMMETRIC - so
-             * an arrowhead here would assert something the ontology declines to state for the
-             * other fifty-two. Where symmetry *is* declared, the note below says so outright.
+             * reading order and nothing more: most of the exported vocabulary declares no
+             * direction at all, so an arrowhead here would assert something the ontology
+             * declines to state. Where symmetry *is* declared, the note below says so outright.
              *
-             * The figure to quote is 8 of 60, verified against `world.predicates.json` and the
-             * artifact's 48 edge types, all eight of which are drawable. This comment previously
-             * said "ten of fifty-seven", which was wrong in both numbers.
+             * No figure is quoted here on purpose. This comment has now been wrong three times -
+             * "ten of fifty-seven", then "eight of sixty, verified" - and each version was
+             * verified against an artifact that then moved. The live counts are in
+             * `world.predicates.json` under `counts` and are asserted against this file by
+             * `tests/world-figures.test.ts`; read them there rather than from a sentence.
              */}
             <p className="va-relationship-statement">
                 <button onClick={() => onSelect(source)} type="button">

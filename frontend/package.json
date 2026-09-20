@@ -12,9 +12,13 @@
     "test:e2e": "playwright test",
     "audit:contrast": "node scripts/audit-contrast.mjs",
     "audit:tokens": "node scripts/audit-tokens.mjs",
-    "audit": "node scripts/audit-tokens.mjs && node scripts/audit-contrast.mjs && node scripts/audit-graph-contrast.mjs && node scripts/audit-class-collisions.mjs",
+    "audit": "node scripts/audit-tokens.mjs && node scripts/audit-contrast.mjs && node scripts/audit-graph-contrast.mjs && node scripts/audit-class-collisions.mjs && node scripts/audit-class-owner.mjs && node scripts/audit-completeness-fallback.mjs && node scripts/audit-z-index.mjs && node scripts/audit-motion.mjs",
+    "audit:completeness": "node scripts/audit-completeness-fallback.mjs",
     "audit:graph": "node scripts/audit-graph-contrast.mjs",
-    "audit:classes": "node scripts/audit-class-collisions.mjs"
+    "audit:classes": "node scripts/audit-class-collisions.mjs && node scripts/audit-class-owner.mjs",
+    "audit:z": "node scripts/audit-z-index.mjs",
+    "audit:motion": "node scripts/audit-motion.mjs",
+    "shoot": "node scripts/shoot-archive.mjs"
   },
   "dependencies": {
     "@phosphor-icons/react": "^2.1.10",

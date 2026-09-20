@@ -1,0 +1,230 @@
+{
+  "proof_id": "WAVE3_GATE_SWEEP_AND_WITHDRAWAL",
+  "measured_at": "2026-09-15",
+  "question": "Can the case-scoped role rule be repaired to an importable standard, or must it be withdrawn?",
+  "the_repair_attempted": "Widen the clause gate from 'more than one FINITE verb' to 'more than one verbal anchor of any kind, and no relative pronoun'. That is where the leakage analysis pointed: acl, xcomp, xcomp:result, advcl and nominal-internal nsubj are all clauses headed by something other than a finite verb, and a relative pronoun implies a clause whose own verb is often elided. Plus an agreement-based merge that collapses a modifier onto the argument it agrees with, to stop one argument being reported as two.",
+  "gate_sweep_all_four_combinations": [
+    {
+      "anchor_gate": false,
+      "relative_gate": false,
+      "merge": true,
+      "scope_candidates": 1114,
+      "scopes_admitted": 1114,
+      "scopes_refused": 0,
+      "fillers_emitted": 2338,
+      "agree": 1290,
+      "role_disagreement": 49,
+      "not_assigned_by_parse_to_this_verb": 999,
+      "precision": 0.5518,
+      "gold_fillers_in_all_candidate_scopes": 1484,
+      "gold_fillers_lost_to_refusal": 0,
+      "recall_against_all_gold": 0.8693
+    },
+    {
+      "anchor_gate": false,
+      "relative_gate": true,
+      "merge": true,
+      "scope_candidates": 1114,
+      "scopes_admitted": 1061,
+      "scopes_refused": 53,
+      "fillers_emitted": 2142,
+      "agree": 1214,
+      "role_disagreement": 47,
+      "not_assigned_by_parse_to_this_verb": 881,
+      "precision": 0.5668,
+      "gold_fillers_in_all_candidate_scopes": 1484,
+      "gold_fillers_lost_to_refusal": 89,
+      "recall_against_all_gold": 0.8181
+    },
+    {
+      "anchor_gate": true,
+      "relative_gate": false,
+      "merge": true,
+      "scope_candidates": 1114,
+      "scopes_admitted": 929,
+      "scopes_refused": 185,
+      "fillers_emitted": 1848,
+      "agree": 1076,
+      "role_disagreement": 45,
+      "not_assigned_by_parse_to_this_verb": 727,
+      "precision": 0.5823,
+      "gold_fillers_in_all_candidate_scopes": 1484,
+      "gold_fillers_lost_to_refusal": 256,
+      "recall_against_all_gold": 0.7251
+    },
+    {
+      "anchor_gate": true,
+      "relative_gate": true,
+      "merge": true,
+      "scope_candidates": 1114,
+      "scopes_admitted": 889,
+      "scopes_refused": 225,
+      "fillers_emitted": 1701,
+      "agree": 1018,
+      "role_disagreement": 43,
+      "not_assigned_by_parse_to_this_verb": 640,
+      "precision": 0.5985,
+      "gold_fillers_in_all_candidate_scopes": 1484,
+      "gold_fillers_lost_to_refusal": 324,
+      "recall_against_all_gold": 0.686
+    },
+    {
+      "anchor_gate": true,
+      "relative_gate": true,
+      "merge": false,
+      "scope_candidates": 1114,
+      "scopes_admitted": 889,
+      "scopes_refused": 225,
+      "fillers_emitted": 1701,
+      "agree": 1018,
+      "role_disagreement": 43,
+      "not_assigned_by_parse_to_this_verb": 640,
+      "precision": 0.5985,
+      "gold_fillers_in_all_candidate_scopes": 1484,
+      "gold_fillers_lost_to_refusal": 324,
+      "recall_against_all_gold": 0.686
+    }
+  ],
+  "per_role_after_both_gates": {
+    "AGENT": {
+      "emitted": 541,
+      "agree_with_parse": 295,
+      "same_argument_expansion": 46,
+      "cross_clause_leakage": 167,
+      "role_disagreement": 0,
+      "parse_assigns_to_no_verb": 33,
+      "wrong": 167,
+      "wrong_share": 0.3087,
+      "defensible_share": 0.6303,
+      "top_sources": {
+        "leak:nsubj": 52,
+        "leak:conj": 44,
+        "leak:acl": 21,
+        "leak:vocative": 16,
+        "expansion:nmod:appos": 16
+      }
+    },
+    "PATIENT": {
+      "emitted": 586,
+      "agree_with_parse": 393,
+      "same_argument_expansion": 62,
+      "cross_clause_leakage": 97,
+      "role_disagreement": 13,
+      "parse_assigns_to_no_verb": 21,
+      "wrong": 110,
+      "wrong_share": 0.1877,
+      "defensible_share": 0.7765,
+      "top_sources": {
+        "leak:conj": 37,
+        "expansion:det": 29,
+        "expansion:conj": 23,
+        "leak:xcomp:result": 16,
+        "leak:xcomp": 13
+      }
+    },
+    "INSTRUMENT": {
+      "emitted": 125,
+      "agree_with_parse": 70,
+      "same_argument_expansion": 19,
+      "cross_clause_leakage": 23,
+      "role_disagreement": 0,
+      "parse_assigns_to_no_verb": 13,
+      "wrong": 23,
+      "wrong_share": 0.184,
+      "defensible_share": 0.712,
+      "top_sources": {
+        "leak:obl:soc": 12,
+        "expansion:conj": 12,
+        "leak:conj": 6,
+        "leak:nmod:appos": 3,
+        "expansion:nmod:appos": 3
+      }
+    },
+    "LOCATION": {
+      "emitted": 138,
+      "agree_with_parse": 69,
+      "same_argument_expansion": 12,
+      "cross_clause_leakage": 15,
+      "role_disagreement": 28,
+      "parse_assigns_to_no_verb": 14,
+      "wrong": 43,
+      "wrong_share": 0.3116,
+      "defensible_share": 0.587,
+      "top_sources": {
+        "leak:obl:temp": 7,
+        "expansion:conj": 6,
+        "expansion:det": 5,
+        "leak:obl:loc": 4,
+        "leak:conj": 2
+      }
+    },
+    "SOURCE": {
+      "emitted": 61,
+      "agree_with_parse": 34,
+      "same_argument_expansion": 11,
+      "cross_clause_leakage": 11,
+      "role_disagreement": 0,
+      "parse_assigns_to_no_verb": 5,
+      "wrong": 11,
+      "wrong_share": 0.1803,
+      "defensible_share": 0.7377,
+      "top_sources": {
+        "expansion:conj": 9,
+        "leak:obl:grad": 4,
+        "leak:obl:source": 2,
+        "leak:obl": 2,
+        "leak:conj": 2
+      }
+    },
+    "BENEFICIARY": {
+      "emitted": 162,
+      "agree_with_parse": 91,
+      "same_argument_expansion": 8,
+      "cross_clause_leakage": 48,
+      "role_disagreement": 1,
+      "parse_assigns_to_no_verb": 14,
+      "wrong": 49,
+      "wrong_share": 0.3025,
+      "defensible_share": 0.6111,
+      "top_sources": {
+        "leak:iobj": 15,
+        "leak:advcl:fin": 7,
+        "leak:conj": 6,
+        "leak:advcl": 5,
+        "leak:nmod:appos": 4
+      }
+    },
+    "GOAL": {
+      "emitted": 88,
+      "agree_with_parse": 66,
+      "same_argument_expansion": 10,
+      "cross_clause_leakage": 9,
+      "role_disagreement": 1,
+      "parse_assigns_to_no_verb": 2,
+      "wrong": 10,
+      "wrong_share": 0.1136,
+      "defensible_share": 0.8636,
+      "top_sources": {
+        "expansion:det": 5,
+        "leak:acl": 2,
+        "leak:obl:temp": 2,
+        "leak:advmod": 2,
+        "expansion:conj": 2
+      }
+    }
+  },
+  "agent_split_by_case": {
+    "VOC": {
+      "agree": 77,
+      "wrong": 23
+    },
+    "NOM": {
+      "agree": 218,
+      "wrong": 144
+    }
+  },
+  "verdict": "Withdraw. Both gates together move the decomposed wrong share from 24.8% to 24.3% while recall falls from 0.869 to 0.686 -- 0.5 points of precision for 18 of recall. No role reaches an importable standard: GOAL, the best, is 11.4% wrong; PATIENT 18.8%; AGENT 30.9%; LOCATION 31.2%. The AGENT class splits by case, and the larger half -- an agreeing nominative under a third-person verb -- is 39.8% wrong. There is no threshold at which the rule is safe to assert.",
+  "what_was_done_instead": "Asserted role fillers now come only from the DCS dependency parse: 51,231 -> 2,052. Everywhere else the assertion is predicate-only, carrying predicate, frame, verb surface and verb features, all read off the verb token and none dependent on role scope, with roles_withheld and a reason. The gated candidates are retained in role_candidates.jsonl with importable=false as a verification queue: 32,025 candidates over 15,704 assertions.",
+  "why_not_simply_downgrade_the_row": "mapping_confidence is a row-level field and a row carries many assertions. Downgrading the row to PROBABLE would have made the defensible predicate layer non-importable along with the undefendable roles. Splitting by what each claim rests on keeps the sound part importable and the unsound part out of rows.jsonl entirely, which is stronger than a confidence label on a mixed row.",
+  "residual_risk_named": "The DCS parse is the reference here and it is not infallible: DCS's own readme claims only that each string was 'verified by one annotator'. So a disagreement is not automatically this pipeline's error. That cannot excuse a 24.3% disagreement rate, but it does mean the 2,052 parse-backed fillers inherit single-annotator quality rather than adjudicated gold, and no human has reviewed any of them."
+}

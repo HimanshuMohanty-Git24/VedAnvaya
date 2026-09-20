@@ -49,6 +49,7 @@ Usage:
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import sys
 import time
@@ -63,6 +64,8 @@ from vedagraph.enrich.predicates import SIGNATURES
 
 REPO = Path(__file__).resolve().parent.parent
 WORLD_MANIFEST = REPO / "frontend" / "public" / "world" / "world.json"
+#: The public export itself. Hashed here rather than trusted through the manifest.
+RAW_EXPORT = REPO / "frontend" / ".world" / "world.raw.json"
 DEFAULT_OUT = REPO / "frontend" / "public" / "world" / "world.predicates.json"
 
 #: What the ontology declares about a predicate's direction, and nothing more.
@@ -104,6 +107,37 @@ def manifest_edge_types() -> list[str]:
     return [str(name) for name in edge_types]
 
 
+def manifest_input_hash() -> str:
+    """The public-export hash ``world.json`` was built from, carried through to this file.
+
+    This table is derived from the manifest's ``edgeTypes``, so it inherits the manifest's
+    lineage whether or not it records it -- and recording it is the difference between a
+    lineage that holds and one that merely happens to. Every other shipped browser artifact
+    pins the exact export; this one did not, which left a predicate table that could be
+    labelling edge types a different export no longer contains.
+    """
+    manifest = json.loads(WORLD_MANIFEST.read_text(encoding="utf-8"))
+    declared = manifest.get("inputPublicExportHash")
+    if not isinstance(declared, str) or not declared:
+        raise SystemExit(
+            f"{WORLD_MANIFEST} carries no inputPublicExportHash; rebuild the world first so "
+            "this table can be pinned to the export it describes."
+        )
+    # Recomputed, not copied. Reading the manifest's value and re-publishing it would make
+    # this file agree with the manifest whatever the manifest said -- a lineage that holds
+    # because two files were written by the same run, rather than one anchored to the bytes.
+    # If the manifest is stale, this refuses instead of propagating it.
+    raw = RAW_EXPORT.read_bytes()
+    measured = hashlib.sha256(raw).hexdigest()
+    if measured != declared:
+        raise SystemExit(
+            f"{WORLD_MANIFEST} declares inputPublicExportHash {declared} and "
+            f"{RAW_EXPORT} hashes to {measured}. The manifest is stale: rebuild the world "
+            "before exporting this table."
+        )
+    return measured
+
+
 def build() -> dict[str, object]:
     """Every predicate the product can draw, with the words it is drawn with.
 
@@ -130,6 +164,7 @@ def build() -> dict[str, object]:
     return {
         "version": 1,
         "generated": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
+        "inputPublicExportHash": manifest_input_hash(),
         "source": "vedagraph.api.services.graph_service.PREDICATE_SEMANTICS",
         "counts": {
             "predicates": len(entries),

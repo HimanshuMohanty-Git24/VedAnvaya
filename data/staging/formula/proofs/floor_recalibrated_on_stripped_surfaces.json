@@ -1,0 +1,38 @@
+{
+ "question": "the 0.72 floor was calibrated on unstripped surfaces; stripping changes the strings, so is it still safe on the surface actually used?",
+ "random_same_recension_pairs_on_stripped_surfaces": {
+  "RV": {
+   "sampled": 20000,
+   "p50": 0.1643,
+   "p99": 0.2191,
+   "p999": 0.2439,
+   "max": 0.2924,
+   "floor_over_p999": 2.95
+  },
+  "SV": {
+   "sampled": 19994,
+   "p50": 0.1628,
+   "p99": 0.2263,
+   "p999": 0.2688,
+   "max": 0.4252,
+   "floor_over_p999": 2.68
+  },
+  "YV": {
+   "sampled": 19998,
+   "p50": 0.1545,
+   "p99": 0.2173,
+   "p999": 0.3072,
+   "max": 0.4796,
+   "floor_over_p999": 2.34
+  },
+  "AV": {
+   "sampled": 19999,
+   "p50": 0.1599,
+   "p99": 0.2155,
+   "p999": 0.2416,
+   "max": 0.6368,
+   "floor_over_p999": 2.98
+  }
+ },
+ "verdict": "the floor still sits 2.2x to 2.9x above every Veda's p99.9 on the stripped surface, so stripping did not move the calibration. As on the unstripped surface, the sample MAXIMUM is not a null maximum -- a repetitive corpus puts real parallels into a random sample, which is why the p99.9 and not the max is the usable statistic."
+}

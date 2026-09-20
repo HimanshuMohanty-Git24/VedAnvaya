@@ -1,0 +1,165 @@
+{
+  "backup_nodes": 164597,
+  "backup_rels": 509486,
+  "backup_derivedmetric": 1481,
+  "label_delta": {
+    "DerivedMetric": [
+      1481,
+      1485
+    ]
+  },
+  "rel_type_delta": {
+    "ASSERTION_AGENT": [
+      2502,
+      2660
+    ],
+    "ASSERTION_TARGET": [
+      799,
+      918
+    ],
+    "MENTIONS_ENTITY": [
+      28116,
+      28122
+    ]
+  },
+  "dm_added": [
+    "VG:METRIC:MATERIAL_CULTURE_BY_RITUAL_CONTEXT:VG:LAYER:MATERIAL_CULTURE",
+    "VG:METRIC:RITUAL_CONTEXT_PRECISION:VG:LAYER:RITUAL_CONTEXT",
+    "VG:METRIC:RITUAL_ENTITY_DENSITY:VG:CONCEPT:SATTRA:PERFORMED_BY",
+    "VG:METRIC:RITUAL_ENTITY_DENSITY:VG:CONCEPT:SVASTYAYANA:USES_OBJECT"
+  ],
+  "dm_removed": [],
+  "dm_null_metric_id_live": 0,
+  "passage_keys_added": [],
+  "passage_keys_removed": [],
+  "passage_keys_n_added": 0,
+  "passage_keys_n_removed": 0,
+  "formula_ids_added": [],
+  "formula_ids_removed": [],
+  "formula_ids_n_added": 0,
+  "formula_ids_n_removed": 0,
+  "entity_keys_added": [],
+  "entity_keys_removed": [],
+  "entity_keys_n_added": 0,
+  "entity_keys_n_removed": 0,
+  "text_ids_added": [],
+  "text_ids_removed": [],
+  "text_ids_n_added": 0,
+  "text_ids_n_removed": 0,
+  "assertion_keys_added": [],
+  "assertion_keys_removed": [],
+  "assertion_keys_n_added": 1,
+  "assertion_keys_n_removed": 0,
+  "backup_confidence_by_type": {
+    "HAS_CHANDAS": 16298,
+    "HAS_DEVATA": 10558,
+    "HAS_RISHI": 17889,
+    "HAS_DEVATA_ASCRIPTION": 5385,
+    "ABOUT_CONCEPT": 24861,
+    "BELONGS_TO_FAMILY": 305,
+    "DESCRIBES": 199,
+    "INVOKES": 207,
+    "REQUESTS": 89,
+    "HAS_THEME": 8,
+    "DESCRIBES_ACTION": 35,
+    "PRAISES": 38,
+    "REFERS_TO_NATURAL_PHENOMENON": 5,
+    "INVOLVES_RITUAL": 9,
+    "REFERS_TO_PLACE": 1,
+    "INVOLVES_OFFERING": 11,
+    "CONTRASTS_WITH": 8,
+    "INVOLVES_SUBSTANCE": 3,
+    "ASCRIBES_TO_DEVATA": 47,
+    "HAS_DEVATA_DERIVED": 882
+  },
+  "backup_confidence_distinct_values": {
+    "HAS_CHANDAS": {
+      "1.0": 16298
+    },
+    "HAS_DEVATA": {
+      "1.0": 10558
+    },
+    "HAS_RISHI": {
+      "1.0": 17889
+    },
+    "HAS_DEVATA_ASCRIPTION": {
+      "1.0": 5385
+    },
+    "BELONGS_TO_FAMILY": {
+      "1.0": 305
+    },
+    "REFERS_TO_NATURAL_PHENOMENON": {
+      "0.85": 2,
+      "0.7": 1,
+      "0.8": 2
+    },
+    "INVOLVES_RITUAL": {
+      "0.8": 3,
+      "0.7": 2,
+      "0.75": 4
+    },
+    "REFERS_TO_PLACE": {
+      "0.75": 1
+    },
+    "INVOLVES_SUBSTANCE": {
+      "0.85": 3
+    },
+    "ASCRIBES_TO_DEVATA": {
+      "1.0": 47
+    },
+    "HAS_DEVATA_DERIVED": {
+      "1.0": 882
+    }
+  },
+  "live_confidence_by_type": {
+    "ABOUT_CONCEPT": 24861,
+    "DESCRIBES": 199,
+    "INVOKES": 207,
+    "REQUESTS": 89,
+    "HAS_THEME": 8,
+    "DESCRIBES_ACTION": 35,
+    "PRAISES": 38,
+    "REFERS_TO_NATURAL_PHENOMENON": 5,
+    "INVOLVES_RITUAL": 9,
+    "INVOLVES_OFFERING": 11,
+    "CONTRASTS_WITH": 8
+  },
+  "confidence_type_delta": {
+    "HAS_CHANDAS": [
+      16298,
+      0
+    ],
+    "ASCRIBES_TO_DEVATA": [
+      47,
+      0
+    ],
+    "BELONGS_TO_FAMILY": [
+      305,
+      0
+    ],
+    "REFERS_TO_PLACE": [
+      1,
+      0
+    ],
+    "HAS_DEVATA": [
+      10558,
+      0
+    ],
+    "HAS_RISHI": [
+      17889,
+      0
+    ],
+    "HAS_DEVATA_ASCRIPTION": [
+      5385,
+      0
+    ],
+    "HAS_DEVATA_DERIVED": [
+      882,
+      0
+    ],
+    "INVOLVES_SUBSTANCE": [
+      3,
+      0
+    ]
+  }
+}

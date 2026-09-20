@@ -1,0 +1,1536 @@
+/* ============================================================================
+   The register: VedAnvaya's dialect for a list of things.
+
+   The product had two visual languages for the same job. On the deity index, the
+   entity index and the Vedas page a row is a ruled line with ranged metadata and
+   no container at all. On search, rituals, formulas, insights and material
+   culture the same information sat in a bordered, rounded card, which is the
+   documentation-site default and looks like every other product.
+
+   This sheet is the first language, generalised. The rules it follows:
+
+     A list is a ruled register, not a grid of boxes. Hairlines separate; nothing
+     encloses. A card is reserved for something that genuinely *is* a container -
+     the evidence drawer, the recitation player, a control group.
+
+     Metadata is ranged, not badged. A count belongs at the right margin in
+     tabular figures, where a reader can scan the column. A pill around it adds a
+     border and loses the alignment.
+
+     The strongest object in the row is its name, and it is set in the reading
+     face at reading size. Everything else steps down from it.
+
+     A row's leading rubric mark draws on hover. Same gesture, same easing, same
+     240ms as `.va-index` and the homepage, because a reader who has met it once
+     should recognise it everywhere. See `thread.css` for the motion law.
+
+   The class namespace here is flat and shared with nine other sheets, so every
+   name is prefixed `va-register-`, `va-reach-`, `va-scope-` or `va-open-`, and
+   `pnpm audit:classes` refuses a second definition of any of them.
+   ============================================================================ */
+
+/* ============================================================ the opening - */
+
+/*
+ * A route-specific editorial opening.
+ *
+ * Fifteen routes opened with the identical four-part figure: uppercase eyebrow,
+ * large title, lede, rule. Consistency is worth a great deal and sameness is
+ * worth nothing, and the difference between them is whether the repetition
+ * carries information. It did not: the eyebrow said "Rituals" above a title that
+ * said "Rites the corpus names".
+ *
+ * So the eyebrow is gone from the page level, and what replaces it is a line of
+ * *measured* orientation - how many things are in this register, over what
+ * scope, read when. A reader arriving at an index wants the size of it, and that
+ * is a fact rather than a label.
+ *
+ * Semantic field labels (DEVATA, RISHI, CHANDAS, NAMED INSIDE THIS VERSE,
+ * ASCRIBED IN THE APPARATUS) are untouched by this. They are data vocabulary.
+ */
+.va-open {
+    max-width: var(--va-measure-wide);
+    margin-bottom: var(--va-space-3xl);
+}
+
+.va-open h1 {
+    margin: 0;
+    font-family: var(--va-font-display);
+    font-size: var(--va-text-3xl);
+    font-weight: var(--va-weight-regular);
+    line-height: var(--va-leading-flat);
+    letter-spacing: var(--va-tracking-display);
+    font-optical-sizing: auto;
+    text-wrap: balance;
+    max-width: var(--va-measure);
+}
+
+.va-open-lede {
+    margin: var(--va-space-lg) 0 0;
+    max-width: var(--va-measure);
+    font-size: var(--va-text-md);
+    line-height: var(--va-leading-normal);
+    color: var(--va-text-secondary);
+}
+
+/*
+ * The standing: what is in this register and over what.
+ *
+ * Set as a ruled strip under the lede rather than as figures in boxes. Each entry
+ * is a value over a label, ranged left, sharing one baseline, so the row reads as
+ * a line of catalogue furniture rather than as a statistics dashboard.
+ */
+.va-open-standing {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--va-space-xl) var(--va-space-3xl);
+    margin-top: var(--va-space-2xl);
+    padding-top: var(--va-space-lg);
+    border-top: var(--va-border-width) solid var(--va-line-strong);
+}
+
+.va-open-standing > div {
+    display: grid;
+    gap: var(--va-space-3xs);
+    align-content: start;
+}
+
+.va-open-standing dt,
+.va-open-standing-label {
+    font-size: var(--va-text-2xs);
+    font-weight: var(--va-weight-semibold);
+    letter-spacing: var(--va-tracking-eyebrow);
+    text-transform: uppercase;
+    color: var(--va-text-tertiary);
+}
+
+.va-open-standing dd,
+.va-open-standing-value {
+    margin: 0;
+    font-family: var(--va-font-display);
+    font-size: var(--va-text-xl);
+    font-variant-numeric: tabular-nums;
+    line-height: var(--va-leading-flat);
+    color: var(--va-text-primary);
+}
+
+/* A standing figure that is not a number: "reused renderings only", "none released". */
+.va-open-standing .is-absent {
+    font-family: var(--va-font-ui);
+    font-size: var(--va-text-sm);
+    color: var(--va-tone-unbuilt);
+}
+
+/* ============================================================ the register - */
+
+.va-register {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border-top: var(--va-border-width) solid var(--va-line-strong);
+}
+
+.va-register > li {
+    position: relative;
+    border-bottom: var(--va-rule-quiet);
+}
+
+/*
+ * One row.
+ *
+ * Four ranges: the leading mark's gutter, the name, the gloss, and the ranged
+ * metadata. The name column is fixed rather than fractional so the glosses of
+ * forty rows start on one line, which is what makes a register scannable and a
+ * card grid not.
+ */
+.va-register-row {
+    display: grid;
+    grid-template-columns: minmax(0, 21rem) minmax(0, 1fr) auto;
+    align-items: baseline;
+    gap: var(--va-space-lg) var(--va-space-xl);
+    padding: var(--va-space-lg) 0 var(--va-space-lg) var(--va-space-lg);
+    color: inherit;
+    text-decoration: none;
+    transition: var(--va-transition-colors);
+}
+
+/* The rubric mark, drawn from the margin on hover. DRAW, in `thread.css` terms. */
+.va-register-row::before {
+    content: "";
+    position: absolute;
+    inset-inline-start: 0;
+    top: calc(var(--va-space-lg) + 0.62em);
+    width: 0;
+    height: var(--va-border-width-accent);
+    background: var(--va-accent-base);
+    transition: width var(--va-duration-base) var(--va-ease-standard);
+}
+
+.va-register-row:hover::before,
+.va-register-row:focus-visible::before {
+    width: var(--va-space-md);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .va-register-row::before {
+        transition: none;
+    }
+}
+
+.va-register-lead {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: var(--va-space-2xs) var(--va-space-sm);
+}
+
+.va-register-name {
+    font-family: var(--va-font-display);
+    font-size: var(--va-text-lg);
+    font-weight: var(--va-weight-regular);
+    line-height: var(--va-leading-tight);
+    color: var(--va-text-primary);
+    transition: var(--va-transition-colors);
+}
+
+/* A name that is Sanskrit takes the Sanskrit face, whatever the row is. */
+.va-register-name.va-sanskrit-inline {
+    font-family: var(--va-font-iast);
+}
+
+.va-register-name.va-sanskrit-inline[data-script="DEVANAGARI"] {
+    font-family: var(--va-font-deva);
+}
+
+.va-register-row:hover .va-register-name,
+.va-register-row:focus-visible .va-register-name {
+    color: var(--va-accent-text);
+}
+
+/* The transliteration or the native form beside the name, not under it. */
+.va-register-alt {
+    font-family: var(--va-font-iast);
+    font-size: var(--va-text-base);
+    letter-spacing: 0;
+    color: var(--va-text-tertiary);
+}
+
+.va-register-kind {
+    font-size: var(--va-text-2xs);
+    letter-spacing: var(--va-tracking-eyebrow);
+    text-transform: uppercase;
+    color: var(--va-text-tertiary);
+}
+
+/* The middle range: the sentence, and the quieter line under it. */
+.va-register-gloss-wrap {
+    display: grid;
+    gap: var(--va-space-2xs);
+    min-width: 0;
+}
+
+.va-register-gloss {
+    margin: 0;
+    font-size: var(--va-text-base);
+    line-height: var(--va-leading-snug);
+    color: var(--va-text-secondary);
+    /*
+     * Three lines, and the rest is on the row's own page.
+     *
+     * One ritual's description in this corpus runs 640 characters and inventories two
+     * Yajurvedic adhyayas. Printed in full it made its row eight times the height of the
+     * one above it, and a register whose rows differ by a factor of eight is a card grid
+     * with the borders taken off.
+     */
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+/* A second line under the gloss: how a search result matched, what a figure excludes. */
+.va-register-note {
+    display: block;
+    margin-top: var(--va-space-2xs);
+    font-size: var(--va-text-xs);
+    line-height: var(--va-leading-snug);
+    color: var(--va-text-tertiary);
+}
+
+.va-register-note em {
+    font-style: normal;
+    color: var(--va-text-secondary);
+}
+
+/* ------------------------------------------------------ ranged metadata - */
+
+.va-register-meta {
+    display: grid;
+    justify-items: end;
+    gap: var(--va-space-3xs);
+    text-align: end;
+    white-space: nowrap;
+}
+
+.va-register-figure {
+    font-family: var(--va-font-display);
+    font-size: var(--va-text-lg);
+    font-variant-numeric: tabular-nums;
+    line-height: var(--va-leading-flat);
+    color: var(--va-text-secondary);
+}
+
+.va-register-unit {
+    font-family: var(--va-font-ui);
+    font-size: var(--va-text-2xs);
+    letter-spacing: var(--va-tracking-eyebrow);
+    text-transform: uppercase;
+    color: var(--va-text-tertiary);
+}
+
+/*
+ * A metadata slot with no figure in it.
+ *
+ * Never a dash, and never blank. The register carries the same typed-absence
+ * rule as every other surface: what is printed is which kind of absence this is,
+ * and it is printed in the unbuilt tone so it cannot be mistaken for a value.
+ */
+.va-register-absent {
+    font-family: var(--va-font-ui);
+    font-size: var(--va-text-xs);
+    line-height: var(--va-leading-snug);
+    color: var(--va-tone-unbuilt);
+    white-space: normal;
+    max-width: 12rem;
+    text-align: end;
+}
+
+/* ------------------------------------------------- the register's measure - */
+
+/*
+ * A count, drawn as well as printed.
+ *
+ * The brief asks for a trustworthy count to influence a register's hierarchy, and the
+ * temptation is to size the rows: a big card for the busy rite, a small one for the quiet
+ * one. That is spectacle, and it also makes the register unscannable, which is the one thing
+ * it is for.
+ *
+ * So the hierarchy goes into a hairline instead. Each row carries a rule whose length is its
+ * figure over the largest figure in the register, ranged under the number it draws. The eye
+ * gets the shape of the distribution down the column; the rows stay the same height; and the
+ * figure itself is printed, so nothing is asserted by the bar that is not also stated in
+ * words.
+ *
+ * It RESOLVES: zero to the measured value, once, on entry, with no overshoot. See
+ * `thread.css`. A row with no figure draws no track at all, because an empty track reads as
+ * a measured zero.
+ */
+.va-register-measure {
+    position: relative;
+    display: block;
+    inline-size: 6rem;
+    block-size: 2px;
+    margin-top: var(--va-space-2xs);
+    background: var(--va-line-hairline);
+}
+
+.va-register-measure span {
+    position: absolute;
+    inset-block: 0;
+    inset-inline-start: 0;
+    display: block;
+    background: var(--va-accent-base);
+}
+
+@media (max-width: 61.999rem) {
+    .va-register-measure {
+        inline-size: 4.5rem;
+    }
+}
+
+/* --------------------------------------------------------------- mobile - */
+
+@media (max-width: 61.999rem) {
+    .va-register-row {
+        grid-template-columns: minmax(0, 1fr);
+        gap: var(--va-space-xs);
+        padding-block: var(--va-space-xl);
+    }
+
+    .va-register-row::before {
+        top: var(--va-space-xl);
+    }
+
+    .va-register-meta {
+        justify-items: start;
+        text-align: start;
+    }
+
+    .va-register-absent {
+        text-align: start;
+        max-width: none;
+    }
+
+    .va-register-gloss {
+        -webkit-line-clamp: 4;
+    }
+}
+
+/* =========================================================== figure blocks - */
+
+/*
+ * A measured block on an index page: a heading, a sentence about what is measured, and
+ * either a ruled table or a register.
+ *
+ * It is not a card. The four census figures used to sit in four bordered boxes side by
+ * side, which drew them as four unrelated statistics; they are one distribution, and a
+ * table with a share rule down the middle says so in a way four boxes cannot.
+ */
+.va-block {
+    margin-top: var(--va-space-5xl);
+}
+
+.va-block-heading {
+    margin: 0 0 var(--va-space-md);
+    font-family: var(--va-font-display);
+    font-size: var(--va-text-xl);
+    font-weight: var(--va-weight-regular);
+    line-height: var(--va-leading-tight);
+    color: var(--va-text-primary);
+}
+
+.va-block-note {
+    margin: 0 0 var(--va-space-xl);
+    max-width: var(--va-measure);
+    font-size: var(--va-text-sm);
+    line-height: var(--va-leading-normal);
+    color: var(--va-text-tertiary);
+}
+
+.va-block-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: var(--va-text-sm);
+}
+
+.va-block-table caption {
+    text-align: start;
+}
+
+.va-block-table th,
+.va-block-table td {
+    padding: var(--va-space-md) var(--va-space-lg) var(--va-space-md) 0;
+    text-align: start;
+    vertical-align: baseline;
+    border-bottom: var(--va-rule-quiet);
+}
+
+.va-block-table thead th {
+    padding-block: var(--va-space-sm);
+    font-size: var(--va-text-2xs);
+    font-weight: var(--va-weight-semibold);
+    letter-spacing: var(--va-tracking-eyebrow);
+    text-transform: uppercase;
+    color: var(--va-text-tertiary);
+    border-bottom: var(--va-border-width) solid var(--va-line-strong);
+}
+
+.va-block-table tbody th {
+    font-weight: var(--va-weight-regular);
+    font-variant-numeric: tabular-nums;
+    color: var(--va-text-primary);
+    white-space: nowrap;
+}
+
+.va-block-table .is-num {
+    text-align: end;
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+}
+
+.va-block-table .is-num:last-child {
+    padding-right: 0;
+}
+
+/* The share column. Wide enough to read a distribution off, narrow enough not to dominate. */
+.va-block-table .is-bar {
+    width: 38%;
+    padding-right: var(--va-space-2xl);
+}
+
+.va-block-track {
+    position: relative;
+    display: block;
+    inline-size: 100%;
+    block-size: 3px;
+    background: var(--va-line-hairline);
+}
+
+.va-block-track > span {
+    position: absolute;
+    inset-block: 0;
+    inset-inline-start: 0;
+    display: block;
+    background: var(--va-accent-base);
+}
+
+/*
+ * A register row that is not a link.
+ *
+ * The widest-family rows have nowhere to go: the family ids in the diffusion payload are
+ * representative wordings rather than stable ids, so a link would be a guess. The row keeps
+ * the register's grid and loses the hover mark, because a mark that draws on hover on
+ * something that cannot be opened is a promise the row does not keep.
+ */
+.va-register-row.is-static {
+    cursor: default;
+}
+
+.va-register-row.is-static::before {
+    content: none;
+}
+
+@media (max-width: 61.999rem) {
+    .va-block-table .is-bar {
+        display: none;
+    }
+
+    .va-block-table th,
+    .va-block-table td {
+        padding-right: var(--va-space-md);
+    }
+}
+
+/* ---------------------------------------------- a wide table on a phone - */
+
+/*
+ * A horizontally scrollable region that is not a card.
+ *
+ * `.matrix-wrap` does this job on the Connections page and it does it inside a bordered,
+ * rounded, filled container. That is right there - the evidence matrix is a single object a
+ * reader manipulates - and wrong on an index, where the table is the page's content rather
+ * than a widget on it. This is the same scroll behaviour and the same edge cue with no
+ * container: the fade says "there is more to the right", which is the only thing the border
+ * was really contributing.
+ *
+ * The visual-QA harness knows not to report a child of an `overflow-x: auto` region as a
+ * page overflow, which is why a six-column matrix can live on a 390px phone without
+ * forty-five false findings.
+ */
+.va-block-scroll {
+    overflow-x: auto;
+    background-image:
+        linear-gradient(to right, var(--va-surface-page) 30%, transparent),
+        linear-gradient(to left, var(--va-surface-page) 30%, transparent),
+        linear-gradient(to right, color-mix(in srgb, var(--va-text-primary) 9%, transparent), transparent 14px),
+        linear-gradient(to left, color-mix(in srgb, var(--va-text-primary) 9%, transparent), transparent 14px);
+    background-position:
+        0 0,
+        100% 0,
+        0 0,
+        100% 0;
+    background-repeat: no-repeat;
+    background-size:
+        40px 100%,
+        40px 100%,
+        14px 100%,
+        14px 100%;
+    background-attachment: local, local, scroll, scroll;
+}
+
+.va-block-scroll > table {
+    min-width: 46rem;
+}
+
+/*
+ * A cell the matcher read and found nothing in.
+ *
+ * Words, not a blank and not a zero. The service is explicit that the lexical layer reaches
+ * all four corpora, so this is a measured "no registered alias matched" and a lower bound of
+ * zero - which is a different claim from "the corpus does not name this", and the difference
+ * is the reason the cell carries text at all.
+ */
+.va-block-table .is-none {
+    font-size: var(--va-text-xs);
+    color: var(--va-tone-insufficient);
+    white-space: nowrap;
+}
+
+.va-block-table .is-total {
+    font-weight: var(--va-weight-medium);
+    color: var(--va-text-primary);
+}
+
+.va-block-table tbody th a {
+    color: inherit;
+    text-decoration: none;
+    border-bottom: var(--va-border-width) solid transparent;
+    transition: var(--va-transition-colors);
+}
+
+.va-block-table tbody th a:hover,
+.va-block-table tbody th a:focus-visible {
+    color: var(--va-accent-text);
+    border-bottom-color: var(--va-accent-base);
+}
+
+/*
+ * A declared gap: a cell the matcher cannot reach although the corpus names the thing.
+ *
+ * Set as a register row with a struck rule in the margin rather than as a dashed card. The
+ * dashed card read as a warning about the product; this reads as an entry in the record,
+ * which is what it is - the build knows this cell is wrong and says so on the page rather
+ * than leaving the reader to infer an absence.
+ */
+.va-gap {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border-top: var(--va-border-width) solid var(--va-line-strong);
+}
+
+.va-gap > li {
+    display: grid;
+    gap: var(--va-space-xs) var(--va-space-2xl);
+    padding: var(--va-space-lg) 0 var(--va-space-lg) var(--va-space-lg);
+    border-bottom: var(--va-rule-quiet);
+    border-inline-start: var(--va-border-width-accent) solid var(--va-tone-insufficient);
+}
+
+@media (min-width: 56rem) {
+    .va-gap > li {
+        grid-template-columns: minmax(0, 18rem) minmax(0, 1fr);
+        align-items: baseline;
+    }
+}
+
+.va-gap-name {
+    display: grid;
+    gap: var(--va-space-3xs);
+}
+
+.va-gap-name strong {
+    font-family: var(--va-font-display);
+    font-size: var(--va-text-md);
+    font-weight: var(--va-weight-regular);
+    color: var(--va-text-primary);
+}
+
+.va-gap-name span {
+    font-size: var(--va-text-2xs);
+    letter-spacing: var(--va-tracking-eyebrow);
+    text-transform: uppercase;
+    color: var(--va-tone-insufficient);
+}
+
+.va-gap-body p {
+    margin: 0 0 var(--va-space-xs);
+    max-width: var(--va-measure);
+    font-size: var(--va-text-sm);
+    line-height: var(--va-leading-normal);
+    color: var(--va-text-secondary);
+}
+
+.va-gap-body p:last-child {
+    margin-bottom: 0;
+}
+
+.va-gap-witness {
+    font-size: var(--va-text-xs);
+    color: var(--va-text-tertiary);
+}
+
+/* ========================================================== the reach dots - */
+
+/*
+ * How far a formula reaches, as four marks.
+ *
+ * The temptation here is a filled dot for "present" and a hollow one for
+ * everything else, and it is wrong for the same reason a blank cell is wrong: it
+ * converts three different claims into one. This corpus distinguishes
+ *
+ *   HELD          measured, and the wording occurs in that collection
+ *   NONE FOUND    measured, and it does not
+ *   NOT MEASURED  the matcher was never run over that collection
+ *   NOT A PAIR    the relation cannot hold there at all
+ *
+ * and four states need four marks. They are distinguished by *shape* as well as
+ * by tone, because a mark distinguished only by colour is not distinguished for
+ * a reader who cannot see the colour, and the whole register would be five grey
+ * circles in greyscale.
+ *
+ * Every mark carries a `title` and a visually hidden word from the component, so
+ * the claim is available as text and not only as a glyph.
+ */
+.va-reach {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--va-space-xs);
+}
+
+.va-reach-cell {
+    display: inline-grid;
+    grid-template-rows: auto auto;
+    justify-items: center;
+    gap: var(--va-space-3xs);
+}
+
+.va-reach-mark {
+    inline-size: 0.6rem;
+    block-size: 0.6rem;
+    border-radius: 50%;
+    border: var(--va-border-width) solid var(--va-line-strong);
+}
+
+.va-reach-veda {
+    font-size: var(--va-text-2xs);
+    letter-spacing: 0.06em;
+    color: var(--va-text-tertiary);
+    font-variant-numeric: tabular-nums;
+}
+
+/* Held: solid, in the evidenced tone. */
+.va-reach-cell[data-state="HELD"] .va-reach-mark {
+    background: var(--va-tone-evidenced);
+    border-color: var(--va-tone-evidenced);
+}
+
+.va-reach-cell[data-state="HELD"] .va-reach-veda {
+    color: var(--va-text-secondary);
+}
+
+/* Measured, and nothing found: hollow, with a rule through it. */
+.va-reach-cell[data-state="NONE_FOUND"] .va-reach-mark {
+    background: none;
+    border-color: var(--va-text-tertiary);
+    position: relative;
+}
+
+.va-reach-cell[data-state="NONE_FOUND"] .va-reach-mark::after {
+    content: "";
+    position: absolute;
+    inset-inline: -1px;
+    top: 50%;
+    block-size: var(--va-border-width);
+    background: var(--va-text-tertiary);
+}
+
+/* Never measured: a dotted outline. Nothing was looked at, so nothing is drawn solid. */
+.va-reach-cell[data-state="NOT_MEASURED"] .va-reach-mark {
+    background: none;
+    border-style: dotted;
+    border-color: var(--va-tone-unbuilt);
+}
+
+/* Not a relation that can hold here: square, and plainly not one of the dots. */
+.va-reach-cell[data-state="NOT_APPLICABLE"] .va-reach-mark {
+    background: none;
+    border-radius: 0;
+    border-color: var(--va-line-hairline);
+    rotate: 45deg;
+    inline-size: 0.5rem;
+    block-size: 0.5rem;
+}
+
+/* ====================================================== the scope register - */
+
+/*
+ * What recension of each collection this product holds, and what it does not.
+ *
+ * Deliberately NOT a tree. A tree drawn from a Veda down to its sakhas reads as a
+ * genealogy - this descended from that - and the relationship between the named
+ * sakhas of a Veda is a question this product has no evidence about and no
+ * business asserting. What it does know is which recension each edition it holds
+ * is of, and which other recensions are named in the scholarly record and are
+ * outside this build. That is a scope statement, so it is set as a register: one
+ * ruled block per collection, the held edition first and in ink, the ones outside
+ * scope beneath it and subdued.
+ *
+ * An exclusion is not an apology. The held row is the loud one.
+ */
+.va-scope {
+    display: grid;
+    gap: var(--va-space-2xl);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.va-scope-veda {
+    display: grid;
+    gap: var(--va-space-md);
+    padding-top: var(--va-space-lg);
+    border-top: var(--va-border-width) solid var(--va-line-strong);
+}
+
+@media (min-width: 56rem) {
+    .va-scope-veda {
+        grid-template-columns: minmax(0, 14rem) minmax(0, 1fr);
+        gap: var(--va-space-2xl);
+        align-items: start;
+    }
+}
+
+.va-scope-name {
+    display: grid;
+    gap: var(--va-space-3xs);
+    align-content: start;
+}
+
+.va-scope-name strong {
+    font-family: var(--va-font-display);
+    font-size: var(--va-text-xl);
+    font-weight: var(--va-weight-regular);
+    line-height: var(--va-leading-tight);
+    color: var(--va-text-primary);
+}
+
+.va-scope-name span {
+    font-family: var(--va-font-deva);
+    font-size: 1.05rem;
+    line-height: 1.4;
+    letter-spacing: 0;
+    color: var(--va-text-tertiary);
+}
+
+.va-scope-lines {
+    display: grid;
+    gap: var(--va-space-sm);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.va-scope-line {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: baseline;
+    gap: var(--va-space-md);
+}
+
+/*
+ * The held / not-held mark.
+ *
+ * Solid rubric bar for what is in the product, a hairline outline for what is
+ * named and outside it. Shape and weight, not only colour.
+ */
+.va-scope-mark {
+    inline-size: var(--va-space-lg);
+    block-size: var(--va-border-width-accent);
+    align-self: center;
+    background: var(--va-line-hairline);
+}
+
+.va-scope-line[data-held="true"] .va-scope-mark {
+    background: var(--va-accent-base);
+}
+
+.va-scope-line[data-held="true"] .va-scope-text strong {
+    color: var(--va-text-primary);
+    font-weight: var(--va-weight-medium);
+}
+
+.va-scope-text {
+    display: grid;
+    gap: var(--va-space-3xs);
+}
+
+.va-scope-text strong {
+    font-size: var(--va-text-base);
+    font-weight: var(--va-weight-regular);
+    color: var(--va-text-tertiary);
+}
+
+.va-scope-text small {
+    font-size: var(--va-text-xs);
+    line-height: var(--va-leading-snug);
+    color: var(--va-text-tertiary);
+    max-width: var(--va-measure);
+}
+
+.va-scope-state {
+    font-size: var(--va-text-2xs);
+    letter-spacing: var(--va-tracking-eyebrow);
+    text-transform: uppercase;
+    color: var(--va-text-tertiary);
+}
+
+.va-scope-line[data-held="true"] .va-scope-state {
+    color: var(--va-accent-text);
+}
+
+.va-scope-caption {
+    margin: var(--va-space-xl) 0 0;
+    max-width: var(--va-measure);
+    font-size: var(--va-text-sm);
+    line-height: var(--va-leading-normal);
+    color: var(--va-text-tertiary);
+}
+
+/* ========================================================== the finding aid - */
+
+/*
+ * Search, set as an archive catalogue.
+ *
+ * What stood here was the documentation-site default: a rounded bordered input, a
+ * row of pills, and results as bordered cards in a four-column grid with the type
+ * badge in the first cell. It was the weakest surface in the product and probably
+ * the first one a reader arriving from a search engine meets.
+ *
+ * The catalogue that replaces it keeps every distinction the old one drew - the
+ * type of each record, how it matched, which collection it sits in, and the
+ * caveat about what the query did and did not reach - and draws them with rules
+ * and ranged metadata instead of containers. Nothing has been dropped: in
+ * particular "Matched on exact entity label" is still printed on every row,
+ * because a result that will not say how it matched is a result a scholar cannot
+ * use.
+ *
+ * The class names are unchanged. They are what the journey suite selects on, and
+ * `.result-row` is a perfectly good name for a result row.
+ */
+.search-experience {
+    display: flex;
+    flex-direction: column;
+    gap: var(--va-space-2xl);
+}
+
+/* --------------------------------------------------------------- the field - */
+
+/*
+ * The field's label is for a screen reader and not for the page.
+ *
+ * It has to exist - the input needs a name, and the journey suite finds the box by it - but
+ * printed above the field it was a third orienting line under a title and a lede that
+ * already say what is searched, set in the same tracked upper case as the eyebrow this
+ * phase removed from every route. The placeholder carries the worked examples for a sighted
+ * reader; this carries the full sentence for everyone else.
+ */
+.search-experience > label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+    border: 0;
+}
+
+/*
+ * A ruled field, not a box.
+ *
+ * One rule under it, in the accent when focused. A rounded 1px container with a
+ * fill is the shape of a form on a settings page; this is the shape of a line
+ * you write a citation on.
+ */
+.search-field {
+    display: flex;
+    align-items: center;
+    gap: var(--va-space-md);
+    padding: var(--va-space-sm) 0;
+    border: 0;
+    border-bottom: 2px solid var(--va-line-strong);
+    background: none;
+    transition: border-color var(--va-duration-fast) var(--va-ease-standard);
+}
+
+.search-field:focus-within {
+    border-bottom-color: var(--va-accent-base);
+}
+
+.search-field svg {
+    color: var(--va-text-tertiary);
+    flex-shrink: 0;
+}
+
+.search-field input {
+    flex: 1;
+    min-width: 0;
+    border: 0;
+    background: transparent;
+    outline: none;
+    color: var(--va-text-primary);
+    font-family: var(--va-font-display);
+    font-size: var(--va-text-2xl);
+    font-weight: var(--va-weight-regular);
+    line-height: var(--va-leading-tight);
+    letter-spacing: var(--va-tracking-tight);
+}
+
+.search-field input::placeholder {
+    color: var(--va-text-tertiary);
+    opacity: 1;
+}
+
+.search-field kbd {
+    flex: none;
+    font-family: var(--va-font-ui);
+    font-size: var(--va-text-2xs);
+    padding: 0 var(--va-space-xs);
+    border: var(--va-border-hairline);
+    border-radius: var(--va-radius-xs);
+    color: var(--va-text-tertiary);
+}
+
+/* ------------------------------------------------------------- the filters - */
+
+.filter-bank {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: var(--va-space-xl);
+}
+
+.filter-bank fieldset {
+    border: 0;
+    padding: 0;
+    margin: 0;
+    min-width: 0;
+}
+
+.filter-bank legend,
+.filter-selects label > span {
+    font-size: var(--va-text-2xs);
+    font-weight: var(--va-weight-semibold);
+    letter-spacing: var(--va-tracking-eyebrow);
+    text-transform: uppercase;
+    color: var(--va-text-tertiary);
+}
+
+.filter-bank legend {
+    margin-bottom: var(--va-space-sm);
+}
+
+/* Underline-current tabs, the device the entity index already uses, not pills. */
+.filter-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 var(--va-space-xl);
+}
+
+.filter-row button {
+    padding: var(--va-space-2xs) 0;
+    border: 0;
+    border-bottom: 2px solid transparent;
+    border-radius: 0;
+    background: none;
+    font-family: var(--va-font-ui);
+    font-size: var(--va-text-sm);
+    color: var(--va-text-tertiary);
+    cursor: pointer;
+    transition: var(--va-transition-colors);
+}
+
+.filter-row button:hover {
+    color: var(--va-text-primary);
+}
+
+.filter-row button[aria-pressed="true"] {
+    border-bottom-color: var(--va-accent-base);
+    color: var(--va-text-primary);
+}
+
+.filter-selects {
+    display: flex;
+    gap: var(--va-space-xl);
+}
+
+.filter-selects label {
+    display: grid;
+    gap: var(--va-space-2xs);
+}
+
+.filter-selects select {
+    padding: var(--va-space-2xs) 0;
+    border: 0;
+    border-bottom: var(--va-border-width) solid var(--va-line-strong);
+    border-radius: 0;
+    background: none;
+    font-family: var(--va-font-ui);
+    font-size: var(--va-text-sm);
+    color: var(--va-text-primary);
+}
+
+/* ------------------------------------------------------------- the results - */
+
+.search-results-wrap {
+    display: flex;
+    flex-direction: column;
+    gap: var(--va-space-lg);
+    transition: opacity var(--va-duration-base) var(--va-ease-standard);
+}
+
+.search-results-wrap.is-stale {
+    opacity: 0.55;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .search-results-wrap {
+        transition: none;
+    }
+}
+
+.results-meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: var(--va-space-md) var(--va-space-2xl);
+    font-size: var(--va-text-xs);
+    color: var(--va-text-tertiary);
+}
+
+.results-meta strong {
+    font-family: var(--va-font-display);
+    font-size: var(--va-text-lg);
+    font-weight: var(--va-weight-regular);
+    font-variant-numeric: tabular-nums;
+    color: var(--va-text-primary);
+}
+
+.refreshing {
+    color: var(--va-accent-text);
+}
+
+.search-results {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border-top: var(--va-border-width) solid var(--va-line-strong);
+}
+
+.search-results > li {
+    position: relative;
+    border-bottom: var(--va-rule-quiet);
+}
+
+/*
+ * A catalogue entry.
+ *
+ * Record column, description column, collection column. The type is set above
+ * the name rather than in a cell of its own, because it says what the record
+ * *is* and belongs with it; the old layout gave it a 118px column of its own and
+ * it read as a tag on a documentation page.
+ */
+.result-row,
+.result-skeleton {
+    display: grid;
+    grid-template-columns: minmax(0, 23rem) minmax(0, 1fr) auto;
+    align-items: baseline;
+    gap: var(--va-space-md) var(--va-space-2xl);
+    padding: var(--va-space-lg) 0 var(--va-space-lg) var(--va-space-lg);
+    color: inherit;
+    text-decoration: none;
+}
+
+.result-row::before {
+    content: "";
+    position: absolute;
+    inset-inline-start: 0;
+    top: calc(var(--va-space-lg) + 1.05em);
+    width: 0;
+    height: var(--va-border-width-accent);
+    background: var(--va-accent-base);
+    transition: width var(--va-duration-base) var(--va-ease-standard);
+}
+
+.result-row:hover::before,
+.result-row:focus-visible::before {
+    width: var(--va-space-md);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .result-row::before {
+        transition: none;
+    }
+}
+
+.result-record {
+    display: grid;
+    gap: var(--va-space-3xs);
+    min-width: 0;
+}
+
+.result-type {
+    font-size: var(--va-text-2xs);
+    font-weight: var(--va-weight-semibold);
+    letter-spacing: var(--va-tracking-eyebrow);
+    text-transform: uppercase;
+    color: var(--va-text-tertiary);
+}
+
+.result-row strong {
+    font-family: var(--va-font-display);
+    font-size: var(--va-text-xl);
+    font-weight: var(--va-weight-regular);
+    line-height: var(--va-leading-tight);
+    color: var(--va-text-primary);
+    transition: var(--va-transition-colors);
+    overflow-wrap: anywhere;
+}
+
+/* A citation is an address. Tabular figures, so a column of them aligns. */
+.result-row strong.is-citation {
+    font-variant-numeric: tabular-nums;
+    letter-spacing: var(--va-tracking-tight);
+}
+
+/* A Sanskrit label takes the Sanskrit face, whatever kind of record it is. */
+.result-row strong.is-sanskrit {
+    font-family: var(--va-font-iast);
+    letter-spacing: 0;
+}
+
+.result-row:hover strong,
+.result-row:focus-visible strong {
+    color: var(--va-accent-text);
+}
+
+.result-body {
+    display: grid;
+    gap: var(--va-space-2xs);
+    min-width: 0;
+}
+
+.result-row p {
+    margin: 0;
+    max-width: var(--va-measure);
+    font-size: var(--va-text-base);
+    line-height: var(--va-leading-snug);
+    color: var(--va-text-secondary);
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+/* A verse printed as a catalogue snippet. The IAST face, because the display face has
+   no mark table and would drop every accent in it. Two lines, then the row ends. */
+.result-row p.is-sanskrit {
+    font-family: var(--va-font-iast);
+    font-size: var(--va-text-sm);
+    line-height: var(--va-leading-snug);
+    letter-spacing: 0;
+    white-space: pre-line;
+    color: var(--va-text-primary);
+}
+
+/*
+ * How this row matched.
+ *
+ * Kept on every row and never abbreviated away. It is the difference between a
+ * search a scholar can reason about and a ranked list they have to trust.
+ */
+.result-row small {
+    display: block;
+    font-size: var(--va-text-xs);
+    color: var(--va-text-tertiary);
+}
+
+.result-row small em {
+    font-style: normal;
+    color: var(--va-text-secondary);
+}
+
+.result-veda {
+    font-size: var(--va-text-2xs);
+    font-weight: var(--va-weight-semibold);
+    letter-spacing: var(--va-tracking-wide);
+    color: var(--va-text-tertiary);
+    white-space: nowrap;
+    align-self: baseline;
+}
+
+/* ----------------------------------------------------------- the openings - */
+
+/* The worked examples offered before a query. Ruled entries, not buttons in boxes. */
+.search-prompts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--va-space-md) var(--va-space-2xl);
+    padding-top: var(--va-space-lg);
+    border-top: var(--va-border-width) solid var(--va-line-strong);
+}
+
+.search-prompts button {
+    display: grid;
+    gap: var(--va-space-3xs);
+    text-align: start;
+    padding: 0;
+    border: 0;
+    background: none;
+    cursor: pointer;
+}
+
+.search-prompts strong {
+    font-family: var(--va-font-display);
+    font-size: var(--va-text-lg);
+    font-weight: var(--va-weight-regular);
+    color: var(--va-text-primary);
+    border-bottom: var(--va-border-width) solid transparent;
+    transition: var(--va-transition-colors);
+}
+
+.search-prompts button:hover strong,
+.search-prompts button:focus-visible strong {
+    color: var(--va-accent-text);
+    border-bottom-color: var(--va-accent-base);
+}
+
+.search-prompts span {
+    font-size: var(--va-text-xs);
+    color: var(--va-text-tertiary);
+}
+
+/* ------------------------------------------------------------ the failures - */
+
+.search-error {
+    display: flex;
+    gap: var(--va-space-md);
+    padding: var(--va-space-md) 0 var(--va-space-md) var(--va-space-md);
+    border-inline-start: var(--va-border-width-accent) solid var(--va-tone-insufficient);
+    font-size: var(--va-text-base);
+    color: var(--va-tone-insufficient);
+}
+
+.search-error strong {
+    display: block;
+    font-weight: var(--va-weight-medium);
+}
+
+.search-error span {
+    display: block;
+    margin-top: var(--va-space-2xs);
+    font-size: var(--va-text-sm);
+    color: var(--va-text-secondary);
+}
+
+/*
+ * What this query did not reach.
+ *
+ * A disclosure rather than a panel, and its summary states the status in words.
+ * The service returns up to eight caveats on a partial search and printing them
+ * all open buries the results under the apparatus.
+ */
+.search-caveats {
+    padding-top: var(--va-space-lg);
+    border-top: var(--va-border-width) solid var(--va-line-strong);
+    font-size: var(--va-text-sm);
+}
+
+.search-caveats summary {
+    cursor: pointer;
+    color: var(--va-text-secondary);
+    font-size: var(--va-text-xs);
+    letter-spacing: var(--va-tracking-eyebrow);
+    text-transform: uppercase;
+}
+
+.search-caveats summary:hover {
+    color: var(--va-accent-text);
+}
+
+.search-caveats p {
+    margin: var(--va-space-md) 0 0;
+    max-width: var(--va-measure);
+    font-size: var(--va-text-sm);
+    line-height: var(--va-leading-normal);
+    color: var(--va-text-tertiary);
+}
+
+/* ------------------------------------------------------------ the skeleton - */
+
+.result-skeleton > div {
+    display: grid;
+    gap: var(--va-space-sm);
+}
+
+/* ---------------------------------------------------------------- mobile - */
+
+@media (max-width: 61.999rem) {
+    .result-row,
+    .result-skeleton {
+        grid-template-columns: minmax(0, 1fr) auto;
+        gap: var(--va-space-sm) var(--va-space-lg);
+        padding-block: var(--va-space-xl);
+    }
+
+    .result-row::before {
+        top: var(--va-space-xl);
+    }
+
+    .result-body {
+        grid-column: 1 / -1;
+    }
+
+    .search-field input {
+        font-size: var(--va-text-xl);
+    }
+
+    .filter-bank {
+        gap: var(--va-space-lg);
+    }
+
+    .filter-selects {
+        gap: var(--va-space-lg);
+    }
+}
+
+/* ============================================================ the insight - */
+
+/*
+ * One of the three kinds of knowledge, as an editorial block rather than a card.
+ *
+ * The kicker is kept here and only here. Everywhere else in the product a page-level
+ * eyebrow was repetition; on this page it is the distinction the whole surface exists to
+ * draw, so MEASURED FROM THE TEXT / DERIVED MEASURE / INTERPRETATION stay, in the accent,
+ * above each block.
+ */
+.va-insight {
+    margin-top: var(--va-space-5xl);
+}
+
+.va-insight-head {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: var(--va-space-2xl);
+    margin: var(--va-space-xl) 0 var(--va-space-2xl);
+}
+
+.va-insight-kicker {
+    margin: 0 0 var(--va-space-sm);
+    font-size: var(--va-text-2xs);
+    font-weight: var(--va-weight-semibold);
+    letter-spacing: var(--va-tracking-eyebrow);
+    text-transform: uppercase;
+    color: var(--va-accent-text);
+}
+
+.va-insight-head h2 {
+    margin: 0;
+    font-family: var(--va-font-display);
+    font-size: var(--va-text-2xl);
+    font-weight: var(--va-weight-regular);
+    line-height: var(--va-leading-tight);
+    letter-spacing: var(--va-tracking-tight);
+    color: var(--va-text-primary);
+}
+
+.va-insight-lede {
+    margin: var(--va-space-md) 0 0;
+    max-width: var(--va-measure);
+    font-size: var(--va-text-base);
+    line-height: var(--va-leading-normal);
+    color: var(--va-text-secondary);
+}
+
+/* Which collections a row was counted over. Quiet, and never mistaken for the figure. */
+.va-block-table .is-scope {
+    font-size: var(--va-text-xs);
+    letter-spacing: 0.04em;
+    color: var(--va-text-tertiary);
+    white-space: nowrap;
+}
+
+@media (max-width: 47.999rem) {
+    .va-insight-head {
+        flex-direction: column;
+        gap: var(--va-space-lg);
+    }
+}
+
+/* A block head with its icon: the lens sections on the Atharvaveda page. */
+.va-lens-head {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--va-space-md);
+    margin: var(--va-space-xl) 0 var(--va-space-xl);
+    color: var(--va-accent-text);
+}
+
+.va-lens-head > svg {
+    flex: none;
+    margin-top: var(--va-space-3xs);
+}
+
+.va-lens-head .va-block-heading {
+    margin-bottom: var(--va-space-sm);
+}
+
+.va-lens-head .va-block-note {
+    margin-bottom: 0;
+}
+
+/*
+ * The register's column heads.
+ *
+ * One ruled row, and it exists to stop the unit repeating down the right margin. It is
+ * `aria-hidden` because it is not a table: each row still carries its own unit in its
+ * accessible name - the component renders it visually hidden when a column head is present
+ * - and an orphan header row read aloud before twenty list items is noise.
+ */
+.va-register-head {
+    display: grid;
+    grid-template-columns: minmax(0, 21rem) minmax(0, 1fr) auto;
+    gap: var(--va-space-lg) var(--va-space-xl);
+    padding: var(--va-space-sm) 0 var(--va-space-sm) var(--va-space-lg);
+    border-bottom: var(--va-border-width) solid var(--va-line-strong);
+    font-size: var(--va-text-2xs);
+    font-weight: var(--va-weight-semibold);
+    letter-spacing: var(--va-tracking-eyebrow);
+    text-transform: uppercase;
+    color: var(--va-text-tertiary);
+}
+
+.va-register-head > span:last-child {
+    text-align: end;
+}
+
+@media (max-width: 61.999rem) {
+    .va-register-head {
+        display: none;
+    }
+}
+
+/*
+ * Spacing between a page-level block and whatever precedes it.
+ *
+ * `.va-page` is a plain block container rather than a flex column, so nothing separates a
+ * scope panel from the register under it and the caveat's bottom edge landed exactly on
+ * the register's top rule. Set here rather than on `.caveat`, which is shared with eleven
+ * surfaces that have their own spacing.
+ */
+.va-page > .va-register,
+.va-page > .va-block-scroll,
+.va-page > .kind-tabs + .caveat,
+.va-page > .caveat + .va-register {
+    margin-top: var(--va-space-2xl);
+}
+
+.va-page > .caveat,
+.va-page > .caveat-list {
+    margin-top: var(--va-space-2xl);
+}
+
+/*
+ * A per-row unit is hidden only where the column head is on screen to carry it.
+ *
+ * The head is `display: none` below 62rem, so hiding the row's own unit there leaves the
+ * figure bare - measured on the mobile rite register, the quiet rows read "0" with nothing
+ * saying nought what. Visually hidden rather than removed, so it stays in the row's
+ * accessible name at every width.
+ */
+@media (min-width: 62rem) {
+    .va-register.has-columns .va-register-unit {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip-path: inset(50%);
+        white-space: nowrap;
+    }
+}

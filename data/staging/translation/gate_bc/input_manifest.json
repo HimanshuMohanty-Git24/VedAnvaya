@@ -1,0 +1,235 @@
+{
+ "phase": 0,
+ "staging_root": "data/staging/translation",
+ "files": [
+  {
+   "path": "m13_plan.json",
+   "sha256": "9799e681716789b480ac2a3396bce27058991a674dd404f50493a2564017ad2b",
+   "bytes": 36232,
+   "is_side_file": true
+  },
+  {
+   "path": "m13_readback.json",
+   "sha256": "922c8c695a3d2e6b4bd724c4515a651d5bf2a64f94f88bf4b734f304c22e9e8e",
+   "bytes": 2373,
+   "is_side_file": true
+  },
+  {
+   "path": "manifest.json",
+   "sha256": "bcd8473f37ae9484970f3e3bcb24ce69d04d8e42e7e6f42fc97a403faf1b77aa",
+   "bytes": 3701,
+   "is_side_file": false
+  },
+  {
+   "path": "proofs/qa.json",
+   "sha256": "dde13013101e15a1098603957674049422baa5f0f56aa9a05b3ca2312ee2e207",
+   "bytes": 12590,
+   "is_side_file": true
+  },
+  {
+   "path": "proofs/sacred_texts_reachability.md",
+   "sha256": "68812499c28520104f837623fef0bd90b2eca25d9a71c47b8b4d2b4eed7c8f2c",
+   "bytes": 2535,
+   "is_side_file": true
+  },
+  {
+   "path": "proofs/source_pages.json",
+   "sha256": "271ac95773d7a7664ba7b4aa539135f8d12300c1de6e90b267d006ea3093dec0",
+   "bytes": 70272,
+   "is_side_file": true
+  },
+  {
+   "path": "proofs/sv_residual.md",
+   "sha256": "1f5c9679ff51ffa09c95e1db7fcb301f978c50fbeaf9fea128a1e31a132c3ef2",
+   "bytes": 5870,
+   "is_side_file": true
+  },
+  {
+   "path": "proofs/yv_adhyaya_12_spine.md",
+   "sha256": "299dce10b397f37e6340223bc2a135f3ca51759a5744ad06968b712601c57184",
+   "bytes": 4046,
+   "is_side_file": true
+  },
+  {
+   "path": "proofs/yv_adhyaya_23_omission.md",
+   "sha256": "f6572705eddf44645a696bffa5fd3267ed2a9ced533f1e49c9e1ee00e31e4e74",
+   "bytes": 3517,
+   "is_side_file": true
+  },
+  {
+   "path": "rejected.jsonl",
+   "sha256": "f27b9981aa20c167f23c05f277cf66dc438d997ca16f820e2219352e9f9f0efd",
+   "bytes": 606129,
+   "is_side_file": true,
+   "lines": 673
+  },
+  {
+   "path": "rows.jsonl",
+   "sha256": "95318468a47c3c45909cada2188f7eff18f591ea63e04bc0a5b7763243a984cd",
+   "bytes": 4587860,
+   "is_side_file": false,
+   "lines": 2254
+  },
+  {
+   "path": "rv_1_65_1_70_pre_fix_audit.json",
+   "sha256": "fd07526fdca3c4366bbcf6eeadacd4a894b6a6339311aa1ad1c0860373cf43ea",
+   "bytes": 52224,
+   "is_side_file": true
+  },
+  {
+   "path": "sources.jsonl",
+   "sha256": "61852477ccfacf29d7de2ac9223422599fdf40c26f0d67bf83e1fd86c71c685a",
+   "bytes": 2407,
+   "is_side_file": true,
+   "lines": 5
+  }
+ ],
+ "side_file_count": 11,
+ "staged_manifest_claims": {
+  "algorithm_version": "translation-completion-v1",
+  "code_commit": "381ba0e8b358b2716e0d5d4242e992b2814bd271",
+  "config_hash": "06d63dc642864f5001383a57094885ad24014ef2304f1aa61b019a5bd8c3b7fe",
+  "counts": {
+   "candidates_considered": 2927,
+   "accepted": 2254,
+   "rejected": 673,
+   "verified_zero": 0,
+   "not_applicable": 0,
+   "unresolved": 0
+  },
+  "source_snapshot_ids": [
+   "SACRED_TEXTS_WYV_SNAPSHOT_2026_09_07",
+   "IA_WAYBACK_GRIFFITH_AV_1895",
+   "IA_WAYBACK_GRIFFITH_SV_1893",
+   "IA_WAYBACK_GRIFFITH_RV_1896",
+   "VEDAGRAPH_CANONICAL_RV_GRIFFITH"
+  ],
+  "closes_gaps": [
+   "GAP-TRANSLATION-AV-KANDA20",
+   "GAP-TRANSLATION-AV-STRAYS",
+   "GAP-TRANSLATION-YV-72",
+   "GAP-TRANSLATION-RV-50",
+   "GAP-TRANSLATION-SV-KAUTHUMA-1844"
+  ]
+ },
+ "hash_agreement": {
+  "rejected.jsonl": {
+   "manifest_sha256": "f27b9981aa20c167f23c05f277cf66dc438d997ca16f820e2219352e9f9f0efd",
+   "measured_sha256": "f27b9981aa20c167f23c05f277cf66dc438d997ca16f820e2219352e9f9f0efd",
+   "agrees": true,
+   "manifest_rows": 673,
+   "measured_lines": 673,
+   "rows_agree": true
+  },
+  "rows.jsonl": {
+   "manifest_sha256": "95318468a47c3c45909cada2188f7eff18f591ea63e04bc0a5b7763243a984cd",
+   "measured_sha256": "95318468a47c3c45909cada2188f7eff18f591ea63e04bc0a5b7763243a984cd",
+   "agrees": true,
+   "manifest_rows": 2254,
+   "measured_lines": 2254,
+   "rows_agree": true
+  },
+  "sources.jsonl": {
+   "manifest_sha256": "61852477ccfacf29d7de2ac9223422599fdf40c26f0d67bf83e1fd86c71c685a",
+   "measured_sha256": "61852477ccfacf29d7de2ac9223422599fdf40c26f0d67bf83e1fd86c71c685a",
+   "agrees": true,
+   "manifest_rows": 5,
+   "measured_lines": 5,
+   "rows_agree": true
+  }
+ },
+ "all_declared_hashes_agree": true,
+ "m13": {
+  "plan_sha256": "9799e681716789b480ac2a3396bce27058991a674dd404f50493a2564017ad2b",
+  "readback_sha256": "922c8c695a3d2e6b4bd724c4515a651d5bf2a64f94f88bf4b734f304c22e9e8e",
+  "readback": {
+   "artifact": "M13_READBACK",
+   "gap": "GAP-TRANSLATION-006",
+   "at": "2026-09-16T11:14:49.235700+00:00",
+   "expectation_source": "data/staging/integration/m13_receipt.json -- the executed receipt. The graph was asked only what the receipt already claims, never for the expectation itself.",
+   "receipt_sha256": "62557895e41423593f9766e17a27efd147a7785dff3c180a45710a1fdfc0fe76",
+   "rows_in_receipt": 31,
+   "rows_moved": 25,
+   "rows_unchanged_anchor": 6,
+   "corrected_attachments_present": 31,
+   "corrected_attachments_missing": 0,
+   "old_attachments_still_serving_that_text": [],
+   "text_bytes_changed": [],
+   "provenance_mismatches": [],
+   "claim_mismatches": [],
+   "translated_verses_in_span": [
+    "VG:RV:SAK:M01:S065:V001",
+    "VG:RV:SAK:M01:S065:V003",
+    "VG:RV:SAK:M01:S065:V005",
+    "VG:RV:SAK:M01:S065:V007",
+    "VG:RV:SAK:M01:S065:V009",
+    "VG:RV:SAK:M01:S066:V001",
+    "VG:RV:SAK:M01:S066:V003",
+    "VG:RV:SAK:M01:S066:V005",
+    "VG:RV:SAK:M01:S066:V007",
+    "VG:RV:SAK:M01:S066:V009",
+    "VG:RV:SAK:M01:S067:V001",
+    "VG:RV:SAK:M01:S067:V003",
+    "VG:RV:SAK:M01:S067:V005",
+    "VG:RV:SAK:M01:S067:V007",
+    "VG:RV:SAK:M01:S067:V009",
+    "VG:RV:SAK:M01:S068:V001",
+    "VG:RV:SAK:M01:S068:V003",
+    "VG:RV:SAK:M01:S068:V005",
+    "VG:RV:SAK:M01:S068:V007",
+    "VG:RV:SAK:M01:S068:V009",
+    "VG:RV:SAK:M01:S069:V001",
+    "VG:RV:SAK:M01:S069:V003",
+    "VG:RV:SAK:M01:S069:V005",
+    "VG:RV:SAK:M01:S069:V007",
+    "VG:RV:SAK:M01:S069:V009",
+    "VG:RV:SAK:M01:S070:V001",
+    "VG:RV:SAK:M01:S070:V003",
+    "VG:RV:SAK:M01:S070:V005",
+    "VG:RV:SAK:M01:S070:V007",
+    "VG:RV:SAK:M01:S070:V009",
+    "VG:RV:SAK:M01:S070:V011"
+   ],
+   "neighbouring_hymns": {
+    "RV 1.63": [
+     9,
+     9
+    ],
+    "RV 1.64": [
+     15,
+     15
+    ],
+    "RV 1.71": [
+     10,
+     10
+    ],
+    "RV 1.72": [
+     10,
+     10
+    ],
+    "RV 1.73": [
+     10,
+     9
+    ]
+   },
+   "corpus_totals": {
+    "translation_nodes": 17283,
+    "translation_edges": 17283,
+    "by_veda": {
+     "AV": 4878,
+     "RV": 10502,
+     "YV": 1903
+    },
+    "core": {
+     "AV": 5839,
+     "RV": 10552,
+     "SV": 1844,
+     "YV": 1975
+    }
+   },
+   "findings": [],
+   "clean": true,
+   "sha256": "f16400fc30c5bbc8e2304dfddc551f69480deaae7f18683a996e541674a6ba0c"
+  }
+ }
+}

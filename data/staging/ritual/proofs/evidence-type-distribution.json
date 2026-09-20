@@ -1,0 +1,148 @@
+{
+  "closed_set": [
+    "BRAHMANA",
+    "DERIVED",
+    "GRHYASUTRA",
+    "OTHER_SUPPLEMENTARY_RITUAL_SOURCE",
+    "SAMHITA",
+    "SRAUTASUTRA"
+  ],
+  "distribution": [
+    {
+      "assertion_class": "action",
+      "evidence_source_type": "BRAHMANA",
+      "count": 11
+    },
+    {
+      "assertion_class": "action",
+      "evidence_source_type": "SAMHITA",
+      "count": 21
+    },
+    {
+      "assertion_class": "action",
+      "evidence_source_type": "SRAUTASUTRA",
+      "count": 3
+    },
+    {
+      "assertion_class": "implement",
+      "evidence_source_type": "BRAHMANA",
+      "count": 4
+    },
+    {
+      "assertion_class": "implement",
+      "evidence_source_type": "SAMHITA",
+      "count": 41
+    },
+    {
+      "assertion_class": "implement",
+      "evidence_source_type": "SRAUTASUTRA",
+      "count": 2
+    },
+    {
+      "assertion_class": "material",
+      "evidence_source_type": "BRAHMANA",
+      "count": 6
+    },
+    {
+      "assertion_class": "material",
+      "evidence_source_type": "SAMHITA",
+      "count": 25
+    },
+    {
+      "assertion_class": "material",
+      "evidence_source_type": "SRAUTASUTRA",
+      "count": 1
+    },
+    {
+      "assertion_class": "offering",
+      "evidence_source_type": "SAMHITA",
+      "count": 21
+    },
+    {
+      "assertion_class": "passage_row",
+      "evidence_source_type": "BRAHMANA",
+      "count": 992
+    },
+    {
+      "assertion_class": "passage_row",
+      "evidence_source_type": "GRHYASUTRA",
+      "count": 527
+    },
+    {
+      "assertion_class": "passage_row",
+      "evidence_source_type": "SAMHITA",
+      "count": 223
+    },
+    {
+      "assertion_class": "passage_row",
+      "evidence_source_type": "SRAUTASUTRA",
+      "count": 1303
+    },
+    {
+      "assertion_class": "receives_offering",
+      "evidence_source_type": "BRAHMANA",
+      "count": 100
+    },
+    {
+      "assertion_class": "receives_offering",
+      "evidence_source_type": "GRHYASUTRA",
+      "count": 75
+    },
+    {
+      "assertion_class": "receives_offering",
+      "evidence_source_type": "SRAUTASUTRA",
+      "count": 80
+    },
+    {
+      "assertion_class": "rite_edge",
+      "evidence_source_type": "GRHYASUTRA",
+      "count": 237
+    },
+    {
+      "assertion_class": "rite_edge",
+      "evidence_source_type": "SRAUTASUTRA",
+      "count": 627
+    },
+    {
+      "assertion_class": "rite_existence",
+      "evidence_source_type": "BRAHMANA",
+      "count": 36
+    },
+    {
+      "assertion_class": "rite_existence",
+      "evidence_source_type": "GRHYASUTRA",
+      "count": 10
+    },
+    {
+      "assertion_class": "rite_existence",
+      "evidence_source_type": "SAMHITA",
+      "count": 45
+    },
+    {
+      "assertion_class": "rite_existence",
+      "evidence_source_type": "SRAUTASUTRA",
+      "count": 12
+    },
+    {
+      "assertion_class": "role_existence",
+      "evidence_source_type": "BRAHMANA",
+      "count": 8
+    },
+    {
+      "assertion_class": "role_existence",
+      "evidence_source_type": "SAMHITA",
+      "count": 19
+    },
+    {
+      "assertion_class": "step",
+      "evidence_source_type": "GRHYASUTRA",
+      "count": 2825
+    },
+    {
+      "assertion_class": "step",
+      "evidence_source_type": "SRAUTASUTRA",
+      "count": 6448
+    }
+  ],
+  "note": "Every ritual assertion in this artifact carries an evidence_source_type from the closed set. A Satapatha line is BRAHMANA evidence about a rite even when the mantra it employs is Yajurvedic, and a rite's deity relationship asserted by a Brahmana is BRAHMANA, not SAMHITA."
+}

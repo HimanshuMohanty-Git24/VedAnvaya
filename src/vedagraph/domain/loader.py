@@ -39,6 +39,7 @@ from vedagraph.domain.ontology import (
     labels_for_node_type,
 )
 from vedagraph.domain.profiles import (
+    ALL_VEDAS,
     PROFILE_MENTION_TIERS,
     DerivedMetric,
     DevataProfile,
@@ -371,6 +372,29 @@ def load_devata_taxonomy(session: Session, entries: Sequence[DevataTaxonomyEntry
         session,
         "UNWIND $rows AS row MATCH (dv:Devata {entity_key: row.entity_key}) SET dv += row",
         [entry.as_row() for entry in entries],
+    )
+
+    # attribution_scope, DERIVED per node rather than stored as a literal.
+    #
+    # GAP-ATTRIBUTION-009's implementation_dependency asks for exactly this -- "Derive
+    # attribution_scope from the graph at projection time instead of storing a literal, so it
+    # cannot outlive the fact it describes" -- and the reason is now on the record twice. The
+    # overlay wrote ["RV"] on all 214 nodes, which was true of HAS_DEVATA and became false the
+    # moment HAS_DEVATA_DERIVED landed 882 Atharvavedic dedications reaching 35 of them. R3
+    # corrected the graph and left the literal, so this rebuild would have flattened the 35
+    # straight back.
+    #
+    # Both RESOLVED dedication predicates, and deliberately not HAS_DEVATA_ASCRIPTION: an
+    # unresolved descriptor names no deity, so it cannot put a corpus in any deity's scope.
+    # The veda order is fixed rather than collected, so the value is stable across rebuilds.
+    session.run(
+        """
+        MATCH (dv:Devata)
+        OPTIONAL MATCH (p:Passage)-[:HAS_DEVATA|HAS_DEVATA_DERIVED]->(dv)
+        WITH dv, collect(DISTINCT p.veda) AS reached
+        SET dv.attribution_scope = [v IN $order WHERE v IN reached]
+        """,
+        order=list(ALL_VEDAS),
     )
 
     _write(

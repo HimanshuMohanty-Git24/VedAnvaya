@@ -1,0 +1,147 @@
+{
+  "artifact": "RELEASE_PREP_RECEIPT",
+  "at": "2026-09-18T16:55:50.748030+00:00",
+  "head_at_start": "a40fb589e85f60dc608cec345005d4fc6f8ffec4",
+  "head_now": "a40fb589e85f60dc608cec345005d4fc6f8ffec4",
+  "branch": "phase-data-completeness-v2",
+  "owner_decisions_recorded": [
+    {
+      "id": "OWNER_DECISION_F_NOTATION_IS_NOT_AUDIO",
+      "section": "docs/reports/data-completeness/OWNER_DECISIONS.md section 40",
+      "provenance": "OWNER-SUPPLIED",
+      "applied_to": "GAP-SAMAVEDA_MUSIC-002",
+      "outcome": "STILL_IMPLEMENTATION_FIXABLE",
+      "why_not_closed": "Three of the four release conditions measure MET. The fourth, 'existing validation gates pass', does not: Gate A is PASS but wave3_eligibility.json records Gate B UNKNOWN and Gate C NOT_RUN for samaveda_music, against a stated rule of A and B and C all PASS. The 1,136 aligned ARCIKA_NOTATION rows are authorised and not yet released; the 708 unaligned ones stay withheld by the decision's own closing clause."
+    },
+    {
+      "id": "OWNER_DECISION_G_GANA_OBJECT_OUT_OF_V1",
+      "section": "docs/reports/data-completeness/OWNER_DECISIONS.md section 41",
+      "provenance": "OWNER-SUPPLIED",
+      "applied_to": "GAP-SAMAVEDA_MUSIC-003 clause 2",
+      "outcome": "CLOSED_SCOPE_DECISION",
+      "why_closed": "MUSICALIZED_AS is not required for Product V1 without a canonical object-side Gana identity, and none exists. No gana node was minted and no edge was created."
+    }
+  ],
+  "registry": {
+    "entries": 85,
+    "by_status": {
+      "ASK_FORMAL_REGRADE_BLOCKED_EXTERNAL_QUOTA": 1,
+      "BLOCKED_EXTERNAL_SOURCE_UNAVAILABLE": 7,
+      "CLOSED_DERIVED": 52,
+      "CLOSED_NOT_APPLICABLE": 2,
+      "CLOSED_SCOPE_DECISION": 14,
+      "CLOSED_VERIFIED_ZERO": 5,
+      "NEEDS_AUDIBLE_REVIEW": 3,
+      "STILL_IMPLEMENTATION_FIXABLE": 1
+    },
+    "data_completeness_closures": 80,
+    "REGISTRY_IMPLEMENTATION_FIXABLE": 1,
+    "OWNER_DECISION_REQUIRED": 0,
+    "NEEDS_AUDIBLE_REVIEW": 3,
+    "ASK_FORMAL_REGRADE_BLOCKED_EXTERNAL_QUOTA": 1,
+    "samaveda_music": {
+      "GAP-SAMAVEDA_MUSIC-001": "CLOSED_SCOPE_DECISION",
+      "GAP-SAMAVEDA_MUSIC-002": "STILL_IMPLEMENTATION_FIXABLE",
+      "GAP-SAMAVEDA_MUSIC-003": "CLOSED_SCOPE_DECISION"
+    },
+    "not_terminal_entries": [
+      "GAP-SAMAVEDA_MUSIC-002"
+    ]
+  },
+  "graph": {
+    "nodes": 164601,
+    "relationships": 509769,
+    "musicalized_as_type_exists": false,
+    "musicalized_as_edges": 0,
+    "melodic_labels": [],
+    "nodes_with_a_gana_property_key": 0,
+    "sv_mantras": 1844,
+    "sv_mantras_without_a_running_number": 0
+  },
+  "audio": {
+    "queue_rows": 1021,
+    "queue_distinct_review_ids": 1018,
+    "sample_rows": 100,
+    "sample_seed": "vedanvaya-wave4-audio-sample",
+    "sample_strata": {
+      "AV_COORDINATE_REMAPPED": 75,
+      "RV_1_65_TO_1_70_AFFECTED_SPAN": 6,
+      "RV_RECOVERED_150": 15,
+      "SV_CONTAINER_SCOPE": 1,
+      "YV_RECOVERED": 3
+    },
+    "reviewed": 0,
+    "AUDIBLY_VERIFIED_SAMPLE": 0,
+    "NOT_INDIVIDUALLY_HEARD": 1021
+  },
+  "worktree": {
+    "classified": 90,
+    "counts": {
+      "COMMIT_REQUIRED": 22,
+      "GENERATED_TRACKED": 2,
+      "LOCAL_EVIDENCE_KEEP_UNTRACKED": 66
+    },
+    "gitignore_rules_added": [
+      "data/staging/final_stabilization/neo4j_backup_20260917/*.dump",
+      "data/staging/release_blocker_r3/backup/*.jsonl",
+      "data/staging/release_blocker_r5/backup/*.jsonl"
+    ],
+    "deleted": [
+      "data/staging/release_blocker_r5/openapi.json"
+    ],
+    "deletion_justified_by": "vedagraph.api.app.create_app().openapi() re-emitted 386,344 bytes over 46 paths with sha256 5a464b183e940ab5, byte-identical to the stored dump, before it was removed."
+  },
+  "manual_and_external_residuals": {
+    "AUDIO_SAMPLE_REVIEW": "PENDING_OWNER",
+    "ASK_FORMAL_60": "PENDING_OWNER_QUOTA"
+  },
+  "superseded_on_2026_09_18": {
+    "what_this_receipt_still_records_correctly": "Everything it measured, at the HEAD it names. No figure in it has been edited.",
+    "what_has_since_changed": "Exactly one reading: GAP-SAMAVEDA_MUSIC-002. This receipt records it as STILL_IMPLEMENTATION_FIXABLE with REGISTRY_IMPLEMENTATION_FIXABLE 1, because the fourth condition of OWNER_DECISION_F -- 'existing validation gates pass' -- was unmet with Gate B UNKNOWN and Gate C NOT_RUN.",
+    "what_settled_it": "OWNER_DECISION_H_GATES_MEANS_A_AND_B_AND_C, OWNER_DECISIONS.md section 42, OWNER-SUPPLIED 2026-09-18: 'existing validation gates' means Gate A and Gate B and Gate C, not Gate A alone. The condition was then satisfied by building and running the two missing gates rather than by narrowing the word. Gate C found a real defect (39 withheld verses stating a reason the repository disproves), the defect was fixed by overlay, and the notation was imported.",
+    "current_reading": {
+      "GAP-SAMAVEDA_MUSIC-002": "CLOSED_SOURCE_ACQUIRED",
+      "REGISTRY_IMPLEMENTATION_FIXABLE": 0,
+      "OWNER_DECISION_REQUIRED": 0,
+      "measured_by": "data/staging/wave4/registry_closure_audit.json",
+      "measured_at": "2026-09-18T17:52:08.523988+00:00"
+    },
+    "unchanged_by_that_closure": {
+      "NEEDS_AUDIBLE_REVIEW": 3,
+      "ASK_FORMAL_REGRADE_BLOCKED_EXTERNAL_QUOTA": 1,
+      "note": "The audio review and the Ask regrade are untouched by this pass. 0 of 1,021 files are heard and the notation is not audio: section 40 is the decision that separates them."
+    },
+    "receipt_figures_edited": 0,
+    "noted_at": "2026-09-18T18:16:08.548312+00:00"
+  },
+  "audio_sample_residual_closed": {
+    "what_this_closes": "manual_and_external_residuals.AUDIO_SAMPLE_REVIEW, which this receipt recorded as PENDING_OWNER with audio.reviewed 0 and AUDIBLY_VERIFIED_SAMPLE 0. The owner has since listened to 20 rows of the seeded 100-row sample and accepted them.",
+    "settled_by": "OWNER_DECISION_AUDIO_SAMPLE_ACCEPTANCE, OWNER_DECISIONS.md section 43, OWNER-SUPPLIED 2026-09-18.",
+    "current_reading": {
+      "AUDIO_SAMPLE_REVIEW": "CLOSED_OWNER_SAMPLE_ACCEPTED",
+      "AUDIO_OWNER_SAMPLE": "ACCEPTED",
+      "AUDIO_SAMPLE_REVIEWED": 20,
+      "AUDIO_SAMPLE_VERIFIED": 20,
+      "AUDIO_SAMPLE_UNCERTAIN": 0,
+      "AUDIO_SAMPLE_REJECTED": 0,
+      "measured_by": "data/manual/audio_review/owner_sample_acceptance.json",
+      "measured_at": "2026-09-18T19:45:13.121077+00:00"
+    },
+    "what_it_does_not_close": {
+      "NEEDS_AUDIBLE_REVIEW": 3,
+      "entries": [
+        "GAP-AUDIO-002",
+        "GAP-AUDIO-003",
+        "GAP-AUDIO-004"
+      ],
+      "why": "Their release requirement is the promotion of 954 staged rows into the product catalogue, which OWNER_DECISION_E_AUDIO_GATE (section 14) gates on the 1,021-row queue being heard. It has not been: 1001 of 1021 rows remain NOT_INDIVIDUALLY_HEARD. A sample acceptance is not a licence to relabel the population it was drawn from, and 0 queue rows were promoted.",
+      "queue_rows_promoted": 0
+    },
+    "also_unchanged": {
+      "ASK_FORMAL_REGRADE_BLOCKED_EXTERNAL_QUOTA": 1,
+      "ASK_FORMAL_60": "PENDING_OWNER_EXECUTION"
+    },
+    "receipt_figures_edited": 0,
+    "noted_at": "2026-09-18T19:46:52.656166+00:00"
+  }
+}

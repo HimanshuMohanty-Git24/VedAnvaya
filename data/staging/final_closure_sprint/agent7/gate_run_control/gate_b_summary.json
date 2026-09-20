@@ -1,0 +1,414 @@
+{
+ "phase": "2-3",
+ "rows_assessed": 2254,
+ "rows_in_artifact": 2254,
+ "assessed_fraction": 1.0,
+ "by_category": {
+  "B_CONFLICT_EXISTING_TRANSLATION": 1108,
+  "B_FAIL_POLICY": 740,
+  "B_FAIL_SOURCE_COORDINATE": 285,
+  "B_PASS": 107,
+  "B_FAIL_PROVENANCE": 11,
+  "B_NEEDS_INDEPENDENT_CONTENT_CONTROL": 3
+ },
+ "by_category_and_veda": {
+  "B_CONFLICT_EXISTING_TRANSLATION|AV": 892,
+  "B_FAIL_POLICY|SV": 735,
+  "B_FAIL_SOURCE_COORDINATE|SV": 285,
+  "B_CONFLICT_EXISTING_TRANSLATION|SV": 173,
+  "B_PASS|AV": 52,
+  "B_PASS|SV": 49,
+  "B_CONFLICT_EXISTING_TRANSLATION|YV": 36,
+  "B_FAIL_PROVENANCE|YV": 11,
+  "B_CONFLICT_EXISTING_TRANSLATION|RV": 7,
+  "B_PASS|RV": 6,
+  "B_FAIL_POLICY|RV": 4,
+  "B_NEEDS_INDEPENDENT_CONTENT_CONTROL|YV": 3,
+  "B_FAIL_POLICY|YV": 1
+ },
+ "by_category_and_source": {
+  "B_CONFLICT_EXISTING_TRANSLATION|IA_WAYBACK_GRIFFITH_AV_1895": 871,
+  "B_FAIL_POLICY|IA_WAYBACK_GRIFFITH_SV_1893": 735,
+  "B_FAIL_SOURCE_COORDINATE|IA_WAYBACK_GRIFFITH_SV_1893": 285,
+  "B_CONFLICT_EXISTING_TRANSLATION|VEDAGRAPH_CANONICAL_RV_GRIFFITH": 194,
+  "B_PASS|IA_WAYBACK_GRIFFITH_AV_1895": 52,
+  "B_PASS|IA_WAYBACK_GRIFFITH_SV_1893": 49,
+  "B_CONFLICT_EXISTING_TRANSLATION|SACRED_TEXTS_WYV_SNAPSHOT_2026_09_07": 36,
+  "B_FAIL_PROVENANCE|SACRED_TEXTS_WYV_SNAPSHOT_2026_09_07": 11,
+  "B_CONFLICT_EXISTING_TRANSLATION|IA_WAYBACK_GRIFFITH_RV_1896": 7,
+  "B_PASS|IA_WAYBACK_GRIFFITH_RV_1896": 6,
+  "B_FAIL_POLICY|IA_WAYBACK_GRIFFITH_RV_1896": 4,
+  "B_NEEDS_INDEPENDENT_CONTENT_CONTROL|SACRED_TEXTS_WYV_SNAPSHOT_2026_09_07": 3,
+  "B_FAIL_POLICY|SACRED_TEXTS_WYV_SNAPSHOT_2026_09_07": 1
+ },
+ "pass_by_veda": {
+  "AV": 52,
+  "SV": 49,
+  "RV": 6
+ },
+ "pass_by_source": {
+  "IA_WAYBACK_GRIFFITH_AV_1895": 52,
+  "IA_WAYBACK_GRIFFITH_SV_1893": 49,
+  "IA_WAYBACK_GRIFFITH_RV_1896": 6
+ },
+ "fail_by_veda": {
+  "SV": 1193,
+  "AV": 892,
+  "YV": 51,
+  "RV": 11
+ },
+ "all_categories_multiset": {
+  "B_CONFLICT_EXISTING_TRANSLATION": 1080,
+  "B_FAIL_POLICY,B_FAIL_SOURCE_COORDINATE": 515,
+  "B_FAIL_SOURCE_COORDINATE": 283,
+  "B_FAIL_POLICY": 224,
+  "B_PASS": 107,
+  "B_CONFLICT_EXISTING_TRANSLATION,B_NEEDS_INDEPENDENT_CONTENT_CONTROL": 28,
+  "B_FAIL_PROVENANCE": 11,
+  "B_NEEDS_INDEPENDENT_CONTENT_CONTROL": 3,
+  "B_FAIL_SOURCE_COORDINATE,B_FAIL_UNEXPLAINED_SPINE": 2,
+  "B_FAIL_POLICY,B_FAIL_PROVENANCE": 1
+ },
+ "measured_grain": {
+  "MANTRA": 2186,
+  "MANTRA_RANGE": 68
+ },
+ "span_class": {
+  "EXACT_SPINE": 2186,
+  "VERIFIED_RANGE": 68
+ },
+ "target_state": {
+  "TARGET_HAS_NO_TRANSLATION": 1146,
+  "TARGET_HAS_TRANSLATION_SAME_SOURCE_IDENTICAL_TEXT": 1108
+ },
+ "checks": {
+  "B1.display_type_mantra": {
+   "eligible": 2254,
+   "evaluated": 2254,
+   "coverage": 1.0,
+   "full_coverage": true,
+   "failed": 0,
+   "passed": 2254
+  },
+  "B1.is_mantra": {
+   "eligible": 2254,
+   "evaluated": 2254,
+   "coverage": 1.0,
+   "full_coverage": true,
+   "failed": 0,
+   "passed": 2254
+  },
+  "B1.is_passage": {
+   "eligible": 2254,
+   "evaluated": 2254,
+   "coverage": 1.0,
+   "full_coverage": true,
+   "failed": 0,
+   "passed": 2254
+  },
+  "B1.not_internal": {
+   "eligible": 2254,
+   "evaluated": 2254,
+   "coverage": 1.0,
+   "full_coverage": true,
+   "failed": 0,
+   "passed": 2254
+  },
+  "B1.parent_exists": {
+   "eligible": 2254,
+   "evaluated": 2254,
+   "coverage": 1.0,
+   "full_coverage": true,
+   "failed": 0,
+   "passed": 2254
+  },
+  "B1.payload_veda_matches": {
+   "eligible": 2254,
+   "evaluated": 2254,
+   "coverage": 1.0,
+   "full_coverage": true,
+   "failed": 0,
+   "passed": 2254
+  },
+  "B1.recension_expected": {
+   "eligible": 2254,
+   "evaluated": 2254,
+   "coverage": 1.0,
+   "full_coverage": true,
+   "failed": 0,
+   "passed": 2254
+  },
+  "B1.status_canonical": {
+   "eligible": 2254,
+   "evaluated": 2254,
+   "coverage": 1.0,
+   "full_coverage": true,
+   "failed": 0,
+   "passed": 2254
+  },
+  "B1.target_resolves": {
+   "eligible": 2254,
+   "evaluated": 2254,
+   "coverage": 1.0,
+   "full_coverage": true,
+   "failed": 0,
+   "passed": 2254
+  },
+  "B1.veda_node_matches_key": {
+   "eligible": 2254,
+   "evaluated": 2254,
+   "coverage": 1.0,
+   "full_coverage": true,
+   "failed": 0,
+   "passed": 2254
+  },
+  "B1.veda_row_matches_key": {
+   "eligible": 2254,
+   "evaluated": 2254,
+   "coverage": 1.0,
+   "full_coverage": true,
+   "failed": 0,
+   "passed": 2254
+  },
+  "B1.work_id_expected": {
+   "eligible": 2254,
+   "evaluated": 2254,
+   "coverage": 1.0,
+   "full_coverage": true,
+   "failed": 0,
+   "passed": 2254
+  },
+  "B2.locator_addresses_one_target": {
+   "eligible": 2254,
+   "evaluated": 2254,
+   "coverage": 1.0,
+   "full_coverage": true,
+   "failed": 800,
+   "passed": 1454
+  },
+  "B2.locator_container_agrees_with_canonical_container": {
+   "eligible": 991,
+   "evaluated": 991,
+   "coverage": 1.0,
+   "full_coverage": true,
+   "failed": 0,
+   "passed": 991
+  },
+  "B2.locator_present": {
+   "eligible": 2254,
+   "evaluated": 2254,
+   "coverage": 1.0,
+   "full_coverage": true,
+   "failed": 0,
+   "passed": 2254
+  },
+  "B3.asserted_grain_matches_source_unit": {
+   "eligible": 2254,
+   "evaluated": 2254,
+   "coverage": 1.0,
+   "full_coverage": true,
+   "failed": 0,
+   "passed": 2254
+  },
+  "B3.grain_is_translation_bearing": {
+   "eligible": 2254,
+   "evaluated": 2254,
+   "coverage": 1.0,
+   "full_coverage": true,
+   "failed": 0,
+   "passed": 2254
+  },
+  "B3.range_enumerates_complete_covered_keys": {
+   "eligible": 68,
+   "evaluated": 68,
+   "coverage": 1.0,
+   "full_coverage": true,
+   "failed": 0,
+   "passed": 68
+  },
+  "B4.span_classified": {
+   "eligible": 2254,
+   "evaluated": 2254,
+   "coverage": 1.0,
+   "full_coverage": true,
+   "failed": 0,
+   "passed": 2254
+  },
+  "B5.has_letters": {
+   "eligible": 2254,
+   "evaluated": 2254,
+   "coverage": 1.0,
+   "full_coverage": true,
+   "failed": 0,
+   "passed": 2254
+  },
+  "B5.materially_textual": {
+   "eligible": 2254,
+   "evaluated": 2254,
+   "coverage": 1.0,
+   "full_coverage": true,
+   "failed": 0,
+   "passed": 2254
+  },
+  "B5.no_chrome_substring": {
+   "eligible": 2254,
+   "evaluated": 2254,
+   "coverage": 1.0,
+   "full_coverage": true,
+   "failed": 0,
+   "passed": 2254
+  },
+  "B5.no_html_artefact": {
+   "eligible": 2254,
+   "evaluated": 2254,
+   "coverage": 1.0,
+   "full_coverage": true,
+   "failed": 0,
+   "passed": 2254
+  },
+  "B5.non_empty": {
+   "eligible": 2254,
+   "evaluated": 2254,
+   "coverage": 1.0,
+   "full_coverage": true,
+   "failed": 0,
+   "passed": 2254
+  },
+  "B5.not_chrome_exact": {
+   "eligible": 2254,
+   "evaluated": 2254,
+   "coverage": 1.0,
+   "full_coverage": true,
+   "failed": 0,
+   "passed": 2254
+  },
+  "B5.not_label_only": {
+   "eligible": 2254,
+   "evaluated": 2254,
+   "coverage": 1.0,
+   "full_coverage": true,
+   "failed": 0,
+   "passed": 2254
+  },
+  "B6.acquisition_traceable": {
+   "eligible": 2254,
+   "evaluated": 2254,
+   "coverage": 1.0,
+   "full_coverage": true,
+   "failed": 0,
+   "passed": 2254
+  },
+  "B6.quality_class_declared": {
+   "eligible": 2254,
+   "evaluated": 2254,
+   "coverage": 1.0,
+   "full_coverage": true,
+   "failed": 0,
+   "passed": 2254
+  },
+  "B6.source_locator_declared": {
+   "eligible": 2254,
+   "evaluated": 2254,
+   "coverage": 1.0,
+   "full_coverage": true,
+   "failed": 0,
+   "passed": 2254
+  },
+  "B6.source_revision_identified": {
+   "eligible": 2254,
+   "evaluated": 2254,
+   "coverage": 1.0,
+   "full_coverage": true,
+   "failed": 12,
+   "passed": 2242
+  },
+  "B6.translation_source_declared": {
+   "eligible": 2254,
+   "evaluated": 2254,
+   "coverage": 1.0,
+   "full_coverage": true,
+   "failed": 0,
+   "passed": 2254
+  },
+  "B6.translator_declared": {
+   "eligible": 2254,
+   "evaluated": 2254,
+   "coverage": 1.0,
+   "full_coverage": true,
+   "failed": 0,
+   "passed": 2254
+  },
+  "B6.work_edition_declared": {
+   "eligible": 2254,
+   "evaluated": 2254,
+   "coverage": 1.0,
+   "full_coverage": true,
+   "failed": 0,
+   "passed": 2254
+  },
+  "B7.target_state_classified": {
+   "eligible": 2254,
+   "evaluated": 2254,
+   "coverage": 1.0,
+   "full_coverage": true,
+   "failed": 1108,
+   "passed": 1146
+  },
+  "B8.correction_dependency_recorded": {
+   "eligible": 2254,
+   "evaluated": 2254,
+   "coverage": 1.0,
+   "full_coverage": true,
+   "failed": 0,
+   "passed": 2254
+  },
+  "B9.central_importability_policy": {
+   "eligible": 2254,
+   "evaluated": 2254,
+   "coverage": 1.0,
+   "full_coverage": true,
+   "failed": 740,
+   "passed": 1514
+  },
+  "B9.forced_address_requires_content_control": {
+   "eligible": 39,
+   "evaluated": 39,
+   "coverage": 1.0,
+   "full_coverage": true,
+   "failed": 31,
+   "passed": 8
+  },
+  "BX.claimed_sanskrit_identity_reproduced": {
+   "eligible": 528,
+   "evaluated": 528,
+   "coverage": 1.0,
+   "full_coverage": true,
+   "failed": 2,
+   "passed": 526
+  }
+ },
+ "checks_without_full_coverage": [],
+ "categories_declared": [
+  "B_PASS",
+  "B_FAIL_TARGET",
+  "B_FAIL_SOURCE_COORDINATE",
+  "B_FAIL_GRANULARITY",
+  "B_FAIL_UNEXPLAINED_SPINE",
+  "B_FAIL_PROVENANCE",
+  "B_FAIL_LITERAL",
+  "B_FAIL_POLICY",
+  "B_CONFLICT_EXISTING_TRANSLATION",
+  "B_NEEDS_INDEPENDENT_CONTENT_CONTROL"
+ ],
+ "precedence": [
+  "B_FAIL_POLICY",
+  "B_FAIL_TARGET",
+  "B_FAIL_SOURCE_COORDINATE",
+  "B_FAIL_PROVENANCE",
+  "B_FAIL_LITERAL",
+  "B_FAIL_GRANULARITY",
+  "B_FAIL_UNEXPLAINED_SPINE",
+  "B_CONFLICT_EXISTING_TRANSLATION",
+  "B_NEEDS_INDEPENDENT_CONTENT_CONTROL"
+ ]
+}

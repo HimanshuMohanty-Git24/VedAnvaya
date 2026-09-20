@@ -1,0 +1,41 @@
+{
+  "artifact": "AUDIO_TWO_TIER_ADMISSION_REPORT",
+  "decision": "OWNER_DECISION_AUDIO_TWO_TIER_PUBLICATION",
+  "admitted_on": "2026-09-19",
+  "candidates_evaluated": 954,
+  "admitted": 946,
+  "refused": 8,
+  "admitted_by_tier": {
+    "SOURCE_MAPPED_UNREVIEWED": 926,
+    "RELEASED_VERIFIED": 20
+  },
+  "refused_by_reason": {
+    "TEXT_ALIGNMENT_NOT_ESTABLISHED": 8
+  },
+  "refused_by_set_and_reason": {
+    "audio_yv": {
+      "TEXT_ALIGNMENT_NOT_ESTABLISHED": 8
+    }
+  },
+  "catalogue_before": 16834,
+  "catalogue_after": 17780,
+  "per_veda_by_tier": {
+    "AV": {
+      "RELEASED_VERIFIED": 20,
+      "SOURCE_MAPPED_UNREVIEWED": 5431
+    },
+    "RV": {
+      "RELEASED_VERIFIED": 0,
+      "SOURCE_MAPPED_UNREVIEWED": 10552
+    },
+    "SV": {
+      "RELEASED_VERIFIED": 0,
+      "SOURCE_MAPPED_UNREVIEWED": 0
+    },
+    "YV": {
+      "RELEASED_VERIFIED": 0,
+      "SOURCE_MAPPED_UNREVIEWED": 1777
+    }
+  },
+  "graph_checked": true
+}

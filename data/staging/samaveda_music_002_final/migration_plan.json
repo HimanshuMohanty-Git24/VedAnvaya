@@ -1,0 +1,80 @@
+{
+  "artifact": "SAMAVEDA_NOTATION_002_MIGRATION_PLAN",
+  "at": "2026-09-18T17:34:56.325255+00:00",
+  "head": "6e6ce43a64d4bcae63c6a99e0013489e72ae22bb",
+  "gates": {
+    "A": {
+      "present": true,
+      "artifact": "data/staging/samaveda_music_002_final/gate_a.json",
+      "result": "PASS",
+      "at": null
+    },
+    "B": {
+      "present": true,
+      "artifact": "data/staging/integration/samaveda_music_gate_b.json",
+      "result": "PASS",
+      "at": "2026-09-18T17:20:11.039403+00:00"
+    },
+    "C": {
+      "present": true,
+      "artifact": "data/staging/integration/samaveda_music_gate_c.json",
+      "result": "SURVIVED",
+      "at": "2026-09-18T17:30:30.510409+00:00"
+    },
+    "rule": "OWNER-SUPPLIED 2026-09-18: 'existing validation gates' in OWNER_DECISION_F_NOTATION_IS_NOT_AUDIO means ALL APPLICABLE gates -- A, B and C -- not Gate A alone. Refusing to execute on anything less is the decision, not caution."
+  },
+  "gates_pass": true,
+  "match_keys": {
+    "TextVersion": "text_id",
+    "Mantra": "canonical_key"
+  },
+  "text_version_id": "WIKISOURCE_SA.SV.KAU.ARCIKA_SASVARA",
+  "text_id_collisions_within_this_payload": 0,
+  "writes": {
+    "text_versions_to_create": 1136,
+    "has_text_version_edges_to_create": 1136,
+    "mantras_to_type_present": 1136,
+    "mantras_to_type_withheld": 708,
+    "mantras_to_type_total": 1844,
+    "withheld_by_class": {
+      "NEAR_LINE_EXISTS_WITNESS_DISAGREEMENT": 565,
+      "NO_NEAR_LINE_PROBABLE_ABSENCE": 104,
+      "WITNESS_OCCURRENCE_CONSUMED_BY_A_COREFERENT_REPEAT": 39
+    },
+    "gana_nodes_to_create": 0,
+    "musicalized_as_edges_to_create": 0,
+    "new_labels_to_create": 0,
+    "new_relationship_types_to_create": 0,
+    "notation_values_invented": 0
+  },
+  "census_before": {
+    "nodes": 164601,
+    "relationships": 509769,
+    "TextVersion": 58786,
+    "HAS_TEXT_VERSION": 58786,
+    "SV_mantras": 1844,
+    "SV_text_versions": 3688,
+    "SV_accented_text_versions": 0,
+    "SV_mantras_with_a_notation_state": 0,
+    "MUSICALIZED_AS": 0
+  },
+  "census_promised_after": {
+    "nodes": 165737,
+    "relationships": 510905,
+    "TextVersion": 59922,
+    "HAS_TEXT_VERSION": 59922,
+    "SV_mantras": 1844,
+    "SV_text_versions": 4824,
+    "SV_accented_text_versions": 1136,
+    "SV_mantras_with_a_notation_state": 1844,
+    "MUSICALIZED_AS": 0
+  },
+  "refuses_to": [
+    "create a Gana node",
+    "create a MUSICALIZED_AS edge",
+    "create any new label or relationship type",
+    "write notation onto a withheld verse",
+    "overwrite the existing SV PRIMARY_TEXT",
+    "interpret a mark into a pitch"
+  ]
+}

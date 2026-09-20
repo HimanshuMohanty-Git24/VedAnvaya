@@ -55,6 +55,12 @@ class NodeKind(StrEnum):
     RISHI = "Rishi"
     CHANDAS = "Chandas"
     LEMMA = "Lemma"
+    #: Internal. ``QA_ISSUE_ON`` is declared by this layer and attaches this repository's
+    #: findings about itself to the work they are about, so its endpoints need naming here
+    #: too: the vocabulary being too narrow to express an internal predicate is not a reason
+    #: for that predicate to go unconstrained.
+    QA_ISSUE = "QAIssue"
+    WORK = "Work"
 
 
 class TextualPredicate(StrEnum):
@@ -134,8 +140,10 @@ _F = NodeKind.FORMULA
 _C = NodeKind.CONCEPT
 _D = NodeKind.DEVATA
 
-#: Domain and range for every non-semantic predicate. The semantic ones keep the
-#: signatures the frozen ontology already gave them and are checked against it directly.
+#: Domain and range for every predicate this layer controls -- textual, structural, semantic
+#: and internal. Wave 4 added the last two groups: until then the dict held only the ten
+#: non-semantic predicates, and the fourteen semantic ones plus ``QA_ISSUE_ON`` were absent
+#: from the composed declaration that every gate reads.
 SIGNATURES: Final[dict[str, Signature]] = {
     str(TextualPredicate.EXACT_PARALLEL_OF): Signature(
         frozenset({_P}), frozenset({_P}), True, "Identical on the strongest reachable surface."
@@ -167,6 +175,42 @@ SIGNATURES: Final[dict[str, Signature]] = {
     str(StructuralPredicate.DEVATA_ASSOCIATED_WITH): Signature(
         frozenset({_D}), frozenset({_C}), False, "A deity and a concept that are not the same node."
     ),
+    # The fourteen semantic predicates. GAP-SEMANTIC-SIGNATURE-COVERAGE-001.
+    #
+    # Added in Wave 4, and the reason they were missing is instructive: ``validate_endpoints``
+    # DOES constrain them -- the branch below enforces "a semantic assertion is about a
+    # passage" -- but it does so by falling through on a missing signature, so the constraint
+    # lived only in a code path and never in the declaration ``all_endpoint_signatures()``
+    # composes. The scorecard's signature gate therefore reported 63 of 76 predicates covered
+    # and could not have noticed: a gate whose universe of discourse omits a predicate cannot
+    # find a violation on it.
+    #
+    # **Declared from the ontology's rule, not from the graph.** The subject of a semantic
+    # assertion is a passage, by the frozen ontology's definition. The object is a canonical
+    # entity, which in this graph is a ``:Devata`` or a ``:Concept`` -- every ``:DomainEntity``
+    # also carries ``:Concept``, so ``Place``, ``Offering``, ``Ritual``, ``Substance``,
+    # ``Action`` and the rest are inside ``_C`` rather than beside it. A live measurement over
+    # all 613 edges agrees with every line of this, which is the direction that check must run
+    # in: the declaration is the standard and the graph is what gets tested against it.
+    #
+    # ``ASSOCIATED_WITH`` and ``EXPRESSES`` carry zero edges and get the same signature from
+    # the same rule. Deriving a declaration from a population is how a layer's first edge
+    # becomes its own authority.
+    **{
+        str(predicate): Signature(
+            frozenset({_P}),
+            frozenset({_D, _C}),
+            False,
+            "A semantic assertion about a passage, whose object is a canonical entity.",
+        )
+        for predicate in sorted(str(p) for p in SEMANTIC_PREDICATES)
+    },
+    "QA_ISSUE_ON": Signature(
+        frozenset({NodeKind.QA_ISSUE}),
+        frozenset({NodeKind.WORK}),
+        False,
+        "A finding this repository holds about one of its own works. Never product content.",
+    ),
 }
 
 #: Enrichment predicates that are declared and deliberately carry zero edges.
@@ -176,16 +220,21 @@ SIGNATURES: Final[dict[str, Signature]] = {
 #: with no rows and correctly reported it as an undocumented dead filter option -- the
 #: rationale existed, in a place nothing querying the database would look. The ontology
 #: reference reads this map together with the domain layer's own.
-UNPOPULATED_BY_DESIGN: Final[dict[str, str]] = {
-    str(TextualPredicate.SHARES_FORMULA_WITH): (
-        "The Formula hub already carries this relation losslessly: "
-        "(a)-[:USES_FORMULA]->(f)<-[:USES_FORMULA]-(b) is the same fact in two hops. "
-        "Materialising it would defeat the point of the hub -- the widest formula spans "
-        "93 passages, so that one node alone would emit 4,278 edges and the layer would "
-        "add 87,296 edges in place of 27,511. V3's FormulaFamily layer supersedes it "
-        "further, grouping the formulas themselves rather than joining their passages."
-    ),
-}
+#: Empty in this release, and Wave 4 found this map's one entry had stopped being true.
+#:
+#: ``SHARES_FORMULA_WITH`` was declared here as deliberately unpopulated, on the reasoning
+#: that materialising the full closure would add 87,296 edges and defeat the Formula hub. Wave
+#: 3 then materialised 6,148 of them -- not the closure, but the pairs selected on rarity-
+#: weighted distinctiveness, which is the criterion the original reasoning had not considered.
+#: The declaration was not revised, so ``generate_ontology_reference.py`` published "declared
+#: and deliberately carries zero edges" about a predicate holding 6,148, and
+#: ``GAP-FORMULA-001`` recorded the same thing as the graph's only declared-but-empty type.
+#:
+#: The entry is gone rather than reworded, because the predicate is populated and this map is
+#: for predicates that are not. ``scripts/graph_quality_scorecard.py`` now gates on exactly
+#: that: a predicate declared here that carries an edge is a false declaration, and nothing
+#: checked these two maps against the graph before.
+UNPOPULATED_BY_DESIGN: Final[dict[str, str]] = {}
 
 
 #: Where each predicate the enrichment brief named actually ended up. Kept as data so a
@@ -239,6 +288,12 @@ assert REFUSED_PREDICATES.keys().isdisjoint(CONTROLLED_PREDICATES), (
     "a refused predicate must not also be writable"
 )
 
+assert set(SIGNATURES) == set(CONTROLLED_PREDICATES), (
+    "every controlled predicate needs an endpoint signature, and nothing else may have one: "
+    f"missing {sorted(CONTROLLED_PREDICATES - set(SIGNATURES))}, "
+    f"stray {sorted(set(SIGNATURES) - CONTROLLED_PREDICATES)}"
+)
+
 
 def is_controlled(predicate: str) -> bool:
     """True when ``predicate`` is a name this layer is permitted to write."""
@@ -253,11 +308,12 @@ def check_signature(predicate: str, subject: NodeKind, object_: NodeKind) -> Non
         raise ValueError(f"{predicate} is not a controlled enrichment predicate{detail}")
     signature = SIGNATURES.get(predicate)
     if signature is None:
-        # A semantic predicate. Its subject is always a passage; its object types are
-        # governed by the frozen ontology's own rule, checked where the assertion is built.
-        if subject is not NodeKind.PASSAGE:
-            raise ValueError(f"{predicate}: semantic assertions are about passages, not {subject}")
-        return
+        # Unreachable while the assertion below holds, and kept as a raise rather than a
+        # fallthrough. It used to be one: a missing signature meant "semantic predicate, so
+        # check only the subject", which is how fourteen predicates ended up constrained by a
+        # code path and by no declaration. Silently passing an unknown predicate is the
+        # failure this guard exists for.
+        raise ValueError(f"{predicate} is controlled but has no endpoint signature")
     if subject not in signature.subject:
         raise ValueError(f"{predicate}: subject {subject} not in {sorted(signature.subject)}")
     if object_ not in signature.object:

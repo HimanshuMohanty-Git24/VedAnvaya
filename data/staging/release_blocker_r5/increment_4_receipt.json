@@ -1,0 +1,52 @@
+{
+  "artifact": "R5_INCREMENT_4",
+  "at": "2026-09-18T14:50:23.510001+00:00",
+  "parallel_edges_total": 14,
+  "edges_left_unhandled_by_increment_1": [
+    {
+      "subject": "VG:SV:KAU:CHANDA:P01:D08:V04",
+      "rel": "NEAR_PARALLEL_OF",
+      "object": "VG:YV:VSM:A12:V051",
+      "transformation": "HEAD_TRUNCATION"
+    }
+  ],
+  "source_roles_used": {
+    "VG:SV:KAU:CHANDA:P01:D08:V04": {
+      "veda": "SV",
+      "role": "PRIMARY_TEXT"
+    },
+    "VG:YV:VSM:A12:V051": {
+      "veda": "YV",
+      "role": "EXTRACTED_FROM_CONTAINER"
+    }
+  },
+  "applied": [],
+  "refused": [
+    {
+      "subject": "VG:SV:KAU:CHANDA:P01:D08:V04",
+      "rel": "NEAR_PARALLEL_OF",
+      "object": "VG:YV:VSM:A12:V051",
+      "stored": {
+        "lcs_ratio": 0.970588,
+        "similarity": 0.913866,
+        "edit_ratio": 0.970588,
+        "token_jaccard": 0.6875,
+        "ngram_jaccard": 0.857143
+      },
+      "recomputed_on_contaminated_text": {
+        "lcs_ratio": 0.970588,
+        "similarity": 0.969988,
+        "edit_ratio": 0.985075,
+        "token_jaccard": 0.928571,
+        "ngram_jaccard": 0.969388
+      },
+      "why": "score_pair does not reproduce the stored metrics on the text as it was, so it cannot be trusted on the text as it is. Nothing written."
+    }
+  ],
+  "verification": {
+    "head_truncation_edges_remaining_anywhere": 2,
+    "head_truncation_on_a_corrected_verse": 1,
+    "parallel_edges_on_the_four_without_a_status": 1,
+    "edges_publishing_a_contaminated_quote": 1
+  }
+}

@@ -1,0 +1,85 @@
+{
+  "built_at": "2026-09-04T06:15:33.265091Z",
+  "dataset": "VedaGraph Canonical Corpus",
+  "generated_files": [
+    {
+      "path": "canonical/rv_1_1_pilot/audio_recordings.jsonl",
+      "record_count": 1,
+      "sha256": "d0800366c5508d5eb80a549ec80ff00d77483e3964d1aa056c10ed9b54b1a7d0"
+    },
+    {
+      "path": "canonical/rv_1_1_pilot/audio_segments.jsonl",
+      "record_count": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "canonical/rv_1_1_pilot/citations.jsonl",
+      "record_count": 9,
+      "sha256": "1a6f0dc19d9c5b020d01b72059866c8c9445b42850fd7b0428ea8e2898d696f2"
+    },
+    {
+      "path": "canonical/rv_1_1_pilot/passages.jsonl",
+      "record_count": 11,
+      "sha256": "efad6c2ee0eb32a9b95b2f724df9397062179d8f819d78e0d68e921082818724"
+    },
+    {
+      "path": "canonical/rv_1_1_pilot/qa_issues.jsonl",
+      "record_count": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "canonical/rv_1_1_pilot/source_assertions.jsonl",
+      "record_count": 1,
+      "sha256": "e7f48902d7a13671642d6eaa0079d7a3054341a99d52bc17cadc62e228c19a5e"
+    },
+    {
+      "path": "canonical/rv_1_1_pilot/sources.jsonl",
+      "record_count": 7,
+      "sha256": "2b30dc99ff23e3e210800bdcec1ab73abc1ea0560237571857b79575bdc85195"
+    },
+    {
+      "path": "canonical/rv_1_1_pilot/text_versions.jsonl",
+      "record_count": 9,
+      "sha256": "f52a8a12f93f4afefcbc298d520438603214874e61912d3e9ab2e21cc658864a"
+    },
+    {
+      "path": "canonical/rv_1_1_pilot/traditional_metadata.jsonl",
+      "record_count": 3,
+      "sha256": "4278f783424f48853d2bc37c8c29c577b4f148fa1a49d7e3c1684fd2bcb75caf"
+    },
+    {
+      "path": "canonical/rv_1_1_pilot/translations.jsonl",
+      "record_count": 9,
+      "sha256": "d632c75e7356327a586f954f9d42732148a723f0fd4dcb0d330ddb2154d49570"
+    },
+    {
+      "path": "canonical/rv_1_1_pilot/works.jsonl",
+      "record_count": 4,
+      "sha256": "543e70599ed9cff3a7a351eb759ae13d68f8204969188e249f0cd5c4e9d9c8f8"
+    }
+  ],
+  "passage_count": 9,
+  "qa_status": "PASSED",
+  "record_counts": {
+    "canonical/rv_1_1_pilot/audio_recordings.jsonl": 1,
+    "canonical/rv_1_1_pilot/audio_segments.jsonl": 0,
+    "canonical/rv_1_1_pilot/citations.jsonl": 9,
+    "canonical/rv_1_1_pilot/passages.jsonl": 11,
+    "canonical/rv_1_1_pilot/qa_issues.jsonl": 0,
+    "canonical/rv_1_1_pilot/source_assertions.jsonl": 1,
+    "canonical/rv_1_1_pilot/sources.jsonl": 7,
+    "canonical/rv_1_1_pilot/text_versions.jsonl": 9,
+    "canonical/rv_1_1_pilot/traditional_metadata.jsonl": 3,
+    "canonical/rv_1_1_pilot/translations.jsonl": 9,
+    "canonical/rv_1_1_pilot/works.jsonl": 4
+  },
+  "schema_version": "1.0.0",
+  "source_snapshot_ids": [
+    "VHP:3a4c8eae800f90e8dd86a48b46bbdbe1b6b2995eeaed67575dd21941a202c633",
+    "WIKISOURCE_GRIFFITH_RV:6525026deec032727c500ac1320a4c8fc2b3987c52635cb14f2fa8a383ed7f24"
+  ],
+  "version": "0.1.0-pilot.1",
+  "works": [
+    "VG:WORK:RV:SAK"
+  ]
+}

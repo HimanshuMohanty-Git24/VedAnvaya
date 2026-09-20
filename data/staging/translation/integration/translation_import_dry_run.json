@@ -1,0 +1,132 @@
+{
+ "mode": "DRY_RUN",
+ "started_at": "2026-09-16T15:34:46.524052+00:00",
+ "plan_sha256": "954a8b7b8d0efabd9554cd260f38e2d879500e15f96478fb20b1cae2825e21df",
+ "import_batch": "TRANSLATION_BULK_2026_09_16",
+ "rows_to_write": 1132,
+ "promised_delta": {
+  "nodes": 1132,
+  "relationships": 1132,
+  "translation_nodes": 1132,
+  "has_translation_edges": 1132
+ },
+ "preflight": {
+  "census_before": {
+   "nodes": 116838,
+   "relationships": 281257,
+   "translation_nodes": 17283,
+   "has_translation_edges": 17283
+  },
+  "core_corpus_before": {
+   "AV": 5839,
+   "RV": 10552,
+   "SV": 1844,
+   "YV": 1975
+  },
+  "core_corpus_matches_invariant": true,
+  "coverage_before": {
+   "AV": {
+    "covered_mantras": 4878,
+    "translation_nodes": 4878,
+    "corpus": 5839,
+    "observed_row": true
+   },
+   "RV": {
+    "covered_mantras": 10502,
+    "translation_nodes": 10502,
+    "corpus": 10552,
+    "observed_row": true
+   },
+   "SV": {
+    "covered_mantras": 0,
+    "translation_nodes": 0,
+    "corpus": 1844,
+    "observed_row": false
+   },
+   "YV": {
+    "covered_mantras": 1903,
+    "translation_nodes": 1903,
+    "corpus": 1975,
+    "observed_row": true
+   }
+  },
+  "attachment_digest_before": {
+   "attachments": 17283,
+   "digest_sha256": "a9c93bf9620f015491de278b6c0d65dae61aa8f393f5f8a1b2ddd3b2f21e163f"
+  },
+  "targets": {
+   "canonical_keys_covered": 1166,
+   "resolved_in_graph": 1166,
+   "unresolvable": [],
+   "anchors": 1132
+  },
+  "targets_already_carrying_a_translation": [],
+  "translation_ids_already_present": [],
+  "reuse_sources": {
+   "declared": 128,
+   "found_in_graph": 128,
+   "missing": []
+  },
+  "blockers": []
+ },
+ "measured_delta": {
+  "nodes": 1132,
+  "relationships": 1132,
+  "translation_nodes": 1132,
+  "has_translation_edges": 1132
+ },
+ "census_inside_the_rolled_back_transaction": {
+  "nodes": 117970,
+  "relationships": 282389,
+  "translation_nodes": 18415,
+  "has_translation_edges": 18415
+ },
+ "core_corpus_inside_the_transaction": {
+  "AV": 5839,
+  "RV": 10552,
+  "SV": 1844,
+  "YV": 1975
+ },
+ "coverage_inside_the_transaction": {
+  "AV": {
+   "covered_mantras": 5770,
+   "translation_nodes": 5770,
+   "corpus": 5839,
+   "observed_row": true
+  },
+  "RV": {
+   "covered_mantras": 10509,
+   "translation_nodes": 10509,
+   "corpus": 10552,
+   "observed_row": true
+  },
+  "SV": {
+   "covered_mantras": 173,
+   "translation_nodes": 173,
+   "corpus": 1844,
+   "observed_row": true
+  },
+  "YV": {
+   "covered_mantras": 1939,
+   "translation_nodes": 1939,
+   "corpus": 1975,
+   "observed_row": true
+  }
+ },
+ "delta_matches_promise": true,
+ "core_corpus_unchanged_by_the_write": true,
+ "mutation_outside_translations": {},
+ "census_after_rollback": {
+  "nodes": 116838,
+  "relationships": 281257,
+  "translation_nodes": 17283,
+  "has_translation_edges": 17283
+ },
+ "rollback_restored_the_graph": true,
+ "attachment_digest_after_rollback": {
+  "attachments": 17283,
+  "digest_sha256": "a9c93bf9620f015491de278b6c0d65dae61aa8f393f5f8a1b2ddd3b2f21e163f"
+ },
+ "existing_attachments_untouched": true,
+ "verdict": "DRY_RUN_OK"
+}

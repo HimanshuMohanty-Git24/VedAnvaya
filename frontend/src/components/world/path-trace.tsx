@@ -79,6 +79,8 @@ type Outcome =
     | { kind: "TRACING" }
     | { kind: "FOUND"; path: PathView }
     | { kind: "NONE" }
+    /** One or both names matched nothing in the index. Named, rather than ignored. */
+    | { kind: "UNRESOLVED"; names: string[] }
     | { kind: "FAILED"; message: string };
 
 export function PathTrace({
@@ -211,10 +213,36 @@ export function PathTrace({
                 className="va-path-form"
                 onSubmit={(event) => {
                     event.preventDefault();
-                    onEndpoints(
-                    resolve(fromRef.current?.value ?? ""),
-                    resolve(toRef.current?.value ?? ""),
-                );
+                    /*
+                     * A name that does not resolve is reported, not swallowed.
+                     *
+                     * This handed two possibly-null ids straight to `onEndpoints`, and the
+                     * effect returns early on a null - so a typo, or a submission made
+                     * before the 4 MB label index had arrived, did nothing at all and said
+                     * nothing at all. The reader pressed the button and the page sat there.
+                     * It also made the end-to-end test for this view flaky, which is how it
+                     * was found: a race the reader loses silently is a race a test loses
+                     * visibly.
+                     */
+                    const typed = {
+                        From: fromRef.current?.value ?? "",
+                        To: toRef.current?.value ?? "",
+                    };
+                    const resolved = {
+                        From: resolve(typed.From),
+                        To: resolve(typed.To),
+                    };
+                    const missing = (["From", "To"] as const).filter(
+                        (field) => typed[field].trim() && !resolved[field],
+                    );
+                    if (missing.length > 0) {
+                        setOutcome({
+                            kind: "UNRESOLVED",
+                            names: missing.map((field) => typed[field].trim()),
+                        });
+                        return;
+                    }
+                    onEndpoints(resolved.From, resolved.To);
                 }}
             >
                 <div className="va-path-fields">
@@ -239,14 +267,32 @@ export function PathTrace({
                         />
                     </label>
                 </div>
-                <button className="va-path-go" type="submit">
-                    Trace the connection
+                {/*
+                 * Disabled until the index it searches exists.
+                 *
+                 * `resolve` reads `labels`, a 4 MB artifact fetched after the page renders.
+                 * Before it lands every name resolves to null, so the control was present,
+                 * enabled, and incapable of doing anything.
+                 */}
+                <button className="va-path-go" disabled={!labels} type="submit">
+                    {labels ? "Trace the connection" : "Loading the index of subjects…"}
                 </button>
             </form>
 
             {outcome?.kind === "TRACING" && (
                 <p className="va-path-status" role="status">
                     Looking for the shortest route…
+                </p>
+            )}
+
+            {outcome?.kind === "UNRESOLVED" && (
+                <p className="va-path-status is-failed" role="alert">
+                    {outcome.names.length === 1
+                        ? `Nothing in this graph is named “${outcome.names[0]}”.`
+                        : `Nothing in this graph is named ${outcome.names
+                              .map((name) => `“${name}”`)
+                              .join(" or ")}.`}{" "}
+                    Try the name as the corpus writes it, or paste a canonical key.
                 </p>
             )}
 

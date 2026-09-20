@@ -1,0 +1,178 @@
+{
+ "the_question": "The graph carries a property named confidence on 76,050 edges and the API exposes min_confidence as a filter. Does the number behave like a probability?",
+ "the_answer": "No, on three independent grounds, each measured below.",
+ "ground_1_the_value_is_mostly_a_constant": {
+  "confidence_bearing_edges": 76050,
+  "value_distribution": [
+   {
+    "value": 1.0,
+    "edges": 50468
+   },
+   {
+    "value": 0.85,
+    "edges": 12782
+   },
+   {
+    "value": 0.8,
+    "edges": 11310
+   },
+   {
+    "value": 0.55,
+    "edges": 456
+   },
+   {
+    "value": 0.89,
+    "edges": 447
+   },
+   {
+    "value": 0.84,
+    "edges": 243
+   },
+   {
+    "value": 0.9,
+    "edges": 145
+   },
+   {
+    "value": 0.75,
+    "edges": 75
+   },
+   {
+    "value": 0.7,
+    "edges": 49
+   },
+   {
+    "value": 0.93,
+    "edges": 22
+   },
+   {
+    "value": 0.59,
+    "edges": 21
+   },
+   {
+    "value": 0.65,
+    "edges": 11
+   },
+   {
+    "value": 0.88,
+    "edges": 8
+   },
+   {
+    "value": 0.6,
+    "edges": 7
+   },
+   {
+    "value": 0.95,
+    "edges": 5
+   },
+   {
+    "value": 0.92,
+    "edges": 1
+   }
+  ],
+  "predicates_with_a_single_constant": [
+   "HAS_RISHI",
+   "HAS_CHANDAS",
+   "HAS_DEVATA",
+   "HAS_DEVATA_ASCRIPTION",
+   "BELONGS_TO_FAMILY",
+   "INVOLVES_SUBSTANCE",
+   "REFERS_TO_PLACE"
+  ],
+  "edges_at_a_single_constant": 50472,
+  "reading": "50,468 of 76,050 edges carry exactly 1.0, and for five predicates the value never varies at all, so a threshold either keeps every edge of that predicate or none."
+ },
+ "ground_2_one_constant_spans_a_26_point_accuracy_range": {
+  "layer": "HAS_CHANDAS, every edge at confidence 1.0",
+  "buckets": {
+   "AV|TIER_A|PER_PASSAGE": {
+    "nominal_confidence": 1.0,
+    "adjudicated": 725,
+    "observed_accuracy": 0.9241
+   },
+   "AV|TIER_B|CONTAINER_INHERITED": {
+    "nominal_confidence": 1.0,
+    "adjudicated": 3615,
+    "observed_accuracy": 0.7142
+   },
+   "RV|TIER_A|PER_PASSAGE": {
+    "nominal_confidence": 1.0,
+    "adjudicated": 4206,
+    "observed_accuracy": 0.9617
+   },
+   "RV|TIER_B|CONTAINER_INHERITED": {
+    "nominal_confidence": 1.0,
+    "adjudicated": 6266,
+    "observed_accuracy": 0.9756
+   }
+  },
+  "reading": "All of these edges say 1.0. Measured against the syllable count of their own verses, the Atharvavedic inherited bucket is right 71.4% of the time and the Rigvedic inherited bucket 97.6%. One nominal value, a 26-point spread in observed accuracy."
+ },
+ "ground_3_where_the_value_varies_it_does_not_order_accuracy": {
+  "layer": "ABOUT_CONCEPT, the only high-volume predicate whose confidence varies",
+  "buckets": [
+   {
+    "layer": "about_concept",
+    "bucket": "(0.8, 'concept-alias-v1:sanskrit-token')",
+    "bucket_axis": "confidence x method",
+    "nominal_confidence": 0.8,
+    "edges": 1518,
+    "adjudicated": 1248,
+    "undecided_partial_annotation": 270,
+    "not_adjudicable": 0,
+    "confirmed_own_lemma": 842,
+    "confirmed_via_unsound_alias": 328,
+    "refuted": 78,
+    "lexical_precision": 0.9375,
+    "strict_precision": 0.6747,
+    "fp_classes": {
+     "REGISTRY_ALIAS_NOT_THE_ENTITY_LEMMA": 328,
+     "PHANTOM_TOKEN": 52,
+     "AMBIGUOUS_SURFACE_WRONG_WORD": 26
+    }
+   },
+   {
+    "layer": "about_concept",
+    "bucket": "(0.85, 'concept-alias-v1:english+sanskrit-token')",
+    "bucket_axis": "confidence x method",
+    "nominal_confidence": 0.85,
+    "edges": 2395,
+    "adjudicated": 2037,
+    "undecided_partial_annotation": 358,
+    "not_adjudicable": 0,
+    "confirmed_own_lemma": 1489,
+    "confirmed_via_unsound_alias": 463,
+    "refuted": 85,
+    "lexical_precision": 0.9583,
+    "strict_precision": 0.731,
+    "fp_classes": {
+     "REGISTRY_ALIAS_NOT_THE_ENTITY_LEMMA": 463,
+     "PHANTOM_TOKEN": 70,
+     "AMBIGUOUS_SURFACE_WRONG_WORD": 15
+    }
+   },
+   {
+    "layer": "about_concept",
+    "bucket": "(0.89, 'concept-alias-v1:english+sanskrit-token')",
+    "bucket_axis": "confidence x method",
+    "nominal_confidence": 0.89,
+    "edges": 76,
+    "adjudicated": 68,
+    "undecided_partial_annotation": 8,
+    "not_adjudicable": 0,
+    "confirmed_own_lemma": 41,
+    "confirmed_via_unsound_alias": 24,
+    "refuted": 3,
+    "lexical_precision": 0.9559,
+    "strict_precision": 0.6029,
+    "fp_classes": {
+     "REGISTRY_ALIAS_NOT_THE_ENTITY_LEMMA": 24,
+     "AMBIGUOUS_SURFACE_WRONG_WORD": 1,
+     "PHANTOM_TOKEN": 2
+    }
+   }
+  ],
+  "reading": "0.80 and 0.85 differ by five points of nominal confidence and two points of measured lexical precision, in the same direction but not the same size; and the 0.89 bucket, nominally the most confident, measures below the 0.85 bucket on the strict reading. The value is a per-branch constant -- 0.80 for a Sanskrit token match, 0.85 when an English gloss agrees, 0.55 for a sandhi-insensitive match -- and what it records is which code path fired."
+ },
+ "what_should_be_used_instead": "quality_tier and attribution_precision do carry signal: TIER_A / PER_PASSAGE outperforms TIER_B / CONTAINER_INHERITED on metre in the Atharvaveda by 21 points. They are the honest axis and they are already on every edge.",
+ "what_is_still_not_measured": "No layer has a reliability curve, because a reliability curve needs a confidence that varies continuously and this one takes 16 values of which three cover 98%. Calibration in the proper sense is not merely unmeasured here; the field's shape forbids it."
+}

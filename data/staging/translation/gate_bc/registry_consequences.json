@@ -1,0 +1,134 @@
+{
+ "phase": 12,
+ "rule_applied": "no gap is proposed for closure on the strength of staging. A closure needs the measure to have moved in the graph, which no row in this packet has done.",
+ "gaps_affected": 7,
+ "closures_proposed": 0,
+ "statuses_mutated_by_this_task": 0,
+ "consequences": [
+  {
+   "gap_id": "GAP-TRANSLATION-001",
+   "domain": "translation",
+   "current_status": "BLOCKED_OWNER_DECISION_REQUIRED",
+   "current_closure_owner_decision": "OWNER_DECISION_A_RV_SPAN + OWNER_DECISION_C_FORCED_ADDRESSES",
+   "measured_truth": "the Samaveda still holds 0 of 1,844 translations. Of the 1,242 staged Samavedic rows, 173 survive both gates and every one of them is a reused Rigvedic rendering, not a Samavedic translation: 735 are PROBABLE and withheld by the central policy, 285 have a printed locator that addresses up to 22 canonical keys, and 49 cite an archive capture with no content hash. Griffith's Samaveda is the RANAYANIYA recension and this corpus is KAUTHUMA, which the staging agent's own residual proof states.",
+   "proposed_post_owner_decision_status": "STILL_IMPLEMENTATION_FIXABLE",
+   "must_not_become": "CLOSED",
+   "why": "even if every safe row were imported the Samaveda would hold 173 of 1,844, and all 173 would be another corpus's English. No Kauthuma translation has been found; the closure_test as written ('every SV Translation node carries a Kauthuma-aligned source_id') would be false for all 173.",
+   "closure_evidence_required": "a Kauthuma witness. The staging agent names Benfey 1848 as the highest-leverage artifact, which carries Griffith's own base Sanskrit and would convert the 735 PROBABLE rows into decidable ones.",
+   "owner_decision_dependency_should_change_to": "OWNER_DECISION_D_REUSED_RENDERING_POLICY -- the Samavedic question is not about the RV span or forced addresses at all, and is mis-gated today"
+  },
+  {
+   "gap_id": "GAP-TRANSLATION-002",
+   "domain": "translation",
+   "current_status": "BLOCKED_OWNER_DECISION_REQUIRED",
+   "current_closure_owner_decision": "OWNER_DECISION_A_RV_SPAN + OWNER_DECISION_C_FORCED_ADDRESSES",
+   "measured_truth": "AV coverage is 4,878 of 5,839, still the pre-closure figure. Of 944 staged Atharvavedic rows, 927 survive both gates: 838 source-explicit, 68 multi-verse ranges and 21 reused Rigvedic renderings. 17 are withheld because the literal is Griffith's Latin. The archive evidence is the strongest in the artifact: 923 of 923 rows name a page hash and every one is present in the artifact's own page proofs, 147 pages all HTTP 200.",
+   "proposed_post_owner_decision_status": "STILL_IMPLEMENTATION_FIXABLE",
+   "must_not_become": "CLOSED",
+   "why": "an approved import would take AV to 5,805 of 5,839, not to 5,839. 34 verses would remain uncovered and the closure_test requires zero. 68 of the 927 would be range-covered and 21 would show Rigvedic English.",
+   "closure_evidence_required": "the import executed and read back, plus a disposition for the 17 Latin rows and the 34 residual verses"
+  },
+  {
+   "gap_id": "GAP-TRANSLATION-003",
+   "domain": "translation",
+   "current_status": "BLOCKED_OWNER_DECISION_REQUIRED",
+   "current_closure_owner_decision": "OWNER_DECISION_A_RV_SPAN + OWNER_DECISION_C_FORCED_ADDRESSES",
+   "measured_truth": "YV coverage is 1,903 of 1,975. Of 51 staged rows, 36 survive both gates and are independently verified against the pinned Griffith snapshot's own printed labels. 12 are withheld: 11 for naming no content hash for the bytes they were read from, 1 PROBABLE, and 1 rejected because the literal is an editorial cross-reference. The registry's root cause -- 39 of 72 gap labels being digit-confusion OCR with the text present throughout -- is confirmed: the source prints a correct label for 18 of the 39 and brackets the slot uniquely for 19 more.",
+   "proposed_post_owner_decision_status": "STILL_IMPLEMENTATION_FIXABLE",
+   "must_not_become": "CLOSED",
+   "why": "an approved import reaches 1,939 of 1,975; the closure_test requires zero remaining",
+   "closure_evidence_required": "the import executed and read back, plus a content hash for the 11 adhyaya-12 rows so their bytes are pinned like the other 39"
+  },
+  {
+   "gap_id": "GAP-TRANSLATION-004",
+   "domain": "translation",
+   "current_status": "BLOCKED_OWNER_DECISION_REQUIRED",
+   "current_closure_owner_decision": "OWNER_DECISION_A_RV_SPAN",
+   "measured_truth": "50 Rigvedic verses carry no translation edge. 30 are the even verses of RV 1.65-1.70 and every one is covered by a MANTRA_RANGE on its paired odd verse -- they lack a dedicated 1:1 rendering because Griffith printed none, which is not the same thing as a missing translation. Of the other 20, 17 are staged (8 safe, 5 Latin, 4 PROBABLE) and 3 have no candidate source at all: RV 8.93.29, 10.86.16 and 10.86.17.",
+   "proposed_post_owner_decision_status": "STILL_IMPLEMENTATION_FIXABLE",
+   "must_not_become": "CLOSED",
+   "why": "the coordinate defect this gap records IS repaired, and that part is mechanically determined. But the gap's own closure_test counts verses with no HAS_TRANSLATION edge and would still return 42.",
+   "closure_evidence_required": "either a source for the 3 unstaged verses and a Latin disposition, or a closure_measure rewritten to count covered verses rather than edges -- the present measure cannot express a range-covered verse and will never reach zero while Griffith's merged units are represented truthfully",
+   "recommended_measure_change": "the current closure_measure counts DISTINCT m with an edge. A verse covered by a sibling's MANTRA_RANGE is a covered verse with no edge, so the measure understates coverage by exactly the 30 verses M13 fixed. This is the registry equivalent of the reader's empty-state defect."
+  },
+  {
+   "gap_id": "OWNER_DECISION_A_RV_SPAN",
+   "domain": "owner_decision",
+   "current_status": "OPEN (referenced by GAP-TRANSLATION-001/002/003/004)",
+   "measured_truth": "the hazard it protects against -- Griffith's merged dvipada unit bound 1:1 to a canonical verse -- is gone. 30 of 30 span verses are covered by a MANTRA_RANGE, the M13 readback is clean with 0 findings, and no staged row targets the span.",
+   "proposed_post_owner_decision_status": "CLOSED_DERIVED on the span; the residual is not an RV-span question and should be re-filed",
+   "mechanically_determined": true,
+   "needs_owner_judgement": false,
+   "why": "nothing about the paired spine remains for an owner to approve or refuse. Leaving the decision open over RV 1.179's Latin and three source-less verses would make the owner re-decide a resolved coordinate question to reach an unrelated editorial one.",
+   "action_not_taken_here": "the status is proposed, not written. The instruction is not to mutate final owner-decision statuses, and although the span part is mechanically determined, retiring the decision also unblocks three other gaps that cite it, which is a scope change the owner should see first.",
+   "should_no_longer_gate": [
+    "GAP-TRANSLATION-001",
+    "GAP-TRANSLATION-002",
+    "GAP-TRANSLATION-003"
+   ],
+   "why_it_should_not_gate_them": "none of the Samavedic, Atharvavedic or Yajurvedic populations involves the Rigvedic paired dvipada spine. They were gated on it because the decision was written over a mixed population."
+  },
+  {
+   "gap_id": "OWNER_DECISION_C_FORCED_ADDRESSES",
+   "domain": "owner_decision",
+   "current_status": "OPEN (referenced by GAP-TRANSLATION-001/002/003)",
+   "measured_truth": "39 rows carry the label-defect flag, 31 of them declaring no content control. Independent verification against the pinned snapshot finds the declaration wrong for most: the source prints a correct legible label for 18 of the 39 and brackets the canonical slot uniquely with its own printed neighbours for 19 more. 2 remain unverified and 1 is rejected on its literal.",
+   "proposed_post_owner_decision_status": "NARROWED to 3 rows",
+   "mechanically_determined": false,
+   "needs_owner_judgement": true,
+   "why": "36 rows now have an independent source-local control of the kind the decision asks for, so the decision's population is 3, not 31. The remaining judgement is whether a printed neighbour bracket counts as independent content control, which is the owner's call and is why this is not written as decided.",
+   "should_no_longer_gate": [
+    "GAP-TRANSLATION-001",
+    "GAP-TRANSLATION-002"
+   ],
+   "why_it_should_not_gate_them": "every forced address in the artifact is Yajurvedic. Gating the Samavedic and Atharvavedic gaps on it blocks 1,242 and 944 rows on a question about 39 Yajurvedic ones."
+  },
+  {
+   "gap_id": "GAP-FORMULA-003",
+   "domain": "enrich",
+   "current_status": "pre-existing failing test, out of scope",
+   "measured_truth": "tests/enrich/test_formula_families.py pins 1,103 nested formulas and measures 1,064. Baselined at phase 0 and re-measured at phase 14 of this task.",
+   "proposed_post_owner_decision_status": "unchanged",
+   "why": "explicitly out of scope; recorded only to prove this task did not move it"
+  }
+ ],
+ "decisions_recommended_for_decomposition": [
+  {
+   "proposed_id": "OWNER_DECISION_D_REUSED_RENDERING_POLICY",
+   "population": 194,
+   "by_veda": {
+    "AV": 21,
+    "SV": 173
+   },
+   "question": "may Griffith's Rigveda rendering be published as the English for a Samavedic or Atharvavedic verse whose Sanskrit is verified character-identical, given that it is disclosed as a reused rendering and is never counted as independent semantic evidence for the target corpus?",
+   "why_it_is_a_new_decision": "it is currently buried inside OWNER_DECISION_A_RV_SPAN and OWNER_DECISION_C_FORCED_ADDRESSES, neither of which is about cross-corpus reuse. It is the single largest question in the artifact by row count and it is genuinely editorial, not mechanical.",
+   "blocked_on_product_semantics": true
+  },
+  {
+   "proposed_id": "OWNER_DECISION_F_LATIN_SUBSTITUTION",
+   "population": 22,
+   "by_veda": {
+    "AV": 17,
+    "RV": 5
+   },
+   "question": "Griffith renders sexually explicit passages into Latin. The text is his and is public domain. Publish it with language corrected to 'la' and a disclosure, leave the verses uncovered, or commission an English rendering?",
+   "why_it_is_a_new_decision": "it was not visible as a population before this pass: all 22 rows declare language 'en' and pass every structural check",
+   "blocked_on_product_semantics": true
+  }
+ ],
+ "summary": {
+  "could_close_after_an_approved_and_executed_import": [],
+  "must_remain_open": [
+   "GAP-TRANSLATION-001",
+   "GAP-TRANSLATION-002",
+   "GAP-TRANSLATION-003",
+   "GAP-TRANSLATION-004"
+  ],
+  "mechanically_resolvable_without_owner_judgement": [
+   "OWNER_DECISION_A_RV_SPAN (span part only)"
+  ],
+  "narrowable": [
+   "OWNER_DECISION_C_FORCED_ADDRESSES (31 -> 3)"
+  ]
+ }
+}

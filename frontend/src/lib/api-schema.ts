@@ -294,7 +294,8 @@ export interface paths {
          *     surfaces are not read, `total` is null, and a caveat says so.
          *
          *     **Deities are population-resolved.** The Anukramani's devata slot holds 22 human patrons,
-         *     7 praise-of-a-gift labels and one dog, and none of them is returned typed `DEVATA`.
+         *     7 praise-of-a-gift labels and 28 abstractions ruled not to name an addressee, and none of
+         *     them is returned typed `DEVATA`.
          *     Searching *Vasistha* will not offer him as a god; a caveat states how many such
          *     ascriptions the query matched and where to read them.
          */
@@ -362,7 +363,9 @@ export interface paths {
         };
         /**
          * Catalog-wide audio figures
-         * @description Every figure derived from the catalog on this request, so nothing here can drift from what the catalog says.
+         * @description Every figure derived from the catalog on this request, so nothing here can drift from what the catalog says. A client rendering audio coverage must read these counts rather than hard-coding one, because the catalogue grows.
+         *
+         *     `by_publication_tier` and `by_veda_and_tier` split the catalogue into `RELEASED_VERIFIED` -- a named person played it -- and `SOURCE_MAPPED_UNREVIEWED` -- mapped and checked by instrument, heard by nobody. The two sum to `total_records`. A surface that adds them and calls the total verified is the one thing this split exists to prevent.
          *
          *     `by_availability` is reported beside the coverage counts on purpose: a catalog whose records were last measured unreachable is a different product state from one whose records answer, and omitting it would read as full coverage.
          */
@@ -429,10 +432,11 @@ export interface paths {
          * @description The resolved pantheon, ordered by total mentions.
          *
          *     **The population contract.** The Anukramani names a *devata* for every Rigvedic hymn and
-         *     that slot is not a theological claim: 30 of the 214 `:Devata` nodes are not gods -- 22
+         *     that slot is not a theological claim: 57 of the 214 `:Devata` nodes are not gods -- 22
          *     human patrons and seers (Vasistha, Visvamitra, Brbu the carpenter), 7 danastuti labels
          *     naming the gift rather than a recipient ("praise of the gift of Sudas son of Pijavana"),
-         *     and one dog. `population=deities` (the default) excludes all 30.
+         *     and 28 abstractions ruled not to name an addressee. `population=deities` (the default)
+         *     excludes all 57.
          *     `population=all_ascriptions` returns the slot as it stands, with every row's `structure`
          *     and `is_deity` stated, and `is_deity` false where it is false.
          *
@@ -469,15 +473,16 @@ export interface paths {
          * Deity profile
          * @description Identity, labels, aliases, structure, functional axes, epithets, mention counts by Veda with all three certainty tiers, strict versus inherited attribution, top seers, metres, concepts, actions, requested actions, objects and formulas, co-deities, and interpretive claims.
          *
-         *     **Read `dimension_status` before reading any empty list here.** It names every dimension whose emptiness is a missing layer or unestablished evidence rather than an absence in the corpus. It is empty for most deities and non-empty exactly where the build recorded a dimension it could not establish, so its presence is the signal -- no count is quoted here, because a figure describing the graph invites a client to skip the field on the deities where it carries the warning.
+         *     **Read `dimension_status` before reading any empty list here.** It names every dimension whose emptiness is a missing layer or unestablished evidence rather than an absence in the corpus. It is non-empty for MOST deities rather than a few: since the profile materialisation was widened from a top-25 union to the whole eligible population, the great majority are thin in at least one dimension, so an empty list here is the exception and not the default. Non-empty exactly where the build recorded a dimension it could not establish, so its presence is the signal -- no count is quoted here, because a figure describing the graph invites a client to skip the field on the deities where it carries the warning.
          *
-         *     **Mention and attribution totals are counted from the edges**, not read off materialised profile properties, which exist on only 30 of the 214 nodes. This is why `/devatas/{id}` and `/insights/devatas/{id}` agree.
+         *     **Mention and attribution totals are counted from the edges**, not read off materialised profile properties. Those exist on exactly the 157 deities the eligibility contract admits -- widened from 25 at R4, and removed from the one danastuti gift-praise label that had carried them. This is why `/devatas/{id}` and `/insights/devatas/{id}` agree.
          *
          *     **The population contract.** The Anukramani names a *devata* for every Rigvedic hymn and
-         *     that slot is not a theological claim: 30 of the 214 `:Devata` nodes are not gods -- 22
+         *     that slot is not a theological claim: 57 of the 214 `:Devata` nodes are not gods -- 22
          *     human patrons and seers (Vasistha, Visvamitra, Brbu the carpenter), 7 danastuti labels
          *     naming the gift rather than a recipient ("praise of the gift of Sudas son of Pijavana"),
-         *     and one dog. `population=deities` (the default) excludes all 30.
+         *     and 28 abstractions ruled not to name an addressee. `population=deities` (the default)
+         *     excludes all 57.
          *     `population=all_ascriptions` returns the slot as it stands, with every row's `structure`
          *     and `is_deity` stated, and `is_deity` false where it is false.
          *
@@ -552,10 +557,11 @@ export interface paths {
          *     **The subject is typed as well as its neighbours.** Under `population=all_ascriptions` the response states the subject's `subject_structure` and `subject_is_deity` and carries the THIS SUBJECT IS NOT A DEITY caveat when it is one of the 30 -- the same disclosure `/devatas/{id}` and `/devatas/{id}/passages` make, from the same helper.
          *
          *     **The population contract.** The Anukramani names a *devata* for every Rigvedic hymn and
-         *     that slot is not a theological claim: 30 of the 214 `:Devata` nodes are not gods -- 22
+         *     that slot is not a theological claim: 57 of the 214 `:Devata` nodes are not gods -- 22
          *     human patrons and seers (Vasistha, Visvamitra, Brbu the carpenter), 7 danastuti labels
          *     naming the gift rather than a recipient ("praise of the gift of Sudas son of Pijavana"),
-         *     and one dog. `population=deities` (the default) excludes all 30.
+         *     and 28 abstractions ruled not to name an addressee. `population=deities` (the default)
+         *     excludes all 57.
          *     `population=all_ascriptions` returns the slot as it stands, with every row's `structure`
          *     and `is_deity` stated, and `is_deity` false where it is false.
          *
@@ -651,16 +657,24 @@ export interface paths {
         };
         /**
          * List the modelled rites
-         * @description All eight, ordered by lexical mention count.
-         *     **Eight modelled rites, not a taxonomy.** The `Ritual` class holds 8 nodes against a
-         *     corpus that names considerably more, so a rank in this list is a rank within 8 and says
-         *     nothing about Vedic ritual as a whole. Elaborate procedure is Brahmana and Sutra material
-         *     and was deliberately not imported into Samhita passages: **3** `HAS_STEP` edges exist in
-         *     the entire graph, all three on the soma pressing, whose morning, midday and third
-         *     libations the text itself numbers. A rite with no steps therefore returns a
-         *     `dimension_status` row saying NOT_BUILT rather than an empty array, and all 25 apparatus
-         *     edges are TIER_D curation whose "purpose" is a curator's statement rather than a purpose
-         *     clause quoted from a passage.
+         * @description Every modelled rite, ordered by lexical mention count.
+         *     **An inventory of rites, not a taxonomy.** The `Ritual` class holds fewer nodes than the
+         *     corpus names, so a rank in this list is a rank within the inventory and says nothing about
+         *     Vedic ritual as a whole. The exact figures are measured per request and returned in
+         *     `coverage_statement` — they are not written into this description, because a number typed
+         *     into prose is the one nothing checks.
+         *
+         *     **Two step layers, and they are not interchangeable.** `steps` is what the Samhita text
+         *     itself numbers: 3 such edges exist in the whole graph, all on the soma pressing, whose
+         *     morning, midday and third libations the hymn numbers in its own words. `procedure` is what
+         *     a Srautasutra or Grhyasutra prints, which is a different claim about a different source —
+         *     and most of those sequences state a step's position without printing the run it falls in,
+         *     so a `procedure` list is a set of located steps rather than a complete procedure. Every
+         *     row says which, and each layer gets its own `dimension_status` entry, so an empty array is
+         *     never left to be read as an absence of ritual structure.
+         *
+         *     Apparatus edges are all TIER_D curation, and a rite's "purpose" is a curator's statement
+         *     rather than a purpose clause quoted from a passage.
          */
         get: operations["list_rituals_endpoint_api_v1_rituals_get"];
         put?: never;
@@ -683,15 +697,23 @@ export interface paths {
          * @description One rite: recorded steps where the text states an order, officiants, offerings, substances, objects, invoked deities, stated purposes, narrower rites and the passages said to describe it.
          *
          *     The invoked deities pass the deity population contract, so a rite cannot list a human patron among the gods it invokes.
-         *     **Eight modelled rites, not a taxonomy.** The `Ritual` class holds 8 nodes against a
-         *     corpus that names considerably more, so a rank in this list is a rank within 8 and says
-         *     nothing about Vedic ritual as a whole. Elaborate procedure is Brahmana and Sutra material
-         *     and was deliberately not imported into Samhita passages: **3** `HAS_STEP` edges exist in
-         *     the entire graph, all three on the soma pressing, whose morning, midday and third
-         *     libations the text itself numbers. A rite with no steps therefore returns a
-         *     `dimension_status` row saying NOT_BUILT rather than an empty array, and all 25 apparatus
-         *     edges are TIER_D curation whose "purpose" is a curator's statement rather than a purpose
-         *     clause quoted from a passage.
+         *     **An inventory of rites, not a taxonomy.** The `Ritual` class holds fewer nodes than the
+         *     corpus names, so a rank in this list is a rank within the inventory and says nothing about
+         *     Vedic ritual as a whole. The exact figures are measured per request and returned in
+         *     `coverage_statement` — they are not written into this description, because a number typed
+         *     into prose is the one nothing checks.
+         *
+         *     **Two step layers, and they are not interchangeable.** `steps` is what the Samhita text
+         *     itself numbers: 3 such edges exist in the whole graph, all on the soma pressing, whose
+         *     morning, midday and third libations the hymn numbers in its own words. `procedure` is what
+         *     a Srautasutra or Grhyasutra prints, which is a different claim about a different source —
+         *     and most of those sequences state a step's position without printing the run it falls in,
+         *     so a `procedure` list is a set of located steps rather than a complete procedure. Every
+         *     row says which, and each layer gets its own `dimension_status` entry, so an empty array is
+         *     never left to be read as an absence of ritual structure.
+         *
+         *     Apparatus edges are all TIER_D curation, and a rite's "purpose" is a curator's statement
+         *     rather than a purpose clause quoted from a passage.
          */
         get: operations["get_ritual_endpoint_api_v1_rituals__ritual_id__get"];
         put?: never;
@@ -805,7 +827,7 @@ export interface paths {
          *     a deity's prominence.
          *
          *     **`include_internal` cannot leak a QA finding.** Measured over the live graph, none of the
-         *     57 traversable predicates has an endpoint labelled `Internal`,
+         *     66 traversable predicates has an endpoint labelled `Internal`,
          *     `QAIssue`, `TextVersion`, `Translation`, `Source` or `SourceArtifact` -- so no value of any
          *     parameter can return one. What `include_internal=true` does, and the only thing it does, is
          *     add `MENTIONS_LEMMA` so that `:Lemma` nodes become reachable. That layer is marked internal
@@ -859,9 +881,12 @@ export interface paths {
          *
          *     **`review_status` is spelled out because the honest answer is uniform.** Nothing in this
          *     graph is HUMAN_REVIEWED. The strongest state that exists is MODEL_ADJUDICATED, on 613 edges
-         *     across ten predicates, where a model re-read the passage and accepted the edge with a
-         *     stated reason. Most edges carry no review record at all, which is not the same as having
-         *     been reviewed and passed.
+         *     across twelve predicates, where a model re-read the passage and accepted the edge with a
+         *     stated reason. TIER_C is wider by 11: 598 edges, of which the 11 that hang off no passage
+         *     are Devata-to-Devata epithet identities carrying review_state UNREVIEWED. The figures are
+         *     :data:`~vedagraph.domain.layer_figures.REVIEW_POPULATION`, measured against the graph.
+         *     Most edges carry no review record at all, which is not the same as having been reviewed
+         *     and passed.
          */
         get: operations["relationship_endpoint_api_v1_graph_relationships__relationship_id__get"];
         put?: never;
@@ -933,11 +958,87 @@ export interface paths {
          * Cross-Veda relatedness matrix (aggregate)
          * @description **Cost class: AGGREGATE.** Scans six relationship types in full and is exempt from the median latency target.
          *
-         *     Returns all six corpus pairs against every relationship class, with **every cell typed** -- including the empty ones. A cell is `MEASURED`, `MEASURED_ZERO`, `NOT_ESTABLISHED_FOR_PAIR`, `CLASS_NOT_CROSS_VEDA` or `NOT_BUILT`, and the count is null for every status but the first two. That distinction is the endpoint's whole purpose: directed textual reuse exists for one corpus pair only, and a table that rendered the other five as `0` would say the Atharvaveda reuses no Rigvedic text while the same graph carries hundreds of parallels between them.
+         *     Returns all six corpus pairs against every relationship class, with **every cell typed** -- including the empty ones. A cell is `MEASURED`, `MEASURED_ZERO`, `NOT_ESTABLISHED_FOR_PAIR`, `CLASS_NOT_CROSS_VEDA` or `NOT_BUILT`, and the count is null for every status but the first two. That distinction is the endpoint's whole purpose: directed textual reuse exists for two corpus pairs only, and a table that rendered the other four as `0` would say the Yajurveda reuses no Rigvedic text while the same graph carries hundreds of parallels between them.
          *
-         *     The semantic-resemblance and semantic-assertion rows are `NOT_BUILT` for every pair and are returned anyway -- the first because no non-lexical measure exists in this graph, the second because every semantic assertion is Rigvedic and so has no non-Rigvedic endpoint to pair with.
+         *     The semantic-resemblance and semantic-assertion rows carry no count for any pair and are returned anyway, with **different statuses, because the reasons differ**. Resemblance is `NOT_BUILT`: no non-lexical measure exists anywhere in this graph. The assertion row is `CLASS_NOT_CROSS_VEDA`: the layer exists, holds 35,131 assertions and reaches all four corpora, and still cannot enter a pair, because an assertion is a predication about one passage rather than a relation between two. This said the assertion row was `NOT_BUILT` because every semantic assertion is Rigvedic; both halves were false, and the status told a reader the layer does not exist anywhere in this graph.
          */
         get: operations["cross_veda_matrix_api_v1_insights_cross_veda_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/insights/devatas/{devata_id}/by-book": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * One deity's distribution across the books of every corpus (aggregate)
+         * @description **Cost class: AGGREGATE.** Walks the containment tree and is exempt from the median latency target.
+         *
+         *     Closes `VIZ_BLOCKER_02`. A deity x mandala heatmap could not be served: `named_by_veda` is per-*Veda* only, and building the breakdown client-side from `/devatas/{id}/passages` would hit the 200-row page cap and truncate without saying so.
+         *
+         *     **Every book is returned, including the ones with no mention.** A book the deity is absent from carries `MEASURED_ZERO` and a note, because a query that returns only its positive rows lets a reader infer a zero nobody measured.
+         *
+         *     Each row carries the book's own mantra total and a per-1,000 figure. Books differ in size by more than an order of magnitude, and a heatmap read on raw counts puts every deity in the largest book.
+         */
+        get: operations["devata_by_book_api_v1_insights_devatas__devata_id__by_book_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/insights/devatas/{devata_id}/by-metre": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * One deity against the metre layer, with the corpora it misses typed (aggregate)
+         * @description **Cost class: AGGREGATE.**
+         *
+         *     Closes `VIZ_BLOCKER_03`, which was deferred on the grounds that the metre layer reaches only two corpora so the matrix would be two thirds hatched -- honest, but thin. Thin and honest is what is served: the corpora the metre layer does not reach are **returned** as rows typed `NOT_BUILT`, never omitted. A matrix with two corpora silently missing is read as a matrix of two corpora, and the Samaveda's verses are metrical whatever this graph knows about them.
+         *
+         *     The layer's reach is measured on each request rather than listed, so a metre layer that grows shrinks the hatched rows without anyone editing a constant.
+         */
+        get: operations["devata_by_metre_api_v1_insights_devatas__devata_id__by_metre_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/insights/devatas/{devata_id}/dispersion": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Every position at which a deity is attested, unbounded by the page cap
+         * @description **Cost class: AGGREGATE.**
+         *
+         *     Closes `VIZ_BLOCKER_01`. An Invocation Landscape for a major deity needs every attesting position, and `/devatas/{id}/passages` is capped at 200 rows a page -- Indra's 2,305 Rigvedic verses were eighteen round trips, and a caller who stopped early got a landscape that looked sparse rather than truncated.
+         *
+         *     Returns **integer positions only**, never passage payloads, so the response stays small whatever the deity's size. A position is the verse's rank in its corpus's canonical order: reading order, which is not order of composition.
+         *
+         *     Every corpus is present. An empty `positions` array is `MEASURED_ZERO` with a note, so it is distinguishable from an absent layer.
+         */
+        get: operations["devata_dispersion_api_v1_insights_devatas__devata_id__dispersion_get"];
         put?: never;
         post?: never;
         delete?: never;
@@ -961,7 +1062,7 @@ export interface paths {
          *
          *     Mention totals default to CERTAIN plus PROBABLE. `certainty=strict` is offered and warned about: filtering to CERTAIN alone returns no non-Rigvedic mentions for several major deities, so the cautious caller gets the worse answer.
          *
-         *     **The default population refuses a non-deity.** The traditional devata slot holds 22 human patrons, 7 praise-of-a-gift labels and one dog alongside the gods, and under `population=deities` those 30 are a 404 here exactly as they are on `/devatas/{id}`. Ask with `population=all_ascriptions` to read one deliberately: the ascription figures are real, and the response then carries `is_resolved_deity: false`, the subject's `structure`, and a THIS SUBJECT IS NOT A DEITY caveat.
+         *     **The default population refuses a non-deity.** The traditional devata slot holds 22 human patrons, 7 praise-of-a-gift labels and 28 abstractions ruled not to name an addressee alongside the gods, and under `population=deities` those 57 are a 404 here exactly as they are on `/devatas/{id}`. Ask with `population=all_ascriptions` to read one deliberately: the ascription figures are real, and the response then carries `is_resolved_deity: false`, the subject's `structure`, and a THIS SUBJECT IS NOT A DEITY caveat.
          */
         get: operations["devata_insight_api_v1_insights_devatas__devata_id__get"];
         put?: never;
@@ -1140,6 +1241,26 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/completeness": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Certified data-completeness state (all corpora)
+         * @description Returns the certified post-campaign data completeness and release state of VedAnvaya, including exact canonical mantra counts, typed translation coverage, released recitation audio, audible review gate state, Samaveda musical notation witnesses, and Ask benchmark results.
+         */
+        get: operations["completeness_stats_api_v1_completeness_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/stats": {
         parameters: {
             query?: never;
@@ -1151,11 +1272,11 @@ export interface paths {
          * Corpus and entity populations (aggregate)
          * @description **Cost class: AGGREGATE.** Groups over the mantra, translation, deity, seer and cross-Veda layers in one round trip, so it is exempt from the median latency target.
          *
-         *     **Two deity numbers, both labelled.** `resolved_deities` is the population every deity surface in this API uses. `anukramani_ascriptions` is the traditional devata slot as it stands, which also holds human patrons, labels naming a gift rather than a recipient, and one dog. Neither is the corrected version of the other.
+         *     **Two deity numbers, both labelled.** `resolved_deities` is the population every deity surface in this API uses. `anukramani_ascriptions` is the traditional devata slot as it stands, which also holds human patrons, labels naming a gift rather than a recipient, and abstractions ruled not to name an addressee. Neither is the corrected version of the other.
          *
          *     **Seers are separated from non-seer addressees.** The seer slot also names deities, abstractions, mythic beings, a plant and an object; those are counted apart and their kinds enumerated, because a combined figure is a category error.
          *
-         *     **A corpus with no translation is null, not zero.** The Samaveda has no released translation, so every translation-derived layer is absent for it rather than empty in it, and the per-corpus breakdown says so.
+         *     **A corpus with no translation is null, not zero.** The Samaveda has no released translation of its own, so every translation-derived layer is absent for it rather than empty in it, and the per-corpus breakdown says so. 173 of its verses do carry an English rendering reused from the Rigvedic parallel; that is reported as `reused_renderings` and never inside `translations`, because adding the two would report a translated Samaveda.
          *
          *     **The graph's relationship total is deliberately absent.** Cross-corpus connections are reported per class instead, with intra-corpus edges excluded and counted separately: an exact parallel, a directed reuse and a shared entity vocabulary assert different things and one total over them would rank a vocabulary overlap beside a verbatim repetition.
          */
@@ -1236,10 +1357,21 @@ export interface components {
     schemas: {
         /**
          * AgentiveAssertionView
-         * @description One agent-predicate-target assertion, from the Rigveda-only agentive layer.
+         * @description One agent-predicate-target assertion from the semantic assertion layer.
          *
-         *     All 4,865 ``SemanticAssertion`` nodes hang off Rigvedic passages. A Yajurvedic verse
-         *     returning none of these is outside the layer, which is why the set carries a status.
+         *     This said "the Rigveda-only agentive layer" and "all 4,865 ``SemanticAssertion`` nodes
+         *     hang off Rigvedic passages". Both were true of an earlier state and are now false: the
+         *     layer holds 35,131 assertions and reaches all four corpora -- RV 27,057, AV 6,167,
+         *     YV 1,543, SV 364. A Yajurvedic verse returning none of these is a verse the layer did
+         *     not reach, not a corpus outside it, which is why the set carries a status.
+         *
+         *     The *agentive* reading was Rigveda-only and is not any more. 2,660 assertions carry
+         *     an ``ASSERTION_AGENT``: 2,406 Rigvedic, from a morphological annotation covering the
+         *     Rigveda alone, plus 124 Atharvavedic and 34 Yajurvedic projected from the DCS
+         *     dependency annotation's own role resolution by GAP-SEMANTICS-003. The Sāmaveda carries
+         *     no agent at all. The two derivations are separable on every edge -- the projected ones
+         *     carry ``derivation = TREEBANK_DEPREL_ROLE_PROJECTION`` and the morphological ones carry
+         *     none -- so a reader is never shown one tier as the other.
          *
          *     **The layer is two layers and they do not share their vocabulary.** The 2,406
          *     deterministic assertions carry ``frame`` (ASSERTED or REQUESTED), ``verb_surface`` and
@@ -1291,6 +1423,37 @@ export interface components {
             evidence_basis?: string | null;
             /** Knowledge Layer */
             knowledge_layer?: string | null;
+            /**
+             * Cautions
+             * @description Caution codes the assertion node carries, verbatim. The load-bearing one is ANALYSIS_IS_OF_A_LETTER_IDENTICAL_RIGVEDIC_VERSE_NOT_OF_A_SAMAVEDIC_ANNOTATION, on all 364 Samavedic assertions: the reading was carried across on textual identity and is not an analysis of the verse in its own collection. The graph has recorded this since the layer was built and this field is what reads it.
+             */
+            cautions?: string[];
+        };
+        /**
+         * AskBenchmarkCompleteness
+         * @description Certified Ask formal 60 benchmark verification result.
+         */
+        AskBenchmarkCompleteness: {
+            /** Benchmark Version */
+            benchmark_version: string;
+            /** Status */
+            status: string;
+            /** Total Questions */
+            total_questions: number;
+            /** Effective Acceptable */
+            effective_acceptable: string;
+            /** Supported Correct */
+            supported_correct: number;
+            /** Partial Correct */
+            partial_correct: number;
+            /** Insufficient Evidence Refused */
+            insufficient_evidence_refused: number;
+            /** Misleading */
+            misleading: number;
+            /** Hallucinated */
+            hallucinated: number;
+            /** Truth Statement */
+            truth_statement: string;
         };
         /**
          * AskMode
@@ -1402,9 +1565,11 @@ export interface components {
             protection_and_treatment?: components["schemas"]["ConcernEvidenceRow"][];
             /** Social Rites */
             social_rites?: components["schemas"]["VedaCountRow"][];
+            /** Stated Remedy */
+            stated_remedy?: components["schemas"]["VedaCountRow"][];
             /**
              * Collections
-             * @description Bounds per collection, keyed by the field each one describes. Four collections travel here, so one shared block would describe three of them wrongly.
+             * @description Bounds per collection, keyed by the field each one describes. Five collections travel here, so one shared block would describe four of them wrongly.
              */
             collections: {
                 [key: string]: components["schemas"]["PaginationMeta"];
@@ -1444,6 +1609,21 @@ export interface components {
         AttestedSet_EntityRef_: {
             /** Items */
             items?: components["schemas"]["EntityRef"][];
+            /**
+             * Total
+             * @description Items available where that differs from the number returned; null means not established and never means zero.
+             */
+            total?: number | null;
+            /** @default SUPPORTED */
+            data_status: components["schemas"]["KnowledgeStatus"];
+            coverage?: components["schemas"]["CoverageView"] | null;
+            /** Caveats */
+            caveats?: components["schemas"]["CaveatView"][];
+        };
+        /** AttestedSet[FormulaPhraseView] */
+        AttestedSet_FormulaPhraseView_: {
+            /** Items */
+            items?: components["schemas"]["FormulaPhraseView"][];
             /**
              * Total
              * @description Items available where that differs from the number returned; null means not established and never means zero.
@@ -1554,12 +1734,20 @@ export interface components {
         };
         /**
          * AudioAvailability
-         * @description Recitation audio, which this graph does not have.
+         * @description The *graph's* recitation layer, which does not exist. Not the product's.
          *
          *     Deliberately not a boolean and not a null. ``false`` reads as "this verse has no
          *     recording" and ``null`` renders as a disabled button with no explanation; both invite a
-         *     frontend to ship a play control over a corpus with no audio layer at all. The validator
-         *     refuses any other status, so adding audio means editing this contract on purpose.
+         *     frontend to ship a play control over a layer that is not there. The validator refuses
+         *     any other status, so adding audio to the *graph* means editing this contract on purpose.
+         *
+         *     The note used to read "No recitation audio exists anywhere in this graph", which was
+         *     true of the graph and false as a sentence a reader would understand: the product serves
+         *     16,834 catalogued recordings from ``/api/v1/passages/{key}/audio``, and RV 1.1.1
+         *     returns a playable track from the same server that was answering "anywhere" with
+         *     "none". A field can be correct about its own layer and still be the wrong thing to say,
+         *     and this one is read by clients that have no way to know the distinction. It now names
+         *     the surface that does hold the audio.
          */
         AudioAvailability: {
             /** @default NOT_BUILT */
@@ -1568,9 +1756,53 @@ export interface components {
             recordings?: components["schemas"]["EntityRef"][];
             /**
              * Note
-             * @default No recitation audio exists anywhere in this graph: the frozen model has no audio node, relationship or property. This is an unbuilt layer and not a statement that the passage is unrecited.
+             * @default The knowledge graph holds no audio node, relationship or property, so this block is always empty. It is not a statement about whether a recording exists: recitations are served from the audio catalogue at GET /api/v1/passages/{key}/audio, which is the surface to ask.
              */
             note: string;
+        };
+        /**
+         * AudioCompleteness
+         * @description Certified public recitation audio and audible review gate status.
+         */
+        AudioCompleteness: {
+            /** Released Catalogue Records */
+            released_catalogue_records: number;
+            /** Released By Veda */
+            released_by_veda: {
+                [key: string]: number;
+            };
+            /** Released Scope Keys By Veda */
+            released_scope_keys_by_veda: {
+                [key: string]: number;
+            };
+            /** Released By Tier */
+            released_by_tier?: {
+                [key: string]: number;
+            };
+            /** Released By Veda And Tier */
+            released_by_veda_and_tier?: {
+                [key: string]: {
+                    [key: string]: number;
+                };
+            };
+            /** Owner Audible Sample Status */
+            owner_audible_sample_status: string;
+            /** Owner Sample Reviewed */
+            owner_sample_reviewed: number;
+            /** Owner Sample Verified */
+            owner_sample_verified: number;
+            /** Owner Sample Rejected */
+            owner_sample_rejected: number;
+            /** Queue Total */
+            queue_total: number;
+            /** Not Individually Heard */
+            not_individually_heard: number;
+            /** Queue Rows Promoted */
+            queue_rows_promoted: number;
+            /** Withheld Gates */
+            withheld_gates: string[];
+            /** Truth Statement */
+            truth_statement: string;
         };
         /**
          * AudioPlaybackView
@@ -1684,10 +1916,13 @@ export interface components {
          * AudioStatsResponse
          * @description Catalog-wide figures, all derived.
          *
-         *     Deliberately reports ``by_availability`` beside the coverage counts. A catalog of 1,801
-         *     records of which most were last measured as unreachable is a different product state
-         *     from one where they answer, and a stats block that omitted it would read as full
-         *     coverage.
+         *     Deliberately reports ``by_availability`` beside the coverage counts. A catalog whose
+         *     records were mostly last measured as unreachable is a different product state from one
+         *     where they answer, and a stats block that omitted it would read as full coverage.
+         *
+         *     Reports ``by_publication_tier`` for the same reason. Since 2026-09-19 the catalogue
+         *     holds recordings nobody has listened to, and a single total would let a surface call
+         *     all of them verified.
          */
         AudioStatsResponse: {
             /** Total Records */
@@ -1695,6 +1930,24 @@ export interface components {
             /** By Veda */
             by_veda?: {
                 [key: string]: number;
+            };
+            /**
+             * By Publication Tier
+             * @description Records per tier. Sums to `total_records`, which is the invariant a client may rely on: there is no third, hidden state.
+             *
+             *     `RELEASED_VERIFIED` counts recordings a named person played. `SOURCE_MAPPED_UNREVIEWED` counts recordings mapped and checked by instrument and heard by nobody. A surface that adds them together and calls the total 'verified' is the one failure this split exists to make impossible.
+             */
+            by_publication_tier?: {
+                [key: string]: number;
+            };
+            /**
+             * By Veda And Tier
+             * @description `{veda: {tier: count}}`, with every tier present for every Veda even at zero -- so a Veda with no reviewed recordings renders as '0 reviewed' rather than rendering as nothing. Read this rather than hard-coding a coverage figure.
+             */
+            by_veda_and_tier?: {
+                [key: string]: {
+                    [key: string]: number;
+                };
             };
             /** By Scope Type */
             by_scope_type?: {
@@ -1761,6 +2014,16 @@ export interface components {
             /** End Seconds */
             end_seconds?: number | null;
             availability: components["schemas"]["Availability"];
+            /**
+             * @description Whether a person has heard this recording. `SOURCE_MAPPED_UNREVIEWED` is the normal answer and must never be rendered with the words 'verified', 'human verified' or 'audibly verified'. Render `review_note` verbatim and the label cannot overstate it.
+             * @default SOURCE_MAPPED_UNREVIEWED
+             */
+            publication_tier: components["schemas"]["PublicationTier"];
+            /**
+             * Review Note
+             * @description Reader-facing prose for `publication_tier`, safe to render verbatim. Written in one place so no second code path can phrase an unheard recording as a checked one.
+             */
+            review_note: string;
             mapping_confidence: components["schemas"]["MappingConfidence"];
             /**
              * Mapping Method
@@ -1798,6 +2061,38 @@ export interface components {
          * @enum {string}
          */
         Availability: "AVAILABLE" | "TEMPORARILY_UNAVAILABLE" | "BROKEN" | "EXTERNAL_ONLY";
+        /**
+         * BookCountRow
+         * @description One book of one corpus, with the deity's count in it and the book's own size.
+         *
+         *     ``denominator`` is the book's mantra total and it is not optional. Mandala 9 is four
+         *     times the size of Mandala 2; a heatmap read on raw counts says the Soma book is where
+         *     every deity lives.
+         */
+        BookCountRow: {
+            /** Book Key */
+            book_key: string;
+            /** Book Label */
+            book_label: string;
+            /** Veda */
+            veda: string;
+            /**
+             * Count
+             * @description Null unless status is MEASURED or MEASURED_ZERO.
+             */
+            count?: number | null;
+            /**
+             * Denominator
+             * @description Mantras in this book.
+             */
+            denominator: number;
+            /** Per 1000 */
+            per_1000?: number | null;
+            /** @default MEASURED */
+            status: components["schemas"]["CellStatus"];
+            /** Note */
+            note?: string | null;
+        };
         /**
          * BreadcrumbView
          * @description One step of a passage's position in its Veda's own structure.
@@ -1886,6 +2181,23 @@ export interface components {
             total_available: number;
             /** Requested Question */
             requested_question?: number | null;
+            /**
+             * Benchmark Not Answerable Total
+             * @description How many questions the frozen 100-question benchmark graded NOT_ANSWERABLE. The population this catalogue must cover.
+             * @default 0
+             */
+            benchmark_not_answerable_total: number;
+            /**
+             * Benchmark Not Answerable Published
+             * @description How many of those this catalogue publishes a probed card for. The catalogue published 7 against 21 once, and said so rather than implying completeness; these two fields are what make that claim checkable.
+             * @default 0
+             */
+            benchmark_not_answerable_published: number;
+            /**
+             * Unpublished Not Answerable
+             * @description Benchmark question numbers graded NOT_ANSWERABLE with no card here. Empty is the closed state, and it is a measurement rather than an assurance.
+             */
+            unpublished_not_answerable?: number[];
         };
         /**
          * CapabilityLimit
@@ -1904,6 +2216,8 @@ export interface components {
             /** Question */
             question: string;
             verdict: components["schemas"]["CapabilityVerdict"];
+            /** @description The frozen V3.3 benchmark's grade, kept beside the live one. They can differ, and when they do the difference is the finding: the graph has moved since the benchmark was frozen, and copying the frozen grade forward would publish a limitation that no longer holds. */
+            benchmark_verdict?: components["schemas"]["CapabilityVerdict"] | null;
             data_status: components["schemas"]["KnowledgeStatus"];
             /**
              * Why
@@ -1978,6 +2292,17 @@ export interface components {
              */
             source: string;
         };
+        /**
+         * CellStatus
+         * @description Why a cell in a deity aggregate holds the value it holds.
+         *
+         *     ``MEASURED_ZERO`` and ``NOT_BUILT`` both render as an empty cell and mean opposite
+         *     things: the first says the deity is not named in that book and the layer looked, the
+         *     second says the layer does not reach that corpus and nothing was looked at. A heatmap
+         *     that drew both as a pale square would assert the Samaveda has no metre.
+         * @enum {string}
+         */
+        CellStatus: "MEASURED" | "MEASURED_ZERO" | "NOT_BUILT";
         /**
          * CentralityView
          * @description A domain entity's measured prominence, with its unbuilt half kept unbuilt.
@@ -2116,6 +2441,34 @@ export interface components {
             claim_rows?: components["schemas"]["InterpretiveClaimRow"][];
         };
         /**
+         * CompletenessResponse
+         * @description The complete certified data-completeness state of VedAnvaya.
+         */
+        CompletenessResponse: {
+            /** @default SUPPORTED */
+            data_status: components["schemas"]["KnowledgeStatus"];
+            /**
+             * Certified Release Commit
+             * @default 50a40429103fa32a5667ee58c72c029cfbeb0f74
+             */
+            certified_release_commit: string;
+            /** As Of Date */
+            as_of_date: string;
+            /** Total Canonical Mantras */
+            total_canonical_mantras: number;
+            /** Truth Summary */
+            truth_summary: string;
+            /** Corpora */
+            corpora: components["schemas"]["CorpusCompletenessItem"][];
+            translations: components["schemas"]["TranslationCompletenessSummary"];
+            samaveda_notation: components["schemas"]["SamavedaNotationCompleteness"];
+            audio: components["schemas"]["AudioCompleteness"];
+            ask_benchmark: components["schemas"]["AskBenchmarkCompleteness"];
+            evidence_layers: components["schemas"]["EvidenceLayersCompleteness"];
+            /** Caveats */
+            caveats?: components["schemas"]["CaveatView"][];
+        };
+        /**
          * ConcernEvidenceRow
          * @description A concern or affliction, with the predicate and tier that reached it.
          *
@@ -2172,6 +2525,32 @@ export interface components {
             content: string;
         };
         /**
+         * CorpusCompletenessItem
+         * @description One canonical Samhita's certified invariant scope and metrics.
+         */
+        CorpusCompletenessItem: {
+            /** Veda */
+            veda: string;
+            /** Traditional Name */
+            traditional_name: string;
+            /** Devanagari Name */
+            devanagari_name: string;
+            /** Recension */
+            recension: string;
+            /** Scope Honest Label */
+            scope_honest_label: string;
+            /** Scope Note */
+            scope_note: string;
+            /** Canonical Mantras */
+            canonical_mantras: number;
+            /** Structure */
+            structure: string;
+            /** Excluded Corpora */
+            excluded_corpora?: string[];
+            /** Limitations */
+            limitations: string;
+        };
+        /**
          * CorpusFigure
          * @description One corpus-level count with the denominator that makes it comparable.
          */
@@ -2224,6 +2603,53 @@ export interface components {
             note?: string | null;
         };
         /**
+         * CoverageDimension
+         * @description One dimension's reach, where a response carries more than one.
+         *
+         *     A deity's *naming* is read off the verse text and spans all four corpora; its
+         *     *ascription* is the traditional apparatus and reaches the Rigveda alone. Those are two
+         *     populations with two different scopes, and a single ``vedas_not_covered`` cannot state
+         *     both -- it once stated the ascription scope beside the naming figures, so the endpoint
+         *     published AV 635, YV 221 and SV 405 and simultaneously told a machine consumer that
+         *     AV, YV and SV were not covered.
+         */
+        CoverageDimension: {
+            /**
+             * Dimension
+             * @description What is being counted, e.g. 'naming' or 'ascription'. Names the axis, so a reader never has to infer which figures a scope applies to.
+             */
+            dimension: string;
+            /**
+             * Vedas In Scope
+             * @description Veda codes THIS dimension measurably reaches.
+             */
+            vedas_in_scope?: string[];
+            /**
+             * Vedas Not Covered
+             * @description Veda codes where THIS dimension's zero means an absent layer.
+             */
+            vedas_not_covered?: string[];
+            /**
+             * Measured
+             * @description Per-Veda counts for this dimension.
+             */
+            measured?: {
+                [key: string]: number;
+            };
+            /**
+             * Denominator
+             * @description Per-Veda mantra totals for normalisation.
+             */
+            denominator?: {
+                [key: string]: number;
+            };
+            /**
+             * Means
+             * @description What this dimension counts and what it must not be added to.
+             */
+            means: string;
+        };
+        /**
          * CoverageView
          * @description What corpus this answer actually reached.
          *
@@ -2231,6 +2657,11 @@ export interface components {
          *     graph is treating a Veda's zero as textual absence when the annotation layer simply
          *     does not reach that corpus, and a coverage block beside the counts is what makes the
          *     two distinguishable without reading prose.
+         *
+         *     The top-level fields describe the dimension ``measured`` belongs to. Where a response
+         *     carries figures from more than one dimension, each gets a :class:`CoverageDimension`
+         *     in ``dimensions`` rather than having its scope folded into the block above -- folding
+         *     is what made three Vedas in-scope, not-covered and measured at the same time.
          */
         CoverageView: {
             /**
@@ -2257,6 +2688,11 @@ export interface components {
             denominator?: {
                 [key: string]: number;
             };
+            /**
+             * Dimensions
+             * @description Per-dimension coverage, present whenever this response reports figures from more than one dimension with different corpus reach.
+             */
+            dimensions?: components["schemas"]["CoverageDimension"][];
         };
         /**
          * CrossVedaCell
@@ -2336,11 +2772,17 @@ export interface components {
          *     ``REUSES_TEXT_FROM``'s six pairs disappear from a table and a reader concludes that only
          *     the Samaveda reuses Rigvedic text.
          *
-         *     Two rows carry no edges by construction and are here anyway. The semantic resemblance
-         *     row is ``NOT_BUILT`` -- no embedding, no vector index and no asserted resemblance exists
-         *     anywhere in this graph -- and the semantic assertion row is ``NOT_BUILT`` for every pair
-         *     because all of its assertions are Rigvedic, so that layer cannot contribute to a
-         *     cross-corpus comparison at all.
+         *     Two rows carry no edges by construction and are here anyway, and they carry different
+         *     statuses because the reasons differ. The semantic resemblance row is ``NOT_BUILT`` -- no
+         *     embedding, no vector index and no asserted resemblance exists anywhere in this graph.
+         *     The semantic assertion row is ``CLASS_NOT_CROSS_VEDA``: the layer exists, holds 35,131
+         *     assertions and reaches all four corpora, and still cannot contribute to a pair, because
+         *     an assertion is a predication about one passage rather than a relation between two.
+         *
+         *     That row read ``NOT_BUILT`` "because all of its assertions are Rigvedic". The premise
+         *     was false -- the layer reaches AV, YV and SV -- and the status told a reader the layer
+         *     does not exist anywhere in this graph, beside a measured total in the same cell that
+         *     said otherwise.
          */
         CrossVedaMatrixResponse: {
             /**
@@ -2455,6 +2897,52 @@ export interface components {
             reason: string;
         };
         /**
+         * DedicationRouteRow
+         * @description One resolved-dedication route, with the method that produced it.
+         *
+         *     ``ascribed_total`` sums two routes that are not the same kind of evidence:
+         *     ``HAS_DEVATA`` is the Anukramani naming a deity the registry already holds, and
+         *     ``HAS_DEVATA_DERIVED`` is that dedication recovered from a Sanskrit adjective by
+         *     morphology. A single total with a single method string would be wrong about one of
+         *     them, so the decomposition is published beside the total rather than folded into it,
+         *     and each row carries its own method. GAP-ATTRIBUTION-002 clause 2 -- *"returns AV in
+         *     ascribed_scope with its method stated"*.
+         */
+        DedicationRouteRow: {
+            /**
+             * Predicate
+             * @description The graph predicate this row counts.
+             */
+            predicate: string;
+            /**
+             * Method
+             * @description How the dedication was arrived at, as a stable code.
+             */
+            method: string;
+            /**
+             * Means
+             * @description What this route asserts, and what it does not.
+             */
+            means: string;
+            /**
+             * Vedas Reached
+             * @description Veda codes this route reaches for this deity.
+             */
+            vedas_reached?: string[];
+            /**
+             * Measured
+             * @description Passages per Veda on this route.
+             */
+            measured?: {
+                [key: string]: number;
+            };
+            /**
+             * Passages
+             * @description Passages this route reaches, summed over its own Vedas.
+             */
+            passages: number;
+        };
+        /**
          * DeityPopulation
          * @description Which slice of the Anukramani's devata slot a request wants.
          * @enum {string}
@@ -2466,7 +2954,8 @@ export interface components {
          *
          *     ``resolved_deities`` is the population every deity surface in this API uses.
          *     ``anukramani_ascriptions`` is the raw slot the tradition fills, which holds human
-         *     patrons, danastuti labels naming a gift rather than a recipient, and one dog. A single
+         *     patrons, danastuti labels naming a gift rather than a recipient, and abstractions ruled
+         *     not to name an addressee. A single
          *     "number of deities" would have to pick one and would be wrong for half its readers, so
          *     both ship, with the difference broken out by structure.
          */
@@ -2527,14 +3016,168 @@ export interface components {
             knowledge_layer?: string | null;
         };
         /**
+         * DevataByBookResponse
+         * @description VIZ_BLOCKER_02. The per-book aggregate a deity x mandala heatmap needs.
+         *
+         *     The blocker's own warning is the reason this is an endpoint rather than a client-side
+         *     roll-up of ``/devatas/{id}/passages``: that route is capped at 200 rows a page, so a
+         *     heatmap built by paging it would truncate silently and a truncated heatmap is
+         *     indistinguishable from a sparse one.
+         */
+        DevataByBookResponse: {
+            /**
+             * Insight
+             * @description Stable identifier for this view, safe to key on.
+             */
+            insight: string;
+            /**
+             * Question
+             * @description The question this view answers, in words.
+             */
+            question: string;
+            data_status: components["schemas"]["KnowledgeStatus"];
+            cost_class: components["schemas"]["CostClass"];
+            /**
+             * Cost Note
+             * @description What this endpoint scans, so a slow response is legible rather than surprising.
+             */
+            cost_note: string;
+            /**
+             * Vedas Reported
+             * @description Corpora whose figures appear below. Each one's exclusions are attached.
+             */
+            vedas_reported?: string[];
+            /** Scope Statements */
+            scope_statements?: components["schemas"]["WorkScopeView"][];
+            coverage?: components["schemas"]["CoverageView"] | null;
+            /** Caveats */
+            caveats?: components["schemas"]["CaveatView"][];
+            /** Devata Id */
+            devata_id: string;
+            /** Display Label */
+            display_label: string;
+            /**
+             * Basis
+             * @description Which layer the counts come from: 'naming' spans four corpora, 'ascription' reaches the Rigveda alone. Never mixed in one response.
+             */
+            basis: string;
+            /** Books */
+            books?: components["schemas"]["BookCountRow"][];
+            /**
+             * Total
+             * @description Sum over the measured books. Equals the naming total.
+             */
+            total: number;
+        };
+        /**
+         * DevataByMetreResponse
+         * @description VIZ_BLOCKER_03. The deity x metre aggregate, with two thirds of it typed unbuilt.
+         *
+         *     The blocker called this low priority because "the metre layer reaches only RV and AV,
+         *     so the matrix would be two-thirds hatched -- honest, but thin". Thin and honest is the
+         *     right trade and it is served here: the Samavedic and Yajurvedic rows are present and
+         *     typed ``NOT_BUILT`` rather than omitted, because a matrix with two corpora silently
+         *     missing is read as a matrix of two corpora.
+         */
+        DevataByMetreResponse: {
+            /**
+             * Insight
+             * @description Stable identifier for this view, safe to key on.
+             */
+            insight: string;
+            /**
+             * Question
+             * @description The question this view answers, in words.
+             */
+            question: string;
+            data_status: components["schemas"]["KnowledgeStatus"];
+            cost_class: components["schemas"]["CostClass"];
+            /**
+             * Cost Note
+             * @description What this endpoint scans, so a slow response is legible rather than surprising.
+             */
+            cost_note: string;
+            /**
+             * Vedas Reported
+             * @description Corpora whose figures appear below. Each one's exclusions are attached.
+             */
+            vedas_reported?: string[];
+            /** Scope Statements */
+            scope_statements?: components["schemas"]["WorkScopeView"][];
+            coverage?: components["schemas"]["CoverageView"] | null;
+            /** Caveats */
+            caveats?: components["schemas"]["CaveatView"][];
+            /** Devata Id */
+            devata_id: string;
+            /** Display Label */
+            display_label: string;
+            /** Cells */
+            cells?: components["schemas"]["MetreCountRow"][];
+            /** Vedas With A Metre Layer */
+            vedas_with_a_metre_layer?: string[];
+            /** Total */
+            total: number;
+        };
+        /**
+         * DevataDispersionResponse
+         * @description VIZ_BLOCKER_01. Dispersion for a deity of any size, unbounded by the page cap.
+         */
+        DevataDispersionResponse: {
+            /**
+             * Insight
+             * @description Stable identifier for this view, safe to key on.
+             */
+            insight: string;
+            /**
+             * Question
+             * @description The question this view answers, in words.
+             */
+            question: string;
+            data_status: components["schemas"]["KnowledgeStatus"];
+            cost_class: components["schemas"]["CostClass"];
+            /**
+             * Cost Note
+             * @description What this endpoint scans, so a slow response is legible rather than surprising.
+             */
+            cost_note: string;
+            /**
+             * Vedas Reported
+             * @description Corpora whose figures appear below. Each one's exclusions are attached.
+             */
+            vedas_reported?: string[];
+            /** Scope Statements */
+            scope_statements?: components["schemas"]["WorkScopeView"][];
+            coverage?: components["schemas"]["CoverageView"] | null;
+            /** Caveats */
+            caveats?: components["schemas"]["CaveatView"][];
+            /** Devata Id */
+            devata_id: string;
+            /** Display Label */
+            display_label: string;
+            /** Basis */
+            basis: string;
+            /** By Veda */
+            by_veda?: {
+                [key: string]: components["schemas"]["DispersionSeries"];
+            };
+            /** Total Positions */
+            total_positions: number;
+        };
+        /**
          * DevataInsightResponse
          * @description A deity's measured reach, with naming and ascription never added together.
          *
          *     ``named`` counts passages whose text says the deity's name and spans all four corpora.
-         *     ``ascribed`` counts the Anukramani's dedication and exists for the Rigveda only. They
-         *     diverge in both directions and neither is the corrected version of the other, so they
-         *     are separate fields with separate scopes, and the per-1,000 figures are what a
-         *     cross-corpus comparison should be read on.
+         *     ``ascribed`` counts the Anukramani's dedication and reaches the corpora an Anukramani
+         *     apparatus was ingested for -- the Rigveda directly, the Atharvaveda through the
+         *     morphological resolution of its descriptors. They diverge in both directions and
+         *     neither is the corrected version of the other, so they are separate fields with
+         *     separate scopes, and the per-1,000 figures are what a cross-corpus comparison should be
+         *     read on.
+         *
+         *     ``ascribed_total`` and ``ascribed_scope`` are computed from ONE pattern over both
+         *     dedication routes, so the figure and the scope label cannot disagree about which routes
+         *     they cover; ``ascription_routes`` decomposes the total by route and method.
          */
         DevataInsightResponse: {
             /**
@@ -2572,7 +3215,7 @@ export interface components {
             structure?: string | null;
             /**
              * Is Resolved Deity
-             * @description Whether this node is in the resolved deity population. False for the human patrons, gift-praise labels and one dog the Anukramani also names.
+             * @description Whether this node is in the resolved deity population. False for the human patrons, gift-praise labels and ruled-out abstractions the Anukramani also names.
              */
             is_resolved_deity: boolean;
             named_by_veda: components["schemas"]["VedaCountRow"];
@@ -2583,6 +3226,11 @@ export interface components {
             ascribed_total?: number | null;
             /** Ascribed Scope */
             ascribed_scope?: string[];
+            /**
+             * Ascription Routes
+             * @description The dedication total decomposed by route and method. Every route is present even where it reaches nothing, so a zero is distinguishable from a route the response omitted.
+             */
+            ascription_routes?: components["schemas"]["DedicationRouteRow"][];
             /** Ascription Note */
             ascription_note: string;
             /**
@@ -2824,7 +3472,7 @@ export interface components {
             attributed_inherited?: number | null;
             /**
              * Attribution Scope
-             * @description Vedas the Anukramani attribution layer reaches. It is Rigveda-only, so a zero elsewhere is a missing layer and not an absent deity.
+             * @description Vedas the HAS_DEVATA attribution layer reaches, which is the Rigveda alone, so a zero elsewhere is a missing layer and not an absent deity. NOT the same as 'the Anukramani is Rigveda-only', which is false: the Atharvaveda has one, and 4,160 of its mantras carry ascription descriptors from it. Those descriptors are not resolved into the deity registry, which is why they are a separate predicate and are out of scope here.
              */
             attribution_scope?: string[];
             /** Top Rishis */
@@ -2932,6 +3580,30 @@ export interface components {
              * @description Why the field is empty. Never 'no data'.
              */
             note: string;
+        };
+        /**
+         * DispersionSeries
+         * @description Where in one corpus a deity is attested, as ordinal positions and nothing else.
+         *
+         *     ``positions`` are 1-based indices into the corpus's canonical mantra order, not
+         *     citations and not payloads. That is the point: an Invocation Landscape for a major
+         *     deity needs every attesting position, and returning the passages would be 2,305 objects
+         *     behind an endpoint capped at 200 rows a page.
+         */
+        DispersionSeries: {
+            /** Veda */
+            veda: string;
+            /** Positions */
+            positions?: number[];
+            /**
+             * Denominator
+             * @description Mantras in this corpus, the axis length.
+             */
+            denominator: number;
+            /** @default MEASURED */
+            status: components["schemas"]["CellStatus"];
+            /** Note */
+            note?: string | null;
         };
         /**
          * EntityListRow
@@ -3163,7 +3835,7 @@ export interface components {
          *        **This enum is NOT the graph's ``evidence_basis`` property.** The two share a name
          *        and describe different axes, and the collision is a trap that was walked into during
          *        this build: reading ``r.evidence_basis`` straight into this enum mapped *every*
-         *        attribution edge in the corpus to ``UNKNOWN`` -- all 17,889 seer edges, all 16,331
+         *        attribution edge in the corpus to ``UNKNOWN`` -- all 17,889 seer edges, all 16,298
          *        metre edges, all 10,558 deity edges -- because the value spaces are disjoint.
          *
          *        The graph property answers "off which textual surface was the evidence read?" and
@@ -3197,6 +3869,11 @@ export interface components {
             sanskrit?: string | null;
             /** Translation */
             translation?: string | null;
+            /**
+             * Translation Disclosure
+             * @description What the quoted English actually is, where that is not a dedicated translation of this verse: a rendering reused from another corpus's parallel, one print unit covering a span of verses, or Griffith's Latin substitution. Travels on the item rather than in a preamble, and is repeated into `qualifier`, because an answer that cites a reused Rigvedic rendering as a Samavedic verse's own translation is wrong about which corpus it is describing.
+             */
+            translation_disclosure?: string | null;
             /** Entity Label */
             entity_label?: string | null;
             /** Entity Type */
@@ -3230,6 +3907,24 @@ export interface components {
          * @enum {string}
          */
         EvidenceItemType: "PASSAGE" | "ENTITY_FACT" | "GRAPH_PATH" | "METRIC" | "INTERPRETIVE_CLAIM" | "FORMULA_FAMILY" | "TEXTUAL_REUSE" | "ATTRIBUTION" | "CORPUS_DISTRIBUTION" | "LEXICAL_PRESENCE";
+        /**
+         * EvidenceLayersCompleteness
+         * @description The four knowledge evidence layers and grounding rules.
+         */
+        EvidenceLayersCompleteness: {
+            /** Source Explicit */
+            source_explicit: string;
+            /** Deterministic Derived */
+            deterministic_derived: string;
+            /** Semantic Model Assisted */
+            semantic_model_assisted: string;
+            /** Interpretive Claim */
+            interpretive_claim: string;
+            /** Normalization Rule */
+            normalization_rule: string;
+            /** Predicate Reach Rule */
+            predicate_reach_rule: string;
+        };
         /**
          * EvidenceSpanView
          * @description One quoted witness for an assertion.
@@ -3676,6 +4371,39 @@ export interface components {
             source_form?: string | null;
         };
         /**
+         * FormulaPhraseView
+         * @description A fixed phrase this verse shares with other verses, and how far it travels.
+         *
+         *     The reader carried no formula layer at all, which left 10,574 mantras - 1,311 of the
+         *     Samaveda's 1,844 among them - with real, readable substance the reading page could not
+         *     show. For a Samavedic verse that matters more than for any other corpus: it has no
+         *     seer, no metre and no ascribed deity of its own, so its shared wording is most of what
+         *     there is to say about it beyond the text.
+         *
+         *     ``match_level`` travels because the formula layer's identity is a normalised-string
+         *     match and the strength of that match varies per occurrence: ``SCRIPT_FOLDED`` is a
+         *     stronger claim than ``SANDHI_INSENSITIVE``, and a surface that showed both as "shares
+         *     this phrase" would flatten the distinction the edge went to the trouble of recording.
+         *     ``source_form`` is what this verse actually reads, which can differ from the family's
+         *     ``display_form``.
+         */
+        FormulaPhraseView: {
+            /** Formula Id */
+            formula_id: string;
+            /** Display Form */
+            display_form: string;
+            /** Source Form */
+            source_form?: string | null;
+            /** Occurrence Count */
+            occurrence_count?: number | null;
+            /** Vedas */
+            vedas?: string[];
+            /** Cross Veda */
+            cross_veda?: boolean | null;
+            /** Match Level */
+            match_level?: string | null;
+        };
+        /**
          * FormulaSpanRow
          * @description How many formula families reach one corpus, and how many reach four.
          */
@@ -3759,9 +4487,12 @@ export interface components {
          *     A copy-everything projection would have shipped every one of them.
          *
          *     **``type: "DEVATA"`` does not mean the thing is a god, and :attr:`is_deity` is why this
-         *     model can say so.** The Anukramani names a *devata* for every hymn and 30 of the 214
+         *     model can say so.** The Anukramani names a *devata* for every hymn and 57 of the 214
          *     entries are not deities: 22 human patrons and seers, 7 labels naming a gift rather than
-         *     a recipient, and one dog. The frozen graph labels all of them ``:Devata``, so a generic
+         *     a recipient, and 28 abstractions ruled not to name an addressee. The dog is NOT among
+         *     them -- it is a deified animal beside thirteen others in the population, and excluding
+         *     it for carrying structure UNSPECIFIED was the morphological accident the eligibility
+         *     ruling names. The frozen graph labels all of them ``:Devata``, so a generic
          *     graph explorer -- whose job is to show what is connected to an arbitrary node -- will
          *     resolve one sooner or later, and eight of them carry real traversable degree.
          *
@@ -3792,7 +4523,7 @@ export interface components {
             description?: string | null;
             /**
              * Is Deity
-             * @description For a node in the Anukramani's devata slot, whether it is actually a god. Null for everything else, because the question does not apply to a metre or a formula and false would answer it. False means the slot holds a human patron, praise of a gift, or the one dog -- do not render it as a deity, whatever `type` says.
+             * @description For a node in the Anukramani's devata slot, whether it is actually a god. Null for everything else, because the question does not apply to a metre or a formula and false would answer it. False means the slot holds a human patron, praise of a gift, or an abstraction ruled not to name an addressee -- do not render it as a deity, whatever `type` says.
              */
             is_deity?: boolean | null;
             /**
@@ -4307,6 +5038,24 @@ export interface components {
             note?: string | null;
         };
         /**
+         * MetreCountRow
+         * @description One deity x metre cell.
+         */
+        MetreCountRow: {
+            /** Metre Key */
+            metre_key: string;
+            /** Metre Label */
+            metre_label: string;
+            /** Veda */
+            veda: string;
+            /** Count */
+            count?: number | null;
+            /** @default MEASURED */
+            status: components["schemas"]["CellStatus"];
+            /** Note */
+            note?: string | null;
+        };
+        /**
          * NavigationRelation
          * @enum {string}
          */
@@ -4743,7 +5492,7 @@ export interface components {
             review_state: string;
             /**
              * Review Note
-             * @default No node or edge in this graph carries HUMAN_REVIEWED. The strongest review state present is MODEL_ADJUDICATED, on 587 edges, none of them Rigvedic.
+             * @default No edge in this graph is HUMAN_REVIEWED and none may claim to be (0 carry it); there is still no human gold set. The strongest review state that exists is MODEL_ADJUDICATED, on 613 edges across 12 predicates, where a model re-read the passage and accepted the edge with a stated reason. TIER_C is wider than that: of its 598 edges, 587 hang off a passage (320 Yajurvedic, 267 Atharvavedic, 0 Rigvedic) and 11 are Devata-to-Devata epithet identities, adjudicated as labels with no passage to read and carrying review_state UNREVIEWED for that reason.
              */
             review_note: string;
         };
@@ -4856,6 +5605,34 @@ export interface components {
          */
         PlaybackMode: "REMOTE_DIRECT" | "LOCAL_CACHE" | "EXTERNAL_EMBED" | "EXTERNAL_LINK" | "PROXIED_STREAM";
         /**
+         * PublicationTier
+         * @description Whether a human has heard this recording, kept apart from whether it is published.
+         *
+         *     **Why the two were ever one field.** Until 2026-09-19 they were not fields at all:
+         *     publication *was* the gate. ``OWNER_DECISION_E_AUDIO_GATE`` (OWNER_DECISIONS.md §8 and
+         *     §14) held that no fragile audio entered the canonical layer until its row had been
+         *     listened to, so 954 staged rows sat outside the catalogue and the catalogue carried no
+         *     review vocabulary because everything in it was, by construction, on the same footing.
+         *
+         *     ``OWNER_DECISION_AUDIO_TWO_TIER_PUBLICATION`` of 2026-09-19 supersedes that gate and
+         *     replaces it with this enum. Audible review is now a badge. The one thing the new policy
+         *     does not permit is the collapse these two values exist to prevent: describing an
+         *     unreviewed recording as verified. Hence
+         *     :attr:`AudioRecord.audible_review_evidence`, which
+         *     :meth:`AudioRecord._check_internal_consistency` requires before
+         *     :attr:`RELEASED_VERIFIED` may be written and refuses on
+         *     :attr:`SOURCE_MAPPED_UNREVIEWED` -- so the tier cannot be typed, only earned, and
+         *     cannot be half-typed either.
+         *
+         *     The default is :attr:`SOURCE_MAPPED_UNREVIEWED` on purpose. A catalogue line written
+         *     before this field existed carries no tier, and the honest reading of a row that says
+         *     nothing about review is that nobody reviewed it. A default of
+         *     ``RELEASED_VERIFIED`` would have promoted all 16,834 incumbent records to a verdict no
+         *     listener ever gave.
+         * @enum {string}
+         */
+        PublicationTier: "RELEASED_VERIFIED" | "SOURCE_MAPPED_UNREVIEWED";
+        /**
          * ReaderPayload
          * @description Everything needed to render one mantra in a single call (spec section 11).
          *
@@ -4893,6 +5670,8 @@ export interface components {
             /** @description Deities *named* in the verse, graded. Distinct from `devatas`, which is the Anukramani's ascription and reaches the Rigveda only -- for a Samavedic, Yajurvedic or Atharvavedic verse this is the only deity signal there is, which is why the reader carries it rather than leaving those three corpora blank. */
             mentioned_devatas: components["schemas"]["MentionedDevataSet"];
             major_concepts: components["schemas"]["AttestedSet_EntityRef_"];
+            /** @description Fixed phrases this verse shares with others. For a Samavedic verse this is often the only knowledge layer besides the text and its Rigvedic counterpart, because the seer, metre and ascription layers are Rigveda-only. */
+            formulas?: components["schemas"]["AttestedSet_FormulaPhraseView_"];
             previous?: components["schemas"]["PassageSummary"] | null;
             next?: components["schemas"]["PassageSummary"] | null;
             /**
@@ -5209,17 +5988,50 @@ export interface components {
          * RitualCoverageView
          * @description What the ritual layer holds, stated as the numbers that bound it.
          *
-         *     Eight modelled rites and three step edges across all of them. That is not a taxonomy of
-         *     Vedic ritual, and a list of eight is not evidence that there are eight, so the bounding
-         *     figures are measured and returned rather than described as "curated".
+         *     The inventory is not a taxonomy of Vedic ritual, and the length of a list is not evidence
+         *     of how many there are, so every bounding figure here is measured and returned rather than
+         *     described as "curated".
+         *
+         *     The two step layers are separate fields because they are separate claims. ``step_edges``
+         *     counts what a Samhita text numbers in its own words; ``procedure_step_edges`` counts what
+         *     a Srautasutra or Grhyasutra prints. Summing them would assert a procedural coverage the
+         *     Samhita layer does not have, and reporting only the first — which this view did for a
+         *     whole import — states that no rite has a recoverable sequence while thousands of located
+         *     sutra steps sit in the graph.
          */
         RitualCoverageView: {
             /** Rituals Modelled */
             rituals_modelled: number;
-            /** Rituals With Steps */
+            /**
+             * Rituals With Steps
+             * @description Rites with at least one step the Samhita text itself numbers.
+             */
             rituals_with_steps: number;
-            /** Step Edges */
+            /**
+             * Step Edges
+             * @description Samhita-numbered step edges, whole graph.
+             */
             step_edges: number;
+            /**
+             * Rituals With Procedure
+             * @description Rites with at least one sutra-attested procedural step.
+             */
+            rituals_with_procedure?: number | null;
+            /**
+             * Procedure Step Edges
+             * @description Sutra-attested procedural step edges, whole graph.
+             */
+            procedure_step_edges?: number | null;
+            /**
+             * Procedure Partial Steps
+             * @description Of those, the ones stating a position without printing the run it falls in. A high share means the sequences are located steps, not procedures.
+             */
+            procedure_partial_steps?: number | null;
+            /**
+             * Procedure Source Works
+             * @description Distinct source works cited. None of them has a node in this graph.
+             */
+            procedure_source_works?: number | null;
             /** Implements Curated */
             implements_curated?: number | null;
             /** Implements Reached By Mentions */
@@ -5249,12 +6061,97 @@ export interface components {
             evidence_status: string;
         };
         /**
-         * RitualProfile
-         * @description One of the eight modelled rites.
+         * RitualProcedureSource
+         * @description One source work's account of a rite's procedure.
          *
-         *     Eight is not a taxonomy of Vedic ritual and the response says so in
-         *     ``coverage_statement`` rather than leaving a client to infer completeness from a list
-         *     that happens to have eight entries in it.
+         *     The grouping is the claim. A rite drawing on eight sutras has eight independently
+         *     numbered sequences, not one procedure of eight parts, and flattening them into a single
+         *     ordered list would assert a composition nobody recorded.
+         *
+         *     ``work_key`` has no node behind it. The 11 work identities these steps cite are not in
+         *     the graph, so ``work_label`` is read off the key rather than from a work record, and
+         *     there is nothing further to follow.
+         */
+        RitualProcedureSource: {
+            /** Work Key */
+            work_key?: string | null;
+            /**
+             * Work Label
+             * @description Derived from `work_key`; there is no work node to fetch a name from.
+             */
+            work_label?: string | null;
+            /**
+             * Source Type
+             * @description SRAUTASUTRA or GRHYASUTRA. Never a Samhita passage.
+             */
+            source_type?: string | null;
+            /** Veda School */
+            veda_school?: string | null;
+            /**
+             * Step Count
+             * @description Steps this source records, before any display cap.
+             */
+            step_count?: number | null;
+            /**
+             * Anchoring Basis
+             * @description Why these steps attach to this rite, as the staging recorded it. Carried per source rather than once per rite, so a source anchored on a different basis cannot hide behind a shared note.
+             */
+            anchoring_basis?: string | null;
+            /** Steps */
+            steps?: components["schemas"]["RitualProcedureStep"][];
+        };
+        /**
+         * RitualProcedureStep
+         * @description One step in one source's sequence for a rite.
+         *
+         *     Kept separate from :class:`RitualStep` for the reason the graph keeps
+         *     ``HAS_RITUAL_STEP`` separate from ``HAS_STEP``: a libation the hymn itself numbers and a
+         *     procedural step a sutra prints are not the same kind of evidence, and merging them would
+         *     silently widen what an ordered step list means.
+         *
+         *     ``position`` is an ordinal **within this source's sequence only**. It is not a position
+         *     in the rite: 2,666 of the 3,121 steps share a position with another step of the same
+         *     rite, because eight or more works each number their own procedure from 1. That is why
+         *     steps arrive grouped under :class:`RitualProcedureSource` rather than in one list.
+         */
+        RitualProcedureStep: {
+            /**
+             * Position
+             * @description Ordinal within THIS source's sequence, not within the rite. Read `order_completeness` before treating a run of these as contiguous.
+             */
+            position?: number | null;
+            /** Display Label */
+            display_label: string;
+            /**
+             * Text
+             * @description The sutra's own words, IAST. This is the step; `display_label` is only where to find it.
+             */
+            text?: string | null;
+            /**
+             * Citation
+             * @description The sutra locator this step was read from.
+             */
+            citation?: string | null;
+            /** Stated Position */
+            stated_position?: string | null;
+            /**
+             * Order Basis
+             * @description SOURCE_PRINTED_SUTRA_SEQUENCE or SOURCE_STATED_SEQUENCE_MARKER.
+             */
+            order_basis?: string | null;
+            /**
+             * Order Completeness
+             * @description PARTIAL_STATED_POSITIONS or CONTIGUOUS_PRINTED_RUN. A partial sequence has gaps the source does not fill.
+             */
+            order_completeness?: string | null;
+        };
+        /**
+         * RitualProfile
+         * @description One modelled rite.
+         *
+         *     The rite inventory is not a taxonomy of Vedic ritual and the response says so in
+         *     ``coverage_statement`` rather than leaving a client to infer completeness from the
+         *     length of a list.
          */
         RitualProfile: {
             /**
@@ -5272,9 +6169,19 @@ export interface components {
             short_description?: string | null;
             /**
              * Steps
-             * @description Only 3 HAS_STEP edges exist across all 8 rites, all of them on the soma pressing, so this list is empty for 7 of the 8. An empty list here is NOT an unstructured rite -- read `dimension_status` for which it is.
+             * @description Steps the Samhita text itself numbers. 3 such edges exist in the whole graph, all on the soma pressing, so this list is empty for every other rite. An empty list here is NOT an unstructured rite, and it is NOT an absence of procedure either -- read `procedure`, then `dimension_status`.
              */
             steps?: components["schemas"]["RitualStep"][];
+            /**
+             * Procedure
+             * @description Procedure attested in Srautasutras and Grhyasutras, grouped by the work that records it. A separate field from `steps` because it is a separate claim, and grouped because each work numbers its own sequence from 1 — the groups do not compose into one procedure. Most sequences are partial; every step says which.
+             */
+            procedure?: components["schemas"]["RitualProcedureSource"][];
+            /**
+             * Procedure Step Count
+             * @description Total sutra-attested steps across every source.
+             */
+            procedure_step_count?: number | null;
             /** Roles */
             roles?: components["schemas"]["EntityRef"][];
             /** Offerings */
@@ -5304,7 +6211,10 @@ export interface components {
             /** Caveats */
             caveats?: components["schemas"]["CaveatView"][];
         };
-        /** RitualStep */
+        /**
+         * RitualStep
+         * @description A step the Samhita text itself numbers. Three of these exist in the whole graph.
+         */
         RitualStep: {
             /** Order */
             order?: number | null;
@@ -5315,7 +6225,7 @@ export interface components {
         };
         /**
          * RitualSummary
-         * @description A rite list row. Carries the eight-rite bound on the row, not only in the header.
+         * @description A rite list row. Carries the inventory bound on the row, not only in the header.
          */
         RitualSummary: {
             /** Type */
@@ -5334,11 +6244,19 @@ export interface components {
             passage_count?: number | null;
             /**
              * Inventory Coverage
-             * @description Stated per row because a list of eight implies a taxonomy of eight.
+             * @description Stated per row, because the length of a list reads as a taxonomy.
              */
             inventory_coverage: string;
-            /** Step Count */
+            /**
+             * Step Count
+             * @description Samhita-numbered steps only. 3 exist in the whole graph.
+             */
             step_count?: number | null;
+            /**
+             * Procedure Step Count
+             * @description Sutra-attested procedural steps. A different evidence class from `step_count`, so it is a different field.
+             */
+            procedure_step_count?: number | null;
             /** Devata Count */
             devata_count?: number | null;
             /** Described In Count */
@@ -5423,6 +6341,71 @@ export interface components {
              * @description Named things a reader would expect here and which are absent, with the reason. An empty list would assert completeness.
              */
             not_covered?: string[];
+        };
+        /**
+         * SamavedaNotationCompleteness
+         * @description Certified status of the Samaveda notation and Gāna scope.
+         */
+        SamavedaNotationCompleteness: {
+            /**
+             * Canonical Corpus Mantras
+             * @default 1844
+             */
+            canonical_corpus_mantras: number;
+            /**
+             * Validated Notation Witnesses
+             * @default 1136
+             */
+            validated_notation_witnesses: number;
+            /** Gates Passed */
+            gates_passed?: string[];
+            /**
+             * Evidence Class
+             * @default PARALLEL_WITNESS / PARALLEL_TEXT
+             */
+            evidence_class: string;
+            /**
+             * Notation System
+             * @default Kauthuma numeric svara (source-printed codepoints)
+             */
+            notation_system: string;
+            /**
+             * Source Supplied
+             * @default true
+             */
+            source_supplied: boolean;
+            /**
+             * Interpreted Into Pitch
+             * @default false
+             */
+            interpreted_into_pitch: boolean;
+            /**
+             * Unaligned Withheld Verses
+             * @default 708
+             */
+            unaligned_withheld_verses: number;
+            /**
+             * Withheld Reason
+             * @default Unaligned or unsupported notation rows withheld
+             */
+            withheld_reason: string;
+            /**
+             * Gana Object Layer
+             * @default OUT_OF_SCOPE
+             */
+            gana_object_layer: string;
+            /**
+             * Gana Works Modeled
+             * @default 0
+             */
+            gana_works_modeled: number;
+            /**
+             * Musicalized As Edges
+             * @default 0
+             */
+            musicalized_as_edges: number;
+            /** Truth Statement */
+            truth_statement: string;
         };
         /**
          * SearchLanguage
@@ -5736,36 +6719,157 @@ export interface components {
             note?: string | null;
         };
         /**
+         * TranslationCompletenessSummary
+         * @description Overall translation coverage with typed categories.
+         */
+        TranslationCompletenessSummary: {
+            /** By Veda */
+            by_veda: {
+                [key: string]: components["schemas"]["TranslationVedaItem"];
+            };
+            /** Total Mantras */
+            total_mantras: number;
+            /** Total Dedicated English */
+            total_dedicated_english: number;
+            /** Total Range Covered */
+            total_range_covered: number;
+            /** Total Reused Rendering */
+            total_reused_rendering: number;
+            /** Total Non English */
+            total_non_english: number;
+            /** Total Uncovered */
+            total_uncovered: number;
+            /** Truth Statement */
+            truth_statement: string;
+        };
+        /**
          * TranslationCoverage
-         * @description How much of a work is translated, and by whom.
+         * @description How much of a work is translated, in what sense, and by whom.
          *
          *     ``translated`` is nullable but never rounded up, and the Samaveda is why this is a
-         *     first-class block rather than a percentage on the summary: it has 0 translations from
-         *     1,844 verses, so every translation-derived layer is empty for that corpus and every one
-         *     of those empty lists would otherwise read as a fact about the Samaveda.
+         *     first-class block rather than a percentage on the summary: it has 0 translations of its
+         *     own from 1,844 verses, so every translation-derived layer is empty for that corpus and
+         *     every one of those empty lists would otherwise read as a fact about the Samaveda.
+         *
+         *     The four populations below are separate fields because they are four different claims
+         *     and one percentage cannot carry them. ``dedicated`` is a verse with its own 1:1 English
+         *     rendering. ``range_covered`` is a verse the translator rendered inside a multi-verse
+         *     print unit -- real coverage, and not a rendering of that verse alone. ``reused_rendering``
+         *     is another corpus's published English on text verified identical, which is the only
+         *     English that will ever reach a Samavedic verse and is not the Samaveda's own. And
+         *     ``other_language`` is Griffith's Latin substitutions, which are his real text and are
+         *     not the English layer. ``translated`` counts ``dedicated`` alone, so the field that
+         *     existed before these distinctions did still means what it meant.
          */
         TranslationCoverage: {
             /** Mantras */
             mantras?: number | null;
-            /** Translated */
+            /**
+             * Translated
+             * @description Verses with their own dedicated English translation. Deliberately not the sum of the four populations below: adding them would assert that every covered verse has a 1:1 rendering of its own.
+             */
             translated?: number | null;
-            /** Percent */
+            /**
+             * Percent
+             * @description `dedicated` over `mantras`. The English layer's own share.
+             */
             percent?: number | null;
-            /** Translators */
+            /** Dedicated */
+            dedicated?: number | null;
+            /**
+             * Range Covered
+             * @description Verses covered only by a multi-verse print unit anchored elsewhere.
+             */
+            range_covered?: number | null;
+            /**
+             * Reused Rendering
+             * @description Verses showing another corpus's rendering of verified-identical text. Never added to `translated`.
+             */
+            reused_rendering?: number | null;
+            /**
+             * Other Language
+             * @description Verses whose only rendering is not in English.
+             */
+            other_language?: number | null;
+            /**
+             * Uncovered
+             * @description Verses no rendering of any kind reaches. Reported so the four populations above can be checked against the corpus rather than trusted.
+             */
+            uncovered?: number | null;
+            /**
+             * Any Coverage
+             * @description Verses reached by a rendering of any kind. The honest answer to 'can I read something here', which is a different question to 'is it translated'.
+             */
+            any_coverage?: number | null;
+            /**
+             * Translators
+             * @description Translators of this work's own English, scoped to the population `translated` counts. A name reaches this list only if it translated this corpus.
+             */
             translators?: string[];
+            /**
+             * Reused From Translators
+             * @description Translators whose rendering of another corpus is shown against verses of this one. Kept apart from `translators` because 'Griffith' beside a Samavedic `translated: 0` reads as a contradiction rather than as reuse.
+             */
+            reused_from_translators?: string[];
             /** @default SUPPORTED */
             status: components["schemas"]["KnowledgeStatus"];
             /** Caveats */
             caveats?: components["schemas"]["CaveatView"][];
         };
         /**
-         * TranslationView
-         * @description One aligned English translation.
+         * TranslationCoverageKind
+         * @description How a translation covers the verse it was asked about.
          *
-         *     ``quality_status`` is ``MACHINE_ALIGNED`` on all 17,283 of them: the alignment of a
+         *     The order is the reporting order and the values are deliberately not rankable: a
+         *     ``RANGE_TRANSLATION`` is not a worse ``DEDICATED_TRANSLATION``, it is a different claim
+         *     about what the translator aligned to.
+         * @enum {string}
+         */
+        TranslationCoverageKind: "DEDICATED_TRANSLATION" | "RANGE_TRANSLATION" | "CONTAINER_TRANSLATION" | "REUSED_RENDERING";
+        /**
+         * TranslationVedaItem
+         * @description Typed translation coverage for one corpus.
+         */
+        TranslationVedaItem: {
+            /** Veda */
+            veda: string;
+            /** Total Mantras */
+            total_mantras: number;
+            /** Dedicated English */
+            dedicated_english: number;
+            /** Range Covered */
+            range_covered: number;
+            /** Reused Rendering */
+            reused_rendering: number;
+            /** Non English */
+            non_english: number;
+            /** Uncovered */
+            uncovered: number;
+            /** Independent English */
+            independent_english: number;
+            /** Coverage Percentage */
+            coverage_percentage: number;
+            /** Has Own Dedicated English */
+            has_own_dedicated_english: boolean;
+            /** Notes */
+            notes: string;
+        };
+        /**
+         * TranslationView
+         * @description One aligned translation, and what kind of coverage it actually gives this verse.
+         *
+         *     ``quality_status`` is ``MACHINE_ALIGNED`` on all of them: the alignment of a
          *     public-domain translation to a canonical key was done by machine and never checked
          *     against the Sanskrit. A client must be able to see that rather than infer editorial
          *     care from the presence of a translator's name.
+         *
+         *     ``coverage_kind`` is the field that stops this model asserting something false, and it
+         *     is required rather than optional. Three shapes now reach a reader and only one of them
+         *     is a 1:1 rendering of the verse asked for: a ``RANGE_TRANSLATION`` is one print unit
+         *     over a span of verses, a ``REUSED_RENDERING`` is another corpus's published English on
+         *     text verified identical, and a non-English ``language`` is Griffith's Latin
+         *     substitution. Each was previously indistinguishable from a dedicated translation, and
+         *     the validators below refuse a payload that presents one as the other.
          */
         TranslationView: {
             /** Text */
@@ -5777,6 +6881,11 @@ export interface components {
              * @default en
              */
             language: string;
+            /**
+             * Language Name
+             * @description The language in words, e.g. 'Latin'. Present so a client need not carry an ISO table to avoid labelling a Latin rendering 'Translation'.
+             */
+            language_name?: string | null;
             /** Year */
             year?: number | null;
             /** Work Edition */
@@ -5788,6 +6897,61 @@ export interface components {
              * @description The unit the alignment claims, e.g. MANTRA.
              */
             alignment_level?: string | null;
+            /** @description How this translation covers the passage it was returned for: DEDICATED_TRANSLATION, RANGE_TRANSLATION, CONTAINER_TRANSLATION or REUSED_RENDERING. Never infer 1:1 alignment from the presence of a translation. */
+            coverage_kind: components["schemas"]["TranslationCoverageKind"];
+            /**
+             * Covers Canonical Keys
+             * @description Every canonical key this one rendering covers. A single-key list on a dedicated translation and the complete span on a range translation; never a partial span, which is refused.
+             */
+            covers_canonical_keys?: string[];
+            /**
+             * Anchor Canonical Key
+             * @description The passage the translation node is attached to. Differs from the passage requested when a range translation reaches it through its span.
+             */
+            anchor_canonical_key?: string | null;
+            /**
+             * Is This Passages Own
+             * @description False when the passage requested is inside a range anchored on another verse, so a client can render 'covered by' rather than 'translated as'.
+             * @default true
+             */
+            is_this_passages_own: boolean;
+            /**
+             * Source Unit
+             * @description The print unit the translator numbered, where it differs from this corpus's verse numbering.
+             */
+            source_unit?: string | null;
+            /**
+             * Independent Translation
+             * @description False for a reused rendering. A false here means the text must not be totalled into this corpus's own translated count, nor used as independent semantic evidence about this passage.
+             * @default true
+             */
+            independent_translation: boolean;
+            /**
+             * Reuse Kind
+             * @description REUSED_RENDERING, or null when the rendering is this translator's own work on this passage.
+             */
+            reuse_kind?: string | null;
+            /** Reused From Veda */
+            reused_from_veda?: string | null;
+            /** Reused From Passage Key */
+            reused_from_passage_key?: string | null;
+            /** Reused From Citation */
+            reused_from_citation?: string | null;
+            /**
+             * Reused From Translation Id
+             * @description The identity of the translation actually being shown, in the corpus it was published for.
+             */
+            reused_from_translation_id?: string | null;
+            /**
+             * Reuse Basis
+             * @description How the text equivalence was established.
+             */
+            reuse_basis?: string | null;
+            /**
+             * Disclosure
+             * @description The sentence a reader must be shown beside this translation. Non-null whenever the rendering is not a dedicated English translation of this verse, and a payload that omits it in that case is refused.
+             */
+            disclosure?: string | null;
             /** Rights Status */
             rights_status?: string | null;
             /** Source Id */
@@ -5881,6 +7045,13 @@ export interface components {
             playable_scope_count: number;
             /** Scope Type Counts */
             scope_type_counts?: {
+                [key: string]: number;
+            };
+            /**
+             * Source Counts
+             * @description Recordings per publisher, over the whole Veda rather than over the page of `tracks` returned. Present because a surface that derived this from `tracks` would be describing a sample as though it were the population, and one did: the Rigveda's recitation panel read its publishers off the first page of tracks and named the Cologne collection, which supplies 150 of its 10,552 recordings, as the source of the collection.
+             */
+            source_counts?: {
                 [key: string]: number;
             };
             data_status: components["schemas"]["KnowledgeStatus"];
@@ -8520,6 +9691,252 @@ export interface operations {
             };
         };
     };
+    devata_by_book_api_v1_insights_devatas__devata_id__by_book_get: {
+        parameters: {
+            query?: {
+                /** @description Which mention certainty tiers to count. */
+                certainty?: components["schemas"]["MentionCertainty"];
+                /** @description `deities` (default) refuses the 30 non-divine devata-slot ascriptions; `all_ascriptions` serves them with their structure and a not-a-deity caveat. */
+                population?: components["schemas"]["DeityPopulation"];
+            };
+            header?: never;
+            path: {
+                /** @description Product id of the deity, e.g. VG:DEVATA:INDRAH. */
+                devata_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DevataByBookResponse"];
+                };
+            };
+            /** @description The request is well-formed but unsupported. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description No such passage, entity or work. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description The record exists but this product holds no bytes for it. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description A parameter failed validation. */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description A third-party media source did not answer. */
+            502: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description The knowledge graph is unavailable. */
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+        };
+    };
+    devata_by_metre_api_v1_insights_devatas__devata_id__by_metre_get: {
+        parameters: {
+            query?: {
+                /** @description Which mention certainty tiers to count. */
+                certainty?: components["schemas"]["MentionCertainty"];
+                /** @description `deities` (default) refuses the 30 non-divine devata-slot ascriptions; `all_ascriptions` serves them with their structure and a not-a-deity caveat. */
+                population?: components["schemas"]["DeityPopulation"];
+            };
+            header?: never;
+            path: {
+                /** @description Product id of the deity, e.g. VG:DEVATA:INDRAH. */
+                devata_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DevataByMetreResponse"];
+                };
+            };
+            /** @description The request is well-formed but unsupported. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description No such passage, entity or work. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description The record exists but this product holds no bytes for it. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description A parameter failed validation. */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description A third-party media source did not answer. */
+            502: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description The knowledge graph is unavailable. */
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+        };
+    };
+    devata_dispersion_api_v1_insights_devatas__devata_id__dispersion_get: {
+        parameters: {
+            query?: {
+                /** @description Which mention certainty tiers to count. */
+                certainty?: components["schemas"]["MentionCertainty"];
+                /** @description `deities` (default) refuses the 30 non-divine devata-slot ascriptions; `all_ascriptions` serves them with their structure and a not-a-deity caveat. */
+                population?: components["schemas"]["DeityPopulation"];
+            };
+            header?: never;
+            path: {
+                /** @description Product id of the deity, e.g. VG:DEVATA:INDRAH. */
+                devata_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DevataDispersionResponse"];
+                };
+            };
+            /** @description The request is well-formed but unsupported. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description No such passage, entity or work. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description The record exists but this product holds no bytes for it. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description A parameter failed validation. */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description A third-party media source did not answer. */
+            502: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description The knowledge graph is unavailable. */
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+        };
+    };
     devata_insight_api_v1_insights_devatas__devata_id__get: {
         parameters: {
             query?: {
@@ -9092,6 +10509,80 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["CapabilitiesResponse"];
+                };
+            };
+            /** @description The request is well-formed but unsupported. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description No such passage, entity or work. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description The record exists but this product holds no bytes for it. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description A parameter failed validation. */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description A third-party media source did not answer. */
+            502: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description The knowledge graph is unavailable. */
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+        };
+    };
+    completeness_stats_api_v1_completeness_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CompletenessResponse"];
                 };
             };
             /** @description The request is well-formed but unsupported. */

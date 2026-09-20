@@ -1,0 +1,131 @@
+{
+  "artifact": "SAMAVEDA_MUSIC_002_BASELINE",
+  "at": "2026-09-18T17:16:37.785625+00:00",
+  "measured_live": true,
+  "head": {
+    "commit": "6e6ce43a64d4bcae63c6a99e0013489e72ae22bb",
+    "branch": "phase-data-completeness-v2",
+    "modified_tracked_files": 1,
+    "untracked_paths": 67
+  },
+  "graph": {
+    "nodes": 164601,
+    "relationships": 509769,
+    "label_count": 56,
+    "relationship_type_count": 81,
+    "sv_mantras": 1844,
+    "sv_text_versions_by_role": [
+      {
+        "role": "PRIMARY_TEXT",
+        "accented": false,
+        "c": 1844
+      },
+      {
+        "role": "SEARCH_DERIVATIVE",
+        "accented": false,
+        "c": 1844
+      }
+    ],
+    "sv_accented_text_versions": 0,
+    "labels_matching_melodic_vocabulary": [],
+    "MUSICALIZED_AS_present_in_type_store": false,
+    "staged_notation_keys_resolving_to_an_sv_mantra": 1136,
+    "staged_notation_keys": 1136
+  },
+  "registry": {
+    "audit_artifact": "data/staging/wave4/registry_closure_audit.json",
+    "audit_at": "2026-09-18T17:08:39.579084+00:00",
+    "entries": 85,
+    "closed": 80,
+    "execution_blockers": 4,
+    "counts": {
+      "ASK_FORMAL_REGRADE_BLOCKED_EXTERNAL_QUOTA": 1,
+      "BLOCKED_EXTERNAL_SOURCE_UNAVAILABLE": 7,
+      "CLOSED_DERIVED": 52,
+      "CLOSED_NOT_APPLICABLE": 2,
+      "CLOSED_SCOPE_DECISION": 14,
+      "CLOSED_VERIFIED_ZERO": 5,
+      "NEEDS_AUDIBLE_REVIEW": 3,
+      "STILL_IMPLEMENTATION_FIXABLE": 1
+    },
+    "implementation_fixable": 1,
+    "owner_decision_required": 0,
+    "not_terminated": [
+      "GAP-SAMAVEDA_MUSIC-002"
+    ],
+    "measurement_disagreements": 0,
+    "status_disagreements": 0,
+    "gap_002_status": "STILL_IMPLEMENTATION_FIXABLE",
+    "gap_002_closure_measure": "MATCH ()-[r:MUSICALIZED_AS]->() RETURN count(r)",
+    "gap_002_closure_measured_value": 0,
+    "gap_002_closure_test": "A melodic node label exists, MUSICALIZED_AS appears in db.relationshipTypes() with a non-zero count, and /api/v1/insights/capabilities no longer returns samavedic_melodic_layer as NOT_BUILT."
+  },
+  "notation_population": {
+    "domain_rows_total": 1471,
+    "by_layer": {
+      "ARCIKA_NOTATION": 1136,
+      "GANA_RENDERING": 332,
+      "GANA_PERFORMANCE_AT_ARCIKA_CONTAINER_SCOPE": 3
+    },
+    "arcika_notation_rows": 1136,
+    "arcika_notation_by_collection": {
+      "CHANDA": 471,
+      "ARANYA": 31,
+      "MAHANAMNYA": 3,
+      "UTTARA": 631
+    },
+    "withheld_unresolved_rows": 708,
+    "withheld_reason_classes": {
+      "NEAR_LINE_EXISTS_WITNESS_DISAGREEMENT": 599,
+      "NO_NEAR_LINE_PROBABLE_ABSENCE": 109
+    },
+    "rejected_non_notation_rows": 16,
+    "sv_verse_denominator": 1844,
+    "notation_plus_withheld": 1844,
+    "every_sv_verse_has_a_typed_disposition": true,
+    "rows_sha256": "c56169455380d625f8be58b83bf325def7086542efc6a18946f16b52c69f858d",
+    "manifest_rows_sha256": "c56169455380d625f8be58b83bf325def7086542efc6a18946f16b52c69f858d"
+  },
+  "gates": {
+    "definitions": {
+      "A": "STRUCTURAL -- schema, identity, subject grain, source refs, denominators",
+      "B": "SEMANTIC -- classification, population, source meaning, relation meaning",
+      "C": "ADVERSARIAL -- headline survived an independent falsification attempt"
+    },
+    "eligibility_rule": "Wave 3 eligibility requires A=PASS and B=PASS and C=PASS. No combined percentage: a strong A must not be allowed to carry a failed C. Four of four domains adversarially tested so far have failed C, and two of those four had every aggregate count survive.",
+    "A": {
+      "source": "scripts/validate_staging_artifact.py --graph, re-run live",
+      "result": "PASS",
+      "checks": 16,
+      "fatal": 0,
+      "every_check_at_full_coverage": true,
+      "recorded_in_wave3_eligibility": {
+        "status": "PASS",
+        "detail": "validator PASS at full evaluation coverage with --graph"
+      }
+    },
+    "B": {
+      "recorded_in_wave3_eligibility": {
+        "status": "UNKNOWN",
+        "detail": "no semantic review recorded"
+      },
+      "implementation_present_before_this_pass": false
+    },
+    "C": {
+      "recorded_in_wave3_eligibility": {
+        "status": "NOT_RUN",
+        "detail": "adversarial test not yet performed"
+      },
+      "implementation_present_before_this_pass": false,
+      "pre_existing_adversarial_sample": {
+        "name": "gana_rendering.adversarial_shortest_40",
+        "target": "the 40 shortest arcika verses carrying a gana rendering, where text containment is likeliest to match by accident",
+        "size": 40,
+        "defects": 0,
+        "population_it_covers": "GANA_RENDERING",
+        "covers_the_notation_population": false,
+        "independent_of_the_staging_codepath": false
+      }
+    }
+  }
+}

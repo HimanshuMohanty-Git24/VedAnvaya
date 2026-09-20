@@ -35,6 +35,7 @@ silently return nothing.
 from __future__ import annotations
 
 import logging
+import re
 import time
 from dataclasses import dataclass, field
 from typing import Any, Final
@@ -67,14 +68,30 @@ MATCH (p:Passage)
 WHERE p.canonical_key = $key OR p.canonical_citation = $key
 OPTIONAL MATCH (p)-[:HAS_TEXT_VERSION]->(tv:TextVersion)
     WHERE tv.text_role = 'PRIMARY_TEXT'
-OPTIONAL MATCH (p)-[:HAS_TRANSLATION]->(tr:Translation)
+// A verse inside a multi-verse print unit carries no HAS_TRANSLATION edge of its own, so
+// the union of the two patterns is what stops Ask reporting the 30 even verses of
+// RV 1.65-1.70 as untranslated while a rendering on the paired verse covers them.
+OPTIONAL MATCH (p)-[:HAS_TRANSLATION]->(own:Translation)
+OPTIONAL MATCH (anchor:Passage)-[:HAS_TRANSLATION]->(span:Translation)
+    WHERE span.alignment_level = 'MANTRA_RANGE'
+      AND p.canonical_key IN span.covers_canonical_keys
+      AND anchor.canonical_key <> p.canonical_key
+WITH p, tv, coalesce(own, span) AS tr, anchor
 RETURN p.canonical_key AS canonical_key,
        p.canonical_citation AS canonical_citation,
        p.veda AS veda,
        p.display_type AS display_type,
        head(collect(DISTINCT tv.text_nfc)) AS sanskrit,
        head(collect(DISTINCT tr.text)) AS translation,
-       head(collect(DISTINCT tr.translator)) AS translator
+       head(collect(DISTINCT tr.translator)) AS translator,
+       head(collect(DISTINCT tr.language)) AS translation_language,
+       head(collect(DISTINCT tr.alignment_level)) AS translation_alignment_level,
+       head(collect(DISTINCT tr.covers_canonical_keys)) AS translation_covers_canonical_keys,
+       head(collect(DISTINCT tr.reuse_kind)) AS translation_reuse_kind,
+       head(collect(DISTINCT tr.reused_from_veda)) AS translation_reused_from_veda,
+       head(collect(DISTINCT tr.reused_from_passage_key)) AS translation_reused_from_passage_key,
+       head(collect(DISTINCT tr.reused_from_citation)) AS translation_reused_from_citation,
+       head(collect(DISTINCT anchor.canonical_key)) AS translation_anchor_key
 LIMIT 1
 """
 
@@ -92,11 +109,21 @@ OPTIONAL MATCH (p)-[:HAS_TEXT_VERSION]->(tv:TextVersion)
 OPTIONAL MATCH (p)-[:HAS_TRANSLATION]->(tr:Translation)
 WITH p, r,
      head(collect(DISTINCT tv.text_nfc)) AS sanskrit,
-     head(collect(DISTINCT tr.text)) AS translation
+     head(collect(DISTINCT tr.text)) AS translation,
+     head(collect(DISTINCT tr.language)) AS translation_language,
+     head(collect(DISTINCT tr.reuse_kind)) AS translation_reuse_kind,
+     head(collect(DISTINCT tr.reused_from_veda)) AS translation_reused_from_veda,
+     head(collect(DISTINCT tr.reused_from_passage_key)) AS translation_reused_from_passage_key,
+     head(collect(DISTINCT tr.reused_from_citation)) AS translation_reused_from_citation,
+     head(collect(DISTINCT tr.alignment_level)) AS translation_alignment_level,
+     head(collect(DISTINCT tr.covers_canonical_keys)) AS translation_covers_canonical_keys
 RETURN p.canonical_key AS canonical_key,
        p.canonical_citation AS canonical_citation,
        p.veda AS veda,
        sanskrit, translation,
+       translation_language, translation_reuse_kind, translation_reused_from_veda,
+       translation_reused_from_passage_key, translation_reused_from_citation,
+       translation_alignment_level, translation_covers_canonical_keys,
        type(r) AS relation_type,
        r.referent_certainty AS certainty,
        r.attribution_precision AS attribution_precision
@@ -112,6 +139,13 @@ RETURN p.canonical_key AS canonical_key,
        p.canonical_citation AS canonical_citation,
        p.veda AS veda,
        tr.text AS translation,
+       tr.language AS translation_language,
+       tr.reuse_kind AS translation_reuse_kind,
+       tr.reused_from_veda AS translation_reused_from_veda,
+       tr.reused_from_passage_key AS translation_reused_from_passage_key,
+       tr.reused_from_citation AS translation_reused_from_citation,
+       tr.alignment_level AS translation_alignment_level,
+       tr.covers_canonical_keys AS translation_covers_canonical_keys,
        'TRANSLATION_MATCH' AS relation_type
 ORDER BY p.veda, p.canonical_key
 LIMIT $limit
@@ -271,11 +305,22 @@ _PARALLELS: Final = """
 MATCH (p:Passage {canonical_key: $canonical_key})-[r]-(other:Passage)
 WHERE type(r) IN $parallel_relations
 OPTIONAL MATCH (other)-[:HAS_TRANSLATION]->(tr:Translation)
-WITH other, r, head(collect(DISTINCT tr.text)) AS translation
+WITH other, r,
+     head(collect(DISTINCT tr.text)) AS translation,
+     head(collect(DISTINCT tr.language)) AS translation_language,
+     head(collect(DISTINCT tr.reuse_kind)) AS translation_reuse_kind,
+     head(collect(DISTINCT tr.reused_from_veda)) AS translation_reused_from_veda,
+     head(collect(DISTINCT tr.reused_from_passage_key)) AS translation_reused_from_passage_key,
+     head(collect(DISTINCT tr.reused_from_citation)) AS translation_reused_from_citation,
+     head(collect(DISTINCT tr.alignment_level)) AS translation_alignment_level,
+     head(collect(DISTINCT tr.covers_canonical_keys)) AS translation_covers_canonical_keys
 RETURN other.canonical_key AS canonical_key,
        other.canonical_citation AS canonical_citation,
        other.veda AS veda,
        translation,
+       translation_language, translation_reuse_kind, translation_reused_from_veda,
+       translation_reused_from_passage_key, translation_reused_from_citation,
+       translation_alignment_level, translation_covers_canonical_keys,
        type(r) AS relation_type
 ORDER BY other.veda, other.canonical_key
 LIMIT 8
@@ -322,6 +367,40 @@ RETURN m.metric_id AS metric_id,
        m.method AS method
 LIMIT 4
 """
+
+# ---------------------------------------------------------------------------
+# Material culture: the classes of entity no name resolves to
+# ---------------------------------------------------------------------------
+
+#: A planner topic, the frozen domain query that answers it, and that query's subject
+#: column. Routed *by name* through :meth:`Neo4jRepository.run_named` rather than retyped
+#: here, so Ask and ``/api/v1/insights/metals`` read the same rows under the same graded
+#: caveat. Re-typing ``metals_by_veda`` into this module would fork it from the version
+#: the 100-question benchmark measured, which is the whole reason the named library exists.
+MATERIAL_TOPIC_QUERIES: Final[dict[str, tuple[str, str]]] = {
+    "metals": ("metals_by_veda", "metal"),
+    "crops": ("crops_by_veda", "crop"),
+    "animals": ("animals_by_veda", "animal"),
+}
+
+# ---------------------------------------------------------------------------
+# Samavedic citation disambiguation
+# ---------------------------------------------------------------------------
+
+#: The four sections of the modelled Kauthuma arcika, in the order the graph holds them.
+#: Every one of the 1,844 Samavedic mantras is cited through one of these, so a bare
+#: ``SV 1.1`` matches no ``canonical_citation`` whatsoever. Left at that, the packet is
+#: empty -- and the graded failure this guards against is precisely a model reading an
+#: empty packet as proof that a verse the graph stores does not exist. Trying the sections
+#: by name turns "nothing found" into "here are the loci that citation could mean".
+#:
+#: These are structural divisions of the arcika. They are NOT the gana corpus, which this
+#: graph does not hold, and an ``SV ARANYA`` locus is arcika verse text rather than an
+#: Aranyaka-genre text or an Aranyaka-gana section.
+SV_ARCIKA_SECTIONS: Final[tuple[str, ...]] = ("ARANYA", "UTTARA", "CHANDA", "MAHANAMNYA")
+
+#: A Samavedic citation with no section named: "SV" then digits only.
+_BARE_SV_LOCUS: Final = re.compile(r"^SV\s+(?P<locus>[\d.]+)$")
 
 #: Which relations answer "named here" versus "dedicated to". Kept as named sets so a
 #: channel cannot accidentally union them.
@@ -375,6 +454,8 @@ class RetrievalResult:
     interpretive_claims: list[dict[str, Any]] = field(default_factory=list)
     derived_metrics: list[dict[str, Any]] = field(default_factory=list)
     lexical: LexicalPresence | None = None
+    material_culture: list[dict[str, Any]] = field(default_factory=list)
+    """Rows from a frozen material-culture query, each tagged with its topic and subject."""
     retrieval_ms: float = 0.0
 
     def note(self, channel: str, rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
@@ -397,6 +478,32 @@ def _relations_for(entity_type: str) -> tuple[str, ...]:
     return CONCEPT_RELATIONS
 
 
+def _sv_section_candidates(
+    passage_key: str, repository: Neo4jRepository, result: RetrievalResult
+) -> list[dict[str, Any]]:
+    """Every arcika section a bare Samavedic locus could have meant.
+
+    Returns ``[]`` for anything that is not a sectionless ``SV`` citation, so the cost is
+    one regex for every other corpus. See :data:`SV_ARCIKA_SECTIONS` for why this exists:
+    the alternative is an empty packet, which this product has already once let a model
+    read as proof that a stored verse does not exist.
+    """
+    match = _BARE_SV_LOCUS.match(passage_key.strip().upper())
+    if match is None:
+        return []
+    locus = match.group("locus")
+    found: list[dict[str, Any]] = []
+    for section in SV_ARCIKA_SECTIONS:
+        rows = repository.run(_PASSAGE_BY_KEY, key=f"SV {section} {locus}")
+        for row in rows:
+            # Carried so the evidence item can say the citation as asked was incomplete,
+            # rather than presenting one section's verse as though it had been named.
+            row["_ambiguous_citation"] = passage_key
+        found.extend(rows)
+    result.note("sv_section_disambiguation", found)
+    return found
+
+
 def retrieve(
     plan: QueryPlan,
     resolved_entities: list[ResolvedEntity],
@@ -413,9 +520,17 @@ def retrieve(
     focus_key: str | None = None
     if plan.passage_key:
         rows = result.note("passage_by_key", repository.run(_PASSAGE_BY_KEY, key=plan.passage_key))
-        result.passages.extend(rows)
         if rows:
             focus_key = str(rows[0]["canonical_key"])
+        else:
+            rows = _sv_section_candidates(plan.passage_key, repository, result)
+            # Only one surviving candidate is an unambiguous hit, so it may anchor the
+            # parallel and formula channels. Several are a disambiguation offered to the
+            # reader, and picking one of them to build further evidence from would be
+            # guessing which verse was meant.
+            if len(rows) == 1:
+                focus_key = str(rows[0]["canonical_key"])
+        result.passages.extend(rows)
 
     if focus_key:
         result.parallels.extend(
@@ -532,6 +647,21 @@ def retrieve(
         term = fold_query_name(plan.lexical_terms[0])
         rows = result.note("lexical_presence", repository.run(_LEXICAL_PRESENCE, term=term))
         result.lexical = LexicalPresence(term=plan.lexical_terms[0], rows=rows)
+
+    # -- material culture ---------------------------------------------------
+    # A class of entity rather than a named one, so entity resolution cannot reach it.
+    # Run by query name: see MATERIAL_TOPIC_QUERIES.
+    if "materials" in channels:
+        for topic in plan.material_topics:
+            query_name, subject_column = MATERIAL_TOPIC_QUERIES.get(topic, ("", ""))
+            if not query_name:
+                continue
+            rows = repository.run_named(query_name)
+            for row in rows:
+                row["_topic"] = topic
+                row["_query_name"] = query_name
+                row["_subject"] = row.get(subject_column)
+            result.material_culture.extend(result.note("materials", rows))
 
     # -- free-text fallback -------------------------------------------------
     if "search" in channels and plan.search_term and len(result.passages) < 3:

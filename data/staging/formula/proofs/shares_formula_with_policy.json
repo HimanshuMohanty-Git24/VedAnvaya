@@ -1,0 +1,96 @@
+{
+ "gap": "GAP-FORMULA-001",
+ "closure_test": "either SHARES_FORMULA_WITH carries edges under a declared selectivity policy with a stated ranking key, or the type is removed from the schema",
+ "first_finding": "the absence is deliberate and already documented in code. vedagraph.enrich.predicates.UNPOPULATED_BY_DESIGN names SHARES_FORMULA_WITH and gives the reason: the USES_FORMULA hub carries the fact in two hops, and materialising it would add 87,296 edges in place of 27,511. The gap registry's 'designed and never populated' is therefore true of the data and not of the intent.",
+ "second_finding": {
+  "claim_checked": "87,296 edges",
+  "reproduced": 87296,
+  "but": "87,296 is the sum over formulas of C(n,2) -- a passage pair counted once per formula it shares. As EDGES, a pair is one edge however many formulas it shares, and the distinct-pair count is 53167. The stated cost of materialising was 64% too high."
+ },
+ "policy": {
+  "name": "formula-sharing-idf-topk-v1",
+  "min_shared_formulas": 2,
+  "top_k_per_passage_per_veda": 3,
+  "cut": "both-sided intersection",
+  "ranking_key": "distinctiveness = sum over shared formulas of ln(20210 / mantra_df(formula))"
+ },
+ "why_this_ranking_key": "it follows the precedent the registry names: SHARES_ENTITY_VOCABULARY_WITH is materialised at 2,141 edges and ships distinctiveness as its ranking key. Its distinctiveness is an IDF sum over shared registry entities; this is an IDF sum over shared formulas, on the same scale, so the two layers do not disagree about what distinctive means.",
+ "selectivity_grid_measured_before_choosing": {
+  "min_shared=1,K=1": {
+   "edges": 6000,
+   "passages_reached": 7355
+  },
+  "min_shared=1,K=2": {
+   "edges": 12575,
+   "passages_reached": 8954
+  },
+  "min_shared=1,K=3": {
+   "edges": 17086,
+   "passages_reached": 9528
+  },
+  "min_shared=1,K=5": {
+   "edges": 23204,
+   "passages_reached": 9952
+  },
+  "min_shared=2,K=1": {
+   "edges": 3051,
+   "passages_reached": 3876
+  },
+  "min_shared=2,K=2": {
+   "edges": 5070,
+   "passages_reached": 4297
+  },
+  "min_shared=2,K=3": {
+   "edges": 6148,
+   "passages_reached": 4491
+  },
+  "min_shared=2,K=5": {
+   "edges": 7640,
+   "passages_reached": 4673
+  },
+  "min_shared=3,K=1": {
+   "edges": 1578,
+   "passages_reached": 2022
+  },
+  "min_shared=3,K=2": {
+   "edges": 2428,
+   "passages_reached": 2191
+  },
+  "min_shared=3,K=3": {
+   "edges": 2838,
+   "passages_reached": 2281
+  },
+  "min_shared=3,K=5": {
+   "edges": 3415,
+   "passages_reached": 2379
+  }
+ },
+ "chosen": {
+  "edges": 6148,
+  "passages_reached": 4491,
+  "by_veda_pair": {
+   "RV-SV": 1050,
+   "AV-RV": 1043,
+   "RV-RV": 988,
+   "AV-AV": 854,
+   "RV-YV": 555,
+   "AV-SV": 395,
+   "AV-YV": 374,
+   "YV-YV": 369,
+   "SV-SV": 300,
+   "SV-YV": 220
+  }
+ },
+ "what_it_costs": {
+  "pairs_sharing_exactly_one_formula_excluded": 33401,
+  "pairs_cut_by_the_top_k": 13618,
+  "passages_with_any_formula_sharing": 10574,
+  "passages_the_policy_reaches": 4491,
+  "the_honest_framing": "the other 6,083 passages keep every fact they had: the edge is an index over USES_FORMULA, not a new fact, and the two-hop traversal is unchanged. A materialised edge that covered all 53,167 pairs would defeat the hub it indexes."
+ },
+ "how_much_is_new_information": {
+  "kept_pairs_already_joined_by_a_parallel_or_identity_edge": 2603,
+  "share": 0.423,
+  "reading": "58% of the kept pairs share distinctive phraseology WITHOUT being a textual parallel, which is exactly the population the edge exists to make findable."
+ }
+}

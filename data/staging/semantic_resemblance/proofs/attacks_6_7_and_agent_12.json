@@ -1,0 +1,139 @@
+{
+ "attack_6_near_duplicate": {
+  "gold_pairs": 324,
+  "gold_pairs_already_reachable_by_an_existing_predicate": {
+   "existing_textual_parallel": 27,
+   "identical_sanskrit_surface": 27,
+   "shared_formula": 75,
+   "in_agent_12_relations": 42,
+   "lexical_cosine_at_or_above_0.20": 67,
+   "any_of_the_above": 87
+  },
+  "accepted_at_threshold_before_novelty_filter": 133,
+  "of_those_already_reachable": 69,
+  "of_those_novel": 64,
+  "share_novel": 0.4812,
+  "labels_of_the_already_reachable_accepted": {
+   "SAME_TOPIC_DIFFERENT_CLAIM": 20,
+   "SAME_CONTENT": 41,
+   "UNRELATED": 7,
+   "SHARED_PHRASING_ONLY": 1
+  },
+  "labels_of_the_novel_accepted": {
+   "UNRELATED": 12,
+   "SAME_TOPIC_DIFFERENT_CLAIM": 48,
+   "SHARED_PHRASING_ONLY": 1,
+   "SAME_CONTENT": 3
+  }
+ },
+ "attack_7_cross_veda_reuse": {
+  "AV": {
+   "gold_pairs": 76,
+   "positive_rate": 0.6579,
+   "auc": 0.7577,
+   "already_a_textual_parallel": 0,
+   "in_agent_12_relations": 15,
+   "novel": 43
+  },
+  "AV-RV": {
+   "gold_pairs": 85,
+   "positive_rate": 0.4706,
+   "auc": 0.8417,
+   "already_a_textual_parallel": 17,
+   "in_agent_12_relations": 17,
+   "novel": 62
+  },
+  "AV-SV": {
+   "gold_pairs": 5,
+   "positive_rate": 0.8,
+   "auc": 1.0,
+   "already_a_textual_parallel": 1,
+   "in_agent_12_relations": 1,
+   "novel": 3
+  },
+  "AV-YV": {
+   "gold_pairs": 17,
+   "positive_rate": 0.3529,
+   "auc": 0.8182,
+   "already_a_textual_parallel": 1,
+   "in_agent_12_relations": 1,
+   "novel": 13
+  },
+  "RV": {
+   "gold_pairs": 118,
+   "positive_rate": 0.6186,
+   "auc": 0.7778,
+   "already_a_textual_parallel": 2,
+   "in_agent_12_relations": 2,
+   "novel": 104
+  },
+  "RV-SV": {
+   "gold_pairs": 12,
+   "positive_rate": 0.75,
+   "auc": 0.9259,
+   "already_a_textual_parallel": 5,
+   "in_agent_12_relations": 5,
+   "novel": 3
+  },
+  "RV-YV": {
+   "gold_pairs": 11,
+   "positive_rate": 0.5455,
+   "auc": 0.6,
+   "already_a_textual_parallel": 1,
+   "in_agent_12_relations": 1,
+   "novel": 9
+  },
+  "pool_composition_at_threshold": {
+   "AV": {
+    "pool_pairs": 148451,
+    "at_or_above_threshold": 38290
+   },
+   "AV-RV": {
+    "pool_pairs": 185565,
+    "at_or_above_threshold": 46518
+   },
+   "AV-SV": {
+    "pool_pairs": 28907,
+    "at_or_above_threshold": 11877
+   },
+   "AV-YV": {
+    "pool_pairs": 52297,
+    "at_or_above_threshold": 17075
+   },
+   "RV": {
+    "pool_pairs": 525038,
+    "at_or_above_threshold": 174858
+   },
+   "RV-SV": {
+    "pool_pairs": 49714,
+    "at_or_above_threshold": 22845
+   },
+   "RV-YV": {
+    "pool_pairs": 90172,
+    "at_or_above_threshold": 24695
+   },
+   "SV": {
+    "pool_pairs": 11553,
+    "at_or_above_threshold": 6519
+   },
+   "SV-YV": {
+    "pool_pairs": 14062,
+    "at_or_above_threshold": 7458
+   },
+   "YV": {
+    "pool_pairs": 27552,
+    "at_or_above_threshold": 12193
+   }
+  }
+ },
+ "correlation_with_agent_12": {
+  "agent_12_staged_relations": 6139,
+  "of_them_present_in_my_candidate_pool": 6139,
+  "share_of_agent_12_my_pool_reaches": 1.0,
+  "pearson_on_that_intersection": 0.2588,
+  "spearman_on_that_intersection": 0.3432,
+  "gold_overlap_pairs": 42,
+  "pearson_on_gold_overlap": 0.2746,
+  "note": "agent 12's similarity is a textual comparator; a low correlation is the result this layer needs, because a high one would mean it is re-deriving their measurement under a semantic name"
+ }
+}

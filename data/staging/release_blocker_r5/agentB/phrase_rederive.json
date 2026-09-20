@@ -1,0 +1,468 @@
+{
+  "independent_phrase_hits": {
+    "VG:CONCEPT:MADHYANDINA-SAVANA-MIDDAY-PRESSING": [
+      [
+        "VG:AV:SAU:K07:S076:V006",
+        "mādhyandine savana"
+      ],
+      [
+        "VG:AV:SAU:K20:S012:V007",
+        "mādhyadine savane"
+      ],
+      [
+        "VG:RV:SAK:M03:S028:V004",
+        "mādhyadine savane"
+      ],
+      [
+        "VG:RV:SAK:M03:S032:V003",
+        "mādhyadine savane"
+      ],
+      [
+        "VG:RV:SAK:M05:S040:V004",
+        "mādhyadine savane"
+      ]
+    ],
+    "VG:CONCEPT:TRTIYA-SAVANA-THIRD-PRESSING": [
+      [
+        "VG:AV:SAU:K06:S047:V003",
+        "ttīya savana"
+      ],
+      [
+        "VG:AV:SAU:K09:S001:V013",
+        "ttīye savana"
+      ],
+      [
+        "VG:RV:SAK:M03:S028:V005",
+        "ttīye savane"
+      ],
+      [
+        "VG:RV:SAK:M04:S034:V004",
+        "ttīya savanam"
+      ],
+      [
+        "VG:RV:SAK:M04:S035:V009",
+        "ttīya savana"
+      ],
+      [
+        "VG:RV:SAK:M08:S057:V001",
+        "ttīya savanam"
+      ]
+    ]
+  },
+  "counts": {
+    "VG:CONCEPT:MADHYANDINA-SAVANA-MIDDAY-PRESSING": 5,
+    "VG:CONCEPT:TRTIYA-SAVANA-THIRD-PRESSING": 6
+  },
+  "live_mentions_for_these_entities": [
+    {
+      "k": "VG:AV:SAU:K07:S076:V006",
+      "e": "VG:CONCEPT:MADHYANDINA-SAVANA-MIDDAY-PRESSING",
+      "path": null,
+      "paths": null,
+      "score": 0.9,
+      "ali": [
+        "mādhyandine"
+      ],
+      "rk": [
+        "grade_basis",
+        "build_pass",
+        "evidence_count",
+        "evidence_basis",
+        "run_id",
+        "method",
+        "pipeline_version",
+        "score",
+        "state",
+        "trust",
+        "evidence",
+        "mention_id",
+        "matched_aliases",
+        "alias_count",
+        "theonym_ambiguous",
+        "domain_model_version",
+        "knowledge_layer",
+        "quality_tier",
+        "attribution_precision"
+      ]
+    },
+    {
+      "k": "VG:AV:SAU:K20:S012:V007",
+      "e": "VG:CONCEPT:MADHYANDINA-SAVANA-MIDDAY-PRESSING",
+      "path": null,
+      "paths": null,
+      "score": 0.9,
+      "ali": [
+        "mādhyaṃdine"
+      ],
+      "rk": [
+        "grade_basis",
+        "build_pass",
+        "evidence_count",
+        "evidence_basis",
+        "run_id",
+        "method",
+        "pipeline_version",
+        "score",
+        "state",
+        "trust",
+        "evidence",
+        "mention_id",
+        "matched_aliases",
+        "alias_count",
+        "theonym_ambiguous",
+        "domain_model_version",
+        "knowledge_layer",
+        "quality_tier",
+        "attribution_precision"
+      ]
+    },
+    {
+      "k": "VG:RV:SAK:M03:S028:V004",
+      "e": "VG:CONCEPT:MADHYANDINA-SAVANA-MIDDAY-PRESSING",
+      "path": null,
+      "paths": null,
+      "score": 0.9,
+      "ali": [
+        "mādhyaṃdine"
+      ],
+      "rk": [
+        "grade_basis",
+        "build_pass",
+        "evidence_count",
+        "evidence_basis",
+        "run_id",
+        "method",
+        "pipeline_version",
+        "score",
+        "state",
+        "trust",
+        "evidence",
+        "mention_id",
+        "matched_aliases",
+        "alias_count",
+        "theonym_ambiguous",
+        "domain_model_version",
+        "knowledge_layer",
+        "quality_tier",
+        "attribution_precision"
+      ]
+    },
+    {
+      "k": "VG:RV:SAK:M03:S032:V003",
+      "e": "VG:CONCEPT:MADHYANDINA-SAVANA-MIDDAY-PRESSING",
+      "path": null,
+      "paths": null,
+      "score": 0.9,
+      "ali": [
+        "mādhyaṃdine"
+      ],
+      "rk": [
+        "grade_basis",
+        "build_pass",
+        "evidence_count",
+        "evidence_basis",
+        "run_id",
+        "method",
+        "pipeline_version",
+        "score",
+        "state",
+        "trust",
+        "evidence",
+        "mention_id",
+        "matched_aliases",
+        "alias_count",
+        "theonym_ambiguous",
+        "domain_model_version",
+        "knowledge_layer",
+        "quality_tier",
+        "attribution_precision"
+      ]
+    },
+    {
+      "k": "VG:RV:SAK:M05:S040:V004",
+      "e": "VG:CONCEPT:MADHYANDINA-SAVANA-MIDDAY-PRESSING",
+      "path": null,
+      "paths": null,
+      "score": 0.9,
+      "ali": [
+        "mādhyaṃdine"
+      ],
+      "rk": [
+        "grade_basis",
+        "build_pass",
+        "evidence_count",
+        "evidence_basis",
+        "run_id",
+        "method",
+        "pipeline_version",
+        "score",
+        "state",
+        "trust",
+        "evidence",
+        "mention_id",
+        "matched_aliases",
+        "alias_count",
+        "theonym_ambiguous",
+        "domain_model_version",
+        "knowledge_layer",
+        "quality_tier",
+        "attribution_precision"
+      ]
+    },
+    {
+      "k": "VG:RV:SAK:M06:S047:V006",
+      "e": "VG:CONCEPT:MADHYANDINA-SAVANA-MIDDAY-PRESSING",
+      "path": null,
+      "paths": null,
+      "score": 0.9,
+      "ali": [
+        "mādhyaṃdine"
+      ],
+      "rk": [
+        "grade_basis",
+        "build_pass",
+        "evidence_count",
+        "evidence_basis",
+        "run_id",
+        "method",
+        "pipeline_version",
+        "score",
+        "state",
+        "trust",
+        "evidence",
+        "mention_id",
+        "matched_aliases",
+        "alias_count",
+        "theonym_ambiguous",
+        "domain_model_version",
+        "knowledge_layer",
+        "quality_tier",
+        "attribution_precision"
+      ]
+    },
+    {
+      "k": "VG:YV:VSM:A19:V026",
+      "e": "VG:CONCEPT:MADHYANDINA-SAVANA-MIDDAY-PRESSING",
+      "path": null,
+      "paths": null,
+      "score": 0.9,
+      "ali": [
+        "mādhyaṃndinam"
+      ],
+      "rk": [
+        "grade_basis",
+        "build_pass",
+        "evidence_count",
+        "evidence_basis",
+        "run_id",
+        "method",
+        "pipeline_version",
+        "score",
+        "state",
+        "trust",
+        "evidence",
+        "mention_id",
+        "matched_aliases",
+        "alias_count",
+        "theonym_ambiguous",
+        "domain_model_version",
+        "knowledge_layer",
+        "quality_tier",
+        "attribution_precision"
+      ]
+    },
+    {
+      "k": "VG:AV:SAU:K06:S047:V003",
+      "e": "VG:CONCEPT:TRTIYA-SAVANA-THIRD-PRESSING",
+      "path": null,
+      "paths": [
+        "sanskrit-phrase"
+      ],
+      "score": 0.95,
+      "ali": [
+        "tṛtīyaṃ savanaṃ"
+      ],
+      "rk": [
+        "r5_contract",
+        "evidence_basis",
+        "knowledge_layer",
+        "theonym_ambiguous",
+        "method",
+        "attribution_precision",
+        "alias_count",
+        "quality_tier",
+        "grade_basis",
+        "matched_aliases",
+        "quote",
+        "paths",
+        "score"
+      ]
+    },
+    {
+      "k": "VG:AV:SAU:K09:S001:V013",
+      "e": "VG:CONCEPT:TRTIYA-SAVANA-THIRD-PRESSING",
+      "path": null,
+      "paths": [
+        "sanskrit-phrase"
+      ],
+      "score": 0.95,
+      "ali": [
+        "tṛtīye savana"
+      ],
+      "rk": [
+        "r5_contract",
+        "evidence_basis",
+        "knowledge_layer",
+        "theonym_ambiguous",
+        "method",
+        "attribution_precision",
+        "alias_count",
+        "quality_tier",
+        "grade_basis",
+        "matched_aliases",
+        "quote",
+        "paths",
+        "score"
+      ]
+    },
+    {
+      "k": "VG:RV:SAK:M03:S028:V005",
+      "e": "VG:CONCEPT:TRTIYA-SAVANA-THIRD-PRESSING",
+      "path": null,
+      "paths": [
+        "sanskrit-phrase"
+      ],
+      "score": 0.95,
+      "ali": [
+        "tṛtīye savane"
+      ],
+      "rk": [
+        "r5_contract",
+        "evidence_basis",
+        "knowledge_layer",
+        "theonym_ambiguous",
+        "method",
+        "attribution_precision",
+        "alias_count",
+        "quality_tier",
+        "grade_basis",
+        "matched_aliases",
+        "quote",
+        "paths",
+        "score"
+      ]
+    },
+    {
+      "k": "VG:RV:SAK:M04:S034:V004",
+      "e": "VG:CONCEPT:TRTIYA-SAVANA-THIRD-PRESSING",
+      "path": null,
+      "paths": [
+        "sanskrit-phrase"
+      ],
+      "score": 0.95,
+      "ali": [
+        "tṛtīyaṃ savanam"
+      ],
+      "rk": [
+        "r5_contract",
+        "evidence_basis",
+        "knowledge_layer",
+        "theonym_ambiguous",
+        "method",
+        "attribution_precision",
+        "alias_count",
+        "quality_tier",
+        "grade_basis",
+        "matched_aliases",
+        "quote",
+        "paths",
+        "score"
+      ]
+    },
+    {
+      "k": "VG:RV:SAK:M04:S035:V009",
+      "e": "VG:CONCEPT:TRTIYA-SAVANA-THIRD-PRESSING",
+      "path": null,
+      "paths": [
+        "sanskrit-phrase"
+      ],
+      "score": 0.95,
+      "ali": [
+        "tṛtīyaṃ savanaṃ"
+      ],
+      "rk": [
+        "r5_contract",
+        "evidence_basis",
+        "knowledge_layer",
+        "theonym_ambiguous",
+        "method",
+        "attribution_precision",
+        "alias_count",
+        "quality_tier",
+        "grade_basis",
+        "matched_aliases",
+        "quote",
+        "paths",
+        "score"
+      ]
+    },
+    {
+      "k": "VG:RV:SAK:M08:S057:V001",
+      "e": "VG:CONCEPT:TRTIYA-SAVANA-THIRD-PRESSING",
+      "path": null,
+      "paths": [
+        "sanskrit-phrase"
+      ],
+      "score": 0.95,
+      "ali": [
+        "tṛtīyaṃ savanam"
+      ],
+      "rk": [
+        "r5_contract",
+        "evidence_basis",
+        "knowledge_layer",
+        "theonym_ambiguous",
+        "method",
+        "attribution_precision",
+        "alias_count",
+        "quality_tier",
+        "grade_basis",
+        "matched_aliases",
+        "quote",
+        "paths",
+        "score"
+      ]
+    },
+    {
+      "k": "VG:YV:VSM:A19:V026",
+      "e": "VG:CONCEPT:TRTIYA-SAVANA-THIRD-PRESSING",
+      "path": null,
+      "paths": null,
+      "score": 0.9,
+      "ali": [
+        "tṛtīyamāptaṃṃ"
+      ],
+      "rk": [
+        "grade_basis",
+        "build_pass",
+        "evidence_count",
+        "evidence_basis",
+        "run_id",
+        "method",
+        "pipeline_version",
+        "score",
+        "state",
+        "trust",
+        "evidence",
+        "mention_id",
+        "matched_aliases",
+        "alias_count",
+        "theonym_ambiguous",
+        "domain_model_version",
+        "knowledge_layer",
+        "quality_tier",
+        "attribution_precision"
+      ]
+    }
+  ]
+}

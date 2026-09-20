@@ -1,0 +1,419 @@
+{
+  "artifact": "AGENT_3_PROPOSED_MUTATIONS",
+  "agent": "AGENT_3_MORPHOLOGY_SEMANTICS",
+  "at": "2026-09-16T18:49:18.197929+00:00",
+  "write_access_taken": "NONE -- every measurement was MATCH/RETURN only",
+  "baseline": {
+    "head": "b4b1b0beba1c499e832150b0b9363d7258e40a26",
+    "nodes": 117970,
+    "relationships": 282389,
+    "core_total": 20210
+  },
+  "ordering": [
+    "A3_TEXT_VERSION_SEARCH_DERIVATIVE",
+    "A3_TEXT_VERSION_YV_UNACCENTED_DERIVED",
+    "A3_MENTIONS_LEMMA_PROJECTION",
+    "A3_DOMAIN_ENTITY_DOMAIN",
+    "A3_LEXICAL_NONRESOLUTION_TYPED",
+    "A3_SEMANTIC_ASSERTION_NODES",
+    "A3_SEMANTIC_ASSERTION_WITHHELD",
+    "A3_ASSERTION_ROLE_REANCHOR"
+  ],
+  "groups": [
+    {
+      "group_id": "A3_TEXT_VERSION_SEARCH_DERIVATIVE",
+      "gap": "GAP-MORPHOLOGY-006",
+      "operation": "CREATE",
+      "kind": "NODE",
+      "label": "TextVersion",
+      "extra_labels": [
+        "Internal"
+      ],
+      "match_key": "text_id",
+      "source_artifact": "text_versions_search_derivative.jsonl",
+      "parameters_from": "data/staging/final_closure_sprint/agent3/text_versions_search_derivative.jsonl",
+      "cypher": [
+        "UNWIND $rows AS row\nMATCH (m:Mantra {canonical_key: row.canonical_key})\nMERGE (t:TextVersion {text_id: row.text_id})\n  ON CREATE SET t:Internal,\n                t.passage_id = m.entity_id,\n                t.text_version_id = row.text_version_id,\n                t.text_role = row.text_role,\n                t.language = row.language,\n                t.script = row.script,\n                t.text_form = row.text_form,\n                t.text_nfc = row.text_nfc,\n                t.text_original = row.text_original,\n                t.accented = row.accented,\n                t.content_sha256 = row.content_sha256,\n                t.source_id = row.source_id,\n                t.source_artifact_id = row.source_artifact_id,\n                t.source_locator = row.source_locator,\n                t.rights_status = row.rights_status,\n                t.derived_from_text_version_id = row.derived_from_text_version_id,\n                t.derivation_steps = row.derivation_steps,\n                t.provenance = row.provenance,\n                t.provenance_note = row.provenance_note\nMERGE (m)-[:HAS_TEXT_VERSION]->(t)"
+      ],
+      "preflight": "UNWIND $rows AS row\nWITH collect(DISTINCT row.canonical_key) AS keys\nUNWIND keys AS k0\nOPTIONAL MATCH (n:Mantra {canonical_key: k0})\nWITH k0 WHERE n IS NULL\nRETURN count(*) AS unresolved_endpoints",
+      "artifact_lines": 14371,
+      "rows": 14371,
+      "elements_written": {
+        "nodes": 14371,
+        "relationships": 14371
+      },
+      "expected_delta": {
+        "nodes": 14371,
+        "relationships": 14371
+      },
+      "nodes_delta": 14371,
+      "relationships_delta": 14371,
+      "attached_by": "(:Mantra {canonical_key})-[:HAS_TEXT_VERSION]->(:TextVersion {text_id})",
+      "notes": "RV 10,552 + SV 1,844 + YV 1,975. The Atharvaveda's existing 5,839 are untouched; post-import the SEARCH_DERIVATIVE population is 20,210 over 4 works."
+    },
+    {
+      "group_id": "A3_TEXT_VERSION_YV_UNACCENTED_DERIVED",
+      "gap": "GAP-MORPHOLOGY-006",
+      "operation": "CREATE",
+      "kind": "NODE",
+      "label": "TextVersion",
+      "extra_labels": [
+        "Internal"
+      ],
+      "match_key": "text_id",
+      "source_artifact": "text_versions_yv_unaccented_derived.jsonl",
+      "parameters_from": "data/staging/final_closure_sprint/agent3/text_versions_yv_unaccented_derived.jsonl",
+      "cypher": [
+        "UNWIND $rows AS row\nMATCH (m:Mantra {canonical_key: row.canonical_key})\nMERGE (t:TextVersion {text_id: row.text_id})\n  ON CREATE SET t:Internal,\n                t.passage_id = m.entity_id,\n                t.text_version_id = row.text_version_id,\n                t.text_role = row.text_role,\n                t.language = row.language,\n                t.script = row.script,\n                t.text_form = row.text_form,\n                t.text_nfc = row.text_nfc,\n                t.text_original = row.text_original,\n                t.accented = row.accented,\n                t.content_sha256 = row.content_sha256,\n                t.source_id = row.source_id,\n                t.source_artifact_id = row.source_artifact_id,\n                t.source_locator = row.source_locator,\n                t.rights_status = row.rights_status,\n                t.derived_from_text_version_id = row.derived_from_text_version_id,\n                t.derivation_steps = row.derivation_steps,\n                t.accent_source = row.accent_source,\n                t.accent_source_note = row.accent_source_note,\n                t.provenance = row.provenance\nMERGE (m)-[:HAS_TEXT_VERSION]->(t)"
+      ],
+      "preflight": "UNWIND $rows AS row\nWITH collect(DISTINCT row.canonical_key) AS keys\nUNWIND keys AS k0\nOPTIONAL MATCH (n:Mantra {canonical_key: k0})\nWITH k0 WHERE n IS NULL\nRETURN count(*) AS unresolved_endpoints",
+      "artifact_lines": 139,
+      "rows": 139,
+      "elements_written": {
+        "nodes": 139,
+        "relationships": 139
+      },
+      "expected_delta": {
+        "nodes": 139,
+        "relationships": 139
+      },
+      "nodes_delta": 139,
+      "relationships_delta": 139,
+      "attached_by": "(:Mantra {canonical_key})-[:HAS_TEXT_VERSION]->(:TextVersion {text_id})",
+      "notes": "The 139 Yajurvedic mantras the Wikisource unaccented witness does not cover. accent_source=DERIVED_ACCENT_STRIPPED on every row: this is our transform, not a second edition."
+    },
+    {
+      "group_id": "A3_MENTIONS_LEMMA_PROJECTION",
+      "gap": "GAP-MORPHOLOGY-001",
+      "operation": "MERGE",
+      "kind": "RELATIONSHIP",
+      "type": "MENTIONS_LEMMA",
+      "start": "(:Mantra {canonical_key})",
+      "end": "(:Lemma {lemma})",
+      "match_key": [
+        "canonical_key",
+        "lemma"
+      ],
+      "source_artifact": "mentions_lemma_projection.jsonl",
+      "parameters_from": "data/staging/final_closure_sprint/agent3/mentions_lemma_projection.jsonl",
+      "cypher": [
+        "UNWIND $rows AS row\nMATCH (m:Mantra {canonical_key: row.canonical_key})\nMATCH (l:Lemma {lemma: row.lemma})\nMERGE (m)-[e:MENTIONS_LEMMA]->(l)\n  ON CREATE SET e.occurrence_count = row.occurrence_count,\n                e.knowledge_layer = row.knowledge_layer,\n                e.provenance_class = row.provenance_class,\n                e.evidence_basis = row.evidence_basis,\n                e.attribution_precision = row.attribution_precision,\n                e.quality_tier = row.quality_tier,\n                e.projection_policy = row.projection_policy,\n                e.annotation_provenance = row.annotation_provenance\n  ON MATCH SET  e.projection_policy = row.projection_policy,\n                e.projection_confirms_pre_existing_edge = true"
+      ],
+      "preflight": "UNWIND $rows AS row\nWITH collect(DISTINCT row.canonical_key) AS keys\nUNWIND keys AS k0\nOPTIONAL MATCH (n:Mantra {canonical_key: k0})\nWITH k0 WHERE n IS NULL\nRETURN count(*) AS missing_mantra\n;\nUNWIND $rows AS row\nWITH collect(DISTINCT row.lemma) AS keys\nUNWIND keys AS k1\nOPTIONAL MATCH (n:Lemma {lemma: k1})\nWITH k1 WHERE n IS NULL\nRETURN count(*) AS missing_lemma",
+      "artifact_lines": 154261,
+      "rows": 154261,
+      "elements_written": {
+        "relationships_merged": 154261
+      },
+      "expected_delta": {
+        "nodes": 0,
+        "relationships": 145261
+      },
+      "why_rows_and_delta_differ": "the statement MERGEs 154261 edges and CREATES 145261 of them; 9000 already exist and take the ON MATCH branch, which writes only the projection marker. Asserting delta == 154261 would fail a correct import.",
+      "nodes_delta": 0,
+      "relationships_delta": 145261,
+      "rows_in_artifact": 154261,
+      "rows_already_in_graph": 9000,
+      "notes": "The live 9,000 edges are a strict subset, verified pair-by-pair: 0 fall outside the projection, so MERGE adds and never rewrites. Zero-indegree :Lemma goes 9,992 -> 0 and distinct lemmas reached 39 -> 10,031."
+    },
+    {
+      "group_id": "A3_DOMAIN_ENTITY_DOMAIN",
+      "gap": "GAP-SEMANTICS-005",
+      "operation": "SET_PROPERTY",
+      "kind": "NODE_PROPERTY",
+      "label": "DomainEntity",
+      "match_key": "entity_key",
+      "properties": [
+        "domain (list)",
+        "domain_provenance",
+        "domain_basis",
+        "domain_vocabulary_version",
+        "domain_is_human_annotation"
+      ],
+      "source_artifact": "domain_entity_domains.jsonl",
+      "parameters_from": "data/staging/final_closure_sprint/agent3/domain_entity_domains.jsonl",
+      "cypher": [
+        "UNWIND $rows AS row\nMATCH (e:DomainEntity {entity_key: row.entity_key})\nSET e.domain = row.domain,\n    e.domain_count = row.domain_count,\n    e.domain_provenance = row.domain_provenance,\n    e.domain_basis = row.domain_basis,\n    e.domain_vocabulary_version = row.domain_vocabulary_version,\n    e.domain_is_human_annotation = row.domain_is_human_annotation"
+      ],
+      "preflight": "UNWIND $rows AS row\nWITH collect(DISTINCT row.entity_key) AS keys\nUNWIND keys AS k0\nOPTIONAL MATCH (n:DomainEntity {entity_key: k0})\nWITH k0 WHERE n IS NULL\nRETURN count(*) AS unresolved_endpoints",
+      "artifact_lines": 375,
+      "rows": 375,
+      "elements_written": {
+        "nodes_touched": 375,
+        "properties": 2250
+      },
+      "expected_delta": {
+        "nodes": 0,
+        "relationships": 0
+      },
+      "why_rows_and_delta_differ": "a property write changes no census figure. Assert on MATCH (e:DomainEntity) WHERE e.domain IS NULL RETURN count(e) -> 0 instead.",
+      "nodes_delta": 0,
+      "relationships_delta": 0,
+      "properties_written": 2250,
+      "nodes_touched": 375,
+      "notes": "375 nodes, not the 229 the registry row's description states. domain IS NULL goes 375 -> 0; 68 are multi-domain; 350 deterministic and 25 model-assisted, typed apart. No row claims human annotation."
+    },
+    {
+      "group_id": "A3_LEXICAL_NONRESOLUTION_TYPED",
+      "gap": "GAP-MORPHOLOGY-004",
+      "operation": "NONE_ARTIFACT_ONLY",
+      "kind": "ARTIFACT",
+      "source_artifact": "lexical_nonresolution_typed.jsonl",
+      "skip": true,
+      "cypher": null,
+      "parameters_from": null,
+      "preflight": null,
+      "artifact_lines": 711,
+      "rows": 0,
+      "elements_written": {
+        "nodes": 0,
+        "relationships": 0
+      },
+      "expected_delta": {
+        "nodes": 0,
+        "relationships": 0
+      },
+      "runner_instruction": "SKIP. NONE_ARTIFACT_ONLY: there is no statement to run and no element to write. Do not guess one.",
+      "nodes_delta": 0,
+      "relationships_delta": 0,
+      "notes": "Deliberately no graph mutation. The 711 tokens are not graph objects; they are the refusal record of the lexical layer, and typing them is a change to data/knowledge/rigveda_lexical_v1's refusal file and to the policy document, both of which are tracked. 79 are Anukramani-corroborated and still get no edge."
+    },
+    {
+      "group_id": "A3_SEMANTIC_ASSERTION_NODES",
+      "gap": "GAP-SEMANTICS-001",
+      "operation": "CREATE",
+      "kind": "NODE",
+      "label": "SemanticAssertion",
+      "match_key": "assertion_key",
+      "source_artifact": "semantic_assertions.jsonl",
+      "parameters_from": "data/staging/final_closure_sprint/agent3/semantic_assertions.jsonl",
+      "cypher": [
+        "UNWIND $rows AS row\nMATCH (m:Mantra {canonical_key: row.canonical_key})\nMATCH (p:ActionPredicate {predicate: row.predicate})\nMERGE (a:SemanticAssertion {assertion_key: row.assertion_key})\n  ON CREATE SET a.canonical_key = row.canonical_key,\n                a.veda = row.veda,\n                a.assertion_ordinal = row.assertion_ordinal,\n                a.predicate = row.predicate,\n                a.predicate_status = row.predicate_status,\n                a.frame = row.frame,\n                a.verb_surface = row.verb_surface,\n                a.verb_features_json = row.verb_features_json,\n                a.verb_feature_scheme = row.verb_feature_scheme,\n                a.root_label = row.root_label,\n                a.role_scope = row.role_scope,\n                a.role_derivation = row.role_derivation,\n                a.derivation = row.derivation,\n                a.roles_withheld = row.roles_withheld,\n                a.roles_withheld_reason = row.roles_withheld_reason,\n                a.cautions = row.cautions,\n                a.asserted_role_count = row.asserted_role_count,\n                a.three_slot_complete = row.three_slot_complete,\n                a.evidence_layer = row.evidence_layer,\n                a.source_id = row.source_id,\n                a.source_snapshot = row.source_snapshot,\n                a.mapping_confidence = row.mapping_confidence,\n                a.algorithm_version = row.algorithm_version,\n                a.config_hash = row.config_hash,\n                a.code_commit = row.code_commit,\n                a.provenance = row.provenance,\n                a.review_state = row.review_state,\n                a.human_annotated = row.human_annotated,\n                a.model_assisted = row.model_assisted,\n                a.projected_from_canonical_key = row.projected_from_canonical_key,\n                a.projection_edge_types = row.projection_edge_types,\n                a.projection_graph_score = row.projection_graph_score,\n                a.projection_identity_basis = row.projection_identity_basis,\n                a.independently_annotated = row.independently_annotated,\n                a.is_samavedic_annotation = row.is_samavedic_annotation\nMERGE (m)-[:HAS_SEMANTIC_ASSERTION]->(a)\nMERGE (a)-[:ASSERTION_PREDICATE]->(p)"
+      ],
+      "preflight": "UNWIND $rows AS row\nWITH collect(DISTINCT row.canonical_key) AS keys\nUNWIND keys AS k0\nOPTIONAL MATCH (n:Mantra {canonical_key: k0})\nWITH k0 WHERE n IS NULL\nRETURN count(*) AS missing_mantra\n;\nUNWIND $rows AS row\nWITH collect(DISTINCT row.predicate) AS keys\nUNWIND keys AS k1\nOPTIONAL MATCH (n:ActionPredicate {predicate: k1})\nWITH k1 WHERE n IS NULL\nRETURN count(*) AS missing_actionpredicate",
+      "artifact_lines": 30266,
+      "rows": 30266,
+      "elements_written": {
+        "nodes": 30266,
+        "relationships": 60532,
+        "relationship_split": {
+          "HAS_SEMANTIC_ASSERTION": 30266,
+          "ASSERTION_PREDICATE": 30266
+        }
+      },
+      "expected_delta": {
+        "nodes": 30266,
+        "relationships": 60532
+      },
+      "index_required_before_this_group": "CREATE INDEX semantic_assertion_assertion_key IF NOT EXISTS FOR (a:SemanticAssertion) ON (a.assertion_key)",
+      "verb_features_is_not_written_as_a_map": "The artifact keeps verb_features as a dict for a human reader; Neo4j cannot store a map as a property, so the statement writes verb_features_json and verb_feature_scheme instead. The two schemes -- ZURICH_VEDAWEB 22,556 for RV and SV, DCS_UD 7,710 for AV and YV -- are NOT flattened into shared columns: IND and Ind are the same mood in two notations, so one verb_mood property would make WHERE verb_mood = 'IND' silently return the Rigvedic half and drop the Atharvavedic one, a filter that looks like a feature filter and is actually a corpus filter.",
+      "nodes_delta": 30266,
+      "relationships_delta": 60532,
+      "attached_by": [
+        "(:Mantra {canonical_key})-[:HAS_SEMANTIC_ASSERTION]->(:SemanticAssertion {assertion_key})",
+        "(:SemanticAssertion {assertion_key})-[:ASSERTION_PREDICATE]->(:ActionPredicate {predicate})"
+      ],
+      "notes": "RV 22,192 + AV 6,167 + YV 1,543 + SV 364 (SV was 372 before the 8 NEAR_PARALLEL_OF assertions were withheld to A3_SEMANTIC_ASSERTION_WITHHELD). Every predicate resolves inside the registry's closed 41. The live 4,865 keep their own derivations and are not touched; role_derivation on the new rows keeps all five instruments unsummable. Every one of these arrives review_state=UNREVIEWED, which takes GAP-SEMANTICS-002 from 4,865 to 35,131."
+    },
+    {
+      "group_id": "A3_SEMANTIC_ASSERTION_WITHHELD",
+      "gap": "GAP-SEMANTICS-001",
+      "operation": "NONE_ARTIFACT_ONLY",
+      "kind": "ARTIFACT",
+      "source_artifact": "semantic_assertions_withheld.jsonl",
+      "skip": true,
+      "cypher": null,
+      "parameters_from": null,
+      "preflight": null,
+      "artifact_lines": 8,
+      "rows": 0,
+      "elements_written": {
+        "nodes": 0,
+        "relationships": 0
+      },
+      "expected_delta": {
+        "nodes": 0,
+        "relationships": 0
+      },
+      "runner_instruction": "SKIP. NONE_ARTIFACT_ONLY: this is the withheld queue, and writing any of it would undo the ruling. Do not guess a statement.",
+      "nodes_delta": 0,
+      "relationships_delta": 0,
+      "notes": "8 CROSS_VEDA_TEXT_IDENTITY assertions over 5 Samavedic verses, withheld on the lead's ruling because the live graph types those 5 pairs NEAR_PARALLEL_OF while the projection asserts letter identity for them. Not deleted: a bounded evidenced queue carrying each pair's full live edge set, the same shape as the 79 Anukramani-corroborated lexical tokens. The artifact's own containment score independently agrees -- these 5 are exactly the 5 pairs of 216 scoring below 1.0."
+    },
+    {
+      "group_id": "A3_ASSERTION_ROLE_REANCHOR",
+      "gap": "GAP-SEMANTICS-003",
+      "operation": "REPLACE",
+      "kind": "RELATIONSHIP",
+      "type": "ASSERTION_ROLE",
+      "delete_first": "(:Passage)-[:ASSERTION_ROLE]->(:RoleFiller)",
+      "delete_count": 2052,
+      "start": "(:SemanticAssertion {assertion_key})",
+      "end": "(:RoleFiller {role_filler_key})",
+      "match_key": [
+        "assertion_key",
+        "role_filler_key"
+      ],
+      "source_artifact": "assertion_role_edges.jsonl",
+      "parameters_from": "data/staging/final_closure_sprint/agent3/assertion_role_edges.jsonl",
+      "preflight": "UNWIND $rows AS row\nWITH collect(DISTINCT row.assertion_key) AS keys\nUNWIND keys AS k0\nOPTIONAL MATCH (n:SemanticAssertion {assertion_key: k0})\nWITH k0 WHERE n IS NULL\nRETURN count(*) AS missing_semanticassertion\n;\nUNWIND $rows AS row\nWITH collect(DISTINCT row.role_filler_key) AS keys\nUNWIND keys AS k1\nOPTIONAL MATCH (n:RoleFiller {role_filler_key: k1})\nWITH k1 WHERE n IS NULL\nRETURN count(*) AS missing_rolefiller",
+      "preflight_depends_on_group": "A3_SEMANTIC_ASSERTION_NODES",
+      "preflight_timing": "Run this preflight AFTER A3_SEMANTIC_ASSERTION_NODES and BEFORE step 2. Its :SemanticAssertion endpoints are created by that group, so run earlier it reports all 1,149 distinct assertion keys missing -- which measures the ordering, not the artifact.",
+      "artifact_lines": 2052,
+      "rows": 2052,
+      "cypher": [
+        {
+          "step": 1,
+          "name": "DELETE the mis-anchored edges",
+          "statement": "MATCH (:Passage)-[e:ASSERTION_ROLE]->(:RoleFiller)\nDELETE e",
+          "parameters_from": null,
+          "rows": 2052,
+          "expected_delta": {
+            "nodes": 0,
+            "relationships": -2052
+          },
+          "assert_between_steps": "MATCH ()-[r:ASSERTION_ROLE]->() RETURN count(r) -> 0"
+        },
+        {
+          "step": 2,
+          "name": "CREATE them on the endpoint card M1 declared",
+          "statement": "UNWIND $rows AS row\nMATCH (a:SemanticAssertion {assertion_key: row.assertion_key})\nMATCH (f:RoleFiller {role_filler_key: row.role_filler_key})\nMERGE (a)-[e:ASSERTION_ROLE]->(f)\n  ON CREATE SET e.role = row.role,\n                e.proposed_role = row.proposed_role,\n                e.role_derivation = row.role_derivation,\n                e.evidence = row.evidence,\n                e.provenance = row.provenance",
+          "parameters_from": "data/staging/final_closure_sprint/agent3/assertion_role_edges.jsonl",
+          "rows": 2052,
+          "expected_delta": {
+            "nodes": 0,
+            "relationships": 2052
+          },
+          "assert_after": "MATCH (:SemanticAssertion)-[r:ASSERTION_ROLE]->(:RoleFiller) RETURN count(r) -> 2052, and MATCH (:Passage)-[r:ASSERTION_ROLE]->() RETURN count(r) -> 0"
+        }
+      ],
+      "expected_delta": {
+        "nodes": 0,
+        "relationships": 0
+      },
+      "why_the_two_steps_are_separate": "The group nets to 0 relationships. Run as one statement, a partial failure would net to zero by accident and look like success. Split, the intermediate count makes a half-applied group visible.",
+      "nodes_delta": 0,
+      "relationships_delta": 0,
+      "notes": "A replace, not an add. The live 2,052 edges start at a :Passage, which SCHEMA_MIGRATION_CARDS.md M1 never declared and which leaves every filler unresolvable to an assertion. Net relationship delta is 0: 2,052 deleted, 2,052 created on the declared endpoint. This group MUST run after A3_SEMANTIC_ASSERTION_NODES or every edge dangles.",
+      "ships_with_a_code_change_and_is_invalid_without_it": {
+        "file": "src/vedagraph/domain/ontology.py",
+        "element": "RELATIONSHIP_SIGNATURES[ASSERTION_ROLE]",
+        "was": "(Passage|Mantra) -> RoleFiller",
+        "now": "SemanticAssertion -> RoleFiller",
+        "why_both_or_neither": "The signature alone makes the 2,052 live edges violate it. The re-anchor alone makes 2,052 new ones violate the old signature. Agent 8 flagged the re-anchor as a scorecard blocker on the old signature and was right about the measurement; the lead ruled the signature is what drifted from owner-approved card M1, not the proposal.",
+        "already_applied_in_the_working_tree": true,
+        "pinned_by": "tests/domain/test_agent3_closure.py::test_the_assertion_role_signature_matches_the_migration_card"
+      }
+    }
+  ],
+  "census_delta": {
+    "nodes": 44776,
+    "relationships": 220303,
+    "absolutes_deliberately_not_published": "Compute them from the graph at execution time. This file states deltas because it cannot know what has landed between generation and execution.",
+    "per_group": {
+      "A3_TEXT_VERSION_SEARCH_DERIVATIVE": {
+        "nodes": 14371,
+        "relationships": 14371
+      },
+      "A3_TEXT_VERSION_YV_UNACCENTED_DERIVED": {
+        "nodes": 139,
+        "relationships": 139
+      },
+      "A3_MENTIONS_LEMMA_PROJECTION": {
+        "nodes": 0,
+        "relationships": 145261
+      },
+      "A3_DOMAIN_ENTITY_DOMAIN": {
+        "nodes": 0,
+        "relationships": 0
+      },
+      "A3_LEXICAL_NONRESOLUTION_TYPED": {
+        "nodes": 0,
+        "relationships": 0
+      },
+      "A3_SEMANTIC_ASSERTION_NODES": {
+        "nodes": 30266,
+        "relationships": 60532
+      },
+      "A3_SEMANTIC_ASSERTION_WITHHELD": {
+        "nodes": 0,
+        "relationships": 0
+      },
+      "A3_ASSERTION_ROLE_REANCHOR": {
+        "nodes": 0,
+        "relationships": 0
+      }
+    },
+    "core_corpus_delta": 0,
+    "core_corpus_invariant": "20,210 mantras unchanged -- no group creates, deletes or relabels a :Mantra. Enforced by construction: every statement MATCHes its Mantra and MATCH cannot create."
+  },
+  "execution_contract": {
+    "ordering_is_binding": [
+      "A3_TEXT_VERSION_SEARCH_DERIVATIVE",
+      "A3_TEXT_VERSION_YV_UNACCENTED_DERIVED",
+      "A3_MENTIONS_LEMMA_PROJECTION",
+      "A3_DOMAIN_ENTITY_DOMAIN",
+      "A3_LEXICAL_NONRESOLUTION_TYPED",
+      "A3_SEMANTIC_ASSERTION_NODES",
+      "A3_SEMANTIC_ASSERTION_WITHHELD",
+      "A3_ASSERTION_ROLE_REANCHOR"
+    ],
+    "skip_groups": [
+      "A3_LEXICAL_NONRESOLUTION_TYPED",
+      "A3_SEMANTIC_ASSERTION_WITHHELD"
+    ],
+    "indexes_to_create_first": [
+      {
+        "statement": "CREATE INDEX semantic_assertion_assertion_key IF NOT EXISTS FOR (a:SemanticAssertion) ON (a.assertion_key)",
+        "required": true,
+        "why": "MERGE on :SemanticAssertion(assertion_key) is a full label scan per row without it, 30,266 times over a growing label."
+      },
+      {
+        "statement": "CREATE INDEX action_predicate_predicate IF NOT EXISTS FOR (p:ActionPredicate) ON (p.predicate)",
+        "required": false,
+        "why": "Advisory. 41 nodes, so the scan is cheap, but it runs 30,266 times."
+      }
+    ],
+    "recommended_batch_size": 5000,
+    "per_group_protocol": [
+      "1. Run the group's `preflight` with the same $rows. It must return 0. A non-zero result means an endpoint does not resolve and the write would silently skip that row rather than fail.",
+      "2. Measure nodes and relationships.",
+      "3. Run the group's `cypher` statements in order, chunking $rows at 5000. Every statement is idempotent and order-independent within its group, so a failed chunk can be re-run.",
+      "4. Measure again and assert the difference equals `expected_delta`. STOP on mismatch.",
+      "5. Assert the core corpus is still 20,210."
+    ],
+    "rows_is_not_the_artifact_line_count": {
+      "A3_MENTIONS_LEMMA_PROJECTION": "154261 artifact lines, 154261 edges MERGEd, 145261 CREATED. Assert the delta against 145261, not 154261.",
+      "A3_DOMAIN_ENTITY_DOMAIN": "375 artifact lines, 375 nodes touched, census delta 0. A property write moves no census figure.",
+      "A3_LEXICAL_NONRESOLUTION_TYPED": "711 artifact lines, 0 elements written. SKIP.",
+      "A3_SEMANTIC_ASSERTION_WITHHELD": "8 artifact lines, 0 elements written. SKIP.",
+      "A3_ASSERTION_ROLE_REANCHOR": "2052 artifact lines, 2052 edges created AND 2,052 deleted, net 0. Assert each step separately."
+    }
+  },
+  "counts_by_operation": {
+    "CREATE_NODE": 44776,
+    "CREATE_RELATIONSHIP": 220303,
+    "REPLACE_RELATIONSHIP": 2052,
+    "SET_PROPERTY_NODES_TOUCHED": 375,
+    "DELETE_RELATIONSHIP": 2052
+  },
+  "artifact_digests": {
+    "assertion_role_edges.jsonl": "bb50918575f6a89beeeca8a48a3a6ea8c77eac91ec51daf29ca918ec0f97f77c",
+    "domain_entity_domains.jsonl": "ce3d7d29a4c41c8f91b1da0c06bd59c7728ac1d6a96d3fc2caebab530b60dba9",
+    "lexical_nonresolution_typed.jsonl": "7cf9e23b7be32616a40a110851ec485ab971047f59206784a46f058b35ecac12",
+    "mentions_lemma_projection.jsonl": "ec744478500edafeb0fffcacda3d305892d71c3f6f16d6974b68239f42d6d614",
+    "semantic_assertions.jsonl": "5c904af624d149a06dc55aeedf4702b5418e21a0bba32a9d56797b238fd08e7e",
+    "semantic_assertions_withheld.jsonl": "e60203def20de2db3a8fa43897d9003608c1dbde889784fc660f78d688c15967",
+    "text_versions_search_derivative.jsonl": "eb442cc6972f69f4542d82de3b7c6c0e813e887dc0a4a1d343c816c1c5a5b4d4",
+    "text_versions_yv_unaccented_derived.jsonl": "2a516931e41b3c5d711f155b94a57c963f1bade34d58ac3c7e927eccac0fecd9"
+  },
+  "readback_tests_the_lead_must_run": {
+    "GAP-MORPHOLOGY-001": "MATCH (l:Lemma) WHERE size([(l)<--()|1])=0 RETURN count(l) -> 0",
+    "GAP-MORPHOLOGY-004": "no graph readback; the artifact and the policy document are the surface",
+    "GAP-MORPHOLOGY-006": "MATCH (t:TextVersion) WHERE t.text_role='SEARCH_DERIVATIVE' RETURN count(t) -> 20210, over 4 works; and MATCH (p:Mantra {veda:'YV'}) WHERE NOT (p)-[:HAS_TEXT_VERSION]->(:TextVersion {accented:false}) RETURN count(p) -> 0",
+    "GAP-SEMANTICS-001": "MATCH (m:Mantra)-[:HAS_SEMANTIC_ASSERTION]->() RETURN m.veda, count(DISTINCT m) -> RV 10150, AV 3295, YV 574, SV 211 (not 216: the 5 NEAR_PARALLEL_OF pairs are withheld)",
+    "GAP-SEMANTICS-002": "MATCH (a:SemanticAssertion) WHERE a.review_state='UNREVIEWED' RETURN count(a) -> 35,131 after import (4,865 live + 30,266 staged), up from 4,865. NOT CLOSED, and this import makes it larger.",
+    "GAP-SEMANTICS-003": "MATCH (a:SemanticAssertion) WHERE size([(a)-[:ASSERTION_ROLE]->(:RoleFiller {role:'AGENT'})|1])>0 AND size([(a)-[:ASSERTION_ROLE]->(:RoleFiller {role:'PATIENT'})|1])>0 AND size([(a)-[:ASSERTION_PREDICATE]->()|1])>0 RETURN count(a) -> 341",
+    "GAP-SEMANTICS-005": "MATCH (e:DomainEntity) WHERE e.domain IS NULL RETURN count(e) -> 0"
+  }
+}

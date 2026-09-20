@@ -1,0 +1,1249 @@
+{
+  "artifact": "RV_DVIPADA_SPINE_PRE_FIX_AUDIT",
+  "gap": "GAP-TRANSLATION-006",
+  "at": "2026-09-16T11:00:01.792721+00:00",
+  "graph_census": {
+    "nodes": 116838,
+    "relationships": 281257,
+    "core": {
+      "AV": 5839,
+      "RV": 10552,
+      "SV": 1844,
+      "YV": 1975
+    }
+  },
+  "core_corpus_invariant_held": true,
+  "measurement": {
+    "canonical_verses_in_span": 61,
+    "currently_translated": 31,
+    "correctly_attached": 6,
+    "wrongly_attached": 25,
+    "missing": 30,
+    "ambiguous": 0
+  },
+  "wave4_claim": {
+    "wrong": 25,
+    "of": 31
+  },
+  "reproduces_wave4_claim": true,
+  "source_row_text_mismatches": 0,
+  "hymns_in_span": [
+    {
+      "hymn": "RV 1.65",
+      "hymn_key": "VG:RV:SAK:M01:S065",
+      "canonical_verse_count": 10,
+      "source_unit_count": 5,
+      "currently_translated": 5,
+      "hemistichs_per_verse": [
+        1
+      ],
+      "is_single_hemistich": true,
+      "canonical_metre": [
+        "virāṭ"
+      ],
+      "source_units_consecutive_from_one": true,
+      "source_alignment_claimed": [
+        "EXACT_MANTRA_ALIGNMENT"
+      ],
+      "spine": "PAIRED_DVIPADA",
+      "unit_to_canonical": {
+        "1": [
+          "VG:RV:SAK:M01:S065:V001",
+          "VG:RV:SAK:M01:S065:V002"
+        ],
+        "2": [
+          "VG:RV:SAK:M01:S065:V003",
+          "VG:RV:SAK:M01:S065:V004"
+        ],
+        "3": [
+          "VG:RV:SAK:M01:S065:V005",
+          "VG:RV:SAK:M01:S065:V006"
+        ],
+        "4": [
+          "VG:RV:SAK:M01:S065:V007",
+          "VG:RV:SAK:M01:S065:V008"
+        ],
+        "5": [
+          "VG:RV:SAK:M01:S065:V009",
+          "VG:RV:SAK:M01:S065:V010"
+        ]
+      }
+    },
+    {
+      "hymn": "RV 1.66",
+      "hymn_key": "VG:RV:SAK:M01:S066",
+      "canonical_verse_count": 10,
+      "source_unit_count": 5,
+      "currently_translated": 5,
+      "hemistichs_per_verse": [
+        1
+      ],
+      "is_single_hemistich": true,
+      "canonical_metre": [
+        "virāṭ"
+      ],
+      "source_units_consecutive_from_one": true,
+      "source_alignment_claimed": [
+        "EXACT_MANTRA_ALIGNMENT"
+      ],
+      "spine": "PAIRED_DVIPADA",
+      "unit_to_canonical": {
+        "1": [
+          "VG:RV:SAK:M01:S066:V001",
+          "VG:RV:SAK:M01:S066:V002"
+        ],
+        "2": [
+          "VG:RV:SAK:M01:S066:V003",
+          "VG:RV:SAK:M01:S066:V004"
+        ],
+        "3": [
+          "VG:RV:SAK:M01:S066:V005",
+          "VG:RV:SAK:M01:S066:V006"
+        ],
+        "4": [
+          "VG:RV:SAK:M01:S066:V007",
+          "VG:RV:SAK:M01:S066:V008"
+        ],
+        "5": [
+          "VG:RV:SAK:M01:S066:V009",
+          "VG:RV:SAK:M01:S066:V010"
+        ]
+      }
+    },
+    {
+      "hymn": "RV 1.67",
+      "hymn_key": "VG:RV:SAK:M01:S067",
+      "canonical_verse_count": 10,
+      "source_unit_count": 5,
+      "currently_translated": 5,
+      "hemistichs_per_verse": [
+        1
+      ],
+      "is_single_hemistich": true,
+      "canonical_metre": [
+        "virāṭ"
+      ],
+      "source_units_consecutive_from_one": true,
+      "source_alignment_claimed": [
+        "EXACT_MANTRA_ALIGNMENT"
+      ],
+      "spine": "PAIRED_DVIPADA",
+      "unit_to_canonical": {
+        "1": [
+          "VG:RV:SAK:M01:S067:V001",
+          "VG:RV:SAK:M01:S067:V002"
+        ],
+        "2": [
+          "VG:RV:SAK:M01:S067:V003",
+          "VG:RV:SAK:M01:S067:V004"
+        ],
+        "3": [
+          "VG:RV:SAK:M01:S067:V005",
+          "VG:RV:SAK:M01:S067:V006"
+        ],
+        "4": [
+          "VG:RV:SAK:M01:S067:V007",
+          "VG:RV:SAK:M01:S067:V008"
+        ],
+        "5": [
+          "VG:RV:SAK:M01:S067:V009",
+          "VG:RV:SAK:M01:S067:V010"
+        ]
+      }
+    },
+    {
+      "hymn": "RV 1.68",
+      "hymn_key": "VG:RV:SAK:M01:S068",
+      "canonical_verse_count": 10,
+      "source_unit_count": 5,
+      "currently_translated": 5,
+      "hemistichs_per_verse": [
+        1
+      ],
+      "is_single_hemistich": true,
+      "canonical_metre": [
+        "virāṭ"
+      ],
+      "source_units_consecutive_from_one": true,
+      "source_alignment_claimed": [
+        "EXACT_MANTRA_ALIGNMENT"
+      ],
+      "spine": "PAIRED_DVIPADA",
+      "unit_to_canonical": {
+        "1": [
+          "VG:RV:SAK:M01:S068:V001",
+          "VG:RV:SAK:M01:S068:V002"
+        ],
+        "2": [
+          "VG:RV:SAK:M01:S068:V003",
+          "VG:RV:SAK:M01:S068:V004"
+        ],
+        "3": [
+          "VG:RV:SAK:M01:S068:V005",
+          "VG:RV:SAK:M01:S068:V006"
+        ],
+        "4": [
+          "VG:RV:SAK:M01:S068:V007",
+          "VG:RV:SAK:M01:S068:V008"
+        ],
+        "5": [
+          "VG:RV:SAK:M01:S068:V009",
+          "VG:RV:SAK:M01:S068:V010"
+        ]
+      }
+    },
+    {
+      "hymn": "RV 1.69",
+      "hymn_key": "VG:RV:SAK:M01:S069",
+      "canonical_verse_count": 10,
+      "source_unit_count": 5,
+      "currently_translated": 5,
+      "hemistichs_per_verse": [
+        1
+      ],
+      "is_single_hemistich": true,
+      "canonical_metre": [
+        "virāṭ"
+      ],
+      "source_units_consecutive_from_one": true,
+      "source_alignment_claimed": [
+        "EXACT_MANTRA_ALIGNMENT"
+      ],
+      "spine": "PAIRED_DVIPADA",
+      "unit_to_canonical": {
+        "1": [
+          "VG:RV:SAK:M01:S069:V001",
+          "VG:RV:SAK:M01:S069:V002"
+        ],
+        "2": [
+          "VG:RV:SAK:M01:S069:V003",
+          "VG:RV:SAK:M01:S069:V004"
+        ],
+        "3": [
+          "VG:RV:SAK:M01:S069:V005",
+          "VG:RV:SAK:M01:S069:V006"
+        ],
+        "4": [
+          "VG:RV:SAK:M01:S069:V007",
+          "VG:RV:SAK:M01:S069:V008"
+        ],
+        "5": [
+          "VG:RV:SAK:M01:S069:V009",
+          "VG:RV:SAK:M01:S069:V010"
+        ]
+      }
+    },
+    {
+      "hymn": "RV 1.70",
+      "hymn_key": "VG:RV:SAK:M01:S070",
+      "canonical_verse_count": 11,
+      "source_unit_count": 6,
+      "currently_translated": 6,
+      "hemistichs_per_verse": [
+        1
+      ],
+      "is_single_hemistich": true,
+      "canonical_metre": [
+        "virāṭ"
+      ],
+      "source_units_consecutive_from_one": true,
+      "source_alignment_claimed": [
+        "EXACT_MANTRA_ALIGNMENT"
+      ],
+      "spine": "PAIRED_DVIPADA",
+      "unit_to_canonical": {
+        "1": [
+          "VG:RV:SAK:M01:S070:V001",
+          "VG:RV:SAK:M01:S070:V002"
+        ],
+        "2": [
+          "VG:RV:SAK:M01:S070:V003",
+          "VG:RV:SAK:M01:S070:V004"
+        ],
+        "3": [
+          "VG:RV:SAK:M01:S070:V005",
+          "VG:RV:SAK:M01:S070:V006"
+        ],
+        "4": [
+          "VG:RV:SAK:M01:S070:V007",
+          "VG:RV:SAK:M01:S070:V008"
+        ],
+        "5": [
+          "VG:RV:SAK:M01:S070:V009",
+          "VG:RV:SAK:M01:S070:V010"
+        ],
+        "6": [
+          "VG:RV:SAK:M01:S070:V011"
+        ]
+      }
+    }
+  ],
+  "neighbours_unchanged_baseline": [
+    {
+      "hymn": "RV 1.63",
+      "hymn_key": "VG:RV:SAK:M01:S063",
+      "canonical_verse_count": 9,
+      "source_unit_count": 9,
+      "currently_translated": 9,
+      "hemistichs_per_verse": [
+        2
+      ],
+      "is_single_hemistich": false,
+      "canonical_metre": [
+        "triṣṭup"
+      ],
+      "source_units_consecutive_from_one": true,
+      "source_alignment_claimed": [
+        "EXACT_MANTRA_ALIGNMENT"
+      ],
+      "spine": "ONE_TO_ONE"
+    },
+    {
+      "hymn": "RV 1.64",
+      "hymn_key": "VG:RV:SAK:M01:S064",
+      "canonical_verse_count": 15,
+      "source_unit_count": 15,
+      "currently_translated": 15,
+      "hemistichs_per_verse": [
+        2
+      ],
+      "is_single_hemistich": false,
+      "canonical_metre": [
+        "jagatī",
+        "triṣṭup"
+      ],
+      "source_units_consecutive_from_one": true,
+      "source_alignment_claimed": [
+        "EXACT_MANTRA_ALIGNMENT"
+      ],
+      "spine": "ONE_TO_ONE"
+    },
+    {
+      "hymn": "RV 1.71",
+      "hymn_key": "VG:RV:SAK:M01:S071",
+      "canonical_verse_count": 10,
+      "source_unit_count": 10,
+      "currently_translated": 10,
+      "hemistichs_per_verse": [
+        2
+      ],
+      "is_single_hemistich": false,
+      "canonical_metre": [
+        "triṣṭup"
+      ],
+      "source_units_consecutive_from_one": true,
+      "source_alignment_claimed": [
+        "EXACT_MANTRA_ALIGNMENT"
+      ],
+      "spine": "ONE_TO_ONE"
+    },
+    {
+      "hymn": "RV 1.72",
+      "hymn_key": "VG:RV:SAK:M01:S072",
+      "canonical_verse_count": 10,
+      "source_unit_count": 10,
+      "currently_translated": 10,
+      "hemistichs_per_verse": [
+        2
+      ],
+      "is_single_hemistich": false,
+      "canonical_metre": [
+        "triṣṭup"
+      ],
+      "source_units_consecutive_from_one": true,
+      "source_alignment_claimed": [
+        "EXACT_MANTRA_ALIGNMENT"
+      ],
+      "spine": "ONE_TO_ONE"
+    },
+    {
+      "hymn": "RV 1.73",
+      "hymn_key": "VG:RV:SAK:M01:S073",
+      "canonical_verse_count": 10,
+      "source_unit_count": 9,
+      "currently_translated": 9,
+      "hemistichs_per_verse": [
+        2
+      ],
+      "is_single_hemistich": false,
+      "canonical_metre": [
+        "triṣṭup"
+      ],
+      "source_units_consecutive_from_one": false,
+      "source_alignment_claimed": [
+        "UNCERTAIN_ALIGNMENT"
+      ],
+      "spine": "UNEXPLAINED_MISMATCH"
+    }
+  ],
+  "assertions": [
+    {
+      "current_canonical_key": "VG:RV:SAK:M01:S065:V001",
+      "coordinate": {
+        "mandala": 1,
+        "sukta": 65,
+        "mantra": 1
+      },
+      "sanskrit_sha256": "bf159b528827f8c636eb22be4f42124021185a0b671890abb027ca90095f1290",
+      "sanskrit": "pa̱śvā na tā̱yuṁ guhā̱ cata̍nta̱ṁ namo̍ yujā̱naṁ namo̱ vaha̍ntam ||",
+      "current_translation": "ONE-MINDED, wise, they tracked thee like a thief lurking in dark cave with a stolen cow: Thee claiming worship, bearing it to Gods: there nigh to thee sate all the Holy Ones.",
+      "current_translation_sha256": "386e3618f89e744e2199f1451bcfcc10823ddba8421beff47df6f90e60520cf4",
+      "translation_source": "WIKISOURCE_GRIFFITH_RV",
+      "translator": "Ralph T. H. Griffith",
+      "alignment_level": "MANTRA",
+      "quality_status": "MACHINE_ALIGNED",
+      "current_translation_id": "58115083-de41-5762-a02e-3511a18d3434",
+      "source_unit": 1,
+      "source_page_title": "The Hymns of the Rigveda/Book 1/Hymn 65",
+      "source_revision_id": 14396884,
+      "source_unit_text_matches_current_row": true,
+      "spine": "PAIRED_DVIPADA",
+      "corrected_anchor_key": "VG:RV:SAK:M01:S065:V001",
+      "covers_canonical_keys": [
+        "VG:RV:SAK:M01:S065:V001",
+        "VG:RV:SAK:M01:S065:V002"
+      ],
+      "attachment": "CORRECT"
+    },
+    {
+      "current_canonical_key": "VG:RV:SAK:M01:S065:V002",
+      "coordinate": {
+        "mandala": 1,
+        "sukta": 65,
+        "mantra": 2
+      },
+      "sanskrit_sha256": "a232004d8a260440c1f1a9ceec3fff5e61879af4d42542b80cb3244b124d93af",
+      "sanskrit": "sa̱joṣā̱ dhīrā̍ḥ pa̱dair anu̍ gma̱nn upa̍ tvā sīda̱n viśve̱ yaja̍trāḥ ||",
+      "current_translation": "The Gods approached the ways of holy Law; there was a gathering vast as heaven itself. The waters feed with praise the growing Babe, born nobly in the womb, the seat of Law.",
+      "current_translation_sha256": "05a9ed35f7d14d7354b29eaed05e53ee3c9bcd2ac809108093c92b5c59800395",
+      "translation_source": "WIKISOURCE_GRIFFITH_RV",
+      "translator": "Ralph T. H. Griffith",
+      "alignment_level": "MANTRA",
+      "quality_status": "MACHINE_ALIGNED",
+      "current_translation_id": "e3eee2ce-f071-52e0-89f3-39803d8f7e6f",
+      "source_unit": 2,
+      "source_page_title": "The Hymns of the Rigveda/Book 1/Hymn 65",
+      "source_revision_id": 14396884,
+      "source_unit_text_matches_current_row": true,
+      "spine": "PAIRED_DVIPADA",
+      "corrected_anchor_key": "VG:RV:SAK:M01:S065:V003",
+      "covers_canonical_keys": [
+        "VG:RV:SAK:M01:S065:V003",
+        "VG:RV:SAK:M01:S065:V004"
+      ],
+      "attachment": "WRONG"
+    },
+    {
+      "current_canonical_key": "VG:RV:SAK:M01:S065:V003",
+      "coordinate": {
+        "mandala": 1,
+        "sukta": 65,
+        "mantra": 3
+      },
+      "sanskrit_sha256": "4b2d58bbc7b4d0cce6ae41c5ede8bea9579b02e30d2e5d3e5a7f99599fc95776",
+      "sanskrit": "ṛ̱tasya̍ de̱vā anu̍ vra̱tā gu̱r bhuva̱t pari̍ṣṭi̱r dyaur na bhūma̍ ||",
+      "current_translation": "Like grateful food, like some wide dwelling place, like a fruit-bearing hill, a wholesome stream. Like a steed urged to run in swift career, rushing like Sindhu, who may check his course?",
+      "current_translation_sha256": "a12b14193893fd05d78d78b92f4a14481e00c15ac50cbe4622fd4a763c58956f",
+      "translation_source": "WIKISOURCE_GRIFFITH_RV",
+      "translator": "Ralph T. H. Griffith",
+      "alignment_level": "MANTRA",
+      "quality_status": "MACHINE_ALIGNED",
+      "current_translation_id": "dc4233cb-0efc-53e0-9048-57654acd61fe",
+      "source_unit": 3,
+      "source_page_title": "The Hymns of the Rigveda/Book 1/Hymn 65",
+      "source_revision_id": 14396884,
+      "source_unit_text_matches_current_row": true,
+      "spine": "PAIRED_DVIPADA",
+      "corrected_anchor_key": "VG:RV:SAK:M01:S065:V005",
+      "covers_canonical_keys": [
+        "VG:RV:SAK:M01:S065:V005",
+        "VG:RV:SAK:M01:S065:V006"
+      ],
+      "attachment": "WRONG"
+    },
+    {
+      "current_canonical_key": "VG:RV:SAK:M01:S065:V004",
+      "coordinate": {
+        "mandala": 1,
+        "sukta": 65,
+        "mantra": 4
+      },
+      "sanskrit_sha256": "95915e47650b6033607f838cf6625bb6e58daeed25e579a4154b4947669fadd3",
+      "sanskrit": "vardha̍ntī̱m āpa̍ḥ pa̱nvā suśi̍śvim ṛ̱tasya̱ yonā̱ garbhe̱ sujā̍tam ||",
+      "current_translation": "Kin as a brother to his sister floods, he eats the woods as a King eats the rich. When through the forest, urged by wind, he spreads, verily Agni shears the hair of earth.",
+      "current_translation_sha256": "d1c16aa78179f13bd20a8d71736f9b911753d77b8e2544087811ed3fc030b1ab",
+      "translation_source": "WIKISOURCE_GRIFFITH_RV",
+      "translator": "Ralph T. H. Griffith",
+      "alignment_level": "MANTRA",
+      "quality_status": "MACHINE_ALIGNED",
+      "current_translation_id": "6f0e3598-f055-5081-a495-82433dc1961d",
+      "source_unit": 4,
+      "source_page_title": "The Hymns of the Rigveda/Book 1/Hymn 65",
+      "source_revision_id": 14396884,
+      "source_unit_text_matches_current_row": true,
+      "spine": "PAIRED_DVIPADA",
+      "corrected_anchor_key": "VG:RV:SAK:M01:S065:V007",
+      "covers_canonical_keys": [
+        "VG:RV:SAK:M01:S065:V007",
+        "VG:RV:SAK:M01:S065:V008"
+      ],
+      "attachment": "WRONG"
+    },
+    {
+      "current_canonical_key": "VG:RV:SAK:M01:S065:V005",
+      "coordinate": {
+        "mandala": 1,
+        "sukta": 65,
+        "mantra": 5
+      },
+      "sanskrit_sha256": "fbd6fdc98e903d1913d430accf038a4d840584ddeeff2adc980207cfe5fe8ef2",
+      "sanskrit": "pu̱ṣṭir na ra̱ṇvā kṣi̱tir na pṛ̱thvī gi̱rir na bhujma̱ kṣodo̱ na śa̱mbhu ||",
+      "current_translation": "Like a swan sitting in the floods he pants wisest in mind mid men he wakes at morn. A Sage like Soma, sprung from Law, he grew like some young creature, mighty, shining far.",
+      "current_translation_sha256": "bd04b4d601ee316559b45aa08390a7ee5ed89d4c0faa059c6e79c90e5e3928ab",
+      "translation_source": "WIKISOURCE_GRIFFITH_RV",
+      "translator": "Ralph T. H. Griffith",
+      "alignment_level": "MANTRA",
+      "quality_status": "MACHINE_ALIGNED",
+      "current_translation_id": "eb053d64-c515-5f20-80e7-4d03531a7475",
+      "source_unit": 5,
+      "source_page_title": "The Hymns of the Rigveda/Book 1/Hymn 65",
+      "source_revision_id": 14396884,
+      "source_unit_text_matches_current_row": true,
+      "spine": "PAIRED_DVIPADA",
+      "corrected_anchor_key": "VG:RV:SAK:M01:S065:V009",
+      "covers_canonical_keys": [
+        "VG:RV:SAK:M01:S065:V009",
+        "VG:RV:SAK:M01:S065:V010"
+      ],
+      "attachment": "WRONG"
+    },
+    {
+      "current_canonical_key": "VG:RV:SAK:M01:S066:V001",
+      "coordinate": {
+        "mandala": 1,
+        "sukta": 66,
+        "mantra": 1
+      },
+      "sanskrit_sha256": "6d370f209b64a32e528a80d1f886a650c9cb898fcea37a552c1e3a82e8163290",
+      "sanskrit": "ra̱yir na ci̱trā sūro̱ na sa̱ṁdṛg āyu̱r na prā̱ṇo nityo̱ na sū̱nuḥ ||",
+      "current_translation": "LIKE the Sun's glance, like wealth of varied sort, like breath which is the life, like one's own son, Like a swift bird, a cow who yields her milk, pure and refulgent to the wood he speeds.",
+      "current_translation_sha256": "0152155a12da449149ca94b2ef4e44832141b33b2691d11ee5b4fad5bceeaada",
+      "translation_source": "WIKISOURCE_GRIFFITH_RV",
+      "translator": "Ralph T. H. Griffith",
+      "alignment_level": "MANTRA",
+      "quality_status": "MACHINE_ALIGNED",
+      "current_translation_id": "ce43fc9d-5f64-508c-8439-55137eca4eee",
+      "source_unit": 1,
+      "source_page_title": "The Hymns of the Rigveda/Book 1/Hymn 66",
+      "source_revision_id": 14396885,
+      "source_unit_text_matches_current_row": true,
+      "spine": "PAIRED_DVIPADA",
+      "corrected_anchor_key": "VG:RV:SAK:M01:S066:V001",
+      "covers_canonical_keys": [
+        "VG:RV:SAK:M01:S066:V001",
+        "VG:RV:SAK:M01:S066:V002"
+      ],
+      "attachment": "CORRECT"
+    },
+    {
+      "current_canonical_key": "VG:RV:SAK:M01:S066:V002",
+      "coordinate": {
+        "mandala": 1,
+        "sukta": 66,
+        "mantra": 2
+      },
+      "sanskrit_sha256": "e12a6e6868fab2542417b153d24d2022b5455fa9e32163e34baf7bb95fa1f100",
+      "sanskrit": "takvā̱ na bhūrṇi̱r vanā̍ siṣakti̱ payo̱ na dhe̱nuḥ śuci̍r vi̱bhāvā̍ ||",
+      "current_translation": "He offers safety like a pleasant home, like ripened corn, the Conqueror of men. Like a Seer lauding, famed among the folk; like a steed friendly he vouchsafes us power.",
+      "current_translation_sha256": "23edf76520696a6835d58d9430bf4d58dd1d1f64f7b2463e50bb08f94f280e94",
+      "translation_source": "WIKISOURCE_GRIFFITH_RV",
+      "translator": "Ralph T. H. Griffith",
+      "alignment_level": "MANTRA",
+      "quality_status": "MACHINE_ALIGNED",
+      "current_translation_id": "bffae295-e3fc-533f-9b6f-bd45440777f0",
+      "source_unit": 2,
+      "source_page_title": "The Hymns of the Rigveda/Book 1/Hymn 66",
+      "source_revision_id": 14396885,
+      "source_unit_text_matches_current_row": true,
+      "spine": "PAIRED_DVIPADA",
+      "corrected_anchor_key": "VG:RV:SAK:M01:S066:V003",
+      "covers_canonical_keys": [
+        "VG:RV:SAK:M01:S066:V003",
+        "VG:RV:SAK:M01:S066:V004"
+      ],
+      "attachment": "WRONG"
+    },
+    {
+      "current_canonical_key": "VG:RV:SAK:M01:S066:V003",
+      "coordinate": {
+        "mandala": 1,
+        "sukta": 66,
+        "mantra": 3
+      },
+      "sanskrit_sha256": "81d3f81011285a14943e9d3ee16e1a62e09f6699be023e0def1d987661e80b68",
+      "sanskrit": "dā̱dhāra̱ kṣema̱m oko̱ na ra̱ṇvo yavo̱ na pa̱kvo jetā̱ janā̍nām ||",
+      "current_translation": "With flame insatiate, like eternal might; caring for each one like a dame at home; Bright when he shines forth, whitish mid the folk, like a car, gold-decked, thundering to the fight.",
+      "current_translation_sha256": "e408e6963dbb067500cbd8c7c9f4224e346fa74ab13af357eb5ae2b95f9ec3d8",
+      "translation_source": "WIKISOURCE_GRIFFITH_RV",
+      "translator": "Ralph T. H. Griffith",
+      "alignment_level": "MANTRA",
+      "quality_status": "MACHINE_ALIGNED",
+      "current_translation_id": "65df036b-78df-5219-93cb-b249409721fe",
+      "source_unit": 3,
+      "source_page_title": "The Hymns of the Rigveda/Book 1/Hymn 66",
+      "source_revision_id": 14396885,
+      "source_unit_text_matches_current_row": true,
+      "spine": "PAIRED_DVIPADA",
+      "corrected_anchor_key": "VG:RV:SAK:M01:S066:V005",
+      "covers_canonical_keys": [
+        "VG:RV:SAK:M01:S066:V005",
+        "VG:RV:SAK:M01:S066:V006"
+      ],
+      "attachment": "WRONG"
+    },
+    {
+      "current_canonical_key": "VG:RV:SAK:M01:S066:V004",
+      "coordinate": {
+        "mandala": 1,
+        "sukta": 66,
+        "mantra": 4
+      },
+      "sanskrit_sha256": "05f64e72932a6a162993666fc51b9bb4aac37f78e58e2a039217dbe2f76a1c5a",
+      "sanskrit": "ṛṣi̱r na stubhvā̍ vi̱kṣu pra̍śa̱sto vā̱jī na prī̱to vayo̍ dadhāti ||",
+      "current_translation": "He strikes with terror like a dart shot forth, e'en like an archer's arrow tipped with flame; Master of present and of future life, the maidens' lover and the matrons' Lord.",
+      "current_translation_sha256": "39962b02c4895f42f70dc0c61d9797257b9979dc282911f3db87597f0ebfed4a",
+      "translation_source": "WIKISOURCE_GRIFFITH_RV",
+      "translator": "Ralph T. H. Griffith",
+      "alignment_level": "MANTRA",
+      "quality_status": "MACHINE_ALIGNED",
+      "current_translation_id": "63c6ffdc-5427-504a-8ec1-ed5cac7755d9",
+      "source_unit": 4,
+      "source_page_title": "The Hymns of the Rigveda/Book 1/Hymn 66",
+      "source_revision_id": 14396885,
+      "source_unit_text_matches_current_row": true,
+      "spine": "PAIRED_DVIPADA",
+      "corrected_anchor_key": "VG:RV:SAK:M01:S066:V007",
+      "covers_canonical_keys": [
+        "VG:RV:SAK:M01:S066:V007",
+        "VG:RV:SAK:M01:S066:V008"
+      ],
+      "attachment": "WRONG"
+    },
+    {
+      "current_canonical_key": "VG:RV:SAK:M01:S066:V005",
+      "coordinate": {
+        "mandala": 1,
+        "sukta": 66,
+        "mantra": 5
+      },
+      "sanskrit_sha256": "4508868dc7668a947eb17321e1eed8c28a9c8edba17527b79382d64025936169",
+      "sanskrit": "du̱roka̍śoci̱ḥ kratu̱r na nityo̍ jā̱yeva̱ yonā̱v ara̱ṁ viśva̍smai ||",
+      "current_translation": "To him lead all your ways: may we attain the kindled God as cows their home at eve. He drives the flames below as floods their swell: the rays rise up to the fair place of heaven.",
+      "current_translation_sha256": "ad5edd2aa1db1161b78cf033ce2212980a5201595d0dfacf6ade16653c916fa3",
+      "translation_source": "WIKISOURCE_GRIFFITH_RV",
+      "translator": "Ralph T. H. Griffith",
+      "alignment_level": "MANTRA",
+      "quality_status": "MACHINE_ALIGNED",
+      "current_translation_id": "8fbfa11e-cbfb-5fa8-8cc5-4ef846e0f528",
+      "source_unit": 5,
+      "source_page_title": "The Hymns of the Rigveda/Book 1/Hymn 66",
+      "source_revision_id": 14396885,
+      "source_unit_text_matches_current_row": true,
+      "spine": "PAIRED_DVIPADA",
+      "corrected_anchor_key": "VG:RV:SAK:M01:S066:V009",
+      "covers_canonical_keys": [
+        "VG:RV:SAK:M01:S066:V009",
+        "VG:RV:SAK:M01:S066:V010"
+      ],
+      "attachment": "WRONG"
+    },
+    {
+      "current_canonical_key": "VG:RV:SAK:M01:S067:V001",
+      "coordinate": {
+        "mandala": 1,
+        "sukta": 67,
+        "mantra": 1
+      },
+      "sanskrit_sha256": "18688afc8c9d913d31b5ebdd4db7424220584ebd88074bc1c433ee2f1014925a",
+      "sanskrit": "vane̍ṣu jā̱yur marte̍ṣu mi̱tro vṛ̍ṇī̱te śru̱ṣṭiṁ rāje̍vāju̱ryam ||",
+      "current_translation": "VICTORIOUS in the wood, Friend among men, ever he claims obedience as a King. Gracious like peace, blessing like mental power, Priest was he, offering-bearer, full of thought.",
+      "current_translation_sha256": "06c373517548b364a3b727bc2f39e9924c4e0747503aa8c3d5b76b4ff5db01fb",
+      "translation_source": "WIKISOURCE_GRIFFITH_RV",
+      "translator": "Ralph T. H. Griffith",
+      "alignment_level": "MANTRA",
+      "quality_status": "MACHINE_ALIGNED",
+      "current_translation_id": "4fea192e-a8a8-535c-a073-b530c15c0870",
+      "source_unit": 1,
+      "source_page_title": "The Hymns of the Rigveda/Book 1/Hymn 67",
+      "source_revision_id": 14396886,
+      "source_unit_text_matches_current_row": true,
+      "spine": "PAIRED_DVIPADA",
+      "corrected_anchor_key": "VG:RV:SAK:M01:S067:V001",
+      "covers_canonical_keys": [
+        "VG:RV:SAK:M01:S067:V001",
+        "VG:RV:SAK:M01:S067:V002"
+      ],
+      "attachment": "CORRECT"
+    },
+    {
+      "current_canonical_key": "VG:RV:SAK:M01:S067:V002",
+      "coordinate": {
+        "mandala": 1,
+        "sukta": 67,
+        "mantra": 2
+      },
+      "sanskrit_sha256": "4f51aafe6b5beecc3c283a59b6cd33113fcece1be63a3332d85f8ad6130e8a38",
+      "sanskrit": "kṣemo̱ na sā̱dhuḥ kratu̱r na bha̱dro bhuva̍t svā̱dhīr hotā̍ havya̱vāṭ ||",
+      "current_translation": "He, bearing in his hand all manly might, crouched in the cavern, struck the Gods with fear. Men filled with understanding find him there, when they have sting prayers formed within their heart.",
+      "current_translation_sha256": "765c87fae7f8d4376adeeb5835dc83bf9b3d0c53c084ee559d70e52e2a4f5a6d",
+      "translation_source": "WIKISOURCE_GRIFFITH_RV",
+      "translator": "Ralph T. H. Griffith",
+      "alignment_level": "MANTRA",
+      "quality_status": "MACHINE_ALIGNED",
+      "current_translation_id": "c3a469fe-8a6a-525c-87c5-03331cfa7101",
+      "source_unit": 2,
+      "source_page_title": "The Hymns of the Rigveda/Book 1/Hymn 67",
+      "source_revision_id": 14396886,
+      "source_unit_text_matches_current_row": true,
+      "spine": "PAIRED_DVIPADA",
+      "corrected_anchor_key": "VG:RV:SAK:M01:S067:V003",
+      "covers_canonical_keys": [
+        "VG:RV:SAK:M01:S067:V003",
+        "VG:RV:SAK:M01:S067:V004"
+      ],
+      "attachment": "WRONG"
+    },
+    {
+      "current_canonical_key": "VG:RV:SAK:M01:S067:V003",
+      "coordinate": {
+        "mandala": 1,
+        "sukta": 67,
+        "mantra": 3
+      },
+      "sanskrit_sha256": "3a0404eae95e6a398d7db468d111e7ebe7e95fe34673eaab71cc8a34e79531ff",
+      "sanskrit": "haste̱ dadhā̍no nṛ̱mṇā viśvā̱ny ame̍ de̱vān dhā̱d guhā̍ ni̱ṣīda̍n ||",
+      "current_translation": "He, like the Unborn, holds the broad earth up; and with effective utterance fixed the sky. O Agni, guard the spots which cattle love: thou, life of all, hast gone from lair to lair.",
+      "current_translation_sha256": "2488f6415109e278abf36bea0dfaaa86f0dc8b0dd7454705cdc7ace2910c2c86",
+      "translation_source": "WIKISOURCE_GRIFFITH_RV",
+      "translator": "Ralph T. H. Griffith",
+      "alignment_level": "MANTRA",
+      "quality_status": "MACHINE_ALIGNED",
+      "current_translation_id": "286f302c-0d5d-5b83-a0fa-0c48d2b60603",
+      "source_unit": 3,
+      "source_page_title": "The Hymns of the Rigveda/Book 1/Hymn 67",
+      "source_revision_id": 14396886,
+      "source_unit_text_matches_current_row": true,
+      "spine": "PAIRED_DVIPADA",
+      "corrected_anchor_key": "VG:RV:SAK:M01:S067:V005",
+      "covers_canonical_keys": [
+        "VG:RV:SAK:M01:S067:V005",
+        "VG:RV:SAK:M01:S067:V006"
+      ],
+      "attachment": "WRONG"
+    },
+    {
+      "current_canonical_key": "VG:RV:SAK:M01:S067:V004",
+      "coordinate": {
+        "mandala": 1,
+        "sukta": 67,
+        "mantra": 4
+      },
+      "sanskrit_sha256": "330d2db3fbd4e0a16ffcd83c13894eee0d73229988d9d1316e439f00be28630d",
+      "sanskrit": "vi̱dantī̱m atra̱ naro̍ dhiya̱ṁdhā hṛ̱dā yat ta̱ṣṭān mantrā̱m̐ aśa̍ṁsan ||",
+      "current_translation": "Whoso hath known him dwelling in his lair, and hath approached the stream of holy Law,-- They who release him, paying sacred rites,--truly to such doth he announce great wealth.",
+      "current_translation_sha256": "5faca335e7fe5bee2ba2f3e362553ef0e8b7e10ccc3f8adf4e208253a3ea8d1f",
+      "translation_source": "WIKISOURCE_GRIFFITH_RV",
+      "translator": "Ralph T. H. Griffith",
+      "alignment_level": "MANTRA",
+      "quality_status": "MACHINE_ALIGNED",
+      "current_translation_id": "3472de91-62b1-5905-a504-ac3390ddae0e",
+      "source_unit": 4,
+      "source_page_title": "The Hymns of the Rigveda/Book 1/Hymn 67",
+      "source_revision_id": 14396886,
+      "source_unit_text_matches_current_row": true,
+      "spine": "PAIRED_DVIPADA",
+      "corrected_anchor_key": "VG:RV:SAK:M01:S067:V007",
+      "covers_canonical_keys": [
+        "VG:RV:SAK:M01:S067:V007",
+        "VG:RV:SAK:M01:S067:V008"
+      ],
+      "attachment": "WRONG"
+    },
+    {
+      "current_canonical_key": "VG:RV:SAK:M01:S067:V005",
+      "coordinate": {
+        "mandala": 1,
+        "sukta": 67,
+        "mantra": 5
+      },
+      "sanskrit_sha256": "42542c5d30ac1deb419be8e6b46a919685471dd764add3870260609af543859f",
+      "sanskrit": "a̱jo na kṣāṁ dā̱dhāra̍ pṛthi̱vīṁ ta̱stambha̱ dyām mantre̍bhiḥ sa̱tyaiḥ ||",
+      "current_translation": "He who grows mightily in herbs, within each fruitful mother and each babe she bears, Wise, life of all men, in the waters' home,--for him have sages built as 'twere a seat.",
+      "current_translation_sha256": "89d4175b5422a4e05c68e305307930ea8a577851661a1b1303d05353d33cc8fb",
+      "translation_source": "WIKISOURCE_GRIFFITH_RV",
+      "translator": "Ralph T. H. Griffith",
+      "alignment_level": "MANTRA",
+      "quality_status": "MACHINE_ALIGNED",
+      "current_translation_id": "cb8d44b6-254d-5b78-886c-cf6060c7c97e",
+      "source_unit": 5,
+      "source_page_title": "The Hymns of the Rigveda/Book 1/Hymn 67",
+      "source_revision_id": 14396886,
+      "source_unit_text_matches_current_row": true,
+      "spine": "PAIRED_DVIPADA",
+      "corrected_anchor_key": "VG:RV:SAK:M01:S067:V009",
+      "covers_canonical_keys": [
+        "VG:RV:SAK:M01:S067:V009",
+        "VG:RV:SAK:M01:S067:V010"
+      ],
+      "attachment": "WRONG"
+    },
+    {
+      "current_canonical_key": "VG:RV:SAK:M01:S068:V001",
+      "coordinate": {
+        "mandala": 1,
+        "sukta": 68,
+        "mantra": 1
+      },
+      "sanskrit_sha256": "de88f62b8febaf430487eb76dcf5c41c9faab33e9872418e128f46f2e5adbe5b",
+      "sanskrit": "śrī̱ṇann upa̍ sthā̱d diva̍m bhura̱ṇyuḥ sthā̱tuś ca̱ratha̍m a̱ktūn vy ū̍rṇot ||",
+      "current_translation": "COMMINGLING, restless, he ascends the sky, unveiling nights and all that stands or moves, As he the sole God is preeminent in greatness among all these other Gods.",
+      "current_translation_sha256": "5e82a8a24446150bd4e7eb5a368f58ca353914c0ca1bc81a55b9188f45babd64",
+      "translation_source": "WIKISOURCE_GRIFFITH_RV",
+      "translator": "Ralph T. H. Griffith",
+      "alignment_level": "MANTRA",
+      "quality_status": "MACHINE_ALIGNED",
+      "current_translation_id": "1c2b4818-d07f-5c18-9cd1-9c00e67a8916",
+      "source_unit": 1,
+      "source_page_title": "The Hymns of the Rigveda/Book 1/Hymn 68",
+      "source_revision_id": 14396887,
+      "source_unit_text_matches_current_row": true,
+      "spine": "PAIRED_DVIPADA",
+      "corrected_anchor_key": "VG:RV:SAK:M01:S068:V001",
+      "covers_canonical_keys": [
+        "VG:RV:SAK:M01:S068:V001",
+        "VG:RV:SAK:M01:S068:V002"
+      ],
+      "attachment": "CORRECT"
+    },
+    {
+      "current_canonical_key": "VG:RV:SAK:M01:S068:V002",
+      "coordinate": {
+        "mandala": 1,
+        "sukta": 68,
+        "mantra": 2
+      },
+      "sanskrit_sha256": "759e61c2deaea9c7066ed7107caa0dcdeb0e3ac2406cc1b43086db465c2a6858",
+      "sanskrit": "pari̱ yad e̍ṣā̱m eko̱ viśve̍ṣā̱m bhuva̍d de̱vo de̱vānā̍m mahi̱tvā ||",
+      "current_translation": "All men are joyful in thy power, O God, that living from the dry wood thou art born. All truly share thy Godhead while they keep, in their accustomed ways, eternal Law.",
+      "current_translation_sha256": "0ada56a5d4be01a997828c15005f10e25f2ed9f20dea4ba5858d35e6814345ad",
+      "translation_source": "WIKISOURCE_GRIFFITH_RV",
+      "translator": "Ralph T. H. Griffith",
+      "alignment_level": "MANTRA",
+      "quality_status": "MACHINE_ALIGNED",
+      "current_translation_id": "3984da2c-be63-56ab-9b50-d3bc23780191",
+      "source_unit": 2,
+      "source_page_title": "The Hymns of the Rigveda/Book 1/Hymn 68",
+      "source_revision_id": 14396887,
+      "source_unit_text_matches_current_row": true,
+      "spine": "PAIRED_DVIPADA",
+      "corrected_anchor_key": "VG:RV:SAK:M01:S068:V003",
+      "covers_canonical_keys": [
+        "VG:RV:SAK:M01:S068:V003",
+        "VG:RV:SAK:M01:S068:V004"
+      ],
+      "attachment": "WRONG"
+    },
+    {
+      "current_canonical_key": "VG:RV:SAK:M01:S068:V003",
+      "coordinate": {
+        "mandala": 1,
+        "sukta": 68,
+        "mantra": 3
+      },
+      "sanskrit_sha256": "65cf060a702615e0eae09a11fa6342c35f63d6228231cabe8f14857a9a4e57f1",
+      "sanskrit": "ād it te̱ viśve̱ kratu̍ṁ juṣanta̱ śuṣkā̱d yad de̍va jī̱vo jani̍ṣṭhāḥ ||",
+      "current_translation": "Strong is the thought of Law, the Law's behest; all works have they performed; he quickens all. Whoso will bring oblation, gifts to thee, to him, bethinking thee, vouchsafe thou wealth.",
+      "current_translation_sha256": "2d12f29858c2d8fb18121615532de8dfee194965e844b5042338580f4062fb5c",
+      "translation_source": "WIKISOURCE_GRIFFITH_RV",
+      "translator": "Ralph T. H. Griffith",
+      "alignment_level": "MANTRA",
+      "quality_status": "MACHINE_ALIGNED",
+      "current_translation_id": "33a76ebf-1369-55a6-8614-62ad3c579e37",
+      "source_unit": 3,
+      "source_page_title": "The Hymns of the Rigveda/Book 1/Hymn 68",
+      "source_revision_id": 14396887,
+      "source_unit_text_matches_current_row": true,
+      "spine": "PAIRED_DVIPADA",
+      "corrected_anchor_key": "VG:RV:SAK:M01:S068:V005",
+      "covers_canonical_keys": [
+        "VG:RV:SAK:M01:S068:V005",
+        "VG:RV:SAK:M01:S068:V006"
+      ],
+      "attachment": "WRONG"
+    },
+    {
+      "current_canonical_key": "VG:RV:SAK:M01:S068:V004",
+      "coordinate": {
+        "mandala": 1,
+        "sukta": 68,
+        "mantra": 4
+      },
+      "sanskrit_sha256": "634061a6b7aa5c689a73ab4d9ed30bad74769d08efd3075506843e0a0e5c4449",
+      "sanskrit": "bhaja̍nta̱ viśve̍ deva̱tvaṁ nāma̍ ṛ̱taṁ sapa̍nto a̱mṛta̱m evai̍ḥ ||",
+      "current_translation": "Seated as Priest with Manu's progeny, of all these treasures he alone is Lord. Men yearn for children to prolong their line, and are not disappointed in their hope.",
+      "current_translation_sha256": "64fd254ada97acbfbc07300a7ab2bba2aac5b34c144a5e68194ab3ca4e4bd5fa",
+      "translation_source": "WIKISOURCE_GRIFFITH_RV",
+      "translator": "Ralph T. H. Griffith",
+      "alignment_level": "MANTRA",
+      "quality_status": "MACHINE_ALIGNED",
+      "current_translation_id": "fb3e0e14-5105-5742-8d30-b8fe2237f95e",
+      "source_unit": 4,
+      "source_page_title": "The Hymns of the Rigveda/Book 1/Hymn 68",
+      "source_revision_id": 14396887,
+      "source_unit_text_matches_current_row": true,
+      "spine": "PAIRED_DVIPADA",
+      "corrected_anchor_key": "VG:RV:SAK:M01:S068:V007",
+      "covers_canonical_keys": [
+        "VG:RV:SAK:M01:S068:V007",
+        "VG:RV:SAK:M01:S068:V008"
+      ],
+      "attachment": "WRONG"
+    },
+    {
+      "current_canonical_key": "VG:RV:SAK:M01:S068:V005",
+      "coordinate": {
+        "mandala": 1,
+        "sukta": 68,
+        "mantra": 5
+      },
+      "sanskrit_sha256": "6d0455c6d1211271bfcf16b4b305dfb58a63b46b2e285821cd5f3810ec8d7934",
+      "sanskrit": "ṛ̱tasya̱ preṣā̍ ṛ̱tasya̍ dhī̱tir vi̱śvāyu̱r viśve̱ apā̍ṁsi cakruḥ ||",
+      "current_translation": "Eagerly they who hear his word fulfil his wish as sons obey their sire's behest. He, rich in food, unbars his wealth like doors: he, the House-Friend, hath decked heaven's vault with stars.",
+      "current_translation_sha256": "2af645f4375b66b617ecab5411b77332fa1266bb6e300c29f413a6a2808fcad8",
+      "translation_source": "WIKISOURCE_GRIFFITH_RV",
+      "translator": "Ralph T. H. Griffith",
+      "alignment_level": "MANTRA",
+      "quality_status": "MACHINE_ALIGNED",
+      "current_translation_id": "6f99d21e-2395-57f0-8582-3c9db2fa3b07",
+      "source_unit": 5,
+      "source_page_title": "The Hymns of the Rigveda/Book 1/Hymn 68",
+      "source_revision_id": 14396887,
+      "source_unit_text_matches_current_row": true,
+      "spine": "PAIRED_DVIPADA",
+      "corrected_anchor_key": "VG:RV:SAK:M01:S068:V009",
+      "covers_canonical_keys": [
+        "VG:RV:SAK:M01:S068:V009",
+        "VG:RV:SAK:M01:S068:V010"
+      ],
+      "attachment": "WRONG"
+    },
+    {
+      "current_canonical_key": "VG:RV:SAK:M01:S069:V001",
+      "coordinate": {
+        "mandala": 1,
+        "sukta": 69,
+        "mantra": 1
+      },
+      "sanskrit_sha256": "51c131fbe8a3c1b270f62990c7d0c95a7a72011b7571c536ba2cbe6a1166e542",
+      "sanskrit": "śu̱kraḥ śu̍śu̱kvām̐ u̱ṣo na jā̱raḥ pa̱prā sa̍mī̱cī di̱vo na jyoti̍ḥ ||",
+      "current_translation": "BRIGHT, splendid, like Dawn's lover, he hath filled the two joined worlds as with the light of heaven. When born, with might thou hast encompassed them: Father of Gods, and yet their Son wast thou.",
+      "current_translation_sha256": "8dde2992caf064f1f4f86b7fa302fc8287e9331515c77c942cff3cb5bfb7a68b",
+      "translation_source": "WIKISOURCE_GRIFFITH_RV",
+      "translator": "Ralph T. H. Griffith",
+      "alignment_level": "MANTRA",
+      "quality_status": "MACHINE_ALIGNED",
+      "current_translation_id": "0561b2c5-4a03-58aa-91bb-29e603e4a71d",
+      "source_unit": 1,
+      "source_page_title": "The Hymns of the Rigveda/Book 1/Hymn 69",
+      "source_revision_id": 14396888,
+      "source_unit_text_matches_current_row": true,
+      "spine": "PAIRED_DVIPADA",
+      "corrected_anchor_key": "VG:RV:SAK:M01:S069:V001",
+      "covers_canonical_keys": [
+        "VG:RV:SAK:M01:S069:V001",
+        "VG:RV:SAK:M01:S069:V002"
+      ],
+      "attachment": "CORRECT"
+    },
+    {
+      "current_canonical_key": "VG:RV:SAK:M01:S069:V002",
+      "coordinate": {
+        "mandala": 1,
+        "sukta": 69,
+        "mantra": 2
+      },
+      "sanskrit_sha256": "abb8c4b193ed209ba02838d8365104b7b26c25065ee7a19dc1230e823a02f7dc",
+      "sanskrit": "pari̱ prajā̍ta̱ḥ kratvā̍ babhūtha̱ bhuvo̍ de̱vānā̍m pi̱tā pu̱traḥ san ||",
+      "current_translation": "Agni, the Sage, the humble, who discerns like the cow's udder, the sweet taste of food, Like a bliss-giver to be drawn to men, sits gracious in the middle of the house.",
+      "current_translation_sha256": "ae85b524067d35cdd662a89b83627362f6eb1d7a99e0233cdddda442acc21afa",
+      "translation_source": "WIKISOURCE_GRIFFITH_RV",
+      "translator": "Ralph T. H. Griffith",
+      "alignment_level": "MANTRA",
+      "quality_status": "MACHINE_ALIGNED",
+      "current_translation_id": "9bc87dd4-9c74-5362-ad9a-dcfbbaa21f2d",
+      "source_unit": 2,
+      "source_page_title": "The Hymns of the Rigveda/Book 1/Hymn 69",
+      "source_revision_id": 14396888,
+      "source_unit_text_matches_current_row": true,
+      "spine": "PAIRED_DVIPADA",
+      "corrected_anchor_key": "VG:RV:SAK:M01:S069:V003",
+      "covers_canonical_keys": [
+        "VG:RV:SAK:M01:S069:V003",
+        "VG:RV:SAK:M01:S069:V004"
+      ],
+      "attachment": "WRONG"
+    },
+    {
+      "current_canonical_key": "VG:RV:SAK:M01:S069:V003",
+      "coordinate": {
+        "mandala": 1,
+        "sukta": 69,
+        "mantra": 3
+      },
+      "sanskrit_sha256": "ac1d66410dd15ae79cb3b99eb974293b3a7ddfae113d9cde409ad0cf8678ef11",
+      "sanskrit": "ve̱dhā adṛ̍pto a̱gnir vi̍jā̱nann ūdha̱r na gonā̱ṁ svādmā̍ pitū̱nām ||",
+      "current_translation": "Born in the dwelling like a lovely son, pleased, like a strong steed, he bears on the folk. What time the men and I, with heroes, call, may Agni then gain all through Godlike power.",
+      "current_translation_sha256": "b8f060e9f6eb95dea3f5c80739d486e2b4771c808c31fd9611f2434d571e14da",
+      "translation_source": "WIKISOURCE_GRIFFITH_RV",
+      "translator": "Ralph T. H. Griffith",
+      "alignment_level": "MANTRA",
+      "quality_status": "MACHINE_ALIGNED",
+      "current_translation_id": "ea588a01-6335-5333-b502-e91dd9d299ef",
+      "source_unit": 3,
+      "source_page_title": "The Hymns of the Rigveda/Book 1/Hymn 69",
+      "source_revision_id": 14396888,
+      "source_unit_text_matches_current_row": true,
+      "spine": "PAIRED_DVIPADA",
+      "corrected_anchor_key": "VG:RV:SAK:M01:S069:V005",
+      "covers_canonical_keys": [
+        "VG:RV:SAK:M01:S069:V005",
+        "VG:RV:SAK:M01:S069:V006"
+      ],
+      "attachment": "WRONG"
+    },
+    {
+      "current_canonical_key": "VG:RV:SAK:M01:S069:V004",
+      "coordinate": {
+        "mandala": 1,
+        "sukta": 69,
+        "mantra": 4
+      },
+      "sanskrit_sha256": "33f29fc9315b51ac159094ecd5dc37f159f28fa66c6c8d11be47fe2ab911fe3f",
+      "sanskrit": "jane̱ na śeva̍ ā̱hūrya̱ḥ san madhye̱ niṣa̍tto ra̱ṇvo du̍ro̱ṇe ||",
+      "current_translation": "None breaks these holy laws of thine when thou hast granted audience to these chieftains here. This is thy boast, thou smotest with thy peers, and joined with heroes dravest off disgrace.",
+      "current_translation_sha256": "b05f55219e300c16f7e9fd43b60881d0799f3b2e2b22d3b1d794d007f7208762",
+      "translation_source": "WIKISOURCE_GRIFFITH_RV",
+      "translator": "Ralph T. H. Griffith",
+      "alignment_level": "MANTRA",
+      "quality_status": "MACHINE_ALIGNED",
+      "current_translation_id": "8ca98e10-7c5c-5b09-9349-5c5da1aeb7d5",
+      "source_unit": 4,
+      "source_page_title": "The Hymns of the Rigveda/Book 1/Hymn 69",
+      "source_revision_id": 14396888,
+      "source_unit_text_matches_current_row": true,
+      "spine": "PAIRED_DVIPADA",
+      "corrected_anchor_key": "VG:RV:SAK:M01:S069:V007",
+      "covers_canonical_keys": [
+        "VG:RV:SAK:M01:S069:V007",
+        "VG:RV:SAK:M01:S069:V008"
+      ],
+      "attachment": "WRONG"
+    },
+    {
+      "current_canonical_key": "VG:RV:SAK:M01:S069:V005",
+      "coordinate": {
+        "mandala": 1,
+        "sukta": 69,
+        "mantra": 5
+      },
+      "sanskrit_sha256": "9a15e3afba3b39484516bb9a3130a31f2f82cee1586c1d5377bea73b1bb327d3",
+      "sanskrit": "pu̱tro na jā̱to ra̱ṇvo du̍ro̱ṇe vā̱jī na prī̱to viśo̱ vi tā̍rīt ||",
+      "current_translation": "Like the Dawn's lover, spreading light, well-known as hued like morn, may he remember me. They, bearing of themselves, unbar the doors: they all ascend to the fair place of heaven.",
+      "current_translation_sha256": "3a9ef3abbd3411239d33119834511a5b6b1e0a859709af1d7dff6173ff3cd856",
+      "translation_source": "WIKISOURCE_GRIFFITH_RV",
+      "translator": "Ralph T. H. Griffith",
+      "alignment_level": "MANTRA",
+      "quality_status": "MACHINE_ALIGNED",
+      "current_translation_id": "44d949bd-6bc4-506e-8db0-51bb2137105d",
+      "source_unit": 5,
+      "source_page_title": "The Hymns of the Rigveda/Book 1/Hymn 69",
+      "source_revision_id": 14396888,
+      "source_unit_text_matches_current_row": true,
+      "spine": "PAIRED_DVIPADA",
+      "corrected_anchor_key": "VG:RV:SAK:M01:S069:V009",
+      "covers_canonical_keys": [
+        "VG:RV:SAK:M01:S069:V009",
+        "VG:RV:SAK:M01:S069:V010"
+      ],
+      "attachment": "WRONG"
+    },
+    {
+      "current_canonical_key": "VG:RV:SAK:M01:S070:V001",
+      "coordinate": {
+        "mandala": 1,
+        "sukta": 70,
+        "mantra": 1
+      },
+      "sanskrit_sha256": "58657f62fb4b6fe9aa1b38246c45e88d3cc9171560e1fee20be3d77808e266c7",
+      "sanskrit": "va̱nema̍ pū̱rvīr a̱ryo ma̍nī̱ṣā a̱gniḥ su̱śoko̱ viśvā̍ny aśyāḥ ||",
+      "current_translation": "MAY we, the pious, win much food by prayer, may Agni with fair light pervade each act,-- He the observer of the heavenly laws of Gods, and of the race of mortal man.",
+      "current_translation_sha256": "4d3b52baef4b7d13383a7c2de12bc4e5e23ccd7c4cfc53d458f509069fc95a8f",
+      "translation_source": "WIKISOURCE_GRIFFITH_RV",
+      "translator": "Ralph T. H. Griffith",
+      "alignment_level": "MANTRA",
+      "quality_status": "MACHINE_ALIGNED",
+      "current_translation_id": "93093aeb-50c5-5aa4-a2e6-67f9276633cc",
+      "source_unit": 1,
+      "source_page_title": "The Hymns of the Rigveda/Book 1/Hymn 70",
+      "source_revision_id": 14396890,
+      "source_unit_text_matches_current_row": true,
+      "spine": "PAIRED_DVIPADA",
+      "corrected_anchor_key": "VG:RV:SAK:M01:S070:V001",
+      "covers_canonical_keys": [
+        "VG:RV:SAK:M01:S070:V001",
+        "VG:RV:SAK:M01:S070:V002"
+      ],
+      "attachment": "CORRECT"
+    },
+    {
+      "current_canonical_key": "VG:RV:SAK:M01:S070:V002",
+      "coordinate": {
+        "mandala": 1,
+        "sukta": 70,
+        "mantra": 2
+      },
+      "sanskrit_sha256": "03960655fac694cb737f8879c25f031ba8e94c171fc1e3e344970762b56a9c83",
+      "sanskrit": "ā daivyā̍ni vra̱tā ci̍ki̱tvān ā mānu̍ṣasya̱ jana̍sya̱ janma̍ ||",
+      "current_translation": "He who is germ of waters, germ of woods, germ of all things that move not and that move,-- To him even in the rock and in the house: Immortal One, he cares for all mankind.",
+      "current_translation_sha256": "8fa964afc5eb1713596b64975f1a2533423e8df0b121e86358f6a9e51a90e087",
+      "translation_source": "WIKISOURCE_GRIFFITH_RV",
+      "translator": "Ralph T. H. Griffith",
+      "alignment_level": "MANTRA",
+      "quality_status": "MACHINE_ALIGNED",
+      "current_translation_id": "d43fdf69-2855-585d-8e50-1b1f19d7ed5b",
+      "source_unit": 2,
+      "source_page_title": "The Hymns of the Rigveda/Book 1/Hymn 70",
+      "source_revision_id": 14396890,
+      "source_unit_text_matches_current_row": true,
+      "spine": "PAIRED_DVIPADA",
+      "corrected_anchor_key": "VG:RV:SAK:M01:S070:V003",
+      "covers_canonical_keys": [
+        "VG:RV:SAK:M01:S070:V003",
+        "VG:RV:SAK:M01:S070:V004"
+      ],
+      "attachment": "WRONG"
+    },
+    {
+      "current_canonical_key": "VG:RV:SAK:M01:S070:V003",
+      "coordinate": {
+        "mandala": 1,
+        "sukta": 70,
+        "mantra": 3
+      },
+      "sanskrit_sha256": "714f77f8c5875c3495ec350a502edc49bd7611493e45e2d10c6df7a5fac8b611",
+      "sanskrit": "garbho̱ yo a̱pāṁ garbho̱ vanā̍nā̱ṁ garbha̍ś ca sthā̱tāṁ garbha̍ś ca̱rathā̍m ||",
+      "current_translation": "Agni is Lord of riches for the man who serves him readily with sacred songs. Protect these beings thou with careful thought, knowing the races both of Gods and men.",
+      "current_translation_sha256": "bb035a7d4970237fb441bec0581167a4b5633461fc9e6a78e9ebde11ef54d14d",
+      "translation_source": "WIKISOURCE_GRIFFITH_RV",
+      "translator": "Ralph T. H. Griffith",
+      "alignment_level": "MANTRA",
+      "quality_status": "MACHINE_ALIGNED",
+      "current_translation_id": "fd090d8f-063e-5873-8b6e-2b9da23c77c4",
+      "source_unit": 3,
+      "source_page_title": "The Hymns of the Rigveda/Book 1/Hymn 70",
+      "source_revision_id": 14396890,
+      "source_unit_text_matches_current_row": true,
+      "spine": "PAIRED_DVIPADA",
+      "corrected_anchor_key": "VG:RV:SAK:M01:S070:V005",
+      "covers_canonical_keys": [
+        "VG:RV:SAK:M01:S070:V005",
+        "VG:RV:SAK:M01:S070:V006"
+      ],
+      "attachment": "WRONG"
+    },
+    {
+      "current_canonical_key": "VG:RV:SAK:M01:S070:V004",
+      "coordinate": {
+        "mandala": 1,
+        "sukta": 70,
+        "mantra": 4
+      },
+      "sanskrit_sha256": "b56735e2fe13b8bcaad0cdccd457ccdf836341db523f728d664f630c9de0abb0",
+      "sanskrit": "adrau̍ cid asmā a̱ntar du̍ro̱ṇe vi̱śāṁ na viśvo̍ a̱mṛta̍ḥ svā̱dhīḥ ||",
+      "current_translation": "Whom many dawns and nights, unlike, make strong, whom, born in Law, all things that move and stand,-- He hath been won, Herald who sits in light, making effectual all our holy works.",
+      "current_translation_sha256": "d4d8e517c2d93376532746c6cd85d393b976ca091562d81b544365accb51d63a",
+      "translation_source": "WIKISOURCE_GRIFFITH_RV",
+      "translator": "Ralph T. H. Griffith",
+      "alignment_level": "MANTRA",
+      "quality_status": "MACHINE_ALIGNED",
+      "current_translation_id": "ea1ff7b7-7a5a-593c-978d-e10320cf0ecb",
+      "source_unit": 4,
+      "source_page_title": "The Hymns of the Rigveda/Book 1/Hymn 70",
+      "source_revision_id": 14396890,
+      "source_unit_text_matches_current_row": true,
+      "spine": "PAIRED_DVIPADA",
+      "corrected_anchor_key": "VG:RV:SAK:M01:S070:V007",
+      "covers_canonical_keys": [
+        "VG:RV:SAK:M01:S070:V007",
+        "VG:RV:SAK:M01:S070:V008"
+      ],
+      "attachment": "WRONG"
+    },
+    {
+      "current_canonical_key": "VG:RV:SAK:M01:S070:V005",
+      "coordinate": {
+        "mandala": 1,
+        "sukta": 70,
+        "mantra": 5
+      },
+      "sanskrit_sha256": "c71a7fd75ffbf6d6246e8910aafeb2b49d668648732f24a3df6b12f2766454b8",
+      "sanskrit": "sa hi kṣa̱pāvā̍m̐ a̱gnī ra̍yī̱ṇāṁ dāśa̱d yo a̍smā̱ ara̍ṁ sū̱ktaiḥ ||",
+      "current_translation": "Thou settest value on our cows and woods: all shall bring tribute to us to the light. Men have served thee in many and sundry spots, parting, as 'twere, an aged father's wealth.",
+      "current_translation_sha256": "55ae1d8a6dc62e0918d9b17dcf764a1ad3f24ca78a78b679b22c78f51ab3ed4c",
+      "translation_source": "WIKISOURCE_GRIFFITH_RV",
+      "translator": "Ralph T. H. Griffith",
+      "alignment_level": "MANTRA",
+      "quality_status": "MACHINE_ALIGNED",
+      "current_translation_id": "77d6a75c-e4d4-5389-b6b0-6f9edbed6874",
+      "source_unit": 5,
+      "source_page_title": "The Hymns of the Rigveda/Book 1/Hymn 70",
+      "source_revision_id": 14396890,
+      "source_unit_text_matches_current_row": true,
+      "spine": "PAIRED_DVIPADA",
+      "corrected_anchor_key": "VG:RV:SAK:M01:S070:V009",
+      "covers_canonical_keys": [
+        "VG:RV:SAK:M01:S070:V009",
+        "VG:RV:SAK:M01:S070:V010"
+      ],
+      "attachment": "WRONG"
+    },
+    {
+      "current_canonical_key": "VG:RV:SAK:M01:S070:V006",
+      "coordinate": {
+        "mandala": 1,
+        "sukta": 70,
+        "mantra": 6
+      },
+      "sanskrit_sha256": "9c3c4ced98bcdf123ce1a6a64806822d1e1eec6cb211737eb4bd79e2605e39cc",
+      "sanskrit": "e̱tā ci̍kitvo̱ bhūmā̱ ni pā̍hi de̱vānā̱ṁ janma̱ martā̍m̐ś ca vi̱dvān ||",
+      "current_translation": "Like a brave archer, like one skilled and bold, a fierce avenger, so he shines in fight.",
+      "current_translation_sha256": "fbb9c05944d42096e0f561ede300fd44acede67c44a9a5b1e0eb856e87f0ab90",
+      "translation_source": "WIKISOURCE_GRIFFITH_RV",
+      "translator": "Ralph T. H. Griffith",
+      "alignment_level": "MANTRA",
+      "quality_status": "MACHINE_ALIGNED",
+      "current_translation_id": "913ed8a0-0944-504a-b7d6-2271fd3070b6",
+      "source_unit": 6,
+      "source_page_title": "The Hymns of the Rigveda/Book 1/Hymn 70",
+      "source_revision_id": 14396890,
+      "source_unit_text_matches_current_row": true,
+      "spine": "PAIRED_DVIPADA",
+      "corrected_anchor_key": "VG:RV:SAK:M01:S070:V011",
+      "covers_canonical_keys": [
+        "VG:RV:SAK:M01:S070:V011"
+      ],
+      "attachment": "WRONG"
+    }
+  ],
+  "sha256": "ead92d1a5339a87dad56df3a1545307a142138bc460ac5b086763aab50648ed1"
+}

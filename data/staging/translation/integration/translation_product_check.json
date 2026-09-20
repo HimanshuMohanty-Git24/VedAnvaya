@@ -1,0 +1,237 @@
+{
+ "phase": "K",
+ "base_url": "http://127.0.0.1:8000/api/v1",
+ "cases": [
+  {
+   "label": "1. ordinary source-explicit translation",
+   "key": "VG:AV:SAU:K03:S009:V004",
+   "translations": 1,
+   "coverage_kind": "DEDICATED_TRANSLATION",
+   "language": "en",
+   "language_name": "English",
+   "is_this_passages_own": true,
+   "independent_translation": true,
+   "anchor": "VG:AV:SAU:K03:S009:V004",
+   "span": 1,
+   "source_id": "IA_WAYBACK_GRIFFITH_AV_1895",
+   "reused_from": null,
+   "disclosure": null,
+   "caveat": null,
+   "failures": []
+  },
+  {
+   "label": "2. AV Wayback-recovered translation",
+   "key": "VG:AV:SAU:K20:S001:V001",
+   "translations": 1,
+   "coverage_kind": "DEDICATED_TRANSLATION",
+   "language": "en",
+   "language_name": "English",
+   "is_this_passages_own": true,
+   "independent_translation": true,
+   "anchor": "VG:AV:SAU:K20:S001:V001",
+   "span": 1,
+   "source_id": "IA_WAYBACK_GRIFFITH_AV_1895",
+   "reused_from": null,
+   "disclosure": null,
+   "caveat": null,
+   "failures": []
+  },
+  {
+   "label": "3. YV verified forced address",
+   "key": "VG:YV:VSM:A06:V023",
+   "translations": 1,
+   "coverage_kind": "DEDICATED_TRANSLATION",
+   "language": "en",
+   "language_name": "English",
+   "is_this_passages_own": true,
+   "independent_translation": true,
+   "anchor": "VG:YV:VSM:A06:V023",
+   "span": 1,
+   "source_id": "SACRED_TEXTS_WYV_SNAPSHOT_2026_09_07",
+   "reused_from": null,
+   "disclosure": null,
+   "caveat": null,
+   "failures": []
+  },
+  {
+   "label": "4. RV MANTRA_RANGE anchor",
+   "key": "VG:RV:SAK:M01:S065:V001",
+   "translations": 1,
+   "coverage_kind": "RANGE_TRANSLATION",
+   "language": "en",
+   "language_name": "English",
+   "is_this_passages_own": true,
+   "independent_translation": true,
+   "anchor": "VG:RV:SAK:M01:S065:V001",
+   "span": 2,
+   "source_id": "WIKISOURCE_GRIFFITH_RV",
+   "reused_from": null,
+   "disclosure": "The source prints one rendering across 2 verses of this corpus's numbering, so this translation covers the span rather than this verse alone.",
+   "caveat": null,
+   "failures": []
+  },
+  {
+   "label": "5. RV MANTRA_RANGE secondary verse",
+   "key": "VG:RV:SAK:M01:S065:V002",
+   "translations": 1,
+   "coverage_kind": "RANGE_TRANSLATION",
+   "language": "en",
+   "language_name": "English",
+   "is_this_passages_own": false,
+   "independent_translation": true,
+   "anchor": "VG:RV:SAK:M01:S065:V001",
+   "span": 2,
+   "source_id": "WIKISOURCE_GRIFFITH_RV",
+   "reused_from": null,
+   "disclosure": "The source prints one rendering across 2 verses of this corpus's numbering, so this translation covers the span rather than this verse alone.",
+   "caveat": "This verse has no rendering aligned to it alone. The 1 shown translation covers it as part of a multi-verse print unit anchored on VG:RV:SAK:M01:S065:V001.",
+   "failures": []
+  },
+  {
+   "label": "6. Samaveda reused rendering",
+   "key": "VG:SV:KAU:ARANYA:D01:V07",
+   "translations": 1,
+   "coverage_kind": "REUSED_RENDERING",
+   "language": "en",
+   "language_name": "English",
+   "is_this_passages_own": true,
+   "independent_translation": false,
+   "anchor": "VG:SV:KAU:ARANYA:D01:V07",
+   "span": 1,
+   "source_id": "VEDAGRAPH_CANONICAL_RV_GRIFFITH",
+   "reused_from": "RV 9.61.12",
+   "disclosure": "English rendering reused from the Rigvedic parallel of RV 9.61.12. The Sanskrit of the two passages is verified identical; this is not an independent translatio",
+   "caveat": "At least one rendering here is reused from another corpus's published translation of verified-identical text. It is not an independent translation of the SV, and it is excluded from this corpus's tran",
+   "failures": []
+  },
+  {
+   "label": "7. Latin / non-English row",
+   "key": "VG:AV:SAU:K20:S136:V001",
+   "translations": 1,
+   "coverage_kind": "DEDICATED_TRANSLATION",
+   "language": "la",
+   "language_name": "Latin",
+   "is_this_passages_own": true,
+   "independent_translation": true,
+   "anchor": "VG:AV:SAU:K20:S136:V001",
+   "span": 1,
+   "source_id": "IA_WAYBACK_GRIFFITH_AV_1895",
+   "reused_from": null,
+   "disclosure": "This rendering is in Latin, not English. Griffith rendered passages he judged too explicit for an English readership into Latin instead; the literal is his publ",
+   "caveat": "At least one rendering here is not in English. Griffith put passages he judged too explicit into Latin, and those are his real published text but are not the English layer.",
+   "failures": []
+  },
+  {
+   "label": "8. withheld forced address",
+   "key": "VG:YV:VSM:A20:V085",
+   "translations": 0,
+   "data_status": "INSUFFICIENT_EVIDENCE",
+   "caveat": "No translation of any kind reaches this verse, although its corpus is translated: verses with their own English rendering number 10,479 of 10,552 for the Rigveda, 1,939 of 1,975 for the Yajurveda and ",
+   "failures": []
+  },
+  {
+   "label": "9. uncovered verse",
+   "key": "VG:RV:SAK:M10:S086:V016",
+   "translations": 0,
+   "data_status": "INSUFFICIENT_EVIDENCE",
+   "caveat": "No translation of any kind reaches this verse, although its corpus is translated: verses with their own English rendering number 10,479 of 10,552 for the Rigveda, 1,939 of 1,975 for the Yajurveda and ",
+   "failures": []
+  },
+  {
+   "label": "10. existing pre-import translation",
+   "key": "VG:RV:SAK:M01:S001:V001",
+   "translations": 1,
+   "coverage_kind": "DEDICATED_TRANSLATION",
+   "language": "en",
+   "language_name": "English",
+   "is_this_passages_own": true,
+   "independent_translation": true,
+   "anchor": "VG:RV:SAK:M01:S001:V001",
+   "span": 1,
+   "source_id": "WIKISOURCE_GRIFFITH_RV",
+   "reused_from": null,
+   "disclosure": null,
+   "caveat": null,
+   "failures": []
+  }
+ ],
+ "coverage": {
+  "per_work": {
+   "VG:WORK:RV:SAK": {
+    "mantras": 10552,
+    "dedicated": 10479,
+    "range_covered": 60,
+    "reused_rendering": 0,
+    "other_language": 6,
+    "uncovered": 7,
+    "percent_dedicated": 99.31,
+    "populations_sum_to_the_corpus": true
+   },
+   "VG:WORK:SV:KAU": {
+    "mantras": 1844,
+    "dedicated": 0,
+    "range_covered": 0,
+    "reused_rendering": 173,
+    "other_language": 0,
+    "uncovered": 1671,
+    "percent_dedicated": 0.0,
+    "populations_sum_to_the_corpus": true
+   },
+   "VG:WORK:YV:VSM": {
+    "mantras": 1975,
+    "dedicated": 1939,
+    "range_covered": 0,
+    "reused_rendering": 0,
+    "other_language": 0,
+    "uncovered": 36,
+    "percent_dedicated": 98.18,
+    "populations_sum_to_the_corpus": true
+   },
+   "VG:WORK:AV:SAU": {
+    "mantras": 5839,
+    "dedicated": 5715,
+    "range_covered": 68,
+    "reused_rendering": 21,
+    "other_language": 18,
+    "uncovered": 17,
+    "percent_dedicated": 97.88,
+    "populations_sum_to_the_corpus": true
+   }
+  },
+  "failures": []
+ },
+ "ask_evidence": {
+  "surface": "retriever + build_evidence_packet",
+  "checks": [
+   {
+    "label": "samavedic reused rendering",
+    "key": "VG:SV:KAU:ARANYA:D01:V07",
+    "evidence_items": 1,
+    "items_quoting_a_translation": 1,
+    "disclosures": [
+     "English rendering reused from the Rigvedic parallel of RV 9.61.12. The Sanskrit of the two passages is verified identical; this is not an independent translation of this verse's own corpus."
+    ],
+    "qualifiers": [
+     "English rendering reused from the Rigvedic parallel of RV 9.61.12. The Sanskrit of the two passages is verified identical; this is not an independent translation of this verse's own corpus."
+    ],
+    "prompt_carries_the_disclosure_line": true
+   },
+   {
+    "label": "rigvedic range secondary verse",
+    "key": "VG:RV:SAK:M01:S065:V002",
+    "evidence_items": 1,
+    "items_quoting_a_translation": 1,
+    "disclosures": [
+     "The source prints one rendering across 2 verses of this corpus's numbering, so this translation covers the span rather than this verse alone."
+    ],
+    "qualifiers": [
+     "The source prints one rendering across 2 verses of this corpus's numbering, so this translation covers the span rather than this verse alone."
+    ],
+    "prompt_carries_the_disclosure_line": true
+   }
+  ],
+  "failures": []
+ },
+ "failures": [],
+ "verdict": "PRODUCT_TRUTHFUL"
+}

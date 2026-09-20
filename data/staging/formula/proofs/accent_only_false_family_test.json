@@ -1,0 +1,186 @@
+{
+ "question": "of the pairs that become identical only once accents are stripped, which are genuine accent variants and which are an artefact of two notations?",
+ "why_it_matters": "typing all of them as accent variants would invent 150 textual variants that are notation artefacts; typing none of them would erase 23 real ones. The discriminator is the measured notation class, not a guess.",
+ "pairs_identical_only_at_ACCENT_INSENSITIVE": 173,
+ "classified": {
+  "AV-AV|GRETIL_AV_ACUTE_GRAVE|SAME_NOTATION_DIFFERENT_ACCENTUATION": 15,
+  "AV-AV|GRETIL_AV_ACUTE_GRAVE|SAME_NOTATION_SAME_MARK_COUNTS": 1,
+  "AV-RV|GRETIL_AV_ACUTE_GRAVE vs GRETIL_RV_ANUDATTA_SVARITA|INCOMPATIBLE_NOTATION_CLASSES": 81,
+  "SV-YV|UNACCENTED vs DEVANAGARI_SVARA|INCOMPATIBLE_NOTATION_CLASSES": 69,
+  "YV-YV|DEVANAGARI_SVARA|SAME_NOTATION_DIFFERENT_ACCENTUATION": 6,
+  "YV-YV|DEVANAGARI_SVARA|SAME_NOTATION_SAME_MARK_COUNTS": 1
+ },
+ "verdict": {
+  "INCOMPATIBLE_NOTATION_CLASSES": "150 pairs -- 81 AV-RV and 69 SV-YV. GRETIL's Atharvaveda marks tone with acute and grave; GRETIL's Rigveda marks it with macron-below and vertical-line-above; the Samavedic source marks none at all. Two texts in different notations CANNOT agree above ACCENT_INSENSITIVE, so for these pairs that level is the comparison ceiling and the right claim is EXACT_PARALLEL_OF with no accent assertion. The live graph already types all 150 that way and is correct.",
+  "SAME_NOTATION_DIFFERENT_ACCENTUATION": "21 pairs -- 15 AV-AV and 6 YV-YV. One edition, one notation, different marks placed. These are real accent variants and are typed VARIANT_OF / ACCENT_PLACEMENT.",
+  "SAME_NOTATION_SAME_MARK_COUNTS": "2 pairs. Same mark inventory and same per-mark totals, so the difference is in mark POSITION rather than count. Still a real accent variant; the per-mark counter simply cannot name it, and that limit is stated rather than rounded away."
+ },
+ "worked_examples": [
+  {
+   "a": "VG:AV:SAU:K02:S033:V001",
+   "b": "VG:AV:SAU:K20:S096:V017",
+   "av": "AV",
+   "bv": "AV",
+   "within": true,
+   "strongest": "ACCENT_INSENSITIVE",
+   "reached": [
+    "ACCENT_INSENSITIVE",
+    "SCRIPT_FOLDED",
+    "SANDHI_INSENSITIVE"
+   ],
+   "same_script": true,
+   "notation_a": "GRETIL_AV_ACUTE_GRAVE",
+   "notation_b": "GRETIL_AV_ACUTE_GRAVE",
+   "marks_a": {
+    "ACUTE": 9,
+    "GRAVE": 1
+   },
+   "marks_b": {
+    "ACUTE": 10,
+    "GRAVE": 1
+   },
+   "accent_case": "SAME_NOTATION_DIFFERENT_ACCENTUATION",
+   "text_a": "akṣī́bhyāṃ te nā́sikābhyāṃ kárṇābhyāṃ chúbukād ádhi |\nyákṣmaṃ śīrṣaṇyàṃ mastíṣkāj jihvā́yā ví vr̥hāmi te ||1||",
+   "text_b": "akṣī́bhyāṃ te nā́sikābhyāṃ kárṇābhyāṃ chúbukād ádhi |\nyákṣmaṃ śī́rṣaṇyàṃ mastíṣkāj jihvā́yā ví vr̥hāmi te ||17||",
+   "citation_a": "AVS 2.33.1",
+   "citation_b": "AVS 20.96.17"
+  },
+  {
+   "a": "VG:AV:SAU:K06:S031:V003",
+   "b": "VG:AV:SAU:K20:S048:V006",
+   "av": "AV",
+   "bv": "AV",
+   "within": true,
+   "strongest": "ACCENT_INSENSITIVE",
+   "reached": [
+    "ACCENT_INSENSITIVE",
+    "SCRIPT_FOLDED",
+    "SANDHI_INSENSITIVE"
+   ],
+   "same_script": true,
+   "notation_a": "GRETIL_AV_ACUTE_GRAVE",
+   "notation_b": "GRETIL_AV_ACUTE_GRAVE",
+   "marks_a": {
+    "ACUTE": 10
+   },
+   "marks_b": {
+    "ACUTE": 9
+   },
+   "accent_case": "SAME_NOTATION_DIFFERENT_ACCENTUATION",
+   "text_a": "triṃśád dhā́mā ví rājati vā́k pataṅgó aśiśríyat |\npráti vástor áhar dyúbhiḥ ||3||",
+   "text_b": "triṃśád dhā́mā ví rājati vā́k pataṅgó aśiśriyat |\npráti vástor áhar dyúbhiḥ ||6||",
+   "citation_a": "AVS 6.31.3",
+   "citation_b": "AVS 20.48.6"
+  },
+  {
+   "a": "VG:AV:SAU:K07:S073:V011",
+   "b": "VG:AV:SAU:K09:S010:V020",
+   "av": "AV",
+   "bv": "AV",
+   "within": true,
+   "strongest": "ACCENT_INSENSITIVE",
+   "reached": [
+    "ACCENT_INSENSITIVE",
+    "SCRIPT_FOLDED",
+    "SANDHI_INSENSITIVE"
+   ],
+   "same_script": true,
+   "notation_a": "GRETIL_AV_ACUTE_GRAVE",
+   "notation_b": "GRETIL_AV_ACUTE_GRAVE",
+   "marks_a": {
+    "ACUTE": 12
+   },
+   "marks_b": {
+    "ACUTE": 13
+   },
+   "accent_case": "SAME_NOTATION_DIFFERENT_ACCENTUATION",
+   "text_a": "sūyavasā́d bhágavatī hí bhūyā́ ádhā vayáṃ bhágavantaḥ syāma |\naddhí tŕ̥ṇam aghnye viśvadā́nīṃ piba śuddhám udakám ācáran",
+   "text_b": "sūyavasā́d bhágavatī hí bhūyā́ ádhā vayáṃ bhágavantaḥ syāma |\naddhí tŕ̥ṇam aghnye viśvadā́nīṃ píba śuddhám udakám ācáran",
+   "citation_a": "AVS 7.73.11",
+   "citation_b": "AVS 9.10.20"
+  },
+  {
+   "a": "VG:AV:SAU:K20:S006:V002",
+   "b": "VG:AV:SAU:K20:S007:V004",
+   "av": "AV",
+   "bv": "AV",
+   "within": true,
+   "strongest": "ACCENT_INSENSITIVE",
+   "reached": [
+    "ACCENT_INSENSITIVE",
+    "SCRIPT_FOLDED",
+    "SANDHI_INSENSITIVE"
+   ],
+   "same_script": true,
+   "notation_a": "GRETIL_AV_ACUTE_GRAVE",
+   "notation_b": "GRETIL_AV_ACUTE_GRAVE",
+   "marks_a": {
+    "ACUTE": 7
+   },
+   "marks_b": {
+    "ACUTE": 6
+   },
+   "accent_case": "SAME_NOTATION_DIFFERENT_ACCENTUATION",
+   "text_a": "índra kratuvídaṃ sutáṃ sómaṃ harya puruṣṭuta |\npíbā́ vr̥ṣasva tā́tr̥pim ||2||",
+   "text_b": "índra kratuvídaṃ sutáṃ sómaṃ harya puruṣṭuta |\npibā́ vr̥ṣasva tā́tr̥pim ||4||",
+   "citation_a": "AVS 20.6.2",
+   "citation_b": "AVS 20.7.4"
+  },
+  {
+   "a": "VG:AV:SAU:K20:S014:V002",
+   "b": "VG:AV:SAU:K20:S062:V002",
+   "av": "AV",
+   "bv": "AV",
+   "within": true,
+   "strongest": "ACCENT_INSENSITIVE",
+   "reached": [
+    "ACCENT_INSENSITIVE",
+    "SCRIPT_FOLDED",
+    "SANDHI_INSENSITIVE"
+   ],
+   "same_script": true,
+   "notation_a": "GRETIL_AV_ACUTE_GRAVE",
+   "notation_b": "GRETIL_AV_ACUTE_GRAVE",
+   "marks_a": {
+    "ACUTE": 14,
+    "GRAVE": 1
+   },
+   "marks_b": {
+    "ACUTE": 13,
+    "GRAVE": 1
+   },
+   "accent_case": "SAME_NOTATION_DIFFERENT_ACCENTUATION",
+   "text_a": "úpa tvā kármann ūtáye sá no yúvográś cakrāma yó dhr̥ṣát |\ntvā́m íd dhy àvitā́raṃ vavr̥máhe sákhāya indra sānasím ||2||",
+   "text_b": "úpa tvā kármann ūtáye sá no yúvográś cakrāma yó dhr̥ṣat |\ntvā́m íd dhy àvitā́raṃ vavr̥máhe sákhāya indra sānasím ||2||",
+   "citation_a": "AVS 20.14.2",
+   "citation_b": "AVS 20.62.2"
+  },
+  {
+   "a": "VG:AV:SAU:K20:S014:V004",
+   "b": "VG:AV:SAU:K20:S062:V004",
+   "av": "AV",
+   "bv": "AV",
+   "within": true,
+   "strongest": "ACCENT_INSENSITIVE",
+   "reached": [
+    "ACCENT_INSENSITIVE",
+    "SCRIPT_FOLDED",
+    "SANDHI_INSENSITIVE"
+   ],
+   "same_script": true,
+   "notation_a": "GRETIL_AV_ACUTE_GRAVE",
+   "notation_b": "GRETIL_AV_ACUTE_GRAVE",
+   "marks_a": {
+    "ACUTE": 13
+   },
+   "marks_b": {
+    "ACUTE": 14
+   },
+   "accent_case": "SAME_NOTATION_DIFFERENT_ACCENTUATION",
+   "text_a": "háryaśvaṃ sátpatiṃ carṣaṇīsáhaṃ sá hí ṣmā yó ámandata |\nā́ tu naḥ sá vayati gávyam áśvyaṃ stotŕ̥bhyo maghávā śatám ||4||",
+   "text_b": "háryaśvaṃ sátpatiṃ carṣaṇīsáhaṃ sá hí ṣmā yó ámandata |\nā́ tú naḥ sá vayati gávyam áśvyaṃ stotŕ̥bhyo maghávā śatám ||4||",
+   "citation_a": "AVS 20.14.4",
+   "citation_b": "AVS 20.62.4"
+  }
+ ]
+}

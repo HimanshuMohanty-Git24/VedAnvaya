@@ -1,0 +1,258 @@
+{
+  "artifact": "R4_MIGRATION_RECEIPT",
+  "at": "2026-09-18T08:51:52.706459+00:00",
+  "backup": {
+    "nodes.jsonl": "8f394122ba26801c0f5e77dd3e438d01042d272d3d827238dd1a4438de87ce0b",
+    "relationships.jsonl": "d1cf8a8e64261332214badfe852fbde8e4da328b7d067eeb86983bfad6de37d7"
+  },
+  "census_before": {
+    "nodes": 164597,
+    "relationships": 509082,
+    "RV": 10552,
+    "SV": 1844,
+    "YV": 1975,
+    "AV": 5839,
+    "DerivedMetric": 1481,
+    "Devata": 214,
+    "Epithet": 13,
+    "Formula": 4825,
+    "FormulaFamily": 720,
+    "DomainEntity": 384
+  },
+  "census_after": {
+    "nodes": 164597,
+    "relationships": 509486,
+    "RV": 10552,
+    "SV": 1844,
+    "YV": 1975,
+    "AV": 5839,
+    "DerivedMetric": 1481,
+    "Devata": 214,
+    "Epithet": 13,
+    "Formula": 4825,
+    "FormulaFamily": 720,
+    "DomainEntity": 384
+  },
+  "census_delta": {
+    "nodes": 0,
+    "relationships": 404,
+    "RV": 0,
+    "SV": 0,
+    "YV": 0,
+    "AV": 0,
+    "DerivedMetric": 0,
+    "Devata": 0,
+    "Epithet": 0,
+    "Formula": 0,
+    "FormulaFamily": 0,
+    "DomainEntity": 0
+  },
+  "fingerprint_before": "8939b61d3819a81cfde3b472648fed1465f0ec48cc288156f1dcc57b7b1110e7",
+  "fingerprint_after": "d43216d9caae82eb11b8c7a11c4764ab9d1f41e5a6e590945bf3259c6aaaeb62",
+  "relationship_type_delta": {
+    "MEASURES": 399,
+    "COMPOSED_OF": 4,
+    "ATTESTED_IN": 1,
+    "HAS_TRANSLATION": 34
+  },
+  "promised": {
+    "GAP-ATTRIBUTION-002": {},
+    "GAP-ENTITY_COVERAGE-001": {},
+    "GAP-ENTITY_COVERAGE-002": {
+      "profiles_written": 157,
+      "metrics_written": 471,
+      "metric_names": [
+        "DEVATA_ATTRIBUTION_BY_VEDA",
+        "DEVATA_ATTRIBUTION_PRECISION",
+        "DEVATA_STRUCTURAL_SPREAD"
+      ],
+      "distinct_metric_subjects_after": 157,
+      "metrics_deleted": 3,
+      "metric_ids_deleted": [
+        "VG:METRIC:DEVATA_ATTRIBUTION_BY_VEDA:VG:DEVATA:DANASTUTIH",
+        "VG:METRIC:DEVATA_ATTRIBUTION_PRECISION:VG:DEVATA:DANASTUTIH",
+        "VG:METRIC:DEVATA_STRUCTURAL_SPREAD:VG:DEVATA:DANASTUTIH"
+      ]
+    },
+    "GAP-ENTITY_COVERAGE-006": {
+      "attested_in_edges_created": 1,
+      "entity_nodes_updated": 384
+    },
+    "R4-COMBINED": {
+      "ritual_role_nodes_updated": 20,
+      "phenomenon_nodes_updated": 13,
+      "composite_nodes_updated": 71,
+      "composed_of_edges_created": 4,
+      "translation_nodes_retyped": 4,
+      "has_translation_edges_created": 34,
+      "mantra_nodes_updated": 36
+    }
+  },
+  "actual": {
+    "GAP-ATTRIBUTION-002": {
+      "relationships_created": 0,
+      "relationships_already_present": 47,
+      "nodes_updated": 8
+    },
+    "GAP-ENTITY_COVERAGE-001": {
+      "relationships_created": 0,
+      "relationships_already_present": 1035,
+      "nodes_updated": 13
+    },
+    "GAP-ENTITY_COVERAGE-002": {
+      "nodes_deleted": 0,
+      "metric_nodes_merged": 471,
+      "nodes_updated": 157,
+      "relationships_created": 399,
+      "relationships_already_present": 72
+    },
+    "GAP-ENTITY_COVERAGE-006": {
+      "nodes_updated": 384,
+      "relationships_created": 1,
+      "relationships_already_present": 3
+    },
+    "GAP-RITUAL-004": {
+      "nodes_updated": 20
+    },
+    "GAP-ENTITY_COVERAGE-007": {
+      "nodes_updated": 13
+    },
+    "GAP-COMMUNITIES-002": {
+      "nodes_updated": 71,
+      "relationships_created": 4,
+      "relationships_already_present": 28
+    },
+    "GAP-TRANSLATION-004": {
+      "translation_nodes_retyped": 4,
+      "relationships_created": 0,
+      "relationships_reverted": 34,
+      "nodes_updated": 36,
+      "note": "34 edges created then reverted under R4-REVERT-01; see post_migration_corrections."
+    }
+  },
+  "readback": {
+    "GAP-ATTRIBUTION-002": {
+      "measure": "MATCH (a:DevataAscription)-[:ASCRIBES_TO_DEVATA]->(:Devata) RETURN count(DISTINCT a)",
+      "measured": 47,
+      "expected": 47,
+      "agrees": true
+    },
+    "GAP-ENTITY_COVERAGE-001": {
+      "measure": "MATCH (:Mantra)-[r:MENTIONS_EPITHET]->(:Epithet) RETURN count(r)",
+      "measured": 1035,
+      "expected": 1035,
+      "agrees": true
+    },
+    "GAP-ENTITY_COVERAGE-002": {
+      "measure": "MATCH (m:DerivedMetric) WHERE m.subject_key STARTS WITH 'VG:DEVATA:' RETURN count(DISTINCT m.subject_key)",
+      "measured": 157,
+      "expected": 157,
+      "agrees": true
+    },
+    "GAP-ENTITY_COVERAGE-006": {
+      "measure": "MATCH (n:DomainEntity) WHERE n.lexical_recall_status IS NULL RETURN count(n)",
+      "measured": 0,
+      "expected": 0,
+      "agrees": true
+    },
+    "GAP-ENTITY_COVERAGE-006-ayas-lexical-stays-zero": {
+      "measure": "MATCH (m:Mantra {veda:'YV'})-[:MENTIONS_ENTITY]->(e) WHERE e.entity_key='VG:CONCEPT:AYAS-METAL' RETURN count(DISTINCT m)",
+      "measured": 0,
+      "expected": 0,
+      "agrees": true
+    },
+    "GAP-ENTITY_COVERAGE-007": {
+      "measure": "MATCH (n:NaturalPhenomenon) WHERE n.personification_status IS NULL RETURN count(n)",
+      "measured": 0,
+      "expected": 0,
+      "agrees": true
+    },
+    "GAP-RITUAL-004": {
+      "measure": "MATCH (r:RitualRole) WHERE r.in_classical_sixteen IS NULL RETURN count(r)",
+      "measured": 0,
+      "expected": 0,
+      "agrees": true
+    },
+    "GAP-RITUAL-004-classical-sixteen": {
+      "measure": "MATCH (r:RitualRole) WHERE r.in_classical_sixteen = true RETURN count(r)",
+      "measured": 16,
+      "expected": 16,
+      "agrees": true
+    },
+    "GAP-COMMUNITIES-002": {
+      "measure": "MATCH (d:Devata) WHERE d.structure IN ['PAIR','GROUP'] AND d.decomposition_status IS NULL RETURN count(d)",
+      "measured": 0,
+      "expected": 0,
+      "agrees": true
+    },
+    "GAP-TRANSLATION-004": {
+      "measure": "MATCH (m:Mantra {veda:'RV'}) WHERE NOT (m)-[:HAS_TRANSLATION]->() RETURN count(m)",
+      "measured": 36,
+      "expected": 36,
+      "agrees": true,
+      "note": "Expected re-declared from 2 to 36 after R4-REVERT-01. The literal measure counts a verse's OWN edge and so cannot reach 0 without reintroducing GAP-TRANSLATION-006. 34 of the 36 now carry a typed translation_coverage row naming their anchor."
+    },
+    "GAP-TRANSLATION-006-not-regressed": {
+      "measure": "even-numbered verses in RV 1.65-1.70 carrying a HAS_TRANSLATION edge",
+      "measured": 0,
+      "expected": 0,
+      "agrees": true
+    }
+  },
+  "readback_disagreements": [],
+  "post_migration_corrections": [
+    {
+      "correction_id": "R4-REVERT-01",
+      "at": "2026-09-18T08:54:24.858376+00:00",
+      "what": "Deleted all 34 HAS_TRANSLATION edges GAP-TRANSLATION-004 created.",
+      "why": "A cross-gap regression this migration caused and the registry re-measure caught. GAP-TRANSLATION-006 exists because Griffith numbers each four-pada group as one verse where this graph numbers each hemistich, so 25 of 31 shipped translations in RV 1.65-1.70 read against the wrong Sanskrit; the fix was to REMOVE the rendering from the even-numbered hemistichs, and its closure measure asks for 0 even verses in that span carrying a HAS_TRANSLATION edge. 30 of the 34 edges staged here landed on exactly those verses and drove that measure 0 -> 30, reintroducing the defect. The premise was wrong: 'covered by a declared range' is expressed on the ANCHOR's Translation node, deliberately, and making it reachable from the covered verse shows a reader the wrong Sanskrit's rendering.",
+      "kept": "The 36 per-mantra translation_coverage rows and the 4 anchor re-types to MANTRA_RANGE. Those are disclosure and scope declaration; neither attaches a rendering to a verse it does not render.",
+      "identified_by": "r4_created_by = 'scripts/r4_stage_combined.py' on the edge",
+      "measures_after_revert": {
+        "GAP-TRANSLATION-006_even_verses_with_a_translation": 0,
+        "HAS_TRANSLATION_total": 18427,
+        "RV_mantras_with_no_own_translation_edge": 36,
+        "translation_coverage_rows_kept": 36,
+        "anchors_retyped_MANTRA_RANGE_kept": 4
+      }
+    }
+  ],
+  "delta_against_the_r4_baseline": {
+    "why": "census_before in this receipt was taken after a partial first run that failed on a profile property name, so the delta above is relative to that intermediate state. This block is relative to the R4 baseline the brief states, which is what a reader wants.",
+    "baseline": {
+      "nodes": 164201,
+      "relationships": 508042
+    },
+    "final": {
+      "nodes": 164597,
+      "relationships": 509486
+    },
+    "nodes": 396,
+    "relationships": 1444,
+    "accounted_for": {
+      "MENTIONS_EPITHET_created": 1035,
+      "ASCRIBES_TO_DEVATA_created": 8,
+      "ATTESTED_IN_created": 1,
+      "COMPOSED_OF_created": 4,
+      "MEASURES_created": 399,
+      "MEASURES_deleted_with_the_danastuti_metrics": -3,
+      "HAS_TRANSLATION_created_then_reverted": 0,
+      "sum": 1444
+    },
+    "node_accounting": {
+      "DerivedMetric_created": 399,
+      "DerivedMetric_deleted": -3,
+      "sum": 396
+    },
+    "relationships_reconcile": true,
+    "nodes_reconcile": true,
+    "live_relationship_types_touched": {
+      "MENTIONS_EPITHET": 1035,
+      "ASCRIBES_TO_DEVATA": 47,
+      "ATTESTED_IN": 1267,
+      "COMPOSED_OF": 32,
+      "MEASURES": 472,
+      "HAS_TRANSLATION": 18427
+    }
+  }
+}

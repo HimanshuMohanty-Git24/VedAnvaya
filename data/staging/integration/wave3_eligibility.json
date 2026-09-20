@@ -1,0 +1,393 @@
+{
+  "schema_version": "1.0",
+  "generated_at": "2026-09-15T15:08:31.220679+00:00",
+  "snapshot_caveat": "A domain whose agent is actively restaging may read FAIL transiently -- most often a manifest checksum mismatch, because the manifest is rewritten after the files it hashes. Re-run once no agent is in flight before treating any gate A result here as final. PER-ROW FRESHNESS: the samaveda_music row was re-measured 2026-09-18 when Gate B and Gate C were implemented and run (see data/staging/samaveda_music_002_final/eligibility_patch.json). Every other row still carries its 2026-09-15 value, so this file is a set of per-domain records and not one simultaneous measurement. Two domains -- attribution and samaveda_music -- have gate artifacts in this directory; only the second has been reconciled into this row.",
+  "gates": {
+    "A": "STRUCTURAL -- schema, identity, subject grain, source refs, denominators",
+    "B": "SEMANTIC -- classification, population, source meaning, relation meaning",
+    "C": "ADVERSARIAL -- headline survived an independent falsification attempt"
+  },
+  "rule": "Wave 3 eligibility requires A=PASS and B=PASS and C=PASS. No combined percentage: a strong A must not be allowed to carry a failed C. Four of four domains adversarially tested so far have failed C, and two of those four had every aggregate count survive.",
+  "domains": {
+    "attribution": {
+      "gate_a_structural": {
+        "status": "PASS",
+        "detail": "validator PASS at full evaluation coverage with --graph"
+      },
+      "gate_b_semantic": {
+        "status": "UNKNOWN",
+        "detail": "no semantic review recorded"
+      },
+      "gate_c_adversarial": {
+        "status": "NOT_RUN",
+        "detail": "adversarial test not yet performed"
+      },
+      "restage_required": false,
+      "restage_reason": null,
+      "blocked_by": [],
+      "depends_on": [],
+      "input_digests": {},
+      "own_digest": "3577b87142f710d570de47fcd75e46199b2c4823eea73de56875d342b7b710df",
+      "stale_inputs": [],
+      "status": "NOT_ELIGIBLE",
+      "status_detail": "gate(s) B, C not passed"
+    },
+    "audio_av": {
+      "gate_a_structural": {
+        "status": "PASS",
+        "detail": "validator PASS at full evaluation coverage with --graph"
+      },
+      "gate_b_semantic": {
+        "status": "UNKNOWN",
+        "detail": "no semantic review recorded"
+      },
+      "gate_c_adversarial": {
+        "status": "NOT_RUN",
+        "detail": "adversarial test not yet performed"
+      },
+      "restage_required": false,
+      "restage_reason": null,
+      "blocked_by": [
+        "OWNER_DECISION_E_AUDIO_GATE"
+      ],
+      "depends_on": [],
+      "input_digests": {},
+      "own_digest": "2c811addd725488278df9399b072751eebb65daa7b1ad81d1f8a3a7f22e9c969",
+      "stale_inputs": [],
+      "status": "BLOCKED",
+      "status_detail": "three gates pass, blocked by OWNER_DECISION_E_AUDIO_GATE"
+    },
+    "audio_rv": {
+      "gate_a_structural": {
+        "status": "PASS",
+        "detail": "validator PASS at full evaluation coverage with --graph"
+      },
+      "gate_b_semantic": {
+        "status": "UNKNOWN",
+        "detail": "no semantic review recorded"
+      },
+      "gate_c_adversarial": {
+        "status": "NOT_RUN",
+        "detail": "adversarial test not yet performed"
+      },
+      "restage_required": false,
+      "restage_reason": null,
+      "blocked_by": [
+        "OWNER_DECISION_E_AUDIO_GATE"
+      ],
+      "depends_on": [],
+      "input_digests": {},
+      "own_digest": "c85bec80f74edfcb515c04534e657adaf1f1e2d0c240295594fe61419b489f67",
+      "stale_inputs": [],
+      "status": "BLOCKED",
+      "status_detail": "three gates pass, blocked by OWNER_DECISION_E_AUDIO_GATE"
+    },
+    "audio_yv": {
+      "gate_a_structural": {
+        "status": "PASS",
+        "detail": "validator PASS at full evaluation coverage with --graph"
+      },
+      "gate_b_semantic": {
+        "status": "UNKNOWN",
+        "detail": "no semantic review recorded"
+      },
+      "gate_c_adversarial": {
+        "status": "NOT_RUN",
+        "detail": "adversarial test not yet performed"
+      },
+      "restage_required": false,
+      "restage_reason": null,
+      "blocked_by": [
+        "OWNER_DECISION_E_AUDIO_GATE"
+      ],
+      "depends_on": [],
+      "input_digests": {},
+      "own_digest": "206f054ef86166a72d1b23e8e23d8427869fc8b3e1420c3043f7b7b09ee7154c",
+      "stale_inputs": [],
+      "status": "BLOCKED",
+      "status_detail": "three gates pass, blocked by OWNER_DECISION_E_AUDIO_GATE"
+    },
+    "communities": {
+      "gate_a_structural": {
+        "status": "PASS",
+        "detail": "validator PASS at full evaluation coverage with --graph"
+      },
+      "gate_b_semantic": {
+        "status": "PASS_AFTER_CORRECTION",
+        "detail": "withdrawn claim replaced by a measured internal limitation"
+      },
+      "gate_c_adversarial": {
+        "status": "SURVIVED",
+        "detail": "the decisive check rested on a scholarly prior the graph contradicts; the claim was withdrawn with the mistake preserved, and the refusal now stands on eight measured grounds with no prior among them"
+      },
+      "restage_required": false,
+      "restage_reason": "Rationale corrected, not data. The refusal stands on six measurements, and the artifact already carries both grains.",
+      "blocked_by": [],
+      "depends_on": [
+        "attribution"
+      ],
+      "input_digests": {
+        "attribution": "3577b87142f710d570de47fcd75e46199b2c4823eea73de56875d342b7b710df"
+      },
+      "own_digest": "157794f1ebe74a46fd8c4a084ab25798f3dcba669691d3ad0190746e6c0c1806",
+      "stale_inputs": [],
+      "status": "ELIGIBLE",
+      "status_detail": "all three gates pass and no blocker is open"
+    },
+    "cross_veda": {
+      "gate_a_structural": {
+        "status": "PASS",
+        "detail": "validator PASS at full evaluation coverage with --graph"
+      },
+      "gate_b_semantic": {
+        "status": "PASS_AFTER_FOLD_FIX",
+        "detail": "396 of 6,271 transformation types corrected and 197 stored relationship types identified as contradicted by their own text. The codebase now reproduces the corrected typing: the fold fix landed as a separate cross-script fold under owner decision 1, leaving the identity fold and all 3,819 released referent digests untouched. The cross-Veda identity baseline was re-recorded deliberately, 1,538 to 1,735."
+      },
+      "gate_c_adversarial": {
+        "status": "SURVIVED",
+        "detail": "root cause traced to dead code -- surfaces transliterates before it folds, so every Devanagari anusvara rule was unreachable on the only cross-script comparison surface. Re-measured over all six pairs rather than assuming Yajurveda-only, which moved RV-SV from a reported 0 to 6."
+      },
+      "restage_required": false,
+      "restage_reason": "Restage complete and the fold fix it waited on is applied.",
+      "blocked_by": [],
+      "depends_on": [
+        "formula"
+      ],
+      "input_digests": {
+        "formula": "caf078d773e7485f68e09fee118172ebab971c5d3032566e1811e3a271011978"
+      },
+      "own_digest": "269c17d3b4c57baf78fb38290137ab8c76f200019e50de0c877bd69478b20cfb",
+      "stale_inputs": [],
+      "status": "ELIGIBLE",
+      "status_detail": "all three gates pass and no blocker is open"
+    },
+    "formula": {
+      "gate_a_structural": {
+        "status": "PASS",
+        "detail": "validator PASS at full evaluation coverage with --graph"
+      },
+      "gate_b_semantic": {
+        "status": "PASS_AFTER_RESTAGE",
+        "detail": "a general structural-reference class replaced the digit exception; all five classes tested and reported including class 4's measured zero. The clearest evidence: EDITORIAL_APPARATUS no longer exists as a transformation type, having held 158 rows."
+      },
+      "gate_c_adversarial": {
+        "status": "SURVIVED",
+        "detail": "whole 34,502-pair population re-run on stripped surfaces, with the floor re-measured on the changed surface rather than inherited. 13 defects recorded, including a validation race the agent caught in its own gate."
+      },
+      "restage_required": false,
+      "restage_reason": "Restage complete and independently re-validated by the lead at 30/30 checksums on frozen bytes.",
+      "blocked_by": [],
+      "depends_on": [],
+      "input_digests": {},
+      "own_digest": "caf078d773e7485f68e09fee118172ebab971c5d3032566e1811e3a271011978",
+      "stale_inputs": [],
+      "status": "ELIGIBLE",
+      "status_detail": "all three gates pass and no blocker is open"
+    },
+    "quality": {
+      "gate_a_structural": {
+        "status": "PASS",
+        "detail": "validator PASS at full evaluation coverage with --graph"
+      },
+      "gate_b_semantic": {
+        "status": "PASS",
+        "detail": "0 rows typed HUMAN_GOLD; three layers adjudicated by a published treebank that didnot build them; metre checked by counting the text against the index's claim"
+      },
+      "gate_c_adversarial": {
+        "status": "SURVIVED",
+        "detail": "lead tested for evaluation leakage and found none. Its verdicts are the finding: of11,210, some 1,402 diverge from their own metre, 1,283 confirm only via an alias itjudges unsound, 143 refuted"
+      },
+      "restage_required": false,
+      "restage_reason": null,
+      "blocked_by": [],
+      "depends_on": [
+        "semantic_roles",
+        "attribution",
+        "formula",
+        "cross_veda",
+        "translation"
+      ],
+      "input_digests": {
+        "semantic_roles": "9ec93cae78c1d1d90bc6873fc1c28cfabb496601f5838e87dccb3e52c319ef35",
+        "attribution": "3577b87142f710d570de47fcd75e46199b2c4823eea73de56875d342b7b710df",
+        "formula": "caf078d773e7485f68e09fee118172ebab971c5d3032566e1811e3a271011978",
+        "cross_veda": "269c17d3b4c57baf78fb38290137ab8c76f200019e50de0c877bd69478b20cfb",
+        "translation": "95318468a47c3c45909cada2188f7eff18f591ea63e04bc0a5b7763243a984cd"
+      },
+      "own_digest": "0e7665d92d22861a40046cceb9cead5b6e1fc4ca077cb377ee1153387c941207",
+      "stale_inputs": [],
+      "status": "ELIGIBLE",
+      "status_detail": "all three gates pass and no blocker is open"
+    },
+    "ritual": {
+      "gate_a_structural": {
+        "status": "PASS",
+        "detail": "validator PASS at full evaluation coverage with --graph"
+      },
+      "gate_b_semantic": {
+        "status": "PASS_AFTER_LEAD_CORRECTION",
+        "detail": "27 rows retyped NAMES_RITE_CATEGORY_GENERICALLY and downgraded; core boundary cleanat 0 of 3,045 rows keyed outside the four recensions"
+      },
+      "gate_c_adversarial": {
+        "status": "DEFECT_FOUND_AND_FIXED",
+        "detail": "lead attack found 24 rows resting on the generic yajna and 3 on bare ISTI, afterenumerating all 45 rite keys rather than grepping the expected term"
+      },
+      "restage_required": false,
+      "restage_reason": null,
+      "blocked_by": [],
+      "depends_on": [],
+      "input_digests": {},
+      "own_digest": "433b0409aabb3396684b409f941bfedc5446a7428511a9b3855f8c0a46d1a48c",
+      "stale_inputs": [],
+      "status": "ELIGIBLE",
+      "status_detail": "all three gates pass and no blocker is open"
+    },
+    "samaveda_music": {
+      "gate_a_structural": {
+        "status": "PASS",
+        "detail": "validator PASS at full evaluation coverage with --graph"
+      },
+      "gate_b_semantic": {
+        "status": "PASS",
+        "detail": "scripts/samaveda_music_gate_b.py at 2026-09-18T17:20:11.039403+00:00: 12 checks over the four sections this file names, 12,782 row-evaluations, 0 defects, 0 checks below full coverage. The 332 GANA_RENDERING rows are reported and not averaged in: their object side is outside Product V1 by OWNER_DECISIONS.md section 41."
+      },
+      "gate_c_adversarial": {
+        "status": "DEFECT_FOUND_AND_FIXED",
+        "detail": "scripts/samaveda_music_gate_c.py. It LANDED: 39 of the 708 withheld verses stated a reason the repository disproves, their exact normalised text being released with notation on a coreferent twin. The failing run is preserved at data/staging/samaveda_music_002_final/gate_c_run1.json; the 39 now carry WITNESS_OCCURRENCE_CONSUMED_BY_A_COREFERENT_REPEAT, no row moved from withheld to released, and no notation was invented. Re-run 2026-09-18T17:30:30.510409+00:00: SURVIVED, 8 attacks, 0 defects. Independent of the staging codepath: it refuses to read the artifact's own tone_stripped_text or QA report, re-implements the declared normalisation from the manifest's prose using the Unicode character database, and carries a negative control that reads 1,136/1,136 aligned against 0/1,136 shifted by one verse."
+      },
+      "restage_required": false,
+      "restage_reason": null,
+      "blocked_by": [],
+      "depends_on": [],
+      "input_digests": {},
+      "own_digest": "c56169455380d625f8be58b83bf325def7086542efc6a18946f16b52c69f858d",
+      "stale_inputs": [],
+      "status": "ELIGIBLE",
+      "status_detail": "all three gates pass and no blocker is open; imported 2026-09-18, see data/staging/samaveda_music_002_final/import_receipt.json",
+      "blocked_by_cleared": {
+        "OWNER_DECISION_E_AUDIO_GATE": "Never the right gate for this domain. OWNER_DECISIONS.md section 40 rules the audible-review gate covers AUDIO only; 1,136 of these 1,471 rows are printed tone marks and contain no recording anyone could listen to."
+      },
+      "imported": true
+    },
+    "scholarship": {
+      "gate_a_structural": {
+        "status": "PASS",
+        "detail": "validator PASS at full evaluation coverage with --graph"
+      },
+      "gate_b_semantic": {
+        "status": "PASS_AFTER_LEAD_CORRECTION",
+        "detail": "1 same-asserter disagreement withdrawn; the other 91 carry two named asserters, twoclaims, two page-precise locators and a stated incompatibility"
+      },
+      "gate_c_adversarial": {
+        "status": "DEFECT_FOUND_AND_FIXED",
+        "detail": "lead attack found the owner's same-author case; the reporting-source attack wasalready pre-empted by 73 rows typed ASCRIPTION_DISPUTED_BY_THE_REPORTING_SOURCE"
+      },
+      "restage_required": false,
+      "restage_reason": null,
+      "blocked_by": [],
+      "depends_on": [],
+      "input_digests": {},
+      "own_digest": "97456b52ac565fad5226d627241ae23575c4ffa6ae9217ee0160bb6d44a0e926",
+      "stale_inputs": [],
+      "status": "ELIGIBLE",
+      "status_detail": "all three gates pass and no blocker is open"
+    },
+    "semantic_resemblance": {
+      "gate_a_structural": {
+        "status": "PASS",
+        "detail": "validator PASS at full evaluation coverage with --graph"
+      },
+      "gate_b_semantic": {
+        "status": "PASS_WITH_DECLARED_LIMITS",
+        "detail": "THEMATICALLY_RESEMBLES, 43,006 edges, 26,953 importable at TIER_A. The layer is defined on the translation-free channels, chosen on structural grounds fixed before the numbers were read and costing 0.049 AUC, because the graph holds zero Samavedic translations and Wave 3 may import 173 that are Griffith's Rigveda renderings used cross-corpus."
+      },
+      "gate_c_adversarial": {
+        "status": "SURVIVED",
+        "detail": "seven attacks run, six clean and the seventh -- lexical leakage -- survived on a residualisation test: the hybrid still separates at 0.737 after removing the lexical control, while the control falls to 0.403, below chance, after removing the hybrid. Three of its own seven blast-radius assertions failed and all three are reported; the tier whose fix broke one is refused."
+      },
+      "restage_required": false,
+      "restage_reason": null,
+      "blocked_by": [
+        "RE_DERIVE_AFTER_IMPORT_NOT_IMPORTABLE_AS_STAGED"
+      ],
+      "depends_on": [
+        "translation",
+        "semantic_roles",
+        "attribution",
+        "formula"
+      ],
+      "input_digests": {
+        "translation": "95318468a47c3c45909cada2188f7eff18f591ea63e04bc0a5b7763243a984cd",
+        "semantic_roles": "9ec93cae78c1d1d90bc6873fc1c28cfabb496601f5838e87dccb3e52c319ef35",
+        "attribution": "3577b87142f710d570de47fcd75e46199b2c4823eea73de56875d342b7b710df",
+        "formula": "caf078d773e7485f68e09fee118172ebab971c5d3032566e1811e3a271011978"
+      },
+      "own_digest": "37be8f726d4514029f383d5b5d1ed4d20fb07618a37d939922aaa091b58c5e19",
+      "stale_inputs": [],
+      "status": "BLOCKED",
+      "status_detail": "three gates pass, blocked by RE_DERIVE_AFTER_IMPORT_NOT_IMPORTABLE_AS_STAGED"
+    },
+    "semantic_roles": {
+      "gate_a_structural": {
+        "status": "PASS",
+        "detail": "validator PASS at full evaluation coverage with --graph"
+      },
+      "gate_b_semantic": {
+        "status": "PASS_AFTER_RESTAGE",
+        "detail": "roles asserted only from treebank labels: 2,052 fillers, all TREEBANK_DEPREL, 0 outside it; 28,742 assertions carry roles_withheld and 15,704 candidate rows are importable:false. Enforced mechanically and verified by the lead."
+      },
+      "gate_c_adversarial": {
+        "status": "SURVIVED",
+        "detail": "repair was attempted and measured to fail before withdrawal: widening the gate moved the wrong share 24.8% to 24.3% at a cost of 18 points of recall, and the largest AGENT class is 39.8% wrong, so no threshold makes the rule safe."
+      },
+      "restage_required": false,
+      "restage_reason": "Restage complete. Asserted fillers 51,231 to 2,052 and triples 5,219 to 341, with the known 24.8% error eliminated rather than documented.",
+      "blocked_by": [],
+      "depends_on": [],
+      "input_digests": {},
+      "own_digest": "9ec93cae78c1d1d90bc6873fc1c28cfabb496601f5838e87dccb3e52c319ef35",
+      "stale_inputs": [],
+      "status": "ELIGIBLE",
+      "status_detail": "all three gates pass and no blocker is open"
+    },
+    "translation": {
+      "gate_a_structural": {
+        "status": "PASS",
+        "detail": "validator PASS at full evaluation coverage with --graph"
+      },
+      "gate_b_semantic": {
+        "status": "UNKNOWN",
+        "detail": "no semantic review recorded"
+      },
+      "gate_c_adversarial": {
+        "status": "NOT_RUN",
+        "detail": "adversarial test not yet performed"
+      },
+      "restage_required": false,
+      "restage_reason": null,
+      "blocked_by": [
+        "OWNER_DECISION_A_RV_SPAN",
+        "OWNER_DECISION_C_FORCED_ADDRESSES"
+      ],
+      "depends_on": [],
+      "input_digests": {},
+      "own_digest": "95318468a47c3c45909cada2188f7eff18f591ea63e04bc0a5b7763243a984cd",
+      "stale_inputs": [],
+      "status": "BLOCKED",
+      "status_detail": "three gates pass, blocked by OWNER_DECISION_A_RV_SPAN, OWNER_DECISION_C_FORCED_ADDRESSES"
+    }
+  },
+  "eligible_domains": [
+    "communities",
+    "cross_veda",
+    "formula",
+    "quality",
+    "ritual",
+    "samaveda_music",
+    "scholarship",
+    "semantic_roles"
+  ],
+  "eligible_count": 8,
+  "domain_count": 14,
+  "wave_3_go": false
+}

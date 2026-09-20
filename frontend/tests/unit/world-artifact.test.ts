@@ -141,13 +141,14 @@ beforeEach(() => {
     vi.stubGlobal(
         "fetch",
         vi.fn(async (url: string) => {
-            if (String(url).endsWith("world.json")) {
+            const path = String(url).split("?")[0];
+            if (path.endsWith("world.json")) {
                 return { ok: true, json: async () => manifest } as unknown as Response;
             }
-            if (String(url).endsWith("world.bin")) {
+            if (path.endsWith("world.bin")) {
                 return { ok: true, arrayBuffer: async () => buffer } as unknown as Response;
             }
-            if (String(url).endsWith("world.labels.json")) {
+            if (path.endsWith("world.labels.json")) {
                 return {
                     ok: true,
                     json: async () => ({
@@ -290,14 +291,24 @@ describe("a world that cannot be read", () => {
     });
 
     it("does not remember a failure, so a later read can succeed", async () => {
-        /* A cache that held a rejection would make one bad response permanent for the life of
-           the page, and the reader's only recourse would be a reload. */
+        /*
+         * A cache that held a rejection would make one bad response permanent for the life of
+         * the page, and the reader's only recourse would be a reload.
+         *
+         * Asserted as "the second attempt went to the network again" rather than as a call
+         * count. The count was four when the manifest and the binary were fetched in parallel
+         * and is two now that the manifest is fetched first and versions the binary's address,
+         * and neither number is the thing under test - a literal here would have failed a
+         * fetch-shape change that kept the behaviour it names.
+         */
         vi.resetModules();
         vi.stubGlobal("fetch", vi.fn(async () => ({ ok: false }) as unknown as Response));
         const fresh = await import("@/lib/world/artifact");
         await expect(fresh.loadWorld()).rejects.toThrow(/could not be read/i);
+        const afterFirst = vi.mocked(globalThis.fetch).mock.calls.length;
+        expect(afterFirst).toBeGreaterThan(0);
         await expect(fresh.loadWorld()).rejects.toThrow(/could not be read/i);
-        expect(vi.mocked(globalThis.fetch).mock.calls.length).toBeGreaterThan(2);
+        expect(vi.mocked(globalThis.fetch).mock.calls.length).toBeGreaterThan(afterFirst);
     });
 });
 

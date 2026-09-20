@@ -1,0 +1,177 @@
+{
+  "adjudicated": 12,
+  "batches": [
+    {
+      "batch": 0,
+      "elapsed_seconds": 177.1,
+      "finish_reason": "stop",
+      "ids": [
+        "VG:AV:SAU:K11:S008:V033|AVS_BHASYA_SAYANA_ASCRIBED",
+        "VG:AV:SAU:K06:S049:V002|AVS_BHASYA_SAYANA_ASCRIBED",
+        "VG:AV:SAU:K04:S036:V004|AVS_BHASYA_SAYANA_ASCRIBED",
+        "VG:AV:SAU:K08:S004:V017|AVS_BHASYA_SAYANA_ASCRIBED",
+        "VG:AV:SAU:K19:S025:V001|AVS_BHASYA_SAYANA_ASCRIBED",
+        "VG:AV:SAU:K19:S044:V004|AVS_BHASYA_SAYANA_ASCRIBED"
+      ],
+      "parsed": [
+        {
+          "id": "VG:AV:SAU:K11:S008:V033|AVS_BHASYA_SAYANA_ASCRIBED",
+          "incompatible_about": null,
+          "note": "Quote reports a variant between commentary and main text, not a scholarly dispute; both readings can coexist in different witnesses.",
+          "verdict": "NOT_A_DISAGREEMENT"
+        },
+        {
+          "id": "VG:AV:SAU:K06:S049:V002|AVS_BHASYA_SAYANA_ASCRIBED",
+          "incompatible_about": null,
+          "note": "Quote reports a variant between commentary and main text, not a scholarly dispute; both readings can coexist in different witnesses.",
+          "verdict": "NOT_A_DISAGREEMENT"
+        },
+        {
+          "id": "VG:AV:SAU:K04:S036:V004|AVS_BHASYA_SAYANA_ASCRIBED",
+          "incompatible_about": null,
+          "note": "Quote reports a variant between commentary and main text, not a scholarly dispute; both readings can coexist in different witnesses.",
+          "verdict": "NOT_A_DISAGREEMENT"
+        },
+        {
+          "id": "VG:AV:SAU:K08:S004:V017|AVS_BHASYA_SAYANA_ASCRIBED",
+          "incompatible_about": null,
+          "note": "Quote reports a variant between commentary and main text, not a scholarly dispute; both readings can coexist in different witnesses.",
+          "verdict": "NOT_A_DISAGREEMENT"
+        },
+        {
+          "id": "VG:AV:SAU:K19:S025:V001|AVS_BHASYA_SAYANA_ASCRIBED",
+          "incompatible_about": null,
+          "note": "Quote reports a variant between commentary and main text, not a scholarly dispute; both readings can coexist in different witnesses.",
+          "verdict": "NOT_A_DISAGREEMENT"
+        },
+        {
+          "id": "VG:AV:SAU:K19:S044:V004|AVS_BHASYA_SAYANA_ASCRIBED",
+          "incompatible_about": null,
+          "note": "Quote reports a variant between commentary and main text, not a scholarly dispute; both readings can coexist in different witnesses.",
+          "verdict": "NOT_A_DISAGREEMENT"
+        }
+      ],
+      "raw_if_unparseable": null,
+      "usage": {
+        "input": 2037,
+        "output": 1507
+      }
+    },
+    {
+      "batch": 1,
+      "elapsed_seconds": 114.5,
+      "finish_reason": "length",
+      "ids": [
+        "VG:AV:SAU:K11:S006:V009|AVS_BHASYA_SAYANA_ASCRIBED",
+        "VG:AV:SAU:K19:S013:V001|AVS_BHASYA_SAYANA_ASCRIBED",
+        "VG:AV:SAU:K06:S029:V002|AVS_BHASYA_SAYANA_ASCRIBED",
+        "VG:AV:SAU:K06:S065:V001|AVS_BHASYA_SAYANA_ASCRIBED",
+        "VG:AV:SAU:K02:S010:V002|AVS_BHASYA_SAYANA_ASCRIBED",
+        "VG:AV:SAU:K06:S016:V002|AVS_BHASYA_SAYANA_ASCRIBED"
+      ],
+      "parsed": null,
+      "raw_if_unparseable": "The user wants me to evaluate each item and determine if there's a real scholarly disagreement based on the verbatim quote. I need to return a JSON array with objects containing id, verdict, incompatible_about, and note.\n\nLet me analyze each item:\n\n1. VG:AV:SAU:K11:S006:V009|AVS_BHASYA_SAYANA_ASCRIBED\n   - Quote: \"comm. has vidmas for -ma in c\"\n   - Position A: Commentary (Sayana) reads vidmas\n   - Position B: Berlin text (Roth & Whitney) reads -ma\n   - These are two different readings reported by Whitney. The commentary has one reading, the printed text has another. This is a real textual disagreement between the commentary and the edited text. The pipeline says they're incompatible about which word-form stands in the text. This seems like a REAL_DISAGREEMENT.\n\n2. VG:AV:SAU:K19:S013:V001|AVS_BHASYA_SAYANA_ASCRIBED\n   - Quote: \"comm. has the senseless yakṣe\"\n   - Position A holder: Sayana, position A: \"comm. has the\" (incomplete?)\n   - Position B holder: Whitney, position B: \"senseless yakṣe\"\n   - The quote says \"comm. has the senseless yakṣe\" - this seems like Whitney is reporting that the commentary has \"the senseless yakṣe\" or perhaps Whitney is calling the commentary's reading \"senseless\". The position A is truncated to \"comm. has the\" which doesn't make sense. Position B is \"senseless yakṣe\". This looks like Whitney is criticizing the commentary's reading. The pipeline says the commentary holds \"comm. has the\" and Whitney rejects it with \"senseless yakṣe\". But the quote is \"comm. has the senseless yakṣe\" - this could mean the commentary has the reading \"yakṣe\" which Whitney considers senseless. Or it could be \"comm. has the senseless yakṣe\" as a phrase. This is ambiguous. The positions seem to be: Sayana's commentary has some reading, Whitney calls it senseless. But position A is just \"comm. has the\" - that's not a complete position. This might be NOT_A_DISAGREEMENT or WORDING_ONLY or CANNOT_TELL. Actually, looking at the pipeline description: \"The commentary h",
+      "usage": {
+        "input": 2023,
+        "output": 2048
+      }
+    },
+    {
+      "batch": 2,
+      "elapsed_seconds": 144.3,
+      "finish_reason": "length",
+      "ids": [
+        "VG:AV:SAU:K10:S005:V036|BRHATSARVANUKRAMANI_AV",
+        "VG:RV:SAK:M01:S006:V005|GRASSMANN_RIGVEDA",
+        "VG:AV:SAU:K09:S005:V037|BRHATSARVANUKRAMANI_AV",
+        "VG:AV:SAU:K06:S067:V003|AVS_BHASYA_SAYANA_ASCRIBED",
+        "VG:AV:SAU:K06:S112:V002|AVS_BHASYA_SAYANA_ASCRIBED",
+        "VG:AV:SAU:K08:S002:V019|AVS_BHASYA_SAYANA_ASCRIBED"
+      ],
+      "parsed": null,
+      "raw_if_unparseable": "The user wants me to evaluate each item and determine if there's a real scholarly disagreement based on the verbatim quote. I need to return a JSON array with objects containing id, verdict, incompatible_about, and note.\n\nLet me analyze each item:\n\n1. VG:AV:SAU:K10:S005:V036|BRHATSARVANUKRAMANI_AV\nQuote: \"the corrupt mārtvī or mārtvi of the Anukr. seems to contain an ascription of authorship for vs. 36. Dr. Ryder suggests that Mārīca may be intended\"\nPosition A: The author of Brhatsarvanukramani says the seer is named by the form mārtvī or mārtvi.\nPosition B: Arthur W. Ryder suggests Mārīca may be intended.\nThe quote says the Anukramani's form is corrupt and \"seems to contain an ascription\" and Ryder \"suggests\" Mārīca may be intended. This is not a disagreement - Ryder is suggesting a correction to a corrupt reading. The Anukramani transmits a corrupt form; Ryder proposes what might be intended. They're not contradicting each other; one is reporting the transmitted text, the other suggesting an emendation. This seems like NOT_A_DISAGREEMENT or maybe WORDING_ONLY? Actually, the Anukramani gives a corrupt form; Ryder suggests what the intended name might be. They're not making incompatible claims about the same thing. The Anukramani's transmitted form is mārtvī/mārtvi; Ryder suggests Mārīca may be intended. That's not a disagreement - it's a scholarly suggestion about a corrupt reading. Verdict: NOT_A_DISAGREEMENT.\n\n2. VG:RV:SAK:M01:S006:V005|GRASSMANN_RIGVEDA\nQuote: \"Grassmann thinks that vahnir âsâ can always be translated by 'vor das Angesicht bringend,' but this does not appear to be the case in his translation\"\nPosition A: Grassmann thinks vahnir âsâ can always be translated that way.\nPosition B: Muller says this does not appear to be the case in his translation.\nThe quote says \"Grassmann thinks... but this does not appear to be the case in his translation\". This is a criticism of Grassmann's own translation practice vs his stated theory. The speaker (likely Mull",
+      "usage": {
+        "input": 2163,
+        "output": 2048
+      }
+    },
+    {
+      "batch": 3,
+      "elapsed_seconds": 80.2,
+      "finish_reason": "stop",
+      "ids": [
+        "VG:AV:SAU:K06:S117:V002|AVS_BHASYA_SAYANA_ASCRIBED",
+        "VG:AV:SAU:K11:S002:V019|AVS_BHASYA_SAYANA_ASCRIBED",
+        "VG:AV:SAU:K18:S003:V066|SAYANA_RIGVEDA_BHASYA",
+        "VG:AV:SAU:K09:S006:V017|BRHATSARVANUKRAMANI_AV",
+        "VG:AV:SAU:K01:S022:V001|AVS_BHASYA_SAYANA_ASCRIBED",
+        "VG:AV:SAU:K11:S003:V037|AVS_BHASYA_SAYANA_ASCRIBED"
+      ],
+      "parsed": [
+        {
+          "id": "VG:AV:SAU:K06:S117:V002|AVS_BHASYA_SAYANA_ASCRIBED",
+          "incompatible_about": "the reading at AVS 6.117.2 pada a (dadhmas vs dadmas)",
+          "note": "Commentary and Berlin text give different word-forms.",
+          "verdict": "REAL_DISAGREEMENT"
+        },
+        {
+          "id": "VG:AV:SAU:K11:S002:V019|AVS_BHASYA_SAYANA_ASCRIBED",
+          "incompatible_about": "the reading at AVS 11.2.19 pada a (martyam vs matyam)",
+          "note": "Commentary and Berlin text give different word-forms.",
+          "verdict": "REAL_DISAGREEMENT"
+        },
+        {
+          "id": "VG:AV:SAU:K18:S003:V066|SAYANA_RIGVEDA_BHASYA",
+          "incompatible_about": "the addressee of the verse (Vena vs pravargyasvāmin) in Sayana's two commentaries",
+          "note": "Lanman notes a diversity of opinion within Sayana's works.",
+          "verdict": "REAL_DISAGREEMENT"
+        },
+        {
+          "id": "VG:AV:SAU:K09:S006:V017|BRHATSARVANUKRAMANI_AV",
+          "incompatible_about": null,
+          "note": "Whitney reports the Anukramani's view; no second position opposes it.",
+          "verdict": "NOT_A_DISAGREEMENT"
+        },
+        {
+          "id": "VG:AV:SAU:K01:S022:V001|AVS_BHASYA_SAYANA_ASCRIBED",
+          "incompatible_about": "whether the commentary's grammatical analysis at AVS 1.22.1 is correct",
+          "note": "Whitney explicitly rejects the commentary's analysis as wrong.",
+          "verdict": "REAL_DISAGREEMENT"
+        },
+        {
+          "id": "VG:AV:SAU:K11:S003:V037|AVS_BHASYA_SAYANA_ASCRIBED",
+          "incompatible_about": "the reading at AVS 11.3.37 (satsyanti vs çatsyanti)",
+          "note": "Commentary and Berlin text give different word-forms.",
+          "verdict": "REAL_DISAGREEMENT"
+        }
+      ],
+      "raw_if_unparseable": null,
+      "usage": {
+        "input": 2117,
+        "output": 1990
+      }
+    }
+  ],
+  "call_cap": 4,
+  "calls_attempted": 4,
+  "errors": [],
+  "model_id": "nvidia/nemotron-3-ultra-550b-a55b:free",
+  "provider": "openrouter",
+  "purpose": "independent adjudication of accepted CONTRADICTS rows; the model may disprove a row, it may not create one",
+  "retry_policy": "none; a rate-limit or quota failure stops the pass",
+  "rows_the_model_did_not_accept_as_disagreements": [
+    "VG:AV:SAU:K11:S008:V033|AVS_BHASYA_SAYANA_ASCRIBED",
+    "VG:AV:SAU:K06:S049:V002|AVS_BHASYA_SAYANA_ASCRIBED",
+    "VG:AV:SAU:K04:S036:V004|AVS_BHASYA_SAYANA_ASCRIBED",
+    "VG:AV:SAU:K08:S004:V017|AVS_BHASYA_SAYANA_ASCRIBED",
+    "VG:AV:SAU:K19:S025:V001|AVS_BHASYA_SAYANA_ASCRIBED",
+    "VG:AV:SAU:K19:S044:V004|AVS_BHASYA_SAYANA_ASCRIBED",
+    "VG:AV:SAU:K09:S006:V017|BRHATSARVANUKRAMANI_AV"
+  ],
+  "sample_method": "12 adversarial (the shortest quotes, i.e. the least context and the likeliest over-reads) plus 12 random, from the 98 accepted CONTRADICTS rows",
+  "sample_size": 24,
+  "verdict_counts": {
+    "NOT_A_DISAGREEMENT": 7,
+    "REAL_DISAGREEMENT": 5
+  }
+}

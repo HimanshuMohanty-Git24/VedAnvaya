@@ -1,0 +1,15 @@
+{
+  "codedication": {
+    "density": 0.063308,
+    "edges": 475,
+    "nodes_placed": 123
+  },
+  "comention": {
+    "density": 0.689744,
+    "devata_nodes_the_mention_layer_reaches": 42,
+    "edges": 538,
+    "nodes_placed": 40,
+    "of_a_devata_population_of": 214
+  },
+  "why_density_matters_here": "The co-mention projection partitions into very few communities and it is important not to read that as 'the deities of the Vedas form three groups'. The theonym mention layer reaches only 42 of 214 :Devata nodes, and among those 42 it is extremely dense -- most of them co-occur with most of the others. A near-complete graph has almost no modular structure to find, so the small community count is a property of the layer's reach, not of the corpus."
+}

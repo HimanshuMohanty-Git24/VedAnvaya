@@ -110,7 +110,9 @@ Three facts here break naive hierarchy visualizations:
 ### 1.3 Hard limits the design must respect
 
 1. **`MAX_PAGE_SIZE = 200`** (`src/vedagraph/api/config.py`). Every collection endpoint is
-   capped. This is the single biggest visualization blocker in the product (§5.1).
+   capped. This *was* the single biggest visualization blocker in the product; it is
+   closed by an unbounded dispersion endpoint that returns positions rather than
+   passages (§5.1).
 2. **Three machine-readable `cost_class` bands on every insight response**: `POINT_READ`
    (inside the median latency target), `AGGREGATE` (grouped counts, *exempt* from the
    median), `CENSUS` (*no* latency target). `/insights/civilization` is the one `CENSUS`.
@@ -118,10 +120,12 @@ Three facts here break naive hierarchy visualizations:
 3. **`experimental.proxyTimeout: 345_000`** in `frontend/next.config.ts`, set for
    `POST /ask`. It does not excuse a slow chart; `PERF_BACKLOG_01` is already open on
    full-ladder Sanskrit search >300 ms.
-4. **No per-book aggregate exists.** `named_by_veda` is per-*Veda* only. A deity × mandala
-   heatmap **cannot be served today**.
-5. **No deity × metre aggregate exists.** `DevataProfile.top_chandas` is a bare
-   `list[str]` with no counts. A deity × metre matrix **cannot be served today**.
+4. ~~**No per-book aggregate exists.**~~ **Superseded.** It did not exist when this was
+   written; `GET /insights/devatas/{id}/by-book` serves all 74 books, absent ones included.
+   See §5.2.
+5. ~~**No deity × metre aggregate exists.**~~ **Superseded.** `GET /insights/devatas/{id}/by-metre`
+   serves it, with the two corpora the metre layer misses typed `NOT_BUILT` rather than
+   omitted. See §5.3.
 6. **No embeddings exist anywhere in the graph.** Verified: `insight_service.py:426` —
    *"No non-lexical resemblance measure exists anywhere in this graph: no embedding, no
    vector index, no asserted resemblance."* This kills the UMAP/t-SNE "semantic
@@ -1064,7 +1068,18 @@ of the contract `Paginated._empty_must_explain_itself` enforces on the API side.
 
 ## 5. Blockers — what the API must gain first
 
-### 5.1 `VIZ_BLOCKER_01` — dispersion data cannot be fetched (blocks V6)
+### 5.1 `VIZ_BLOCKER_01` — **CLOSED** (dispersion is served; it blocked V6)
+
+**Closed in the final closure sprint, GAP-PRODUCT_SURFACE-003.** Served at
+`GET /api/v1/insights/devatas/{id}/dispersion`, `cost_class: AGGREGATE`, returning integer
+positions only and bounded by nothing. Measured against the live graph: Indra returns 3,566
+positions in one request (RV 2,305 / AV 635 / SV 405 / YV 221) against a page cap of 200,
+and each corpus carries a `CellStatus` so an empty `positions` array is `MEASURED_ZERO`
+rather than an absent layer. Pinned by `tests/api/test_visualization_aggregates.py`. The
+original statement of the blocker follows.
+
+#### As originally recorded
+
 
 `MAX_PAGE_SIZE = 200` caps `/devatas/{id}/passages`. An Invocation Landscape for a major deity
 needs every attesting citation. Proposed: a new `AGGREGATE`-class endpoint
@@ -1079,7 +1094,20 @@ returning **integer positions only** (no passage payloads), which keeps the resp
 removes the 18 round-trips. It must carry `CoverageView` so an empty `positions` array for the
 Samaveda is distinguishable from an absent layer.
 
-### 5.2 `VIZ_BLOCKER_02` — no per-book aggregate (blocks deity × mandala)
+### 5.2 `VIZ_BLOCKER_02` — **CLOSED** (per-book aggregate is served)
+
+**Closed in the final closure sprint, GAP-PRODUCT_SURFACE-003.** Served at
+`GET /api/v1/insights/devatas/{id}/by-book`, `cost_class: AGGREGATE`. All 74 books are
+returned — ten mandalas, twenty kandas, forty adhyayas, four arcikas — including the ones
+the deity is absent from, which carry `MEASURED_ZERO` and a note. Every row carries the
+book's own mantra total and a per-1,000 figure, because the books differ in size by more
+than an order of magnitude. The section's warning was honoured rather than worked around:
+this is an endpoint, not a client-side roll-up of paged rows. Pinned by
+`tests/api/test_visualization_aggregates.py`, including a reconciliation of the per-book
+total against `named_by_veda`. The original statement follows.
+
+#### As originally recorded
+
 
 A deity × mandala heatmap is a genuine scholarly ask — the Family Books hypothesis lives there
 — and cannot be served. Needed: a per-container count endpoint at the level named by
@@ -1087,7 +1115,21 @@ A deity × mandala heatmap is a genuine scholarly ask — the Family Books hypot
 rows: the page cap would silently truncate it, and a truncated heatmap is indistinguishable
 from a sparse one.**
 
-### 5.3 `VIZ_BLOCKER_03` — no deity × metre aggregate
+### 5.3 `VIZ_BLOCKER_03` — **CLOSED** (deity × metre is served, and says where it is hatched)
+
+**Closed in the final closure sprint, GAP-PRODUCT_SURFACE-003.** Served at
+`GET /api/v1/insights/devatas/{id}/by-metre`, `cost_class: AGGREGATE`. The deferral reasoning
+was right about the data and wrong about the remedy: thin and honest is better than absent,
+so the two corpora the metre layer does not reach are **returned** as rows typed `NOT_BUILT`
+with a note, never omitted — a matrix with two corpora silently missing is read as a matrix
+of two corpora. The layer's reach is measured on each request (RV 10,518 and AV 4,068
+mantras at the time of closure) rather than listed, so a metre layer that grows shrinks the
+hatched rows without anyone editing a constant. This does **not** wait on
+GAP-ATTRIBUTION-006: it makes that gap visible in the product instead of hiding it.
+The original statement follows.
+
+#### As originally recorded
+
 
 `DevataProfile.top_chandas` is a `list[str]` with no counts. Low priority: the metre layer
 reaches only RV and AV, so the matrix would be two-thirds hatched — honest, but thin.

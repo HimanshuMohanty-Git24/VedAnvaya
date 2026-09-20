@@ -1,0 +1,167 @@
+{
+ "entity_key": "VG:CONCEPT:YUPA-SACRIFICIAL-POST",
+ "registry_file": "data/domain/vedagraph_domain_v2/domain_entities_material.yaml",
+ "matcher": "vedagraph.domain.mentions -- whole folded token, not a prefix",
+ "why_word_forms_and_not_a_prefix": "The Wave 2 ritual registry fixed this by admitting `yupa` as a four-letter word-initial PREFIX. The mention layer that actually writes MENTIONS_ENTITY matches whole folded tokens, so a prefix never fires there -- and `yupa` with a short a would in any case miss `yupan` and `yupe`, whose stem vowel is long. The attested word forms are registered instead.",
+ "aliases_already_held": [
+  "yūpaḥ",
+  "yūpe",
+  "yūpān",
+  "svaravaḥ"
+ ],
+ "aliases_added": [
+  "yūpa",
+  "yūpena",
+  "yūpo",
+  "yūpād",
+  "yūpeva",
+  "yūpavraskā",
+  "yūpavāhāś"
+ ],
+ "deliberately_not_registered": {
+  "dhariyūpīyāyāṁ": "RV 6.27.5. The place-name Hariyupiya. GAP-RITUAL-003's own evidence names it: 'Eleven mantras carry a yupa-word (one of them the place-name Hariyupiya)'.",
+  "sthūrayūpavat": "RV 8.23.24. A medial compound, 'having a stout post', used as an epithet. Left out because the mention layer matches whole tokens and registering a compound whose head is the post is a separate decision from registering its inflections.",
+  "aśvayūpāya": "RV 1.162.6 and VSM 25.29. A medial compound. Both mantras are already reached by yupavraska and yupavahas in the same verse, so registering it would add no passage and would take a decision this artifact does not need to take.",
+  "yūpavāhāścaṣālaṃ": "A sandhi-glued token produced by transliterating the VSM container text. Its content is already reached by yupavahas in the parallel text of the same verse."
+ },
+ "simulation_reproduces_the_live_graph_before_the_fix": true,
+ "live_graph_passages_before": [
+  "VG:AV:SAU:K04:S024:V004",
+  "VG:AV:SAU:K09:S006:V022",
+  "VG:AV:SAU:K12:S001:V013",
+  "VG:AV:SAU:K13:S001:V047",
+  "VG:RV:SAK:M01:S051:V014",
+  "VG:RV:SAK:M03:S008:V010"
+ ],
+ "simulated_passages_before": [
+  "VG:AV:SAU:K04:S024:V004",
+  "VG:AV:SAU:K09:S006:V022",
+  "VG:AV:SAU:K12:S001:V013",
+  "VG:AV:SAU:K13:S001:V047",
+  "VG:RV:SAK:M01:S051:V014",
+  "VG:RV:SAK:M03:S008:V010"
+ ],
+ "passages_after": [
+  "VG:AV:SAU:K04:S024:V004",
+  "VG:AV:SAU:K09:S006:V022",
+  "VG:AV:SAU:K12:S001:V013",
+  "VG:AV:SAU:K12:S001:V038",
+  "VG:AV:SAU:K13:S001:V047",
+  "VG:RV:SAK:M01:S051:V014",
+  "VG:RV:SAK:M01:S162:V006",
+  "VG:RV:SAK:M03:S008:V010",
+  "VG:RV:SAK:M04:S033:V003",
+  "VG:RV:SAK:M05:S002:V007",
+  "VG:YV:VSM:A19:V017",
+  "VG:YV:VSM:A25:V029"
+ ],
+ "mantras_before": 6,
+ "mantras_after": 12,
+ "vedas_with_matches_before": 2,
+ "vedas_with_matches_after": 3,
+ "vsm_19_17_matched": true,
+ "vsm_25_29_matched": true,
+ "host_forms_per_alias": {
+  "svaravaḥ": {
+   "svaravaḥ": 4,
+   "svara̍vaḥ": 1,
+   "sváravaḥ": 3
+  },
+  "yūpa": {
+   "yūpa": 1,
+   "yūpa̭": 1
+  },
+  "yūpavraskā": {
+   "yūpavraskā": 1,
+   "yūpavraskā́": 1,
+   "yū̱pa̱vra̱skā": 2
+  },
+  "yūpavāhāś": {
+   "yūpavāhāś": 1,
+   "yūpavāhā́ś": 1,
+   "yū̍pavā̱hāś": 1
+  },
+  "yūpaḥ": {
+   "yūpa̍ḥ": 1,
+   "yū́paḥ": 1
+  },
+  "yūpe": {
+   "yūpe": 2,
+   "yū́pe": 1
+  },
+  "yūpena": {
+   "yūpena": 1,
+   "yūpḙna̱": 1
+  },
+  "yūpeva": {
+   "yūpe̍va": 1,
+   "yū́peva": 1
+  },
+  "yūpo": {
+   "yūpo": 2,
+   "yū́po": 1
+  },
+  "yūpād": {
+   "yūpā̍d": 1,
+   "yū́pād": 1
+  },
+  "yūpān": {
+   "yūpān": 2,
+   "yū́pān": 1
+  }
+ },
+ "host_form_audit": "Printed per alias, not per row. Every host form of every proposed alias is a yupa form; no alias reaches a different word.",
+ "new_mention_edges": [
+  {
+   "passage_key": "VG:AV:SAU:K12:S001:V038",
+   "entity_key": "VG:CONCEPT:YUPA-SACRIFICIAL-POST",
+   "matched_aliases": [
+    "yūpo"
+   ],
+   "method": "domain-mention-v1:sanskrit-token"
+  },
+  {
+   "passage_key": "VG:RV:SAK:M01:S162:V006",
+   "entity_key": "VG:CONCEPT:YUPA-SACRIFICIAL-POST",
+   "matched_aliases": [
+    "yūpavraskā",
+    "yūpavāhāś"
+   ],
+   "method": "domain-mention-v1:sanskrit-token"
+  },
+  {
+   "passage_key": "VG:RV:SAK:M04:S033:V003",
+   "entity_key": "VG:CONCEPT:YUPA-SACRIFICIAL-POST",
+   "matched_aliases": [
+    "yūpeva"
+   ],
+   "method": "domain-mention-v1:sanskrit-token"
+  },
+  {
+   "passage_key": "VG:RV:SAK:M05:S002:V007",
+   "entity_key": "VG:CONCEPT:YUPA-SACRIFICIAL-POST",
+   "matched_aliases": [
+    "yūpād"
+   ],
+   "method": "domain-mention-v1:sanskrit-token"
+  },
+  {
+   "passage_key": "VG:YV:VSM:A19:V017",
+   "entity_key": "VG:CONCEPT:YUPA-SACRIFICIAL-POST",
+   "matched_aliases": [
+    "yūpa",
+    "yūpena"
+   ],
+   "method": "domain-mention-v1:sanskrit-token"
+  },
+  {
+   "passage_key": "VG:YV:VSM:A25:V029",
+   "entity_key": "VG:CONCEPT:YUPA-SACRIFICIAL-POST",
+   "matched_aliases": [
+    "yūpavraskā",
+    "yūpavāhāś"
+   ],
+   "method": "domain-mention-v1:sanskrit-token"
+  }
+ ]
+}

@@ -1,0 +1,100 @@
+{
+  "ATTRIBUTION-003": {
+    "stale_claim": "a live API caveat states that the Atharvaveda carries no Anukramani deity ascription.",
+    "verdict": "DISPROVEN",
+    "measurement": {
+      "query": "MATCH (m:Mantra {veda:'AV'})-[r:HAS_DEVATA_ASCRIPTION]->(d:DevataAscription) RETURN count(DISTINCT m), count(r), count(DISTINCT d)",
+      "mantras_with_an_ascription": 4160,
+      "mantra_level_edges": 4816,
+      "distinct_ascription_descriptors": 324,
+      "hymns_with_an_ascription": 505,
+      "hymn_level_edges": 569
+    },
+    "provenance_of_the_data": "data/canonical/atharvaveda_saunaka_digital_working_v1/traditional_metadata.jsonl, 569 HAS_DEVATA rows at WHOLE_PASSAGE scope, built by scripts/build_atharvaveda_anukramani.py from 1,254 pinned Whitney & Lanman Page:-namespace revisions. The builder was re-run --dry-run on 2026-09-15 and reproduced all 3,252 assertions exactly, so the artifact and the graph agree.",
+    "the_correction_that_still_belongs_on_the_caveat": "the layer exists but it is 0% source-explicit at verse level before this artifact: all 4,816 mantra-level edges are knowledge_layer=L2_DETERMINISTIC_DERIVED, attribution_precision=CONTAINER_INHERITED, scope_origin=SUKTA_WIDE. So the honest replacement caveat is not 'no ascription' and not '4,160 mantras have a deity' but 'the Atharvavedic deity layer covers 4,160 of 5,839 mantras, every one of them a hymn-scope label read down onto its verses'. Removing the caveat without that sentence would replace an understatement with an overstatement.",
+    "note": "product copy is NOT edited here. This is the proof only."
+  },
+  "ATTRIBUTION-008": {
+    "stale_claim": "RishiFamily is reported as 0 nodes.",
+    "verdict": "DISPROVEN",
+    "measurement": {
+      "rishi_family_nodes": 87,
+      "belongs_to_family_edges": 305,
+      "seers_resolved_to_a_family": 302,
+      "rishi_nodes_total": 729,
+      "rishi_nodes_without_a_family_edge": 427
+    },
+    "and_the_gap_figure_needs_correcting_twice": {
+      "the_729_figure": "wrong. 729 is the :Rishi node count, not an unresolved count.",
+      "the_427_figure": "arithmetically right but it is not a gap. 427 nodes lack a BELONGS_TO_FAMILY edge, and the layer already records WHY for every one of them in r.family_assignment_class.",
+      "decomposition": [
+        {
+          "is_seer": true,
+          "family_assignment_class": "NO_PATRONYMIC_STATED",
+          "count": 170
+        },
+        {
+          "is_seer": false,
+          "family_assignment_class": "NON_SEER_ASCRIPTION",
+          "count": 113
+        },
+        {
+          "is_seer": true,
+          "family_assignment_class": "EPONYM_WITHOUT_STATED_PATRONYMIC",
+          "count": 69
+        },
+        {
+          "is_seer": true,
+          "family_assignment_class": "THEONYMIC_DESCENT",
+          "count": 45
+        },
+        {
+          "is_seer": true,
+          "family_assignment_class": "COLLECTIVE_LINEAGE_COMPOUND",
+          "count": 12
+        },
+        {
+          "is_seer": true,
+          "family_assignment_class": "TITULAR_NOT_DESCENT",
+          "count": 8
+        },
+        {
+          "is_seer": true,
+          "family_assignment_class": "SOURCE_SPELLING_OUTSIDE_TABLE",
+          "count": 5
+        },
+        {
+          "is_seer": true,
+          "family_assignment_class": "KINSHIP_NOT_DESCENT",
+          "count": 3
+        },
+        {
+          "is_seer": true,
+          "family_assignment_class": "ETYMON_UNCERTAIN",
+          "count": 1
+        },
+        {
+          "is_seer": true,
+          "family_assignment_class": "MYTHIC_DESCENT",
+          "count": 1
+        }
+      ],
+      "what_is_actually_unresolved": "6. Five nodes are SOURCE_SPELLING_OUTSIDE_TABLE and one is ETYMON_UNCERTAIN. Everything else is a typed non-assignment: 113 are not seers at all, 170 have NO_PATRONYMIC_STATED in the source, 69 are an eponym for whom no patronymic is printed, 45 are THEONYMIC_DESCENT, 12 a COLLECTIVE_LINEAGE_COMPOUND, 8 TITULAR_NOT_DESCENT, 3 KINSHIP_NOT_DESCENT, 1 MYTHIC_DESCENT.",
+      "how_to_report_it": "three numbers, not one: 427 lack a family edge; 421 lack one for a stated reason; 6 lack one for an unresolved reason."
+    }
+  },
+  "DEVATA_ATTRIBUTION_SCOPE_CARRIES_THE_SAME_STALE_CLAIM": {
+    "found_while_checking_the_above": true,
+    "finding": "all 214 :Devata nodes carry attribution_scope=['RV'] together with an attribution_scope_note that reads 'The Anukramani attribution layer covers the Rigveda only. A zero for SV, YV or AV means that corpus has no attribution layer, NOT that the deity is absent from it.'",
+    "measurement": [
+      {
+        "attribution_scope": [
+          "RV"
+        ],
+        "c": 214
+      }
+    ],
+    "why_it_matters": "that note is now half false. The Atharvaveda DOES have an Anukramani attribution layer -- 4,160 mantras, 4,816 edges, 324 descriptors -- it simply lands on :DevataAscription rather than on :Devata, because Whitney's bracket prints descriptors ('agneyam', 'mantroktadevatyam') rather than deity names. So the sentence is true of the :Devata NODE and false of the CORPUS, and a reader cannot tell which is meant. It is ATTRIBUTION-003 wearing different clothes, and it is served from a node property rather than from a caveat string, which is why the stale-claim sweep did not catch it.",
+    "not_fixed_here": "this is a canonical node property. Only the lead may write it."
+  }
+}

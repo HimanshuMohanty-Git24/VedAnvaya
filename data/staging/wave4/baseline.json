@@ -1,0 +1,76 @@
+{
+  "artifact": "WAVE4_BASELINE",
+  "at": "2026-09-16T07:54:55.303328+00:00",
+  "census": {
+    "nodes": 116838,
+    "relationships": 281257,
+    "public_nodes": 39692
+  },
+  "core_corpus": {
+    "AV": 5839,
+    "RV": 10552,
+    "SV": 1844,
+    "YV": 1975
+  },
+  "core_total": 20210,
+  "claimed_by_the_brief": {
+    "nodes": 116838,
+    "relationships": 281257,
+    "core": {
+      "RV": 10552,
+      "SV": 1844,
+      "YV": 1975,
+      "AV": 5839
+    },
+    "core_total": 20210
+  },
+  "disagreements_with_the_brief": [],
+  "brief_verified": true,
+  "uniqueness_constraints": 23,
+  "constraint_names": [
+    "chandas_entity_key_unique",
+    "deity_axis_key_unique",
+    "deity_group_key_unique",
+    "derived_metric_id_unique",
+    "devata_entity_key_unique",
+    "domain_entity_key_unique",
+    "enrichment_concept_id_unique",
+    "enrichment_formula_id_unique",
+    "epithet_key_unique",
+    "formula_family_id_unique",
+    "interpretive_claim_id_unique",
+    "lemma_unique",
+    "passage_canonical_key_unique",
+    "passage_canonical_urn_unique",
+    "passage_entity_id_unique",
+    "qa_issue_id_unique",
+    "rishi_entity_key_unique",
+    "rishi_family_key_unique",
+    "source_artifact_id_unique",
+    "source_id_unique",
+    "text_version_id_unique",
+    "translation_id_unique",
+    "work_id_unique"
+  ],
+  "backups": [
+    {
+      "path": "D:/vedanvaya-backups/round4-pre-m9-20260916T124347/neo4j.dump",
+      "exists": true,
+      "bytes": 120620890,
+      "sha256": "50f27ea8bed34f25c25909ab64ca1a43ed49fd0e2f2d63fccbf8e838337c0543"
+    },
+    {
+      "path": "D:/vedanvaya-backups/round4-pre-m8-20260916T112837/neo4j.dump",
+      "exists": true,
+      "bytes": 120285079,
+      "sha256": "13eaef621bc17a6d9a499a9cc1f3731626524a2c271e1e9d9f2f6ed56e8b6698"
+    },
+    {
+      "path": "D:/vedanvaya-backups/wave3-final-baseline-20260916T101224/neo4j.dump",
+      "exists": true,
+      "bytes": 117924267,
+      "sha256": "6da4d69f5d0ed1f3f09b08554099edc28a8096808d9d0293082941e0f7a980ce"
+    }
+  ],
+  "at_least_one_backup_present": true
+}

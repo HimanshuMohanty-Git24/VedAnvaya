@@ -1,0 +1,149 @@
+{
+  "build_config_sha256": "2770291f1a4aef7a7c29ebe6f6325db7b34025047378e48489c5b5bea49c514e",
+  "built_at": "2026-09-04T00:00:00+05:30",
+  "dataset": "VedaGraph Canonical Corpus",
+  "generated_files": [
+    {
+      "path": "canonical/rv_mandala_1_sample_v2/REPORT.md",
+      "record_count": 1,
+      "sha256": "309e020e8f0a1851eb8043240df03a81d74fa74bc7345e8ba9aa4993ab5059f0"
+    },
+    {
+      "path": "canonical/rv_mandala_1_sample_v2/audio_recordings.jsonl",
+      "record_count": 5,
+      "sha256": "cb18b20dedd2bfdb06457b73adfcd90f1f700cee81404ffe59d555695efc0bb9"
+    },
+    {
+      "path": "canonical/rv_mandala_1_sample_v2/audio_segments.jsonl",
+      "record_count": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "canonical/rv_mandala_1_sample_v2/citations.jsonl",
+      "record_count": 111,
+      "sha256": "b2bab5a0b3daaf3da0ede7736c24e5cfe98195d10aa37a83966ec703f8d0445a"
+    },
+    {
+      "path": "canonical/rv_mandala_1_sample_v2/discoveries.jsonl",
+      "record_count": 382,
+      "sha256": "cd7a65f833c126bff735dc7d4f23f6979401820e62bc67d1265fe68ce90615e6"
+    },
+    {
+      "path": "canonical/rv_mandala_1_sample_v2/passages.jsonl",
+      "record_count": 117,
+      "sha256": "a9cfefb4a9642057141a34fbbab8abadf11f10f96b16c95a0f98e82ec0072793"
+    },
+    {
+      "path": "canonical/rv_mandala_1_sample_v2/qa_issues.jsonl",
+      "record_count": 7,
+      "sha256": "4ff4eac25f0c5d88e8939e70fbd1d1651bc2ca194198c3c787111ecefefb20cc"
+    },
+    {
+      "path": "canonical/rv_mandala_1_sample_v2/source_artifacts.jsonl",
+      "record_count": 5,
+      "sha256": "a3ce182bb3abb0f58e192bd14278ff37e15f586df7c847611f9ad75606c13d99"
+    },
+    {
+      "path": "canonical/rv_mandala_1_sample_v2/source_assertions.jsonl",
+      "record_count": 251,
+      "sha256": "ec609701d925c3cddbf753c40f7bfc04fa8b26cb08130e2de6f826fa5606e029"
+    },
+    {
+      "path": "canonical/rv_mandala_1_sample_v2/sources.jsonl",
+      "record_count": 8,
+      "sha256": "47de4d35e96d86046a8a7af77171bef84ae59af3b2b4a68c148b3655983b3547"
+    },
+    {
+      "path": "canonical/rv_mandala_1_sample_v2/text_versions.jsonl",
+      "record_count": 111,
+      "sha256": "bcd77f46076cd201ce71596cc3d89ce200702d37cfd5908f17c01cbc44041fec"
+    },
+    {
+      "path": "canonical/rv_mandala_1_sample_v2/traditional_metadata.jsonl",
+      "record_count": 9,
+      "sha256": "393899582caa01c4f1642df6633c88d0f06bbe798ec36691ae693ffeb317a109"
+    },
+    {
+      "path": "canonical/rv_mandala_1_sample_v2/translations.jsonl",
+      "record_count": 111,
+      "sha256": "dff0aa5673295813a0faa5add2b052ea42f01c7192236d08042579847fd6b6dd"
+    },
+    {
+      "path": "canonical/rv_mandala_1_sample_v2/works.jsonl",
+      "record_count": 1,
+      "sha256": "477cde9b833ea9e46b3dd41a1939dce763f5984199304cb4375d53a28f299056"
+    }
+  ],
+  "parser_versions": {
+    "GRETIL:sanskrit": "gretil-rigveda-tei-v2",
+    "VHP:discovery": "vhp-rigveda-v2",
+    "VHP:metadata": "vhp-rigveda-v2",
+    "WIKISOURCE_GRIFFITH_RV:translation": "wikisource-griffith-v2",
+    "WIKISOURCE_GRIFFITH_RV:translation_revision": "mediawiki-revision-v1"
+  },
+  "passage_count": 111,
+  "qa_status": "PASSED_WITH_WARNINGS",
+  "raw_snapshot_hashes": {
+    "GRETIL:14197d9c1dcced64900ef971d9f4dc5b46aa8750780f5599453c9739d6a29edd": "14197d9c1dcced64900ef971d9f4dc5b46aa8750780f5599453c9739d6a29edd",
+    "VHP:3a4c8eae800f90e8dd86a48b46bbdbe1b6b2995eeaed67575dd21941a202c633": "3a4c8eae800f90e8dd86a48b46bbdbe1b6b2995eeaed67575dd21941a202c633",
+    "VHP:5eee5aa6c4a162425e6afda8b6952ddc68a762a9245dc2cdf7d05b5382aaa8c2": "5eee5aa6c4a162425e6afda8b6952ddc68a762a9245dc2cdf7d05b5382aaa8c2",
+    "VHP:943d5a5b3cdf87319f1b634cc49925e119c6ea5334fb6b1a73a1975cd0837937": "943d5a5b3cdf87319f1b634cc49925e119c6ea5334fb6b1a73a1975cd0837937",
+    "VHP:ea578e56195ea1b1acb7635338185ab089b474d4597b9a272d602c11459dbee9": "ea578e56195ea1b1acb7635338185ab089b474d4597b9a272d602c11459dbee9",
+    "VHP:fb49e07090c27445149d9e915adef719c0f8a9e2d22c44fdf6d69cb7752567e2": "fb49e07090c27445149d9e915adef719c0f8a9e2d22c44fdf6d69cb7752567e2",
+    "WIKISOURCE_GRIFFITH_RV:079b0364bd7dee6b14a9b365ee8167b402a252a4bc7f4b70221ad783666f3a1a": "079b0364bd7dee6b14a9b365ee8167b402a252a4bc7f4b70221ad783666f3a1a",
+    "WIKISOURCE_GRIFFITH_RV:0fb63bfc9a9307f6f210c5fe49647c5b77f5e98c14bd57b5bf6f18b1b90fb8c4": "0fb63bfc9a9307f6f210c5fe49647c5b77f5e98c14bd57b5bf6f18b1b90fb8c4",
+    "WIKISOURCE_GRIFFITH_RV:154cd0d816f1141b61b3899825cd087e62f8a4dd1af75bcb28ffd4d31ead8bf1": "154cd0d816f1141b61b3899825cd087e62f8a4dd1af75bcb28ffd4d31ead8bf1",
+    "WIKISOURCE_GRIFFITH_RV:1ced430aa6e83f5a5d8d0951119c10a15e960079c8d14a4c1c209d9c3dc350de": "1ced430aa6e83f5a5d8d0951119c10a15e960079c8d14a4c1c209d9c3dc350de",
+    "WIKISOURCE_GRIFFITH_RV:21ca0e2b39fb75421ea8038b13bc672d3e57cf2952b1883eb609c269a311cf57": "21ca0e2b39fb75421ea8038b13bc672d3e57cf2952b1883eb609c269a311cf57",
+    "WIKISOURCE_GRIFFITH_RV:246ec1f87c7079debead3813ac9d0d1dc25bde3432c1bd585b328aaccdfd17c6": "246ec1f87c7079debead3813ac9d0d1dc25bde3432c1bd585b328aaccdfd17c6",
+    "WIKISOURCE_GRIFFITH_RV:2b0b8746d52f84fb5db33e05b9839aaf73f948116ae8b78602e465b236e976c5": "2b0b8746d52f84fb5db33e05b9839aaf73f948116ae8b78602e465b236e976c5",
+    "WIKISOURCE_GRIFFITH_RV:564c06cde819cc01ac6c60a8aa031c95f5e4ab892bc3aebb8bb8a236225be6cd": "564c06cde819cc01ac6c60a8aa031c95f5e4ab892bc3aebb8bb8a236225be6cd",
+    "WIKISOURCE_GRIFFITH_RV:b32fe2c83d2a0c78c7853478ea4a6dd2b570b78c55c72a740a1d3aa4dd6dd50b": "b32fe2c83d2a0c78c7853478ea4a6dd2b570b78c55c72a740a1d3aa4dd6dd50b",
+    "WIKISOURCE_GRIFFITH_RV:bab75f936eaf06e2a6d2c346ef4c405a71d12d168b7d58b7d0bb97ef1d5ddf3e": "bab75f936eaf06e2a6d2c346ef4c405a71d12d168b7d58b7d0bb97ef1d5ddf3e"
+  },
+  "reconciliation_policy_version": "rv-mandala-1-v1",
+  "record_counts": {
+    "canonical/rv_mandala_1_sample_v2/REPORT.md": 1,
+    "canonical/rv_mandala_1_sample_v2/audio_recordings.jsonl": 5,
+    "canonical/rv_mandala_1_sample_v2/audio_segments.jsonl": 0,
+    "canonical/rv_mandala_1_sample_v2/citations.jsonl": 111,
+    "canonical/rv_mandala_1_sample_v2/discoveries.jsonl": 382,
+    "canonical/rv_mandala_1_sample_v2/passages.jsonl": 117,
+    "canonical/rv_mandala_1_sample_v2/qa_issues.jsonl": 7,
+    "canonical/rv_mandala_1_sample_v2/source_artifacts.jsonl": 5,
+    "canonical/rv_mandala_1_sample_v2/source_assertions.jsonl": 251,
+    "canonical/rv_mandala_1_sample_v2/sources.jsonl": 8,
+    "canonical/rv_mandala_1_sample_v2/text_versions.jsonl": 111,
+    "canonical/rv_mandala_1_sample_v2/traditional_metadata.jsonl": 9,
+    "canonical/rv_mandala_1_sample_v2/translations.jsonl": 111,
+    "canonical/rv_mandala_1_sample_v2/works.jsonl": 1
+  },
+  "schema_version": "1.0.0",
+  "source_artifact_ids": [
+    "GRETIL.RV.AUFRECHT.TEI.2019",
+    "GRIFFITH.RV.1896.WIKISOURCE",
+    "VHP.RV.SHAKALA.MANDALA1.WEB"
+  ],
+  "source_snapshot_ids": [
+    "GRETIL:14197d9c1dcced64900ef971d9f4dc5b46aa8750780f5599453c9739d6a29edd",
+    "VHP:3a4c8eae800f90e8dd86a48b46bbdbe1b6b2995eeaed67575dd21941a202c633",
+    "VHP:5eee5aa6c4a162425e6afda8b6952ddc68a762a9245dc2cdf7d05b5382aaa8c2",
+    "VHP:943d5a5b3cdf87319f1b634cc49925e119c6ea5334fb6b1a73a1975cd0837937",
+    "VHP:ea578e56195ea1b1acb7635338185ab089b474d4597b9a272d602c11459dbee9",
+    "VHP:fb49e07090c27445149d9e915adef719c0f8a9e2d22c44fdf6d69cb7752567e2",
+    "WIKISOURCE_GRIFFITH_RV:079b0364bd7dee6b14a9b365ee8167b402a252a4bc7f4b70221ad783666f3a1a",
+    "WIKISOURCE_GRIFFITH_RV:0fb63bfc9a9307f6f210c5fe49647c5b77f5e98c14bd57b5bf6f18b1b90fb8c4",
+    "WIKISOURCE_GRIFFITH_RV:154cd0d816f1141b61b3899825cd087e62f8a4dd1af75bcb28ffd4d31ead8bf1",
+    "WIKISOURCE_GRIFFITH_RV:1ced430aa6e83f5a5d8d0951119c10a15e960079c8d14a4c1c209d9c3dc350de",
+    "WIKISOURCE_GRIFFITH_RV:21ca0e2b39fb75421ea8038b13bc672d3e57cf2952b1883eb609c269a311cf57",
+    "WIKISOURCE_GRIFFITH_RV:246ec1f87c7079debead3813ac9d0d1dc25bde3432c1bd585b328aaccdfd17c6",
+    "WIKISOURCE_GRIFFITH_RV:2b0b8746d52f84fb5db33e05b9839aaf73f948116ae8b78602e465b236e976c5",
+    "WIKISOURCE_GRIFFITH_RV:564c06cde819cc01ac6c60a8aa031c95f5e4ab892bc3aebb8bb8a236225be6cd",
+    "WIKISOURCE_GRIFFITH_RV:b32fe2c83d2a0c78c7853478ea4a6dd2b570b78c55c72a740a1d3aa4dd6dd50b",
+    "WIKISOURCE_GRIFFITH_RV:bab75f936eaf06e2a6d2c346ef4c405a71d12d168b7d58b7d0bb97ef1d5ddf3e"
+  ],
+  "version": "0.2.0-sample.2",
+  "works": [
+    "VG:WORK:RV:SAK"
+  ]
+}

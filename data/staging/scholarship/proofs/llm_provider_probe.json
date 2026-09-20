@@ -1,0 +1,9 @@
+{
+  "conclusion": "the configured free model is usable for a small batched pass and unusable at scale; 4 QA calls took 80-177s each",
+  "configured_model": "nvidia/nemotron-3-ultra-550b-a55b:free",
+  "configured_provider": "openrouter",
+  "note": "the adjudication pass itself is in qa_llm_adjudication.json",
+  "probe_1": "timed out at the configured 60s timeout",
+  "probe_2": "answered \"OK\" in 96.5s with a 240s timeout",
+  "retry_policy": "no retry on any timeout, rate-limit or quota error"
+}

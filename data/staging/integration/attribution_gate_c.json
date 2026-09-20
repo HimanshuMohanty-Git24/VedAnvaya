@@ -1,0 +1,125 @@
+{
+  "artifact": "ATTRIBUTION_GATE_C",
+  "strategy": "The census claims to describe this graph, so the graph is used to contradict it: every state is checked against the edges that actually exist, stratified by Veda, dimension and state. The Whitney rows assert what the graph does not hold, so they are checked against their own printed source instead.",
+  "census_rows": 22537,
+  "census_assertions_checked": 67611,
+  "census_contradicted": 0,
+  "census_contradiction_rate": 0.0,
+  "strata": 38,
+  "worst_strata": [
+    {
+      "stratum": "AV:rishi:NOT_APPLICABLE_AT_THIS_GRANULARITY",
+      "checked": 20,
+      "contradicted": 0,
+      "rate": 0.0
+    },
+    {
+      "stratum": "AV:devata:NOT_APPLICABLE_AT_THIS_GRANULARITY",
+      "checked": 20,
+      "contradicted": 0,
+      "rate": 0.0
+    },
+    {
+      "stratum": "AV:chandas:NOT_APPLICABLE_AT_THIS_GRANULARITY",
+      "checked": 20,
+      "contradicted": 0,
+      "rate": 0.0
+    },
+    {
+      "stratum": "AV:rishi:DERIVED_PRESENT",
+      "checked": 5084,
+      "contradicted": 0,
+      "rate": 0.0
+    },
+    {
+      "stratum": "AV:devata:DERIVED_PRESENT",
+      "checked": 4665,
+      "contradicted": 0,
+      "rate": 0.0
+    },
+    {
+      "stratum": "AV:chandas:DERIVED_PRESENT",
+      "checked": 2897,
+      "contradicted": 0,
+      "rate": 0.0
+    },
+    {
+      "stratum": "AV:chandas:SOURCE_EXPLICIT_PRESENT",
+      "checked": 1650,
+      "contradicted": 0,
+      "rate": 0.0
+    },
+    {
+      "stratum": "AV:devata:ASSESSED_SOURCE_ABSENT",
+      "checked": 804,
+      "contradicted": 0,
+      "rate": 0.0
+    },
+    {
+      "stratum": "AV:chandas:ASSESSED_SOURCE_ABSENT",
+      "checked": 922,
+      "contradicted": 0,
+      "rate": 0.0
+    },
+    {
+      "stratum": "AV:rishi:ASSESSED_SOURCE_ABSENT",
+      "checked": 385,
+      "contradicted": 0,
+      "rate": 0.0
+    },
+    {
+      "stratum": "AV:rishi:NEVER_ASSESSED",
+      "checked": 1101,
+      "contradicted": 0,
+      "rate": 0.0
+    },
+    {
+      "stratum": "AV:devata:NEVER_ASSESSED",
+      "checked": 1101,
+      "contradicted": 0,
+      "rate": 0.0
+    },
+    {
+      "stratum": "AV:chandas:NEVER_ASSESSED",
+      "checked": 1101,
+      "contradicted": 0,
+      "rate": 0.0
+    },
+    {
+      "stratum": "RV:rishi:NOT_APPLICABLE_AT_THIS_GRANULARITY",
+      "checked": 10,
+      "contradicted": 0,
+      "rate": 0.0
+    },
+    {
+      "stratum": "RV:devata:NOT_APPLICABLE_AT_THIS_GRANULARITY",
+      "checked": 10,
+      "contradicted": 0,
+      "rate": 0.0
+    }
+  ],
+  "contradiction_examples": [],
+  "boundary_coordinates_checked": [
+    "VG:AV:SAU:K01",
+    "VG:AV:SAU:K20:S143:V009",
+    "VG:RV:SAK:M01",
+    "VG:RV:SAK:M10:S191:V004",
+    "VG:SV:KAU:ARANYA",
+    "VG:SV:KAU:UTTARA:P09:R03:D09:V03",
+    "VG:YV:VSM:A01",
+    "VG:YV:VSM:A40:V017"
+  ],
+  "boundary_findings": [],
+  "whitney_rows": 466,
+  "whitney_address_mismatches": 0,
+  "whitney_address_examples": [],
+  "whitney_rows_carrying_a_printed_bracket": 83,
+  "whitney_addresses_not_anchored_in_the_bracket": 0,
+  "whitney_unanchored_examples": [],
+  "whitney_addresses_this_gate_could_not_parse": 0,
+  "whitney_unparseable_examples": [],
+  "whitney_verse_overruns": 0,
+  "whitney_overrun_examples": [],
+  "defect_class": "NONE",
+  "verdict": "GATE_C_PASS"
+}

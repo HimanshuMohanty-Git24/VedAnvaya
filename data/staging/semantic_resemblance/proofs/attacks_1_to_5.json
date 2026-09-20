@@ -1,0 +1,305 @@
+{
+ "attack_3_lexical_leakage": {
+  "pearson_hybrid_vs_lexical_control_on_gold": 0.7562,
+  "spearman_hybrid_vs_lexical_control_on_gold": 0.7108,
+  "pearson_hybrid_vs_lexical_control_on_the_full_pool": 0.3874,
+  "auc_hybrid": 0.8377,
+  "auc_lexical_control_alone": 0.7758,
+  "auc_hybrid_residualised_on_lexical": 0.7371,
+  "auc_lexical_residualised_on_hybrid": 0.4025,
+  "per_channel_correlation_with_lexical_control": {
+   "R1_LEMMA_TFIDF": {
+    "pearson_gold": -0.012,
+    "pearson_pool": 0.1815
+   },
+   "R2_ENTITY_IDF": {
+    "pearson_gold": 0.5256,
+    "pearson_pool": 0.1824
+   },
+   "R3_TRANSLATION_TFIDF": {
+    "pearson_gold": 0.402,
+    "pearson_pool": 0.3692
+   },
+   "R3b_TRANSLATION_RAW": {
+    "pearson_gold": 0.3982,
+    "pearson_pool": 0.3853
+   },
+   "R4_FRAME_IDF": {
+    "pearson_gold": 0.4016,
+    "pearson_pool": 0.1535
+   },
+   "R5_MULTILING_SANSKRIT": {
+    "pearson_gold": 0.4575,
+    "pearson_pool": 0.0787
+   },
+   "R5_MULTILING_SANSKRIT_CENTRED": {
+    "pearson_gold": 0.5944,
+    "pearson_pool": 0.1224
+   },
+   "R6_E5_SANSKRIT": {
+    "pearson_gold": 0.861,
+    "pearson_pool": 0.3851
+   },
+   "R6_E5_SANSKRIT_CENTRED": {
+    "pearson_gold": 0.866,
+    "pearson_pool": 0.4272
+   },
+   "R7_E5_TRANSLATION": {
+    "pearson_gold": -0.3514,
+    "pearson_pool": -0.0202
+   },
+   "R7_E5_TRANSLATION_CENTRED": {
+    "pearson_gold": 0.2761,
+    "pearson_pool": 0.2303
+   },
+   "R8_ENMINI_TRANSLATION": {
+    "pearson_gold": -0.0443,
+    "pearson_pool": 0.0856
+   },
+   "R8_ENMINI_TRANSLATION_CENTRED": {
+    "pearson_gold": 0.241,
+    "pearson_pool": 0.1893
+   }
+  },
+  "assertion_residual_auc_above_half": true,
+  "lexical_cosine_below_0.10": {
+   "n": 231,
+   "positives": 111,
+   "auc_hybrid": 0.8161,
+   "auc_lexical_control": 0.7209,
+   "auc_R4_FRAME_IDF": 0.7663
+  },
+  "lexical_cosine_below_0.20": {
+   "n": 257,
+   "positives": 127,
+   "auc_hybrid": 0.8068,
+   "auc_lexical_control": 0.7044,
+   "auc_R4_FRAME_IDF": 0.7658
+  },
+  "lexical_cosine_0.20_or_above": {
+   "n": 67,
+   "positives": 61,
+   "auc_hybrid": 0.5738,
+   "auc_lexical_control": 0.7541,
+   "auc_R4_FRAME_IDF": 0.4413
+  },
+  "excluding_every_yajurvedic_endpoint": {
+   "n": 296,
+   "auc_hybrid": 0.8447,
+   "auc_lexical_control": 0.784,
+   "why": "873 of 1,975 YV verses carry a Vedic sign that survives my fold with no counterpart on the transliterated RV and AV side, so the lexical control is misaligned on them; this checks whether the leakage finding depends on it"
+  }
+ },
+ "attack_1_translation_circularity": {
+  "same_encoder_two_channels": {
+   "R6_E5_SANSKRIT_auc": 0.7195,
+   "R7_E5_TRANSLATION_auc": 0.6085,
+   "spearman_between_them_on_gold": 0.1039,
+   "spearman_between_them_on_the_pool": 0.057
+  },
+  "habit_word_ablation": {
+   "R3_habit_words_removed_auc": 0.6209,
+   "R3b_habit_words_kept_auc": 0.6121,
+   "auc_delta_from_removing_them": 0.0088,
+   "habit_word_list_size": 60
+  },
+  "same_translator_vs_different": {
+   "same_translator_n": 185,
+   "same_translator_positive_rate": 0.6054,
+   "different_translator_n": 78,
+   "different_translator_positive_rate": 0.3718,
+   "auc_hybrid_same_translator": 0.7798,
+   "auc_hybrid_different_translator": 0.8557,
+   "auc_R7_same_translator": 0.7298,
+   "auc_R7_different_translator": 0.8023
+  },
+  "translation_free_hybrid": {
+   "channels": [
+    "R4_FRAME_IDF",
+    "R6_E5_SANSKRIT",
+    "R2_ENTITY_IDF"
+   ],
+   "auc": 0.803,
+   "auc_of_the_full_hybrid": 0.8377
+  },
+  "adjudicator_self_report": {
+   "pairs_marked_phrasing_driven": 5,
+   "of_which_positive": 0,
+   "basis_distribution": {
+    "BOTH": 112,
+    "SANSKRIT": 177,
+    "ENGLISH": 35
+   }
+  }
+ },
+ "attack_2_duplicate_translations": {
+  "gold_pairs_with_fold_identical_english": 1,
+  "their_labels": {
+   "SAME_CONTENT": 1
+  },
+  "gold_pairs_with_fold_identical_sanskrit": 27,
+  "their_sanskrit_labels": {
+   "SAME_CONTENT": 27
+  },
+  "known_bad_rv_translation_keys_excluded_by_key": 31,
+  "hymn_level_only_rv_keys_excluded": 158,
+  "samavedic_translations_in_the_live_graph": 0,
+  "note": "the 173 Wave-1 staged Samavedic translations are Griffith Rigveda renderings used cross-corpus; the live graph holds none, so no RV-SV score here is circular through them. It becomes circular the moment Wave 3 imports them."
+ },
+ "attack_4_entity_leakage": {
+  "gold_pairs_sharing_a_devata_mention_or_dedication": 145,
+  "gold_pairs_sharing_none": 179,
+  "positive_rate_sharing": 0.8276,
+  "positive_rate_not_sharing": 0.3799,
+  "auc_hybrid_on_pairs_sharing_no_theonym": 0.8041,
+  "auc_hybrid_on_pairs_sharing_one": 0.7147,
+  "auc_R2_ENTITY_IDF_alone": 0.7048,
+  "auc_hybrid_without_R2": 0.8323,
+  "gold_pairs_already_carrying_an_entity_vocabulary_edge": 1
+ },
+ "attack_5_anisotropy_and_random_pairs": {
+  "random_pairs_drawn": 200000,
+  "drawn_from": "a seeded uniform draw over the 204,220,445-pair mantra product, independent of the candidate pool",
+  "per_candidate_on_random_pairs": {
+   "R1_LEMMA_TFIDF": {
+    "mean": 0.0039,
+    "p50": 0.0,
+    "p95": 0.0309,
+    "p999": 0.1833,
+    "max": 0.7673,
+    "share_at_or_above_0.5": 0.0,
+    "share_at_or_above_0.8": 0.0
+   },
+   "R2_ENTITY_IDF": {
+    "mean": 0.0261,
+    "p50": 0.0,
+    "p95": 0.2242,
+    "p999": 1.0,
+    "max": 1.0,
+    "share_at_or_above_0.5": 0.0126,
+    "share_at_or_above_0.8": 0.0025
+   },
+   "R3_TRANSLATION_TFIDF": {
+    "mean": 0.0053,
+    "p50": 0.0,
+    "p95": 0.0438,
+    "p999": 0.1804,
+    "max": 1.0,
+    "share_at_or_above_0.5": 0.0,
+    "share_at_or_above_0.8": 0.0
+   },
+   "R3b_TRANSLATION_RAW": {
+    "mean": 0.0074,
+    "p50": 0.0,
+    "p95": 0.0488,
+    "p999": 0.1799,
+    "max": 1.0,
+    "share_at_or_above_0.5": 0.0,
+    "share_at_or_above_0.8": 0.0
+   },
+   "R4_FRAME_IDF": {
+    "mean": 0.0502,
+    "p50": 0.0,
+    "p95": 0.3161,
+    "p999": 1.0,
+    "max": 1.0,
+    "share_at_or_above_0.5": 0.018,
+    "share_at_or_above_0.8": 0.0027
+   },
+   "C_LEXICAL_CHAR4": {
+    "mean": 0.0048,
+    "p50": 0.0,
+    "p95": 0.0214,
+    "p999": 0.0843,
+    "max": 0.9353,
+    "share_at_or_above_0.5": 0.0001,
+    "share_at_or_above_0.8": 0.0
+   },
+   "R5_MULTILING_SANSKRIT": {
+    "mean": 0.5988,
+    "p50": 0.6108,
+    "p95": 0.8827,
+    "p999": 0.9689,
+    "max": 0.9898,
+    "share_at_or_above_0.5": 0.7014,
+    "share_at_or_above_0.8": 0.16
+   },
+   "R5_MULTILING_SANSKRIT_CENTRED": {
+    "mean": 0.009,
+    "p50": -0.0148,
+    "p95": 0.4981,
+    "p999": 0.8814,
+    "max": 0.9665,
+    "share_at_or_above_0.5": 0.0495,
+    "share_at_or_above_0.8": 0.0046
+   },
+   "R6_E5_SANSKRIT": {
+    "mean": 0.8883,
+    "p50": 0.8895,
+    "p95": 0.9134,
+    "p999": 0.9356,
+    "max": 0.9968,
+    "share_at_or_above_0.5": 1.0,
+    "share_at_or_above_0.8": 0.9999
+   },
+   "R6_E5_SANSKRIT_CENTRED": {
+    "mean": -0.0004,
+    "p50": -0.0079,
+    "p95": 0.1839,
+    "p999": 0.411,
+    "max": 0.968,
+    "share_at_or_above_0.5": 0.0002,
+    "share_at_or_above_0.8": 0.0
+   },
+   "R7_E5_TRANSLATION": {
+    "mean": 0.5974,
+    "p50": 0.8227,
+    "p95": 0.8674,
+    "p999": 0.9033,
+    "max": 0.9974,
+    "share_at_or_above_0.5": 0.7163,
+    "share_at_or_above_0.8": 0.6652
+   },
+   "R7_E5_TRANSLATION_CENTRED": {
+    "mean": 0.0001,
+    "p50": 0.0,
+    "p95": 0.1425,
+    "p999": 0.3571,
+    "max": 0.9832,
+    "share_at_or_above_0.5": 0.0001,
+    "share_at_or_above_0.8": 0.0
+   },
+   "R8_ENMINI_TRANSLATION": {
+    "mean": 0.2143,
+    "p50": 0.2436,
+    "p95": 0.4576,
+    "p999": 0.6274,
+    "max": 0.9952,
+    "share_at_or_above_0.5": 0.0224,
+    "share_at_or_above_0.8": 0.0
+   },
+   "R8_ENMINI_TRANSLATION_CENTRED": {
+    "mean": -0.0,
+    "p50": 0.0,
+    "p95": 0.1585,
+    "p999": 0.3974,
+    "max": 0.9932,
+    "share_at_or_above_0.5": 0.0001,
+    "share_at_or_above_0.8": 0.0
+   }
+  },
+  "hybrid_z_on_random_pairs": {
+   "mean": -0.7592,
+   "p50": -0.7854,
+   "p99": 0.2567,
+   "p9999": 1.4434,
+   "max": 3.1064
+  },
+  "hybrid_z_on_the_candidate_pool": {
+   "mean": 0.0,
+   "p50": -0.0637,
+   "p99": 1.5298,
+   "max": 3.4538
+  }
+ }
+}

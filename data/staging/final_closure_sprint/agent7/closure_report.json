@@ -1,0 +1,208 @@
+{
+ "artifact": "AGENT7_CLOSURE_REPORT",
+ "agent": "AGENT_7_TRANSLATION_SAMAVEDA",
+ "write_surface": "read-only against Neo4j; every mutation is staged for the lead",
+ "rule": "a gap closes only when its own declared closure_test passes AS WRITTEN",
+ "gaps": {
+  "GAP-TRANSLATION-001": {
+   "veda": "SV",
+   "closure_test": "MATCH (p:Mantra) WHERE p.veda='SV' AND NOT (p)-[:HAS_TRANSLATION]->() RETURN count(p) returns 0, every SV Translation node carries a Kauthuma-aligned source_id, and /api/v1/works reports VG:WORK:SV:KAU as SUPPORTED.",
+   "measured_now": {
+    "clause_1_mantras_without_their_own_edge": 1671,
+    "clause_1_demands": 0,
+    "clause_2_kauthuma_aligned_sv_translations": 0,
+    "clause_2_demands": 1844,
+    "clause_3_works_status": "PARTIAL, not SUPPORTED"
+   },
+   "passes": false,
+   "predicted_after_agent7_delta": {
+    "mantras_without_their_own_edge": 1671
+   },
+   "classification": "BLOCKED_EXTERNAL_SOURCE_UNAVAILABLE",
+   "blocked_evidence": {
+    "sources_searched": "Griffith 'Hymns of the Samaveda' (sacred-texts, and the Internet Archive Wayback capture 20231227014835 of /hin/sv.htm, 284,759 bytes, HTTP 200); Benfey 1848 (archive.org bub_gb_0C_oEB7TkVgC); Stevenson; Samasrami; Devi Chand; GRETIL; VedaWeb; en.wikisource 'The Sama Veda'; the registry's own declared WIKISOURCE_GRIFFITH_SV source node.",
+    "search_date": "2026-09-15, re-checked 2026-09-16 in the Wave 4 sweep, and re-verified 2026-09-16 in this pass against the held staging artifact and the live store",
+    "addressing_proof": "NOT a coordinate failure, and this was measured rather than assumed. 1,242 Samavedic translation rows are staged against this corpus's own canonical keys and every one resolves to an existing SV mantra with a matching veda; 173 of them are imported and live. The structural walk of the Samavedic passage tree also reproduces the gana source's own printed running number on 256 of 332 controls exactly, and the 76 that diverge are explained to the unit by the 31-verse corpus deficit. The addressing works. Diagnostics A, D, E, F, G and I all run.",
+    "why_no_lawful_source": "Every public-domain English Samaveda located is Ranayaniya, not the Kauthuma arcika this graph holds. Griffith's own preface states 'I have followed Benfey's text', and names Benfey's and Samasrami's editions as of the same recension as Stevenson's Ranayaniya. Campaign rule 3 forbids mapping another recension onto the one held, and this gap's own closure test demands Kauthuma-aligned source_ids, so the Ranayaniya material cannot lawfully satisfy it. Devi Chand and the commercial Samaveda Samhita reprint are in copyright. sacred-texts.com serves a Cloudflare bot challenge (HTTP 403 on every probe, research and browser UA, direct and via www); clearing it is out of bounds by policy, and the Wayback route was taken instead rather than treating the 403 as absence.",
+    "absence_not_inferred_from_not_looking": "Measured, not assumed: 0 Kauthuma-aligned Samaveda translations in the store against 1,844 mantras; 1,242 rows located, staged and key-resolved; 173 imported as DISCLOSED REUSE of Griffith's Rigvedic English on verified-identical text, which is why they are not counted toward this gap. Nine acquisition avenues are recorded per verse in data/staging/translation/proofs/sv_residual.md."
+   },
+   "note": "The 173 imported Samavedic renderings are Griffith's RIGVEDIC English on verified-identical text, disclosed as reuse. They are not converted into Samavedic translations here and must not be: the count of Kauthuma-aligned Samaveda translations is 0 and stays 0 until such a translation exists."
+  },
+  "GAP-TRANSLATION-002": {
+   "veda": "AV",
+   "closure_test": "MATCH (p:Mantra) WHERE p.veda='AV' AND NOT (p)-[:HAS_TRANSLATION]->() RETURN count(p) returns 0, and no AVS 20 mantra is untranslated.",
+   "measured_now": {
+    "mantras_without_their_own_edge": 51,
+    "demands": 0,
+    "verses_no_rendering_reaches": 17
+   },
+   "passes": false,
+   "predicted_after_agent7_delta": {
+    "mantras_without_their_own_edge": 51
+   },
+   "classification": "BLOCKED_EXTERNAL_SOURCE_UNAVAILABLE",
+   "blocked_evidence": {
+    "sources_searched": "Griffith 'Hymns of the Atharvaveda' kanda 20, all 143 hymn pages plus the index, via the Wayback capture 20230325113203 (144/144 HTTP 200); Whitney/Lanman via VEDAWEB (the incumbent layer); en.wikisource 'Hymns of the Atharva-Veda' (re-verified by list=allpages: 21 pages, Book 1 and a Book 2 stub); and the cross-corpus reuse route against every Rigvedic text version in this store.",
+    "search_date": "2026-09-15, re-measured 2026-09-16 in this pass",
+    "addressing_proof": "Not an addressing failure. Recension verified: Griffith's kanda 20 has 143 hymns in both his print and this spine, with per-hymn verse counts agreeing on 127 of 143. The anchor-name defect in the kanda-20 HTML was found and routed around by addressing on the page's own hymn number. For each of the 17, the printed label sequence of its own hymn page skips it with no cross-reference line. The reuse route was then measured against all 21,104 Rigvedic text versions under the packet's strict fold -- not only against the asserted parallel, which is how the 7 verses with no asserted parallel stopped being undecidable-because-unlooked-at. Diagnostics A, D, E, F, G, J and M run.",
+    "why_no_lawful_source": "The two attributed English Atharvavedas both omit these verses: Whitney excluded kanda 20, and Griffith's print does not carry these 17. The cross-corpus route is lawful only at surface identity of exactly 1.0, and no residual reaches it on the PRIMARY_TEXT pair the gate fixes. Sixteen have no exact match anywhere in the Rigveda; the seventeenth reaches 1.0 only on a non-primary pairing and Gate B measures token Dice 0.9375 on the primary one, the residue being a phonemic visarga. Forcing it would be the selected-witness error.",
+    "absence_not_inferred_from_not_looking": "21,104 Rigvedic text versions scanned for an exact fold match, per residual, and every candidate pair reported rather than the best one. 21 sibling verses WERE closed by this same route at exactly 1.0 and are imported, so the route is known to work and these 17 are where it stops."
+   },
+   "residual_keys": 17
+  },
+  "GAP-TRANSLATION-003": {
+   "veda": "YV",
+   "closure_test": "MATCH (p:Mantra) WHERE p.veda='YV' AND NOT (p)-[:HAS_TRANSLATION]->() RETURN count(p) returns 0.",
+   "measured_now": {
+    "mantras_without_their_own_edge": 36,
+    "demands": 0
+   },
+   "passes": false,
+   "predicted_after_agent7_delta": {
+    "mantras_without_their_own_edge": 25
+   },
+   "classification": "STILL_IMPLEMENTATION_FIXABLE",
+   "reason": "Eleven of the 36 are staged and pass both unmodified gates, so the gap is not source-limited as a whole. Of the remaining 25: twelve (A23.20-31) are a printed omission and source-blocked, with the five fields recorded below; nine (A12.97-105) are an undecidable ten-units-for-nine-slots split whose English is on disk and deliberately withheld; three are withheld by a standing owner decision; one (A12.117) has no content control. Only the first group is a source limit, so the ENTRY is implementation-fixable and carries a scoped source blocker inside it.",
+   "scoped_source_blocker": {
+    "keys": [
+     "VG:YV:VSM:A23:V020",
+     "VG:YV:VSM:A23:V021",
+     "VG:YV:VSM:A23:V022",
+     "VG:YV:VSM:A23:V023",
+     "VG:YV:VSM:A23:V024",
+     "VG:YV:VSM:A23:V025",
+     "VG:YV:VSM:A23:V026",
+     "VG:YV:VSM:A23:V027",
+     "VG:YV:VSM:A23:V028",
+     "VG:YV:VSM:A23:V029",
+     "VG:YV:VSM:A23:V030",
+     "VG:YV:VSM:A23:V031"
+    ],
+    "sources_searched": "Griffith 'The Texts of the White Yajurveda' 1899, all 40 book pages held locally as the 2026-09-07 sacred-texts snapshot (sha256 per page); the archive.org scan of the same 1899 edition; Keith's Taittiriya; the edited Griffith Yajurvedas (Arya, Pratap); en.wikisource 'Yajurveda'.",
+    "search_date": "2026-09-15, re-verified 2026-09-16 against the held snapshot tree",
+    "addressing_proof": "Not an addressing failure, and the distinction was measured: of the original 72, 39 were OCR digit confusion with the translated text present throughout, and 36 of those are now imported. For adhyaya 23.20-31 the print declares its own omission -- unit 19 ends in a row of ellipsis dots and the next printed label is 32 -- so the gap is read from the page rather than from a parse failure. Diagnostics A, C, H run.",
+    "why_no_lawful_source": "Griffith declines to render the asvamedha dialogue. The archive.org scan of the same 1899 edition carries the same omission, with none of the dialogue's catchwords anywhere in 1.04 MB of its OCR. Keith's Taittiriya is a different samhita and using it would be the cross-recension substitution the campaign forbids. en.wikisource 'Yajurveda' redirects to Keith. The edited Griffith Yajurvedas are in copyright.",
+    "absence_not_inferred_from_not_looking": "Six avenues checked and recorded in proofs/yv_adhyaya_23_omission.md, including a catchword search over the whole OCR of an independent scan of the same edition. The 11 adhyaya-12 rows that WERE recoverable were recovered in this pass, which is the control that the search is discriminating rather than uniformly negative."
+   }
+  },
+  "GAP-TRANSLATION-004": {
+   "veda": "RV",
+   "closure_test": "MATCH (p:Mantra) WHERE p.veda='RV' AND NOT (p)-[:HAS_TRANSLATION]->() RETURN count(p) returns 0.",
+   "measured_now": {
+    "mantras_without_their_own_edge": 37,
+    "demands": 0,
+    "verses_no_rendering_reaches": 7
+   },
+   "passes": false,
+   "predicted_after_agent7_delta": {
+    "mantras_without_their_own_edge": 36
+   },
+   "classification": "STILL_IMPLEMENTATION_FIXABLE",
+   "reason": "One of the seven (RV 8.93.29) is resolved and staged, passing both unmodified gates. Four (5.55.8, 9.7.9, 10.48.7, 10.132.5) are mis-grained rather than absent: their English is already imported inside the preceding printed unit, and the honest repair is the MANTRA_RANGE re-typing M13 already used for the RV 1.65-1.70 span, not a split of Griffith's prose. Two (10.86.16-17) are a genuine source absence and carry the five fields. The 30 M13 span verses also still count against this test as written, because MANTRA_RANGE coverage was imported without an edge to each covered verse -- that is an edge-model question that reopens owner decision A and is the lead's, not this agent's.",
+   "scoped_source_blocker": {
+    "keys": [
+     "VG:RV:SAK:M10:S086:V016",
+     "VG:RV:SAK:M10:S086:V017"
+    ],
+    "sources_searched": "WIKISOURCE_GRIFFITH_RV, the held per-hymn snapshots for RV 10.86 (sha256 verified against the derived source manifest); the sacred-texts Wayback capture of rv10086.htm recorded in proofs/source_pages.json; and the already-imported Latin substitution population.",
+    "search_date": "2026-09-15, re-measured 2026-09-16 in this pass",
+    "addressing_proof": "Not an addressing failure. The held snapshot's printed label sequence for RV 10.86 runs 1..15 then 18..23 -- 21 units for 23 canonical verses -- with no corrupt token anywhere in the sequence under the single-glyph substitution rule that recovered RV 8.93.29 from the same source family, and no over-length unit that could contain the two. Diagnostics A, B, C, H, I run; the Valakhilya permutation is checked and does not apply to mandala 10.",
+    "why_no_lawful_source": "Griffith suppresses the Vrsakapi dialogue at 10.86.16-17. He elsewhere renders explicit passages into Latin and six such Rigvedic rows are already imported (RV 1.179.3-4, 10.61.5-8), so the Latin route was checked specifically: he does not take it here, the verses are omitted outright. This graph ingests one English Rigveda and there is no second attributed public-domain witness in it.",
+    "absence_not_inferred_from_not_looking": "The label sequence was parsed from the bytes and printed in full rather than reported as a count, and the same parser recovered RV 8.93.29 from a corrupt label in the same run -- so a negative here is a negative from an instrument that returns positives."
+   }
+  },
+  "GAP-TRANSLATION-005": {
+   "closure_test": "MATCH (t:Translation) WHERE t.alignment_confidence IS NULL RETURN count(t) returns 0, and the 158-uncertain claim is either reproducible from the data or removed.",
+   "measured_now": {
+    "clause_1_null_alignment_confidence": 18415,
+    "clause_1_demands": 0,
+    "clause_2_158_reproducible": true,
+    "clause_2_measured": {
+     "translations_at_HYMN_grain_corpus_wide": 158,
+     "translations_at_HYMN_grain_from_WIKISOURCE_GRIFFITH_RV": 158,
+     "wikisource_griffith_rv_total": 10502,
+     "wikisource_griffith_rv_at_MANTRA": 10314,
+     "wikisource_griffith_rv_at_MANTRA_RANGE": 30
+    }
+   },
+   "passes": false,
+   "predicted_after_agent7_delta": {
+    "null_alignment_confidence": 0,
+    "158_reproducible": true
+   },
+   "classification": "STILL_IMPLEMENTATION_FIXABLE",
+   "reason": "Clause 2 is CLOSED by measurement: the 158 is exactly the count of WIKISOURCE_GRIFFITH_RV translations at HYMN grain, and the registry's ruling that no property carries the record was a false absence -- the property is alignment_level and the audit grepped for the value's name instead of enumerating the field's value space. Clause 1 stands at 18,415 of 18,415 null; the derivation is complete, total and refusing, and staged as M3, but Agent 7 may not write canonical so the test cannot pass by its hand.",
+   "correction_owed_by_the_documents": {
+    "10344_exact_mantra_alignments": "now 10,314 at MANTRA plus 30 at MANTRA_RANGE. M13 re-typed the RV 1.65-1.70 span, so the 10,344 is one population that has become two.",
+    "52_mantras_have_none": "now 37 carry no HAS_TRANSLATION edge of their own and 7 are reached by no rendering of any kind. Both are lower than 52 and neither is 52.",
+    "action": "the 158 stands and must not be withdrawn; the 10,344 and the 52 in the same sentence need correcting. PRODUCT_V1_SCOPE.md and docs/STATUS.md are outside this agent's write surface, so the correction is proposed here rather than applied."
+   }
+  },
+  "GAP-SAMAVEDA_MUSIC-003": {
+   "closure_test": "Every Samavedic mantra exposes its running Samhita number, and re-deriving the MUSICALIZED_AS edges from the graph alone reproduces all 495.",
+   "measured_now": {
+    "clause_1_sv_mantras_carrying_the_number": 0,
+    "clause_1_demands": 1844,
+    "clause_2_musicalized_as_edges_in_the_graph": 0,
+    "clause_2_demands": 495
+   },
+   "passes": false,
+   "classification": "STILL_IMPLEMENTATION_FIXABLE",
+   "reason": "The gap's premise is wrong in one place and right in another, and both were measured. Wrong: it says the 495 edges 'cannot be re-derived or audited AFTER import' -- the graph holds ZERO MUSICALIZED_AS edges, so nothing was imported and clause 2 is currently unsatisfiable rather than failed. Right, but for a deeper reason than recorded: the running number IS derivable from the graph's own structure for the first 1,106 verses, exactly. A depth-first walk of the Samavedic passage tree by (parent_key, sequence_in_parent) reproduces the gana source's own printed number on 256 of 332 controls; ASCII canonical_key order, which sorts ARANYA before CHANDA, manages only 104. The 76 that diverge do so by a cumulative offset that ends at exactly 31 -- which is exactly the declared deficit between the 1,875-verse Kauthuma Samhita and the 1,844 this graph holds. So the number cannot be fully re-derived, and the reason is a corpus deficit rather than a discarded field. The offset profile localises the 31 missing verses to six intervals in Uttararcika prapathakas 4 and 5, which is a new and actionable finding.",
+   "offset_steps": [
+    {
+     "first_control_at_derived_position": 1,
+     "canonical_key": "VG:SV:KAU:CHANDA:P01:D01:V01",
+     "offset_becomes": 0
+    },
+    {
+     "first_control_at_derived_position": 1107,
+     "canonical_key": "VG:SV:KAU:UTTARA:P04:R02:D01:V01",
+     "offset_becomes": 9
+    },
+    {
+     "first_control_at_derived_position": 1163,
+     "canonical_key": "VG:SV:KAU:UTTARA:P05:R01:D01:V01",
+     "offset_becomes": 12
+    },
+    {
+     "first_control_at_derived_position": 1204,
+     "canonical_key": "VG:SV:KAU:UTTARA:P05:R01:D11:V01",
+     "offset_becomes": 21
+    },
+    {
+     "first_control_at_derived_position": 1220,
+     "canonical_key": "VG:SV:KAU:UTTARA:P05:R01:D18:V01",
+     "offset_becomes": 24
+    },
+    {
+     "first_control_at_derived_position": 1280,
+     "canonical_key": "VG:SV:KAU:UTTARA:P05:R02:D11:V01",
+     "offset_becomes": 30
+    },
+    {
+     "first_control_at_derived_position": 1285,
+     "canonical_key": "VG:SV:KAU:UTTARA:P05:R02:D13:V01",
+     "offset_becomes": 31
+    }
+   ],
+   "derivation_artifact": "sv_running_number_derivation.json",
+   "what_would_close_it": "materialise the derived position as its own property (unambiguously this graph's own ordinal, not a claim about the edition); carry the edition's number only where a source prints it, which is 332 verses today; and resolve the 31 missing verses before any property claims to be the edition's running number beyond position 1,106. Clause 2 additionally needs the 495 edges imported, which sits behind OWNER_DECISION_E_AUDIO_GATE and is not this agent's."
+  }
+ },
+ "summary": {
+  "owned": 6,
+  "closed": 0,
+  "blocked_external_source_unavailable": [
+   "GAP-TRANSLATION-001",
+   "GAP-TRANSLATION-002"
+  ],
+  "still_implementation_fixable": [
+   "GAP-TRANSLATION-003",
+   "GAP-TRANSLATION-004",
+   "GAP-TRANSLATION-005",
+   "GAP-SAMAVEDA_MUSIC-003"
+  ],
+  "why_zero_closed": "every one of these six closure tests measures the canonical graph, and this agent may not write to it. Twelve verses are resolved and staged through the unmodified gates, and the report says exactly what each test would read after import -- and none of them reads 0."
+ }
+}

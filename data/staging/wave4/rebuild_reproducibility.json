@@ -1,0 +1,238 @@
+{
+  "artifact": "WAVE4_REBUILD_REPRODUCIBILITY",
+  "at": "2026-09-16T10:13:50.516012+00:00",
+  "method": "Two consecutive runs per builder, outputs compared byte for byte, then compared again with each builder's own declared volatile patterns masked. Volatile fields are declared before the comparison so that 'semantically equivalent' is a prediction that can fail.",
+  "counts": {
+    "BLOCKED_EXTERNAL_SOURCE": 1,
+    "NONDETERMINISTIC_BUT_SEMANTICALLY_EQUIVALENT": 5,
+    "NOT_APPLICABLE": 2,
+    "REPRODUCIBLE": 4
+  },
+  "defective": [],
+  "builders": [
+    {
+      "builder": "graph_quality_scorecard",
+      "status": "REPRODUCIBLE",
+      "runs": 2,
+      "byte_identical_outputs": [
+        "docs/reports/GRAPH_QUALITY_V2_SCORECARD.md"
+      ],
+      "differ_only_in_declared_volatile_fields": [],
+      "unexplained_differences": [],
+      "declared_volatile_patterns": [
+        "(?i)(generated|measured|as of|last built)[^\\n]*\\d{4}-\\d{2}-\\d{2}[^\\n]*"
+      ],
+      "first_run_tail": "on.UNRECOGNIZED: 'UNRECOGNIZED'>, raw_severity='WARNING', severity=<NotificationSeverity.WARNING: 'WARNING'>, diagnostic_record={'_classification': 'UNRECOGNIZED', '_severity': 'WARNING', '_position': {'offset': 13, 'line': 1, 'column': 14}, 'OPERATION': '', 'OPERATION_CODE': '0', 'CURRENT_SCHEMA': '/'}> for query: 'MATCH (a)-[r:WIELDS]->(b) WHERE NOT (a:Devata) OR NOT (b:Object) RETURN count(r)'\n",
+      "outputs": {
+        "docs/reports/GRAPH_QUALITY_V2_SCORECARD.md": {
+          "digest": "fe5803ad823606cd4554c928fa2e74bcdca08463498322ffddd3c16d45950fbe",
+          "bytes": 9340
+        }
+      }
+    },
+    {
+      "builder": "generate_ontology_reference",
+      "status": "REPRODUCIBLE",
+      "runs": 2,
+      "byte_identical_outputs": [
+        "docs/reports/VEDAGRAPH_ONTOLOGY_REFERENCE_V3.md"
+      ],
+      "differ_only_in_declared_volatile_fields": [],
+      "unexplained_differences": [],
+      "declared_volatile_patterns": [
+        "(?i)(generated|measured|as of|last built)[^\\n]*\\d{4}-\\d{2}-\\d{2}[^\\n]*"
+      ],
+      "first_run_tail": "wrote D:\\VedaGraph\\docs\\reports\\VEDAGRAPH_ONTOLOGY_REFERENCE_V3.md (982 lines)\n",
+      "outputs": {
+        "docs/reports/VEDAGRAPH_ONTOLOGY_REFERENCE_V3.md": {
+          "digest": "d2ca9e08f4ee3b71615d651ac42285ec7aaaa7df6c86f45a30a1b3b04e849a84",
+          "bytes": 51711
+        }
+      }
+    },
+    {
+      "builder": "export_predicate_semantics",
+      "status": "NONDETERMINISTIC_BUT_SEMANTICALLY_EQUIVALENT",
+      "runs": 2,
+      "byte_identical_outputs": [],
+      "differ_only_in_declared_volatile_fields": [
+        "frontend/public/world/world.predicates.json"
+      ],
+      "unexplained_differences": [],
+      "declared_volatile_patterns": [
+        "\"generated(?:_at)?\"\\s*:\\s*\"[^\"]*\"",
+        "\"\\d{4}-\\d{2}-\\d{2}T[0-9:.]+(?:\\+00:00|Z)?\""
+      ],
+      "first_run_tail": "Wrote D:\\VedaGraph\\frontend\\public\\world\\world.predicates.json\n  68 predicates: 62 curated, 6 derived from the name\n  direction: 17 directed, 4 symmetric, 47 undeclared\n  no curated explanation for: ASSERTION_AGENT, ASSERTION_TARGET, CONTAINS, POSITION_ASSERTED_BY, POSITION_STATED_IN, REPORTED_IN\n",
+      "outputs": {
+        "frontend/public/world/world.predicates.json": {
+          "digest": "d150e717cab9e06c607214764c328e07cd5a42c4b2ce7242ee819202241e33e0",
+          "bytes": 24592
+        }
+      }
+    },
+    {
+      "builder": "export_graph_world",
+      "status": "NONDETERMINISTIC_BUT_SEMANTICALLY_EQUIVALENT",
+      "runs": 2,
+      "byte_identical_outputs": [],
+      "differ_only_in_declared_volatile_fields": [
+        "frontend/.world/world.raw.json"
+      ],
+      "unexplained_differences": [],
+      "declared_volatile_patterns": [
+        "\"generated(?:_at)?\"\\s*:\\s*\"[^\"]*\"",
+        "\"\\d{4}-\\d{2}-\\d{2}T[0-9:.]+(?:\\+00:00|Z)?\""
+      ],
+      "first_run_tail": "rnal\\nWITH a, e, b,\\n     coalesce(a.entity_key, a.canonical_key, a.formula_id, a.assertion_id,\\n              a.concept_id, a.ascription_id, a.metric_id) AS sid,\\n     coalesce(b.entity_key, b.canonical_key, b.formula_id, b.assertion_id,\\n              b.concept_id, b.ascription_id, b.metric_id) AS tid\\nWHERE sid IS NOT NULL AND tid IS NOT NULL AND sid <> tid\\nRETURN sid, tid, type(e) AS type\\n'\n",
+      "outputs": {
+        "frontend/.world/world.raw.json": {
+          "digest": "977b02f79ce390a55170083967ec5b368ca5aec89c24f7be0a697b0d27422699",
+          "bytes": 10838476
+        }
+      }
+    },
+    {
+      "builder": "build_atharvaveda_anukramani",
+      "status": "REPRODUCIBLE",
+      "runs": 2,
+      "byte_identical_outputs": [
+        "data/canonical/atharvaveda_saunaka_digital_working_v1/traditional_metadata.jsonl",
+        "data/registry/chandas_av.yaml"
+      ],
+      "differ_only_in_declared_volatile_fields": [],
+      "unexplained_differences": [],
+      "declared_volatile_patterns": [
+        "\"generated(?:_at)?\"\\s*:\\s*\"[^\"]*\"",
+        "\"\\d{4}-\\d{2}-\\d{2}T[0-9:.]+(?:\\+00:00|Z)?\"",
+        "\"(?:built_at|at|created_at|measured_at|closure_measured_at)\"\\s*:\\s*\"[^\"]*\""
+      ],
+      "first_run_tail": " bá¹›hatÄ«; 8 a. paroá¹£á¹‡ih; 1 b, 6 b. Ä�rcÄ« panÌ„kti; 7 a. Ä�r\nwrote 3219 assertions -> data\\canonical\\atharvaveda_saunaka_digital_working_v1\\traditional_metadata.jsonl\nwrote 583 provenance rows -> data\\canonical\\atharvaveda_saunaka_digital_working_v1\\traditional_metadata_provenance.jsonl\nmanifest: refreshed 2 file entries in data\\canonical\\atharvaveda_saunaka_digital_working_v1\\manifest.json\n",
+      "outputs": {
+        "data/canonical/atharvaveda_saunaka_digital_working_v1/traditional_metadata.jsonl": {
+          "digest": "4875a75b23d66d6a40897f0b49f6a2f9f0a4101b06596ef72b2a20fbcee97119",
+          "bytes": 2695808
+        },
+        "data/registry/chandas_av.yaml": {
+          "digest": "8c4fb2575ad61fad00a47849640438a0f07e2dab9f7967a4e1909f38941badd5",
+          "bytes": 213717
+        }
+      }
+    },
+    {
+      "builder": "build_constellations",
+      "status": "NONDETERMINISTIC_BUT_SEMANTICALLY_EQUIVALENT",
+      "runs": 2,
+      "byte_identical_outputs": [],
+      "differ_only_in_declared_volatile_fields": [
+        "frontend/.world/constellations.json"
+      ],
+      "unexplained_differences": [],
+      "declared_volatile_patterns": [
+        "\"generated(?:_at)?\"\\s*:\\s*\"[^\"]*\"",
+        "\"\\d{4}-\\d{2}-\\d{2}T[0-9:.]+(?:\\+00:00|Z)?\""
+      ],
+      "first_run_tail": "V 68%      passage    Rigvedic Â· wealth (rayi)\n   15    706   100% RV 54%      passage    passage cluster\n   52    657   100% RV 59%      passage    passage cluster\n    3    592   100% AV 56%      passage    lifespan (Ä�yus)\n    8    592   100% RV 38%      passage    passage cluster\n   16    589   100% RV 47%      passage    passage cluster\n\nwrote D:\\VedaGraph\\frontend\\.world\\constellations.json\n",
+      "outputs": {
+        "frontend/.world/constellations.json": {
+          "digest": "998fb5b3087ea64274917f684d2552eef21d49165292bdb61653890743bb2106",
+          "bytes": 875865
+        }
+      }
+    },
+    {
+      "builder": "build_world",
+      "status": "REPRODUCIBLE",
+      "runs": 2,
+      "byte_identical_outputs": [
+        "frontend/public/world/world.json",
+        "frontend/public/world/world.labels.json",
+        "frontend/public/world/world.bin"
+      ],
+      "differ_only_in_declared_volatile_fields": [],
+      "unexplained_differences": [],
+      "declared_volatile_patterns": [
+        "\"generated(?:_at)?\"\\s*:\\s*\"[^\"]*\"",
+        "\"\\d{4}-\\d{2}-\\d{2}T[0-9:.]+(?:\\+00:00|Z)?\"",
+        "\\d+\\.\\d+s"
+      ],
+      "first_run_tail": "rs ...\n  10/36  (63s)\n  20/36  (75s)\n  30/36  (80s)\n\n  interiors settled in 80.3s\narranging 36 regions ...\n\nwrote public/world/\n  world.bin            2.58 MB\n  world.json           0.02 MB\n  world.labels.json    1.95 MB\n\n  36 constellations drawn, 35 named from metrics\n  154,766 semantic edges before the structural tail\n  83,860 bridge edges between regions\n  bytes per node (geometry only): 72.3\n",
+      "outputs": {
+        "frontend/public/world/world.json": {
+          "digest": "7a2d51158743afe48a534ddbb03302e6a02e52c7d9c512ca3648e60f60b16216",
+          "bytes": 19014
+        },
+        "frontend/public/world/world.labels.json": {
+          "digest": "95510540c7971604e2934cacf5c49eba188db1991293a184429cd2a79c57dfe5",
+          "bytes": 1953444
+        },
+        "frontend/public/world/world.bin": {
+          "digest": "12a11a69d34fc3e00fd7fef1361f17f3a3556861c3f4e39f652cbde34c18ad9c",
+          "bytes": 2576935
+        }
+      }
+    },
+    {
+      "builder": "wave4_registry_closure_audit",
+      "status": "NONDETERMINISTIC_BUT_SEMANTICALLY_EQUIVALENT",
+      "runs": 2,
+      "byte_identical_outputs": [],
+      "differ_only_in_declared_volatile_fields": [
+        "data/staging/wave4/registry_closure_audit.json"
+      ],
+      "unexplained_differences": [],
+      "declared_volatile_patterns": [
+        "\"(?:built_at|at|created_at|measured_at|closure_measured_at)\"\\s*:\\s*\"[^\"]*\"",
+        "\"\\d{4}-\\d{2}-\\d{2}T[0-9:.]+(?:\\+00:00|Z)?\"",
+        "\"sha256\"\\s*:\\s*\"[0-9a-f]{64}\""
+      ],
+      "first_run_tail": "tion.UNRECOGNIZED: 'UNRECOGNIZED'>, raw_severity='WARNING', severity=<NotificationSeverity.WARNING: 'WARNING'>, diagnostic_record={'_classification': 'UNRECOGNIZED', '_severity': 'WARNING', '_position': {'offset': 30, 'line': 1, 'column': 31}, 'OPERATION': '', 'OPERATION_CODE': '0', 'CURRENT_SCHEMA': '/'}> for query: 'MATCH (t:Translation) WHERE t.alignment_confidence IS NOT NULL RETURN count(t)'\n",
+      "outputs": {
+        "data/staging/wave4/registry_closure_audit.json": {
+          "digest": "e399dfc74936bf4f3d63f190e259f5f10d63b45f70cea37270ba19351ab3af8b",
+          "bytes": 82097
+        }
+      }
+    },
+    {
+      "builder": "dependency_state",
+      "status": "NONDETERMINISTIC_BUT_SEMANTICALLY_EQUIVALENT",
+      "runs": 2,
+      "byte_identical_outputs": [],
+      "differ_only_in_declared_volatile_fields": [
+        "data/staging/integration/dependency_status.json"
+      ],
+      "unexplained_differences": [],
+      "declared_volatile_patterns": [
+        "\"(?:built_at|at|created_at|measured_at|closure_measured_at)\"\\s*:\\s*\"[^\"]*\"",
+        "\"\\d{4}-\\d{2}-\\d{2}T[0-9:.]+(?:\\+00:00|Z)?\""
+      ],
+      "first_run_tail": " a.assertion_id, a.step_key, a.lemma, a.predicate) AS ka, coalesce(b.canonical_key, b.entity_key, b.formula_id, b.family_id, b.metric_id, b.claim_id, b.work_id, b.assertion_id, b.step_key, b.lemma, b.predicate) AS kb RETURN count(*) AS total, sum(CASE WHEN ka IS NULL OR kb IS NULL THEN 1 ELSE 0 END) AS unnamed, collect(CASE WHEN ka IS NULL OR kb IS NULL THEN NULL ELSE ka + '>' + kb END) AS pairs\"\n",
+      "outputs": {
+        "data/staging/integration/dependency_status.json": {
+          "digest": "473f1671f0c24b9a5e19429e2a4701404982e61a41460216deeaed78350285d7",
+          "bytes": 8119
+        }
+      }
+    },
+    {
+      "builder": "run_ask_benchmark",
+      "status": "BLOCKED_EXTERNAL_SOURCE",
+      "reason": "Needs a live LLM provider and a daily quota. The fresh commit-keyed run stalled at 31 of 60 on a rate limit, which is recorded as ASK_FORMAL_REGRADE_BLOCKED_EXTERNAL_QUOTA rather than as a reproducibility result. Determinism of the RETRIEVAL half is covered by the deterministic Ask suite, which does not call a provider.",
+      "runs": 0
+    },
+    {
+      "builder": "graph migrations M7-M12",
+      "status": "NOT_APPLICABLE",
+      "reason": "Single-shot receipted mutations of the canonical store, not idempotent by design: each refuses to run twice (M10 refuses if the targets are already internal, M12's rows are already written). Re-running one to measure its determinism would be a canonical mutation performed for a measurement. Their receipts in data/staging/integration/ carry the before and after census, the additive flag and the residual count, which is the evidence that exists and the evidence the owner's rules permit.",
+      "runs": 0
+    },
+    {
+      "builder": "semantic resemblance re-derivation",
+      "status": "NOT_APPLICABLE",
+      "reason": "The staged artifact is pre-Wave-3 and the owner bars importing an old score artifact, so the layer needs re-derivation from the final canonical snapshot rather than a rebuild. Nothing to re-run: there is no current builder whose output could be compared.",
+      "runs": 0
+    }
+  ],
+  "sha256": "4c18655b0221b0b5d0893ad48a423e9788e2128fcce995011a2fdd6dbc098b54"
+}

@@ -12,12 +12,12 @@ weighted towards what a reader can rely on.
 
 | metric | V1 baseline | V2 | delta |
 |---|---|---|---|
-| nodes | 100,584 | 100,780 | +196 |
-| relationships | 212,336 | 242,147 | +29,811 |
-| product nodes | — | 38,297 | — |
-| internal nodes | 0 (unmarked) | 62,483 | +62,483 |
-| domain entities | 89 | 163 | +74 |
-| typed domain labels | 0 | 23 | +23 |
+| nodes | 100,584 | 165,737 | +65,153 |
+| relationships | 212,336 | 510,905 | +298,569 |
+| product nodes | — | 71,773 | — |
+| internal nodes | 0 (unmarked) | 93,964 | +93,964 |
+| domain entities | 89 | 384 | +295 |
+| typed domain labels | 0 | 24 | +24 |
 
 ## 2. Provenance coverage
 
@@ -26,18 +26,19 @@ query could ask across them. `quality_tier` is the single derived grade.
 
 | metric | value |
 |---|---|
-| edges carrying `quality_tier` | 242,147 (100.0%) |
-| edges carrying `evidence` | 106,029 (43.8%) |
-| edges carrying `trust` | 106,029 (43.8%) |
+| edges carrying `quality_tier` | 510,905 (100.0%) |
+| edges carrying `evidence` | 109,075 (21.3%) |
+| edges carrying `trust` | 110,430 (21.6%) |
 | ungraded edges | **0** |
 
 ### Quality tier distribution
 
 | tier | meaning | edges |
 |---|---|---|
-| `TIER_A` | a source states it | 91,163 |
-| `TIER_B` | reproducible derivation, including scope inheritance | 149,206 |
-| `TIER_D` | interpretation, or an unreviewed model proposal | 1,778 |
+| `TIER_A` | a source states it | 109,262 |
+| `TIER_B` | reproducible derivation, including scope inheritance | 396,497 |
+| `TIER_C` | model-extracted, evidence survived review | 598 |
+| `TIER_D` | interpretation, or an unreviewed model proposal | 4,548 |
 
 TIER_C is **0 by construction**: all 736 model-extracted candidates are
 `state=CANDIDATE`, because there is no human gold set to accept them against.
@@ -51,9 +52,9 @@ not something the source said about any of those mantras.
 
 | predicate | source-stated | container-inherited | inherited share |
 |---|---|---|---|
-| `HAS_CHANDAS` | 4,247 | 6,276 | **59.6%** |
+| `HAS_CHANDAS` | 5,899 | 10,399 | **63.8%** |
 | `HAS_DEVATA` | 2,229 | 8,329 | **78.9%** |
-| `HAS_RISHI` | 472 | 10,093 | **95.5%** |
+| `HAS_RISHI` | 2,712 | 15,177 | **84.8%** |
 
 ## 3. Readability (display contract)
 
@@ -61,7 +62,7 @@ not something the source said about any of those mantras.
 |---|---|---|
 | UNKNOWN_LABEL_RATE | 59.2% | **0.00%** |
 | product nodes without a readable label | 22,541 | **0** |
-| product nodes with `display_type` | 0 | 38,297 |
+| product nodes with `display_type` | 0 | 71,480 |
 
 ## 4. Devatā model
 
@@ -72,7 +73,7 @@ not something the source said about any of those mantras.
 | with a functional axis | 5 (subtype only) | 113 |
 | with an English label | 0 | 214 |
 | with probed aliases | 0 | 66 |
-| with a corpus profile | 0 | 25 |
+| with a corpus profile | 0 | 157 |
 | axis nodes / in use | 0 | 22 / 22 |
 | epithets / deity groups | 0 | 13 / 2 |
 
@@ -104,53 +105,54 @@ gap awaiting a guess: a justified UNSPECIFIED is worth more than an invented axi
 | Indra and Varuna | 70 | PAIR | WARRIOR, COSMIC_SOVEREIGN, GUARDIAN_OF_ORDER | 1 | yes |
 | Surya | 63 | INDIVIDUAL | SOLAR | 4 | yes |
 | Vayu | 53 | INDIVIDUAL | ATMOSPHERIC | 3 | yes |
-| praise of a patron's gift | 50 | PATRON_PRAISE | UNSPECIFIED | 0 | yes |
+| praise of a patron's gift | 50 | PATRON_PRAISE | UNSPECIFIED | 0 | no |
 
 Of the top 20: **18** carry a real functional
-axis and **20** carry a corpus profile.
+axis and **19** carry a corpus profile.
 
 ## 5. Domain entity coverage
 
 | entity type | entities |
 |---|---|
-| `Concept` | 24 |
-| `Object` | 16 |
+| `None` | 146 |
+| `Condition` | 36 |
+| `Concept` | 23 |
+| `RitualRole` | 19 |
+| `Object` | 18 |
+| `Plant` | 17 |
+| `Animal` | 15 |
 | `NaturalPhenomenon` | 13 |
-| `Animal` | 12 |
-| `Condition` | 12 |
-| `PhilosophicalConcept` | 11 |
-| `Plant` | 8 |
-| `River` | 7 |
-| `Action` | 5 |
+| `PhilosophicalConcept` | 13 |
+| `Action` | 12 |
+| `Ritual` | 8 |
+| `River` | 8 |
+| `Substance` | 8 |
+| `HumanConcern` | 7 |
+| `Metal` | 7 |
 | `Crop` | 5 |
-| `Metal` | 5 |
-| `RitualRole` | 5 |
-| `Substance` | 5 |
+| `SocialRite` | 5 |
 | `Tribe` | 5 |
+| `Weapon` | 5 |
 | `CosmicEntity` | 4 |
-| `HumanConcern` | 4 |
-| `Ritual` | 4 |
-| `SocialRite` | 4 |
 | `Place` | 3 |
 | `Quality` | 3 |
-| `State` | 3 |
-| `Weapon` | 3 |
 | `Offering` | 2 |
+| `State` | 2 |
 
-Registry composition: `{"ACTION": 5, "ANIMAL": 12, "CONCEPT": 24, "CONDITION": 12, "COSMIC_ENTITY": 4, "CROP": 5, "HUMAN_CONCERN": 4, "METAL": 5, "NATURAL_PHENOMENON": 13, "OBJECT": 16, "OFFERING": 2, "PHILOSOPHICAL_CONCEPT": 11, "PLACE": 3, "PLANT": 8, "QUALITY": 3, "RITUAL": 4, "RITUAL_ROLE": 5, "RIVER": 7, "SOCIAL_RITE": 4, "STATE": 3, "SUBSTANCE": 5, "TRIBE": 5, "WEAPON": 3}`
+Registry composition: `{"ACTION": 12, "ANIMAL": 15, "CONCEPT": 23, "CONDITION": 36, "COSMIC_ENTITY": 4, "CROP": 5, "HUMAN_CONCERN": 7, "METAL": 7, "NATURAL_PHENOMENON": 13, "OBJECT": 18, "OFFERING": 2, "PHILOSOPHICAL_CONCEPT": 13, "PLACE": 3, "PLANT": 17, "QUALITY": 3, "RITUAL": 8, "RITUAL_ROLE": 10, "RIVER": 8, "SOCIAL_RITE": 5, "STATE": 2, "SUBSTANCE": 8, "TRIBE": 5, "WEAPON": 5}`
 
 ### Mention layer (Sanskrit evidence only)
 
 | Veda | mantras | with a domain mention | coverage |
 |---|---|---|---|
-| AV | 5,839 | 4,167 | 71.4% |
-| RV | 10,552 | 8,375 | 79.4% |
-| SV | 1,844 | 1,358 | 73.6% |
-| YV | 1,975 | 1,320 | 66.8% |
+| AV | 5,839 | 4,288 | 73.4% |
+| RV | 10,552 | 8,121 | 77.0% |
+| SV | 1,844 | 1,302 | 70.6% |
+| YV | 1,975 | 1,359 | 68.8% |
 
-- mention edges: **28,675**
-- flagged `theonym_ambiguous`: **3,896** (13.6%) — an upper bound on deity/entity conflation, not a count of errors
-- entities attested in 3+ Vedas: **119**
+- mention edges: **28,122**
+- flagged `theonym_ambiguous`: **2,514** (8.9%) — an upper bound on deity/entity conflation, not a count of errors
+- entities attested in 3+ Vedas: **131**
 
 The V1 concept layer reported 96.1% Rigvedic coverage. This layer reports lower
 because it admits **no English-translation evidence**: 44.7% of V1 concept
@@ -163,7 +165,7 @@ assertions rested on a word in Griffith or Whitney and no Sanskrit at all.
 | Formula nodes | 4,825 |
 | cross-Veda formulas | 3,643 |
 | formulas under 2 words (thin) | 0 |
-| entities still narrowly typed `Concept` | 24 |
+| entities still narrowly typed `Concept` | 23 |
 
 ## 7. Interpretive layer
 
@@ -174,8 +176,8 @@ assertions rested on a word in Griffith or Whitney and no Sanskrit at all.
 | claims citing a computed metric | 6 |
 | claims graded other than TIER_D | **0** (must be 0) |
 | live contradiction pairs | 1 |
-| DerivedMetric nodes | 79 |
-| metrics with no subject node | 3 |
+| DerivedMetric nodes | 1485 |
+| metrics with no subject node | 1013 |
 
 Claim summary: `{"claims": 6, "with_passage_evidence": 2, "with_statistical_evidence": 6, "with_both": 2, "with_external_source": 0, "by_status": {"MODEL_SYNTHESIS": 4, "RESEARCH_HYPOTHESIS": 2}}`
 
@@ -190,19 +192,18 @@ pseudo-entity `VG:CORPUS:FOUR-VEDA`, which deliberately has no node.
 | ungraded edges | 0 | YES |
 | product nodes without a readable label | 0 | YES |
 | orphan domain entities | 0 | YES |
+| orphan public nodes, all product labels | 0 | YES |
 | controlled-predicate violations | 0 | YES |
 | undeclared relationship types | 0 | YES |
 | claims wrongly pointing at passages | 0 | YES |
 | metrics wrongly pointing at passages | 0 | YES |
-
-Relationship types declared with zero edges: `SHARES_FORMULA_WITH`. `MUSICALIZED_AS` is empty by design — no gāna corpus is ingested, and an
-empty typed edge states that honestly where a `PARALLEL_TO` standing in for it
-would not.
+| claims graded other than TIER_D | 0 | YES |
+| predicates falsely declared unpopulated | 0 | YES |
 
 ## 9. Query surface
 
-- named domain queries: **48**
-- killer questions with at least one query: **49** of 50
+- named domain queries: **92**
+- killer questions with at least one query: **56** of 50
 - every query carries a `caveat` stating what its answer does not establish
 
 Query coverage is not answerability. A question with a query attached may still
@@ -213,22 +214,22 @@ judgement is recorded.
 
 | relationship type | edges |
 |---|---|
-| `ABOUT_CONCEPT` | 47,542 |
-| `HAS_TEXT_VERSION` | 44,276 |
-| `MENTIONS_ENTITY` | 37,675 |
+| `MENTIONS_LEMMA` | 154,261 |
+| `HAS_TEXT_VERSION` | 59,922 |
+| `HAS_SEMANTIC_ASSERTION` | 35,131 |
+| `ASSERTION_PREDICATE` | 32,938 |
+| `MENTIONS_ENTITY` | 28,122 |
+| `ABOUT_CONCEPT` | 24,861 |
 | `USES_FORMULA` | 22,686 |
 | `CONTAINS` | 22,537 |
-| `HAS_TRANSLATION` | 17,283 |
-| `HAS_RISHI` | 10,565 |
+| `HAS_TRANSLATION` | 18,427 |
+| `HAS_RISHI` | 17,889 |
+| `MENTIONS_DEVATA` | 17,165 |
+| `HAS_CHANDAS` | 16,298 |
 | `HAS_DEVATA` | 10,558 |
-| `HAS_CHANDAS` | 10,523 |
-| `MENTIONS_LEMMA` | 9,000 |
-| `NEAR_PARALLEL_OF` | 3,049 |
-| `REUSES_TEXT_FROM` | 1,684 |
-| `EXACT_PARALLEL_OF` | 1,006 |
-| `HAS_QA_ISSUE` | 915 |
-| `VARIANT_OF` | 788 |
-| `HAS_AXIS` | 289 |
+| `SHARES_FORMULA_WITH` | 6,148 |
+| `HAS_DEVATA_ASCRIPTION` | 5,385 |
+| `HAS_PARALLEL_PADA` | 4,079 |
 
 During this pass an unlabelled `MATCH (t) WHERE t.work_id = $k` produced **39,461**
 `CONCERNS` edges from 9 claim targets, because every Passage carries a `work_id`

@@ -1,0 +1,39 @@
+{
+  "artifact": "AGENT_3_DOMAIN_ENTITY_DOMAINS",
+  "gap": "GAP-SEMANTICS-005",
+  "at": "2026-09-16T17:06:54.331463+00:00",
+  "neo4j_access": "READ_ONLY",
+  "vocabulary": {
+    "RITUAL": "the sacrifice and its performance: rites, officiants, oblations, implements and the acts that make up a rite",
+    "COSMOLOGICAL": "the ordered world and its powers: the three worlds, the waters, dawn, the seasons, the phenomena a hymn addresses as agents",
+    "MATERIAL": "worked and unworked physical stuff: metals, substances, made objects, weapons, grain as a commodity",
+    "BIOTIC": "living kinds as living kinds: plants and animals",
+    "SOCIAL": "human collectivities and the relations inside them: tribes, kingship, kinship, alliance, rivalry, the ancestors",
+    "CORPOREAL": "the body and what happens to it: parts, breath, lifespan, affliction, healing, death",
+    "SPECULATIVE": "the abstract vocabulary the hymns reason with: order, truth, being, mind, formulation, and the qualities predicated of gods and men",
+    "GEOGRAPHIC": "located things: rivers as places, mountains, fields, dwellings"
+  },
+  "vocabulary_declared_before_assignment": true,
+  "entities": 375,
+  "domain_is_null_before": 375,
+  "domain_is_null_after_import": 0,
+  "multi_domain_entities": 68,
+  "by_provenance": {
+    "deterministic": 350,
+    "model-assisted": 25
+  },
+  "by_domain": {
+    "BIOTIC": 37,
+    "CORPOREAL": 53,
+    "COSMOLOGICAL": 27,
+    "GEOGRAPHIC": 12,
+    "MATERIAL": 91,
+    "RITUAL": 166,
+    "SOCIAL": 42,
+    "SPECULATIVE": 19
+  },
+  "human_annotation_claimed": false,
+  "files": {
+    "domain_entity_domains.jsonl": "ce3d7d29a4c41c8f91b1da0c06bd59c7728ac1d6a96d3fc2caebab530b60dba9"
+  }
+}

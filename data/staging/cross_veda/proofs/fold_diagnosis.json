@@ -1,0 +1,106 @@
+{
+ "cluster_folds_to": "<U+E003><U+E003>",
+ "fold_direct_on_devanagari": "<U+E003>",
+ "raw_numeral_rate": {
+  "RV": 0.0609,
+  "SV": 0.0385,
+  "YV": 0.9995,
+  "AV": 0.9947
+ },
+ "numerals_surviving_per_surface": {
+  "source": 8496,
+  "unicode_normalized": 8496,
+  "punctuation_normalized": 0,
+  "accent_insensitive": 0,
+  "script_folded": 0,
+  "sandhi_insensitive": 0
+ },
+ "changed_spans_with_a_numeral": 0,
+ "numeral_edges_per_pair": {},
+ "span_enrichment_top": [
+  {
+   "codepoint": "U+007E",
+   "name": "TILDE",
+   "in_spans": 108,
+   "enrichment": 49.772
+  },
+  {
+   "codepoint": "U+E002",
+   "name": "PRIVATE USE / UNNAMED",
+   "in_spans": 218,
+   "enrichment": 24.159
+  },
+  {
+   "codepoint": "U+1E0D",
+   "name": "LATIN SMALL LETTER D WITH DOT BELOW",
+   "in_spans": 222,
+   "enrichment": 19.624
+  },
+  {
+   "codepoint": "U+E003",
+   "name": "PRIVATE USE / UNNAMED",
+   "in_spans": 3860,
+   "enrichment": 8.088
+  },
+  {
+   "codepoint": "U+1E45",
+   "name": "LATIN SMALL LETTER N WITH DOT ABOVE",
+   "in_spans": 74,
+   "enrichment": 4.467
+  },
+  {
+   "codepoint": "U+006D",
+   "name": "LATIN SMALL LETTER M",
+   "in_spans": 3306,
+   "enrichment": 3.439
+  },
+  {
+   "codepoint": "U+00F1",
+   "name": "LATIN SMALL LETTER N WITH TILDE",
+   "in_spans": 112,
+   "enrichment": 2.839
+  },
+  {
+   "codepoint": "U+006C",
+   "name": "LATIN SMALL LETTER L",
+   "in_spans": 61,
+   "enrichment": 1.758
+  },
+  {
+   "codepoint": "U+1E25",
+   "name": "LATIN SMALL LETTER H WITH DOT BELOW",
+   "in_spans": 582,
+   "enrichment": 1.656
+  },
+  {
+   "codepoint": "U+1E6D",
+   "name": "LATIN SMALL LETTER T WITH DOT BELOW",
+   "in_spans": 73,
+   "enrichment": 1.075
+  },
+  {
+   "codepoint": "U+012B",
+   "name": "LATIN SMALL LETTER I WITH MACRON",
+   "in_spans": 253,
+   "enrichment": 1.036
+  },
+  {
+   "codepoint": "U+0065",
+   "name": "LATIN SMALL LETTER E",
+   "in_spans": 673,
+   "enrichment": 1.026
+  },
+  {
+   "codepoint": "U+0075",
+   "name": "LATIN SMALL LETTER U",
+   "in_spans": 688,
+   "enrichment": 1.019
+  },
+  {
+   "codepoint": "U+006F",
+   "name": "LATIN SMALL LETTER O",
+   "in_spans": 550,
+   "enrichment": 1.014
+  }
+ ]
+}

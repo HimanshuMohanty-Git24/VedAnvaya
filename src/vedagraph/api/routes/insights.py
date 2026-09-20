@@ -25,6 +25,9 @@ from vedagraph.api.models.insight import (
     CapabilitiesResponse,
     CivilizationResponse,
     CrossVedaMatrixResponse,
+    DevataByBookResponse,
+    DevataByMetreResponse,
+    DevataDispersionResponse,
     DevataInsightResponse,
     FormulaDiffusionResponse,
     MaterialCultureResponse,
@@ -68,19 +71,149 @@ _TIERS_BY_CERTAINTY = {
         "typed** -- including the empty ones. A cell is `MEASURED`, `MEASURED_ZERO`, "
         "`NOT_ESTABLISHED_FOR_PAIR`, `CLASS_NOT_CROSS_VEDA` or `NOT_BUILT`, and the count is "
         "null for every status but the first two. That distinction is the endpoint's whole "
-        "purpose: directed textual reuse exists for one corpus pair only, and a table that "
-        "rendered the other five as `0` would say the Atharvaveda reuses no Rigvedic text "
+        "purpose: directed textual reuse exists for two corpus pairs only, and a table that "
+        "rendered the other four as `0` would say the Yajurveda reuses no Rigvedic text "
         "while the same graph carries hundreds of parallels between them.\n\n"
-        "The semantic-resemblance and semantic-assertion rows are `NOT_BUILT` for every pair "
-        "and are returned anyway -- the first because no non-lexical measure exists in this "
-        "graph, the second because every semantic assertion is Rigvedic and so has no "
-        "non-Rigvedic endpoint to pair with."
+        "The semantic-resemblance and semantic-assertion rows carry no count for any pair "
+        "and are returned anyway, with **different statuses, because the reasons differ**. "
+        "Resemblance is `NOT_BUILT`: no non-lexical measure exists anywhere in this graph. "
+        "The assertion row is `CLASS_NOT_CROSS_VEDA`: the layer exists, holds 35,131 "
+        "assertions and reaches all four corpora, and still cannot enter a pair, because an "
+        "assertion is a predication about one passage rather than a relation between two. "
+        "This said the assertion row was `NOT_BUILT` because every semantic assertion is "
+        "Rigvedic; both halves were false, and the status told a reader the layer does not "
+        "exist anywhere in this graph."
     ),
     response_model=CrossVedaMatrixResponse,
     responses=COMMON_ERROR_RESPONSES,
 )
 def cross_veda_matrix(repository: RepositoryDep) -> CrossVedaMatrixResponse:
     return InsightService(repository).cross_veda_matrix()
+
+
+# ---------------------------------------------------------------------------
+# The three visualization blockers (GAP-PRODUCT_SURFACE-003)
+#
+# Three aggregates a live design spec named as blocking three charts, all three of them API
+# omissions over data the graph already holds. Each is served here rather than left to
+# client-side aggregation of /devatas/{id}/passages, which the spec itself warned against:
+# that route is capped at 200 rows a page, so a chart assembled by paging it truncates
+# silently and a truncated heatmap is indistinguishable from a sparse one.
+# ---------------------------------------------------------------------------
+
+
+_DEVATA_PATH = Annotated[
+    str,
+    Path(
+        min_length=3,
+        max_length=200,
+        description="Product id of the deity, e.g. VG:DEVATA:INDRAH.",
+    ),
+]
+_CERTAINTY_QUERY = Annotated[
+    MentionCertainty, Query(description="Which mention certainty tiers to count.")
+]
+_POPULATION_QUERY = Annotated[
+    DeityPopulation,
+    Query(
+        description="`deities` (default) refuses the 30 non-divine devata-slot ascriptions; "
+        "`all_ascriptions` serves them with their structure and a not-a-deity caveat.",
+    ),
+]
+
+
+@router.get(
+    "/insights/devatas/{devata_id}/by-book",
+    summary="One deity's distribution across the books of every corpus (aggregate)",
+    description=(
+        "**Cost class: AGGREGATE.** Walks the containment tree and is exempt from the "
+        "median latency target.\n\n"
+        "Closes `VIZ_BLOCKER_02`. A deity x mandala heatmap could not be served: "
+        "`named_by_veda` is per-*Veda* only, and building the breakdown client-side from "
+        "`/devatas/{id}/passages` would hit the 200-row page cap and truncate without "
+        "saying so.\n\n"
+        "**Every book is returned, including the ones with no mention.** A book the deity "
+        "is absent from carries `MEASURED_ZERO` and a note, because a query that returns "
+        "only its positive rows lets a reader infer a zero nobody measured.\n\n"
+        "Each row carries the book's own mantra total and a per-1,000 figure. Books differ "
+        "in size by more than an order of magnitude, and a heatmap read on raw counts puts "
+        "every deity in the largest book."
+    ),
+    response_model=DevataByBookResponse,
+    responses=COMMON_ERROR_RESPONSES,
+)
+def devata_by_book(
+    repository: RepositoryDep,
+    devata_id: _DEVATA_PATH,
+    certainty: _CERTAINTY_QUERY = MentionCertainty.DEFAULT,
+    population: _POPULATION_QUERY = DeityPopulation.DEITIES,
+) -> DevataByBookResponse:
+    return InsightService(repository).devata_by_book(
+        devata_id=devata_id,
+        tiers=sorted(_TIERS_BY_CERTAINTY[certainty]),
+        population=population,
+    )
+
+
+@router.get(
+    "/insights/devatas/{devata_id}/by-metre",
+    summary="One deity against the metre layer, with the corpora it misses typed (aggregate)",
+    description=(
+        "**Cost class: AGGREGATE.**\n\n"
+        "Closes `VIZ_BLOCKER_03`, which was deferred on the grounds that the metre layer "
+        "reaches only two corpora so the matrix would be two thirds hatched -- honest, but "
+        "thin. Thin and honest is what is served: the corpora the metre layer does not "
+        "reach are **returned** as rows typed `NOT_BUILT`, never omitted. A matrix with two "
+        "corpora silently missing is read as a matrix of two corpora, and the Samaveda's "
+        "verses are metrical whatever this graph knows about them.\n\n"
+        "The layer's reach is measured on each request rather than listed, so a metre layer "
+        "that grows shrinks the hatched rows without anyone editing a constant."
+    ),
+    response_model=DevataByMetreResponse,
+    responses=COMMON_ERROR_RESPONSES,
+)
+def devata_by_metre(
+    repository: RepositoryDep,
+    devata_id: _DEVATA_PATH,
+    certainty: _CERTAINTY_QUERY = MentionCertainty.DEFAULT,
+    population: _POPULATION_QUERY = DeityPopulation.DEITIES,
+) -> DevataByMetreResponse:
+    return InsightService(repository).devata_by_metre(
+        devata_id=devata_id,
+        tiers=sorted(_TIERS_BY_CERTAINTY[certainty]),
+        population=population,
+    )
+
+
+@router.get(
+    "/insights/devatas/{devata_id}/dispersion",
+    summary="Every position at which a deity is attested, unbounded by the page cap",
+    description=(
+        "**Cost class: AGGREGATE.**\n\n"
+        "Closes `VIZ_BLOCKER_01`. An Invocation Landscape for a major deity needs every "
+        "attesting position, and `/devatas/{id}/passages` is capped at 200 rows a page -- "
+        "Indra's 2,305 Rigvedic verses were eighteen round trips, and a caller who stopped "
+        "early got a landscape that looked sparse rather than truncated.\n\n"
+        "Returns **integer positions only**, never passage payloads, so the response stays "
+        "small whatever the deity's size. A position is the verse's rank in its corpus's "
+        "canonical order: reading order, which is not order of composition.\n\n"
+        "Every corpus is present. An empty `positions` array is `MEASURED_ZERO` with a "
+        "note, so it is distinguishable from an absent layer."
+    ),
+    response_model=DevataDispersionResponse,
+    responses=COMMON_ERROR_RESPONSES,
+)
+def devata_dispersion(
+    repository: RepositoryDep,
+    devata_id: _DEVATA_PATH,
+    certainty: _CERTAINTY_QUERY = MentionCertainty.DEFAULT,
+    population: _POPULATION_QUERY = DeityPopulation.DEITIES,
+) -> DevataDispersionResponse:
+    return InsightService(repository).devata_dispersion(
+        devata_id=devata_id,
+        tiers=sorted(_TIERS_BY_CERTAINTY[certainty]),
+        population=population,
+    )
 
 
 @router.get(
@@ -97,8 +230,9 @@ def cross_veda_matrix(repository: RepositoryDep) -> CrossVedaMatrixResponse:
         "warned about: filtering to CERTAIN alone returns no non-Rigvedic mentions for several "
         "major deities, so the cautious caller gets the worse answer.\n\n"
         "**The default population refuses a non-deity.** The traditional devata slot holds 22 "
-        "human patrons, 7 praise-of-a-gift labels and one dog alongside the gods, and under "
-        "`population=deities` those 30 are a 404 here exactly as they are on `/devatas/{id}`. "
+        "human patrons, 7 praise-of-a-gift labels and 28 abstractions ruled not to name an "
+        "addressee alongside the gods, and under `population=deities` those 57 are a 404 here "
+        "exactly as they are on `/devatas/{id}`. "
         "Ask with `population=all_ascriptions` to read one deliberately: the ascription figures "
         "are real, and the response then carries `is_resolved_deity: false`, the subject's "
         "`structure`, and a THIS SUBJECT IS NOT A DEITY caveat."

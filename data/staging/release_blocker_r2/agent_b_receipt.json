@@ -1,0 +1,142 @@
+{
+  "artifact": "RELEASE_BLOCKER_R2_AGENT_B_RECEIPT",
+  "rounds": 2,
+  "round_1": {
+    "critical": 3,
+    "major": 7,
+    "minor": 8,
+    "common_shape": "R2 diagnosed each defect precisely and fixed the one instance it had opened, without sweeping for the same sentence elsewhere.",
+    "findings": [
+      {
+        "id": "F1",
+        "severity": "CRITICAL",
+        "summary": "Semantic assertion layer still published as Rigveda-only / All 4,865 on world.predicates.json (rendered in the Visualization Lab), /api/v1/works/*, /api/v1/passages/* for 5,578 non-Rigvedic verses, and /openapi.json, against a live 35,131 over four corpora.",
+        "fix": "Corrected at six sources: graph_service PREDICATE_SEMANTICS, passage_service LayerSpec + CoverageView + caveat, models/passage AgentiveAssertionView, domain/queries _ASSERTION_LAYER_CAVEAT, graph/insight_queries morphology-filtered caveat, models/insight CrossVedaMatrixResponse. world.predicates.json and frontend api-schema.ts regenerated.",
+        "status": "FIXED"
+      },
+      {
+        "id": "F2",
+        "severity": "CRITICAL",
+        "summary": "GAP-SEMANTICS-001 was marked CLOSED_DERIVED while clause 3 (no surface reports a blended assertion total) was broken by the shipped predicate table publishing All 4,865.",
+        "fix": "The blended total was removed from every surface that published it, and the closure was re-verified clause by clause against the live graph.",
+        "status": "FIXED"
+      },
+      {
+        "id": "F3",
+        "severity": "CRITICAL",
+        "summary": "The 30 to 57 and one-dog correction reached a single constant. The published OpenAPI carried 30/one-dog 18 times and 57/28-abstractions zero times; the Lab shipped All 184 deities; /api/v1/stats still listed the dog among the excluded.",
+        "fix": "Corrected at eleven sources across models, routes, services and the Lab plate, and api-schema.ts regenerated. Live OpenAPI now: one dog 0, excludes all 30 0, excludes all 57 3, 28 abstractions 6.",
+        "status": "FIXED"
+      },
+      {
+        "id": "F4",
+        "severity": "MAJOR",
+        "summary": "test_the_singular_reading_is_used_for_one_subject was turned into a permanent skip; 55 of the 57 ruled non-deities would have satisfied it.",
+        "fix": "The skip is removed. The test now searches the ruled non-deities for a singular payload and fails if none exists.",
+        "status": "FIXED"
+      },
+      {
+        "id": "F5",
+        "severity": "MAJOR",
+        "summary": "test_every_deity_list_row_states_whether_it_is_a_deity was cut from all 214 rows to the first 40, in a file whose stated contract is per subject, not per sample.",
+        "fix": "Restored to all 214, collecting every disagreement rather than failing on the first.",
+        "status": "FIXED"
+      },
+      {
+        "id": "F6",
+        "severity": "MAJOR",
+        "summary": "world.bin carried no hash and no test while build-world.mjs asserted in a comment that it was pinned.",
+        "fix": "The manifest now records worldBinSha256 and worldBinBytes, a new frontend test recomputes both, and the false comment is corrected.",
+        "status": "FIXED"
+      },
+      {
+        "id": "F7",
+        "severity": "MAJOR",
+        "summary": "Q84 safe_alternative recommended a ritual-context split that no API surface serves; ritual_context is read nowhere outside the capability probe.",
+        "fix": "The card now states that no product surface reads ritual_context and that what changed is the existence of the axis, not a served split.",
+        "status": "FIXED"
+      },
+      {
+        "id": "F8",
+        "severity": "MAJOR",
+        "summary": "The claim of ONE documented predicate was overstated: domain/queries.py still used the two-clause eligible_predicate() shim whose own removal condition was already met.",
+        "fix": "All 8 shim occurrences replaced with the documented predicate. The contract test now asserts ELIGIBLE_DEITY_PREDICATE and refuses the shim by name.",
+        "status": "FIXED"
+      },
+      {
+        "id": "F9",
+        "severity": "MAJOR",
+        "summary": "The phrase reaches all four corpora omitted that all 364 Samavedic assertions are projections from letter-identical Rigvedic verses, which the nodes themselves flag.",
+        "fix": "The cross-Veda note and the predicate table both state the projection.",
+        "status": "FIXED"
+      },
+      {
+        "id": "F10",
+        "severity": "MAJOR",
+        "summary": "The PadaParallelGroup case was described as harmless while its 1,434 nodes draw as other in the shipped world, which is the exact harm cited to justify the assertion migration.",
+        "fix": "The comment is corrected and the residual is reported as an open finding rather than described as benign. No node has ever carried the PascalCase spelling, so there was nothing to normalise; the remedy is a missing group mapping.",
+        "status": "FIXED_AS_DISCLOSURE"
+      },
+      {
+        "id": "F11",
+        "severity": "MINOR",
+        "summary": "The ritual-006 receipt figure citation_writes 1,903 is the evidence-type row count; only 1,691 rows carry a citation string, the other 212 being RITE_NAMED_IN_THIS_MANTRA which legitimately have no citing work.",
+        "status": "ACKNOWLEDGED_IN_REPORT"
+      },
+      {
+        "id": "F12",
+        "severity": "MINOR",
+        "summary": "world.predicates.json inherited the export hash from world.json rather than recomputing it, so a stale manifest would propagate and both files would agree.",
+        "fix": "export_predicate_semantics.py now recomputes sha256 of world.raw.json and refuses if the manifest disagrees.",
+        "status": "FIXED"
+      },
+      {
+        "id": "F13",
+        "severity": "MINOR",
+        "summary": "constellations.json was described as a browser artifact; it lives outside frontend/public and is never fetched.",
+        "status": "ACKNOWLEDGED_IN_REPORT"
+      },
+      {
+        "id": "F14",
+        "severity": "MINOR",
+        "summary": "docs/reports/data-completeness/ritual.md still states that ritual_context is absent from db.propertyKeys().",
+        "status": "NOT_FIXED_DATED_WAVE_2_REPORT"
+      },
+      {
+        "id": "F15",
+        "severity": "MINOR",
+        "summary": "The path-route disclosure ordering assertion was loosened from first-caveat to any-caveat.",
+        "status": "ACCEPTED_WITH_REASON_RECORDED",
+        "reason": "A hub-mediated path legitimately puts its routing caveat first. The first-caveat contract is still asserted on root payloads by test_a_non_deity_root_is_flagged_and_caveated."
+      },
+      {
+        "id": "F16",
+        "severity": "MINOR",
+        "summary": "Q84 what_would_change_it hardcoded 7,769 as prose on a card whose premise is derivation from measurement.",
+        "fix": "The literal is gone.",
+        "status": "FIXED"
+      },
+      {
+        "id": "F17",
+        "severity": "MINOR",
+        "summary": "The corrected deity caveat did not disclose that 5 labels ruled UNDECIDED are kept inside the 157.",
+        "fix": "NON_DEITY_EXCLUSION_CAVEAT now names them.",
+        "status": "FIXED"
+      },
+      {
+        "id": "F18",
+        "severity": "MINOR",
+        "summary": "abstract_label_rulings.json states of itself that it is NOT applied as a silent filter, and it is now the product sole deity-eligibility source.",
+        "status": "ACKNOWLEDGED_IN_REPORT"
+      }
+    ],
+    "claims_that_survived_attack": [
+      "C1 ritual_context false absence: all five remaining PROBED_ABSENT_PROPERTIES verified absent from db.propertyKeys(); Q84 publishes coverage and resolution as separate measurements, 20,210 / 1,903 / 18,307, summing exactly.",
+      "C3 display_type normalisation: one spelling live; all 35,131 public ids verified unchanged against the pre-migration backup with 0 missing and 0 added; no collateral property writes; 47 product types with no duplicate.",
+      "C4 lineage: sha256 of world.raw.json recomputed independently and matched by all four JSON artifacts; world.labels.json ids byte-identical to the export node order.",
+      "C5 deity population mechanism: the SUNAH ruling quoted verbatim from abstract_label_rulings.json; 22+7+28=57 and 214-57=157 verified; a full 214-node sweep across five deity routes found 0 disagreements.",
+      "C6 GAP-RITUAL-006: every count verified live, values match the staged source on all 20,210 rows with 0 disagreements, census unchanged, and the gap was not quietly closed.",
+      "C8 test-failure honesty: the reported counts reproduced exactly; each remaining failure traced to pre-R2 data drift; the FROZEN_NODES raise confirmed legitimate from files committed at HEAD before R2 ran."
+    ]
+  }
+}

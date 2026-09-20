@@ -1,0 +1,333 @@
+{
+ "overlay_version": "agent4-ritual-registry-overlay-1.0.0",
+ "why_an_overlay_and_not_an_edit": "data/staging/ritual/manifest.json carries a sha256 for every file beside it. A correction made in place would break 25 hashes and the seal's only value is that they still verify. The overlay is consulted after the sealed registry, is additive by construction, and a test re-hashes the sealed files to prove they did not move.",
+ "additions": {
+  "SATTRA": {
+   "adds": [
+    "satram",
+    "satraṃ",
+    "satre",
+    "satrasya",
+    "satrāṇi"
+   ],
+   "defect": "RITE_CANDIDATES registers SATTRA only with double-t forms -- sattram, sattrasya, sattre, sattrani, sattranam -- and the prefix `sattrayan`. The Sankhayana edition prints the single-t `satram`. No registered form reaches it, so SankhSS 13.14.1 -- `satram asiran`, the line that enumerates the sixteen officiants and which Caland translates 'A sattra may be performed by sixteen persons' -- was anchored to DIKSA-CONSECRATION instead, on the participle `diksita` that describes the performers.",
+   "basis": "Orthographic variation between editions of the same word, not a different word. Single-t satra and double-t sattra are the same noun; the Bibliotheca Indica and the Sankhayana witnesses simply differ on the geminate.",
+   "collision_check": "`satra-` is five letters, so it clears MIN_PREFIX_ALIAS_LEN, but it is registered as whole-token exact forms rather than as a prefix precisely because a `satra` prefix would reach `satrajit` and `satrasah`. The host forms each added token actually reaches are measured in ritual_registry_overlay.json and every one is the session."
+  }
+ },
+ "host_forms_per_added_token": {
+  "satram": 11,
+  "satre": 4,
+  "satraṃ": 2,
+  "satrāṇi": 1
+ },
+ "supplementary_lines_reached": 18,
+ "lines_that_gain_a_rite": 18,
+ "lines": [
+  {
+   "supplementary_key": "VG:SUPP:VaitS:3:4:7",
+   "citation": "VaitS 3.4.7",
+   "tokens_reached": [
+    "satre"
+   ],
+   "rites_named_before_overlay": [],
+   "rites_named_after_overlay": [
+    "VG:CONCEPT:SATTRA"
+   ],
+   "newly_named": [
+    "VG:CONCEPT:SATTRA"
+   ],
+   "quote": "satre hotādhvaryur brahmodgātānucarā gṛhapatiś ca"
+  },
+  {
+   "supplementary_key": "VG:SUPP:SadvB:4:6:2",
+   "citation": "SadvB 4.6.2",
+   "tokens_reached": [
+    "satram"
+   ],
+   "rites_named_before_overlay": [],
+   "rites_named_after_overlay": [
+    "VG:CONCEPT:SATTRA"
+   ],
+   "newly_named": [
+    "VG:CONCEPT:SATTRA"
+   ],
+   "quote": "viśve devāḥ satram āsata somena rājñā gṛhapatinā / te 'bruvant soma eva no rājā sarvatra vibhaved iti / tasmāt somo rājā sarvāṇi nakṣatrāṇy upaiti / somo hi retodhāḥ"
+  },
+  {
+   "supplementary_key": "VG:SUPP:LatSS:1:6:41",
+   "citation": "LatSS 1.6.41",
+   "tokens_reached": [
+    "satre"
+   ],
+   "rites_named_before_overlay": [],
+   "rites_named_after_overlay": [
+    "VG:CONCEPT:SATTRA"
+   ],
+   "newly_named": [
+    "VG:CONCEPT:SATTRA"
+   ],
+   "quote": "satre satrasyarddhi"
+  },
+  {
+   "supplementary_key": "VG:SUPP:LatSS:3:11:3",
+   "citation": "LatSS 3.11.3",
+   "tokens_reached": [
+    "satre"
+   ],
+   "rites_named_before_overlay": [
+    "VG:CONCEPT:DIKSA-CONSECRATION"
+   ],
+   "rites_named_after_overlay": [
+    "VG:CONCEPT:DIKSA-CONSECRATION",
+    "VG:CONCEPT:SATTRA"
+   ],
+   "newly_named": [
+    "VG:CONCEPT:SATTRA"
+   ],
+   "quote": "tvaṃ vāg asi ye naḥ satre anindiṣu dīkṣāyāṃ śrānta āsi te rāddhiṃ tebhyo dundubhe rāddhim asmabhyam āvadeti parāvada dviṣantaṃ ghorāṃ vācaṃ parāvadāthāsmabhyaṃ sumitriyāṃ vācaṃ dundubhe kalyāṇīṃ kīrti"
+  },
+  {
+   "supplementary_key": "VG:SUPP:LatSS:10:1:11",
+   "citation": "LatSS 10.1.11",
+   "tokens_reached": [
+    "satrāṇi"
+   ],
+   "rites_named_before_overlay": [
+    "VG:CONCEPT:DVADASAHA"
+   ],
+   "rites_named_after_overlay": [
+    "VG:CONCEPT:DVADASAHA",
+    "VG:CONCEPT:SATTRA"
+   ],
+   "newly_named": [
+    "VG:CONCEPT:SATTRA"
+   ],
+   "quote": "dvādaśāhaprabhṛtīni satrāṇi"
+  },
+  {
+   "supplementary_key": "VG:SUPP:AB:2:19:1",
+   "citation": "AB 2.19.1",
+   "tokens_reached": [
+    "satram"
+   ],
+   "rites_named_before_overlay": [],
+   "rites_named_after_overlay": [
+    "VG:CONCEPT:SATTRA"
+   ],
+   "newly_named": [
+    "VG:CONCEPT:SATTRA"
+   ],
+   "quote": "ṛṣayo vai sarasvatyāṃ satram āsata te kavaṣam ailūṣaṃ somād anayan dāsyāḥ putraḥ kitavo 'brāhmaṇaḥ kathaṃ no madhye 'dīkṣiṣṭeti tam bahir dhanvodavahann atrainam pipāsā hantu sarasvatyā udakam mā pād "
+  },
+  {
+   "supplementary_key": "VG:SUPP:AB:4:12:10",
+   "citation": "AB 4.12.10",
+   "tokens_reached": [
+    "satraṃ"
+   ],
+   "rites_named_before_overlay": [
+    "VG:CONCEPT:UKTHYA",
+    "VG:CONCEPT:YAJNA-SACRIFICE"
+   ],
+   "rites_named_after_overlay": [
+    "VG:CONCEPT:SATTRA",
+    "VG:CONCEPT:UKTHYA",
+    "VG:CONCEPT:YAJNA-SACRIFICE"
+   ],
+   "newly_named": [
+    "VG:CONCEPT:SATTRA"
+   ],
+   "quote": "ukthya eva syāt paśusamṛddho yajñaḥ paśusamṛddhaṃ satraṃ sarvāṇi caturviṃśāni stotrāṇi pratyakṣāddhyetad ahaś caturviṃśaṃ tasmād ukthya eva syāt"
+  },
+  {
+   "supplementary_key": "VG:SUPP:AB:4:16:6",
+   "citation": "AB 4.16.6",
+   "tokens_reached": [
+    "satram"
+   ],
+   "rites_named_before_overlay": [],
+   "rites_named_after_overlay": [
+    "VG:CONCEPT:SATTRA"
+   ],
+   "newly_named": [
+    "VG:CONCEPT:SATTRA"
+   ],
+   "quote": "annādyakāmāḥ khalu vai satram āsata tad yad virājam māsi māsy abhisaṃpādayanto yanty annādyam eva tan māsi māsy avarundhānā yanty asmai ca lokāyāmuṣmai cobhābhyām"
+  },
+  {
+   "supplementary_key": "VG:SUPP:AB:4:17:2",
+   "citation": "AB 4.17.2",
+   "tokens_reached": [
+    "satram"
+   ],
+   "rites_named_before_overlay": [],
+   "rites_named_after_overlay": [
+    "VG:CONCEPT:SATTRA"
+   ],
+   "newly_named": [
+    "VG:CONCEPT:SATTRA"
+   ],
+   "quote": "gāvo vai satram āsata śaphāñchṛṅgāṇi siṣāsantyas tāsāṃ daśame māsi śaphāḥ śṛṅgāṇy ajāyanta tā abruvan yasmai kāmāyādīkṣāmahy āpāma tam uttiṣṭhāmeti tā yā udatiṣṭhaṃs tā etāḥ śṛṅgiṇyaḥ"
+  },
+  {
+   "supplementary_key": "VG:SUPP:AB:4:26:13",
+   "citation": "AB 4.26.13",
+   "tokens_reached": [
+    "satram"
+   ],
+   "rites_named_before_overlay": [],
+   "rites_named_after_overlay": [
+    "VG:CONCEPT:SATTRA"
+   ],
+   "newly_named": [
+    "VG:CONCEPT:SATTRA"
+   ],
+   "quote": "satram u cet saṃnyupyāgnīn yajeran sarve dīkṣeran sarve sunuyur vasantam abhyudavasyaty ūrg vai vasanta iṣam eva tad ūrjam abhyudavasyati"
+  },
+  {
+   "supplementary_key": "VG:SUPP:AB:4:32:7",
+   "citation": "AB 4.32.7",
+   "tokens_reached": [
+    "satram"
+   ],
+   "rites_named_before_overlay": [
+    "VG:CONCEPT:YAJNA-SACRIFICE"
+   ],
+   "rites_named_after_overlay": [
+    "VG:CONCEPT:SATTRA",
+    "VG:CONCEPT:YAJNA-SACRIFICE"
+   ],
+   "newly_named": [
+    "VG:CONCEPT:SATTRA"
+   ],
+   "quote": "tad u śāryātam aṅgiraso vai svargāya lokāya satram āsata te ha sma dvitīyaṃ dvitīyam evāhar āgatya muhyanti tān vā etac chāryāto mānavo dvitīye 'hani sūktam aśaṃsayat tato vai te pra yajñam ajānan pra"
+  },
+  {
+   "supplementary_key": "VG:SUPP:AB:5:14:3",
+   "citation": "AB 5.14.3",
+   "tokens_reached": [
+    "satram"
+   ],
+   "rites_named_before_overlay": [],
+   "rites_named_after_overlay": [
+    "VG:CONCEPT:SATTRA"
+   ],
+   "newly_named": [
+    "VG:CONCEPT:SATTRA"
+   ],
+   "quote": "sa pitaram etyābravīt tvāṃ ha vāva mahyam tatābhākṣur iti tam pitābravīn mā putraka tad ādṛthā aṅgiraso vā ime svargāya lokāya satram āsate te ṣaṣṭhaṃ ṣaṣṭham evāhar āgatya muhyanti tān ete sūkte ṣaṣṭ"
+  },
+  {
+   "supplementary_key": "VG:SUPP:AB:6:1:1",
+   "citation": "AB 6.1.1",
+   "tokens_reached": [
+    "satraṃ"
+   ],
+   "rites_named_before_overlay": [],
+   "rites_named_after_overlay": [
+    "VG:CONCEPT:SATTRA"
+   ],
+   "newly_named": [
+    "VG:CONCEPT:SATTRA"
+   ],
+   "quote": "devā ha vai sarvacarau satraṃ niṣedus te ha pāpmānaṃ nāpajaghnire tān hovācārbudaḥ kādraveyaḥ sarpaṛṣir mantrakṛd ekā vai vo hotrākṛtā tāṃ vo 'haṃ karavāṇy atha pāpmānam apahaniṣyadhva iti te ha tathe"
+  },
+  {
+   "supplementary_key": "VG:SUPP:AB:6:3:6",
+   "citation": "AB 6.3.6",
+   "tokens_reached": [
+    "satram"
+   ],
+   "rites_named_before_overlay": [],
+   "rites_named_after_overlay": [
+    "VG:CONCEPT:SATTRA"
+   ],
+   "newly_named": [
+    "VG:CONCEPT:SATTRA"
+   ],
+   "quote": "tad āhur atha kasmād utkare tiṣṭhan subrahmaṇyām āhvayatīty ṛṣayo vai satram āsata teṣāṃ yo varṣiṣṭha āsīt tam abruvan subrahmaṇyām āhvaya tvaṃ no nediṣṭhād devān hvayiṣyasīti varṣiṣṭham evainaṃ tat k"
+  },
+  {
+   "supplementary_key": "VG:SUPP:AB:8:21:4",
+   "citation": "AB 8.21.4",
+   "tokens_reached": [
+    "satre"
+   ],
+   "rites_named_before_overlay": [],
+   "rites_named_after_overlay": [
+    "VG:CONCEPT:SATTRA"
+   ],
+   "newly_named": [
+    "VG:CONCEPT:SATTRA"
+   ],
+   "quote": "etena ha vā aindreṇa mahābhiṣekeṇa cyavano bhārgavaḥ śāryātam mānavam abhiṣiṣeca tasmād u śāryāto mānavaḥ samantaṃ sarvataḥ pṛthivīṃ jayan parīyāyāśvena ca medhyeneje devānāṃ hāpi satre gṛhapatir āsa"
+  },
+  {
+   "supplementary_key": "VG:SUPP:KausB:12:3:11",
+   "citation": "KausB 12.3.11",
+   "tokens_reached": [
+    "satram"
+   ],
+   "rites_named_before_overlay": [],
+   "rites_named_after_overlay": [
+    "VG:CONCEPT:SATTRA"
+   ],
+   "newly_named": [
+    "VG:CONCEPT:SATTRA"
+   ],
+   "quote": "mādhyamāḥ sarasvatyāṃ satram āsata"
+  },
+  {
+   "supplementary_key": "VG:SUPP:KausB:15:1:23",
+   "citation": "KausB 15.1.23",
+   "tokens_reached": [
+    "satram"
+   ],
+   "rites_named_before_overlay": [],
+   "rites_named_after_overlay": [
+    "VG:CONCEPT:SATTRA"
+   ],
+   "newly_named": [
+    "VG:CONCEPT:SATTRA"
+   ],
+   "quote": "ātmadakṣiṇaṃ vai satram"
+  },
+  {
+   "supplementary_key": "VG:SUPP:SankhSS:13:14:1",
+   "citation": "SankhSS 13.14.1",
+   "tokens_reached": [
+    "satram"
+   ],
+   "rites_named_before_overlay": [
+    "VG:CONCEPT:DIKSA-CONSECRATION"
+   ],
+   "rites_named_after_overlay": [
+    "VG:CONCEPT:DIKSA-CONSECRATION",
+    "VG:CONCEPT:SATTRA"
+   ],
+   "newly_named": [
+    "VG:CONCEPT:SATTRA"
+   ],
+   "quote": "āhitāgnaya iṣṭaprathamayajñā dīkṣitā gṛhapatisaptadaśāḥ satram āsīran hotā maitrāvaruṇo 'cchāvāko grāvastud brahmā brāhmaṇācchaṃsī potāgnīdhra udgātā prastotā pratihartā subrahmaṇyo 'dhvaryuḥ pratipra"
+  }
+ ],
+ "the_decisive_line": {
+  "supplementary_key": "VG:SUPP:SankhSS:13:14:1",
+  "citation": "SankhSS 13.14.1",
+  "tokens_reached": [
+   "satram"
+  ],
+  "rites_named_before_overlay": [
+   "VG:CONCEPT:DIKSA-CONSECRATION"
+  ],
+  "rites_named_after_overlay": [
+   "VG:CONCEPT:DIKSA-CONSECRATION",
+   "VG:CONCEPT:SATTRA"
+  ],
+  "newly_named": [
+   "VG:CONCEPT:SATTRA"
+  ],
+  "quote": "āhitāgnaya iṣṭaprathamayajñā dīkṣitā gṛhapatisaptadaśāḥ satram āsīran hotā maitrāvaruṇo 'cchāvāko grāvastud brahmā brāhmaṇācchaṃsī potāgnīdhra udgātā prastotā pratihartā subrahmaṇyo 'dhvaryuḥ pratipra"
+ }
+}

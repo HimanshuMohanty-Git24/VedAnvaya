@@ -1,0 +1,140 @@
+{
+ "AV-RV": {
+  "pair": "AV-RV",
+  "links": 1325,
+  "corpus_size_ratio": 1.807,
+  "observed_containment_ratio": 1.943,
+  "excess_containment_over_size": 1.075,
+  "contiguity_observed": {
+   "AV": 0.8322784810126582,
+   "RV": 0.8380843785632839
+  },
+  "contiguity_null_mean": {
+   "AV": 0.0013,
+   "RV": 0.0014
+  },
+  "contiguity_z": {
+   "AV": 740.38,
+   "RV": 689.63
+  },
+  "contiguity_denominators": {
+   "AV": 948,
+   "RV": 877
+  }
+ },
+ "AV-SV": {
+  "pair": "AV-SV",
+  "links": 467,
+  "corpus_size_ratio": 3.166,
+  "observed_containment_ratio": 3.279,
+  "excess_containment_over_size": 1.036,
+  "contiguity_observed": {
+   "AV": 0.7416267942583732,
+   "SV": 0.6797752808988764
+  },
+  "contiguity_null_mean": {
+   "AV": 0.005,
+   "SV": 0.0058
+  },
+  "contiguity_z": {
+   "AV": 158.29,
+   "SV": 122.22
+  },
+  "contiguity_denominators": {
+   "AV": 209,
+   "SV": 178
+  }
+ },
+ "AV-YV": {
+  "pair": "AV-YV",
+  "links": 210,
+  "corpus_size_ratio": 2.956,
+  "observed_containment_ratio": 2.941,
+  "excess_containment_over_size": 0.995,
+  "contiguity_observed": {
+   "AV": 0.6571428571428571,
+   "YV": 0.5568181818181818
+  },
+  "contiguity_null_mean": {
+   "AV": 0.0061,
+   "YV": 0.0049
+  },
+  "contiguity_z": {
+   "AV": 71.16,
+   "YV": 75.84
+  },
+  "contiguity_denominators": {
+   "AV": 70,
+   "YV": 88
+  }
+ },
+ "RV-SV": {
+  "pair": "RV-SV",
+  "links": 1684,
+  "corpus_size_ratio": 5.722,
+  "observed_containment_ratio": 6.693,
+  "excess_containment_over_size": 1.17,
+  "contiguity_observed": {
+   "RV": 0.752046783625731,
+   "SV": 0.5650655021834061
+  },
+  "contiguity_null_mean": {
+   "RV": 0.0012,
+   "SV": 0.0009
+  },
+  "contiguity_z": {
+   "RV": 616.43,
+   "SV": 620.27
+  },
+  "contiguity_denominators": {
+   "RV": 855,
+   "SV": 1145
+  }
+ },
+ "RV-YV": {
+  "pair": "RV-YV",
+  "links": 662,
+  "corpus_size_ratio": 5.343,
+  "observed_containment_ratio": 5.732,
+  "excess_containment_over_size": 1.073,
+  "contiguity_observed": {
+   "RV": 0.8113879003558719,
+   "YV": 0.47540983606557374
+  },
+  "contiguity_null_mean": {
+   "RV": 0.0028,
+   "YV": 0.0016
+  },
+  "contiguity_z": {
+   "RV": 258.08,
+   "YV": 262.63
+  },
+  "contiguity_denominators": {
+   "RV": 281,
+   "YV": 488
+  }
+ },
+ "SV-YV": {
+  "pair": "SV-YV",
+  "links": 239,
+  "corpus_size_ratio": 1.071,
+  "observed_containment_ratio": 1.191,
+  "excess_containment_over_size": 1.112,
+  "contiguity_observed": {
+   "SV": 0.5970149253731343,
+   "YV": 0.47191011235955055
+  },
+  "contiguity_null_mean": {
+   "SV": 0.0065,
+   "YV": 0.0049
+  },
+  "contiguity_z": {
+   "SV": 58.93,
+   "YV": 61.91
+  },
+  "contiguity_denominators": {
+   "SV": 67,
+   "YV": 89
+  }
+ }
+}

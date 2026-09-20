@@ -1,0 +1,131 @@
+{
+  "domain": "quality",
+  "agent": 16,
+  "schema_version": "1.0",
+  "algorithm_version": "vg-quality-reference-set-v1",
+  "created_at": "2026-09-15T09:31:55.655656Z",
+  "code_commit": "5a9af5547f253f4b66f0d4dcf974409d48e90ad2",
+  "config_hash": "19fd8c05ff60aa7821c570c1af039e9edd5e292588a8a1d697e47235c0ce440d",
+  "source_snapshot_ids": [
+    "UD_SANSKRIT_VEDIC_V2",
+    "VEDAWEB_ZURICH_VIA_GRAPH",
+    "VG_CANONICAL_STORE_2026_09_15",
+    "INDEPENDENT_MODEL_ADJUDICATOR"
+  ],
+  "files": [
+    {
+      "path": "rows.jsonl",
+      "sha256": "0e7665d92d22861a40046cceb9cead5b6e1fc4ca077cb377ee1153387c941207",
+      "rows": 3951,
+      "bytes": 13494165
+    },
+    {
+      "path": "rejected.jsonl",
+      "sha256": "994354b9e337ba1cc2091810d90d080b4c483475c8b94cec4b388fd34604928e",
+      "rows": 2127,
+      "bytes": 673649
+    },
+    {
+      "path": "sources.jsonl",
+      "sha256": "024c60568ee2ae2a9ab3ee490e83b6c5865fe282ee6b53f673ee836f700e1707",
+      "rows": 4,
+      "bytes": 3013
+    }
+  ],
+  "counts": {
+    "candidates_considered": 35933,
+    "accepted": 3951,
+    "rejected": 2127,
+    "verified_zero": 1844,
+    "not_applicable": 0,
+    "unresolved": 29855
+  },
+  "counts_explained": {
+    "candidates_considered": "11310 mention and concept edges put to the reference, plus 15806 metre edges counted, plus 7149 treebank sentences whose verse address was attempted, plus 1668 registry aliases grounded against 206,440 human-annotated words, plus 0 assertions sent to the independent model.",
+    "accepted": "rows.jsonl: one row per claim a reference actually decided, plus the metre edges that diverge from their own metre, plus the independently adjudicated assertions.",
+    "rejected": "rejected.jsonl: every candidate with a recorded refusal reason -- 1502 graph claims the reference could not decide, 570 aliases unattested as a word in the human corpus, the unaligned treebank sentences grouped by refusal reason, and the PUA root inventory.",
+    "verified_zero": "1,844 Samavedic mantras: zero published human annotation exists, on three independent negatives (DCS, VedaWeb, UD_Sanskrit-Vedic). This is a measured zero over an assessed population, not an unknown.",
+    "unresolved": "metre edges whose metre has too few verses for a trustworthy median (994), treebank sentences that aligned and are used as reference but are not themselves rows, and assertions sent to the model for which no verdict came back (0)."
+  },
+  "closes_gaps": [],
+  "advances_gaps": {
+    "GAP-QUALITY-001": "supplies the first evaluation set this project has had. 695 gold rows held zero annotations; this artifact holds rows decided by published human annotation of the Vedic text. It does NOT close the gap, because no human has reviewed a VedaGraph claim and the reference cannot decide aboutness or referent.",
+    "GAP-QUALITY-CALIBRATION": "answers it in the negative and with numbers. The confidence property is not a probability: 50,468 of 76,050 edges carry exactly 1.0, five predicates never vary, and inside one nominal 1.0 the observed accuracy runs 71.4% to 97.6%. See proofs/calibration.json.",
+    "CORPUS_D01": "CORRECTS it. The Atharvavedic SEARCH_DERIVATIVE layer does not strip base letters; it substitutes Private Use Area codepoints for them, one for one. The layer is losslessly repairable by a four-entry table derived from 5,123 verse pairs at >=0.9994 agreement. The committed diagnosis prescribes a rebuild the data does not need.",
+    "MORPHOLOGY-003 / MORPHOLOGY-005": "adds a measurement rather than a correction: the graph already holds 10,031 Zurich :Lemma nodes implying 154,261 mantra-lemma pairs, against 9,000 edges over 39 lemmas. A Rigvedic morphology layer is latent and 99.6% unwired.",
+    "CROSS_VEDA-002": "confirmed at full population: 5,808 parallel edges across four predicates, zero transformation types.",
+    "ATTRIBUTION-006": "adds an accuracy to the coverage. Atharvavedic container-inherited metre measures 71.4% against the syllable count of its own verses, against 92.4% for the source-explicit rows -- and 1,176 mantras carry both at confidence 1.0."
+  },
+  "qa": {
+    "sampled": 3951,
+    "sample_method": "both",
+    "sample_note": "Not a sample in the usual sense: every graph claim falling on a human-annotated verse was adjudicated, which is a census of the intersection rather than a draw from it. Adversarial in three places -- the per-alias table, which exists because two random per-row samples in this project once reported 97%+ while one alias was 82.9% wrong; the monotonicity check on the reference set's own addresses; and the deliberate refusal to force 805 ambiguous-margin alignments.",
+    "defects_found": 4,
+    "defects": [
+      "Private Use Area codepoints substituted for Unicode letters in 5,123 Atharvavedic SEARCH_DERIVATIVE texts, 20 Yajurvedic PARALLEL_TEXT texts and 393 SemanticAssertion roots. Corrects the committed CORPUS_D01 diagnosis; mapping derived and verified.",
+      "1,176 mantras carry a source-explicit and a container-inherited metre naming different Chandas nodes, every edge at confidence 1.0.",
+      "morphological_roles carries two disjoint spellings of the same case values, split by branch. Raw agreement with hand-annotated case 61.6%; after folding, 98.8%. A value filter on 'NOM' returns the Rigveda and reports an Atharvavedic zero.",
+      "570 of 1,668 registry aliases never occur as a whole word in 206,440 human-annotated words, and 314 more resolve to a lemma that is not the entity's own word."
+    ],
+    "defects_in_this_agents_own_first_pass": [
+      "A first scoring pass reported 196 Rigvedic deity mentions as refuted. Almost all were our citation convention against the treebank's -- apah versus ap. Fixed by writing the bridge down entry by entry rather than by loosening a string rule.",
+      "A first metre pass scored against nominal syllable totals and reported whole metres as divergent, because sandhied samhita spelling systematically under-counts. Fixed by scoring each verse against the median of its own metre.",
+      "A first reading of the vowelless roots called them stripped letters, matching the committed CORPUS_D01 diagnosis. Reading the codepoints showed Private Use Area substitution instead -- a different defect with a different and much cheaper fix."
+    ],
+    "human_reviewed": 0,
+    "reviewed_by": "Nobody. Every verdict in rows.jsonl was produced by published human annotation of the Vedic text (Scarlata, Ackermann, Hellwig, Biagetti, Sellmer), by a syllable count, or by the independent provider model. claude-opus-5 acting as Agent 16 wrote the bridge tables and the error taxonomy and is named on both; it adjudicated no graph claim, and it did not re-score theonym_mention_gold_v1 because claude-opus-5 wrote that file. Campaign section 26."
+  },
+  "reference_set": {
+    "name": "vedanvaya-reference-set-v1",
+    "type": "INDEPENDENT_SOURCE_ADJUDICATED_REFERENCE_SET",
+    "is_human_gold": false,
+    "why_not": "No human has annotated a VedaGraph claim. The human annotation is of the Vedic text and this agent derived every verdict from it mechanically. Calling this human gold would be the exact failure the domain exists to prevent.",
+    "mantras_with_human_annotation": 3072,
+    "mantras_annotated_to_at_least_80_percent": 1074,
+    "by_veda": {
+      "RV": 413,
+      "AV": 643,
+      "YV": 18
+    },
+    "addresses_confirmed_by_a_second_annotation": 1166,
+    "addresses_total": 3072,
+    "alignment_integrity": {
+      "adjacent_pairs_checked": 5541,
+      "backwards_jumps": 90,
+      "violation_rate": 0.01624,
+      "quarantined_sentences": 176
+    }
+  },
+  "evaluation": {
+    "independence_policy": "campaign section 26",
+    "adjudicators": {
+      "PUBLISHED_HUMAN_TREEBANK": "UD_Sanskrit-Vedic, CC BY-SA 4.0",
+      "DETERMINISTIC_TEXT_DERIVATION": "syllable nuclei counted in the verse",
+      "INDEPENDENT_MODEL": null
+    },
+    "llm_provider": null,
+    "llm_model": null,
+    "llm_calls_made": null,
+    "llm_call_cap": 22,
+    "llm_stopped_because": null,
+    "llm_quota_policy": "a rate-limit or quota error is recorded and the run stops; it is never retried in a loop",
+    "what_produced_what": {
+      "MENTIONS_DEVATA RV": "theonym-mention-v1:rv-lemma-annotation, deterministic over the Zurich annotation",
+      "MENTIONS_DEVATA AV/YV/SV": "theonym-mention-v1:sanskrit-surface-token, deterministic surface matching",
+      "ABOUT_CONCEPT": "concept-alias-v1, deterministic alias matching",
+      "SemanticAssertion MODEL_EXTRACTION": "claude-opus-5",
+      "SemanticAssertion MORPHOLOGY_RULE": "agentive-morphology-v1",
+      "this artifact": "claude-opus-5 as Agent 16, adjudicating nothing"
+    }
+  },
+  "population": {
+    "mantras": 20210,
+    "confidence_bearing_edges": 76050,
+    "mentions_devata_edges": 17166,
+    "mentions_entity_edges": 28227,
+    "about_concept_edges": 24969,
+    "has_chandas_edges": 16331,
+    "semantic_assertions": 4865,
+    "uses_formula_edges": 22686
+  }
+}

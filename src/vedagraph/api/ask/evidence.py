@@ -25,12 +25,14 @@ The budget is ranked, not truncated arbitrarily: see :data:`_TYPE_PRIORITY`.
 from __future__ import annotations
 
 import json
-from collections.abc import Iterator
+from collections.abc import Iterator, Mapping
 from dataclasses import dataclass, field
 from typing import Any, Final
 
 from vedagraph.api.ask.models import EvidenceItem, EvidenceItemType
 from vedagraph.api.ask.retriever import SURFACE_LIMITS, RetrievalResult
+from vedagraph.api.repositories.neo4j_repository import named_query_caveat
+from vedagraph.domain import translation_semantics
 
 #: How many items reach the prompt. Bounded because a packet that dumps 200 passages
 #: costs latency and tokens while burying the three rows that answer the question.
@@ -109,6 +111,8 @@ def _render(item: EvidenceItem) -> str:
         lines.append(f"  sanskrit: {item.sanskrit[:_MAX_SANSKRIT]}")
     if item.translation:
         lines.append(f"  translation: {item.translation[:_MAX_TRANSLATION]}")
+    if item.translation_disclosure:
+        lines.append(f"  translation_is: {item.translation_disclosure}")
     if item.fact:
         lines.append(f"  fact: {item.fact}")
     if item.claim_text:
@@ -134,6 +138,28 @@ def _ids() -> Iterator[str]:
 # ---------------------------------------------------------------------------
 # Per-channel qualifiers. Measured statements about what a row can support.
 # ---------------------------------------------------------------------------
+
+
+def _translation_disclosure(row: Mapping[str, Any]) -> str | None:
+    """The disclosure owed by whatever English this row quotes, or None.
+
+    Reads the retriever's ``translation_*`` columns back into the shape
+    :mod:`vedagraph.domain.translation_semantics` classifies, so Ask, the passage API and
+    the coverage figures all disclose the same three things in the same words.
+    """
+    props = {
+        "language": row.get("translation_language") or "en",
+        "reuse_kind": row.get("translation_reuse_kind"),
+        "reused_from_veda": row.get("translation_reused_from_veda"),
+        "reused_from_passage_key": row.get("translation_reused_from_passage_key"),
+        "reused_from_citation": row.get("translation_reused_from_citation"),
+        "alignment_level": row.get("translation_alignment_level"),
+        "covers_canonical_keys": row.get("translation_covers_canonical_keys"),
+    }
+    if not row.get("translation"):
+        return None
+    return translation_semantics.disclosure(props)
+
 
 _TRANSLATION_QUALIFIER: Final = (
     "This English wording is a 19th-century translation (Griffith/Whitney), not the "
@@ -251,6 +277,17 @@ def build_evidence_packet(
                 "Found by matching the English translation, so the match is in the "
                 "translator's wording and not necessarily in the Sanskrit."
             )
+        if row.get("_ambiguous_citation"):
+            qualifier_parts.append(
+                f"The citation as asked, '{row['_ambiguous_citation']}', names no section "
+                "of the Kauthuma arcika and matches no verse on its own. This is one of "
+                "the loci it could have meant, found by trying each arcika section. Cite "
+                "it by the full citation shown here, and say that the question's citation "
+                "was incomplete."
+            )
+        disclosure = _translation_disclosure(row)
+        if disclosure:
+            qualifier_parts.append(disclosure)
         staged.append(
             EvidenceItem(
                 id=next(ids),
@@ -260,6 +297,7 @@ def build_evidence_packet(
                 veda=row.get("veda"),
                 sanskrit=row.get("sanskrit"),
                 translation=row.get("translation"),
+                translation_disclosure=disclosure,
                 relationship_type=row.get("relation_type"),
                 qualifier=" ".join(qualifier_parts) or None,
                 knowledge_status="SUPPORTED",
@@ -284,7 +322,16 @@ def build_evidence_packet(
                     "Anukramani apparatus (HAS_DEVATA), which is dedication and not "
                     "mention."
                 ),
-                qualifier=_ASCRIPTION_QUALIFIER.get(precision),
+                translation_disclosure=_translation_disclosure(row),
+                qualifier=" ".join(
+                    part
+                    for part in (
+                        _ASCRIPTION_QUALIFIER.get(precision),
+                        _translation_disclosure(row),
+                    )
+                    if part
+                )
+                or None,
                 knowledge_status="SUPPORTED",
             )
         )
@@ -383,6 +430,57 @@ def build_evidence_packet(
             )
         )
 
+    # -- material culture ---------------------------------------------------
+    # One item per subject, not per row: the frozen grids return a row per (subject, Veda)
+    # and a packet holding fourteen separate "gold in RV" items would spend its whole
+    # budget on one dimension while telling the reader nothing it could not read off a
+    # single line. The caveat is *read from the query* rather than written here -- this
+    # project has twice shipped hand-copied caveat prose that drifted from the data it
+    # described, and the metals caveat in particular carries a known-false cell (Yajurvedic
+    # ayas) whose wording must be the graded one.
+    by_subject: dict[tuple[str, str], list[dict[str, Any]]] = {}
+    for row in result.material_culture:
+        subject = str(row.get("_subject") or "")
+        if not subject:
+            continue
+        by_subject.setdefault((str(row.get("_query_name")), subject), []).append(row)
+
+    for (query_name, subject), rows in by_subject.items():
+        matched = [row for row in rows if int(row.get("mantras") or 0) > 0]
+        if not matched:
+            # A cell that matched nothing is carried by the caveat, not by its own item:
+            # the metals grid returns every metal against every Veda, so emitting the
+            # empty ones would be a packet of zeros.
+            continue
+        per_corpus: list[str] = []
+        for row in sorted(matched, key=lambda r: str(r.get("veda"))):
+            detail = f"{row['veda']}: {int(row.get('mantras') or 0)} verses"
+            if row.get("per_1000_mantras") is not None:
+                detail += f" ({row['per_1000_mantras']} per 1,000 mantras)"
+            if row.get("evidence_status"):
+                detail += f" [{row['evidence_status']}]"
+            per_corpus.append(detail)
+        silent = sorted(
+            str(row.get("veda"))
+            for row in rows
+            if int(row.get("mantras") or 0) == 0 and row.get("veda")
+        )
+        staged.append(
+            EvidenceItem(
+                id=next(ids),
+                type=EvidenceItemType.CORPUS_DISTRIBUTION,
+                entity_label=subject,
+                fact=(
+                    f"Verses naming {subject} per corpus — "
+                    + "; ".join(per_corpus)
+                    + "."
+                    + (f" No lexical match in: {', '.join(silent)}." if silent else "")
+                ),
+                qualifier=named_query_caveat(query_name),
+                knowledge_status="SUPPORTED",
+            )
+        )
+
     # -- textual reuse ------------------------------------------------------
     for row in result.parallels:
         relation = str(row.get("relation_type") or "")
@@ -395,7 +493,16 @@ def build_evidence_packet(
                 veda=row.get("veda"),
                 translation=row.get("translation"),
                 relationship_type=relation,
-                qualifier=_REUSE_QUALIFIER.get(relation),
+                translation_disclosure=_translation_disclosure(row),
+                qualifier=" ".join(
+                    part
+                    for part in (
+                        _REUSE_QUALIFIER.get(relation),
+                        _translation_disclosure(row),
+                    )
+                    if part
+                )
+                or None,
                 knowledge_status="SUPPORTED",
             )
         )

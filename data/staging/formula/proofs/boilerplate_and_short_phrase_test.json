@@ -1,0 +1,38 @@
+{
+ "question": "do short high-frequency phrases merge unrelated material into false formulae?",
+ "word_count_distribution": {
+  "2": 2038,
+  "3": 1249,
+  "4": 614,
+  "5": 345,
+  "6": 241,
+  "7": 185,
+  "8": 153
+ },
+ "tokens_above_the_grammar_line": {
+  "rule": "per-Veda document frequency above MAX_FORMULA_CORPUS_SHARE = 0.08",
+  "enumerated_not_hand_listed": [
+   "ā",
+   "na",
+   "te",
+   "tvā",
+   "ca",
+   "no",
+   "indra",
+   "pra",
+   "sa"
+  ],
+  "count": 9
+ },
+ "two_word_formulae_half_of_which_is_grammar": {
+  "formulas": 59,
+  "occurrence_rows": 296,
+  "cross_veda_claims": 50,
+  "including_indra": 97,
+  "indra_is_excluded_and_the_exclusion_is_stated": "indra is the one content word above the line and its pairs are attested vocative formulae, not a word plus its grammar. Including it takes the recommendation from 59 to 97.",
+  "status": "RECOMMENDATION ONLY. No formula was removed, and formula_nesting.jsonl carries all 4,825.",
+  "reproduces": "FORMULA_FAMILY_RECONSTRUCTION_V3 section 4.5, to the row: 59 / 296 / 50 / 97"
+ },
+ "false_positives_inside_the_recommendation": "present and not hidden. pra mamhisthaya (RV/SV/AV) is genuinely from pra mamhisthaya gayata. That is why the list carries per-row evidence and is not a deletion.",
+ "did_short_phrases_merge_anything_here": "no. The identity layer is exact string equality, which cannot over-merge. The near-parallel layer's shortest accepted pair has 20 characters on its shorter side and a median of 91, and the six weakest accepted pairs were read by hand and are all genuine. The only place a short phrase produced a weak claim is the 6 sub-threshold svaha identities, which are staged importable=false."
+}

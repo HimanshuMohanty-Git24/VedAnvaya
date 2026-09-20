@@ -1,0 +1,27 @@
+{
+ "accepted_rederived_lcs": {
+  "n": 3049,
+  "min": 0.619565,
+  "p01": 0.869159,
+  "p05": 0.902564,
+  "p25": 0.954023,
+  "median": 0.976744,
+  "max": 0.996633
+ },
+ "discovered": {
+  "n": 305,
+  "min": 0.720721,
+  "median": 0.816794,
+  "max": 0.975124
+ },
+ "discovered_at_or_above": {
+  "weakest_accepted": 305,
+  "p05": 10,
+  "p25": 4,
+  "median": 0
+ },
+ "at_or_above_p25_per_pair": {
+  "RV-YV": 2,
+  "RV-SV": 2
+ }
+}

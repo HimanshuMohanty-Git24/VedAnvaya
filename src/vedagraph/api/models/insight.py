@@ -357,7 +357,8 @@ class DeityPopulationStat(ApiModel):
 
     ``resolved_deities`` is the population every deity surface in this API uses.
     ``anukramani_ascriptions`` is the raw slot the tradition fills, which holds human
-    patrons, danastuti labels naming a gift rather than a recipient, and one dog. A single
+    patrons, danastuti labels naming a gift rather than a recipient, and abstractions ruled
+    not to name an addressee. A single
     "number of deities" would have to pick one and would be wrong for half its readers, so
     both ship, with the difference broken out by structure.
     """
@@ -519,11 +520,17 @@ class CrossVedaMatrixResponse(InsightEnvelope):
     ``REUSES_TEXT_FROM``'s six pairs disappear from a table and a reader concludes that only
     the Samaveda reuses Rigvedic text.
 
-    Two rows carry no edges by construction and are here anyway. The semantic resemblance
-    row is ``NOT_BUILT`` -- no embedding, no vector index and no asserted resemblance exists
-    anywhere in this graph -- and the semantic assertion row is ``NOT_BUILT`` for every pair
-    because all of its assertions are Rigvedic, so that layer cannot contribute to a
-    cross-corpus comparison at all.
+    Two rows carry no edges by construction and are here anyway, and they carry different
+    statuses because the reasons differ. The semantic resemblance row is ``NOT_BUILT`` -- no
+    embedding, no vector index and no asserted resemblance exists anywhere in this graph.
+    The semantic assertion row is ``CLASS_NOT_CROSS_VEDA``: the layer exists, holds 35,131
+    assertions and reaches all four corpora, and still cannot contribute to a pair, because
+    an assertion is a predication about one passage rather than a relation between two.
+
+    That row read ``NOT_BUILT`` "because all of its assertions are Rigvedic". The premise
+    was false -- the layer reaches AV, YV and SV -- and the status told a reader the layer
+    does not exist anywhere in this graph, beside a measured total in the same cell that
+    said otherwise.
     """
 
     pairs: list[CrossVedaPairRow] = Field(default_factory=list)
@@ -677,14 +684,38 @@ class MaterialCultureResponse(InsightEnvelope):
 class RitualCoverageView(ApiModel):
     """What the ritual layer holds, stated as the numbers that bound it.
 
-    Eight modelled rites and three step edges across all of them. That is not a taxonomy of
-    Vedic ritual, and a list of eight is not evidence that there are eight, so the bounding
-    figures are measured and returned rather than described as "curated".
+    The inventory is not a taxonomy of Vedic ritual, and the length of a list is not evidence
+    of how many there are, so every bounding figure here is measured and returned rather than
+    described as "curated".
+
+    The two step layers are separate fields because they are separate claims. ``step_edges``
+    counts what a Samhita text numbers in its own words; ``procedure_step_edges`` counts what
+    a Srautasutra or Grhyasutra prints. Summing them would assert a procedural coverage the
+    Samhita layer does not have, and reporting only the first — which this view did for a
+    whole import — states that no rite has a recoverable sequence while thousands of located
+    sutra steps sit in the graph.
     """
 
     rituals_modelled: int
-    rituals_with_steps: int
-    step_edges: int
+    rituals_with_steps: int = Field(
+        description="Rites with at least one step the Samhita text itself numbers."
+    )
+    step_edges: int = Field(description="Samhita-numbered step edges, whole graph.")
+    rituals_with_procedure: int | None = Field(
+        default=None, description="Rites with at least one sutra-attested procedural step."
+    )
+    procedure_step_edges: int | None = Field(
+        default=None, description="Sutra-attested procedural step edges, whole graph."
+    )
+    procedure_partial_steps: int | None = Field(
+        default=None,
+        description="Of those, the ones stating a position without printing the run it "
+        "falls in. A high share means the sequences are located steps, not procedures.",
+    )
+    procedure_source_works: int | None = Field(
+        default=None,
+        description="Distinct source works cited. None of them has a node in this graph.",
+    )
     implements_curated: int | None = None
     implements_reached_by_mentions: int | None = None
     statement: str
@@ -802,15 +833,25 @@ class AtharvavedaConcernsResponse(InsightEnvelope):
         "afflictions",
         "protection_and_treatment",
         "social_rites",
+        "stated_remedy",
     )
 
     concerns: list[VedaCountRow] = Field(default_factory=list)
     afflictions: list[VedaCountRow] = Field(default_factory=list)
     protection_and_treatment: list[ConcernEvidenceRow] = Field(default_factory=list)
     social_rites: list[VedaCountRow] = Field(default_factory=list)
+    #: GAP-ENTITY_COVERAGE-003. The remedy side of the question, which this endpoint
+    #: published as unanswerable for two rounds on a premise that was false. The caveat
+    #: stood here for two rounds saying "the registry has no healing entity -- bhesaja
+    #: was never curated", which was false, and
+    #: ``VG:CONCEPT:BHESAJA-HEALING`` had been in the registry all along with 7 registered
+    #: Sanskrit aliases and 108 mention edges carrying verbatim verse evidence across all
+    #: four corpora. A reader could reach afflictions and plants and was told the remedy
+    #: was unreachable.
+    stated_remedy: list[VedaCountRow] = Field(default_factory=list)
     collections: dict[str, PaginationMeta] = Field(
-        description="Bounds per collection, keyed by the field each one describes. Four "
-        "collections travel here, so one shared block would describe three of them wrongly."
+        description="Bounds per collection, keyed by the field each one describes. Five "
+        "collections travel here, so one shared block would describe four of them wrongly."
     )
 
     @model_validator(mode="after")
@@ -1108,6 +1149,13 @@ class CapabilityLimit(ApiModel):
     question_number: int | None = None
     question: str
     verdict: CapabilityVerdict
+    benchmark_verdict: CapabilityVerdict | None = Field(
+        default=None,
+        description="The frozen V3.3 benchmark's grade, kept beside the live one. They can "
+        "differ, and when they do the difference is the finding: the graph has moved since "
+        "the benchmark was frozen, and copying the frozen grade forward would publish a "
+        "limitation that no longer holds.",
+    )
     data_status: KnowledgeStatus
     why: str = Field(description="What is missing, in terms of the graph rather than the corpus.")
     what_this_is_not: str = Field(
@@ -1138,6 +1186,46 @@ class CapabilitiesResponse(InsightEnvelope):
     limits: list[CapabilityLimit] = Field(default_factory=list)
     total_available: int
     requested_question: int | None = None
+    benchmark_not_answerable_total: int = Field(
+        default=0,
+        description="How many questions the frozen 100-question benchmark graded "
+        "NOT_ANSWERABLE. The population this catalogue must cover.",
+    )
+    benchmark_not_answerable_published: int = Field(
+        default=0,
+        description="How many of those this catalogue publishes a probed card for. The "
+        "catalogue published 7 against 21 once, and said so rather than implying "
+        "completeness; these two fields are what make that claim checkable.",
+    )
+    unpublished_not_answerable: list[int] = Field(
+        default_factory=list,
+        description="Benchmark question numbers graded NOT_ANSWERABLE with no card here. "
+        "Empty is the closed state, and it is a measurement rather than an assurance.",
+    )
+
+    @model_validator(mode="after")
+    def _the_published_count_must_match_the_cards(self) -> Self:
+        """The completeness claim is recomputed from ``limits``, never asserted.
+
+        A hand-set ``benchmark_not_answerable_published`` is exactly the sort of figure
+        typed into a payload that nothing checks. Deriving it here means a card that is
+        dropped moves the number and repopulates ``unpublished_not_answerable``.
+        """
+        if self.requested_question is not None:
+            return self
+        covered = {
+            limit.question_number
+            for limit in self.limits
+            if limit.question_number is not None
+            and limit.benchmark_verdict is CapabilityVerdict.NOT_ANSWERABLE
+        }
+        if len(covered) != self.benchmark_not_answerable_published:
+            raise ValueError(
+                f"benchmark_not_answerable_published says "
+                f"{self.benchmark_not_answerable_published} but {len(covered)} cards carry a "
+                "NOT_ANSWERABLE benchmark verdict"
+            )
+        return self
 
     @model_validator(mode="after")
     def _a_refusal_is_never_an_empty_list(self) -> Self:
@@ -1151,18 +1239,160 @@ class CapabilitiesResponse(InsightEnvelope):
 
 
 # ---------------------------------------------------------------------------
+# /insights/devatas/{id}/by-book, /by-metre, /dispersion -- the three viz blockers
+# ---------------------------------------------------------------------------
+
+
+class CellStatus(StrEnum):
+    """Why a cell in a deity aggregate holds the value it holds.
+
+    ``MEASURED_ZERO`` and ``NOT_BUILT`` both render as an empty cell and mean opposite
+    things: the first says the deity is not named in that book and the layer looked, the
+    second says the layer does not reach that corpus and nothing was looked at. A heatmap
+    that drew both as a pale square would assert the Samaveda has no metre.
+    """
+
+    MEASURED = "MEASURED"
+    MEASURED_ZERO = "MEASURED_ZERO"
+    NOT_BUILT = "NOT_BUILT"
+
+
+class BookCountRow(ApiModel):
+    """One book of one corpus, with the deity's count in it and the book's own size.
+
+    ``denominator`` is the book's mantra total and it is not optional. Mandala 9 is four
+    times the size of Mandala 2; a heatmap read on raw counts says the Soma book is where
+    every deity lives.
+    """
+
+    book_key: str
+    book_label: str
+    veda: str
+    count: int | None = Field(
+        default=None, description="Null unless status is MEASURED or MEASURED_ZERO."
+    )
+    denominator: int = Field(description="Mantras in this book.")
+    per_1000: float | None = None
+    status: CellStatus = CellStatus.MEASURED
+    note: str | None = None
+
+
+class DevataByBookResponse(InsightEnvelope):
+    """VIZ_BLOCKER_02. The per-book aggregate a deity x mandala heatmap needs.
+
+    The blocker's own warning is the reason this is an endpoint rather than a client-side
+    roll-up of ``/devatas/{id}/passages``: that route is capped at 200 rows a page, so a
+    heatmap built by paging it would truncate silently and a truncated heatmap is
+    indistinguishable from a sparse one.
+    """
+
+    devata_id: str
+    display_label: str
+    basis: str = Field(
+        description="Which layer the counts come from: 'naming' spans four corpora, "
+        "'ascription' reaches the Rigveda alone. Never mixed in one response."
+    )
+    books: list[BookCountRow] = Field(default_factory=list)
+    total: int = Field(description="Sum over the measured books. Equals the naming total.")
+
+
+class MetreCountRow(ApiModel):
+    """One deity x metre cell."""
+
+    metre_key: str
+    metre_label: str
+    veda: str
+    count: int | None = None
+    status: CellStatus = CellStatus.MEASURED
+    note: str | None = None
+
+
+class DevataByMetreResponse(InsightEnvelope):
+    """VIZ_BLOCKER_03. The deity x metre aggregate, with two thirds of it typed unbuilt.
+
+    The blocker called this low priority because "the metre layer reaches only RV and AV,
+    so the matrix would be two-thirds hatched -- honest, but thin". Thin and honest is the
+    right trade and it is served here: the Samavedic and Yajurvedic rows are present and
+    typed ``NOT_BUILT`` rather than omitted, because a matrix with two corpora silently
+    missing is read as a matrix of two corpora.
+    """
+
+    devata_id: str
+    display_label: str
+    cells: list[MetreCountRow] = Field(default_factory=list)
+    vedas_with_a_metre_layer: list[str] = Field(default_factory=list)
+    total: int
+
+
+class DispersionSeries(ApiModel):
+    """Where in one corpus a deity is attested, as ordinal positions and nothing else.
+
+    ``positions`` are 1-based indices into the corpus's canonical mantra order, not
+    citations and not payloads. That is the point: an Invocation Landscape for a major
+    deity needs every attesting position, and returning the passages would be 2,305 objects
+    behind an endpoint capped at 200 rows a page.
+    """
+
+    veda: str
+    positions: list[int] = Field(default_factory=list)
+    denominator: int = Field(description="Mantras in this corpus, the axis length.")
+    status: CellStatus = CellStatus.MEASURED
+    note: str | None = None
+
+
+class DevataDispersionResponse(InsightEnvelope):
+    """VIZ_BLOCKER_01. Dispersion for a deity of any size, unbounded by the page cap."""
+
+    devata_id: str
+    display_label: str
+    basis: str
+    by_veda: dict[str, DispersionSeries] = Field(default_factory=dict)
+    total_positions: int
+
+
+# ---------------------------------------------------------------------------
 # /insights/devatas/{id}
 # ---------------------------------------------------------------------------
+
+
+class DedicationRouteRow(ApiModel):
+    """One resolved-dedication route, with the method that produced it.
+
+    ``ascribed_total`` sums two routes that are not the same kind of evidence:
+    ``HAS_DEVATA`` is the Anukramani naming a deity the registry already holds, and
+    ``HAS_DEVATA_DERIVED`` is that dedication recovered from a Sanskrit adjective by
+    morphology. A single total with a single method string would be wrong about one of
+    them, so the decomposition is published beside the total rather than folded into it,
+    and each row carries its own method. GAP-ATTRIBUTION-002 clause 2 -- *"returns AV in
+    ascribed_scope with its method stated"*.
+    """
+
+    predicate: str = Field(description="The graph predicate this row counts.")
+    method: str = Field(description="How the dedication was arrived at, as a stable code.")
+    means: str = Field(description="What this route asserts, and what it does not.")
+    vedas_reached: list[str] = Field(
+        default_factory=list, description="Veda codes this route reaches for this deity."
+    )
+    measured: dict[str, int] = Field(
+        default_factory=dict, description="Passages per Veda on this route."
+    )
+    passages: int = Field(description="Passages this route reaches, summed over its own Vedas.")
 
 
 class DevataInsightResponse(InsightEnvelope):
     """A deity's measured reach, with naming and ascription never added together.
 
     ``named`` counts passages whose text says the deity's name and spans all four corpora.
-    ``ascribed`` counts the Anukramani's dedication and exists for the Rigveda only. They
-    diverge in both directions and neither is the corrected version of the other, so they
-    are separate fields with separate scopes, and the per-1,000 figures are what a
-    cross-corpus comparison should be read on.
+    ``ascribed`` counts the Anukramani's dedication and reaches the corpora an Anukramani
+    apparatus was ingested for -- the Rigveda directly, the Atharvaveda through the
+    morphological resolution of its descriptors. They diverge in both directions and
+    neither is the corrected version of the other, so they are separate fields with
+    separate scopes, and the per-1,000 figures are what a cross-corpus comparison should be
+    read on.
+
+    ``ascribed_total`` and ``ascribed_scope`` are computed from ONE pattern over both
+    dedication routes, so the figure and the scope label cannot disagree about which routes
+    they cover; ``ascription_routes`` decomposes the total by route and method.
     """
 
     devata_id: str
@@ -1170,13 +1400,20 @@ class DevataInsightResponse(InsightEnvelope):
     structure: str | None = None
     is_resolved_deity: bool = Field(
         description="Whether this node is in the resolved deity population. False for the "
-        "human patrons, gift-praise labels and one dog the Anukramani also names."
+        "human patrons, gift-praise labels and ruled-out abstractions the Anukramani also "
+        "names."
     )
     named_by_veda: VedaCountRow
     named_total: int | None = None
     certainty: ReferentCertaintyCounts
     ascribed_total: int | None = None
     ascribed_scope: list[str] = Field(default_factory=list)
+    ascription_routes: list[DedicationRouteRow] = Field(
+        default_factory=list,
+        description="The dedication total decomposed by route and method. Every route is "
+        "present even where it reaches nothing, so a zero is distinguishable from a route "
+        "the response omitted.",
+    )
     ascription_note: str
     mention_surplus: int | None = Field(
         default=None,

@@ -1,26 +1,45 @@
 import Link from "next/link";
+import { ScopeRegister } from "@/components/corpus/scope-register";
 import { LoadFailure } from "@/components/empty-state";
 import { Action } from "@/components/home/sections";
-import { CaveatList } from "@/components/status";
-import { load, vedaOrder, workSlugs, type WorksResponse } from "@/lib/api";
+import {
+    encoded,
+    load,
+    loadCompleteness,
+    vedaNames,
+    vedaOrder,
+    workSlugs,
+    type Stats,
+    type Work,
+    type WorksResponse,
+} from "@/lib/api";
 import type { Metadata } from "next";
 import { pageMetadata } from "@/lib/site";
+
+export const revalidate = 300;
 
 export const metadata: Metadata = pageMetadata({
     title: "The Four Vedas",
     description:
-        "Four Samhita corpora, each with its own hierarchy, recension, translation and recitation coverage, and a statement of what is not held.",
+        "Read the four Samhita corpora: the Rigveda, Samaveda, Yajurveda and Atharvaveda, each with its own hierarchy, recension, translation, recitation and evidence layers.",
     pathname: "/vedas",
 });
 
 /**
- * The collection index.
+ * The collection index, as a way in rather than as a ledger of what is absent.
  *
  * Four entries rather than four cards, and the difference is not cosmetic. The collections
- * differ by a factor of six in size, one of them has no translation layer at all and another
- * has no recitation, and three are partial in ways their traditional names do not reveal.
- * Four equal tiles assert an equivalence the data contradicts, and a tile has no room for the
- * sentence that says what is missing, which is the most useful thing on the page.
+ * differ by a factor of six in size, one of them has no translation layer of its own and
+ * another has no recitation, and each keeps a different structure. Four equal tiles assert an
+ * equivalence the data contradicts.
+ *
+ * WHAT EACH ROW SAYS, AND WHERE IT COMES FROM. The counts are read from `/works` and
+ * `/audio/stats` on this request. The feature list is read from each work's measured
+ * `knowledge_layers`, so a layer appears on a card only where the graph actually holds edges
+ * into that corpus -- it is never a list typed here and left to drift. The notation figure is
+ * the certified completeness record. The one-line scope note is the only typed string on the
+ * page and it names a recension, never a count; the full scope statement for every edition,
+ * with its exclusions enumerated, is on /limits.
  */
 
 const DEVANAGARI: Record<string, string> = {
@@ -32,7 +51,7 @@ const DEVANAGARI: Record<string, string> = {
 
 const RECENSION: Record<string, string> = {
     RV: "Śākala recension",
-    SV: "Kauthuma recension, ārcika only",
+    SV: "Kauthuma recension, ārcika",
     YV: "Śukla, Vājasaneyi Mādhyandina",
     AV: "Śaunaka recension",
 };
@@ -40,27 +59,123 @@ const RECENSION: Record<string, string> = {
 /** The levels each collection actually uses. None of them is forced into another's shape. */
 const STRUCTURE: Record<string, string> = {
     RV: "Mandala → Sukta → Mantra",
-    SV: "Collection → Parvan → Dasati → Verse",
+    SV: "Ārcika → Prapāṭhaka → Ardha → Daśati → Verse",
     YV: "Adhyaya → Mantra",
     AV: "Kanda → Sukta → Mantra",
 };
 
-const NOT_HELD: Record<string, string> = {
-    RV: "Samhita only, in one recension. No Brahmana, Aranyaka or Upanisad layer is held, and the Ashvalayana recension is not present.",
-    SV: "The ārcika verses only. The gana collections are not included: they are a parallel and larger body, and they are the reason the Samaveda is a distinct Veda rather than a Rigvedic excerpt. Nothing here shows or infers melody.",
-    YV: "The White Yajurveda only. The Krishna Yajurveda is not held at all, which is the omission most likely to mislead, because the name ordinarily covers both.",
-    AV: "The Śaunaka recension only. The Paippalāda is not a minor variant: it is a substantially different collection with its own hymn order.",
+/**
+ * One sentence on what this edition is, in the reader's terms.
+ *
+ * A recension and a shape, not a list of exclusions. A reader standing at the index needs to
+ * know which text they are about to open; the enumerated boundaries of each edition are set
+ * out once, on /limits, and linked from the foot of this page.
+ */
+const EDITION: Record<string, string> = {
+    RV: "The oldest of the four and the source most of the others draw on: ten mandalas of hymns to Agni, Indra, Soma and the rest, with the traditional index naming a seer, a deity and a metre for every verse.",
+    /*
+     * One clause of absence survives the move to /limits, and only this one.
+     *
+     * Every other exclusion is enumerated on the scope page. The gāna are different in kind:
+     * they are the sung books the ārcika is sung *from*, they are larger than it, and a card
+     * that says "arranged for singing" and "the marks that record how it was pitched" without
+     * them invites a reader to conclude the singing is here. The absence has to travel with
+     * the sentence that raises it, so it does - in a clause, not in a block.
+     */
+    SV: "The Rigveda arranged for singing: the ārcika verse collection in the Kauthuma recension, most of it Rigvedic wording set in a new order, carrying the svara marks that record how it was pitched. The gāna song-books it was sung from are not included.",
+    YV: "The liturgy itself: forty adhyayas of formulas spoken at the rite, many of them prose, arranged by the order of the ceremony rather than by hymn.",
+    AV: "The domestic and the urgent — healing, protection, rivalry, marriage, statecraft — in twenty kandas, and the collection that shows most of Vedic life outside the sacrificial ground.",
 };
 
-type AudioStats = { mapped_scope_keys_by_veda: Record<string, number> };
+/**
+ * The measured layers, in the reader's words.
+ *
+ * Keyed on the layer name the API reports, so a layer this map does not know is simply not
+ * shown rather than printed as a raw identifier. The order of this object is the order the
+ * features appear, which puts the text and the ways of hearing and reading it first and the
+ * annotation layers after.
+ */
+const LAYER_LABEL: Record<string, string> = {
+    TRANSLATION: "English translation",
+    DEVATA_ASCRIPTION: "Deity named by the index",
+    DEVATA_ASCRIPTION_DESCRIPTOR: "Deity descriptors from the index",
+    RISHI_ATTRIBUTION: "Seer attribution",
+    CHANDAS_ATTRIBUTION: "Metre",
+    DEVATA_MENTION: "Deities named in the verse",
+    ENTITY_MENTION: "Named entities",
+    FORMULA_OCCURRENCE: "Shared formulas",
+    CONCEPT_ASSERTION: "Concept links",
+};
+
+const SCRIPT_LABEL: Record<string, string> = {
+    IAST: "Accented romanised Sanskrit",
+    DEVANAGARI: "Devanagari",
+};
 
 const number = (value: number | null | undefined) =>
     typeof value === "number" ? value.toLocaleString("en-GB") : null;
 
+type AudioStats = { mapped_scope_keys_by_veda?: Record<string, number> };
+
+/** One work's measured detail. Only the fields this page reads are declared. */
+type WorkDetail = Work & {
+    knowledge_layers?: Array<{ layer: string; status: string }>;
+    text_scripts?: string[];
+};
+
+/**
+ * What this collection carries, built from what was measured rather than from a list.
+ *
+ * Recitation and notation are not knowledge layers -- they are product layers over the text --
+ * so they are added from their own measured figures. The translation entry is relabelled where
+ * a corpus has none of its own: the Samaveda's TRANSLATION edges are Rigvedic renderings shown
+ * against verses verified character-identical, and calling that "English translation" on a card
+ * would be the single most misleading word on this page.
+ */
+function features(
+    detail: WorkDetail | null,
+    { recited, notation, ownTranslations }: {
+        recited: number;
+        notation: number | null;
+        ownTranslations: number | null;
+    },
+): string[] {
+    const out: string[] = [];
+
+    for (const script of detail?.text_scripts ?? []) {
+        const label = SCRIPT_LABEL[script];
+        if (label) out.push(label);
+    }
+
+    const built = new Set(
+        (detail?.knowledge_layers ?? [])
+            .filter((row) => row.status === "SUPPORTED")
+            .map((row) => row.layer),
+    );
+
+    if (built.has("TRANSLATION")) {
+        out.push(
+            ownTranslations ? LAYER_LABEL.TRANSLATION : "Reused English renderings, labelled as reuse",
+        );
+    }
+    if (recited > 0) out.push("Verse-by-verse recitation");
+    if (notation) out.push("Source-explicit svara notation");
+    out.push("Cross-Veda parallels");
+
+    for (const [layer, label] of Object.entries(LAYER_LABEL)) {
+        if (layer === "TRANSLATION") continue;
+        if (built.has(layer)) out.push(label);
+    }
+
+    return out;
+}
+
 export default async function VedasPage() {
-    const [result, audio] = await Promise.all([
+    const [result, audio, stats, completeness] = await Promise.all([
         load<WorksResponse>("/works"),
         load<AudioStats>("/audio/stats"),
+        load<Stats>("/stats"),
+        loadCompleteness(),
     ]);
     if (!result.ok) {
         return (
@@ -72,26 +187,52 @@ export default async function VedasPage() {
     const works = [...(result.data.items ?? [])].sort(
         (a, b) => (vedaOrder[a.veda ?? ""] ?? 9) - (vedaOrder[b.veda ?? ""] ?? 9),
     );
-    const recited = audio.ok ? audio.data.mapped_scope_keys_by_veda : {};
+
+    /* The feature list is measured per work, so it is fetched per work. */
+    const details = await Promise.all(
+        works.map((work) => load<WorkDetail>(`/works/${encoded(work.work_id)}`)),
+    );
+
+    /*
+     * Recitation counts come from the audio service and from nowhere else.
+     *
+     * The completeness record also carries a per-Veda recitation block, and on this build it
+     * disagrees: it reports one Veda's recording count as that Veda's entire mantra total.
+     * `/audio/stats` is the layer's own measurement, so it is the only figure printed here,
+     * and an unreachable audio service prints nothing rather than a second-hand number.
+     */
+    const recitedByVeda: Record<string, number> = audio.ok
+        ? (audio.data.mapped_scope_keys_by_veda ?? {})
+        : {};
+    const notationTotal = completeness.samaveda_notation.validated_notation_witnesses;
+    const canonicalMantras = stats.ok
+        ? (stats.data.corpus?.find((row) => row.name === "mantras")?.total ?? null)
+        : null;
 
     return (
         <div className="va-page">
             <header className="va-page-head">
                 <h1>Four Samhitas. Four textual worlds.</h1>
                 <p>
-                    Each collection keeps its own hierarchy and its own words for it. None is
-                    flattened into a common template, and each says which recension is held here
-                    before it says how much of it.
+                    {canonicalMantras ? `${number(canonicalMantras)} canonical mantras, held` : "Held"}{" "}
+                    as four editions rather than as one flattened corpus. Each keeps its own
+                    hierarchy and its own words for it, and each says which recension is open in
+                    front of you.
                 </p>
             </header>
 
             <div className="va-collections">
-                {works.map((work) => {
+                {works.map((work, index) => {
                     const code = work.veda ?? "RV";
                     const slug = workSlugs[code];
+                    const name = vedaNames[code] ?? work.traditional_name;
+                    const loaded = details[index];
+                    const detail = loaded && loaded.ok ? loaded.data : null;
                     const total = work.mantra_count ?? 0;
                     const translated = work.translated_mantra_count ?? 0;
-                    const audioCount = recited[code];
+                    const reused = completeness.translations.by_veda[code]?.reused_rendering ?? 0;
+                    const recited = recitedByVeda[code] ?? 0;
+                    const notation = code === "SV" ? notationTotal : null;
 
                     return (
                         <article className="va-collection" key={work.work_id}>
@@ -104,11 +245,24 @@ export default async function VedasPage() {
                             </Link>
 
                             <div className="va-collection-body">
+                                <p className="va-collection-scope">{EDITION[code]}</p>
                                 <p className="va-collection-structure">{STRUCTURE[code]}</p>
-                                <p className="va-collection-limit">{NOT_HELD[code]}</p>
-                                <Action href={`/vedas/${slug}`}>
-                                    Read the {work.traditional_name}
-                                </Action>
+
+                                <ul className="va-collection-features">
+                                    {features(detail, {
+                                        recited,
+                                        notation,
+                                        ownTranslations: translated,
+                                    }).map((item) => (
+                                        <li className="va-collection-feature" key={item}>
+                                            {item}
+                                        </li>
+                                    ))}
+                                </ul>
+
+                                <p className="va-collection-cta">
+                                    <Action href={`/vedas/${slug}`}>Read the {name}</Action>
+                                </p>
                             </div>
 
                             <dl className="va-facts">
@@ -118,21 +272,28 @@ export default async function VedasPage() {
                                         <strong>{number(total)}</strong>
                                     </dd>
                                 </div>
-                                <div className={`va-fact${translated === 0 ? " is-none" : ""}`}>
-                                    <dt>Translated</dt>
+
+                                <div className="va-fact">
+                                    <dt>{translated ? "Translated" : "Reused renderings"}</dt>
                                     <dd>
-                                        <strong>
-                                            {translated === 0 ? "none" : number(translated)}
-                                        </strong>
+                                        <strong>{number(translated ? translated : reused)}</strong>
                                     </dd>
                                 </div>
-                                <div className={`va-fact${audioCount === 0 ? " is-none" : ""}`}>
+
+                                {notation ? (
+                                    <div className="va-fact">
+                                        <dt>Notation witnesses</dt>
+                                        <dd>
+                                            <strong>{number(notation)}</strong>
+                                        </dd>
+                                    </div>
+                                ) : null}
+
+                                <div className={`va-fact${recited === 0 ? " is-none" : ""}`}>
                                     <dt>Recited</dt>
                                     <dd>
                                         <strong>
-                                            {audioCount === 0
-                                                ? "none"
-                                                : (number(audioCount) ?? "not read")}
+                                            {recited === 0 ? "none yet" : number(recited)}
                                         </strong>
                                     </dd>
                                 </div>
@@ -142,7 +303,35 @@ export default async function VedasPage() {
                 })}
             </div>
 
-            <CaveatList caveats={result.data.caveats} title="Scope of this list" />
+            {/*
+             * What each edition is, and what it is not, as a register.
+             *
+             * The sentence this replaces pointed at /limits and asked the reader to take the
+             * exclusions on trust until they got there. They are the most consequential facts
+             * on this page - "the Yajurveda" ordinarily means both recensions and this build
+             * holds one - so they are stated here, in a form a reader can scan, and /limits
+             * carries the same register at length.
+             *
+             * Deliberately a register and not a tree. See the note in `ScopeRegister`: a tree
+             * would assert descent between recensions, which is a question this build has no
+             * evidence about.
+             */}
+            <section aria-labelledby="va-vedas-scope" className="va-block">
+                <hr className="va-rule-drawn" />
+                <h2 className="va-block-heading" id="va-vedas-scope">
+                    One recension each, and what that leaves out
+                </h2>
+                <p className="va-block-note">
+                    A solid mark is the edition this build holds. A hollow one is a corpus the
+                    registry records as named and outside it, so an absence measured in this
+                    product is an absence from the held recension only.
+                </p>
+                <ScopeRegister link={false} works={works} />
+                <p className="va-scope-caption">
+                    How translation, recitation and notation coverage are typed is set out in
+                    full on <Link href="/limits">the scope page</Link>.
+                </p>
+            </section>
         </div>
     );
 }

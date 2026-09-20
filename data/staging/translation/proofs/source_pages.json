@@ -1,0 +1,1472 @@
+{
+ "note": "every external page this artifact draws on, with its sha256 and the immutable timestamped Wayback URL it was read from",
+ "pages": [
+  {
+   "page_id": "av20-001",
+   "request_url": "https://web.archive.org/web/20230325113203/https://www.sacred-texts.com/hin/av/av20001.htm",
+   "final_url": "https://web.archive.org/web/20230325113203/https://www.sacred-texts.com/hin/av/av20001.htm",
+   "http_status": 200,
+   "sha256": "f02fd3151827eb64a93c544a776f000f3e06e3f06c69c93b7805c28ae7595ecd",
+   "bytes": 4542,
+   "retrieved_at": "2026-09-15T07:00:28Z"
+  },
+  {
+   "page_id": "av20-002",
+   "request_url": "https://web.archive.org/web/20230325113203/https://www.sacred-texts.com/hin/av/av20002.htm",
+   "final_url": "https://web.archive.org/web/20250420122116/https://sacred-texts.com/hin/av/av20002.htm",
+   "http_status": 200,
+   "sha256": "6f54bbc5e519d42a7720be042a1bc615497965f6ce93bb4de91d3bedb09e065a",
+   "bytes": 12561,
+   "retrieved_at": "2026-09-15T07:00:34Z"
+  },
+  {
+   "page_id": "av20-003",
+   "request_url": "https://web.archive.org/web/20230325113203/https://www.sacred-texts.com/hin/av/av20003.htm",
+   "final_url": "https://web.archive.org/web/20230325110729/https://www.sacred-texts.com/hin/av/av20003.htm",
+   "http_status": 200,
+   "sha256": "f5cd2a1a23dacb793fc0f8ccfdd072f2a3973c30e8f863f6a0632b24efdd18d6",
+   "bytes": 12497,
+   "retrieved_at": "2026-09-15T07:00:38Z"
+  },
+  {
+   "page_id": "av20-004",
+   "request_url": "https://web.archive.org/web/20230325113203/https://www.sacred-texts.com/hin/av/av20004.htm",
+   "final_url": "https://web.archive.org/web/20250420132352/https://sacred-texts.com/hin/av/av20004.htm",
+   "http_status": 200,
+   "sha256": "7a57e7d387b493a048f7298398dcf39cb29ece4ca9cce66594e189469fcc9dac",
+   "bytes": 12346,
+   "retrieved_at": "2026-09-15T07:00:41Z"
+  },
+  {
+   "page_id": "av20-005",
+   "request_url": "https://web.archive.org/web/20230325113203/https://www.sacred-texts.com/hin/av/av20005.htm",
+   "final_url": "https://web.archive.org/web/20230325103732/https://www.sacred-texts.com/hin/av/av20005.htm",
+   "http_status": 200,
+   "sha256": "f10ccb797c4202a012a4b8da952ba35948b15d330dd5c0da5435a6e362d4866a",
+   "bytes": 13468,
+   "retrieved_at": "2026-09-15T07:00:47Z"
+  },
+  {
+   "page_id": "av20-006",
+   "request_url": "https://web.archive.org/web/20230325113203/https://www.sacred-texts.com/hin/av/av20006.htm",
+   "final_url": "https://web.archive.org/web/20230329155746/https://www.sacred-texts.com/hin/av/av20006.htm",
+   "http_status": 200,
+   "sha256": "acda148d54e0dee6683447fd1476513ec1257d337fefc44e6ff7418bf93a0506",
+   "bytes": 13610,
+   "retrieved_at": "2026-09-15T07:00:52Z"
+  },
+  {
+   "page_id": "av20-007",
+   "request_url": "https://web.archive.org/web/20230325113203/https://www.sacred-texts.com/hin/av/av20007.htm",
+   "final_url": "https://web.archive.org/web/20231203065540/https://sacred-texts.com/hin/av/av20007.htm",
+   "http_status": 200,
+   "sha256": "c2bfa6eea7269751c49e655eeea6e1854c4442ff4204966ffdb267dec0ea5df6",
+   "bytes": 12327,
+   "retrieved_at": "2026-09-15T07:00:57Z"
+  },
+  {
+   "page_id": "av20-008",
+   "request_url": "https://web.archive.org/web/20230325113203/https://www.sacred-texts.com/hin/av/av20008.htm",
+   "final_url": "https://web.archive.org/web/20230325192704/https://www.sacred-texts.com/hin/av/av20008.htm",
+   "http_status": 200,
+   "sha256": "0d28112e7bf74f5a8e86d4bc80a12ce286c1a93edaa09f1454c9bc24ce0a1498",
+   "bytes": 12848,
+   "retrieved_at": "2026-09-15T07:01:01Z"
+  },
+  {
+   "page_id": "av20-009",
+   "request_url": "https://web.archive.org/web/20230325113203/https://www.sacred-texts.com/hin/av/av20009.htm",
+   "final_url": "https://web.archive.org/web/20230530121238/https://www.sacred-texts.com/hin/av/av20009.htm",
+   "http_status": 200,
+   "sha256": "4f178c37008a66fea80809ab53d2d4be9b26caef92a76d6c6ae870016282c5aa",
+   "bytes": 13029,
+   "retrieved_at": "2026-09-15T07:01:05Z"
+  },
+  {
+   "page_id": "av20-010",
+   "request_url": "https://web.archive.org/web/20230325113203/https://www.sacred-texts.com/hin/av/av20010.htm",
+   "final_url": "https://web.archive.org/web/20230325211929/https://www.sacred-texts.com/hin/av/av20010.htm",
+   "http_status": 200,
+   "sha256": "80887730de31d6eaee95f855763b0db9fb1c43887f5f36184a0b531b04ba2cee",
+   "bytes": 12480,
+   "retrieved_at": "2026-09-15T07:01:10Z"
+  },
+  {
+   "page_id": "av20-011",
+   "request_url": "https://web.archive.org/web/20230325113203/https://www.sacred-texts.com/hin/av/av20011.htm",
+   "final_url": "https://web.archive.org/web/20230329170148/https://www.sacred-texts.com/hin/av/av20011.htm",
+   "http_status": 200,
+   "sha256": "2ae93ac8f41f5e73be4b2760116e3b86ec53c081e0eb117d1fb2709ac4c230de",
+   "bytes": 15556,
+   "retrieved_at": "2026-09-15T07:01:37Z"
+  },
+  {
+   "page_id": "av20-012",
+   "request_url": "https://web.archive.org/web/20230325113203/https://www.sacred-texts.com/hin/av/av20012.htm",
+   "final_url": "https://web.archive.org/web/20230329164850/https://www.sacred-texts.com/hin/av/av20012.htm",
+   "http_status": 200,
+   "sha256": "5ebc4be7f077ddada47a890feec8c5d6d989d2284c9335f997b3209439045772",
+   "bytes": 14216,
+   "retrieved_at": "2026-09-15T07:01:43Z"
+  },
+  {
+   "page_id": "av20-013",
+   "request_url": "https://web.archive.org/web/20230325113203/https://www.sacred-texts.com/hin/av/av20013.htm",
+   "final_url": "https://web.archive.org/web/20230325111137/https://www.sacred-texts.com/hin/av/av20013.htm",
+   "http_status": 200,
+   "sha256": "a9fd0d2e68e40b779bd8935455307fa0ba2f8c5c9b091eeb986e13397828159c",
+   "bytes": 13226,
+   "retrieved_at": "2026-09-15T07:01:48Z"
+  },
+  {
+   "page_id": "av20-014",
+   "request_url": "https://web.archive.org/web/20230325113203/https://www.sacred-texts.com/hin/av/av20014.htm",
+   "final_url": "https://web.archive.org/web/20230329162718/https://www.sacred-texts.com/hin/av/av20014.htm",
+   "http_status": 200,
+   "sha256": "3cbe60124caa22592dde42c4763cda0067d488603a4b3d9d17aec1812f7b7d52",
+   "bytes": 12970,
+   "retrieved_at": "2026-09-15T07:02:00Z"
+  },
+  {
+   "page_id": "av20-015",
+   "request_url": "https://web.archive.org/web/20230325113203/https://www.sacred-texts.com/hin/av/av20015.htm",
+   "final_url": "https://web.archive.org/web/20230601020121/https://www.sacred-texts.com/hin/av/av20015.htm",
+   "http_status": 200,
+   "sha256": "d1d1d638290e3d35fa9b280f4dae8e8f4b961e84d51d6178e12814e9b491cb89",
+   "bytes": 13954,
+   "retrieved_at": "2026-09-15T07:02:05Z"
+  },
+  {
+   "page_id": "av20-016",
+   "request_url": "https://web.archive.org/web/20230325113203/https://www.sacred-texts.com/hin/av/av20016.htm",
+   "final_url": "https://web.archive.org/web/20230329124333/https://www.sacred-texts.com/hin/av/av20016.htm",
+   "http_status": 200,
+   "sha256": "d19682969282aee9811837920114e98a393dcb75f734b65a9e3f5cc703be805b",
+   "bytes": 15970,
+   "retrieved_at": "2026-09-15T07:02:10Z"
+  },
+  {
+   "page_id": "av20-017",
+   "request_url": "https://web.archive.org/web/20230325113203/https://www.sacred-texts.com/hin/av/av20017.htm",
+   "final_url": "https://web.archive.org/web/20230329123011/https://www.sacred-texts.com/hin/av/av20017.htm",
+   "http_status": 200,
+   "sha256": "902e954b59548dd374792083a240515a3975c3758efd8a7c8c94b7056ecf4b16",
+   "bytes": 16079,
+   "retrieved_at": "2026-09-15T07:02:50Z"
+  },
+  {
+   "page_id": "av20-018",
+   "request_url": "https://web.archive.org/web/20230325113203/https://www.sacred-texts.com/hin/av/av20018.htm",
+   "final_url": "https://web.archive.org/web/20230601011643/https://www.sacred-texts.com/hin/av/av20018.htm",
+   "http_status": 200,
+   "sha256": "22622e01dbf36148a44d1c061dbab2f57d19752734456f829bb9d1f972c90f52",
+   "bytes": 13098,
+   "retrieved_at": "2026-09-15T07:02:54Z"
+  },
+  {
+   "page_id": "av20-019",
+   "request_url": "https://web.archive.org/web/20230325113203/https://www.sacred-texts.com/hin/av/av20019.htm",
+   "final_url": "https://web.archive.org/web/20230325212616/https://www.sacred-texts.com/hin/av/av20019.htm",
+   "http_status": 200,
+   "sha256": "38b775bd6c557853752a799aaf07c1694a106674c7023aa31226d71ad8dfdebc",
+   "bytes": 13410,
+   "retrieved_at": "2026-09-15T07:02:59Z"
+  },
+  {
+   "page_id": "av20-020",
+   "request_url": "https://web.archive.org/web/20230325113203/https://www.sacred-texts.com/hin/av/av20020.htm",
+   "final_url": "https://web.archive.org/web/20230329171841/https://www.sacred-texts.com/hin/av/av20020.htm",
+   "http_status": 200,
+   "sha256": "ec1cf0e5d12b2f5ba76fde772f7b7707cd24d487a403058d7fc051b86ecbaa2b",
+   "bytes": 13399,
+   "retrieved_at": "2026-09-15T07:03:05Z"
+  },
+  {
+   "page_id": "av20-021",
+   "request_url": "https://web.archive.org/web/20230325113203/https://www.sacred-texts.com/hin/av/av20021.htm",
+   "final_url": "https://web.archive.org/web/20230327204506/https://www.sacred-texts.com/hin/av/av20021.htm",
+   "http_status": 200,
+   "sha256": "b1308a176a128ffd427c9f9c74016c533b980797d0dd9bdd1c5a1c475e673859",
+   "bytes": 15754,
+   "retrieved_at": "2026-09-15T07:03:10Z"
+  },
+  {
+   "page_id": "av20-022",
+   "request_url": "https://web.archive.org/web/20230325113203/https://www.sacred-texts.com/hin/av/av20022.htm",
+   "final_url": "https://web.archive.org/web/20230329165245/https://www.sacred-texts.com/hin/av/av20022.htm",
+   "http_status": 200,
+   "sha256": "655ce1597a2f508a1b5d4d89489ad86aa9468c21a1ec1523ac8282fb1383dca4",
+   "bytes": 13261,
+   "retrieved_at": "2026-09-15T07:03:14Z"
+  },
+  {
+   "page_id": "av20-023",
+   "request_url": "https://web.archive.org/web/20230325113203/https://www.sacred-texts.com/hin/av/av20023.htm",
+   "final_url": "https://web.archive.org/web/20230325204001/https://www.sacred-texts.com/hin/av/av20023.htm",
+   "http_status": 200,
+   "sha256": "6a4a8d39f058f489299592008e6c368b8d5bbd66d3e6af49985a45f6d4c7896a",
+   "bytes": 13938,
+   "retrieved_at": "2026-09-15T07:03:19Z"
+  },
+  {
+   "page_id": "av20-024",
+   "request_url": "https://web.archive.org/web/20230325113203/https://www.sacred-texts.com/hin/av/av20024.htm",
+   "final_url": "https://web.archive.org/web/20230325110045/https://www.sacred-texts.com/hin/av/av20024.htm",
+   "http_status": 200,
+   "sha256": "eb1ed8f49befeeae121617401980c2c17ab80ab044322b79e3454bf363605e9c",
+   "bytes": 13938,
+   "retrieved_at": "2026-09-15T07:03:23Z"
+  },
+  {
+   "page_id": "av20-025",
+   "request_url": "https://web.archive.org/web/20230325113203/https://www.sacred-texts.com/hin/av/av20025.htm",
+   "final_url": "https://web.archive.org/web/20240226171238/https://sacred-texts.com/hin/av/av20025.htm",
+   "http_status": 200,
+   "sha256": "c7df17740717cdf822e46fa65145bb13a24dfc8c22808f4a58fb2c2ae9e5eb13",
+   "bytes": 13900,
+   "retrieved_at": "2026-09-15T07:03:29Z"
+  },
+  {
+   "page_id": "av20-026",
+   "request_url": "https://web.archive.org/web/20230325113203/https://www.sacred-texts.com/hin/av/av20026.htm",
+   "final_url": "https://web.archive.org/web/20230329160421/https://www.sacred-texts.com/hin/av/av20026.htm",
+   "http_status": 200,
+   "sha256": "3d418a770fefca8315d33c8abf8d18acc1a16ba8fcbd44beba437a080c15c34f",
+   "bytes": 13201,
+   "retrieved_at": "2026-09-15T07:03:33Z"
+  },
+  {
+   "page_id": "av20-027",
+   "request_url": "https://web.archive.org/web/20230325113203/https://www.sacred-texts.com/hin/av/av20027.htm",
+   "final_url": "https://web.archive.org/web/20230329154923/https://www.sacred-texts.com/hin/av/av20027.htm",
+   "http_status": 200,
+   "sha256": "74b8ee2e7060486d5dee7521644036cda362c15e3ade152857807fd5e1e62574",
+   "bytes": 13193,
+   "retrieved_at": "2026-09-15T07:03:52Z"
+  },
+  {
+   "page_id": "av20-028",
+   "request_url": "https://web.archive.org/web/20230325113203/https://www.sacred-texts.com/hin/av/av20028.htm",
+   "final_url": "https://web.archive.org/web/20230329153358/https://www.sacred-texts.com/hin/av/av20028.htm",
+   "http_status": 200,
+   "sha256": "aab4821a9a385f9475a8077838af0befd688ab6b384a2db824ea11f28f1d2764",
+   "bytes": 12719,
+   "retrieved_at": "2026-09-15T07:03:56Z"
+  },
+  {
+   "page_id": "av20-029",
+   "request_url": "https://web.archive.org/web/20230325113203/https://www.sacred-texts.com/hin/av/av20029.htm",
+   "final_url": "https://web.archive.org/web/20250420125143/https://sacred-texts.com/hin/av/av20029.htm",
+   "http_status": 200,
+   "sha256": "fb933117a4c64708c3178ec271be180614c184231906e1452f25163366981b56",
+   "bytes": 12737,
+   "retrieved_at": "2026-09-15T07:04:02Z"
+  },
+  {
+   "page_id": "av20-030",
+   "request_url": "https://web.archive.org/web/20230325113203/https://www.sacred-texts.com/hin/av/av20030.htm",
+   "final_url": "https://web.archive.org/web/20230329172213/https://www.sacred-texts.com/hin/av/av20030.htm",
+   "http_status": 200,
+   "sha256": "7889edff4bcdb6d1dc285ba6ce9927de9547a7de83c1b63963d69344e9c03129",
+   "bytes": 13620,
+   "retrieved_at": "2026-09-15T07:04:06Z"
+  },
+  {
+   "page_id": "av20-031",
+   "request_url": "https://web.archive.org/web/20230325113203/https://www.sacred-texts.com/hin/av/av20031.htm",
+   "final_url": "https://web.archive.org/web/20250420130518/https://sacred-texts.com/hin/av/av20031.htm",
+   "http_status": 200,
+   "sha256": "664ff27dcfc2af63edc2ee1bc56d6888834d0f82cad1b6bc9bbff2f695e1f9d1",
+   "bytes": 13563,
+   "retrieved_at": "2026-09-15T07:04:14Z"
+  },
+  {
+   "page_id": "av20-032",
+   "request_url": "https://web.archive.org/web/20230325113203/https://www.sacred-texts.com/hin/av/av20032.htm",
+   "final_url": "https://web.archive.org/web/20230329165615/https://www.sacred-texts.com/hin/av/av20032.htm",
+   "http_status": 200,
+   "sha256": "e5ae2c68635ade252085f25086d5e155a90ac561cc2689a38381cd9e01926907",
+   "bytes": 12875,
+   "retrieved_at": "2026-09-15T07:04:19Z"
+  },
+  {
+   "page_id": "av20-033",
+   "request_url": "https://web.archive.org/web/20230325113203/https://www.sacred-texts.com/hin/av/av20033.htm",
+   "final_url": "https://web.archive.org/web/20230329164304/https://www.sacred-texts.com/hin/av/av20033.htm",
+   "http_status": 200,
+   "sha256": "6404f8763297bcc5b74829343ddf0242ea3ac81fdd9a1956113682f17177e18d",
+   "bytes": 12860,
+   "retrieved_at": "2026-09-15T07:04:23Z"
+  },
+  {
+   "page_id": "av20-034",
+   "request_url": "https://web.archive.org/web/20230325113203/https://www.sacred-texts.com/hin/av/av20034.htm",
+   "final_url": "https://web.archive.org/web/20230329131503/https://www.sacred-texts.com/hin/av/av20034.htm",
+   "http_status": 200,
+   "sha256": "01d06464b2f0ab5194c4f1618ea8316f497a821ac2af7266594dc5d3e9c6853e",
+   "bytes": 17902,
+   "retrieved_at": "2026-09-15T07:04:30Z"
+  },
+  {
+   "page_id": "av20-035",
+   "request_url": "https://web.archive.org/web/20230325113203/https://www.sacred-texts.com/hin/av/av20035.htm",
+   "final_url": "https://web.archive.org/web/20230329130311/https://www.sacred-texts.com/hin/av/av20035.htm",
+   "http_status": 200,
+   "sha256": "60a3ba7e9c43d212047cce481e6c2c4b4ec9d57eaf3c05b7fd83b0347e5f4bf8",
+   "bytes": 17410,
+   "retrieved_at": "2026-09-15T07:04:36Z"
+  },
+  {
+   "page_id": "av20-036",
+   "request_url": "https://web.archive.org/web/20230325113203/https://www.sacred-texts.com/hin/av/av20036.htm",
+   "final_url": "https://web.archive.org/web/20230321010702/https://www.sacred-texts.com/hin/av/av20036.htm",
+   "http_status": 200,
+   "sha256": "a9640fff537f7899998d35d42dadd5ce444296fac387f409a49e69b1de42e6b1",
+   "bytes": 15697,
+   "retrieved_at": "2026-09-15T07:04:40Z"
+  },
+  {
+   "page_id": "av20-037",
+   "request_url": "https://web.archive.org/web/20230325113203/https://www.sacred-texts.com/hin/av/av20037.htm",
+   "final_url": "https://web.archive.org/web/20230329155510/https://www.sacred-texts.com/hin/av/av20037.htm",
+   "http_status": 200,
+   "sha256": "85dcbc74121f4aa6de0b20fba41b31acc46f61ded59017b4b9672558db7bea09",
+   "bytes": 15524,
+   "retrieved_at": "2026-09-15T07:04:55Z"
+  },
+  {
+   "page_id": "av20-038",
+   "request_url": "https://web.archive.org/web/20230325113203/https://www.sacred-texts.com/hin/av/av20038.htm",
+   "final_url": "https://web.archive.org/web/20230329153855/https://www.sacred-texts.com/hin/av/av20038.htm",
+   "http_status": 200,
+   "sha256": "b23ef13ab1cb54e19072c98c2ee911ddd6729598b51dec4b165db34c1dd52579",
+   "bytes": 13240,
+   "retrieved_at": "2026-09-15T07:04:59Z"
+  },
+  {
+   "page_id": "av20-039",
+   "request_url": "https://web.archive.org/web/20230325113203/https://www.sacred-texts.com/hin/av/av20039.htm",
+   "final_url": "https://web.archive.org/web/20230329172931/https://www.sacred-texts.com/hin/av/av20039.htm",
+   "http_status": 200,
+   "sha256": "534dc5ec936b9fffc668863a1282b34fae630edb4868b45d1f2391cdd5ec9bc9",
+   "bytes": 12966,
+   "retrieved_at": "2026-09-15T07:05:07Z"
+  },
+  {
+   "page_id": "av20-040",
+   "request_url": "https://web.archive.org/web/20230325113203/https://www.sacred-texts.com/hin/av/av20040.htm",
+   "final_url": "https://web.archive.org/web/20230929081251/https://sacred-texts.com/hin/av/av20040.htm",
+   "http_status": 200,
+   "sha256": "daba6763a4bc193eb46cf6d19ee8713e5d5784a3c739765fd96a9afb57ac4c1d",
+   "bytes": 12038,
+   "retrieved_at": "2026-09-15T07:05:11Z"
+  },
+  {
+   "page_id": "av20-041",
+   "request_url": "https://web.archive.org/web/20230325113203/https://www.sacred-texts.com/hin/av/av20041.htm",
+   "final_url": "https://web.archive.org/web/20230607195956/https://www.sacred-texts.com/hin/av/av20041.htm",
+   "http_status": 200,
+   "sha256": "00f7297305b5819c704708acd5bccba295feec35c0e59d015a4097886092924e",
+   "bytes": 12495,
+   "retrieved_at": "2026-09-15T07:05:16Z"
+  },
+  {
+   "page_id": "av20-042",
+   "request_url": "https://web.archive.org/web/20230325113203/https://www.sacred-texts.com/hin/av/av20042.htm",
+   "final_url": "https://web.archive.org/web/20230325113342/https://www.sacred-texts.com/hin/av/av20042.htm",
+   "http_status": 200,
+   "sha256": "e6a40bcc29d451c0668873872e4e3f6fd4aa89f95013434918d1b37f8f018880",
+   "bytes": 12518,
+   "retrieved_at": "2026-09-15T07:05:20Z"
+  },
+  {
+   "page_id": "av20-043",
+   "request_url": "https://web.archive.org/web/20230325113203/https://www.sacred-texts.com/hin/av/av20043.htm",
+   "final_url": "https://web.archive.org/web/20230530113258/https://www.sacred-texts.com/hin/av/av20043.htm",
+   "http_status": 200,
+   "sha256": "cc69ba4cb5bd29541fcfdeabc9a4a482d9b80dc666fa92233147432e8061d9a7",
+   "bytes": 12468,
+   "retrieved_at": "2026-09-15T07:05:25Z"
+  },
+  {
+   "page_id": "av20-044",
+   "request_url": "https://web.archive.org/web/20230325113203/https://www.sacred-texts.com/hin/av/av20044.htm",
+   "final_url": "https://web.archive.org/web/20230325203408/https://www.sacred-texts.com/hin/av/av20044.htm",
+   "http_status": 200,
+   "sha256": "7d14391706a3f2e625635b5dd788d5b7d84947f4dc71fd75f261673ed410270b",
+   "bytes": 12511,
+   "retrieved_at": "2026-09-15T07:05:32Z"
+  },
+  {
+   "page_id": "av20-045",
+   "request_url": "https://web.archive.org/web/20230325113203/https://www.sacred-texts.com/hin/av/av20045.htm",
+   "final_url": "https://web.archive.org/web/20230601021129/https://www.sacred-texts.com/hin/av/av20045.htm",
+   "http_status": 200,
+   "sha256": "47dc98fba5bd95001526167804b6a51d6c93b610484216919c2e355d318358be",
+   "bytes": 12458,
+   "retrieved_at": "2026-09-15T07:05:37Z"
+  },
+  {
+   "page_id": "av20-046",
+   "request_url": "https://web.archive.org/web/20230325113203/https://www.sacred-texts.com/hin/av/av20046.htm",
+   "final_url": "https://web.archive.org/web/20230601015929/https://www.sacred-texts.com/hin/av/av20046.htm",
+   "http_status": 200,
+   "sha256": "2efaab4a005d2c0ba862ad75bb77eca1a449e2c04b845aa73540753c086f50ac",
+   "bytes": 12414,
+   "retrieved_at": "2026-09-15T07:05:41Z"
+  },
+  {
+   "page_id": "av20-047",
+   "request_url": "https://web.archive.org/web/20230325113203/https://www.sacred-texts.com/hin/av/av20047.htm",
+   "final_url": "https://web.archive.org/web/20230325195728/https://www.sacred-texts.com/hin/av/av20047.htm",
+   "http_status": 200,
+   "sha256": "0b1e5e4ca2c19df523d38efd56569bac11bb0a4d33a4380efaf8484766247d5c",
+   "bytes": 15350,
+   "retrieved_at": "2026-09-15T07:05:46Z"
+  },
+  {
+   "page_id": "av20-048",
+   "request_url": "https://web.archive.org/web/20230325113203/https://www.sacred-texts.com/hin/av/av20048.htm",
+   "final_url": "https://web.archive.org/web/20230329154223/https://www.sacred-texts.com/hin/av/av20048.htm",
+   "http_status": 200,
+   "sha256": "13f0b1301c4c97f09ed4fc3fabd62607eefac619dae5a210ea31652bb3cfc6e8",
+   "bytes": 13246,
+   "retrieved_at": "2026-09-15T07:06:01Z"
+  },
+  {
+   "page_id": "av20-049",
+   "request_url": "https://web.archive.org/web/20230325113203/https://www.sacred-texts.com/hin/av/av20049.htm",
+   "final_url": "https://web.archive.org/web/20230329152812/https://www.sacred-texts.com/hin/av/av20049.htm",
+   "http_status": 200,
+   "sha256": "f0a5a7bd67ba75b675bc95133b9074cdf61e7b5e192a55d7bdce756759e67aa7",
+   "bytes": 13805,
+   "retrieved_at": "2026-09-15T07:06:06Z"
+  },
+  {
+   "page_id": "av20-050",
+   "request_url": "https://web.archive.org/web/20230325113203/https://www.sacred-texts.com/hin/av/av20050.htm",
+   "final_url": "https://web.archive.org/web/20230325213057/https://www.sacred-texts.com/hin/av/av20050.htm",
+   "http_status": 200,
+   "sha256": "a5fa359b444228ae48cf739e9a8dc22d5c75a69164fd29475ce564c6d81e75ff",
+   "bytes": 12463,
+   "retrieved_at": "2026-09-15T07:06:12Z"
+  },
+  {
+   "page_id": "av20-051",
+   "request_url": "https://web.archive.org/web/20230325113203/https://www.sacred-texts.com/hin/av/av20051.htm",
+   "final_url": "https://web.archive.org/web/20230530120830/https://www.sacred-texts.com/hin/av/av20051.htm",
+   "http_status": 200,
+   "sha256": "a8b5b1c406b5dc86e5210920ba5c862bd8521e64bc543610f69ca08fa4627d8d",
+   "bytes": 13018,
+   "retrieved_at": "2026-09-15T07:06:19Z"
+  },
+  {
+   "page_id": "av20-052",
+   "request_url": "https://web.archive.org/web/20230325113203/https://www.sacred-texts.com/hin/av/av20052.htm",
+   "final_url": "https://web.archive.org/web/20230325210354/https://www.sacred-texts.com/hin/av/av20052.htm",
+   "http_status": 200,
+   "sha256": "e90b2b488fe2977b3baf232b9e6d3fe6183f92d44859be13a5a19f6ac7f7a0e5",
+   "bytes": 12443,
+   "retrieved_at": "2026-09-15T07:06:27Z"
+  },
+  {
+   "page_id": "av20-053",
+   "request_url": "https://web.archive.org/web/20230325113203/https://www.sacred-texts.com/hin/av/av20053.htm",
+   "final_url": "https://web.archive.org/web/20230601024110/https://www.sacred-texts.com/hin/av/av20053.htm",
+   "http_status": 200,
+   "sha256": "6c9a2821033917d4d3911bef6d59e95f0f1e6780fbd1fce507759520c4bf6b09",
+   "bytes": 12709,
+   "retrieved_at": "2026-09-15T07:06:31Z"
+  },
+  {
+   "page_id": "av20-054",
+   "request_url": "https://web.archive.org/web/20230325113203/https://www.sacred-texts.com/hin/av/av20054.htm",
+   "final_url": "https://web.archive.org/web/20230329163634/https://www.sacred-texts.com/hin/av/av20054.htm",
+   "http_status": 200,
+   "sha256": "224b0fde8b057bcac16a5ca00fa2c6f6550a6e055774e8239183a1b779e321ed",
+   "bytes": 12766,
+   "retrieved_at": "2026-09-15T07:06:37Z"
+  },
+  {
+   "page_id": "av20-055",
+   "request_url": "https://web.archive.org/web/20230325113203/https://www.sacred-texts.com/hin/av/av20055.htm",
+   "final_url": "https://web.archive.org/web/20230601021514/https://www.sacred-texts.com/hin/av/av20055.htm",
+   "http_status": 200,
+   "sha256": "b7f864f35bb514dcaa30750393e1dbce88b40a8fdff55d0f444ba5c1c6093a82",
+   "bytes": 12733,
+   "retrieved_at": "2026-09-15T07:06:45Z"
+  },
+  {
+   "page_id": "av20-056",
+   "request_url": "https://web.archive.org/web/20230325113203/https://www.sacred-texts.com/hin/av/av20056.htm",
+   "final_url": "https://web.archive.org/web/20230325201026/https://www.sacred-texts.com/hin/av/av20056.htm",
+   "http_status": 200,
+   "sha256": "4743aa574885936af5f6f70ce13c6520dda7dd9d768351c6225c20df75ca7654",
+   "bytes": 13702,
+   "retrieved_at": "2026-09-15T07:06:49Z"
+  },
+  {
+   "page_id": "av20-057",
+   "request_url": "https://web.archive.org/web/20230325113203/https://www.sacred-texts.com/hin/av/av20057.htm",
+   "final_url": "https://web.archive.org/web/20230329160225/https://www.sacred-texts.com/hin/av/av20057.htm",
+   "http_status": 200,
+   "sha256": "c22d12a11cf44ed4be1f534691f5475bbbba311e657125a4ad534a3897bf8e2b",
+   "bytes": 14948,
+   "retrieved_at": "2026-09-15T07:06:54Z"
+  },
+  {
+   "page_id": "av20-058",
+   "request_url": "https://web.archive.org/web/20230325113203/https://www.sacred-texts.com/hin/av/av20058.htm",
+   "final_url": "https://web.archive.org/web/20230325195046/https://www.sacred-texts.com/hin/av/av20058.htm",
+   "http_status": 200,
+   "sha256": "df3b9a701154c1db268a7419fec29bf222bb89c53989222cba74efc25378b66b",
+   "bytes": 13060,
+   "retrieved_at": "2026-09-15T07:07:14Z"
+  },
+  {
+   "page_id": "av20-059",
+   "request_url": "https://web.archive.org/web/20230325113203/https://www.sacred-texts.com/hin/av/av20059.htm",
+   "final_url": "https://web.archive.org/web/20230601012157/https://www.sacred-texts.com/hin/av/av20059.htm",
+   "http_status": 200,
+   "sha256": "0c7f4acc7f107dbd3a024153e40310b3979bbde04055c99f31721f58676517d0",
+   "bytes": 12344,
+   "retrieved_at": "2026-09-15T07:07:18Z"
+  },
+  {
+   "page_id": "av20-060",
+   "request_url": "https://web.archive.org/web/20230325113203/https://www.sacred-texts.com/hin/av/av20060.htm",
+   "final_url": "https://web.archive.org/web/20230329152713/https://www.sacred-texts.com/hin/av/av20060.htm",
+   "http_status": 200,
+   "sha256": "e2ff0e525543098ad916f208208ca91a88771abf6c78094dc8024082bbb81a40",
+   "bytes": 13153,
+   "retrieved_at": "2026-09-15T07:07:21Z"
+  },
+  {
+   "page_id": "av20-061",
+   "request_url": "https://web.archive.org/web/20230325113203/https://www.sacred-texts.com/hin/av/av20061.htm",
+   "final_url": "https://web.archive.org/web/20230601031336/https://www.sacred-texts.com/hin/av/av20061.htm",
+   "http_status": 200,
+   "sha256": "9ced2121c61a413995ede0e89a3ea3367ab3e78a503106b4dd0bf9e062f1b1e5",
+   "bytes": 13319,
+   "retrieved_at": "2026-09-15T07:07:25Z"
+  },
+  {
+   "page_id": "av20-062",
+   "request_url": "https://web.archive.org/web/20230325113203/https://www.sacred-texts.com/hin/av/av20062.htm",
+   "final_url": "https://web.archive.org/web/20230325210727/https://www.sacred-texts.com/hin/av/av20062.htm",
+   "http_status": 200,
+   "sha256": "b0a01828951cf306535e6121432c9fd28fee64f8ddbaf8fa232b695938ea3392",
+   "bytes": 13321,
+   "retrieved_at": "2026-09-15T07:07:32Z"
+  },
+  {
+   "page_id": "av20-063",
+   "request_url": "https://web.archive.org/web/20230325113203/https://www.sacred-texts.com/hin/av/av20063.htm",
+   "final_url": "https://web.archive.org/web/20230325205451/https://www.sacred-texts.com/hin/av/av20063.htm",
+   "http_status": 200,
+   "sha256": "e24fb88c0d7a2713fcd0a6673d855036f0fea6c22939bc27a12aa80c8c46ef03",
+   "bytes": 14358,
+   "retrieved_at": "2026-09-15T07:07:37Z"
+  },
+  {
+   "page_id": "av20-064",
+   "request_url": "https://web.archive.org/web/20230325113203/https://www.sacred-texts.com/hin/av/av20064.htm",
+   "final_url": "https://web.archive.org/web/20230601022951/https://www.sacred-texts.com/hin/av/av20064.htm",
+   "http_status": 200,
+   "sha256": "977039c58e8b8c0506585376842b719b3021440c3c7f8246a4dabc3c1ec63004",
+   "bytes": 13214,
+   "retrieved_at": "2026-09-15T07:07:42Z"
+  },
+  {
+   "page_id": "av20-065",
+   "request_url": "https://web.archive.org/web/20230325113203/https://www.sacred-texts.com/hin/av/av20065.htm",
+   "final_url": "https://web.archive.org/web/20230325110337/https://www.sacred-texts.com/hin/av/av20065.htm",
+   "http_status": 200,
+   "sha256": "ea0967b3ee371e7b37d985b1d5c78bec89371d3b4ab3b16b41aa5550c07e9ff8",
+   "bytes": 12575,
+   "retrieved_at": "2026-09-15T07:07:56Z"
+  },
+  {
+   "page_id": "av20-066",
+   "request_url": "https://web.archive.org/web/20230325113203/https://www.sacred-texts.com/hin/av/av20066.htm",
+   "final_url": "https://web.archive.org/web/20240619010119/https://sacred-texts.com/hin/av/av20066.htm",
+   "http_status": 200,
+   "sha256": "1d7c1caa6514cf796cdaf344f37b01a3312af1215d2e654bdc44f01ce8d9dc45",
+   "bytes": 12125,
+   "retrieved_at": "2026-09-15T07:08:04Z"
+  },
+  {
+   "page_id": "av20-067",
+   "request_url": "https://web.archive.org/web/20230325113203/https://www.sacred-texts.com/hin/av/av20067.htm",
+   "final_url": "https://web.archive.org/web/20230329160700/https://www.sacred-texts.com/hin/av/av20067.htm",
+   "http_status": 200,
+   "sha256": "b4390b6b20f3fefcbd6f2bc045763ac1b9a0dee216880f927e3ed5c05ece2cca",
+   "bytes": 14768,
+   "retrieved_at": "2026-09-15T07:08:18Z"
+  },
+  {
+   "page_id": "av20-068",
+   "request_url": "https://web.archive.org/web/20230325113203/https://www.sacred-texts.com/hin/av/av20068.htm",
+   "final_url": "https://web.archive.org/web/20230329155009/https://www.sacred-texts.com/hin/av/av20068.htm",
+   "http_status": 200,
+   "sha256": "da3a94d5644101997b9fdce82188169610e8191bc7937510039ecce615196210",
+   "bytes": 13902,
+   "retrieved_at": "2026-09-15T07:08:23Z"
+  },
+  {
+   "page_id": "av20-069",
+   "request_url": "https://web.archive.org/web/20230325113203/https://www.sacred-texts.com/hin/av/av20069.htm",
+   "final_url": "https://web.archive.org/web/20230325100612/https://www.sacred-texts.com/hin/av/av20069.htm",
+   "http_status": 200,
+   "sha256": "69bd8580be15f4d269acdb8b41d6012bacd2815e8d743bfcfffd153a531bb010",
+   "bytes": 13932,
+   "retrieved_at": "2026-09-15T07:08:27Z"
+  },
+  {
+   "page_id": "av20-070",
+   "request_url": "https://web.archive.org/web/20230325113203/https://www.sacred-texts.com/hin/av/av20070.htm",
+   "final_url": "https://web.archive.org/web/20230329122013/https://www.sacred-texts.com/hin/av/av20070.htm",
+   "http_status": 200,
+   "sha256": "2b5d35588af171fbf2539a806c22caa90c28901e57114789838a340905f9da03",
+   "bytes": 16569,
+   "retrieved_at": "2026-09-15T07:08:31Z"
+  },
+  {
+   "page_id": "av20-071",
+   "request_url": "https://web.archive.org/web/20230325113203/https://www.sacred-texts.com/hin/av/av20071.htm",
+   "final_url": "https://web.archive.org/web/20230325212757/https://www.sacred-texts.com/hin/av/av20071.htm",
+   "http_status": 200,
+   "sha256": "d775388e861913c17bfc2891e4fb64261e27541fa5e80e9fe899c3e3905b0b3b",
+   "bytes": 14844,
+   "retrieved_at": "2026-09-15T07:08:37Z"
+  },
+  {
+   "page_id": "av20-072",
+   "request_url": "https://web.archive.org/web/20230325113203/https://www.sacred-texts.com/hin/av/av20072.htm",
+   "final_url": "https://web.archive.org/web/20230325211335/https://www.sacred-texts.com/hin/av/av20072.htm",
+   "http_status": 200,
+   "sha256": "3b2584e74edccbb8ca23dd65d3e75f9f45affc39ea2ff2cea31354d99e77def7",
+   "bytes": 13311,
+   "retrieved_at": "2026-09-15T07:08:45Z"
+  },
+  {
+   "page_id": "av20-073",
+   "request_url": "https://web.archive.org/web/20230325113203/https://www.sacred-texts.com/hin/av/av20073.htm",
+   "final_url": "https://web.archive.org/web/20230325205815/https://www.sacred-texts.com/hin/av/av20073.htm",
+   "http_status": 200,
+   "sha256": "a94f6f15b866d5fed53d516beabc099b5da43857c9fdf623d772841b6f2f05c6",
+   "bytes": 13711,
+   "retrieved_at": "2026-09-15T07:09:01Z"
+  },
+  {
+   "page_id": "av20-074",
+   "request_url": "https://web.archive.org/web/20230325113203/https://www.sacred-texts.com/hin/av/av20074.htm",
+   "final_url": "https://web.archive.org/web/20230325204527/https://www.sacred-texts.com/hin/av/av20074.htm",
+   "http_status": 200,
+   "sha256": "b4cf52afbbc61246916eb2553a12938e6873751d71b363b4e61f0001af1f2882",
+   "bytes": 13945,
+   "retrieved_at": "2026-09-15T07:09:06Z"
+  },
+  {
+   "page_id": "av20-075",
+   "request_url": "https://web.archive.org/web/20230325113203/https://www.sacred-texts.com/hin/av/av20075.htm",
+   "final_url": "https://web.archive.org/web/20230329163212/https://www.sacred-texts.com/hin/av/av20075.htm",
+   "http_status": 200,
+   "sha256": "2dc218ce52f70fde0b5e06f609e0be5cda0d413248688ce05b9bae7e501a2d47",
+   "bytes": 13368,
+   "retrieved_at": "2026-09-15T07:09:12Z"
+  },
+  {
+   "page_id": "av20-076",
+   "request_url": "https://web.archive.org/web/20230325113203/https://www.sacred-texts.com/hin/av/av20076.htm",
+   "final_url": "https://web.archive.org/web/20230329162424/https://www.sacred-texts.com/hin/av/av20076.htm",
+   "http_status": 200,
+   "sha256": "8cf049f716ba3a2a17a80be87e1e49a9c1cd31ce1e4b381a2eeb40ef9f400f40",
+   "bytes": 14605,
+   "retrieved_at": "2026-09-15T07:09:19Z"
+  },
+  {
+   "page_id": "av20-077",
+   "request_url": "https://web.archive.org/web/20230325113203/https://www.sacred-texts.com/hin/av/av20077.htm",
+   "final_url": "https://web.archive.org/web/20230329161015/https://www.sacred-texts.com/hin/av/av20077.htm",
+   "http_status": 200,
+   "sha256": "3789fdc38e06f8cb6e82130a275db7b0cacb3977db18d6f86c9f7242861aeee5",
+   "bytes": 14562,
+   "retrieved_at": "2026-09-15T07:09:25Z"
+  },
+  {
+   "page_id": "av20-078",
+   "request_url": "https://web.archive.org/web/20230325113203/https://www.sacred-texts.com/hin/av/av20078.htm",
+   "final_url": "https://web.archive.org/web/20230329155627/https://www.sacred-texts.com/hin/av/av20078.htm",
+   "http_status": 200,
+   "sha256": "fb0b3db495ae8582e5b596036a52b0cec4678e7476b2fbe1de6fcd29f619cb36",
+   "bytes": 12536,
+   "retrieved_at": "2026-09-15T07:09:28Z"
+  },
+  {
+   "page_id": "av20-079",
+   "request_url": "https://web.archive.org/web/20230325113203/https://www.sacred-texts.com/hin/av/av20079.htm",
+   "final_url": "https://web.archive.org/web/20250621043809/https://sacred-texts.com/hin/av/av20079.htm",
+   "http_status": 200,
+   "sha256": "7839bc84c1fc17cb2149cb360c9b420b1052ef7a5e8316ec02209d17b7b22148",
+   "bytes": 17405,
+   "retrieved_at": "2026-09-15T07:09:34Z"
+  },
+  {
+   "page_id": "av20-080",
+   "request_url": "https://web.archive.org/web/20230325113203/https://www.sacred-texts.com/hin/av/av20080.htm",
+   "final_url": "https://web.archive.org/web/20191020225731/https://www.sacred-texts.com/hin/av/av20080.htm",
+   "http_status": 200,
+   "sha256": "6bb178490b9f79f69f48374e35b2626f174b836c052db293316f42a70f20591a",
+   "bytes": 11712,
+   "retrieved_at": "2026-09-15T07:09:45Z"
+  },
+  {
+   "page_id": "av20-081",
+   "request_url": "https://web.archive.org/web/20230325113203/https://www.sacred-texts.com/hin/av/av20081.htm",
+   "final_url": "https://web.archive.org/web/20230325115954/https://www.sacred-texts.com/hin/av/av20081.htm",
+   "http_status": 200,
+   "sha256": "aafe7a9da5a811adb2665cfec3323959b8fd1376e764e8c128eaa29d867270ea",
+   "bytes": 12464,
+   "retrieved_at": "2026-09-15T07:09:49Z"
+  },
+  {
+   "page_id": "av20-082",
+   "request_url": "https://web.archive.org/web/20230325113203/https://www.sacred-texts.com/hin/av/av20082.htm",
+   "final_url": "https://web.archive.org/web/20191020225716/https://www.sacred-texts.com/hin/av/av20082.htm",
+   "http_status": 200,
+   "sha256": "8136c377c9a23c2e132fc31ddc164bb0d7f0190be3b62c8f9f5e08aa3671558b",
+   "bytes": 11671,
+   "retrieved_at": "2026-09-15T07:09:54Z"
+  },
+  {
+   "page_id": "av20-083",
+   "request_url": "https://web.archive.org/web/20230325113203/https://www.sacred-texts.com/hin/av/av20083.htm",
+   "final_url": "https://web.archive.org/web/20250420134749/https://sacred-texts.com/hin/av/av20083.htm",
+   "http_status": 200,
+   "sha256": "773a0f6671a32ad9a97f4f1b145c2edaac905f7f6648d9036f155d3d608d618d",
+   "bytes": 12304,
+   "retrieved_at": "2026-09-15T07:09:58Z"
+  },
+  {
+   "page_id": "av20-084",
+   "request_url": "https://web.archive.org/web/20230325113203/https://www.sacred-texts.com/hin/av/av20084.htm",
+   "final_url": "https://web.archive.org/web/20230325112228/https://www.sacred-texts.com/hin/av/av20084.htm",
+   "http_status": 200,
+   "sha256": "7a07eb8f02dacca44a51018de8c270133f75abd4240a4becc7c38f2f6031e484",
+   "bytes": 12504,
+   "retrieved_at": "2026-09-15T07:10:04Z"
+  },
+  {
+   "page_id": "av20-085",
+   "request_url": "https://web.archive.org/web/20230325113203/https://www.sacred-texts.com/hin/av/av20085.htm",
+   "final_url": "https://web.archive.org/web/20250420130916/https://sacred-texts.com/hin/av/av20085.htm",
+   "http_status": 200,
+   "sha256": "a3df40154a9b41ca27253e1b2b6f9ba9c342b3fc19d10dcc5e2bddc9d5472d97",
+   "bytes": 12950,
+   "retrieved_at": "2026-09-15T07:10:16Z"
+  },
+  {
+   "page_id": "av20-086",
+   "request_url": "https://web.archive.org/web/20230325113203/https://www.sacred-texts.com/hin/av/av20086.htm",
+   "final_url": "https://web.archive.org/web/20230325105528/https://www.sacred-texts.com/hin/av/av20086.htm",
+   "http_status": 200,
+   "sha256": "54e31bf992d95c1f4b78877975925ece6bb62932db9267a3eb9629a1b45b7ef6",
+   "bytes": 12153,
+   "retrieved_at": "2026-09-15T07:10:21Z"
+  },
+  {
+   "page_id": "av20-087",
+   "request_url": "https://web.archive.org/web/20230325113203/https://www.sacred-texts.com/hin/av/av20087.htm",
+   "final_url": "https://web.archive.org/web/20250420121830/https://sacred-texts.com/hin/av/av20087.htm",
+   "http_status": 200,
+   "sha256": "4291846766c13a380102f5d25c6a9079a2c043599a1df3195472b0adb84f1c5a",
+   "bytes": 14078,
+   "retrieved_at": "2026-09-15T07:10:36Z"
+  },
+  {
+   "page_id": "av20-088",
+   "request_url": "https://web.archive.org/web/20230325113203/https://www.sacred-texts.com/hin/av/av20088.htm",
+   "final_url": "https://web.archive.org/web/20230329160026/https://www.sacred-texts.com/hin/av/av20088.htm",
+   "http_status": 200,
+   "sha256": "a64a3017e6d3c472ca4984fb309bc24f0c0c0dcfbf682e8324e3e81851d85f43",
+   "bytes": 13885,
+   "retrieved_at": "2026-09-15T07:10:40Z"
+  },
+  {
+   "page_id": "av20-089",
+   "request_url": "https://web.archive.org/web/20230325113203/https://www.sacred-texts.com/hin/av/av20089.htm",
+   "final_url": "https://web.archive.org/web/20230329122928/https://www.sacred-texts.com/hin/av/av20089.htm",
+   "http_status": 200,
+   "sha256": "8f164d7641afb755e457e98f4742868fb0b91da3b913e7845348aa35e60701d3",
+   "bytes": 15580,
+   "retrieved_at": "2026-09-15T07:10:48Z"
+  },
+  {
+   "page_id": "av20-090",
+   "request_url": "https://web.archive.org/web/20230325113203/https://www.sacred-texts.com/hin/av/av20090.htm",
+   "final_url": "https://web.archive.org/web/20250420135117/https://sacred-texts.com/hin/av/av20090.htm",
+   "http_status": 200,
+   "sha256": "4322e5198008449afffc109f77b1d0be2cf7450d9f35ec44ba7b5a98bea7ae4c",
+   "bytes": 12716,
+   "retrieved_at": "2026-09-15T07:10:54Z"
+  },
+  {
+   "page_id": "av20-091",
+   "request_url": "https://web.archive.org/web/20230325113203/https://www.sacred-texts.com/hin/av/av20091.htm",
+   "final_url": "https://web.archive.org/web/20230329121045/https://www.sacred-texts.com/hin/av/av20091.htm",
+   "http_status": 200,
+   "sha256": "ec8dd9daadeca92d9016ac0477ff3e9fa44745b03834861cd03ef454883f93d4",
+   "bytes": 15951,
+   "retrieved_at": "2026-09-15T07:10:59Z"
+  },
+  {
+   "page_id": "av20-092",
+   "request_url": "https://web.archive.org/web/20230325113203/https://www.sacred-texts.com/hin/av/av20092.htm",
+   "final_url": "https://web.archive.org/web/20230329140318/https://www.sacred-texts.com/hin/av/av20092.htm",
+   "http_status": 200,
+   "sha256": "0b0f79b28823ef904e4d7c60e6e15f5d67697b65e5d7147bdcb7ce5a64ec9598",
+   "bytes": 18043,
+   "retrieved_at": "2026-09-15T07:11:03Z"
+  },
+  {
+   "page_id": "av20-093",
+   "request_url": "https://web.archive.org/web/20230325113203/https://www.sacred-texts.com/hin/av/av20093.htm",
+   "final_url": "https://web.archive.org/web/20230325113852/https://www.sacred-texts.com/hin/av/av20093.htm",
+   "http_status": 200,
+   "sha256": "a1c321f0ae1f988340219c62f04bcdccac5472d0048eaf14c373803a44a096b5",
+   "bytes": 13665,
+   "retrieved_at": "2026-09-15T07:11:07Z"
+  },
+  {
+   "page_id": "av20-094",
+   "request_url": "https://web.archive.org/web/20230325113203/https://www.sacred-texts.com/hin/av/av20094.htm",
+   "final_url": "https://web.archive.org/web/20230329133737/https://www.sacred-texts.com/hin/av/av20094.htm",
+   "http_status": 200,
+   "sha256": "2daef02d392eba4c3ca4e73d5fbf768a5f9f83474e4dc4f167bba66e75725e37",
+   "bytes": 15734,
+   "retrieved_at": "2026-09-15T07:11:22Z"
+  },
+  {
+   "page_id": "av20-095",
+   "request_url": "https://web.archive.org/web/20230325113203/https://www.sacred-texts.com/hin/av/av20095.htm",
+   "final_url": "https://web.archive.org/web/20230329163752/https://www.sacred-texts.com/hin/av/av20095.htm",
+   "http_status": 200,
+   "sha256": "9a66518e3334c40de29c94d29264d62f457bd866ef27c184b83a8ec63af71c26",
+   "bytes": 13494,
+   "retrieved_at": "2026-09-15T07:11:27Z"
+  },
+  {
+   "page_id": "av20-096",
+   "request_url": "https://web.archive.org/web/20230325113203/https://www.sacred-texts.com/hin/av/av20096.htm",
+   "final_url": "https://web.archive.org/web/20230329130933/https://www.sacred-texts.com/hin/av/av20096.htm",
+   "http_status": 200,
+   "sha256": "3838e08835e29101e5e259720cbd8a52c7acf652304f9de976cc4f7d43972360",
+   "bytes": 18788,
+   "retrieved_at": "2026-09-15T07:11:31Z"
+  },
+  {
+   "page_id": "av20-097",
+   "request_url": "https://web.archive.org/web/20230325113203/https://www.sacred-texts.com/hin/av/av20097.htm",
+   "final_url": "https://web.archive.org/web/20230325201346/https://www.sacred-texts.com/hin/av/av20097.htm",
+   "http_status": 200,
+   "sha256": "2d3b39041492d18a7cde4530a124de2554df4f0ab63f5daab5ef8d85183c5168",
+   "bytes": 12742,
+   "retrieved_at": "2026-09-15T07:11:44Z"
+  },
+  {
+   "page_id": "av20-098",
+   "request_url": "https://web.archive.org/web/20230325113203/https://www.sacred-texts.com/hin/av/av20098.htm",
+   "final_url": "https://web.archive.org/web/20230601015332/https://www.sacred-texts.com/hin/av/av20098.htm",
+   "http_status": 200,
+   "sha256": "aa26d38b62629abfbd0fc8053202527a9a825783e9858dc9e08c9e6e311000b9",
+   "bytes": 12390,
+   "retrieved_at": "2026-09-15T07:11:50Z"
+  },
+  {
+   "page_id": "av20-099",
+   "request_url": "https://web.archive.org/web/20230325113203/https://www.sacred-texts.com/hin/av/av20099.htm",
+   "final_url": "https://web.archive.org/web/20230601014148/https://www.sacred-texts.com/hin/av/av20099.htm",
+   "http_status": 200,
+   "sha256": "583cfd597636a8da4f9fc3166b978ed722f8184090677a97ac2d395ba10d9d61",
+   "bytes": 12374,
+   "retrieved_at": "2026-09-15T07:11:54Z"
+  },
+  {
+   "page_id": "av20-100",
+   "request_url": "https://web.archive.org/web/20230325113203/https://www.sacred-texts.com/hin/av/av20100.htm",
+   "final_url": "https://web.archive.org/web/20230325201627/https://www.sacred-texts.com/hin/av/av20100.htm",
+   "http_status": 200,
+   "sha256": "45d257b335a6c00750cbe6cb870cb4cb95bef0f4ac09e05676593c072ccdeb39",
+   "bytes": 12581,
+   "retrieved_at": "2026-09-15T07:12:02Z"
+  },
+  {
+   "page_id": "av20-101",
+   "request_url": "https://web.archive.org/web/20230325113203/https://www.sacred-texts.com/hin/av/av20101.htm",
+   "final_url": "https://web.archive.org/web/20230601015737/https://www.sacred-texts.com/hin/av/av20101.htm",
+   "http_status": 200,
+   "sha256": "7fb7c04acab6c6db0b13d0bcd49c276f89402756d7472daa78ef55a7d7a737fe",
+   "bytes": 12414,
+   "retrieved_at": "2026-09-15T07:12:08Z"
+  },
+  {
+   "page_id": "av20-102",
+   "request_url": "https://web.archive.org/web/20230325113203/https://www.sacred-texts.com/hin/av/av20102.htm",
+   "final_url": "https://web.archive.org/web/20230329155056/https://www.sacred-texts.com/hin/av/av20102.htm",
+   "http_status": 200,
+   "sha256": "d2ae88292277e255589c981f95df60c57eebacf0f79148b442ccdf63dd16b144",
+   "bytes": 12476,
+   "retrieved_at": "2026-09-15T07:12:12Z"
+  },
+  {
+   "page_id": "av20-103",
+   "request_url": "https://web.archive.org/web/20230325113203/https://www.sacred-texts.com/hin/av/av20103.htm",
+   "final_url": "https://web.archive.org/web/20250420135214/https://sacred-texts.com/hin/av/av20103.htm",
+   "http_status": 200,
+   "sha256": "c1aef0599c6a56c48131c5c1382e9d4095950f0b998d37fa5e7bfa1db2561803",
+   "bytes": 12634,
+   "retrieved_at": "2026-09-15T07:12:16Z"
+  },
+  {
+   "page_id": "av20-104",
+   "request_url": "https://web.archive.org/web/20230325113203/https://www.sacred-texts.com/hin/av/av20104.htm",
+   "final_url": "https://web.archive.org/web/20230328001102/https://www.sacred-texts.com/hin/av/av20104.htm",
+   "http_status": 200,
+   "sha256": "e7edd915e88887969ec404bb98fb71c563bf1ba2f98eb69bcef54063e74c83f7",
+   "bytes": 13077,
+   "retrieved_at": "2026-09-15T07:12:23Z"
+  },
+  {
+   "page_id": "av20-105",
+   "request_url": "https://web.archive.org/web/20230325113203/https://www.sacred-texts.com/hin/av/av20105.htm",
+   "final_url": "https://web.archive.org/web/20240226174953/https://sacred-texts.com/hin/av/av20105.htm",
+   "http_status": 200,
+   "sha256": "bf32ae9dc3c9db711a11ab8b595d695e24514f34a8bf9bc95a0e26496ac7f876",
+   "bytes": 12310,
+   "retrieved_at": "2026-09-15T07:12:28Z"
+  },
+  {
+   "page_id": "av20-106",
+   "request_url": "https://web.archive.org/web/20230325113203/https://www.sacred-texts.com/hin/av/av20106.htm",
+   "final_url": "https://web.archive.org/web/20230329170111/https://www.sacred-texts.com/hin/av/av20106.htm",
+   "http_status": 200,
+   "sha256": "33018aed7cd78384043d95265ec3c3cd94825b0d37bd7ec786e7ee29e70b15a5",
+   "bytes": 12522,
+   "retrieved_at": "2026-09-15T07:12:32Z"
+  },
+  {
+   "page_id": "av20-107",
+   "request_url": "https://web.archive.org/web/20230325113203/https://www.sacred-texts.com/hin/av/av20107.htm",
+   "final_url": "https://web.archive.org/web/20230325204924/https://www.sacred-texts.com/hin/av/av20107.htm",
+   "http_status": 200,
+   "sha256": "d22625a617922aaefe7654a18f55d799935917d42b66daf704b4ec0f039e93ee",
+   "bytes": 16606,
+   "retrieved_at": "2026-09-15T07:12:36Z"
+  },
+  {
+   "page_id": "av20-108",
+   "request_url": "https://web.archive.org/web/20230325113203/https://www.sacred-texts.com/hin/av/av20108.htm",
+   "final_url": "https://web.archive.org/web/20230325203711/https://www.sacred-texts.com/hin/av/av20108.htm",
+   "http_status": 200,
+   "sha256": "1dd40b5647b5d1ad94e3bdf4b4df14fa81b9395f504c8496eee5fa8af9426bfa",
+   "bytes": 12562,
+   "retrieved_at": "2026-09-15T07:12:48Z"
+  },
+  {
+   "page_id": "av20-109",
+   "request_url": "https://web.archive.org/web/20230325113203/https://www.sacred-texts.com/hin/av/av20109.htm",
+   "final_url": "https://web.archive.org/web/20230325202256/https://www.sacred-texts.com/hin/av/av20109.htm",
+   "http_status": 200,
+   "sha256": "2f6b9d02bbf005fcd99abc8d34fc2bc812da89fc309dc9982c131dcd3b490ad8",
+   "bytes": 12748,
+   "retrieved_at": "2026-09-15T07:12:54Z"
+  },
+  {
+   "page_id": "av20-110",
+   "request_url": "https://web.archive.org/web/20230325113203/https://www.sacred-texts.com/hin/av/av20110.htm",
+   "final_url": "https://web.archive.org/web/20230601021052/https://www.sacred-texts.com/hin/av/av20110.htm",
+   "http_status": 200,
+   "sha256": "dddc9127eba1164d60d86ef278a5413067fe8ddaa1d1a265a7031ba41ab2011b",
+   "bytes": 12423,
+   "retrieved_at": "2026-09-15T07:12:58Z"
+  },
+  {
+   "page_id": "av20-111",
+   "request_url": "https://web.archive.org/web/20230325113203/https://www.sacred-texts.com/hin/av/av20111.htm",
+   "final_url": "https://web.archive.org/web/20230929064132/https://sacred-texts.com/hin/av/av20111.htm",
+   "http_status": 200,
+   "sha256": "a75ded21668ea4ee61f6b3f52d101d82649b068b6a62311193b1388b6b272230",
+   "bytes": 12090,
+   "retrieved_at": "2026-09-15T07:13:10Z"
+  },
+  {
+   "page_id": "av20-112",
+   "request_url": "https://web.archive.org/web/20230325113203/https://www.sacred-texts.com/hin/av/av20112.htm",
+   "final_url": "https://web.archive.org/web/20230329155706/https://www.sacred-texts.com/hin/av/av20112.htm",
+   "http_status": 200,
+   "sha256": "4d08c68cc5f14f8347c70f976ac3aded2138e54e10d560c212825d5e54070e2f",
+   "bytes": 12476,
+   "retrieved_at": "2026-09-15T07:13:14Z"
+  },
+  {
+   "page_id": "av20-113",
+   "request_url": "https://web.archive.org/web/20230325113203/https://www.sacred-texts.com/hin/av/av20113.htm",
+   "final_url": "https://web.archive.org/web/20250618121338/https://sacred-texts.com/hin/av/av20113.htm",
+   "http_status": 200,
+   "sha256": "6eb21852ad034eeacd4205b525c5b9647a10e68617c84868270c8ba87f736f07",
+   "bytes": 17472,
+   "retrieved_at": "2026-09-15T07:13:17Z"
+  },
+  {
+   "page_id": "av20-114",
+   "request_url": "https://web.archive.org/web/20230325113203/https://www.sacred-texts.com/hin/av/av20114.htm",
+   "final_url": "https://web.archive.org/web/20191020225722/https://www.sacred-texts.com/hin/av/av20114.htm",
+   "http_status": 200,
+   "sha256": "40a5b9b3453b3bb7ac2a4ae29a67e3bc9c95b5a120605d8fb6bfb9b5c5fc2c9f",
+   "bytes": 11648,
+   "retrieved_at": "2026-09-15T07:13:31Z"
+  },
+  {
+   "page_id": "av20-115",
+   "request_url": "https://web.archive.org/web/20230325113203/https://www.sacred-texts.com/hin/av/av20115.htm",
+   "final_url": "https://web.archive.org/web/20230325115007/https://www.sacred-texts.com/hin/av/av20115.htm",
+   "http_status": 200,
+   "sha256": "0c1f1a4a7c86ba347b0c25d42b41a4a000adc2529e544697932f6265fd10e18f",
+   "bytes": 12517,
+   "retrieved_at": "2026-09-15T07:13:37Z"
+  },
+  {
+   "page_id": "av20-116",
+   "request_url": "https://web.archive.org/web/20230325113203/https://www.sacred-texts.com/hin/av/av20116.htm",
+   "final_url": "https://web.archive.org/web/20191020225723/https://www.sacred-texts.com/hin/av/av20116.htm",
+   "http_status": 200,
+   "sha256": "87ba96a53ce93546004baddc0f9ca132b17328cbed63874819472c4ac872f17f",
+   "bytes": 11633,
+   "retrieved_at": "2026-09-15T07:13:45Z"
+  },
+  {
+   "page_id": "av20-117",
+   "request_url": "https://web.archive.org/web/20230325113203/https://www.sacred-texts.com/hin/av/av20117.htm",
+   "final_url": "https://web.archive.org/web/20191020225718/https://www.sacred-texts.com/hin/av/av20117.htm",
+   "http_status": 200,
+   "sha256": "ea0180f37a297aa76da636a270d1d543c2007824af669ebc4f5b6ffb94972608",
+   "bytes": 11887,
+   "retrieved_at": "2026-09-15T07:13:49Z"
+  },
+  {
+   "page_id": "av20-118",
+   "request_url": "https://web.archive.org/web/20230325113203/https://www.sacred-texts.com/hin/av/av20118.htm",
+   "final_url": "https://web.archive.org/web/20230329163842/https://www.sacred-texts.com/hin/av/av20118.htm",
+   "http_status": 200,
+   "sha256": "7540c92dff370bcaaee7831eb08316ecce62a7255e7914dc89a70f29d3f9a601",
+   "bytes": 13016,
+   "retrieved_at": "2026-09-15T07:13:52Z"
+  },
+  {
+   "page_id": "av20-119",
+   "request_url": "https://web.archive.org/web/20230325113203/https://www.sacred-texts.com/hin/av/av20119.htm",
+   "final_url": "https://web.archive.org/web/20230601021801/https://www.sacred-texts.com/hin/av/av20119.htm",
+   "http_status": 200,
+   "sha256": "44521ca78c10a0e9577803fba3e88c2f2c2c63a4a8957636865a9bb37c96b1f0",
+   "bytes": 12396,
+   "retrieved_at": "2026-09-15T07:13:56Z"
+  },
+  {
+   "page_id": "av20-120",
+   "request_url": "https://web.archive.org/web/20230325113203/https://www.sacred-texts.com/hin/av/av20120.htm",
+   "final_url": "https://web.archive.org/web/20230325202222/https://www.sacred-texts.com/hin/av/av20120.htm",
+   "http_status": 200,
+   "sha256": "677f772b022d64f663d58d1eaad6482e02b4dde7b7de208fb831bb715c59ed5b",
+   "bytes": 12451,
+   "retrieved_at": "2026-09-15T07:14:13Z"
+  },
+  {
+   "page_id": "av20-121",
+   "request_url": "https://web.archive.org/web/20230325113203/https://www.sacred-texts.com/hin/av/av20121.htm",
+   "final_url": "https://web.archive.org/web/20230601020043/https://www.sacred-texts.com/hin/av/av20121.htm",
+   "http_status": 200,
+   "sha256": "2f48f1b8304273812932d78b7e73db43fdea572aab8c57a02b2328bdb6b7769a",
+   "bytes": 12201,
+   "retrieved_at": "2026-09-15T07:14:18Z"
+  },
+  {
+   "page_id": "av20-122",
+   "request_url": "https://web.archive.org/web/20230325113203/https://www.sacred-texts.com/hin/av/av20122.htm",
+   "final_url": "https://web.archive.org/web/20240521173941/https://sacred-texts.com/hin/av/av20122.htm",
+   "http_status": 200,
+   "sha256": "7b061fcb8ec1620035bff478b7f12ed319abcc3d3f2c65183e0a3bcd92453927",
+   "bytes": 12098,
+   "retrieved_at": "2026-09-15T07:14:23Z"
+  },
+  {
+   "page_id": "av20-123",
+   "request_url": "https://web.archive.org/web/20230325113203/https://www.sacred-texts.com/hin/av/av20123.htm",
+   "final_url": "https://web.archive.org/web/20230325101142/https://www.sacred-texts.com/hin/av/av20123.htm",
+   "http_status": 200,
+   "sha256": "311313f6cfbdebdaafa0a2b0b7cb46b3a06aed2426b0655fdeaa315cea1decad",
+   "bytes": 12513,
+   "retrieved_at": "2026-09-15T07:14:36Z"
+  },
+  {
+   "page_id": "av20-124",
+   "request_url": "https://web.archive.org/web/20230325113203/https://www.sacred-texts.com/hin/av/av20124.htm",
+   "final_url": "https://web.archive.org/web/20230329153230/https://www.sacred-texts.com/hin/av/av20124.htm",
+   "http_status": 200,
+   "sha256": "10d88201ba2510caca8cb2d25dc20e36b4b6a9980be3e240aa631066ede6d61f",
+   "bytes": 13521,
+   "retrieved_at": "2026-09-15T07:14:41Z"
+  },
+  {
+   "page_id": "av20-125",
+   "request_url": "https://web.archive.org/web/20230325113203/https://www.sacred-texts.com/hin/av/av20125.htm",
+   "final_url": "https://web.archive.org/web/20240421110855/https://sacred-texts.com/hin/av/av20125.htm",
+   "http_status": 200,
+   "sha256": "432648e20b03ca071199ee9b48766cdb160bc576279e6faa0eb4e5cfc82ed7be",
+   "bytes": 13653,
+   "retrieved_at": "2026-09-15T07:14:49Z"
+  },
+  {
+   "page_id": "av20-126",
+   "request_url": "https://web.archive.org/web/20230325113203/https://www.sacred-texts.com/hin/av/av20126.htm",
+   "final_url": "https://web.archive.org/web/20230321021619/https://www.sacred-texts.com/hin/av/av20126.htm",
+   "http_status": 200,
+   "sha256": "07249c984b3763789d7a6921102c42da2c18809693d461733fdf5aa6e6833f2d",
+   "bytes": 19067,
+   "retrieved_at": "2026-09-15T07:14:54Z"
+  },
+  {
+   "page_id": "av20-127",
+   "request_url": "https://web.archive.org/web/20230325113203/https://www.sacred-texts.com/hin/av/av20127.htm",
+   "final_url": "https://web.archive.org/web/20230327203457/https://www.sacred-texts.com/hin/av/av20127.htm",
+   "http_status": 200,
+   "sha256": "932c30219701351be31724de15a37ed67106d7886dbcc2f5d1b1cbe03cd03ae1",
+   "bytes": 16023,
+   "retrieved_at": "2026-09-15T07:14:59Z"
+  },
+  {
+   "page_id": "av20-128",
+   "request_url": "https://web.archive.org/web/20230325113203/https://www.sacred-texts.com/hin/av/av20128.htm",
+   "final_url": "https://web.archive.org/web/20230329132856/https://www.sacred-texts.com/hin/av/av20128.htm",
+   "http_status": 200,
+   "sha256": "865ff739ba541d569afe907c6803b128aab07642bcf00882b2fe31718c311745",
+   "bytes": 16521,
+   "retrieved_at": "2026-09-15T07:15:13Z"
+  },
+  {
+   "page_id": "av20-129",
+   "request_url": "https://web.archive.org/web/20230325113203/https://www.sacred-texts.com/hin/av/av20129.htm",
+   "final_url": "https://web.archive.org/web/20230325203055/https://www.sacred-texts.com/hin/av/av20129.htm",
+   "http_status": 200,
+   "sha256": "1bbc3e2ec2f935564e653a189e89af44e258edbec4456c5c6aa0119d5ebe9b38",
+   "bytes": 13705,
+   "retrieved_at": "2026-09-15T07:15:19Z"
+  },
+  {
+   "page_id": "av20-130",
+   "request_url": "https://web.archive.org/web/20230325113203/https://www.sacred-texts.com/hin/av/av20130.htm",
+   "final_url": "https://web.archive.org/web/20230325105933/https://www.sacred-texts.com/hin/av/av20130.htm",
+   "http_status": 200,
+   "sha256": "3da4b34dbc3912f1335943be6a78ed2ed1ed4d81ac96aff591c0e6f24da30dd1",
+   "bytes": 13696,
+   "retrieved_at": "2026-09-15T07:15:25Z"
+  },
+  {
+   "page_id": "av20-131",
+   "request_url": "https://web.archive.org/web/20230325113203/https://www.sacred-texts.com/hin/av/av20131.htm",
+   "final_url": "https://web.archive.org/web/20230325104428/https://www.sacred-texts.com/hin/av/av20131.htm",
+   "http_status": 200,
+   "sha256": "d34354997ef9170794b075bfd070d9742289dfe0e05440c28d04702eba5e8f32",
+   "bytes": 13980,
+   "retrieved_at": "2026-09-15T07:15:29Z"
+  },
+  {
+   "page_id": "av20-132",
+   "request_url": "https://web.archive.org/web/20230325113203/https://www.sacred-texts.com/hin/av/av20132.htm",
+   "final_url": "https://web.archive.org/web/20220704024245/https://www.sacred-texts.com/hin/av/av20132.htm",
+   "http_status": 200,
+   "sha256": "3709fe48b401d803de942109adf0f6dbbe15d7f8ff38c1d5bf1427729cff6c0f",
+   "bytes": 13388,
+   "retrieved_at": "2026-09-15T07:15:49Z"
+  },
+  {
+   "page_id": "av20-133",
+   "request_url": "https://web.archive.org/web/20230325113203/https://www.sacred-texts.com/hin/av/av20133.htm",
+   "final_url": "https://web.archive.org/web/20230601014233/https://www.sacred-texts.com/hin/av/av20133.htm",
+   "http_status": 200,
+   "sha256": "18f72ba6c6a5eee7b8cb60169374006bff97d4f4fde3621e16394db037cc76ff",
+   "bytes": 12250,
+   "retrieved_at": "2026-09-15T07:15:53Z"
+  },
+  {
+   "page_id": "av20-134",
+   "request_url": "https://web.archive.org/web/20230325113203/https://www.sacred-texts.com/hin/av/av20134.htm",
+   "final_url": "https://web.archive.org/web/20230325193759/https://www.sacred-texts.com/hin/av/av20134.htm",
+   "http_status": 200,
+   "sha256": "43a337af6157d934ef5a5262ac250433cf91c88d92396b2e36efd96d137b086b",
+   "bytes": 13185,
+   "retrieved_at": "2026-09-15T07:15:59Z"
+  },
+  {
+   "page_id": "av20-135",
+   "request_url": "https://web.archive.org/web/20230325113203/https://www.sacred-texts.com/hin/av/av20135.htm",
+   "final_url": "https://web.archive.org/web/20230325213023/https://www.sacred-texts.com/hin/av/av20135.htm",
+   "http_status": 200,
+   "sha256": "3f36ba86a784b3da63eb3096e554754218dd935c3075fa715776624a8e86f6a4",
+   "bytes": 14901,
+   "retrieved_at": "2026-09-15T07:16:03Z"
+  },
+  {
+   "page_id": "av20-136",
+   "request_url": "https://web.archive.org/web/20230325113203/https://www.sacred-texts.com/hin/av/av20136.htm",
+   "final_url": "https://web.archive.org/web/20230413180403/https://www.sacred-texts.com/hin/av/av20136.htm",
+   "http_status": 200,
+   "sha256": "eaf8c4d27de5356439b5aef12cf237ecdf860378fdaef455a29bb503208fecb4",
+   "bytes": 15632,
+   "retrieved_at": "2026-09-15T07:16:14Z"
+  },
+  {
+   "page_id": "av20-137",
+   "request_url": "https://web.archive.org/web/20230325113203/https://www.sacred-texts.com/hin/av/av20137.htm",
+   "final_url": "https://web.archive.org/web/20230329134521/https://www.sacred-texts.com/hin/av/av20137.htm",
+   "http_status": 200,
+   "sha256": "a8d7e60f70f4ed9d8421682cd8ff9916a033a93f7ff38d8e76df961291e38791",
+   "bytes": 16203,
+   "retrieved_at": "2026-09-15T07:16:19Z"
+  },
+  {
+   "page_id": "av20-138",
+   "request_url": "https://web.archive.org/web/20230325113203/https://www.sacred-texts.com/hin/av/av20138.htm",
+   "final_url": "https://web.archive.org/web/20230329164615/https://www.sacred-texts.com/hin/av/av20138.htm",
+   "http_status": 200,
+   "sha256": "e6e5d0a56a0f28de99b98e4b1f7e33591f1b88b12a1b4ac981e3fececb7acc14",
+   "bytes": 12634,
+   "retrieved_at": "2026-09-15T07:16:25Z"
+  },
+  {
+   "page_id": "av20-139",
+   "request_url": "https://web.archive.org/web/20230325113203/https://www.sacred-texts.com/hin/av/av20139.htm",
+   "final_url": "https://web.archive.org/web/20230530111835/https://www.sacred-texts.com/hin/av/av20139.htm",
+   "http_status": 200,
+   "sha256": "6b250f78d8591296c310f3c60f5315fd4c06e11f035456d64c003d2cca7c5dbc",
+   "bytes": 13135,
+   "retrieved_at": "2026-09-15T07:16:30Z"
+  },
+  {
+   "page_id": "av20-140",
+   "request_url": "https://web.archive.org/web/20230325113203/https://www.sacred-texts.com/hin/av/av20140.htm",
+   "final_url": "https://web.archive.org/web/20230325202949/https://www.sacred-texts.com/hin/av/av20140.htm",
+   "http_status": 200,
+   "sha256": "18a639a168969641985d891d8801206f2fe3d23be8eb53c8f181c517d72dd5d6",
+   "bytes": 13465,
+   "retrieved_at": "2026-09-15T07:16:33Z"
+  },
+  {
+   "page_id": "av20-141",
+   "request_url": "https://web.archive.org/web/20230325113203/https://www.sacred-texts.com/hin/av/av20141.htm",
+   "final_url": "https://web.archive.org/web/20230329162158/https://www.sacred-texts.com/hin/av/av20141.htm",
+   "http_status": 200,
+   "sha256": "96e925294908a66d248a41b06db59ec499bda4cb1fa405b02959de8712c84e34",
+   "bytes": 13344,
+   "retrieved_at": "2026-09-15T07:16:37Z"
+  },
+  {
+   "page_id": "av20-142",
+   "request_url": "https://web.archive.org/web/20230325113203/https://www.sacred-texts.com/hin/av/av20142.htm",
+   "final_url": "https://web.archive.org/web/20230325103457/https://www.sacred-texts.com/hin/av/av20142.htm",
+   "http_status": 200,
+   "sha256": "ea6da05b9a0f3b2ca3a1dc350f6732639aaae353c709cd28bec39336500425eb",
+   "bytes": 13590,
+   "retrieved_at": "2026-09-15T07:16:51Z"
+  },
+  {
+   "page_id": "av20-143",
+   "request_url": "https://web.archive.org/web/20230325113203/https://www.sacred-texts.com/hin/av/av20143.htm",
+   "final_url": "https://web.archive.org/web/20230329155312/https://www.sacred-texts.com/hin/av/av20143.htm",
+   "http_status": 200,
+   "sha256": "145e1608d03078bc0dd8a87d03e7e629094ae04b1abda1cc2be0d513ecdcfb8a",
+   "bytes": 14823,
+   "retrieved_at": "2026-09-15T07:16:56Z"
+  },
+  {
+   "page_id": "av20-index",
+   "request_url": "https://web.archive.org/web/20230325113203/https://www.sacred-texts.com/hin/av/avbook20.htm",
+   "final_url": "https://web.archive.org/web/20230425220815/https://www.sacred-texts.com/hin/av/avbook20.htm",
+   "http_status": 200,
+   "sha256": "7b61b7f17b1fdfd8362dbced1da0dd1c76b74c3e4dcea5942caedabd5b4fb9dc",
+   "bytes": 17578,
+   "retrieved_at": "2026-09-15T07:16:59Z"
+  },
+  {
+   "page_id": "av03-009",
+   "request_url": "https://web.archive.org/web/20230325113203/https://www.sacred-texts.com/hin/av/av03009.htm",
+   "final_url": "https://web.archive.org/web/20230323172937/https://www.sacred-texts.com/hin/av/av03009.htm",
+   "http_status": 200,
+   "sha256": "4410b0a65554f54cc919cbaf7dfd83224ee38d5553003a1e6803945524000530",
+   "bytes": 13543,
+   "retrieved_at": "2026-09-15T07:17:23Z"
+  },
+  {
+   "page_id": "av05-012",
+   "request_url": "https://web.archive.org/web/20230325113203/https://www.sacred-texts.com/hin/av/av05012.htm",
+   "final_url": "https://web.archive.org/web/20230329135112/https://www.sacred-texts.com/hin/av/av05012.htm",
+   "http_status": 200,
+   "sha256": "bcedb156d94ef972694c86e18545ac062f1166d32f7bb87e759e10b54d7e764c",
+   "bytes": 15716,
+   "retrieved_at": "2026-09-15T07:17:28Z"
+  },
+  {
+   "page_id": "av10-008",
+   "request_url": "https://web.archive.org/web/20230325113203/https://www.sacred-texts.com/hin/av/av10008.htm",
+   "final_url": "https://web.archive.org/web/20230321121525/https://www.sacred-texts.com/hin/av/av10008.htm",
+   "http_status": 200,
+   "sha256": "9648d64e259375909896d85b409a85d7121ac0a48877945c1628b0aa97cf8e41",
+   "bytes": 25745,
+   "retrieved_at": "2026-09-15T07:17:31Z"
+  },
+  {
+   "page_id": "rv01-179",
+   "request_url": "https://web.archive.org/web/2023/https://www.sacred-texts.com/hin/rigveda/rv01179.htm",
+   "final_url": "https://web.archive.org/web/20240421211859/https://sacred-texts.com/hin/rigveda/rv01179.htm",
+   "http_status": 200,
+   "sha256": "f1eccc67ad1e2d89598fefa7d4af4f1ee8f5ec66bc029e9e2efa9b3841ed5022",
+   "bytes": 14235,
+   "retrieved_at": "2026-09-15T07:28:47Z"
+  },
+  {
+   "page_id": "rv01-053",
+   "request_url": "https://web.archive.org/web/2023/https://www.sacred-texts.com/hin/rigveda/rv01053.htm",
+   "final_url": "https://web.archive.org/web/20231127163510/https://sacred-texts.com/hin/rigveda/rv01053.htm",
+   "http_status": 200,
+   "sha256": "9f7d9e7b60f86db0d4c95c776c1bcb00dcae861654259afa6076322e8dc00fdc",
+   "bytes": 13965,
+   "retrieved_at": "2026-09-15T07:28:52Z"
+  },
+  {
+   "page_id": "rv01-065",
+   "request_url": "https://web.archive.org/web/2023/https://www.sacred-texts.com/hin/rigveda/rv01065.htm",
+   "final_url": "https://web.archive.org/web/20240423010359/https://sacred-texts.com/hin/rigveda/rv01065.htm",
+   "http_status": 200,
+   "sha256": "4ede0ac8da17dfeb6042a7c33a23e9d90d5287fbcc72d6d77a066a526343691f",
+   "bytes": 12516,
+   "retrieved_at": "2026-09-15T07:28:57Z"
+  },
+  {
+   "page_id": "rv01-066",
+   "request_url": "https://web.archive.org/web/2023/https://www.sacred-texts.com/hin/rigveda/rv01066.htm",
+   "final_url": "https://web.archive.org/web/20240423010352/https://sacred-texts.com/hin/rigveda/rv01066.htm",
+   "http_status": 200,
+   "sha256": "b020df19f79ef11c15678c1fc95a6f87910ec300e7eccb2e1d674e16a8977b4a",
+   "bytes": 12551,
+   "retrieved_at": "2026-09-15T07:29:01Z"
+  },
+  {
+   "page_id": "rv01-067",
+   "request_url": "https://web.archive.org/web/2023/https://www.sacred-texts.com/hin/rigveda/rv01067.htm",
+   "final_url": "https://web.archive.org/web/20240423010359/https://sacred-texts.com/hin/rigveda/rv01067.htm",
+   "http_status": 200,
+   "sha256": "4f95b5f94bf9fbc58f7b00086e81166f53cb53cf6c08706149a15443ee91df0c",
+   "bytes": 12294,
+   "retrieved_at": "2026-09-15T07:29:06Z"
+  },
+  {
+   "page_id": "rv01-068",
+   "request_url": "https://web.archive.org/web/2023/https://www.sacred-texts.com/hin/rigveda/rv01068.htm",
+   "final_url": "https://web.archive.org/web/20231201060805/https://sacred-texts.com/hin/rigveda/rv01068.htm",
+   "http_status": 200,
+   "sha256": "bd167ef59819bcdf75b8478850a4ed5f6906b35af3d1740caa14ae0df8b76628",
+   "bytes": 12491,
+   "retrieved_at": "2026-09-15T07:29:13Z"
+  },
+  {
+   "page_id": "rv01-069",
+   "request_url": "https://web.archive.org/web/2023/https://www.sacred-texts.com/hin/rigveda/rv01069.htm",
+   "final_url": "https://web.archive.org/web/20240423010344/https://sacred-texts.com/hin/rigveda/rv01069.htm",
+   "http_status": 200,
+   "sha256": "7621f418d5112eee0b3d5eb9a2a34770eb6dd29ed194c6d15fe8e25a4fe4daca",
+   "bytes": 12551,
+   "retrieved_at": "2026-09-15T07:29:16Z"
+  },
+  {
+   "page_id": "rv01-070",
+   "request_url": "https://web.archive.org/web/2023/https://www.sacred-texts.com/hin/rigveda/rv01070.htm",
+   "final_url": "https://web.archive.org/web/20240423010357/https://sacred-texts.com/hin/rigveda/rv01070.htm",
+   "http_status": 200,
+   "sha256": "1e9d867055e7b206e23b51f0cfd51715b31f7d5c737ad2a3acea83a12e054b6c",
+   "bytes": 12608,
+   "retrieved_at": "2026-09-15T07:29:21Z"
+  },
+  {
+   "page_id": "rv01-073",
+   "request_url": "https://web.archive.org/web/2023/https://www.sacred-texts.com/hin/rigveda/rv01073.htm",
+   "final_url": "https://web.archive.org/web/20240423010349/https://sacred-texts.com/hin/rigveda/rv01073.htm",
+   "http_status": 200,
+   "sha256": "ff2a100631500daa0c926226b9c7eb94404404f807e22ac1ef61e135765baf89",
+   "bytes": 13520,
+   "retrieved_at": "2026-09-15T07:29:26Z"
+  },
+  {
+   "page_id": "rv10-132",
+   "request_url": "https://web.archive.org/web/2023/https://www.sacred-texts.com/hin/rigveda/rv10132.htm",
+   "final_url": "https://web.archive.org/web/20230922180430/https://sacred-texts.com/hin/rigveda/rv10132.htm",
+   "http_status": 200,
+   "sha256": "9aca107ca8e35b24431e68dcedb317dda6c32eb7f9f06278d258621eb7026553",
+   "bytes": 12890,
+   "retrieved_at": "2026-09-15T07:29:30Z"
+  },
+  {
+   "page_id": "rv10-048",
+   "request_url": "https://web.archive.org/web/2023/https://www.sacred-texts.com/hin/rigveda/rv10048.htm",
+   "final_url": "https://web.archive.org/web/20230929170541/https://sacred-texts.com/hin/rigveda/rv10048.htm",
+   "http_status": 200,
+   "sha256": "01629690a57cbad40e7b050b2be23b84b917a533e7c048661dd1e952ee4b8010",
+   "bytes": 13853,
+   "retrieved_at": "2026-09-15T07:29:35Z"
+  },
+  {
+   "page_id": "rv10-061",
+   "request_url": "https://web.archive.org/web/2023/https://www.sacred-texts.com/hin/rigveda/rv10061.htm",
+   "final_url": "https://web.archive.org/web/20230326214543/https://www.sacred-texts.com/hin/rigveda/rv10061.htm",
+   "http_status": 200,
+   "sha256": "c12cf0b9e2457c58fe9a3a8bdcd5714e65dc8123e44dbfa53629a4ee37d8468b",
+   "bytes": 17447,
+   "retrieved_at": "2026-09-15T07:29:52Z"
+  },
+  {
+   "page_id": "rv10-086",
+   "request_url": "https://web.archive.org/web/2023/https://www.sacred-texts.com/hin/rigveda/rv10086.htm",
+   "final_url": "https://web.archive.org/web/20231206151855/https://sacred-texts.com/hin/rigveda/rv10086.htm",
+   "http_status": 200,
+   "sha256": "777b28a1190a8eadbec4b7b9884dbe5a56d63d8fff682ce1e0c6a8f1b9f2384e",
+   "bytes": 15146,
+   "retrieved_at": "2026-09-15T07:29:56Z"
+  },
+  {
+   "page_id": "rv05-055",
+   "request_url": "https://web.archive.org/web/2023/https://www.sacred-texts.com/hin/rigveda/rv05055.htm",
+   "final_url": "https://web.archive.org/web/20240414213123/https://sacred-texts.com/hin/rigveda/rv05055.htm",
+   "http_status": 200,
+   "sha256": "7480d7d4a8d6b24b70252242478125f89e6ac5de5910ff0d04d7d7150b4706d2",
+   "bytes": 13658,
+   "retrieved_at": "2026-09-15T07:30:03Z"
+  },
+  {
+   "page_id": "rv08-093",
+   "request_url": "https://web.archive.org/web/2023/https://www.sacred-texts.com/hin/rigveda/rv08093.htm",
+   "final_url": "https://web.archive.org/web/20220119020909/https://sacred-texts.com/hin/rigveda/rv08093.htm",
+   "http_status": 200,
+   "sha256": "01b349d34b05cbf74f656643a35822dcc0594953587c24d80e37877dae7916aa",
+   "bytes": 12965,
+   "retrieved_at": "2026-09-15T07:30:07Z"
+  },
+  {
+   "page_id": "rv09-007",
+   "request_url": "https://web.archive.org/web/2023/https://www.sacred-texts.com/hin/rigveda/rv09007.htm",
+   "final_url": "https://web.archive.org/web/20240423010341/https://sacred-texts.com/hin/rigveda/rv09007.htm",
+   "http_status": 200,
+   "sha256": "3bf1ac8cb6ec7572b8a0e612d332b8df834d902cd11ebf318a5f4f8125018a78",
+   "bytes": 12644,
+   "retrieved_at": "2026-09-15T07:30:13Z"
+  }
+ ]
+}

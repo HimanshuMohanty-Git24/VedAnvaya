@@ -1,0 +1,521 @@
+{
+ "artifact": "AGENT7_PROPOSED_CANONICAL_MUTATIONS",
+ "agent": 7,
+ "write_surface": "Agent 7 wrote nothing to Neo4j. Every query it ran was MATCH/RETURN. This file is a proposal for the lead.",
+ "admission_rule": "only rows that passed the UNMODIFIED Gate B and Gate C, verified regression-free against a control run of the same gates over the untouched population",
+ "baseline_census": {
+  "nodes": 117970,
+  "relationships": 282389,
+  "mantras_without_their_own_HAS_TRANSLATION": {
+   "RV": 37,
+   "SV": 1671,
+   "YV": 36,
+   "AV": 51
+  }
+ },
+ "mutations": [
+  {
+   "id": "M1_CREATE_TRANSLATIONS",
+   "operation": "CREATE :Translation:Internal + MERGE (:Mantra)-[:HAS_TRANSLATION]->()",
+   "count": 12,
+   "by_veda": {
+    "RV": 1,
+    "YV": 11
+   },
+   "rows": [
+    {
+     "canonical_key": "VG:RV:SAK:M08:S093:V029",
+     "canonical_urn": "urn:vedagraph:mantra:rigveda:shakala:mandala:8:sukta:93:mantra:29",
+     "translation_id": "0e2891a2-7d8e-5d93-a362-b734e4a7ca93",
+     "gate_b": "B_PASS",
+     "gate_c": "C_PASS",
+     "properties": {
+      "text": "O Satakratu, bring to us all blessings, all felicity: Fbr, Indra, thou art kind to us.",
+      "language": "en",
+      "translator": "Ralph T. H. Griffith",
+      "work_edition": "The Hymns of the Rigveda, second edition",
+      "year": 1896,
+      "source_id": "WIKISOURCE_GRIFFITH_RV",
+      "source_url": "https://en.wikisource.org/wiki/The_Rig_Veda/Mandala_8/Hymn_93",
+      "source_locator": "Wikisource Rig Veda Mandala 8 Hymn 93, printed label 2§ standing between the literal labels 28 and 30",
+      "snapshot_sha256": "ed0222c19c5ee9f52251ff02949d230a6ee5c19437a5dda6ea483c0d6df3beb5",
+      "alignment_level": "MANTRA",
+      "quality_status": "MACHINE_ALIGNED",
+      "rights_status": "PUBLIC_DOMAIN",
+      "alignment_confidence": "SOURCE_LABELLED_MANTRA",
+      "import_batch": "AGENT7_TRANSLATION_RESIDUALS"
+     },
+     "edge": {
+      "type": "HAS_TRANSLATION",
+      "properties": {
+       "knowledge_layer": "L1_SOURCE_EXPLICIT",
+       "evidence_basis": "STRUCTURAL",
+       "grade_basis": "corpus structure as printed by the edition",
+       "translator": "Ralph T. H. Griffith",
+       "language": "en",
+       "attribution_precision": "NOT_AN_ATTRIBUTION",
+       "quality_tier": "TIER_A"
+      }
+     }
+    },
+    {
+     "canonical_key": "VG:YV:VSM:A12:V106",
+     "canonical_urn": "urn:vedagraph:mantra:yajurveda:vajasaneyi-madhyandina:adhyaya:12:mantra:106",
+     "translation_id": "f3787c2c-f916-574b-b082-8dca93232c15",
+     "gate_b": "B_PASS",
+     "gate_c": "C_PASS",
+     "properties": {
+      "text": "Agni, life-power and fame are thine: thy fires blaze mightily,\nthou rich in wealth of beams!\nSage, passing bright, thou givest to the worshipper, with\nstrength, the food that merits laud.",
+      "language": "en",
+      "translator": "Ralph T. H. Griffith",
+      "work_edition": "Ralph T. H. Griffith, The Texts of the White Yajurveda, E. J. Lazarus, Benares, 1899",
+      "year": 1899,
+      "source_id": "SACRED_TEXTS_WYV_SNAPSHOT_2026_09_07",
+      "source_url": "https://sacred-texts.com/hin/wyv/wyvbk12.htm",
+      "source_locator": "book page wyvbk12.htm, printed label '107', printed page 112",
+      "snapshot_sha256": "67559e80228d45270c24e04c7cda58a74d07bf4aeb4c3020a012b77471ef2940",
+      "alignment_level": "MANTRA",
+      "quality_status": "MACHINE_ALIGNED",
+      "rights_status": "PUBLIC_DOMAIN",
+      "alignment_confidence": "SOURCE_LABELLED_MANTRA",
+      "import_batch": "AGENT7_TRANSLATION_RESIDUALS"
+     },
+     "edge": {
+      "type": "HAS_TRANSLATION",
+      "properties": {
+       "knowledge_layer": "L1_SOURCE_EXPLICIT",
+       "evidence_basis": "STRUCTURAL",
+       "grade_basis": "corpus structure as printed by the edition",
+       "translator": "Ralph T. H. Griffith",
+       "language": "en",
+       "attribution_precision": "NOT_AN_ATTRIBUTION",
+       "quality_tier": "TIER_A"
+      }
+     }
+    },
+    {
+     "canonical_key": "VG:YV:VSM:A12:V107",
+     "canonical_urn": "urn:vedagraph:mantra:yajurveda:vajasaneyi-madhyandina:adhyaya:12:mantra:107",
+     "translation_id": "9909afe2-eaf2-5311-8cf5-e21c312cada2",
+     "gate_b": "B_PASS",
+     "gate_c": "C_PASS",
+     "properties": {
+      "text": "With brilliant, purifying sheen, with perfect sheen thou\nliftest up thyself in light.\nThou, visiting both thy Mothers, aidest them as Son: thou\njoinest close the earth and heaven.",
+      "language": "en",
+      "translator": "Ralph T. H. Griffith",
+      "work_edition": "Ralph T. H. Griffith, The Texts of the White Yajurveda, E. J. Lazarus, Benares, 1899",
+      "year": 1899,
+      "source_id": "SACRED_TEXTS_WYV_SNAPSHOT_2026_09_07",
+      "source_url": "https://sacred-texts.com/hin/wyv/wyvbk12.htm",
+      "source_locator": "book page wyvbk12.htm, printed label '108', printed page 112",
+      "snapshot_sha256": "67559e80228d45270c24e04c7cda58a74d07bf4aeb4c3020a012b77471ef2940",
+      "alignment_level": "MANTRA",
+      "quality_status": "MACHINE_ALIGNED",
+      "rights_status": "PUBLIC_DOMAIN",
+      "alignment_confidence": "SOURCE_LABELLED_MANTRA",
+      "import_batch": "AGENT7_TRANSLATION_RESIDUALS"
+     },
+     "edge": {
+      "type": "HAS_TRANSLATION",
+      "properties": {
+       "knowledge_layer": "L1_SOURCE_EXPLICIT",
+       "evidence_basis": "STRUCTURAL",
+       "grade_basis": "corpus structure as printed by the edition",
+       "translator": "Ralph T. H. Griffith",
+       "language": "en",
+       "attribution_precision": "NOT_AN_ATTRIBUTION",
+       "quality_tier": "TIER_A"
+      }
+     }
+    },
+    {
+     "canonical_key": "VG:YV:VSM:A12:V108",
+     "canonical_urn": "urn:vedagraph:mantra:yajurveda:vajasaneyi-madhyandina:adhyaya:12:mantra:108",
+     "translation_id": "ffe6c4ec-7894-5d55-9e5f-d0a5b84cff3e",
+     "gate_b": "B_PASS",
+     "gate_c": "C_PASS",
+     "properties": {
+      "text": "O Jâtavedas, Son of Strength, rejoice thyself, gracious, in\nour fair hymns and songs.\nIn thee are treasured various forms of strengthening food,\nborn nobly and of wondrous help.",
+      "language": "en",
+      "translator": "Ralph T. H. Griffith",
+      "work_edition": "Ralph T. H. Griffith, The Texts of the White Yajurveda, E. J. Lazarus, Benares, 1899",
+      "year": 1899,
+      "source_id": "SACRED_TEXTS_WYV_SNAPSHOT_2026_09_07",
+      "source_url": "https://sacred-texts.com/hin/wyv/wyvbk12.htm",
+      "source_locator": "book page wyvbk12.htm, printed label '109', printed page 113",
+      "snapshot_sha256": "67559e80228d45270c24e04c7cda58a74d07bf4aeb4c3020a012b77471ef2940",
+      "alignment_level": "MANTRA",
+      "quality_status": "MACHINE_ALIGNED",
+      "rights_status": "PUBLIC_DOMAIN",
+      "alignment_confidence": "SOURCE_LABELLED_MANTRA",
+      "import_batch": "AGENT7_TRANSLATION_RESIDUALS"
+     },
+     "edge": {
+      "type": "HAS_TRANSLATION",
+      "properties": {
+       "knowledge_layer": "L1_SOURCE_EXPLICIT",
+       "evidence_basis": "STRUCTURAL",
+       "grade_basis": "corpus structure as printed by the edition",
+       "translator": "Ralph T. H. Griffith",
+       "language": "en",
+       "attribution_precision": "NOT_AN_ATTRIBUTION",
+       "quality_tier": "TIER_A"
+      }
+     }
+    },
+    {
+     "canonical_key": "VG:YV:VSM:A12:V109",
+     "canonical_urn": "urn:vedagraph:mantra:yajurveda:vajasaneyi-madhyandina:adhyaya:12:mantra:109",
+     "translation_id": "d5bf60e9-33f1-59c3-93fc-5a25b4b7e73a",
+     "gate_b": "B_PASS",
+     "gate_c": "C_PASS",
+     "properties": {
+      "text": "Agni, spread forth, as Ruler, over living things: give wealth\nto us, Immortal God.\nThou shinest out from beauty fair to look upon: thou\nleadest us to conquering power.",
+      "language": "en",
+      "translator": "Ralph T. H. Griffith",
+      "work_edition": "Ralph T. H. Griffith, The Texts of the White Yajurveda, E. J. Lazarus, Benares, 1899",
+      "year": 1899,
+      "source_id": "SACRED_TEXTS_WYV_SNAPSHOT_2026_09_07",
+      "source_url": "https://sacred-texts.com/hin/wyv/wyvbk12.htm",
+      "source_locator": "book page wyvbk12.htm, printed label '110', printed page 113",
+      "snapshot_sha256": "67559e80228d45270c24e04c7cda58a74d07bf4aeb4c3020a012b77471ef2940",
+      "alignment_level": "MANTRA",
+      "quality_status": "MACHINE_ALIGNED",
+      "rights_status": "PUBLIC_DOMAIN",
+      "alignment_confidence": "SOURCE_LABELLED_MANTRA",
+      "import_batch": "AGENT7_TRANSLATION_RESIDUALS"
+     },
+     "edge": {
+      "type": "HAS_TRANSLATION",
+      "properties": {
+       "knowledge_layer": "L1_SOURCE_EXPLICIT",
+       "evidence_basis": "STRUCTURAL",
+       "grade_basis": "corpus structure as printed by the edition",
+       "translator": "Ralph T. H. Griffith",
+       "language": "en",
+       "attribution_precision": "NOT_AN_ATTRIBUTION",
+       "quality_tier": "TIER_A"
+      }
+     }
+    },
+    {
+     "canonical_key": "VG:YV:VSM:A12:V110",
+     "canonical_urn": "urn:vedagraph:mantra:yajurveda:vajasaneyi-madhyandina:adhyaya:12:mantra:110",
+     "translation_id": "e551c034-90d4-5b56-8c29-e4b973c0f586",
+     "gate_b": "B_PASS",
+     "gate_c": "C_PASS",
+     "properties": {
+      "text": "To him, the wise, who orders sacrifice, who hath great riches\nunder his control,\nThou givest blest award of good, and plenteous food, givest\nhim wealth that conquers all.",
+      "language": "en",
+      "translator": "Ralph T. H. Griffith",
+      "work_edition": "Ralph T. H. Griffith, The Texts of the White Yajurveda, E. J. Lazarus, Benares, 1899",
+      "year": 1899,
+      "source_id": "SACRED_TEXTS_WYV_SNAPSHOT_2026_09_07",
+      "source_url": "https://sacred-texts.com/hin/wyv/wyvbk12.htm",
+      "source_locator": "book page wyvbk12.htm, printed label '111', printed page 113",
+      "snapshot_sha256": "67559e80228d45270c24e04c7cda58a74d07bf4aeb4c3020a012b77471ef2940",
+      "alignment_level": "MANTRA",
+      "quality_status": "MACHINE_ALIGNED",
+      "rights_status": "PUBLIC_DOMAIN",
+      "alignment_confidence": "SOURCE_LABELLED_MANTRA",
+      "import_batch": "AGENT7_TRANSLATION_RESIDUALS"
+     },
+     "edge": {
+      "type": "HAS_TRANSLATION",
+      "properties": {
+       "knowledge_layer": "L1_SOURCE_EXPLICIT",
+       "evidence_basis": "STRUCTURAL",
+       "grade_basis": "corpus structure as printed by the edition",
+       "translator": "Ralph T. H. Griffith",
+       "language": "en",
+       "attribution_precision": "NOT_AN_ATTRIBUTION",
+       "quality_tier": "TIER_A"
+      }
+     }
+    },
+    {
+     "canonical_key": "VG:YV:VSM:A12:V111",
+     "canonical_urn": "urn:vedagraph:mantra:yajurveda:vajasaneyi-madhyandina:adhyaya:12:mantra:111",
+     "translation_id": "8cace8c8-58bc-5ae2-8b19-3d2c640fe548",
+     "gate_b": "B_PASS",
+     "gate_c": "C_PASS",
+     "properties": {
+      "text": "The men have set before them for their welfare Agni, strong,\nvisible to all, the Holy.\nThee, Godlike One, with ears to hear, most famous, men's\ngenerations magnify with praise-songs.",
+      "language": "en",
+      "translator": "Ralph T. H. Griffith",
+      "work_edition": "Ralph T. H. Griffith, The Texts of the White Yajurveda, E. J. Lazarus, Benares, 1899",
+      "year": 1899,
+      "source_id": "SACRED_TEXTS_WYV_SNAPSHOT_2026_09_07",
+      "source_url": "https://sacred-texts.com/hin/wyv/wyvbk12.htm",
+      "source_locator": "book page wyvbk12.htm, printed label '112', printed page 113",
+      "snapshot_sha256": "67559e80228d45270c24e04c7cda58a74d07bf4aeb4c3020a012b77471ef2940",
+      "alignment_level": "MANTRA",
+      "quality_status": "MACHINE_ALIGNED",
+      "rights_status": "PUBLIC_DOMAIN",
+      "alignment_confidence": "SOURCE_LABELLED_MANTRA",
+      "import_batch": "AGENT7_TRANSLATION_RESIDUALS"
+     },
+     "edge": {
+      "type": "HAS_TRANSLATION",
+      "properties": {
+       "knowledge_layer": "L1_SOURCE_EXPLICIT",
+       "evidence_basis": "STRUCTURAL",
+       "grade_basis": "corpus structure as printed by the edition",
+       "translator": "Ralph T. H. Griffith",
+       "language": "en",
+       "attribution_precision": "NOT_AN_ATTRIBUTION",
+       "quality_tier": "TIER_A"
+      }
+     }
+    },
+    {
+     "canonical_key": "VG:YV:VSM:A12:V112",
+     "canonical_urn": "urn:vedagraph:mantra:yajurveda:vajasaneyi-madhyandina:adhyaya:12:mantra:112",
+     "translation_id": "e77e28a5-8819-57e3-ae61-29c965c5d89b",
+     "gate_b": "B_PASS",
+     "gate_c": "C_PASS",
+     "properties": {
+      "text": "Soma, wax great. From every side may vigorous powers\nunite in thee.\nBe in the gathering-place of strength.",
+      "language": "en",
+      "translator": "Ralph T. H. Griffith",
+      "work_edition": "Ralph T. H. Griffith, The Texts of the White Yajurveda, E. J. Lazarus, Benares, 1899",
+      "year": 1899,
+      "source_id": "SACRED_TEXTS_WYV_SNAPSHOT_2026_09_07",
+      "source_url": "https://sacred-texts.com/hin/wyv/wyvbk12.htm",
+      "source_locator": "book page wyvbk12.htm, printed label '113', printed page 113",
+      "snapshot_sha256": "67559e80228d45270c24e04c7cda58a74d07bf4aeb4c3020a012b77471ef2940",
+      "alignment_level": "MANTRA",
+      "quality_status": "MACHINE_ALIGNED",
+      "rights_status": "PUBLIC_DOMAIN",
+      "alignment_confidence": "SOURCE_LABELLED_MANTRA",
+      "import_batch": "AGENT7_TRANSLATION_RESIDUALS"
+     },
+     "edge": {
+      "type": "HAS_TRANSLATION",
+      "properties": {
+       "knowledge_layer": "L1_SOURCE_EXPLICIT",
+       "evidence_basis": "STRUCTURAL",
+       "grade_basis": "corpus structure as printed by the edition",
+       "translator": "Ralph T. H. Griffith",
+       "language": "en",
+       "attribution_precision": "NOT_AN_ATTRIBUTION",
+       "quality_tier": "TIER_A"
+      }
+     }
+    },
+    {
+     "canonical_key": "VG:YV:VSM:A12:V113",
+     "canonical_urn": "urn:vedagraph:mantra:yajurveda:vajasaneyi-madhyandina:adhyaya:12:mantra:113",
+     "translation_id": "3d682519-5b56-531c-b2a0-4b4f72d946b6",
+     "gate_b": "B_PASS",
+     "gate_c": "C_PASS",
+     "properties": {
+      "text": "In thee be juicy nutriments united, and power and mighty\nfoe-subduing vigour.\nWaxing to immortality, O Soma, win highest glory for\nthyself in heaven.",
+      "language": "en",
+      "translator": "Ralph T. H. Griffith",
+      "work_edition": "Ralph T. H. Griffith, The Texts of the White Yajurveda, E. J. Lazarus, Benares, 1899",
+      "year": 1899,
+      "source_id": "SACRED_TEXTS_WYV_SNAPSHOT_2026_09_07",
+      "source_url": "https://sacred-texts.com/hin/wyv/wyvbk12.htm",
+      "source_locator": "book page wyvbk12.htm, printed label '114', printed page 113",
+      "snapshot_sha256": "67559e80228d45270c24e04c7cda58a74d07bf4aeb4c3020a012b77471ef2940",
+      "alignment_level": "MANTRA",
+      "quality_status": "MACHINE_ALIGNED",
+      "rights_status": "PUBLIC_DOMAIN",
+      "alignment_confidence": "SOURCE_LABELLED_MANTRA",
+      "import_batch": "AGENT7_TRANSLATION_RESIDUALS"
+     },
+     "edge": {
+      "type": "HAS_TRANSLATION",
+      "properties": {
+       "knowledge_layer": "L1_SOURCE_EXPLICIT",
+       "evidence_basis": "STRUCTURAL",
+       "grade_basis": "corpus structure as printed by the edition",
+       "translator": "Ralph T. H. Griffith",
+       "language": "en",
+       "attribution_precision": "NOT_AN_ATTRIBUTION",
+       "quality_tier": "TIER_A"
+      }
+     }
+    },
+    {
+     "canonical_key": "VG:YV:VSM:A12:V114",
+     "canonical_urn": "urn:vedagraph:mantra:yajurveda:vajasaneyi-madhyandina:adhyaya:12:mantra:114",
+     "translation_id": "e1374f3a-91e4-5e13-b7df-ecb502d41da3",
+     "gate_b": "B_PASS",
+     "gate_c": "C_PASS",
+     "properties": {
+      "text": "Wax, O most gladdening Soma, great through all thy\nfilaments, and be\nA friend of most illustrious fame to prosper us.",
+      "language": "en",
+      "translator": "Ralph T. H. Griffith",
+      "work_edition": "Ralph T. H. Griffith, The Texts of the White Yajurveda, E. J. Lazarus, Benares, 1899",
+      "year": 1899,
+      "source_id": "SACRED_TEXTS_WYV_SNAPSHOT_2026_09_07",
+      "source_url": "https://sacred-texts.com/hin/wyv/wyvbk12.htm",
+      "source_locator": "book page wyvbk12.htm, printed label '115', printed page 113",
+      "snapshot_sha256": "67559e80228d45270c24e04c7cda58a74d07bf4aeb4c3020a012b77471ef2940",
+      "alignment_level": "MANTRA",
+      "quality_status": "MACHINE_ALIGNED",
+      "rights_status": "PUBLIC_DOMAIN",
+      "alignment_confidence": "SOURCE_LABELLED_MANTRA",
+      "import_batch": "AGENT7_TRANSLATION_RESIDUALS"
+     },
+     "edge": {
+      "type": "HAS_TRANSLATION",
+      "properties": {
+       "knowledge_layer": "L1_SOURCE_EXPLICIT",
+       "evidence_basis": "STRUCTURAL",
+       "grade_basis": "corpus structure as printed by the edition",
+       "translator": "Ralph T. H. Griffith",
+       "language": "en",
+       "attribution_precision": "NOT_AN_ATTRIBUTION",
+       "quality_tier": "TIER_A"
+      }
+     }
+    },
+    {
+     "canonical_key": "VG:YV:VSM:A12:V115",
+     "canonical_urn": "urn:vedagraph:mantra:yajurveda:vajasaneyi-madhyandina:adhyaya:12:mantra:115",
+     "translation_id": "0894e339-92b9-5ac8-9c32-eb79e00a32fa",
+     "gate_b": "B_PASS",
+     "gate_c": "C_PASS",
+     "properties": {
+      "text": "May Vatsa draw thy mind away, even from thy loftiest\ndwelling-place,\nAgni, with song that yearns for thee.",
+      "language": "en",
+      "translator": "Ralph T. H. Griffith",
+      "work_edition": "Ralph T. H. Griffith, The Texts of the White Yajurveda, E. J. Lazarus, Benares, 1899",
+      "year": 1899,
+      "source_id": "SACRED_TEXTS_WYV_SNAPSHOT_2026_09_07",
+      "source_url": "https://sacred-texts.com/hin/wyv/wyvbk12.htm",
+      "source_locator": "book page wyvbk12.htm, printed label '116', printed page 113",
+      "snapshot_sha256": "67559e80228d45270c24e04c7cda58a74d07bf4aeb4c3020a012b77471ef2940",
+      "alignment_level": "MANTRA",
+      "quality_status": "MACHINE_ALIGNED",
+      "rights_status": "PUBLIC_DOMAIN",
+      "alignment_confidence": "SOURCE_LABELLED_MANTRA",
+      "import_batch": "AGENT7_TRANSLATION_RESIDUALS"
+     },
+     "edge": {
+      "type": "HAS_TRANSLATION",
+      "properties": {
+       "knowledge_layer": "L1_SOURCE_EXPLICIT",
+       "evidence_basis": "STRUCTURAL",
+       "grade_basis": "corpus structure as printed by the edition",
+       "translator": "Ralph T. H. Griffith",
+       "language": "en",
+       "attribution_precision": "NOT_AN_ATTRIBUTION",
+       "quality_tier": "TIER_A"
+      }
+     }
+    },
+    {
+     "canonical_key": "VG:YV:VSM:A12:V116",
+     "canonical_urn": "urn:vedagraph:mantra:yajurveda:vajasaneyi-madhyandina:adhyaya:12:mantra:116",
+     "translation_id": "72808450-75e1-528d-9e88-149a380c3471",
+     "gate_b": "B_PASS",
+     "gate_c": "C_PASS",
+     "properties": {
+      "text": "Agni, best Angiras, to thee all people who have pleasant\nhomes\nApart have turned to gain their wish.",
+      "language": "en",
+      "translator": "Ralph T. H. Griffith",
+      "work_edition": "Ralph T. H. Griffith, The Texts of the White Yajurveda, E. J. Lazarus, Benares, 1899",
+      "year": 1899,
+      "source_id": "SACRED_TEXTS_WYV_SNAPSHOT_2026_09_07",
+      "source_url": "https://sacred-texts.com/hin/wyv/wyvbk12.htm",
+      "source_locator": "book page wyvbk12.htm, printed label '117', printed page 113",
+      "snapshot_sha256": "67559e80228d45270c24e04c7cda58a74d07bf4aeb4c3020a012b77471ef2940",
+      "alignment_level": "MANTRA",
+      "quality_status": "MACHINE_ALIGNED",
+      "rights_status": "PUBLIC_DOMAIN",
+      "alignment_confidence": "SOURCE_LABELLED_MANTRA",
+      "import_batch": "AGENT7_TRANSLATION_RESIDUALS"
+     },
+     "edge": {
+      "type": "HAS_TRANSLATION",
+      "properties": {
+       "knowledge_layer": "L1_SOURCE_EXPLICIT",
+       "evidence_basis": "STRUCTURAL",
+       "grade_basis": "corpus structure as printed by the edition",
+       "translator": "Ralph T. H. Griffith",
+       "language": "en",
+       "attribution_precision": "NOT_AN_ATTRIBUTION",
+       "quality_tier": "TIER_A"
+      }
+     }
+    }
+   ],
+   "expected_census_delta": {
+    "nodes": 12,
+    "relationships": 12
+   }
+  },
+  {
+   "id": "M2_REPAIR_RV_8_93_28_LITERAL",
+   "operation": "SET t.text on one existing :Translation",
+   "count": 1,
+   "why": "the live literal for RV 8.93.28 carries the OCR'd printed label 2§ and the whole of verse 29's English after it. Leaving it would put verse 29's text on two keys at once, and leave page furniture inside a canonical literal.",
+   "translation_id": "238aa74f-a50e-53ea-8fca-a93ad9aae6b2",
+   "text_before": "Bring to us all things excellent, O Satakratu, food and strength: For, Indra, thou art kind to us. 2§ O Satakratu, bring to us all blessings, all felicity: Fbr, Indra, thou art kind to us.",
+   "text_after": "Bring to us all things excellent, O Satakratu, food and strength: For, Indra, thou art kind to us.",
+   "bytes_removed": 90,
+   "must_run_with": "M1, or verse 29's English is deleted rather than moved",
+   "expected_census_delta": {
+    "nodes": 0,
+    "relationships": 0
+   }
+  },
+  {
+   "id": "M3_SET_ALIGNMENT_CONFIDENCE",
+   "operation": "SET t.alignment_confidence, t.alignment_confidence_basis",
+   "count": 18415,
+   "payload_file": "alignment_confidence_rows.jsonl",
+   "why": "GAP-TRANSLATION-005 clause 1: 18,415 of 18,415 are null",
+   "note": "derived from evidence each node already carries, closed vocabulary, unknown shapes raise. Re-run alignment_confidence.py after M1 so the 12 new nodes are graded too.",
+   "expected_census_delta": {
+    "nodes": 0,
+    "relationships": 0
+   }
+  }
+ ],
+ "withheld_rows": [
+  {
+   "canonical_key": "VG:YV:VSM:A12:V117",
+   "gate_b": "B_FAIL_POLICY",
+   "gate_c": "C_PASS"
+  }
+ ],
+ "expected_census_after": {
+  "nodes": 117982,
+  "relationships": 282401,
+  "mantras_without_their_own_HAS_TRANSLATION": {
+   "AV": 51,
+   "RV": 36,
+   "SV": 1671,
+   "YV": 25
+  }
+ },
+ "closure_test_after_import": {
+  "GAP-TRANSLATION-002_AV": {
+   "demands": 0,
+   "predicted": 51,
+   "passes": false
+  },
+  "GAP-TRANSLATION-003_YV": {
+   "demands": 0,
+   "predicted": 25,
+   "passes": false
+  },
+  "GAP-TRANSLATION-004_RV": {
+   "demands": 0,
+   "predicted": 36,
+   "passes": false
+  },
+  "GAP-TRANSLATION-005": {
+   "demands": 0,
+   "predicted": 0,
+   "passes": true,
+   "second_clause": "the 158 is reproducible; see alignment_confidence.json"
+  },
+  "note": "none of 002/003/004 closes on this delta and the numbers say so. Coverage improving is not closure, and the registry says so in its own words."
+ }
+}

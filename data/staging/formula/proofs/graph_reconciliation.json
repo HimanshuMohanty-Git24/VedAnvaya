@@ -1,0 +1,89 @@
+{
+ "question": "does re-running discovery on the current corpus change anything?",
+ "rerun": {
+  "formulas": {
+   "rebuilt": 4825,
+   "committed": 4825,
+   "byte_identical": true
+  },
+  "formula_occurrences": {
+   "rebuilt": 22686,
+   "committed": 22686,
+   "byte_identical": true
+  },
+  "cross_veda_parallels": {
+   "rebuilt": 6271,
+   "committed": 6271,
+   "byte_identical": true
+  },
+  "verdict": "the committed enrichment artifacts reproduce byte for byte from the current corpus. The corpus has not moved since they were built and the formula/parallel gap is NOT staleness. Every gap below is structural."
+ },
+ "graph_edge_counts_read_2026_09_15": {
+  "EXACT_PARALLEL_OF": 1006,
+  "PARALLEL_TO": 69,
+  "USES_FORMULA": 22686,
+  "NEAR_PARALLEL_OF": 3049,
+  "REUSES_TEXT_FROM": 1684,
+  "VARIANT_OF": 788,
+  "HAS_FORMULA": 2037,
+  "MEMBER_OF_FAMILY": 2037
+ },
+ "artifact_vs_graph": {
+  "cross_veda_artifact_rows": 6271,
+  "graph_parallel_edges": 6527,
+  "difference": 256,
+  "explained": "the 256 within-Rigveda EXACT_PARALLEL_OF edges come from the older vedagraph.lexical layer, not from the cross-Veda artifact. 6,271 + 256 = 6,527. Rows sent equals rows landed for the cross-Veda layer."
+ },
+ "within_recension_coverage_before": {
+  "RV": "252 EXACT_PARALLEL_OF at SOURCE_EXACT plus 4 at LEMMA_SEQUENCE_EXACT, plus 69 PARALLEL_TO",
+  "SV": "0",
+  "YV": "0",
+  "AV": "0",
+  "note": "no within-recension parallel edge exists for the Samaveda, Yajurveda or Atharvaveda"
+ },
+ "within_recension_identity_found": {
+  "AV": 244,
+  "RV": 190,
+  "SV": 405,
+  "YV": 128
+ },
+ "new_identity_pairs_by_veda": {
+  "AV": 131,
+  "YV": 80,
+  "SV": 204
+ },
+ "new_relation_pairs": {
+  "identity": 415,
+  "near": 831
+ },
+ "existing_rv_layer_overlap": {
+  "rv_parallel_to_edges": 69,
+  "also_found_by_this_run_as_a_near_parallel": 40,
+  "found_by_neither_identity_nor_near": 29,
+  "reading": "the RV lexical layer's acceptance policy is token-based (ordered token similarity 0.80, token Jaccard 0.70, edit similarity 0.80, length ratio 0.60); this run's is character-based. 40 of 69 agree. The 29 that do not are a difference between two declared policies, not a defect in either, and this run does not retract them."
+ },
+ "within_exact_reconciliation": {
+  "graph_within_veda_exact_parallel_edges": 256,
+  "reproduced_by_this_run": 252,
+  "not_reproduced": 4,
+  "explained": "the 4 not reproduced carry strongest_method = LEMMA_SEQUENCE_EXACT. That is a lemma-sequence criterion, not a surface criterion, so no level of this ladder can reach them. They are correct edges this run cannot corroborate, not misses."
+ },
+ "gap_cross_veda_003_is_a_name_collision_not_an_absence": {
+  "registry_claim": "256 of 1,006 EXACT_PARALLEL_OF edges carry no parallel_id",
+  "measured": "true -- and the same 256 are also the only EXACT_PARALLEL_OF edges with a null match_level",
+  "finding": "those 256 are not missing the fact. They carry strongest_method = SOURCE_EXACT (246 + 6) or LEMMA_SEQUENCE_EXACT (4) and a methods array, written by the RV lexical layer under a different property name than the enrichment layer's match_level. One axis, two names -- so a backfill should map ParallelMethod onto MatchLevel rather than re-derive, and relations.jsonl supplies the MatchLevel value for 252 of the 256.",
+  "relation_row_deltas": {
+   "TYPOLOGY_BACKFILL_ONLY": 4368,
+   "NEW_RELATION": 1252,
+   "RETYPE_PROPOSED": 515
+  }
+ },
+ "rows_by_scope_and_claim": {
+  "CROSS_RECENSION|EXACT_PARALLEL": 279,
+  "CROSS_RECENSION|NEAR_PARALLEL": 3049,
+  "CROSS_RECENSION|VARIANT": 1259,
+  "WITHIN_RECENSION|EXACT_PARALLEL": 457,
+  "WITHIN_RECENSION|NEAR_PARALLEL": 875,
+  "WITHIN_RECENSION|VARIANT": 216
+ }
+}

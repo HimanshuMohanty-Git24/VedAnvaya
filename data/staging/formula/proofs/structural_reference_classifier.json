@@ -1,0 +1,222 @@
+{
+ "owner_ruling": "the artifact was not importable: a third ceiling axis added after the fact is not a classifier that handles structural references correctly from the start. Required: fix the classifier as a CLASS, re-run the whole candidate population, and test five classes explicitly including zeros.",
+ "what_a_structural_reference_is": "material inside a stored text field that ADDRESSES or ANNOTATES the verse rather than being the verse. The first version handled one instance of one class -- a trailing digit -- as an exception.",
+ "the_five_classes": [
+  "SELF_ADDRESS",
+  "SECTION_LABEL",
+  "EDITION_APPARATUS",
+  "EMBEDDED_CITATION_LANGUAGE",
+  "TRUE_VARIANT_WORDING"
+ ],
+ "the_general_rule_that_replaced_the_digit_exception": {
+  "different_script": "SCRIPT_FOLDED",
+  "different_accent_notation": "ACCENT_INSENSITIVE",
+  "same_script_and_notation": "PUNCTUATION_NORMALIZED",
+  "note": "SOURCE_EXACT and UNICODE_NORMALIZED are not ceilings. Classes 1, 2 and 4 are removed by the stripper and class 3 is what PUNCTUATION_NORMALIZED folds, so that rung IS 'the text with all structural reference set aside'. There is no digit branch and no per-pair exception."
+ },
+ "why_it_generalises": "classes 1, 2 and 4 are removed by the stripper; class 3 is exactly what PUNCTUATION_NORMALIZED folds. So that rung IS 'the text with all structural reference set aside', and the ceiling stops there. SOURCE_EXACT and UNICODE_NORMALIZED are no longer ceilings -- reaching them is recorded in levels_reached as a bonus, never required. There is no digit branch, no self-address branch and no per-pair exception in the decision.",
+ "stripper_rules": {
+  "R1": "grouped annotations {} [] () <>, any position",
+  "R2": "leading cross-reference clause, prefix only",
+  "R3": "commentary tail at the Uvata sigil after a danda, tail only",
+  "R4": "any other citation marker is flagged and refused, never stripped"
+ },
+ "stripper_removals_per_veda": {
+  "RV": {},
+  "SV": {
+   "SECTION_LABEL": 3,
+   "EMBEDDED_CITATION_LANGUAGE": 2
+  },
+  "YV": {
+   "SECTION_LABEL": 4,
+   "EMBEDDED_CITATION_LANGUAGE": 1
+  },
+  "AV": {
+   "SECTION_LABEL": 295
+  }
+ },
+ "stripper_detail": {
+  "AV|SECTION_LABEL": [
+   {
+    "citation": "AVS 3.3.3",
+    "removed": [
+     "{4}"
+    ],
+    "chars_removed": 2
+   },
+   {
+    "citation": "AVS 3.3.4",
+    "removed": [
+     "{5}"
+    ],
+    "chars_removed": 2
+   },
+   {
+    "citation": "AVS 3.3.5",
+    "removed": [
+     "{6}"
+    ],
+    "chars_removed": 2
+   },
+   {
+    "citation": "AVS 3.3.6",
+    "removed": [
+     "{7}"
+    ],
+    "chars_removed": 2
+   },
+   {
+    "citation": "AVS 8.1.10",
+    "removed": [
+     "{1}"
+    ],
+    "chars_removed": 2
+   },
+   {
+    "citation": "AVS 8.1.21",
+    "removed": [
+     "{2}"
+    ],
+    "chars_removed": 2
+   }
+  ],
+  "SV|SECTION_LABEL": [
+   {
+    "citation": "SV ARANYA 1.4",
+    "removed": [
+     "(आरण्यकगानम्)"
+    ],
+    "chars_removed": 44
+   },
+   {
+    "citation": "SV CHANDA 2.7.7",
+    "removed": [
+     "(आरण्यकम्)"
+    ],
+    "chars_removed": 9
+   },
+   {
+    "citation": "SV CHANDA 4.5.6",
+    "removed": [
+     "(आरण्यकगानम्)"
+    ],
+    "chars_removed": 12
+   }
+  ],
+  "SV|EMBEDDED_CITATION_LANGUAGE": [
+   {
+    "citation": "SV ARANYA 1.4",
+    "removed": [
+     "prefix:   द्र. आर्षेयब्राह्मणम् भाष्यम् "
+    ],
+    "chars_removed": 44
+   },
+   {
+    "citation": "SV CHANDA 1.8.4",
+    "removed": [
+     "prefix: द्र. इडामग्ने "
+    ],
+    "chars_removed": 14
+   }
+  ],
+  "YV|SECTION_LABEL": [
+   {
+    "citation": "VSM 7.3",
+    "removed": [
+     "(१ उपरिप्रुता इति पाठः.)"
+    ],
+    "chars_removed": 1094
+   },
+   {
+    "citation": "VSM 8.55",
+    "removed": [
+     "(१)"
+    ],
+    "chars_removed": 2
+   },
+   {
+    "citation": "VSM 9.31",
+    "removed": [
+     "(तु. तैसं. १.७.११.१)"
+    ],
+    "chars_removed": 19
+   },
+   {
+    "citation": "VSM 24.37",
+    "removed": [
+     "(पुण्डृणाची – पाठभेदः)"
+    ],
+    "chars_removed": 21
+   }
+  ],
+  "YV|EMBEDDED_CITATION_LANGUAGE": [
+   {
+    "citation": "VSM 7.3",
+    "removed": [
+     "tail: ।   उ० जुहोति । स्वांकृतोऽसि स्वयं कृतोऽसि । स्वयं कृतोसीति "
+    ],
+    "chars_removed": 1094
+   }
+  ]
+ },
+ "guard": {
+  "max_strip_fraction": 0.4,
+  "breaches": [
+   {
+    "citation": "VSM 7.3",
+    "fraction_removed": 0.813,
+    "classes": [
+     "SECTION_LABEL",
+     "EMBEDDED_CITATION_LANGUAGE"
+    ],
+    "kept": "स्वाङ्कृ॑तोऽसि॒ विश्वे॑भ्य इन्द्रि॒येभ्यो॑ दि॒व्येभ्य॒: पार्"
+   }
+  ],
+  "reading": "one breach, VSM 7.3 at 81.3%. That is the Uvata commentary and the retained text is the mantra. Every other strip is under 40%."
+ },
+ "mantras_made_uncomparable_by_stripping": 0,
+ "R4_flagged_and_refused": {
+  "count": 0,
+  "reading": "a measured zero. R1-R3 handled every marker-bearing mantra, so nothing had to be refused. Reported as zero rather than as not-applicable."
+ },
+ "a_destructive_bug_in_my_first_stripper": "the first version cut the text at ANY citation marker. In SV ARANYA 1.4 the marker sits in a PREFIX -- '(aranyakaganam) dr. arseyabrahmanam bhasyam UD UTTAMAM VARUNA ...' -- so cutting at 'bhasyam' deleted 107 characters that were the mantra. A stripper that can delete the text it is meant to clean is worse than none. Rules R2 and R3 now carry explicit position conditions and the 40% guard plus the made-uncomparable assertion would have caught it.",
+ "full_population_rerun": {
+  "comparable_after_stripping": 20095,
+  "identity_pairs": 2206,
+  "candidate_pairs": 34502,
+  "rejections": {
+   "below_floor_by_ngram_bound": 26296,
+   "candidate_already_identical": 2206,
+   "below_near_parallel_floor": 1493,
+   "below_floor_by_length_bound": 5,
+   "dropped_by_degree_cap": 575
+  },
+  "note": "34,502 candidates against the 16,550 of the within-recension-only run and crossveda's 17,786 cross-only run: this pass generates every veda combination uniformly on the stripped surface, which is what 'the whole candidate population' means."
+ },
+ "headline_before_and_after": {
+  "as_first_staged": {
+   "EXACT_PARALLEL": 736,
+   "VARIANT": 1475,
+   "NEAR_PARALLEL": 3924
+  },
+  "after_the_adversarial_preflight_digit_fix": {
+   "EXACT_PARALLEL": 870,
+   "VARIANT": 1341,
+   "NEAR_PARALLEL": 3924
+  },
+  "after_this_classifier_rebuild": {
+   "EXACT_PARALLEL": 895,
+   "NEAR_PARALLEL": 3927,
+   "VARIANT": 1317
+  },
+  "by_scope": {
+   "CROSS_RECENSION|EXACT_PARALLEL": 279,
+   "CROSS_RECENSION|NEAR_PARALLEL": 3053,
+   "CROSS_RECENSION|VARIANT": 1259,
+   "WITHIN_RECENSION|EXACT_PARALLEL": 616,
+   "WITHIN_RECENSION|NEAR_PARALLEL": 874,
+   "WITHIN_RECENSION|VARIANT": 58
+  },
+  "what_the_generalisation_moved_beyond_the_digit_fix": "24 rows the digit fix had KEPT as variants -- 6 Atharvavedic/Yajurvedic pairs whose difference was a verse number PLUS a danda, and 18 Samavedic pairs whose difference is ASCII '|' against Devanagari danda (9) or an inserted space (9). A digit exception could not reach any of them; the general rule makes all 24 exact, because apparatus is not a variant. Plus 1 new identity pair and 4 new cross-Veda near parallels that structural stripping made visible."
+ }
+}

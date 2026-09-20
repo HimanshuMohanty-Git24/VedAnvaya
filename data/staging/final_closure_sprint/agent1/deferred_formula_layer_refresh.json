@@ -1,0 +1,41 @@
+{
+  "artifact": "AGENT_1_DEFERRED_FORMULA_LAYER_REFRESH",
+  "graph_surfaces_unfolded": 23,
+  "owner": "sprint lead",
+  "regenerate_with": [
+    "python scripts/build_enrichment.py",
+    "python scripts/build_formula_families.py"
+  ],
+  "sizing": {
+    "Formula": {
+      "after": 4729,
+      "before": 4825,
+      "create": 121,
+      "delete": 217
+    },
+    "FormulaFamily": {
+      "after": 702,
+      "before": 720
+    },
+    "HAS_FORMULA": {
+      "after": 1969,
+      "before": 2037
+    },
+    "MEMBER_OF_FAMILY": {
+      "after": 1969,
+      "before": 2037
+    },
+    "USES_FORMULA": {
+      "after": 22422,
+      "before": 22686,
+      "create": 543,
+      "delete": 807
+    },
+    "strict_substring_count": {
+      "after": 1064,
+      "before": 1103
+    }
+  },
+  "status": "SIZED_NOT_PROPOSED",
+  "why_not_proposed": "The canonical Formula layer was built on 2026-09-15 16:29 from an artifact written five hours before the Yajurvedic double-fold correction landed at commit 3f2b0d8. Rebuilt over the corrected fold the same code produces 4,729 formulas rather than 4,825, and the strict-substring count moves 1,103 -> 1,064. That is a population change, not a measurement change, and replacing the layer touches USES_FORMULA, SHARES_FORMULA_WITH, the family layer and every published formula figure. It is larger than GAP-FORMULA-003 and is a lead decision, so it is sized here and not executed."
+}

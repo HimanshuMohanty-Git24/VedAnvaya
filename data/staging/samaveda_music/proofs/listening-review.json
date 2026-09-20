@@ -1,0 +1,41 @@
+{
+  "question": "Campaign section 22 names the Samaveda as the case where 100% listening review may be required. What population was actually reviewed?",
+  "files_listened_to_by_a_human": 0,
+  "files_listened_to_by_this_agent": 0,
+  "reviewed_population": 0,
+  "population_that_would_need_review": 475,
+  "overstatement_guard": "No listening sheet is produced and no row claims aural verification. A prior session in this project shipped a listening sheet whose decisive row quoted what a BROKEN mapping would play, which is what happens when a sheet is written from expectation. There is nothing to compare against here anyway: the Samavedic gana has no printed text this project holds in a form a listener could follow, and the only notation witness for 421 of the 657 units is a page scan.",
+  "what_was_verified_instead_and_how": [
+    {
+      "property": "byte integrity",
+      "population": 475,
+      "method": "sha256 computed over the fetched bytes; the sha1 of the same byte stream re-derived and compared to the sha1 MediaWiki reports. 475/475 agree, so the bytes hashed are provably the bytes Commons describes."
+    },
+    {
+      "property": "declared byte size",
+      "population": 475,
+      "method": "bytes received compared to the inventory's byte_size. 475/475 agree."
+    },
+    {
+      "property": "the file is really audio, and how long",
+      "population": 474,
+      "method": "the Ogg identification header and the final page granule position were read out of the container, giving a duration INDEPENDENT of the API's. 474/474 agree with the API-reported duration within 0.1 s. One file (Aurnayavottaram.ogg) puts its Vorbis identification header beyond the first 4 KB, so its rate was not read and its measured duration is recorded as null rather than assumed; its granulepos of 4,506,624 over 44,100 Hz reproduces the API's 102.191 s, but that is corroboration, not a measurement."
+    },
+    {
+      "property": "content distinctness",
+      "population": 475,
+      "method": "475 distinct sha256 values: no file is a byte-duplicate of another."
+    },
+    {
+      "property": "which gana the file belongs to",
+      "population": 475,
+      "method": "transclusion on a pinned sa.wikisource gana page. 468 files appear on exactly one page, 6 on two, 1 on four."
+    },
+    {
+      "property": "licence",
+      "population": 475,
+      "method": "per-file imageinfo: 459 CC BY-SA 4.0, 16 CC0, 0 unstated."
+    }
+  ],
+  "honest_summary": "Zero minutes of this corpus were heard. Every claim this artifact makes about the audio is a claim about bytes, containers, licences and source placement, and none is a claim about what the recording contains. A gana-to-audio mapping is asserted only at the granularity the source itself chose: one file, one gana page."
+}

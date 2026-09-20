@@ -1,0 +1,157 @@
+{
+ "what_this_is": "GAP-RITUAL-006's closure test asks for material-culture counts reported split by context. This is that split, over every Crop, Metal and Animal mention of the mention layer, joined to the four-valued ritual_context proposed here.",
+ "the_split_is_not_ritual_versus_everyday": "NO_RITUAL_CITATION_FOUND is a measured absence against eighteen acquired works, not a finding that a mention is domestic. No mantra in this artifact is marked NON_RITUAL. A reader who collapses the four values into two will invent the very distinction the evidence cannot support.",
+ "context_values": {
+  "EMPLOYED_IN_RITE": "A named ritual work quotes this mantra by its pratika inside an instruction, the quotation is closed by `iti`, and the matched span is reproducible from a text form this graph stores for the mantra.",
+  "EMPLOYED_IN_RITE_PROBABLE": "Reached by the same matcher, but the locus is PROBABLE, or is not closed by `iti`, or its span cannot be reproduced from any stored text form. Not asserted.",
+  "RITE_NAMED_IN_THIS_MANTRA": "The mantra itself names a rite. A different claim from being employed in one.",
+  "UNRESOLVED_SHARED_OPENING": "The mantra's opening letters are shared with at least one other mantra, so a quotation of that opening cannot be attributed to it. The rivals are named. This is NOT evidence of absence.",
+  "NO_RITUAL_CITATION_FOUND": "Assessed against all 61,393 cited lines of the eighteen acquired ritual works and no quotation was found. This is NOT `non-ritual`: the mantra may be quoted in a work not acquired, or by a pratika shorter than the two-word minimum. No mantra anywhere in this artifact is marked NON_RITUAL, because nothing measured here could support that."
+ },
+ "mentions_assessed": 1777,
+ "by_context": {
+  "NO_RITUAL_CITATION_FOUND": 936,
+  "EMPLOYED_IN_RITE_PROBABLE": 93,
+  "UNRESOLVED_SHARED_OPENING": 711,
+  "EMPLOYED_IN_RITE": 21,
+  "RITE_NAMED_IN_THIS_MANTRA": 16
+ },
+ "by_class_then_context": {
+  "Concept": {
+   "NO_RITUAL_CITATION_FOUND": 936,
+   "EMPLOYED_IN_RITE_PROBABLE": 93,
+   "UNRESOLVED_SHARED_OPENING": 711,
+   "EMPLOYED_IN_RITE": 21,
+   "RITE_NAMED_IN_THIS_MANTRA": 16
+  }
+ },
+ "by_entity_then_context": {
+  "VG:CONCEPT:GO-CATTLE": {
+   "UNRESOLVED_SHARED_OPENING": 330,
+   "RITE_NAMED_IN_THIS_MANTRA": 7,
+   "EMPLOYED_IN_RITE_PROBABLE": 33,
+   "NO_RITUAL_CITATION_FOUND": 377,
+   "EMPLOYED_IN_RITE": 10
+  },
+  "VG:CONCEPT:ASVA-HORSE": {
+   "NO_RITUAL_CITATION_FOUND": 133,
+   "UNRESOLVED_SHARED_OPENING": 89,
+   "EMPLOYED_IN_RITE_PROBABLE": 10,
+   "EMPLOYED_IN_RITE": 2
+  },
+  "VG:CONCEPT:VRSABHA-BULL": {
+   "NO_RITUAL_CITATION_FOUND": 98,
+   "UNRESOLVED_SHARED_OPENING": 86,
+   "EMPLOYED_IN_RITE_PROBABLE": 10,
+   "EMPLOYED_IN_RITE": 4,
+   "RITE_NAMED_IN_THIS_MANTRA": 3
+  },
+  "VG:CONCEPT:VI-BIRD": {
+   "NO_RITUAL_CITATION_FOUND": 52,
+   "UNRESOLVED_SHARED_OPENING": 41,
+   "EMPLOYED_IN_RITE_PROBABLE": 10,
+   "RITE_NAMED_IN_THIS_MANTRA": 2,
+   "EMPLOYED_IN_RITE": 1
+  },
+  "VG:CONCEPT:HIRANYA-GOLD": {
+   "RITE_NAMED_IN_THIS_MANTRA": 2,
+   "UNRESOLVED_SHARED_OPENING": 35,
+   "EMPLOYED_IN_RITE_PROBABLE": 9,
+   "NO_RITUAL_CITATION_FOUND": 38
+  },
+  "VG:CONCEPT:AHI-SERPENT": {
+   "NO_RITUAL_CITATION_FOUND": 42,
+   "EMPLOYED_IN_RITE_PROBABLE": 2,
+   "UNRESOLVED_SHARED_OPENING": 24
+  },
+  "VG:CONCEPT:PASU-LIVESTOCK": {
+   "UNRESOLVED_SHARED_OPENING": 18,
+   "NO_RITUAL_CITATION_FOUND": 34,
+   "EMPLOYED_IN_RITE_PROBABLE": 4,
+   "EMPLOYED_IN_RITE": 1
+  },
+  "VG:CONCEPT:AVI-SHEEP": {
+   "NO_RITUAL_CITATION_FOUND": 26,
+   "UNRESOLVED_SHARED_OPENING": 15,
+   "RITE_NAMED_IN_THIS_MANTRA": 1,
+   "EMPLOYED_IN_RITE_PROBABLE": 4
+  },
+  "VG:CONCEPT:MRGA-WILD-BEAST": {
+   "UNRESOLVED_SHARED_OPENING": 19,
+   "NO_RITUAL_CITATION_FOUND": 20,
+   "EMPLOYED_IN_RITE_PROBABLE": 2
+  },
+  "VG:CONCEPT:MAHISA-BUFFALO": {
+   "NO_RITUAL_CITATION_FOUND": 21,
+   "UNRESOLVED_SHARED_OPENING": 17,
+   "EMPLOYED_IN_RITE_PROBABLE": 2
+  },
+  "VG:CONCEPT:YAVA-BARLEY": {
+   "NO_RITUAL_CITATION_FOUND": 15,
+   "EMPLOYED_IN_RITE": 1,
+   "UNRESOLVED_SHARED_OPENING": 21,
+   "EMPLOYED_IN_RITE_PROBABLE": 1
+  },
+  "VG:CONCEPT:DHANYA-GRAIN": {
+   "EMPLOYED_IN_RITE_PROBABLE": 3,
+   "NO_RITUAL_CITATION_FOUND": 18,
+   "EMPLOYED_IN_RITE": 1,
+   "UNRESOLVED_SHARED_OPENING": 4
+  },
+  "VG:CONCEPT:AJA-GOAT": {
+   "UNRESOLVED_SHARED_OPENING": 4,
+   "NO_RITUAL_CITATION_FOUND": 13
+  },
+  "VG:CONCEPT:AYAS-METAL": {
+   "UNRESOLVED_SHARED_OPENING": 2,
+   "NO_RITUAL_CITATION_FOUND": 8,
+   "EMPLOYED_IN_RITE_PROBABLE": 1
+  },
+  "VG:CONCEPT:PRDAKU-ADDER": {
+   "NO_RITUAL_CITATION_FOUND": 10
+  },
+  "VG:CONCEPT:SISA-LEAD": {
+   "UNRESOLVED_SHARED_OPENING": 1,
+   "NO_RITUAL_CITATION_FOUND": 6
+  },
+  "VG:CONCEPT:MANDUKA-FROG": {
+   "NO_RITUAL_CITATION_FOUND": 4,
+   "UNRESOLVED_SHARED_OPENING": 1,
+   "RITE_NAMED_IN_THIS_MANTRA": 1
+  },
+  "VG:CONCEPT:TILA-SESAME": {
+   "UNRESOLVED_SHARED_OPENING": 3,
+   "NO_RITUAL_CITATION_FOUND": 2
+  },
+  "VG:CONCEPT:SVAN-DOG": {
+   "NO_RITUAL_CITATION_FOUND": 4
+  },
+  "VG:CONCEPT:VRSCIKA-SCORPION": {
+   "EMPLOYED_IN_RITE_PROBABLE": 2,
+   "NO_RITUAL_CITATION_FOUND": 2
+  },
+  "VG:CONCEPT:VRIHI-RICE": {
+   "NO_RITUAL_CITATION_FOUND": 2,
+   "EMPLOYED_IN_RITE": 1
+  },
+  "VG:CONCEPT:SVAJA-CONSTRICTOR": {
+   "UNRESOLVED_SHARED_OPENING": 1,
+   "NO_RITUAL_CITATION_FOUND": 2
+  },
+  "VG:CONCEPT:MASA-BEAN": {
+   "NO_RITUAL_CITATION_FOUND": 2
+  },
+  "VG:CONCEPT:RAJATA-SILVER": {
+   "NO_RITUAL_CITATION_FOUND": 2
+  },
+  "VG:CONCEPT:TRAPU-TIN": {
+   "NO_RITUAL_CITATION_FOUND": 2
+  },
+  "VG:CONCEPT:SYAMA-DARK-METAL": {
+   "NO_RITUAL_CITATION_FOUND": 2
+  },
+  "VG:CONCEPT:LOHA-COPPER": {
+   "NO_RITUAL_CITATION_FOUND": 1
+  }
+ }
+}

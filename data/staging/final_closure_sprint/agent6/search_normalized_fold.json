@@ -1,0 +1,193 @@
+{
+  "artifact": "search_normalized_fold",
+  "at": "2026-09-16T17:48:28.069194+00:00",
+  "head": "b4b1b0beba1c499e832150b0b9363d7258e40a26",
+  "agent": "AGENT_6_PRODUCT_SURFACE",
+  "defect": "NORMALIZED_SANSKRIT_PHRASE rung bound the raw query against sentinel-folded text",
+  "assigned_by": "LEAD",
+  "file": "src/vedagraph/api/services/search_service.py",
+  "fold_applied": {
+    "text_side": "comparison_form(text, ComparisonForm.SEARCH_NORMALIZED) -- UNCHANGED",
+    "query_side": "comparison_form(cleaned, ComparisonForm.SEARCH_NORMALIZED) -- ADDED",
+    "parameter": "$q_search_normalized (was $q, i.e. query.strip().lower())",
+    "widening_refused": "The text side was deliberately not widened. The IAST acute is both a consonant diacritic and the udatta, so a wider text-side fold would merge distinct readings and both over- and under-normalising look like a clean run."
+  },
+  "probes": [
+    {
+      "probe": "ṛtasya",
+      "folded_codepoints": [
+        "U+E000",
+        "U+0074",
+        "U+0061",
+        "U+0073",
+        "U+0079",
+        "U+0061"
+      ],
+      "rung_passages_before": 0,
+      "rung_passages_after": 94,
+      "rung_vedas_after": [
+        "AV"
+      ],
+      "service_items": 100,
+      "service_rungs": [
+        "EXACT_SANSKRIT_PHRASE"
+      ]
+    },
+    {
+      "probe": "ṛṣi",
+      "folded_codepoints": [
+        "U+E000",
+        "U+1E63",
+        "U+0069"
+      ],
+      "rung_passages_before": 0,
+      "rung_passages_after": 33,
+      "rung_vedas_after": [
+        "AV"
+      ],
+      "service_items": 100,
+      "service_rungs": [
+        "EXACT_SANSKRIT_PHRASE"
+      ]
+    },
+    {
+      "probe": "somaṁ",
+      "folded_codepoints": [
+        "U+0073",
+        "U+006F",
+        "U+006D",
+        "U+0061",
+        "U+E003"
+      ],
+      "rung_passages_before": 0,
+      "rung_passages_after": 34,
+      "rung_vedas_after": [
+        "AV"
+      ],
+      "service_items": 34,
+      "service_rungs": [
+        "NORMALIZED_SANSKRIT_PHRASE"
+      ]
+    },
+    {
+      "probe": "kḻptam",
+      "folded_codepoints": [
+        "U+006B",
+        "U+E002",
+        "U+0070",
+        "U+0074",
+        "U+0061",
+        "U+006D"
+      ],
+      "rung_passages_before": 0,
+      "rung_passages_after": 0,
+      "rung_vedas_after": [],
+      "service_items": 0,
+      "service_rungs": []
+    },
+    {
+      "probe": "índra",
+      "folded_codepoints": [
+        "U+0069",
+        "U+006E",
+        "U+0064",
+        "U+0072",
+        "U+0061"
+      ],
+      "rung_passages_before": 0,
+      "rung_passages_after": 571,
+      "rung_vedas_after": [
+        "AV"
+      ],
+      "service_items": 100,
+      "service_rungs": [
+        "EXACT_SANSKRIT_PHRASE"
+      ]
+    },
+    {
+      "probe": "devásya",
+      "folded_codepoints": [
+        "U+0064",
+        "U+0065",
+        "U+0076",
+        "U+0061",
+        "U+0073",
+        "U+0079",
+        "U+0061"
+      ],
+      "rung_passages_before": 0,
+      "rung_passages_after": 40,
+      "rung_vedas_after": [
+        "AV"
+      ],
+      "service_items": 100,
+      "service_rungs": [
+        "EXACT_SANSKRIT_PHRASE"
+      ]
+    },
+    {
+      "probe": "agním",
+      "folded_codepoints": [
+        "U+0061",
+        "U+0067",
+        "U+006E",
+        "U+0069",
+        "U+006D"
+      ],
+      "rung_passages_before": 0,
+      "rung_passages_after": 19,
+      "rung_vedas_after": [
+        "AV"
+      ],
+      "service_items": 100,
+      "service_rungs": [
+        "EXACT_SANSKRIT_PHRASE"
+      ]
+    },
+    {
+      "probe": "sómam",
+      "folded_codepoints": [
+        "U+0073",
+        "U+006F",
+        "U+006D",
+        "U+0061",
+        "U+006D"
+      ],
+      "rung_passages_before": 0,
+      "rung_passages_after": 23,
+      "rung_vedas_after": [
+        "AV"
+      ],
+      "service_items": 100,
+      "service_rungs": [
+        "EXACT_SANSKRIT_PHRASE"
+      ]
+    },
+    {
+      "probe": "soma",
+      "folded_codepoints": [
+        "U+0073",
+        "U+006F",
+        "U+006D",
+        "U+0061"
+      ],
+      "rung_passages_before": 179,
+      "rung_passages_after": 179,
+      "rung_vedas_after": [
+        "AV"
+      ],
+      "service_items": 100,
+      "service_rungs": [
+        "EXACT_SANSKRIT_PHRASE",
+        "LEMMA_FORM"
+      ]
+    }
+  ],
+  "search_derivative_coverage_by_veda": {
+    "AV": 5839
+  },
+  "reach_note": "The SEARCH_DERIVATIVE layer covers one corpus today, so the rung reaches AV only. Agent 3's staged import extends it to all 20,210 mantras across four works; the four-corpora reach can only be re-measured after that lands.",
+  "tests": [
+    "tests/api/test_search_normalized_fold.py"
+  ]
+}

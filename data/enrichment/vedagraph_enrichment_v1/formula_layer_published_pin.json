@@ -1,0 +1,75 @@
+{
+  "artifact": "FORMULA_LAYER_PUBLISHED_PIN",
+  "at": "2026-09-18T07:48:31.655863+00:00",
+  "why": "The graph's formula layer is frozen at a published generation and the enrichment layer on disk has since been rebuilt. Both are correct; the owner rule below forbids collapsing them. This pin is the falsifier for the frozen generation and for its exact distance from the rebuild.",
+  "owner_rule": {
+    "rule": "formula_id is a published stable product ID; content-hash recomputation cannot silently re-key it",
+    "recorded_in": "data/staging/final_stabilization/formula_identity_impact.json",
+    "migration_permitted": "false",
+    "published_contract": "src/vedagraph/api/routes/formulas.py exposes /api/v1/formulas/{formula_id}; src/vedagraph/api/routes/graph.py describes Formula.formula_id as a stable product identifier",
+    "verification_receipt": "data/staging/release_blocker_r1/formula_identity_verification_receipt.json"
+  },
+  "published_generation": {
+    "formulas": 4825,
+    "families": 720,
+    "members": 2037,
+    "roles": {
+      "CORE": 914,
+      "EXPANSION": 1119,
+      "VARIANT": 4
+    },
+    "quality_tiers": [
+      "TIER_B",
+      "TIER_D"
+    ],
+    "invariants": {
+      "distinct_family_id": 720,
+      "null_family_id": 0,
+      "distinct_collapsed_formula_identity": 4825,
+      "member_edges_with_a_bad_endpoint": 0,
+      "formulas_in_more_than_one_family": 0,
+      "expansion_edges_whose_linked_parent_is_absent": 0,
+      "families_whose_member_count_disagrees_with_landed_edges": 0,
+      "expansion_rows_recomputed": 1119,
+      "containment_violations": 0
+    }
+  },
+  "rebuild_on_disk": {
+    "pipeline_version": "vedagraph-graph-enrichment-v1",
+    "corpus_counts": {
+      "AV": 5839,
+      "RV": 10552,
+      "SV": 1844,
+      "YV": 1975
+    },
+    "manifest_formula_count": 4729,
+    "manifest_digest_of_formulas_jsonl": "e7bc710ab9b3194a01a2c83251dc65b7d34298d71afbfac4469eb6d7db002671"
+  },
+  "delta_published_to_rebuild": {
+    "formulas": {
+      "published": 4825,
+      "rebuilt": 4729,
+      "published_only": 217,
+      "rebuilt_only": 121,
+      "published_only_sha256": "aee56ef8f0b6b4a8e0b79694dae3129908eef092abf340f11cb74f97ee01567d",
+      "rebuilt_only_sha256": "e360157044f5c9451cd2d8d333488cb701b694c4dc7366517f02db7b6656c127"
+    },
+    "families": {
+      "published": 720,
+      "rebuilt": 702,
+      "published_only": 48,
+      "rebuilt_only": 30,
+      "published_only_sha256": "2ff82aeb29f9179bcbe5509c0276730bf7f885c8a0d80b446d08634de86c304d",
+      "rebuilt_only_sha256": "4a46f0d3005d1bdced9f7e7cd41f12250813a9c98f976a914a9dbfd6d39a965e"
+    },
+    "members": {
+      "published": 2037,
+      "rebuilt": 1969,
+      "published_only": 184,
+      "rebuilt_only": 116,
+      "published_only_sha256": "56227f07ec90736764b16b269cec1392da38ee06f51581c0354a6d2647a50bd8",
+      "rebuilt_only_sha256": "cb7110eb7a5ac7935c74b9f19e57931eb7982d36a8640254fe2f0d773a564226"
+    }
+  },
+  "served_figure_is_the_graph": "The API and the frontend read the graph :FormulaFamily nodes. tests/api/test_stats.py pins formula_families: 720, the graph's figure. The JSONL is read only by the producer, the graph importers and this pin."
+}

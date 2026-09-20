@@ -1980,6 +1980,9 @@ concepts:
   related_devatas: []
 - concept_id: VG:CONCEPT:MADHYANDINA-SAVANA-MIDDAY-PRESSING
   preferred_label_sa: mādhyandina savana
+  aliases_sa_phrases:
+  - mādhyaṃdine savane
+  - mādhyandine savana
   preferred_label_en: midday pressing
   node_type: ACTION
   definition: The second of the day's three soma pressings, named by its time of day at RV 3.28.4, RV
@@ -3692,6 +3695,11 @@ concepts:
   related_devatas: []
 - concept_id: VG:CONCEPT:TRTIYA-SAVANA-THIRD-PRESSING
   preferred_label_sa: tṛtīya savana
+  aliases_sa_phrases:
+  - tṛtīye savane
+  - tṛtīye savana
+  - tṛtīyaṃ savanaṃ
+  - tṛtīyaṃ savanam
   preferred_label_en: third pressing
   node_type: ACTION
   definition: 'The third of the day''s three soma pressings, and the one the corpus numbers most often:

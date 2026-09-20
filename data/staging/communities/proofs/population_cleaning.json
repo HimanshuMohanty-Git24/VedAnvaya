@@ -1,0 +1,55 @@
+{
+  "abstract_rulings": {
+    "DEITY": 9,
+    "NOT_DEITY": 28,
+    "UNDECIDED": 5
+  },
+  "curated_structure_distribution": {
+    "ABSTRACT": 41,
+    "GROUP": 33,
+    "HUMAN": 22,
+    "INDIVIDUAL": 72,
+    "PAIR": 38,
+    "PATRON_PRAISE": 7,
+    "UNSPECIFIED": 1
+  },
+  "devata_nodes": 214,
+  "eligible_by_variant": {
+    "V-ALL": 185,
+    "V-NONE": 143,
+    "V-RULED": 157
+  },
+  "excluded_not_a_deity": {
+    "count": 29,
+    "dedications_carried": 171,
+    "verified_against": "agent 8's figure of 29 nodes carrying 171 dedications"
+  },
+  "occurrence_count_present_on": 0,
+  "placeable_by_variant": {
+    "V-ALL": {
+      "eligible": 185,
+      "placed_in_a_community": 141,
+      "unplaceable_degree_zero": 44
+    },
+    "V-NONE": {
+      "eligible": 143,
+      "placed_in_a_community": 115,
+      "unplaceable_degree_zero": 28
+    },
+    "V-RULED": {
+      "eligible": 157,
+      "placed_in_a_community": 123,
+      "unplaceable_degree_zero": 34
+    }
+  },
+  "ritual_implements_retained": [
+    "VG:DEVATA:BARHIH",
+    "VG:DEVATA:DEVIRDVARAH",
+    "VG:DEVATA:GRAVANAH",
+    "VG:DEVATA:HAVIRDHANE-SAKATE",
+    "VG:DEVATA:ULUKHALAM",
+    "VG:DEVATA:ULUKHALAMUSALE",
+    "VG:DEVATA:VANASPATIH",
+    "VG:DEVATA:YUPAH"
+  ]
+}

@@ -12,9 +12,11 @@ null.
 
 *A collection too small to paginate still has to say why it is empty.* A passage has at
 most one translation, so wrapping it in :class:`~vedagraph.api.models.common.Paginated`
-would be theatre -- but the Samaveda has zero translations across all 1,844 verses, and an
-empty list there means "no translation was ever released for this corpus" rather than
-"this verse is untranslated". :class:`AttestedSet` is the small-collection counterpart of
+would be theatre -- but the Samaveda has zero translations of its own across all 1,844
+verses, and an empty list there means "no translation was ever released for this corpus"
+rather than "this verse is untranslated". The 173 Samavedic verses that do return an item
+return a rendering reused from the Rigvedic parallel, which the item discloses.
+:class:`AttestedSet` is the small-collection counterpart of
 ``Paginated`` and carries the same refusal: an empty set cannot claim ``SUPPORTED``
 without a caveat.
 
@@ -48,6 +50,8 @@ from vedagraph.api.models.common import (
     ReferentCertaintyCounts,
 )
 from vedagraph.api.models.entity import AttributedRef, EntityRef, MentionCertainty
+from vedagraph.domain import layer_figures
+from vedagraph.domain.translation_semantics import TranslationCoverageKind
 
 # ---------------------------------------------------------------------------
 # A bounded collection that explains its own size
@@ -80,7 +84,8 @@ class AttestedSet[T](ApiModel):
         if not self.items and self.data_status is KnowledgeStatus.SUPPORTED and not self.caveats:
             raise ValueError(
                 "An empty AttestedSet must carry a non-SUPPORTED data_status or a caveat: "
-                "the Samaveda's zero translations and the Yajurveda's absent deity "
+                "the Samaveda's zero translations of its own and the Yajurveda's absent "
+                "deity "
                 "ascription layer are both empty lists and neither is textual absence."
             )
         return self
@@ -225,27 +230,136 @@ class TextAvailability(ApiModel):
 
 
 class TranslationView(ApiModel):
-    """One aligned English translation.
+    """One aligned translation, and what kind of coverage it actually gives this verse.
 
-    ``quality_status`` is ``MACHINE_ALIGNED`` on all 17,283 of them: the alignment of a
+    ``quality_status`` is ``MACHINE_ALIGNED`` on all of them: the alignment of a
     public-domain translation to a canonical key was done by machine and never checked
     against the Sanskrit. A client must be able to see that rather than infer editorial
     care from the presence of a translator's name.
+
+    ``coverage_kind`` is the field that stops this model asserting something false, and it
+    is required rather than optional. Three shapes now reach a reader and only one of them
+    is a 1:1 rendering of the verse asked for: a ``RANGE_TRANSLATION`` is one print unit
+    over a span of verses, a ``REUSED_RENDERING`` is another corpus's published English on
+    text verified identical, and a non-English ``language`` is Griffith's Latin
+    substitution. Each was previously indistinguishable from a dedicated translation, and
+    the validators below refuse a payload that presents one as the other.
     """
 
     text: str
     translator: str | None = None
     language: str = "en"
+    language_name: str | None = Field(
+        default=None,
+        description="The language in words, e.g. 'Latin'. Present so a client need not "
+        "carry an ISO table to avoid labelling a Latin rendering 'Translation'.",
+    )
     year: int | None = None
     work_edition: str | None = None
     quality_status: str | None = None
     alignment_level: str | None = Field(
         default=None, description="The unit the alignment claims, e.g. MANTRA."
     )
+    coverage_kind: TranslationCoverageKind = Field(
+        description="How this translation covers the passage it was returned for: "
+        "DEDICATED_TRANSLATION, RANGE_TRANSLATION, CONTAINER_TRANSLATION or "
+        "REUSED_RENDERING. Never infer 1:1 alignment from the presence of a translation."
+    )
+    covers_canonical_keys: list[str] = Field(
+        default_factory=list,
+        description="Every canonical key this one rendering covers. A single-key list on a "
+        "dedicated translation and the complete span on a range translation; never a "
+        "partial span, which is refused.",
+    )
+    anchor_canonical_key: str | None = Field(
+        default=None,
+        description="The passage the translation node is attached to. Differs from the "
+        "passage requested when a range translation reaches it through its span.",
+    )
+    is_this_passages_own: bool = Field(
+        default=True,
+        description="False when the passage requested is inside a range anchored on "
+        "another verse, so a client can render 'covered by' rather than 'translated as'.",
+    )
+    source_unit: str | None = Field(
+        default=None,
+        description="The print unit the translator numbered, where it differs from this "
+        "corpus's verse numbering.",
+    )
+    independent_translation: bool = Field(
+        default=True,
+        description="False for a reused rendering. A false here means the text must not "
+        "be totalled into this corpus's own translated count, nor used as independent "
+        "semantic evidence about this passage.",
+    )
+    reuse_kind: str | None = Field(
+        default=None,
+        description="REUSED_RENDERING, or null when the rendering is this "
+        "translator's own work on this passage.",
+    )
+    reused_from_veda: str | None = None
+    reused_from_passage_key: str | None = None
+    reused_from_citation: str | None = None
+    reused_from_translation_id: str | None = Field(
+        default=None,
+        description="The identity of the translation actually being shown, in the corpus "
+        "it was published for.",
+    )
+    reuse_basis: str | None = Field(
+        default=None, description="How the text equivalence was established."
+    )
+    disclosure: str | None = Field(
+        default=None,
+        description="The sentence a reader must be shown beside this translation. Non-null "
+        "whenever the rendering is not a dedicated English translation of this verse, and "
+        "a payload that omits it in that case is refused.",
+    )
     rights_status: str | None = None
     source_id: str | None = None
     upstream_correction_id: str | None = None
     upstream_correction_reason: str | None = None
+
+    @model_validator(mode="after")
+    def _a_rendering_that_is_not_this_verses_own_must_say_so(self) -> Self:
+        """Refuse the three payloads that would read as a dedicated English translation.
+
+        A route can forget to set a disclosure on one branch; this model cannot. The
+        Samaveda is the reason it is enforced here: every English string that will ever
+        reach a Samavedic verse is a Rigvedic rendering, so an undisclosed one tells a
+        visitor the corpus has 173 translations of its own.
+        """
+        if self.coverage_kind is TranslationCoverageKind.REUSED_RENDERING:
+            if self.independent_translation:
+                raise ValueError(
+                    "a REUSED_RENDERING cannot claim independent_translation: it is "
+                    "another corpus's published English on verified-identical text."
+                )
+            if not self.reused_from_passage_key:
+                raise ValueError(
+                    "a REUSED_RENDERING must name the passage whose rendering it is; "
+                    "'The Hymns of the Rigveda' in an edition line is not a disclosure."
+                )
+            if not self.disclosure:
+                raise ValueError("a REUSED_RENDERING must carry its disclosure sentence")
+        if self.coverage_kind is TranslationCoverageKind.RANGE_TRANSLATION:
+            if len(self.covers_canonical_keys) < 2:
+                raise ValueError(
+                    "a RANGE_TRANSLATION must enumerate its complete span: a range that "
+                    "names one verse is indistinguishable from a dedicated translation."
+                )
+            if not self.disclosure:
+                raise ValueError("a RANGE_TRANSLATION must disclose that it covers a span")
+        if self.language != "en" and not self.disclosure:
+            raise ValueError(
+                f"a translation in {self.language!r} must disclose that it is not English: "
+                "the 22 Latin substitutions are Griffith's real text and are not the "
+                "English layer."
+            )
+        if not self.is_this_passages_own and not self.anchor_canonical_key:
+            raise ValueError(
+                "a translation reached through another passage's span must name the anchor"
+            )
+        return self
 
 
 # ---------------------------------------------------------------------------
@@ -463,10 +577,21 @@ class AssertionModality(StrEnum):
 
 
 class AgentiveAssertionView(ApiModel):
-    """One agent-predicate-target assertion, from the Rigveda-only agentive layer.
+    """One agent-predicate-target assertion from the semantic assertion layer.
 
-    All 4,865 ``SemanticAssertion`` nodes hang off Rigvedic passages. A Yajurvedic verse
-    returning none of these is outside the layer, which is why the set carries a status.
+    This said "the Rigveda-only agentive layer" and "all 4,865 ``SemanticAssertion`` nodes
+    hang off Rigvedic passages". Both were true of an earlier state and are now false: the
+    layer holds 35,131 assertions and reaches all four corpora -- RV 27,057, AV 6,167,
+    YV 1,543, SV 364. A Yajurvedic verse returning none of these is a verse the layer did
+    not reach, not a corpus outside it, which is why the set carries a status.
+
+    The *agentive* reading was Rigveda-only and is not any more. 2,660 assertions carry
+    an ``ASSERTION_AGENT``: 2,406 Rigvedic, from a morphological annotation covering the
+    Rigveda alone, plus 124 Atharvavedic and 34 Yajurvedic projected from the DCS
+    dependency annotation's own role resolution by GAP-SEMANTICS-003. The Sāmaveda carries
+    no agent at all. The two derivations are separable on every edge -- the projected ones
+    carry ``derivation = TREEBANK_DEPREL_ROLE_PROJECTION`` and the morphological ones carry
+    none -- so a reader is never shown one tier as the other.
 
     **The layer is two layers and they do not share their vocabulary.** The 2,406
     deterministic assertions carry ``frame`` (ASSERTED or REQUESTED), ``verb_surface`` and
@@ -515,6 +640,14 @@ class AgentiveAssertionView(ApiModel):
     quality_tier: str | None = None
     evidence_basis: str | None = None
     knowledge_layer: str | None = None
+    cautions: list[str] = Field(
+        default_factory=list,
+        description="Caution codes the assertion node carries, verbatim. The load-bearing "
+        "one is ANALYSIS_IS_OF_A_LETTER_IDENTICAL_RIGVEDIC_VERSE_NOT_OF_A_SAMAVEDIC_"
+        "ANNOTATION, on all 364 Samavedic assertions: the reading was carried across on "
+        "textual identity and is not an analysis of the verse in its own collection. The "
+        "graph has recorded this since the layer was built and this field is what reads it.",
+    )
 
     @model_validator(mode="after")
     def _absent_modality_must_be_typed(self) -> Self:
@@ -535,20 +668,29 @@ class AgentiveAssertionView(ApiModel):
 
 
 class AudioAvailability(ApiModel):
-    """Recitation audio, which this graph does not have.
+    """The *graph's* recitation layer, which does not exist. Not the product's.
 
     Deliberately not a boolean and not a null. ``false`` reads as "this verse has no
     recording" and ``null`` renders as a disabled button with no explanation; both invite a
-    frontend to ship a play control over a corpus with no audio layer at all. The validator
-    refuses any other status, so adding audio means editing this contract on purpose.
+    frontend to ship a play control over a layer that is not there. The validator refuses
+    any other status, so adding audio to the *graph* means editing this contract on purpose.
+
+    The note used to read "No recitation audio exists anywhere in this graph", which was
+    true of the graph and false as a sentence a reader would understand: the product serves
+    16,834 catalogued recordings from ``/api/v1/passages/{key}/audio``, and RV 1.1.1
+    returns a playable track from the same server that was answering "anywhere" with
+    "none". A field can be correct about its own layer and still be the wrong thing to say,
+    and this one is read by clients that have no way to know the distinction. It now names
+    the surface that does hold the audio.
     """
 
     status: KnowledgeStatus = KnowledgeStatus.NOT_BUILT
     recordings: list[EntityRef] = Field(default_factory=list)
     note: str = (
-        "No recitation audio exists anywhere in this graph: the frozen model has no audio "
-        "node, relationship or property. This is an unbuilt layer and not a statement that "
-        "the passage is unrecited."
+        "The knowledge graph holds no audio node, relationship or property, so this block "
+        "is always empty. It is not a statement about whether a recording exists: "
+        "recitations are served from the audio catalogue at "
+        "GET /api/v1/passages/{key}/audio, which is the surface to ask."
     )
 
     @model_validator(mode="after")
@@ -556,7 +698,8 @@ class AudioAvailability(ApiModel):
         if self.status is not KnowledgeStatus.NOT_BUILT or self.recordings:
             raise ValueError(
                 "There is no audio layer in the frozen graph. Reporting anything but "
-                "NOT_BUILT here would be a claim no node supports."
+                "NOT_BUILT here would be a claim no node supports. Catalogued recordings "
+                "are served by /api/v1/passages/{key}/audio and do not belong in this block."
             )
         return self
 
@@ -581,10 +724,10 @@ class PassageProvenance(ApiModel):
     rights: list[str] = Field(default_factory=list)
     status: str | None = Field(default=None, description="The passage's canonical status.")
     review_state: str = "NOT_HUMAN_REVIEWED"
-    review_note: str = (
-        "No node or edge in this graph carries HUMAN_REVIEWED. The strongest review state "
-        "present is MODEL_ADJUDICATED, on 587 edges, none of them Rigvedic."
-    )
+    # Built from the measured figures rather than typed. The sentence this replaces said
+    # "MODEL_ADJUDICATED, on 587 edges, none of them Rigvedic", which is the TIER_C
+    # passage-anchored count wearing the MODEL_ADJUDICATED label: MODEL_ADJUDICATED is 613.
+    review_note: str = layer_figures.adjudication_disclosure()
 
 
 class PassageDetail(ApiModel):
@@ -658,6 +801,36 @@ class NavigationResult(ApiModel):
     results: Paginated[PassageSummary]
 
 
+class FormulaPhraseView(ApiModel):
+    """A fixed phrase this verse shares with other verses, and how far it travels.
+
+    The reader carried no formula layer at all, which left 10,574 mantras - 1,311 of the
+    Samaveda's 1,844 among them - with real, readable substance the reading page could not
+    show. For a Samavedic verse that matters more than for any other corpus: it has no
+    seer, no metre and no ascribed deity of its own, so its shared wording is most of what
+    there is to say about it beyond the text.
+
+    ``match_level`` travels because the formula layer's identity is a normalised-string
+    match and the strength of that match varies per occurrence: ``SCRIPT_FOLDED`` is a
+    stronger claim than ``SANDHI_INSENSITIVE``, and a surface that showed both as "shares
+    this phrase" would flatten the distinction the edge went to the trouble of recording.
+    ``source_form`` is what this verse actually reads, which can differ from the family's
+    ``display_form``.
+    """
+
+    formula_id: str
+    display_form: str
+    #: The wording as it stands in *this* verse, where the edge recorded it.
+    source_form: str | None = None
+    #: Verses carrying this formula anywhere in the corpus. Null means not established.
+    occurrence_count: int | None = None
+    #: The corpora it is attested in, as recorded on the formula.
+    vedas: list[str] = Field(default_factory=list)
+    cross_veda: bool | None = None
+    #: How closely this verse's wording matched. Null where the edge predates recording.
+    match_level: str | None = None
+
+
 class ReaderPayload(ApiModel):
     """Everything needed to render one mantra in a single call (spec section 11).
 
@@ -694,6 +867,14 @@ class ReaderPayload(ApiModel):
         "why the reader carries it rather than leaving those three corpora blank."
     )
     major_concepts: AttestedSet[EntityRef]
+    formulas: AttestedSet[FormulaPhraseView] = Field(
+        default_factory=lambda: AttestedSet[FormulaPhraseView](
+            data_status=KnowledgeStatus.NOT_BUILT
+        ),
+        description="Fixed phrases this verse shares with others. For a Samavedic verse "
+        "this is often the only knowledge layer besides the text and its Rigvedic "
+        "counterpart, because the seer, metre and ascription layers are Rigveda-only.",
+    )
 
     previous: PassageSummary | None = None
     next: PassageSummary | None = None

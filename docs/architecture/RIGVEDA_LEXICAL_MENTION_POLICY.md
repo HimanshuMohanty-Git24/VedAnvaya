@@ -115,16 +115,45 @@ rather than silent.
 a token several lexical entries and only some reach a canonical entity. That is the
 source's uncertainty, not ours to settle.
 
-711 tokens are deliberately left unresolved. The largest groups:
+711 tokens are left unresolved, and **each now carries a typed linguistic reason** rather
+than a queue state. `data/staging/final_closure_sprint/agent3/lexical_nonresolution_typed.jsonl`
+holds one row per token; `scripts/build_lexical_nonresolution_reasons.py` regenerates it.
 
-- `sárasvant-` — the annotation lemmatises every Sarasvatī form under the vant-stem
-  that also covers the masculine Sarasvant. Separable by the annotation's own
-  gender feature, but v1 has no feature-conditioned alias mechanism, so no edge is
-  created. This is the highest-value deferred item.
-- `áp-` — both the ordinary noun "water" and the deified Āpaḥ, inseparable
-  lexically.
-- `yamá-`, `mr̥tyú-`, `vená-`, `sī́tā-` — deity and appellative share one entry.
-- `dadhikrā́-` — the entity registry holds two Devatā entries for one lemma.
+**The feature-conditioned alias deferral is closed and this paragraph used to be wrong
+about it.** An earlier revision named `sárasvant-` as the largest group and the
+highest-value deferred item, on the grounds that "v1 has no feature-conditioned alias
+mechanism". The mechanism exists: `lexical_aliases.jsonl` carries `allowed_case`,
+`allowed_gender`, `allowed_number`, `allowed_pos` and `forbidden_features`, and seven
+aliases use it — `áditi-`, `aśvín-`, `mitrá-`, `sárasvant-`, `sūryā́-` and `sū́rya-`.
+`sárasvant-` is resolved by it: its 75 tokens split 70 `F` / 5 `M` on the annotation's own
+gender feature, and two `ACCEPTED` gender-conditioned aliases send the feminine to
+Sarasvatī and the masculine to Sarasvant. It appears **0 times** in
+`ambiguous_mentions.jsonl` and is not part of the 711.
+
+Measured against the annotation, **none of the ten residual lemmas is separable by any
+annotated feature**: `áp-` is `F.PL` in 540 of 547 tokens whether it means water or the
+goddesses, `yamá-` is `M.SG` for both the god and the twin, and so on. The mechanism is not
+the obstruction here; the lexicon is.
+
+The three typed reasons, and what each means:
+
+| reason | tokens | lemmas |
+|---|--:|---|
+| `LEXEME_COVERS_DEITY_AND_APPELLATIVE` | 625 | `áp-` 547, `yamá-` 60, `mr̥tyú-` 16, `sī́tā-` 2 |
+| `DEVATA_OR_RISHI_UNDECIDABLE` | 74 | `átri-` 46, `vená-` 19, `viśvā́mitra-` 7, `vāmádeva-` 1, `venā́-` 1 |
+| `REGISTRY_HOLDS_TWO_ENTITIES_FOR_ONE_LEMMA` | 12 | `dadhikrā́-` 12 |
+
+`DEVATA_OR_RISHI_UNDECIDABLE` is the same question ADR-013 defers for Ṛṣi lexical mention
+and closes with it, not separately. `REGISTRY_HOLDS_TWO_ENTITIES_FOR_ONE_LEMMA` closes by
+adjudicating our own registry rather than by reading the text.
+
+**79 of the 711 are corroborated and still get no edge.** Each sits in a mantra whose
+Anukramaṇī dedication is the very deity its alias proposes. That is recorded per row as
+`anukramani_corroborated` and it is deliberately not treated as a resolution: a hymn
+dedicated to the Waters is exactly where the ordinary noun "water" is most likely in its
+ordinary sense, so the agreement is expected under both readings and discriminates neither.
+The flag turns an undifferentiated 711 into a bounded, evidenced review queue; it does not
+create a mention.
 
 ---
 

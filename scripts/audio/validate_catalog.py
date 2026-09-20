@@ -33,7 +33,6 @@ Usage::
 from __future__ import annotations
 
 import argparse
-import io
 import json
 import os
 import pathlib
@@ -45,7 +44,8 @@ from typing import Any
 
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[2] / "src"))
 
-sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8", errors="replace")
+if hasattr(sys.stdout, "reconfigure"):  # pragma: no cover - stream setup
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 warnings.filterwarnings("ignore")
 
 from neo4j import GraphDatabase  # noqa: E402
@@ -64,6 +64,7 @@ from vedagraph.product.audio.models import (  # noqa: E402
     Availability,
     MappingConfidence,
     PlaybackMode,
+    PublicationTier,
 )
 
 #: Connection defaults match ``infra/docker-compose.neo4j.yml``, which declares this
@@ -317,6 +318,74 @@ def check_exact_is_text_verified(records: list[AudioRecord]) -> Check:
     )
 
 
+#: The append-only log the reviewed tier's evidence has to be findable in.
+DECISIONS_LOG = PROJECT_ROOT / "data" / "manual" / "audio_review" / "sample_decisions.jsonl"
+
+
+def _effective_hearings() -> dict[tuple[str, str], dict[str, Any]]:
+    """``(canonical_key, media_url) -> decision row``, last line per ``review_id`` wins.
+
+    Last line because a correction in that log appends rather than edits: reading any
+    earlier line reports a verdict the reviewer has since replaced.
+    """
+    if not DECISIONS_LOG.exists():
+        return {}
+    by_review: dict[str, dict[str, Any]] = {}
+    with DECISIONS_LOG.open(encoding="utf-8") as handle:
+        for line in handle:
+            if line.strip():
+                row = json.loads(line)
+                by_review[row["review_id"]] = row
+    return {(r["canonical_key"], r["media_url"]): r for r in by_review.values()}
+
+
+def check_tiers_partition_the_catalogue(records: list[AudioRecord]) -> Check:
+    """Every record sits in exactly one publication tier, and the tiers sum to the file.
+
+    Trivially true of an enum field, and checked anyway because the figure the product
+    publishes is the *sum* of the two tiers. A third state arriving later -- a nullable
+    tier, a hand-edited value -- would make that sum quietly smaller than the catalogue
+    while every per-tier count stayed correct.
+    """
+    total = sum(sum(1 for r in records if r.publication_tier is tier) for tier in PublicationTier)
+    bad = [] if total == len(records) else [f"tiers sum to {total} over {len(records)} records"]
+    return _fail(
+        "tiers_partition_the_catalogue",
+        bad,
+        "Every record carries a publication tier and the tiers sum to the catalogue.",
+    )
+
+
+def check_reviewed_tier_cites_a_real_hearing(records: list[AudioRecord]) -> Check:
+    """A ``RELEASED_VERIFIED`` record must be findable in the decision log, by key and URL.
+
+    By URL as well as key because a verdict about one recording of a passage is not a
+    verdict about a different recording of it, and this catalogue now holds Atharvavedic
+    audio from two publishers over overlapping coordinates. Matching on the key alone would
+    let a Vedavani file inherit a hearing given to a VedSearch one.
+    """
+    hearings = _effective_hearings()
+    bad: list[str] = []
+    for record in records:
+        if record.publication_tier is not PublicationTier.RELEASED_VERIFIED:
+            if record.audible_review_evidence:
+                bad.append(f"{record.audio_id}: unreviewed tier carries review evidence")
+            continue
+        decision = hearings.get((record.scope_key or "", record.media_url or ""))
+        if decision is None:
+            bad.append(f"{record.audio_id}: no decision row for this key and media URL")
+        elif decision.get("verdict") != "AUDIBLY_VERIFIED" or not decision.get("recording_opened"):
+            bad.append(f"{record.audio_id}: the decision row records no accepted hearing")
+        elif not decision.get("reviewer"):
+            bad.append(f"{record.audio_id}: the decision row names no reviewer")
+    return _fail(
+        "reviewed_tier_cites_a_real_hearing",
+        bad,
+        "Every RELEASED_VERIFIED record is backed by a named listener's decision row, and "
+        "no SOURCE_MAPPED_UNREVIEWED record claims one.",
+    )
+
+
 def check_proxied_records_are_fetchable(records: list[AudioRecord]) -> Check:
     """A proxied record must name the source item the streaming route has to fetch.
 
@@ -477,6 +546,10 @@ def metrics(catalog: AudioCatalog) -> dict[str, Any]:
         "by_availability": catalog.counts_by("availability"),
         "by_audio_type": catalog.counts_by("audio_type"),
         "by_playback_mode": catalog.counts_by("playback_mode"),
+        "by_publication_tier": {
+            tier.value: len(catalog.for_tier(tier)) for tier in PublicationTier
+        },
+        "by_veda_and_publication_tier": catalog.counts_by_veda_and_tier(),
         "distinct_mapped_keys_by_veda": {
             veda: len(catalog.scope_keys_for_veda(veda)) for veda in sorted(VEDA_RECENSIONS)
         },
@@ -514,6 +587,8 @@ def main() -> int:
         check_confidence_evidence(records),
         check_no_invented_timestamps(records),
         check_exact_is_text_verified(records),
+        check_tiers_partition_the_catalogue(records),
+        check_reviewed_tier_cites_a_real_hearing(records),
         check_proxied_records_are_fetchable(records),
         check_playback_has_something_to_play(records),
         check_cache_files_present(records, args.data_dir),

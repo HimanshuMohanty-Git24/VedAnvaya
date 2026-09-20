@@ -1,0 +1,33 @@
+{
+  "consumers": {
+    "cross-Veda matrices": {
+      "output": "data/derived/release_blocker_r1/cross_veda_matrix.json",
+      "output_hash": "d258621970e686083de91e49b610678a09a710c27e822eb3ff2aba6581543ae8",
+      "status": "CURRENT"
+    },
+    "formula / parallel / variant relations": {
+      "output": "data/derived/release_blocker_r1/formula_consumer.json",
+      "output_hash": "8dd4dc9565d6147c25bde3e6d135c56baaac862c3a4f50d16e5c283036117327",
+      "status": "CURRENT"
+    }
+  },
+  "graph_census": {
+    "nodes": 164201,
+    "relationships": 508042
+  },
+  "graph_mutation": false,
+  "query_hashes": [
+    "12001a8e6421f5620e7d891bab78c29ef00cff77734ea3a44635003aacbd68f6",
+    "18e2d4b4c5b76afd56fb48b5517deef2ab7d7578e9fe1213dd7cccfaafd50fb1",
+    "1b6014b0aa2163f5f21f1695196030d70dfc7649d185b053a71660d81af75dcf",
+    "4267f1261b0107ab3ae8e426d173d37058efd87a97cd298c4802c45e8634fefe",
+    "52a1bff56bead62533cbe4091a30808ecbfce0b872a64d46ac394f9efb4e5069",
+    "5e95f53a7a43d6b5a944c009843db29c829b734c1666625620dd2b4bd40bc203",
+    "91b63f3822bfed37fb6102af781749e9441cb3f4dbc074361c8100d10a570b7f",
+    "9f717d103972395720290ad67d93722cf1d9efc6d8a67f8bf9db831000ecd267",
+    "a5816e7252639a36509afe96962e8dfe04dc00fbb1eecad16f79f231215edd94",
+    "ae0c99999556b181cdf0a2dc2d1279fd8e336d2818fe5ea2c914117ad479754b",
+    "bf34522476d70a2a55f76ba943ae154efbb4ff41e09b44d4883823c80eb76fe2"
+  ],
+  "two_builds_identical": true
+}

@@ -2,9 +2,12 @@
 
 import clsx from "clsx";
 import Link from "next/link";
+import { useState } from "react";
 import { encoded } from "@/lib/api";
 import {
+    caveatSourceLabel,
     channelLabel,
+    clauses,
     formatMs,
     matchRankCopy,
     supportLevelCopy,
@@ -13,7 +16,7 @@ import {
     type AskEvidenceItem,
     type AskResponse,
 } from "@/lib/ask";
-import { parseAnswer } from "@/lib/ask-citations";
+import { parseAnswer, type AnswerSegment } from "@/lib/ask-citations";
 import { entityHref } from "@/lib/knowledge";
 
 /**
@@ -73,6 +76,64 @@ export function AskAnswer({
     const passages = inlinePassages(result.evidence);
     const cited = new Set(citedIds);
 
+    /*
+     * The binding: which evidence item the reader is pointing at, from either end.
+     *
+     * One piece of state, written by the citation markers in the prose and by the evidence
+     * entries under it, and read by both. That is what makes the relation legible in both
+     * directions without either side knowing about the other: a citation says "E2" and an
+     * entry says "E2", and the id is the binding.
+     *
+     * Hover *and* focus, because the whole point is that it works from the keyboard as well.
+     * A binding that only exists under a pointer is a binding a screen-reader user and a
+     * keyboard user cannot see at all, and the citation markers are already buttons in the
+     * tab order.
+     *
+     * The drawn rule is the Anvaya Thread from `thread.css`: DRAW, where a real evidentiary
+     * relation exists. A citation pointing at the item it cites is exactly that, and it is
+     * the only place in the answer where a line is drawn.
+     */
+    const [bound, setBound] = useState<string | null>(null);
+    const bind = (id: string | null) => () => setBound(id);
+
+    /**
+     * One run of segments, as prose and citation markers.
+     *
+     * Shared by a paragraph and a list item rather than written twice, because the two
+     * differ only in the element around them - and a second copy is a second place for the
+     * binding, the disabled state or the accessible name of a citation to drift.
+     */
+    const render = (segments: AnswerSegment[]) =>
+        segments.map((segment, position) =>
+            segment.kind === "text" ? (
+                segment.emphasis ? (
+                    <strong key={position}>{segment.text}</strong>
+                ) : (
+                    <span key={position}>{segment.text}</span>
+                )
+            ) : (
+                <span className="va-cite-group" key={position}>
+                    {segment.ids.map((id) => (
+                        <button
+                            aria-label={`Open evidence ${id}`}
+                            className="va-cite"
+                            data-bound={bound === id}
+                            disabled={!evidenceIds.has(id)}
+                            key={id}
+                            onBlur={bind(null)}
+                            onClick={() => onOpenEvidence(id)}
+                            onFocus={bind(id)}
+                            onMouseEnter={bind(id)}
+                            onMouseLeave={bind(null)}
+                            type="button"
+                        >
+                            {id}
+                        </button>
+                    ))}
+                </span>
+            ),
+        );
+
     return (
         <article aria-labelledby="ask-answer-heading" className="va-answer">
             {/*
@@ -123,31 +184,27 @@ export function AskAnswer({
                         is still listed below.
                     </p>
                 )}
-                {paragraphs.map((paragraph, index) => (
-                    // Paragraph order is the answer's own order; index is the stable key.
-                    <p key={index}>
-                        {paragraph.segments.map((segment, position) =>
-                            segment.kind === "text" ? (
-                                <span key={position}>{segment.text}</span>
-                            ) : (
-                                <span className="va-cite-group" key={position}>
-                                    {segment.ids.map((id) => (
-                                        <button
-                                            aria-label={`Open evidence ${id}`}
-                                            className="va-cite"
-                                            disabled={!evidenceIds.has(id)}
-                                            key={id}
-                                            onClick={() => onOpenEvidence(id)}
-                                            type="button"
-                                        >
-                                            {id}
-                                        </button>
-                                    ))}
-                                </span>
-                            ),
-                        )}
-                    </p>
-                ))}
+                {paragraphs.map((paragraph, index) =>
+                    /*
+                     * A block the model wrote as a list is rendered as one.
+                     *
+                     * Set in the reading column's own type rather than as a bulleted list
+                     * with a marker: these are findings, each one carrying its citations,
+                     * and a rubric mark in the margin is how the rest of the product marks
+                     * a division. See `parseAnswer` for why the block arrives as one
+                     * paragraph in the first place.
+                     */
+                    paragraph.bullets ? (
+                        <ul className="va-answer-points" key={index}>
+                            {paragraph.bullets.map((point, at) => (
+                                <li key={at}>{render(point)}</li>
+                            ))}
+                        </ul>
+                    ) : (
+                        // Paragraph order is the answer's own order; index is the stable key.
+                        <p key={index}>{render(paragraph.segments)}</p>
+                    ),
+                )}
             </div>
 
             {passages.length > 0 && (
@@ -165,8 +222,18 @@ export function AskAnswer({
                         {passages.slice(0, 3).map((item) => (
                             <li
                                 className="va-evidence-entry"
+                                data-bound={bound === item.id}
                                 data-cited={cited.has(item.id)}
                                 key={item.id}
+                                /* The reverse binding. An entry is not a control, so the
+                                   pointer half is on the item and the keyboard half is
+                                   delegated: focus bubbles here from the links and buttons
+                                   inside it, which are what a keyboard reader actually
+                                   lands on. */
+                                onBlur={bind(null)}
+                                onFocus={bind(item.id)}
+                                onMouseEnter={bind(item.id)}
+                                onMouseLeave={bind(null)}
                             >
                                 <div className="va-evidence-cite">
                                     <span className="va-evidence-id">{item.id}</span>
@@ -233,11 +300,21 @@ export function AskAnswer({
             {caveats.length > 0 && (
                 <section aria-label="Scope notes for this answer" className="va-answer-caveats">
                     <h3>What this answer does not settle</h3>
+                    {/*
+                     * Each caveat, broken into the clauses it is already made of.
+                     *
+                     * Nothing is rewritten, shortened or dropped: `clauses` decides where a
+                     * line ends and does nothing else, and its round trip is asserted in
+                     * `tests/unit/ask-clauses.test.ts`. What changes is that four sentences
+                     * qualifying four different things stop being one grey paragraph.
+                     */}
                     <ul>
                         {caveats.map((caveat) => (
                             <li key={`${caveat.source}-${caveat.text}`}>
-                                <p>{caveat.text}</p>
-                                <cite>{caveat.source}</cite>
+                                {clauses(caveat.text).map((clause, index) => (
+                                    <p key={index}>{clause}</p>
+                                ))}
+                                <cite>{caveatSourceLabel(caveat.source)}</cite>
                             </li>
                         ))}
                     </ul>

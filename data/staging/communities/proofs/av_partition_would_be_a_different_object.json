@@ -1,0 +1,8 @@
+{
+  "av_ascription_descriptors": 324,
+  "av_mantras_with_2_or_more_ascriptions": 549,
+  "av_mantras_with_a_dedication": 4160,
+  "decision": "NOT COMPUTED AS A PUBLISHED PARTITION. The 324 descriptors are carried as `unresolved` candidates in the manifest and enumerated in av_ascription_unresolved.jsonl.",
+  "descriptors_that_resolve_to_a_devata_node": 0,
+  "so_an_av_partition_would_be": "a partition over 324 Anukramani ascription DESCRIPTORS, not over deities. 549 Atharvavedic mantras carry two or more descriptors, so such a graph is computable -- and it would answer a different question. Merging it with the Rigvedic deity partition would assert an identity between a descriptor and a deity that nothing in the graph supports."
+}

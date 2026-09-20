@@ -51,12 +51,30 @@
  *
  * Not a four-up grid. The four collections are not four instances of one thing: they differ
  * in size by a factor of six, in what is held of them, and in whether they have a translation
- * layer at all. Four equal cards assert an equivalence the data contradicts, and there is no
- * room in a card for the sentence that says what is missing, which is the most important
- * thing on the page.
+ * layer of their own. Four equal cards assert an equivalence the data contradicts, and a card
+ * has no room for the three things that actually distinguish one collection from the next:
+ * the sentence that says what this edition is, the shape it keeps, and the measured list of
+ * what it carries.
  */
 .va-collections {
     border-top: var(--va-border-width) solid var(--va-line-strong);
+}
+
+/* Where the scope statements went. One line, at the foot, after the reader has seen four
+   ways in -- not four paragraphs of exclusion between them and the text. */
+.va-collections-foot {
+    margin: var(--va-space-2xl) 0 0;
+    max-width: var(--va-measure);
+    font-size: var(--va-text-sm);
+    line-height: var(--va-leading-normal);
+    color: var(--va-text-tertiary);
+}
+
+.va-collections-foot a {
+    color: var(--va-accent-text);
+    text-decoration: none;
+    border-bottom: var(--va-border-width) solid
+        color-mix(in srgb, var(--va-accent-text) 34%, transparent);
 }
 
 .va-collection {
@@ -118,14 +136,70 @@
     color: var(--va-text-tertiary);
 }
 
-.va-collection-limit {
+/*
+ * What this edition is, in one sentence.
+ *
+ * This slot used to hold a paragraph of what the collection does not contain, set against a
+ * warning rule, which made the widest and loudest object on the index the statement of
+ * absence. The enumerated boundaries moved to /limits; what stands here is the sentence that
+ * tells a reader which text they are about to open, set as ordinary reading prose because
+ * that is what it is.
+ */
+.va-collection-scope {
     margin: 0;
     max-width: var(--va-measure);
-    padding-inline-start: var(--va-space-lg);
-    border-inline-start: var(--va-border-width-accent) solid var(--va-tone-unbuilt);
-    font-size: var(--va-text-sm);
+    font-size: var(--va-text-base);
     line-height: var(--va-leading-normal);
     color: var(--va-text-secondary);
+}
+
+/*
+ * What the collection carries, as a rule-separated run rather than as pills.
+ *
+ * Every entry here is measured -- it appears because the graph holds that layer for this
+ * corpus -- so the list length differs per collection by design, and a row of equal pills
+ * would flatten that difference into decoration. Hairlines between items keep the run
+ * legible as one sentence of capabilities without drawing eight boxes.
+ */
+.va-collection-features {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--va-space-2xs) var(--va-space-md);
+    max-width: var(--va-measure-wide);
+}
+
+.va-collection-feature {
+    display: flex;
+    align-items: baseline;
+    gap: var(--va-space-xs);
+    font-size: var(--va-text-xs);
+    line-height: var(--va-leading-normal);
+    color: var(--va-text-secondary);
+}
+
+/*
+ * A gold tick before each entry, not a rule between them.
+ *
+ * A separator between wrapped flex items is a trap: the item that lands first on the second
+ * line keeps the separator it inherited from being nth in the source, and a stray hairline
+ * appears against the left margin. A mark that belongs to the item travels with it.
+ */
+.va-collection-feature::before {
+    content: "";
+    flex: none;
+    width: 0.3rem;
+    height: 0.3rem;
+    border-radius: 50%;
+    background: var(--va-accent-text);
+    opacity: 0.55;
+    transform: translateY(-0.15em);
+}
+
+.va-collection-cta {
+    margin: 0;
 }
 
 /* --------------------------------------------------------- counted facts - */
@@ -394,8 +468,21 @@
     transition: var(--va-transition-colors);
 }
 
+/*
+ * The current tab, and the reason `background` is reset here rather than inherited.
+ *
+ * The rule above resets the background on `.va-page .kind-tabs a`, which has the same
+ * specificity as the old pill rule's `[aria-current="page"]` variant in `globals.css` -
+ * and that one is later in the cascade, so it kept its `background: var(--ink)` while this
+ * block set `color: var(--va-text-primary)` over it. Measured on /entities/condition and
+ * /material-culture: the selected tab rendered as a solid black rectangle with its label
+ * invisible, in both themes, and it had been that way since the tabs were converted.
+ */
 .va-page .kind-tabs a[aria-current="page"] {
+    background: none;
+    border-color: transparent;
     border-bottom-color: var(--va-accent-base);
+    border-radius: 0;
     color: var(--va-text-primary);
 }
 
@@ -457,7 +544,7 @@
     content: "";
     position: absolute;
     inset: 0;
-    z-index: -1;
+    z-index: var(--va-z-beneath);
     background-image: image-set(
         url("/brand/textures/plates-light-1536.avif") type("image/avif"),
         url("/brand/textures/plates-light-1536.webp") type("image/webp")
@@ -780,7 +867,7 @@
 }
 
 .va-work-shape > h2,
-.va-work-limit > h2,
+.va-work-carries > h2,
 .va-work-ways > h2 {
     margin: 0 0 var(--va-space-sm);
     font-family: var(--va-font-ui);
@@ -800,27 +887,56 @@
 }
 
 /*
- * The limit statement, given an accent rule rather than a box.
+ * What this edition is, under the title.
  *
- * It is the same gesture the collection index uses for the same sentence, so the reader who
- * has met it on the way in recognises it here as the same kind of claim.
+ * One sentence of character rather than a paragraph of exclusions. It sits inside the head so
+ * it is read with the name and the recension, which are the other two things a reader needs
+ * before they can tell whether this is the text they came for.
  */
-.va-work-limit {
-    margin-top: var(--va-space-3xl);
-    padding-left: var(--va-space-lg);
-    border-left: var(--va-border-width) solid var(--va-accent-base);
-}
-
-.va-work-limit > p {
-    margin: 0;
+.va-work-edition {
+    margin: var(--va-space-md) 0 0;
     max-width: var(--va-measure);
-    font-size: var(--va-text-base);
-    line-height: var(--va-leading-prose);
-    color: var(--va-text-primary);
+    font-size: var(--va-text-md);
+    line-height: var(--va-leading-normal);
+    color: var(--va-text-secondary);
 }
 
-.va-work-status {
+/*
+ * What the collection carries, above the index into it.
+ *
+ * This slot used to be "What this collection does not hold", a paragraph set against an
+ * accent rule, which made the last thing a reader passed on the way to the text a statement
+ * of what they would not find in it. Every entry here was measured on the request; the
+ * edition's boundaries are one line below it and the whole statement is on /limits.
+ */
+.va-work-carries {
+    margin-top: var(--va-space-3xl);
+    padding-top: var(--va-space-xl);
+    border-top: var(--va-rule-quiet);
+}
+
+.va-work-carries .va-collection-features {
     margin-top: var(--va-space-md);
+    gap: var(--va-space-sm) var(--va-space-xl);
+}
+
+.va-work-carries .va-collection-feature {
+    font-size: var(--va-text-sm);
+}
+
+.va-work-scope {
+    margin: var(--va-space-xl) 0 0;
+    max-width: var(--va-measure);
+    font-size: var(--va-text-sm);
+    line-height: var(--va-leading-normal);
+    color: var(--va-text-tertiary);
+}
+
+.va-work-scope a {
+    color: var(--va-accent-text);
+    text-decoration: none;
+    border-bottom: var(--va-border-width) solid
+        color-mix(in srgb, var(--va-accent-text) 34%, transparent);
 }
 
 .va-work-foot {
@@ -843,61 +959,6 @@
     display: grid;
     gap: var(--va-space-md);
     justify-items: start;
-}
-
-/*
- * The corpus status inside the limit statement.
- *
- * The default treatment is a tinted card with an icon, which is right in a list of many
- * statuses and wrong as the single object on a page of rules and type: it reads as the most
- * important thing here, and the sentence above it is. Reduced to a tone-coded label.
- */
-.va-work-status .knowledge-status[data-tone] {
-    display: inline-flex;
-    align-items: baseline;
-    gap: var(--va-space-2xs);
-    padding: 0 0 2px;
-    background: none;
-    border: 0;
-    border-bottom: var(--va-border-width) solid currentColor;
-    border-radius: 0;
-}
-
-.va-work-status .knowledge-status[data-tone] svg {
-    display: none;
-}
-
-.va-work-status .knowledge-status[data-tone] strong {
-    font-family: var(--va-font-ui);
-    font-size: var(--va-text-2xs);
-    font-weight: var(--va-weight-semibold);
-    letter-spacing: var(--va-tracking-eyebrow);
-    text-transform: uppercase;
-}
-
-.va-work-status .knowledge-status[data-tone] span {
-    font-family: var(--va-font-ui);
-    font-size: var(--va-text-xs);
-    letter-spacing: 0;
-    text-transform: none;
-    color: var(--va-text-tertiary);
-}
-
-.va-work-status .knowledge-status[data-tone] > div {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: baseline;
-    gap: var(--va-space-2xs);
-}
-
-/* Absence keeps its own rule style, as it does in the reader's apparatus. */
-.va-work-status .knowledge-status.tone-insufficient {
-    border-bottom-style: dashed;
-}
-
-.va-work-status .knowledge-status.tone-partial,
-.va-work-status .knowledge-status.tone-not-built {
-    border-bottom-style: dotted;
 }
 
 /* ------------------------------------------------------------ missing thread - */

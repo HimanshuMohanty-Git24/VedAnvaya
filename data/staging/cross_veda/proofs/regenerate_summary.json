@@ -1,0 +1,136 @@
+{
+ "surfaces_changed": {
+  "RV": 0,
+  "SV": 3,
+  "YV": 873,
+  "AV": 0
+ },
+ "types_changed_per_pair": {
+  "AV-RV": 0,
+  "AV-SV": 0,
+  "AV-YV": 53,
+  "RV-SV": 6,
+  "RV-YV": 254,
+  "SV-YV": 83,
+  "RV-INTRA": 0
+ },
+ "edges_per_pair": {
+  "AV-RV": 1325,
+  "AV-SV": 467,
+  "AV-YV": 210,
+  "RV-SV": 3368,
+  "RV-YV": 662,
+  "SV-YV": 239,
+  "RV-INTRA": 325
+ },
+ "types_changed_total_cross_veda": 396,
+ "transitions": {
+  "SCATTERED_SUBSTITUTIONS -> TWO_CONTIGUOUS_SUBSTITUTIONS": 62,
+  "TWO_CONTIGUOUS_SUBSTITUTIONS -> INTERIOR_INSERTION": 4,
+  "SINGLE_CONTIGUOUS_SUBSTITUTION -> NO_CHANGE_OBSERVABLE_AT_REACHABLE_LEVEL": 7,
+  "TWO_CONTIGUOUS_SUBSTITUTIONS -> INTERIOR_DELETION": 12,
+  "INTERIOR_INSERTION -> SCRIPT_CONVENTION_ONLY": 13,
+  "INTERIOR_INSERTION -> WORD_DIVISION_ONLY": 97,
+  "TWO_CONTIGUOUS_SUBSTITUTIONS -> SINGLE_CONTIGUOUS_SUBSTITUTION": 72,
+  "SCATTERED_SUBSTITUTIONS -> SINGLE_CONTIGUOUS_SUBSTITUTION": 41,
+  "TWO_CONTIGUOUS_SUBSTITUTIONS -> WORD_DIVISION_ONLY": 30,
+  "TWO_CONTIGUOUS_SUBSTITUTIONS -> TAIL_EXTENSION": 4,
+  "SINGLE_CONTIGUOUS_SUBSTITUTION -> WORD_DIVISION_ONLY": 21,
+  "SCATTERED_SUBSTITUTIONS -> HEAD_TRUNCATION": 1,
+  "TWO_CONTIGUOUS_SUBSTITUTIONS -> SCRIPT_CONVENTION_ONLY": 3,
+  "SCATTERED_SUBSTITUTIONS -> WORD_DIVISION_ONLY": 4,
+  "SINGLE_CONTIGUOUS_SUBSTITUTION -> SCRIPT_CONVENTION_ONLY": 7,
+  "INTERIOR_INSERTION -> NO_CHANGE_OBSERVABLE_AT_REACHABLE_LEVEL": 12,
+  "TWO_CONTIGUOUS_SUBSTITUTIONS -> HEAD_TRUNCATION": 1,
+  "SCATTERED_SUBSTITUTIONS -> INTERIOR_DELETION": 1,
+  "TWO_CONTIGUOUS_SUBSTITUTIONS -> NO_CHANGE_OBSERVABLE_AT_REACHABLE_LEVEL": 4
+ },
+ "ceiling_old": {
+  "AV-RV": 0.481,
+  "AV-SV": 0.4952,
+  "AV-YV": 0.5185,
+  "RV-SV": 0.4954,
+  "RV-YV": 0.4714,
+  "SV-YV": 0.5225
+ },
+ "ceiling_new": {
+  "AV-RV": 0.481,
+  "AV-SV": 0.4952,
+  "AV-YV": 0.5185,
+  "RV-SV": 0.4954,
+  "RV-YV": 0.4748,
+  "SV-YV": 0.5225
+ },
+ "revealed_boundary": {
+  "n": 3049,
+  "min": 0.619565,
+  "p01": 0.870968,
+  "p05": 0.903226,
+  "p25": 0.954357,
+  "median": 0.979798,
+  "max": 1.0
+ },
+ "recall": {
+  "AV-RV": {
+   "assessed": 8194,
+   "already_linked": 958,
+   "below_floor": 8094,
+   "above_floor": 100,
+   "importable": 0
+  },
+  "AV-SV": {
+   "assessed": 887,
+   "already_linked": 411,
+   "below_floor": 860,
+   "above_floor": 27,
+   "importable": 0
+  },
+  "AV-YV": {
+   "assessed": 2666,
+   "already_linked": 181,
+   "below_floor": 2599,
+   "above_floor": 67,
+   "importable": 0
+  },
+  "RV-SV": {
+   "assessed": 4295,
+   "already_linked": 1225,
+   "below_floor": 4233,
+   "above_floor": 62,
+   "importable": 2
+  },
+  "RV-YV": {
+   "assessed": 3272,
+   "already_linked": 506,
+   "below_floor": 3236,
+   "above_floor": 36,
+   "importable": 2
+  },
+  "SV-YV": {
+   "assessed": 448,
+   "already_linked": 217,
+   "below_floor": 432,
+   "above_floor": 16,
+   "importable": 0
+  }
+ },
+ "stored_types_contradicted": {
+  "AV-RV": 0,
+  "AV-SV": 0,
+  "AV-YV": 27,
+  "RV-SV": 1,
+  "RV-YV": 139,
+  "SV-YV": 30
+ },
+ "stored_type_detail": {
+  "RV-SV|NEAR_PARALLEL_OF|EXACT_PARALLEL_OF": 1,
+  "SV-YV|NEAR_PARALLEL_OF|EXACT_PARALLEL_OF": 23,
+  "RV-YV|NEAR_PARALLEL_OF|VARIANT_OF": 122,
+  "SV-YV|NEAR_PARALLEL_OF|VARIANT_OF": 7,
+  "AV-YV|NEAR_PARALLEL_OF|VARIANT_OF": 23,
+  "RV-YV|NEAR_PARALLEL_OF|EXACT_PARALLEL_OF": 17,
+  "AV-YV|NEAR_PARALLEL_OF|EXACT_PARALLEL_OF": 4
+ },
+ "identity_edges": 2240,
+ "substantive_edges": 4031
+}

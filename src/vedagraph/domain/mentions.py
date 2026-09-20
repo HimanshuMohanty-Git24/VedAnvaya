@@ -138,6 +138,16 @@ _TOKEN_SCORE: Final = 0.90
 #: token path and carrying its path in the method, so it can be filtered out wholesale.
 _SANDHI_SCORE: Final = 0.60
 
+#: A multi-token Sanskrit match, available in every Veda.
+_PATH_PHRASE: Final = "sanskrit-phrase"
+
+#: A run of consecutive whole Sanskrit tokens. Scored ABOVE the single-token path, because
+#: a two-token match is strictly more specific than a one-token match: ``tṛtīye savane`` can
+#: only be the third pressing, while ``savane`` alone is any of the three. Both ends are
+#: required to fall on a token boundary, so unlike the Sāmaveda sandhi pass this can never
+#: fire inside a longer word.
+_PHRASE_SCORE: Final = 0.95
+
 #: Context tokens kept either side of a hit, so the quote is evidence rather than the verse.
 _CONTEXT_TOKENS: Final = 2
 _SANDHI_CONTEXT_CHARS: Final = 25
@@ -157,6 +167,11 @@ class MentionIndex:
     sandhi: tuple[tuple[str, str], ...]
     #: Folded aliases that are also a Devatā label form. Not excluded -- recorded.
     theonyms: frozenset[str]
+    #: Multi-token folded aliases, as a token tuple paired with its entity. Held apart from
+    #: ``token`` rather than in it: a string with a space in it can never equal a single
+    #: folded token, so a multi-word alias in ``token`` is an alias that matches nothing
+    #: forever and says nothing about it.
+    phrase: tuple[tuple[tuple[str, ...], str], ...] = ()
 
     @property
     def counts(self) -> dict[str, int]:
@@ -164,6 +179,7 @@ class MentionIndex:
             "token_aliases": len(self.token),
             "sandhi_aliases": len(self.sandhi),
             "theonym_aliases": len(self.theonyms),
+            "phrase_aliases": len(self.phrase),
         }
 
 
@@ -187,11 +203,17 @@ def devata_label_forms(devata_labels: Iterable[str]) -> frozenset[str]:
 
 
 def build_index(entities: Sequence[ConceptRow], devata_labels: Iterable[str] = ()) -> MentionIndex:
-    """Invert the lexicon, and mark which aliases are also deity names."""
+    """Invert the lexicon, and mark which aliases are also deity names.
+
+    A registered alias containing whitespace goes to the PHRASE table and never to
+    ``token``. It is sorted there before it is used, so an alias that happens to be a
+    prefix of a longer one cannot win by registry order.
+    """
     theonym_forms = devata_label_forms(devata_labels)
     token: dict[str, str] = {}
     sandhi: list[tuple[str, str]] = []
     theonyms: set[str] = set()
+    phrase: list[tuple[tuple[str, ...], str]] = []
     for entity in entities:
         for alias in entity.aliases_sa:
             folded = fold_alias(alias)
@@ -206,7 +228,19 @@ def build_index(entities: Sequence[ConceptRow], devata_labels: Iterable[str] = (
                 and alias not in V2_SANDHI_SUPPRESSED_ALIASES
             ):
                 sandhi.append((folded, entity.concept_id))
-    return MentionIndex(token=token, sandhi=tuple(sorted(sandhi)), theonyms=frozenset(theonyms))
+        for alias in getattr(entity, "aliases_sa_phrases", ()) or ():
+            parts = tuple(fold_alias(part) for part in str(alias).split())
+            # Every part must fold to something, or the phrase has a hole in it and would
+            # match a run it does not describe.
+            if len(parts) < 2 or not all(parts):
+                continue
+            phrase.append((parts, entity.concept_id))
+    return MentionIndex(
+        token=token,
+        sandhi=tuple(sorted(sandhi)),
+        theonyms=frozenset(theonyms),
+        phrase=tuple(sorted(phrase)),
+    )
 
 
 @dataclass
@@ -266,6 +300,32 @@ def _token_hits(mantra: MantraRecord, index: MentionIndex) -> dict[str, _Hit]:
     return found
 
 
+def _phrase_hits(mantra: MantraRecord, index: MentionIndex) -> dict[str, _Hit]:
+    """Entities named by a run of consecutive whole tokens.
+
+    Both ends of the run are token boundaries by construction -- the comparison is over the
+    token SEQUENCE, never over the joined string -- so this cannot fire inside a longer
+    word. That is the difference between this and :func:`_sandhi_hits`, and it is why this
+    one is not restricted to the Sāmaveda.
+    """
+    tokens = mantra.surfaces.tokens
+    found: dict[str, _Hit] = {}
+    if not index.phrase or not tokens:
+        return found
+    for parts, entity_key in index.phrase:
+        width = len(parts)
+        for position in range(len(tokens) - width + 1):
+            if tuple(tokens[position : position + width]) != parts:
+                continue
+            window = tokens[
+                max(0, position - _CONTEXT_TOKENS) : position + width + _CONTEXT_TOKENS
+            ]
+            found.setdefault(entity_key, _Hit()).add(
+                " ".join(parts), " ".join(window), "script_folded_phrase"
+            )
+    return found
+
+
 def _sandhi_hits(mantra: MantraRecord, index: MentionIndex, already: set[str]) -> dict[str, _Hit]:
     """Substring pass over the boundary-free surface, Sāmaveda only.
 
@@ -309,24 +369,34 @@ def extract_mentions(
     rows: list[MentionRow] = []
     per_veda: dict[str, int] = {}
     covered: dict[str, set[str]] = {}
-    path_counts: dict[str, int] = {_PATH_TOKEN: 0, _PATH_SANDHI: 0}
+    path_counts: dict[str, int] = {_PATH_TOKEN: 0, _PATH_SANDHI: 0, _PATH_PHRASE: 0}
     theonym_total = 0
 
     for mantra in corpus.mantras:
         per_veda[mantra.veda] = per_veda.get(mantra.veda, 0) + 1
         token_hits = _token_hits(mantra, index)
+        phrase_hits = _phrase_hits(mantra, index)
         sandhi_hits = (
-            _sandhi_hits(mantra, index, set(token_hits))
+            _sandhi_hits(mantra, index, set(token_hits) | set(phrase_hits))
             if mantra.veda in SANDHI_MATCH_VEDAS
             else {}
         )
-        if not token_hits and not sandhi_hits:
+        if not token_hits and not phrase_hits and not sandhi_hits:
             continue
 
         built: list[MentionRow] = []
         for entity_key, hit in sorted(token_hits.items()):
             built.append(
                 _build_row(mantra, entity_key, hit, _PATH_TOKEN, _TOKEN_SCORE, index, identity)
+            )
+        for entity_key, hit in sorted(phrase_hits.items()):
+            if entity_key in token_hits:
+                # Reached by both paths. The phrase is the stronger claim, so it replaces
+                # the token row rather than travelling beside it: two rows for one
+                # (passage, entity) would double-count the mention.
+                built = [row for row in built if row.entity_key != entity_key]
+            built.append(
+                _build_row(mantra, entity_key, hit, _PATH_PHRASE, _PHRASE_SCORE, index, identity)
             )
         for entity_key, hit in sorted(sandhi_hits.items()):
             built.append(

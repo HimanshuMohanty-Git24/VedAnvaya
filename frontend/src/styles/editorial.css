@@ -628,3 +628,291 @@
         transition: none;
     }
 }
+
+/* ============================================================================
+   Scope and limits.
+
+   The one page in the product that states its boundaries at length, and the
+   register it is written in is the point. An engineering incident report and a
+   scholarly statement of scope can carry identical facts and leave a reader
+   with opposite impressions, and the difference is almost entirely typographic:
+   warning boxes, status chips and red rules turn a boundary into a fault.
+
+   So there are no tinted panels here. A section is a heading, a lede, a small
+   run of figures and a set of prose notes, separated by rules, in the same
+   vocabulary the sources page uses, because /limits and /sources are two halves
+   of one document and a reader moves between them.
+   ============================================================================ */
+
+.va-limits-intro {
+    margin: calc(-1 * var(--va-space-lg)) 0 var(--va-space-4xl);
+    max-width: var(--va-measure);
+    font-size: var(--va-text-md);
+    line-height: var(--va-leading-prose);
+    color: var(--va-text-secondary);
+}
+
+.va-scope-section {
+    padding-top: var(--va-space-3xl);
+    margin-bottom: var(--va-space-4xl);
+    border-top: var(--va-border-width) solid var(--va-line-strong);
+}
+
+.va-scope-section > h2 {
+    margin: 0;
+    font-family: var(--va-font-display);
+    font-size: var(--va-text-2xl);
+    font-weight: var(--va-weight-regular);
+    line-height: var(--va-leading-tight);
+    letter-spacing: var(--va-tracking-tight);
+    color: var(--va-text-primary);
+    font-optical-sizing: auto;
+}
+
+.va-scope-lede {
+    margin: var(--va-space-lg) 0 0;
+    max-width: var(--va-measure);
+    font-size: var(--va-text-md);
+    line-height: var(--va-leading-prose);
+    color: var(--va-text-secondary);
+}
+
+/* ------------------------------------------------- the per-edition rows -- */
+
+/*
+ * One entry per edition: the name and the recension held on the left, the count and the
+ * enumerated exclusions on the right. A table was the obvious shape and the wrong one. The
+ * exclusion cell is a sentence of variable length, and a table column sets it as a ragged
+ * block against four unequal neighbours.
+ */
+.va-scope-list {
+    margin: var(--va-space-2xl) 0 0;
+}
+
+.va-scope-entry {
+    display: grid;
+    gap: var(--va-space-xs) var(--va-space-3xl);
+    padding-block: var(--va-space-xl);
+    border-bottom: var(--va-rule-quiet);
+}
+
+@media (min-width: 48rem) {
+    .va-scope-entry {
+        grid-template-columns: minmax(0, 14rem) minmax(0, 1fr);
+        align-items: baseline;
+    }
+}
+
+.va-scope-entry dt {
+    display: grid;
+    gap: var(--va-space-3xs);
+}
+
+.va-scope-entry dt a {
+    font-family: var(--va-font-display);
+    font-size: var(--va-text-lg);
+    color: var(--va-text-primary);
+    text-decoration: none;
+    transition: var(--va-transition-colors);
+}
+
+.va-scope-entry dt a:hover {
+    color: var(--va-accent-text);
+}
+
+.va-scope-entry dt span {
+    font-size: var(--va-text-xs);
+    color: var(--va-text-tertiary);
+}
+
+.va-scope-entry dd {
+    margin: 0;
+    max-width: var(--va-measure);
+}
+
+.va-scope-entry dd p {
+    margin: 0 0 var(--va-space-xs);
+    font-size: var(--va-text-sm);
+    line-height: var(--va-leading-normal);
+    color: var(--va-text-secondary);
+}
+
+.va-scope-entry dd p:last-child {
+    margin-bottom: 0;
+}
+
+.va-scope-figure {
+    font-variant-numeric: tabular-nums;
+    color: var(--va-text-primary);
+}
+
+.va-scope-entry dd b {
+    font-weight: var(--va-weight-medium);
+    color: var(--va-text-primary);
+}
+
+/* ---------------------------------------------------------- figure runs -- */
+
+/*
+ * Counts, set as a run of small ledger entries rather than as a row of stat tiles.
+ *
+ * The figures on this page are qualifications, not achievements. "1,719 verses with no
+ * English" is not a metric to celebrate, and a display-size number on a tinted card would
+ * make it look like one. Label above, figure below, at reading size, wrapping freely.
+ */
+.va-scope-figures {
+    margin: var(--va-space-2xl) 0 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--va-space-xl) var(--va-space-3xl);
+    padding-block: var(--va-space-lg);
+    border-block: var(--va-rule-quiet);
+}
+
+.va-scope-figures > div {
+    display: grid;
+    gap: var(--va-space-3xs);
+    align-content: start;
+}
+
+.va-scope-figures dt {
+    font-size: var(--va-text-2xs);
+    letter-spacing: var(--va-tracking-eyebrow);
+    text-transform: uppercase;
+    color: var(--va-text-tertiary);
+}
+
+.va-scope-figures dd {
+    margin: 0;
+    font-family: var(--va-font-display);
+    font-size: var(--va-text-xl);
+    font-variant-numeric: tabular-nums;
+    color: var(--va-text-primary);
+}
+
+/* ------------------------------------------------------------ the notes -- */
+
+.va-scope-note {
+    margin-top: var(--va-space-2xl);
+    max-width: var(--va-measure);
+}
+
+.va-scope-note h3 {
+    margin: var(--va-space-2xl) 0 var(--va-space-sm);
+    font-family: var(--va-font-ui);
+    font-size: var(--va-text-2xs);
+    font-weight: var(--va-weight-semibold);
+    letter-spacing: var(--va-tracking-eyebrow);
+    text-transform: uppercase;
+    color: var(--va-text-tertiary);
+}
+
+.va-scope-note h3:first-child {
+    margin-top: 0;
+}
+
+.va-scope-note p {
+    margin: 0 0 var(--va-space-md);
+    font-size: var(--va-text-base);
+    line-height: var(--va-leading-prose);
+    color: var(--va-text-secondary);
+}
+
+.va-scope-note p:last-child {
+    margin-bottom: 0;
+}
+
+.va-scope-note b {
+    font-weight: var(--va-weight-medium);
+    color: var(--va-text-primary);
+}
+
+.va-scope-note a,
+.va-scope-lede a,
+.va-limits-appendix a:not(.text-link) {
+    color: var(--va-accent-text);
+    text-decoration: none;
+    border-bottom: var(--va-border-width) solid
+        color-mix(in srgb, var(--va-accent-text) 34%, transparent);
+}
+
+/* A figure read on this request rather than certified with the release. Marked so a reader
+   can tell which of two adjacent numbers is live. */
+.va-scope-measured {
+    padding-top: var(--va-space-md);
+    border-top: var(--va-rule-quiet);
+    font-size: var(--va-text-sm);
+    color: var(--va-text-tertiary);
+}
+
+/* --------------------------------------------------- the question cards -- */
+
+/*
+ * The probed limits keep the card treatment they had, but they now sit under a section
+ * heading, so their own titles step down a level. The existing rules in the global sheet are
+ * written against h2 and h3; these carry the same type to the new levels.
+ */
+.limits-page .limit-card h3 {
+    margin-top: 8px;
+    font-family: var(--va-font-display);
+    font-size: 1.28rem;
+    font-weight: var(--va-weight-regular);
+    line-height: var(--va-leading-tight);
+}
+
+.limits-page .limit-body h4 {
+    margin-bottom: 7px;
+    font-family: var(--va-font-ui);
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    color: var(--faint);
+}
+
+/* ------------------------------------------------------------- appendix -- */
+
+/*
+ * The only place on this page an internal identifier appears, and it is fenced. A reader who
+ * does not want a release hash should never have met one; a reader reproducing a figure needs
+ * exactly this and nothing else.
+ */
+.va-limits-appendix {
+    margin-top: var(--va-space-4xl);
+    padding-top: var(--va-space-2xl);
+    border-top: var(--va-border-width) solid var(--va-line-strong);
+    max-width: var(--va-measure);
+}
+
+.va-limits-appendix h2 {
+    margin: 0 0 var(--va-space-md);
+    font-family: var(--va-font-ui);
+    font-size: var(--va-text-2xs);
+    font-weight: var(--va-weight-semibold);
+    letter-spacing: var(--va-tracking-eyebrow);
+    text-transform: uppercase;
+    color: var(--va-text-tertiary);
+}
+
+.va-limits-appendix p {
+    margin: 0 0 var(--va-space-md);
+    font-size: var(--va-text-sm);
+    line-height: var(--va-leading-normal);
+    color: var(--va-text-tertiary);
+}
+
+.va-limits-appendix code {
+    font-family: var(--va-font-mono);
+    font-size: 0.92em;
+    color: var(--va-text-secondary);
+}
+
+@media (max-width: 47.999rem) {
+    .va-scope-figures {
+        gap: var(--va-space-lg) var(--va-space-2xl);
+    }
+
+    .va-scope-figures dd {
+        font-size: var(--va-text-lg);
+    }
+}

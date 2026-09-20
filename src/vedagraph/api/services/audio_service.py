@@ -12,8 +12,10 @@ checked to still be inside it. A record naming ``../../.env`` produces ``None`` 
 a file handle, and :class:`~vedagraph.product.audio.models.AudioRecord` additionally
 refuses to load such a path at all. Two independent checks because this one is worth two.
 
-**The catalog is loaded once per process.** It is a read-only 1,801-line file and parsing
-it per request would be the most expensive thing in an audio response. It is held on
+**The catalog is loaded once per process.** It is a read-only JSONL file of tens of
+thousands of lines -- a figure that has trebled twice during this build, which is why it is
+not written down here -- and parsing it per request would be the most expensive thing in an
+audio response. It is held on
 ``app.state`` beside the Neo4j repository, for the same reason and with the same lifetime.
 """
 
@@ -43,6 +45,7 @@ from vedagraph.product.audio.catalog import (
     AudioCatalog,
     scope_label,
     scope_plural,
+    tier_note,
 )
 from vedagraph.product.audio.models import (
     VEDA_RECENSIONS,
@@ -52,6 +55,7 @@ from vedagraph.product.audio.models import (
     Availability,
     MappingConfidence,
     PlaybackMode,
+    PublicationTier,
 )
 from vedagraph.product.audio.net import USER_AGENT
 from vedagraph.product.audio.vedsearch import VedSearchClient
@@ -205,6 +209,8 @@ class AudioService:
             start_seconds=record.start_seconds,
             end_seconds=record.end_seconds,
             availability=record.availability,
+            publication_tier=record.publication_tier,
+            review_note=tier_note(record.publication_tier),
             mapping_confidence=record.mapping_confidence,
             mapping_method=record.mapping_method,
             text_verified=record.text_verified,
@@ -306,8 +312,11 @@ class AudioService:
             for record in page
         ]
         scope_counts: dict[str, int] = {}
+        source_counts: dict[str, int] = {}
         for record in records:
             scope_counts[record.scope_type.value] = scope_counts.get(record.scope_type.value, 0) + 1
+            name = record.source_name or "Unnamed source"
+            source_counts[name] = source_counts.get(name, 0) + 1
 
         caveats = list(_work_caveats(veda, records))
         return WorkAudioResponse(
@@ -325,6 +334,7 @@ class AudioService:
                 }
             ),
             scope_type_counts=dict(sorted(scope_counts.items())),
+            source_counts=dict(sorted(source_counts.items(), key=lambda kv: (-kv[1], kv[0]))),
             data_status=(KnowledgeStatus.NOT_BUILT if not records else KnowledgeStatus.PARTIAL),
             caveats=caveats,
         )
@@ -366,6 +376,26 @@ class AudioService:
                 source="measured",
             )
 
+        # The tier split, stated in the payload's own prose and counted rather than typed.
+        # An earlier policy made this unnecessary: nothing was published until it had been
+        # heard, so the catalogue had one footing and needed no sentence about it. Under
+        # the 2026-09-19 two-tier policy the catalogue has two, and a stats block that
+        # reported only a total would read as though the whole of it had been reviewed.
+        unreviewed = len(catalog.for_tier(PublicationTier.SOURCE_MAPPED_UNREVIEWED))
+        verified = len(catalog.for_tier(PublicationTier.RELEASED_VERIFIED))
+        if unreviewed:
+            yield CaveatView(
+                text=(
+                    f"{unreviewed:,} of these {len(catalog):,} recordings have not been "
+                    f"listened to by anyone. They are published because their mapping was "
+                    f"checked against the source's coordinates and this corpus's text and "
+                    f"their media resolves -- not because they were verified by ear. "
+                    f"{verified:,} carry an audible review. Do not describe the total as "
+                    f"human-verified."
+                ),
+                source="measured",
+            )
+
         samavedic = catalog.for_veda("SV")
         if not samavedic:
             yield CaveatView(
@@ -394,6 +424,10 @@ class AudioService:
         return AudioStatsResponse(
             total_records=len(catalog),
             by_veda=catalog.counts_by("veda"),
+            by_publication_tier={
+                tier.value: len(catalog.for_tier(tier)) for tier in PublicationTier
+            },
+            by_veda_and_tier=catalog.counts_by_veda_and_tier(),
             by_scope_type=catalog.counts_by("scope_type"),
             by_audio_type=catalog.counts_by("audio_type"),
             by_mapping_confidence=catalog.counts_by("mapping_confidence"),

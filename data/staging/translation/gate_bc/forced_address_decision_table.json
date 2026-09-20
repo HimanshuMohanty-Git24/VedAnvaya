@@ -1,0 +1,2092 @@
+{
+ "phase": 8,
+ "decision": "OWNER_DECISION_C_FORCED_ADDRESSES",
+ "what_the_decision_protects": "31 Yajurvedic rows whose payload declares address_forced_without_content_control: true, plus 8 more carrying the same label defect with a control already attached. Owner principle 14 bars promoting the 31 unless independent content verification now exists.",
+ "why_the_central_policy_does_not_cover_them": "all 31 are staged mapping_confidence EXACT, and the campaign's central NOT_IMPORTABLE set is {PROBABLE, UNVERIFIED}. The predicate keys on confidence and forcing is orthogonal to it, so nothing mechanical withholds these rows today. Gate B carries B_NEEDS_INDEPENDENT_CONTENT_CONTROL as a separate category for exactly this reason.",
+ "independent_verification_performed": "the pinned Griffith snapshot is on disk -- 45 pages under data/raw/sacred_texts/2026-09-07/wyv, each named by the sha256 of its own bytes, and 39 of the 51 rows name the hash of the page they were read from. Each row's literal was located in those bytes by content and the printed label around it was read directly, which tests the rows' own claim that the source prints no usable label.",
+ "headline_finding": "the claim is wrong for most of them. The source prints a correct, legible label for 15 of the 31, so those addresses were read rather than forced. For 14 more the unit's own label is genuinely corrupt -- Griffith's adhyaya 6 prints '23' twice, once for verse 23 and again for verse 25 -- but the printed neighbours bracket the canonical slot uniquely (24 before, 26 after, one slot between), which is a source-local control and not an inference from position.",
+ "rows": 39,
+ "by_classification": {
+  "VERIFIED_INDEPENDENTLY": 37,
+  "NOT_VERIFIED": 2
+ },
+ "by_determination": {
+  "PRINTED_LABEL_READ_DIRECTLY": 18,
+  "UNIQUELY_BRACKETED_BY_PRINTED_NEIGHBOURS": 19,
+  "ORDER_AND_COUNT_ONLY": 1,
+  "None": 1
+ },
+ "by_recommendation": {
+  "SAFE_TO_IMPORT": 36,
+  "KEEP_WITHHELD": 2,
+  "SOURCE_ERROR": 1
+ },
+ "flag_true_by_recommendation": {
+  "SAFE_TO_IMPORT": 28,
+  "KEEP_WITHHELD": 2,
+  "SOURCE_ERROR": 1
+ },
+ "flag_false_by_recommendation": {
+  "SAFE_TO_IMPORT": 8
+ },
+ "decision_table": [
+  {
+   "staged_row_id": "TR02203",
+   "canonical_key": "VG:YV:VSM:A06:V023",
+   "source_coordinate": "book page wyvbk06.htm, printed page 48, document unit 22, printed label '23'",
+   "forced_canonical_target": "VG:YV:VSM:A06:V023",
+   "why_forcing_occurred": [
+    "LABEL_PRINTED_BUT_CORRUPT",
+    "LABEL_NOT_PRINTED"
+   ],
+   "payload_claims_no_content_control": true,
+   "independent_control_available": true,
+   "independent_evidence": {
+    "determination": "PRINTED_LABEL_READ_DIRECTLY",
+    "printed_label_glyphs": "23",
+    "printed_label_read": 23,
+    "printed_label_candidates": [
+     23
+    ],
+    "printed_label_equals_canonical_verse": true,
+    "neighbours": {
+     "previous": {
+      "printed_label": 0,
+      "printed_label_candidates": [
+       0
+      ],
+      "printed_label_glyphs": "O",
+      "label_was_printed": true
+     },
+     "next": {
+      "printed_label": 24,
+      "printed_label_candidates": [
+       24
+      ],
+      "printed_label_glyphs": "24",
+      "label_was_printed": true
+     }
+    },
+    "neighbours_bracket_canonical_slot_exactly": false,
+    "literal_found_in_pinned_source": true,
+    "match_score": 1.0,
+    "row_pins_its_own_source_bytes": true,
+    "rigveda_english_control": null,
+    "controls": [
+     "SOURCE_PRINTS_THE_CORRECT_LABEL"
+    ]
+   },
+   "gate_b_result": "B_NEEDS_INDEPENDENT_CONTENT_CONTROL",
+   "gate_c_result": "C_PASS",
+   "classification": "VERIFIED_INDEPENDENTLY",
+   "recommendation": "SAFE_TO_IMPORT",
+   "recommendation_basis": "independent content control present and adversarially clean: SOURCE_PRINTS_THE_CORRECT_LABEL"
+  },
+  {
+   "staged_row_id": "TR02204",
+   "canonical_key": "VG:YV:VSM:A06:V025",
+   "source_coordinate": "book page wyvbk06.htm, printed page 48, document unit 24, printed label '23'",
+   "forced_canonical_target": "VG:YV:VSM:A06:V025",
+   "why_forcing_occurred": [
+    "LABEL_PRINTED_BUT_CORRUPT",
+    "LABEL_NOT_PRINTED"
+   ],
+   "payload_claims_no_content_control": true,
+   "independent_control_available": true,
+   "independent_evidence": {
+    "determination": "UNIQUELY_BRACKETED_BY_PRINTED_NEIGHBOURS",
+    "printed_label_glyphs": "23",
+    "printed_label_read": 23,
+    "printed_label_candidates": [
+     23
+    ],
+    "printed_label_equals_canonical_verse": false,
+    "neighbours": {
+     "previous": {
+      "printed_label": 24,
+      "printed_label_candidates": [
+       24
+      ],
+      "printed_label_glyphs": "24",
+      "label_was_printed": true
+     },
+     "next": {
+      "printed_label": 26,
+      "printed_label_candidates": [
+       26
+      ],
+      "printed_label_glyphs": "26",
+      "label_was_printed": true
+     }
+    },
+    "neighbours_bracket_canonical_slot_exactly": true,
+    "literal_found_in_pinned_source": true,
+    "match_score": 1.0,
+    "row_pins_its_own_source_bytes": true,
+    "rigveda_english_control": null,
+    "controls": [
+     "SOURCE_PRINTED_NEIGHBOURS_BRACKET_THE_SLOT_UNIQUELY"
+    ]
+   },
+   "gate_b_result": "B_NEEDS_INDEPENDENT_CONTENT_CONTROL",
+   "gate_c_result": "C_PASS",
+   "classification": "VERIFIED_INDEPENDENTLY",
+   "recommendation": "SAFE_TO_IMPORT",
+   "recommendation_basis": "independent content control present and adversarially clean: SOURCE_PRINTED_NEIGHBOURS_BRACKET_THE_SLOT_UNIQUELY"
+  },
+  {
+   "staged_row_id": "TR02205",
+   "canonical_key": "VG:YV:VSM:A08:V017",
+   "source_coordinate": "book page wyvbk08.htm, printed page 62, document unit 16, printed label '17'",
+   "forced_canonical_target": "VG:YV:VSM:A08:V017",
+   "why_forcing_occurred": [
+    "LABEL_PRINTED_BUT_CORRUPT",
+    "LABEL_NOT_PRINTED"
+   ],
+   "payload_claims_no_content_control": true,
+   "independent_control_available": true,
+   "independent_evidence": {
+    "determination": "PRINTED_LABEL_READ_DIRECTLY",
+    "printed_label_glyphs": "17",
+    "printed_label_read": 17,
+    "printed_label_candidates": [
+     17
+    ],
+    "printed_label_equals_canonical_verse": true,
+    "neighbours": {
+     "previous": {
+      "printed_label": 16,
+      "printed_label_candidates": [
+       16
+      ],
+      "printed_label_glyphs": "16",
+      "label_was_printed": true
+     },
+     "next": {
+      "printed_label": 18,
+      "printed_label_candidates": [
+       18
+      ],
+      "printed_label_glyphs": "18",
+      "label_was_printed": true
+     }
+    },
+    "neighbours_bracket_canonical_slot_exactly": true,
+    "literal_found_in_pinned_source": true,
+    "match_score": 1.0,
+    "row_pins_its_own_source_bytes": true,
+    "rigveda_english_control": null,
+    "controls": [
+     "SOURCE_PRINTS_THE_CORRECT_LABEL"
+    ]
+   },
+   "gate_b_result": "B_NEEDS_INDEPENDENT_CONTENT_CONTROL",
+   "gate_c_result": "C_PASS",
+   "classification": "VERIFIED_INDEPENDENTLY",
+   "recommendation": "SAFE_TO_IMPORT",
+   "recommendation_basis": "independent content control present and adversarially clean: SOURCE_PRINTS_THE_CORRECT_LABEL"
+  },
+  {
+   "staged_row_id": "TR02206",
+   "canonical_key": "VG:YV:VSM:A08:V027",
+   "source_coordinate": "book page wyvbk08.htm, printed page 64, document unit 26, printed label '17'",
+   "forced_canonical_target": "VG:YV:VSM:A08:V027",
+   "why_forcing_occurred": [
+    "LABEL_PRINTED_BUT_CORRUPT",
+    "LABEL_NOT_PRINTED"
+   ],
+   "payload_claims_no_content_control": true,
+   "independent_control_available": true,
+   "independent_evidence": {
+    "determination": "UNIQUELY_BRACKETED_BY_PRINTED_NEIGHBOURS",
+    "printed_label_glyphs": "17",
+    "printed_label_read": 17,
+    "printed_label_candidates": [
+     17
+    ],
+    "printed_label_equals_canonical_verse": false,
+    "neighbours": {
+     "previous": {
+      "printed_label": 26,
+      "printed_label_candidates": [
+       26
+      ],
+      "printed_label_glyphs": "26",
+      "label_was_printed": true
+     },
+     "next": {
+      "printed_label": 28,
+      "printed_label_candidates": [
+       28
+      ],
+      "printed_label_glyphs": "28",
+      "label_was_printed": true
+     }
+    },
+    "neighbours_bracket_canonical_slot_exactly": true,
+    "literal_found_in_pinned_source": true,
+    "match_score": 1.0,
+    "row_pins_its_own_source_bytes": true,
+    "rigveda_english_control": null,
+    "controls": [
+     "SOURCE_PRINTED_NEIGHBOURS_BRACKET_THE_SLOT_UNIQUELY"
+    ]
+   },
+   "gate_b_result": "B_NEEDS_INDEPENDENT_CONTENT_CONTROL",
+   "gate_c_result": "C_PASS",
+   "classification": "VERIFIED_INDEPENDENTLY",
+   "recommendation": "SAFE_TO_IMPORT",
+   "recommendation_basis": "independent content control present and adversarially clean: SOURCE_PRINTED_NEIGHBOURS_BRACKET_THE_SLOT_UNIQUELY"
+  },
+  {
+   "staged_row_id": "TR02207",
+   "canonical_key": "VG:YV:VSM:A12:V014",
+   "source_coordinate": "book page wyvbk12.htm, printed page 102, document unit 13, printed label '14'",
+   "forced_canonical_target": "VG:YV:VSM:A12:V014",
+   "why_forcing_occurred": [
+    "LABEL_PRINTED_BUT_CORRUPT",
+    "LABEL_NOT_PRINTED"
+   ],
+   "payload_claims_no_content_control": false,
+   "independent_control_available": true,
+   "independent_evidence": {
+    "determination": "PRINTED_LABEL_READ_DIRECTLY",
+    "printed_label_glyphs": "14",
+    "printed_label_read": 14,
+    "printed_label_candidates": [
+     14
+    ],
+    "printed_label_equals_canonical_verse": true,
+    "neighbours": {
+     "previous": {
+      "printed_label": 12,
+      "printed_label_candidates": [
+       12
+      ],
+      "printed_label_glyphs": "12",
+      "label_was_printed": true
+     },
+     "next": {
+      "printed_label": 15,
+      "printed_label_candidates": [
+       15
+      ],
+      "printed_label_glyphs": "15",
+      "label_was_printed": true
+     }
+    },
+    "neighbours_bracket_canonical_slot_exactly": false,
+    "literal_found_in_pinned_source": true,
+    "match_score": 1.0,
+    "row_pins_its_own_source_bytes": true,
+    "rigveda_english_control": {
+     "control_rv_key": "VG:RV:SAK:M04:S040:V005",
+     "control_relation": "NEAR_PARALLEL_OF",
+     "sanskrit_similarity": 0.9756,
+     "english_similarity": 0.963
+    },
+    "controls": [
+     "SOURCE_PRINTS_THE_CORRECT_LABEL",
+     "INDEPENDENT_RIGVEDA_ENGLISH_PARALLEL_CONTROL"
+    ]
+   },
+   "gate_b_result": "B_PASS",
+   "gate_c_result": "C_PASS",
+   "classification": "VERIFIED_INDEPENDENTLY",
+   "recommendation": "SAFE_TO_IMPORT",
+   "recommendation_basis": "independent content control present and adversarially clean: SOURCE_PRINTS_THE_CORRECT_LABEL, INDEPENDENT_RIGVEDA_ENGLISH_PARALLEL_CONTROL"
+  },
+  {
+   "staged_row_id": "TR02208",
+   "canonical_key": "VG:YV:VSM:A12:V044",
+   "source_coordinate": "book page wyvbk12.htm, printed page 105, document unit 42, printed label '14'",
+   "forced_canonical_target": "VG:YV:VSM:A12:V044",
+   "why_forcing_occurred": [
+    "LABEL_PRINTED_BUT_CORRUPT",
+    "LABEL_NOT_PRINTED"
+   ],
+   "payload_claims_no_content_control": true,
+   "independent_control_available": true,
+   "independent_evidence": {
+    "determination": "UNIQUELY_BRACKETED_BY_PRINTED_NEIGHBOURS",
+    "printed_label_glyphs": "14",
+    "printed_label_read": 14,
+    "printed_label_candidates": [
+     14
+    ],
+    "printed_label_equals_canonical_verse": false,
+    "neighbours": {
+     "previous": {
+      "printed_label": 43,
+      "printed_label_candidates": [
+       43
+      ],
+      "printed_label_glyphs": "43",
+      "label_was_printed": true
+     },
+     "next": {
+      "printed_label": 45,
+      "printed_label_candidates": [
+       45
+      ],
+      "printed_label_glyphs": "45",
+      "label_was_printed": true
+     }
+    },
+    "neighbours_bracket_canonical_slot_exactly": true,
+    "literal_found_in_pinned_source": true,
+    "match_score": 1.0,
+    "row_pins_its_own_source_bytes": true,
+    "rigveda_english_control": null,
+    "controls": [
+     "SOURCE_PRINTED_NEIGHBOURS_BRACKET_THE_SLOT_UNIQUELY"
+    ]
+   },
+   "gate_b_result": "B_NEEDS_INDEPENDENT_CONTENT_CONTROL",
+   "gate_c_result": "C_PASS",
+   "classification": "VERIFIED_INDEPENDENTLY",
+   "recommendation": "SAFE_TO_IMPORT",
+   "recommendation_basis": "independent content control present and adversarially clean: SOURCE_PRINTED_NEIGHBOURS_BRACKET_THE_SLOT_UNIQUELY"
+  },
+  {
+   "staged_row_id": "TR02209",
+   "canonical_key": "VG:YV:VSM:A12:V071",
+   "source_coordinate": "book page wyvbk12.htm, printed page 109, document unit 69, printed label '71'",
+   "forced_canonical_target": "VG:YV:VSM:A12:V071",
+   "why_forcing_occurred": [
+    "LABEL_PRINTED_BUT_CORRUPT",
+    "LABEL_NOT_PRINTED"
+   ],
+   "payload_claims_no_content_control": true,
+   "independent_control_available": true,
+   "independent_evidence": {
+    "determination": "PRINTED_LABEL_READ_DIRECTLY",
+    "printed_label_glyphs": "71",
+    "printed_label_read": 71,
+    "printed_label_candidates": [
+     71
+    ],
+    "printed_label_equals_canonical_verse": true,
+    "neighbours": {
+     "previous": {
+      "printed_label": 70,
+      "printed_label_candidates": [
+       70
+      ],
+      "printed_label_glyphs": "70",
+      "label_was_printed": true
+     },
+     "next": {
+      "printed_label": 72,
+      "printed_label_candidates": [
+       72
+      ],
+      "printed_label_glyphs": "72",
+      "label_was_printed": true
+     }
+    },
+    "neighbours_bracket_canonical_slot_exactly": true,
+    "literal_found_in_pinned_source": true,
+    "match_score": 1.0,
+    "row_pins_its_own_source_bytes": true,
+    "rigveda_english_control": null,
+    "controls": [
+     "SOURCE_PRINTS_THE_CORRECT_LABEL"
+    ]
+   },
+   "gate_b_result": "B_NEEDS_INDEPENDENT_CONTENT_CONTROL",
+   "gate_c_result": "C_PASS",
+   "classification": "VERIFIED_INDEPENDENTLY",
+   "recommendation": "SAFE_TO_IMPORT",
+   "recommendation_basis": "independent content control present and adversarially clean: SOURCE_PRINTS_THE_CORRECT_LABEL"
+  },
+  {
+   "staged_row_id": "TR02210",
+   "canonical_key": "VG:YV:VSM:A12:V074",
+   "source_coordinate": "book page wyvbk12.htm, printed page 109, document unit 72, printed label '71'",
+   "forced_canonical_target": "VG:YV:VSM:A12:V074",
+   "why_forcing_occurred": [
+    "LABEL_PRINTED_BUT_CORRUPT",
+    "LABEL_NOT_PRINTED"
+   ],
+   "payload_claims_no_content_control": true,
+   "independent_control_available": true,
+   "independent_evidence": {
+    "determination": "UNIQUELY_BRACKETED_BY_PRINTED_NEIGHBOURS",
+    "printed_label_glyphs": "71",
+    "printed_label_read": 71,
+    "printed_label_candidates": [
+     71
+    ],
+    "printed_label_equals_canonical_verse": false,
+    "neighbours": {
+     "previous": {
+      "printed_label": 73,
+      "printed_label_candidates": [
+       73
+      ],
+      "printed_label_glyphs": "73",
+      "label_was_printed": true
+     },
+     "next": {
+      "printed_label": 75,
+      "printed_label_candidates": [
+       75
+      ],
+      "printed_label_glyphs": "75",
+      "label_was_printed": true
+     }
+    },
+    "neighbours_bracket_canonical_slot_exactly": true,
+    "literal_found_in_pinned_source": true,
+    "match_score": 1.0,
+    "row_pins_its_own_source_bytes": true,
+    "rigveda_english_control": null,
+    "controls": [
+     "SOURCE_PRINTED_NEIGHBOURS_BRACKET_THE_SLOT_UNIQUELY"
+    ]
+   },
+   "gate_b_result": "B_NEEDS_INDEPENDENT_CONTENT_CONTROL",
+   "gate_c_result": "C_PASS",
+   "classification": "VERIFIED_INDEPENDENTLY",
+   "recommendation": "SAFE_TO_IMPORT",
+   "recommendation_basis": "independent content control present and adversarially clean: SOURCE_PRINTED_NEIGHBOURS_BRACKET_THE_SLOT_UNIQUELY"
+  },
+  {
+   "staged_row_id": "TR02223",
+   "canonical_key": "VG:YV:VSM:A16:V031",
+   "source_coordinate": "book page wyvbk16.htm, printed page 143, document unit 30, printed label '31'",
+   "forced_canonical_target": "VG:YV:VSM:A16:V031",
+   "why_forcing_occurred": [
+    "LABEL_PRINTED_BUT_CORRUPT",
+    "LABEL_NOT_PRINTED"
+   ],
+   "payload_claims_no_content_control": true,
+   "independent_control_available": true,
+   "independent_evidence": {
+    "determination": "PRINTED_LABEL_READ_DIRECTLY",
+    "printed_label_glyphs": "31",
+    "printed_label_read": 31,
+    "printed_label_candidates": [
+     31
+    ],
+    "printed_label_equals_canonical_verse": true,
+    "neighbours": {
+     "previous": {
+      "printed_label": 30,
+      "printed_label_candidates": [
+       30
+      ],
+      "printed_label_glyphs": "30",
+      "label_was_printed": true
+     },
+     "next": {
+      "printed_label": 32,
+      "printed_label_candidates": [
+       32
+      ],
+      "printed_label_glyphs": "32",
+      "label_was_printed": true
+     }
+    },
+    "neighbours_bracket_canonical_slot_exactly": true,
+    "literal_found_in_pinned_source": true,
+    "match_score": 1.0,
+    "row_pins_its_own_source_bytes": true,
+    "rigveda_english_control": null,
+    "controls": [
+     "SOURCE_PRINTS_THE_CORRECT_LABEL"
+    ]
+   },
+   "gate_b_result": "B_NEEDS_INDEPENDENT_CONTENT_CONTROL",
+   "gate_c_result": "C_PASS",
+   "classification": "VERIFIED_INDEPENDENTLY",
+   "recommendation": "SAFE_TO_IMPORT",
+   "recommendation_basis": "independent content control present and adversarially clean: SOURCE_PRINTS_THE_CORRECT_LABEL"
+  },
+  {
+   "staged_row_id": "TR02224",
+   "canonical_key": "VG:YV:VSM:A16:V034",
+   "source_coordinate": "book page wyvbk16.htm, printed page 144, document unit 33, printed label '31'",
+   "forced_canonical_target": "VG:YV:VSM:A16:V034",
+   "why_forcing_occurred": [
+    "LABEL_PRINTED_BUT_CORRUPT",
+    "LABEL_NOT_PRINTED"
+   ],
+   "payload_claims_no_content_control": true,
+   "independent_control_available": true,
+   "independent_evidence": {
+    "determination": "UNIQUELY_BRACKETED_BY_PRINTED_NEIGHBOURS",
+    "printed_label_glyphs": "31",
+    "printed_label_read": 31,
+    "printed_label_candidates": [
+     31
+    ],
+    "printed_label_equals_canonical_verse": false,
+    "neighbours": {
+     "previous": {
+      "printed_label": 33,
+      "printed_label_candidates": [
+       33
+      ],
+      "printed_label_glyphs": "33",
+      "label_was_printed": true
+     },
+     "next": {
+      "printed_label": 35,
+      "printed_label_candidates": [
+       35
+      ],
+      "printed_label_glyphs": "35",
+      "label_was_printed": true
+     }
+    },
+    "neighbours_bracket_canonical_slot_exactly": true,
+    "literal_found_in_pinned_source": true,
+    "match_score": 1.0,
+    "row_pins_its_own_source_bytes": true,
+    "rigveda_english_control": null,
+    "controls": [
+     "SOURCE_PRINTED_NEIGHBOURS_BRACKET_THE_SLOT_UNIQUELY"
+    ]
+   },
+   "gate_b_result": "B_NEEDS_INDEPENDENT_CONTENT_CONTROL",
+   "gate_c_result": "C_PASS",
+   "classification": "VERIFIED_INDEPENDENTLY",
+   "recommendation": "SAFE_TO_IMPORT",
+   "recommendation_basis": "independent content control present and adversarially clean: SOURCE_PRINTED_NEIGHBOURS_BRACKET_THE_SLOT_UNIQUELY"
+  },
+  {
+   "staged_row_id": "TR02225",
+   "canonical_key": "VG:YV:VSM:A19:V023",
+   "source_coordinate": "book page wyvbk19.htm, printed page 175, document unit 22, printed label '23'",
+   "forced_canonical_target": "VG:YV:VSM:A19:V023",
+   "why_forcing_occurred": [
+    "LABEL_PRINTED_BUT_CORRUPT",
+    "LABEL_NOT_PRINTED"
+   ],
+   "payload_claims_no_content_control": true,
+   "independent_control_available": true,
+   "independent_evidence": {
+    "determination": "PRINTED_LABEL_READ_DIRECTLY",
+    "printed_label_glyphs": "23",
+    "printed_label_read": 23,
+    "printed_label_candidates": [
+     23
+    ],
+    "printed_label_equals_canonical_verse": true,
+    "neighbours": {
+     "previous": {
+      "printed_label": 22,
+      "printed_label_candidates": [
+       22
+      ],
+      "printed_label_glyphs": "22",
+      "label_was_printed": true
+     },
+     "next": {
+      "printed_label": 24,
+      "printed_label_candidates": [
+       24
+      ],
+      "printed_label_glyphs": "24",
+      "label_was_printed": true
+     }
+    },
+    "neighbours_bracket_canonical_slot_exactly": true,
+    "literal_found_in_pinned_source": true,
+    "match_score": 1.0,
+    "row_pins_its_own_source_bytes": true,
+    "rigveda_english_control": null,
+    "controls": [
+     "SOURCE_PRINTS_THE_CORRECT_LABEL"
+    ]
+   },
+   "gate_b_result": "B_NEEDS_INDEPENDENT_CONTENT_CONTROL",
+   "gate_c_result": "C_PASS",
+   "classification": "VERIFIED_INDEPENDENTLY",
+   "recommendation": "SAFE_TO_IMPORT",
+   "recommendation_basis": "independent content control present and adversarially clean: SOURCE_PRINTS_THE_CORRECT_LABEL"
+  },
+  {
+   "staged_row_id": "TR02226",
+   "canonical_key": "VG:YV:VSM:A19:V028",
+   "source_coordinate": "book page wyvbk19.htm, printed page 176, document unit 27, printed label '23'",
+   "forced_canonical_target": "VG:YV:VSM:A19:V028",
+   "why_forcing_occurred": [
+    "LABEL_PRINTED_BUT_CORRUPT",
+    "LABEL_NOT_PRINTED"
+   ],
+   "payload_claims_no_content_control": true,
+   "independent_control_available": true,
+   "independent_evidence": {
+    "determination": "UNIQUELY_BRACKETED_BY_PRINTED_NEIGHBOURS",
+    "printed_label_glyphs": "23",
+    "printed_label_read": 23,
+    "printed_label_candidates": [
+     23
+    ],
+    "printed_label_equals_canonical_verse": false,
+    "neighbours": {
+     "previous": {
+      "printed_label": 27,
+      "printed_label_candidates": [
+       27
+      ],
+      "printed_label_glyphs": "27",
+      "label_was_printed": true
+     },
+     "next": {
+      "printed_label": 29,
+      "printed_label_candidates": [
+       29
+      ],
+      "printed_label_glyphs": "29",
+      "label_was_printed": true
+     }
+    },
+    "neighbours_bracket_canonical_slot_exactly": true,
+    "literal_found_in_pinned_source": true,
+    "match_score": 1.0,
+    "row_pins_its_own_source_bytes": true,
+    "rigveda_english_control": null,
+    "controls": [
+     "SOURCE_PRINTED_NEIGHBOURS_BRACKET_THE_SLOT_UNIQUELY"
+    ]
+   },
+   "gate_b_result": "B_NEEDS_INDEPENDENT_CONTENT_CONTROL",
+   "gate_c_result": "C_PASS",
+   "classification": "VERIFIED_INDEPENDENTLY",
+   "recommendation": "SAFE_TO_IMPORT",
+   "recommendation_basis": "independent content control present and adversarially clean: SOURCE_PRINTED_NEIGHBOURS_BRACKET_THE_SLOT_UNIQUELY"
+  },
+  {
+   "staged_row_id": "TR02227",
+   "canonical_key": "VG:YV:VSM:A19:V033",
+   "source_coordinate": "book page wyvbk19.htm, printed page 177, document unit 32, printed label '33'",
+   "forced_canonical_target": "VG:YV:VSM:A19:V033",
+   "why_forcing_occurred": [
+    "LABEL_PRINTED_BUT_CORRUPT",
+    "LABEL_NOT_PRINTED"
+   ],
+   "payload_claims_no_content_control": true,
+   "independent_control_available": true,
+   "independent_evidence": {
+    "determination": "PRINTED_LABEL_READ_DIRECTLY",
+    "printed_label_glyphs": "33",
+    "printed_label_read": 33,
+    "printed_label_candidates": [
+     33
+    ],
+    "printed_label_equals_canonical_verse": true,
+    "neighbours": {
+     "previous": {
+      "printed_label": 32,
+      "printed_label_candidates": [
+       32
+      ],
+      "printed_label_glyphs": "32",
+      "label_was_printed": true
+     },
+     "next": {
+      "printed_label": 34,
+      "printed_label_candidates": [
+       34
+      ],
+      "printed_label_glyphs": "34",
+      "label_was_printed": true
+     }
+    },
+    "neighbours_bracket_canonical_slot_exactly": true,
+    "literal_found_in_pinned_source": true,
+    "match_score": 1.0,
+    "row_pins_its_own_source_bytes": true,
+    "rigveda_english_control": null,
+    "controls": [
+     "SOURCE_PRINTS_THE_CORRECT_LABEL"
+    ]
+   },
+   "gate_b_result": "B_NEEDS_INDEPENDENT_CONTENT_CONTROL",
+   "gate_c_result": "C_PASS",
+   "classification": "VERIFIED_INDEPENDENTLY",
+   "recommendation": "SAFE_TO_IMPORT",
+   "recommendation_basis": "independent content control present and adversarially clean: SOURCE_PRINTS_THE_CORRECT_LABEL"
+  },
+  {
+   "staged_row_id": "TR02228",
+   "canonical_key": "VG:YV:VSM:A19:V038",
+   "source_coordinate": "book page wyvbk19.htm, printed page 177, document unit 37, printed label '33'",
+   "forced_canonical_target": "VG:YV:VSM:A19:V038",
+   "why_forcing_occurred": [
+    "LABEL_PRINTED_BUT_CORRUPT",
+    "LABEL_NOT_PRINTED"
+   ],
+   "payload_claims_no_content_control": false,
+   "independent_control_available": true,
+   "independent_evidence": {
+    "determination": "UNIQUELY_BRACKETED_BY_PRINTED_NEIGHBOURS",
+    "printed_label_glyphs": "33",
+    "printed_label_read": 33,
+    "printed_label_candidates": [
+     33
+    ],
+    "printed_label_equals_canonical_verse": false,
+    "neighbours": {
+     "previous": {
+      "printed_label": 37,
+      "printed_label_candidates": [
+       37
+      ],
+      "printed_label_glyphs": "37",
+      "label_was_printed": true
+     },
+     "next": {
+      "printed_label": 39,
+      "printed_label_candidates": [
+       39
+      ],
+      "printed_label_glyphs": "39",
+      "label_was_printed": true
+     }
+    },
+    "neighbours_bracket_canonical_slot_exactly": true,
+    "literal_found_in_pinned_source": true,
+    "match_score": 1.0,
+    "row_pins_its_own_source_bytes": true,
+    "rigveda_english_control": {
+     "control_rv_key": "VG:RV:SAK:M09:S066:V019",
+     "control_relation": "NEAR_PARALLEL_OF",
+     "sanskrit_similarity": 1.0,
+     "english_similarity": 0.9412
+    },
+    "controls": [
+     "SOURCE_PRINTED_NEIGHBOURS_BRACKET_THE_SLOT_UNIQUELY",
+     "INDEPENDENT_RIGVEDA_ENGLISH_PARALLEL_CONTROL"
+    ]
+   },
+   "gate_b_result": "B_PASS",
+   "gate_c_result": "C_PASS",
+   "classification": "VERIFIED_INDEPENDENTLY",
+   "recommendation": "SAFE_TO_IMPORT",
+   "recommendation_basis": "independent content control present and adversarially clean: SOURCE_PRINTED_NEIGHBOURS_BRACKET_THE_SLOT_UNIQUELY, INDEPENDENT_RIGVEDA_ENGLISH_PARALLEL_CONTROL"
+  },
+  {
+   "staged_row_id": "TR02229",
+   "canonical_key": "VG:YV:VSM:A20:V084",
+   "source_coordinate": "book page wyvbk20.htm, printed page 195, document unit 83, printed label '84'",
+   "forced_canonical_target": "VG:YV:VSM:A20:V084",
+   "why_forcing_occurred": [
+    "LABEL_PRINTED_BUT_CORRUPT",
+    "LABEL_NOT_PRINTED"
+   ],
+   "payload_claims_no_content_control": true,
+   "independent_control_available": true,
+   "independent_evidence": {
+    "determination": "PRINTED_LABEL_READ_DIRECTLY",
+    "printed_label_glyphs": "84",
+    "printed_label_read": 84,
+    "printed_label_candidates": [
+     84
+    ],
+    "printed_label_equals_canonical_verse": true,
+    "neighbours": {
+     "previous": {
+      "printed_label": 83,
+      "printed_label_candidates": [
+       83
+      ],
+      "printed_label_glyphs": "83",
+      "label_was_printed": true
+     },
+     "next": {
+      "printed_label": null,
+      "printed_label_candidates": [
+       55,
+       85
+      ],
+      "printed_label_glyphs": "S5",
+      "label_was_printed": true
+     }
+    },
+    "neighbours_bracket_canonical_slot_exactly": true,
+    "literal_found_in_pinned_source": true,
+    "match_score": 1.0,
+    "row_pins_its_own_source_bytes": true,
+    "rigveda_english_control": null,
+    "controls": [
+     "SOURCE_PRINTS_THE_CORRECT_LABEL"
+    ]
+   },
+   "gate_b_result": "B_NEEDS_INDEPENDENT_CONTENT_CONTROL",
+   "gate_c_result": "C_PASS",
+   "classification": "VERIFIED_INDEPENDENTLY",
+   "recommendation": "SAFE_TO_IMPORT",
+   "recommendation_basis": "independent content control present and adversarially clean: SOURCE_PRINTS_THE_CORRECT_LABEL"
+  },
+  {
+   "staged_row_id": "TR02230",
+   "canonical_key": "VG:YV:VSM:A20:V085",
+   "source_coordinate": "book page wyvbk20.htm, printed page 195, document unit 84, printed label 'S5'",
+   "forced_canonical_target": "VG:YV:VSM:A20:V085",
+   "why_forcing_occurred": [
+    "LABEL_PRINTED_BUT_CORRUPT",
+    "LABEL_NOT_PRINTED"
+   ],
+   "payload_claims_no_content_control": true,
+   "independent_control_available": false,
+   "independent_evidence": {
+    "determination": "ORDER_AND_COUNT_ONLY",
+    "printed_label_glyphs": "S5",
+    "printed_label_read": null,
+    "printed_label_candidates": [
+     55,
+     85
+    ],
+    "printed_label_equals_canonical_verse": false,
+    "neighbours": {
+     "previous": {
+      "printed_label": 84,
+      "printed_label_candidates": [
+       84
+      ],
+      "printed_label_glyphs": "84",
+      "label_was_printed": true
+     },
+     "next": {
+      "printed_label": 85,
+      "printed_label_candidates": [
+       85
+      ],
+      "printed_label_glyphs": "85",
+      "label_was_printed": true
+     }
+    },
+    "neighbours_bracket_canonical_slot_exactly": false,
+    "literal_found_in_pinned_source": true,
+    "match_score": 1.0,
+    "row_pins_its_own_source_bytes": true,
+    "rigveda_english_control": null,
+    "controls": []
+   },
+   "gate_b_result": "B_NEEDS_INDEPENDENT_CONTENT_CONTROL",
+   "gate_c_result": "C_FAIL_UNVERIFIED_FORCED_ADDRESS",
+   "classification": "NOT_VERIFIED",
+   "recommendation": "KEEP_WITHHELD",
+   "recommendation_basis": "no independent control: the pinned source neither prints a usable label for this unit nor brackets the slot uniquely (determination='ORDER_AND_COUNT_ONLY')"
+  },
+  {
+   "staged_row_id": "TR02231",
+   "canonical_key": "VG:YV:VSM:A20:V086",
+   "source_coordinate": "book page wyvbk20.htm, printed page 195, document unit 85, printed label '85'",
+   "forced_canonical_target": "VG:YV:VSM:A20:V086",
+   "why_forcing_occurred": [
+    "LABEL_PRINTED_BUT_CORRUPT",
+    "LABEL_NOT_PRINTED"
+   ],
+   "payload_claims_no_content_control": true,
+   "independent_control_available": true,
+   "independent_evidence": {
+    "determination": "UNIQUELY_BRACKETED_BY_PRINTED_NEIGHBOURS",
+    "printed_label_glyphs": "85",
+    "printed_label_read": 85,
+    "printed_label_candidates": [
+     85
+    ],
+    "printed_label_equals_canonical_verse": false,
+    "neighbours": {
+     "previous": {
+      "printed_label": null,
+      "printed_label_candidates": [
+       55,
+       85
+      ],
+      "printed_label_glyphs": "S5",
+      "label_was_printed": true
+     },
+     "next": {
+      "printed_label": 87,
+      "printed_label_candidates": [
+       87
+      ],
+      "printed_label_glyphs": "87",
+      "label_was_printed": true
+     }
+    },
+    "neighbours_bracket_canonical_slot_exactly": true,
+    "literal_found_in_pinned_source": true,
+    "match_score": 1.0,
+    "row_pins_its_own_source_bytes": true,
+    "rigveda_english_control": null,
+    "controls": [
+     "SOURCE_PRINTED_NEIGHBOURS_BRACKET_THE_SLOT_UNIQUELY"
+    ]
+   },
+   "gate_b_result": "B_NEEDS_INDEPENDENT_CONTENT_CONTROL",
+   "gate_c_result": "C_PASS",
+   "classification": "VERIFIED_INDEPENDENTLY",
+   "recommendation": "SAFE_TO_IMPORT",
+   "recommendation_basis": "independent content control present and adversarially clean: SOURCE_PRINTED_NEIGHBOURS_BRACKET_THE_SLOT_UNIQUELY"
+  },
+  {
+   "staged_row_id": "TR02232",
+   "canonical_key": "VG:YV:VSM:A21:V043",
+   "source_coordinate": "book page wyvbk21.htm, printed page 201, document unit 42, printed label '43'",
+   "forced_canonical_target": "VG:YV:VSM:A21:V043",
+   "why_forcing_occurred": [
+    "LABEL_PRINTED_BUT_CORRUPT",
+    "LABEL_NOT_PRINTED"
+   ],
+   "payload_claims_no_content_control": true,
+   "independent_control_available": true,
+   "independent_evidence": {
+    "determination": "PRINTED_LABEL_READ_DIRECTLY",
+    "printed_label_glyphs": "43",
+    "printed_label_read": 43,
+    "printed_label_candidates": [
+     43
+    ],
+    "printed_label_equals_canonical_verse": true,
+    "neighbours": {
+     "previous": {
+      "printed_label": 42,
+      "printed_label_candidates": [
+       42
+      ],
+      "printed_label_glyphs": "42",
+      "label_was_printed": true
+     },
+     "next": {
+      "printed_label": 44,
+      "printed_label_candidates": [
+       44
+      ],
+      "printed_label_glyphs": "44",
+      "label_was_printed": true
+     }
+    },
+    "neighbours_bracket_canonical_slot_exactly": true,
+    "literal_found_in_pinned_source": true,
+    "match_score": 1.0,
+    "row_pins_its_own_source_bytes": true,
+    "rigveda_english_control": null,
+    "controls": [
+     "SOURCE_PRINTS_THE_CORRECT_LABEL"
+    ]
+   },
+   "gate_b_result": "B_NEEDS_INDEPENDENT_CONTENT_CONTROL",
+   "gate_c_result": "C_PASS",
+   "classification": "VERIFIED_INDEPENDENTLY",
+   "recommendation": "SAFE_TO_IMPORT",
+   "recommendation_basis": "independent content control present and adversarially clean: SOURCE_PRINTS_THE_CORRECT_LABEL"
+  },
+  {
+   "staged_row_id": "TR02233",
+   "canonical_key": "VG:YV:VSM:A21:V045",
+   "source_coordinate": "book page wyvbk21.htm, printed page 202, document unit 44, printed label '43'",
+   "forced_canonical_target": "VG:YV:VSM:A21:V045",
+   "why_forcing_occurred": [
+    "LABEL_PRINTED_BUT_CORRUPT",
+    "LABEL_NOT_PRINTED"
+   ],
+   "payload_claims_no_content_control": true,
+   "independent_control_available": true,
+   "independent_evidence": {
+    "determination": "UNIQUELY_BRACKETED_BY_PRINTED_NEIGHBOURS",
+    "printed_label_glyphs": "43",
+    "printed_label_read": 43,
+    "printed_label_candidates": [
+     43
+    ],
+    "printed_label_equals_canonical_verse": false,
+    "neighbours": {
+     "previous": {
+      "printed_label": 44,
+      "printed_label_candidates": [
+       44
+      ],
+      "printed_label_glyphs": "44",
+      "label_was_printed": true
+     },
+     "next": {
+      "printed_label": 46,
+      "printed_label_candidates": [
+       46
+      ],
+      "printed_label_glyphs": "46",
+      "label_was_printed": true
+     }
+    },
+    "neighbours_bracket_canonical_slot_exactly": true,
+    "literal_found_in_pinned_source": true,
+    "match_score": 1.0,
+    "row_pins_its_own_source_bytes": true,
+    "rigveda_english_control": null,
+    "controls": [
+     "SOURCE_PRINTED_NEIGHBOURS_BRACKET_THE_SLOT_UNIQUELY"
+    ]
+   },
+   "gate_b_result": "B_NEEDS_INDEPENDENT_CONTENT_CONTROL",
+   "gate_c_result": "C_FAIL_SOURCE_GRANULARITY",
+   "classification": "VERIFIED_INDEPENDENTLY",
+   "recommendation": "SOURCE_ERROR",
+   "recommendation_basis": "the address is determined, but the literal at that address is Griffith's editorial cross-reference ('etc., as in 44 mutatis mutandis'), not a translation; importing it would assert a pointer as the verse's meaning"
+  },
+  {
+   "staged_row_id": "TR02234",
+   "canonical_key": "VG:YV:VSM:A22:V023",
+   "source_coordinate": "book page wyvbk22.htm, printed page 208, document unit 22, printed label '23'",
+   "forced_canonical_target": "VG:YV:VSM:A22:V023",
+   "why_forcing_occurred": [
+    "LABEL_PRINTED_BUT_CORRUPT",
+    "LABEL_NOT_PRINTED"
+   ],
+   "payload_claims_no_content_control": true,
+   "independent_control_available": true,
+   "independent_evidence": {
+    "determination": "PRINTED_LABEL_READ_DIRECTLY",
+    "printed_label_glyphs": "23",
+    "printed_label_read": 23,
+    "printed_label_candidates": [
+     23
+    ],
+    "printed_label_equals_canonical_verse": true,
+    "neighbours": {
+     "previous": {
+      "printed_label": 22,
+      "printed_label_candidates": [
+       22
+      ],
+      "printed_label_glyphs": "22",
+      "label_was_printed": true
+     },
+     "next": {
+      "printed_label": 24,
+      "printed_label_candidates": [
+       24
+      ],
+      "printed_label_glyphs": "24",
+      "label_was_printed": true
+     }
+    },
+    "neighbours_bracket_canonical_slot_exactly": true,
+    "literal_found_in_pinned_source": true,
+    "match_score": 1.0,
+    "row_pins_its_own_source_bytes": true,
+    "rigveda_english_control": null,
+    "controls": [
+     "SOURCE_PRINTS_THE_CORRECT_LABEL"
+    ]
+   },
+   "gate_b_result": "B_NEEDS_INDEPENDENT_CONTENT_CONTROL",
+   "gate_c_result": "C_PASS",
+   "classification": "VERIFIED_INDEPENDENTLY",
+   "recommendation": "SAFE_TO_IMPORT",
+   "recommendation_basis": "independent content control present and adversarially clean: SOURCE_PRINTS_THE_CORRECT_LABEL"
+  },
+  {
+   "staged_row_id": "TR02235",
+   "canonical_key": "VG:YV:VSM:A22:V028",
+   "source_coordinate": "book page wyvbk22.htm, printed page 209, document unit 27, printed label '23'",
+   "forced_canonical_target": "VG:YV:VSM:A22:V028",
+   "why_forcing_occurred": [
+    "LABEL_PRINTED_BUT_CORRUPT",
+    "LABEL_NOT_PRINTED"
+   ],
+   "payload_claims_no_content_control": true,
+   "independent_control_available": true,
+   "independent_evidence": {
+    "determination": "UNIQUELY_BRACKETED_BY_PRINTED_NEIGHBOURS",
+    "printed_label_glyphs": "23",
+    "printed_label_read": 23,
+    "printed_label_candidates": [
+     23
+    ],
+    "printed_label_equals_canonical_verse": false,
+    "neighbours": {
+     "previous": {
+      "printed_label": 27,
+      "printed_label_candidates": [
+       27
+      ],
+      "printed_label_glyphs": "27",
+      "label_was_printed": true
+     },
+     "next": {
+      "printed_label": 29,
+      "printed_label_candidates": [
+       29
+      ],
+      "printed_label_glyphs": "29",
+      "label_was_printed": true
+     }
+    },
+    "neighbours_bracket_canonical_slot_exactly": true,
+    "literal_found_in_pinned_source": true,
+    "match_score": 1.0,
+    "row_pins_its_own_source_bytes": true,
+    "rigveda_english_control": null,
+    "controls": [
+     "SOURCE_PRINTED_NEIGHBOURS_BRACKET_THE_SLOT_UNIQUELY"
+    ]
+   },
+   "gate_b_result": "B_NEEDS_INDEPENDENT_CONTENT_CONTROL",
+   "gate_c_result": "C_PASS",
+   "classification": "VERIFIED_INDEPENDENTLY",
+   "recommendation": "SAFE_TO_IMPORT",
+   "recommendation_basis": "independent content control present and adversarially clean: SOURCE_PRINTED_NEIGHBOURS_BRACKET_THE_SLOT_UNIQUELY"
+  },
+  {
+   "staged_row_id": "TR02236",
+   "canonical_key": "VG:YV:VSM:A23:V058",
+   "source_coordinate": "book page wyvbk23.htm, printed page 216, document unit 45, printed label '68'",
+   "forced_canonical_target": "VG:YV:VSM:A23:V058",
+   "why_forcing_occurred": [
+    "LABEL_PRINTED_BUT_CORRUPT",
+    "LABEL_NOT_PRINTED"
+   ],
+   "payload_claims_no_content_control": true,
+   "independent_control_available": true,
+   "independent_evidence": {
+    "determination": "UNIQUELY_BRACKETED_BY_PRINTED_NEIGHBOURS",
+    "printed_label_glyphs": "68",
+    "printed_label_read": 68,
+    "printed_label_candidates": [
+     68
+    ],
+    "printed_label_equals_canonical_verse": false,
+    "neighbours": {
+     "previous": {
+      "printed_label": 57,
+      "printed_label_candidates": [
+       57
+      ],
+      "printed_label_glyphs": "57",
+      "label_was_printed": true
+     },
+     "next": {
+      "printed_label": 59,
+      "printed_label_candidates": [
+       59
+      ],
+      "printed_label_glyphs": "59",
+      "label_was_printed": true
+     }
+    },
+    "neighbours_bracket_canonical_slot_exactly": true,
+    "literal_found_in_pinned_source": true,
+    "match_score": 1.0,
+    "row_pins_its_own_source_bytes": true,
+    "rigveda_english_control": null,
+    "controls": [
+     "SOURCE_PRINTED_NEIGHBOURS_BRACKET_THE_SLOT_UNIQUELY"
+    ]
+   },
+   "gate_b_result": "B_NEEDS_INDEPENDENT_CONTENT_CONTROL",
+   "gate_c_result": "C_PASS",
+   "classification": "VERIFIED_INDEPENDENTLY",
+   "recommendation": "SAFE_TO_IMPORT",
+   "recommendation_basis": "independent content control present and adversarially clean: SOURCE_PRINTED_NEIGHBOURS_BRACKET_THE_SLOT_UNIQUELY"
+  },
+  {
+   "staged_row_id": "TR02237",
+   "canonical_key": "VG:YV:VSM:A26:V023",
+   "source_coordinate": "book page wyvbk26.htm, printed page 234, document unit 22, printed label '28'",
+   "forced_canonical_target": "VG:YV:VSM:A26:V023",
+   "why_forcing_occurred": [
+    "LABEL_PRINTED_BUT_CORRUPT",
+    "LABEL_NOT_PRINTED"
+   ],
+   "payload_claims_no_content_control": true,
+   "independent_control_available": true,
+   "independent_evidence": {
+    "determination": "UNIQUELY_BRACKETED_BY_PRINTED_NEIGHBOURS",
+    "printed_label_glyphs": "28",
+    "printed_label_read": 28,
+    "printed_label_candidates": [
+     28
+    ],
+    "printed_label_equals_canonical_verse": false,
+    "neighbours": {
+     "previous": {
+      "printed_label": 22,
+      "printed_label_candidates": [
+       22
+      ],
+      "printed_label_glyphs": "22",
+      "label_was_printed": true
+     },
+     "next": {
+      "printed_label": 24,
+      "printed_label_candidates": [
+       24
+      ],
+      "printed_label_glyphs": "24",
+      "label_was_printed": true
+     }
+    },
+    "neighbours_bracket_canonical_slot_exactly": true,
+    "literal_found_in_pinned_source": true,
+    "match_score": 1.0,
+    "row_pins_its_own_source_bytes": true,
+    "rigveda_english_control": null,
+    "controls": [
+     "SOURCE_PRINTED_NEIGHBOURS_BRACKET_THE_SLOT_UNIQUELY"
+    ]
+   },
+   "gate_b_result": "B_NEEDS_INDEPENDENT_CONTENT_CONTROL",
+   "gate_c_result": "C_PASS",
+   "classification": "VERIFIED_INDEPENDENTLY",
+   "recommendation": "SAFE_TO_IMPORT",
+   "recommendation_basis": "independent content control present and adversarially clean: SOURCE_PRINTED_NEIGHBOURS_BRACKET_THE_SLOT_UNIQUELY"
+  },
+  {
+   "staged_row_id": "TR02238",
+   "canonical_key": "VG:YV:VSM:A27:V012",
+   "source_coordinate": "book page wyvbk27.htm, printed page 236, document unit 11, printed label '13'",
+   "forced_canonical_target": "VG:YV:VSM:A27:V012",
+   "why_forcing_occurred": [
+    "LABEL_PRINTED_BUT_CORRUPT",
+    "LABEL_NOT_PRINTED"
+   ],
+   "payload_claims_no_content_control": true,
+   "independent_control_available": true,
+   "independent_evidence": {
+    "determination": "UNIQUELY_BRACKETED_BY_PRINTED_NEIGHBOURS",
+    "printed_label_glyphs": "13",
+    "printed_label_read": 13,
+    "printed_label_candidates": [
+     13
+    ],
+    "printed_label_equals_canonical_verse": false,
+    "neighbours": {
+     "previous": {
+      "printed_label": 11,
+      "printed_label_candidates": [
+       11
+      ],
+      "printed_label_glyphs": "11",
+      "label_was_printed": true
+     },
+     "next": {
+      "printed_label": 13,
+      "printed_label_candidates": [
+       13
+      ],
+      "printed_label_glyphs": "13",
+      "label_was_printed": true
+     }
+    },
+    "neighbours_bracket_canonical_slot_exactly": true,
+    "literal_found_in_pinned_source": true,
+    "match_score": 1.0,
+    "row_pins_its_own_source_bytes": true,
+    "rigveda_english_control": null,
+    "controls": [
+     "SOURCE_PRINTED_NEIGHBOURS_BRACKET_THE_SLOT_UNIQUELY"
+    ]
+   },
+   "gate_b_result": "B_NEEDS_INDEPENDENT_CONTENT_CONTROL",
+   "gate_c_result": "C_PASS",
+   "classification": "VERIFIED_INDEPENDENTLY",
+   "recommendation": "SAFE_TO_IMPORT",
+   "recommendation_basis": "independent content control present and adversarially clean: SOURCE_PRINTED_NEIGHBOURS_BRACKET_THE_SLOT_UNIQUELY"
+  },
+  {
+   "staged_row_id": "TR02239",
+   "canonical_key": "VG:YV:VSM:A27:V013",
+   "source_coordinate": "book page wyvbk27.htm, printed page 236, document unit 12, printed label '13'",
+   "forced_canonical_target": "VG:YV:VSM:A27:V013",
+   "why_forcing_occurred": [
+    "LABEL_PRINTED_BUT_CORRUPT",
+    "LABEL_NOT_PRINTED"
+   ],
+   "payload_claims_no_content_control": true,
+   "independent_control_available": true,
+   "independent_evidence": {
+    "determination": "PRINTED_LABEL_READ_DIRECTLY",
+    "printed_label_glyphs": "13",
+    "printed_label_read": 13,
+    "printed_label_candidates": [
+     13
+    ],
+    "printed_label_equals_canonical_verse": true,
+    "neighbours": {
+     "previous": {
+      "printed_label": 13,
+      "printed_label_candidates": [
+       13
+      ],
+      "printed_label_glyphs": "13",
+      "label_was_printed": true
+     },
+     "next": {
+      "printed_label": 14,
+      "printed_label_candidates": [
+       14
+      ],
+      "printed_label_glyphs": "14",
+      "label_was_printed": true
+     }
+    },
+    "neighbours_bracket_canonical_slot_exactly": false,
+    "literal_found_in_pinned_source": true,
+    "match_score": 1.0,
+    "row_pins_its_own_source_bytes": true,
+    "rigveda_english_control": null,
+    "controls": [
+     "SOURCE_PRINTS_THE_CORRECT_LABEL"
+    ]
+   },
+   "gate_b_result": "B_NEEDS_INDEPENDENT_CONTENT_CONTROL",
+   "gate_c_result": "C_PASS",
+   "classification": "VERIFIED_INDEPENDENTLY",
+   "recommendation": "SAFE_TO_IMPORT",
+   "recommendation_basis": "independent content control present and adversarially clean: SOURCE_PRINTS_THE_CORRECT_LABEL"
+  },
+  {
+   "staged_row_id": "TR02240",
+   "canonical_key": "VG:YV:VSM:A27:V025",
+   "source_coordinate": "book page wyvbk27.htm, printed page 237, document unit 24, printed label '26'",
+   "forced_canonical_target": "VG:YV:VSM:A27:V025",
+   "why_forcing_occurred": [
+    "LABEL_PRINTED_BUT_CORRUPT",
+    "LABEL_NOT_PRINTED"
+   ],
+   "payload_claims_no_content_control": false,
+   "independent_control_available": true,
+   "independent_evidence": {
+    "determination": "UNIQUELY_BRACKETED_BY_PRINTED_NEIGHBOURS",
+    "printed_label_glyphs": "26",
+    "printed_label_read": 26,
+    "printed_label_candidates": [
+     26
+    ],
+    "printed_label_equals_canonical_verse": false,
+    "neighbours": {
+     "previous": {
+      "printed_label": 24,
+      "printed_label_candidates": [
+       24
+      ],
+      "printed_label_glyphs": "24",
+      "label_was_printed": true
+     },
+     "next": {
+      "printed_label": 26,
+      "printed_label_candidates": [
+       26
+      ],
+      "printed_label_glyphs": "26",
+      "label_was_printed": true
+     }
+    },
+    "neighbours_bracket_canonical_slot_exactly": true,
+    "literal_found_in_pinned_source": true,
+    "match_score": 1.0,
+    "row_pins_its_own_source_bytes": true,
+    "rigveda_english_control": {
+     "control_rv_key": "VG:RV:SAK:M10:S121:V007",
+     "control_relation": "NEAR_PARALLEL_OF",
+     "sanskrit_similarity": 1.0,
+     "english_similarity": 1.0
+    },
+    "controls": [
+     "SOURCE_PRINTED_NEIGHBOURS_BRACKET_THE_SLOT_UNIQUELY",
+     "INDEPENDENT_RIGVEDA_ENGLISH_PARALLEL_CONTROL"
+    ]
+   },
+   "gate_b_result": "B_PASS",
+   "gate_c_result": "C_PASS",
+   "classification": "VERIFIED_INDEPENDENTLY",
+   "recommendation": "SAFE_TO_IMPORT",
+   "recommendation_basis": "independent content control present and adversarially clean: SOURCE_PRINTED_NEIGHBOURS_BRACKET_THE_SLOT_UNIQUELY, INDEPENDENT_RIGVEDA_ENGLISH_PARALLEL_CONTROL"
+  },
+  {
+   "staged_row_id": "TR02241",
+   "canonical_key": "VG:YV:VSM:A27:V026",
+   "source_coordinate": "book page wyvbk27.htm, printed page 237, document unit 25, printed label '26'",
+   "forced_canonical_target": "VG:YV:VSM:A27:V026",
+   "why_forcing_occurred": [
+    "LABEL_PRINTED_BUT_CORRUPT",
+    "LABEL_NOT_PRINTED"
+   ],
+   "payload_claims_no_content_control": true,
+   "independent_control_available": true,
+   "independent_evidence": {
+    "determination": "PRINTED_LABEL_READ_DIRECTLY",
+    "printed_label_glyphs": "26",
+    "printed_label_read": 26,
+    "printed_label_candidates": [
+     26
+    ],
+    "printed_label_equals_canonical_verse": true,
+    "neighbours": {
+     "previous": {
+      "printed_label": 26,
+      "printed_label_candidates": [
+       26
+      ],
+      "printed_label_glyphs": "26",
+      "label_was_printed": true
+     },
+     "next": {
+      "printed_label": 27,
+      "printed_label_candidates": [
+       27
+      ],
+      "printed_label_glyphs": "27",
+      "label_was_printed": true
+     }
+    },
+    "neighbours_bracket_canonical_slot_exactly": false,
+    "literal_found_in_pinned_source": true,
+    "match_score": 1.0,
+    "row_pins_its_own_source_bytes": true,
+    "rigveda_english_control": null,
+    "controls": [
+     "SOURCE_PRINTS_THE_CORRECT_LABEL"
+    ]
+   },
+   "gate_b_result": "B_NEEDS_INDEPENDENT_CONTENT_CONTROL",
+   "gate_c_result": "C_PASS",
+   "classification": "VERIFIED_INDEPENDENTLY",
+   "recommendation": "SAFE_TO_IMPORT",
+   "recommendation_basis": "independent content control present and adversarially clean: SOURCE_PRINTS_THE_CORRECT_LABEL"
+  },
+  {
+   "staged_row_id": "TR02242",
+   "canonical_key": "VG:YV:VSM:A28:V021",
+   "source_coordinate": "book page wyvbk28.htm, printed page 243, document unit 20, printed label '21'",
+   "forced_canonical_target": "VG:YV:VSM:A28:V021",
+   "why_forcing_occurred": [
+    "LABEL_PRINTED_BUT_CORRUPT",
+    "LABEL_NOT_PRINTED"
+   ],
+   "payload_claims_no_content_control": true,
+   "independent_control_available": true,
+   "independent_evidence": {
+    "determination": "PRINTED_LABEL_READ_DIRECTLY",
+    "printed_label_glyphs": "21",
+    "printed_label_read": 21,
+    "printed_label_candidates": [
+     21
+    ],
+    "printed_label_equals_canonical_verse": true,
+    "neighbours": {
+     "previous": {
+      "printed_label": 20,
+      "printed_label_candidates": [
+       20
+      ],
+      "printed_label_glyphs": "20",
+      "label_was_printed": true
+     },
+     "next": {
+      "printed_label": 22,
+      "printed_label_candidates": [
+       22
+      ],
+      "printed_label_glyphs": "22",
+      "label_was_printed": true
+     }
+    },
+    "neighbours_bracket_canonical_slot_exactly": true,
+    "literal_found_in_pinned_source": true,
+    "match_score": 1.0,
+    "row_pins_its_own_source_bytes": true,
+    "rigveda_english_control": null,
+    "controls": [
+     "SOURCE_PRINTS_THE_CORRECT_LABEL"
+    ]
+   },
+   "gate_b_result": "B_NEEDS_INDEPENDENT_CONTENT_CONTROL",
+   "gate_c_result": "C_PASS",
+   "classification": "VERIFIED_INDEPENDENTLY",
+   "recommendation": "SAFE_TO_IMPORT",
+   "recommendation_basis": "independent content control present and adversarially clean: SOURCE_PRINTS_THE_CORRECT_LABEL"
+  },
+  {
+   "staged_row_id": "TR02243",
+   "canonical_key": "VG:YV:VSM:A28:V024",
+   "source_coordinate": "book page wyvbk28.htm, printed page 243, document unit 23, printed label '21'",
+   "forced_canonical_target": "VG:YV:VSM:A28:V024",
+   "why_forcing_occurred": [
+    "LABEL_PRINTED_BUT_CORRUPT",
+    "LABEL_NOT_PRINTED"
+   ],
+   "payload_claims_no_content_control": true,
+   "independent_control_available": true,
+   "independent_evidence": {
+    "determination": "UNIQUELY_BRACKETED_BY_PRINTED_NEIGHBOURS",
+    "printed_label_glyphs": "21",
+    "printed_label_read": 21,
+    "printed_label_candidates": [
+     21
+    ],
+    "printed_label_equals_canonical_verse": false,
+    "neighbours": {
+     "previous": {
+      "printed_label": 23,
+      "printed_label_candidates": [
+       23
+      ],
+      "printed_label_glyphs": "23",
+      "label_was_printed": true
+     },
+     "next": {
+      "printed_label": 25,
+      "printed_label_candidates": [
+       25
+      ],
+      "printed_label_glyphs": "25",
+      "label_was_printed": true
+     }
+    },
+    "neighbours_bracket_canonical_slot_exactly": true,
+    "literal_found_in_pinned_source": true,
+    "match_score": 1.0,
+    "row_pins_its_own_source_bytes": true,
+    "rigveda_english_control": null,
+    "controls": [
+     "SOURCE_PRINTED_NEIGHBOURS_BRACKET_THE_SLOT_UNIQUELY"
+    ]
+   },
+   "gate_b_result": "B_NEEDS_INDEPENDENT_CONTENT_CONTROL",
+   "gate_c_result": "C_PASS",
+   "classification": "VERIFIED_INDEPENDENTLY",
+   "recommendation": "SAFE_TO_IMPORT",
+   "recommendation_basis": "independent content control present and adversarially clean: SOURCE_PRINTED_NEIGHBOURS_BRACKET_THE_SLOT_UNIQUELY"
+  },
+  {
+   "staged_row_id": "TR02244",
+   "canonical_key": "VG:YV:VSM:A29:V021",
+   "source_coordinate": "book page wyvbk29.htm, printed page 249, document unit 20, printed label '21'",
+   "forced_canonical_target": "VG:YV:VSM:A29:V021",
+   "why_forcing_occurred": [
+    "LABEL_PRINTED_BUT_CORRUPT",
+    "LABEL_NOT_PRINTED"
+   ],
+   "payload_claims_no_content_control": false,
+   "independent_control_available": true,
+   "independent_evidence": {
+    "determination": "PRINTED_LABEL_READ_DIRECTLY",
+    "printed_label_glyphs": "21",
+    "printed_label_read": 21,
+    "printed_label_candidates": [
+     21
+    ],
+    "printed_label_equals_canonical_verse": true,
+    "neighbours": {
+     "previous": {
+      "printed_label": 20,
+      "printed_label_candidates": [
+       20
+      ],
+      "printed_label_glyphs": "20",
+      "label_was_printed": true
+     },
+     "next": {
+      "printed_label": 22,
+      "printed_label_candidates": [
+       22
+      ],
+      "printed_label_glyphs": "22",
+      "label_was_printed": true
+     }
+    },
+    "neighbours_bracket_canonical_slot_exactly": true,
+    "literal_found_in_pinned_source": true,
+    "match_score": 1.0,
+    "row_pins_its_own_source_bytes": true,
+    "rigveda_english_control": {
+     "control_rv_key": "VG:RV:SAK:M01:S163:V010",
+     "control_relation": "NEAR_PARALLEL_OF",
+     "sanskrit_similarity": 1.0,
+     "english_similarity": 1.0
+    },
+    "controls": [
+     "SOURCE_PRINTS_THE_CORRECT_LABEL",
+     "INDEPENDENT_RIGVEDA_ENGLISH_PARALLEL_CONTROL"
+    ]
+   },
+   "gate_b_result": "B_PASS",
+   "gate_c_result": "C_PASS",
+   "classification": "VERIFIED_INDEPENDENTLY",
+   "recommendation": "SAFE_TO_IMPORT",
+   "recommendation_basis": "independent content control present and adversarially clean: SOURCE_PRINTS_THE_CORRECT_LABEL, INDEPENDENT_RIGVEDA_ENGLISH_PARALLEL_CONTROL"
+  },
+  {
+   "staged_row_id": "TR02245",
+   "canonical_key": "VG:YV:VSM:A29:V024",
+   "source_coordinate": "book page wyvbk29.htm, printed page 250, document unit 23, printed label '21'",
+   "forced_canonical_target": "VG:YV:VSM:A29:V024",
+   "why_forcing_occurred": [
+    "LABEL_PRINTED_BUT_CORRUPT",
+    "LABEL_NOT_PRINTED"
+   ],
+   "payload_claims_no_content_control": false,
+   "independent_control_available": true,
+   "independent_evidence": {
+    "determination": "UNIQUELY_BRACKETED_BY_PRINTED_NEIGHBOURS",
+    "printed_label_glyphs": "21",
+    "printed_label_read": 21,
+    "printed_label_candidates": [
+     21
+    ],
+    "printed_label_equals_canonical_verse": false,
+    "neighbours": {
+     "previous": {
+      "printed_label": 23,
+      "printed_label_candidates": [
+       23
+      ],
+      "printed_label_glyphs": "23",
+      "label_was_printed": true
+     },
+     "next": {
+      "printed_label": 25,
+      "printed_label_candidates": [
+       25
+      ],
+      "printed_label_glyphs": "25",
+      "label_was_printed": true
+     }
+    },
+    "neighbours_bracket_canonical_slot_exactly": true,
+    "literal_found_in_pinned_source": true,
+    "match_score": 1.0,
+    "row_pins_its_own_source_bytes": true,
+    "rigveda_english_control": {
+     "control_rv_key": "VG:RV:SAK:M01:S163:V013",
+     "control_relation": "NEAR_PARALLEL_OF",
+     "sanskrit_similarity": 0.9741,
+     "english_similarity": 0.9706
+    },
+    "controls": [
+     "SOURCE_PRINTED_NEIGHBOURS_BRACKET_THE_SLOT_UNIQUELY",
+     "INDEPENDENT_RIGVEDA_ENGLISH_PARALLEL_CONTROL"
+    ]
+   },
+   "gate_b_result": "B_PASS",
+   "gate_c_result": "C_PASS",
+   "classification": "VERIFIED_INDEPENDENTLY",
+   "recommendation": "SAFE_TO_IMPORT",
+   "recommendation_basis": "independent content control present and adversarially clean: SOURCE_PRINTED_NEIGHBOURS_BRACKET_THE_SLOT_UNIQUELY, INDEPENDENT_RIGVEDA_ENGLISH_PARALLEL_CONTROL"
+  },
+  {
+   "staged_row_id": "TR02246",
+   "canonical_key": "VG:YV:VSM:A29:V050",
+   "source_coordinate": "book page wyvbk29.htm, printed page 253, document unit 49, printed label '59'",
+   "forced_canonical_target": "VG:YV:VSM:A29:V050",
+   "why_forcing_occurred": [
+    "LABEL_PRINTED_BUT_CORRUPT",
+    "LABEL_NOT_PRINTED"
+   ],
+   "payload_claims_no_content_control": false,
+   "independent_control_available": true,
+   "independent_evidence": {
+    "determination": "UNIQUELY_BRACKETED_BY_PRINTED_NEIGHBOURS",
+    "printed_label_glyphs": "59",
+    "printed_label_read": 59,
+    "printed_label_candidates": [
+     59
+    ],
+    "printed_label_equals_canonical_verse": false,
+    "neighbours": {
+     "previous": {
+      "printed_label": 49,
+      "printed_label_candidates": [
+       49
+      ],
+      "printed_label_glyphs": "49",
+      "label_was_printed": true
+     },
+     "next": {
+      "printed_label": 51,
+      "printed_label_candidates": [
+       51
+      ],
+      "printed_label_glyphs": "51",
+      "label_was_printed": true
+     }
+    },
+    "neighbours_bracket_canonical_slot_exactly": true,
+    "literal_found_in_pinned_source": true,
+    "match_score": 1.0,
+    "row_pins_its_own_source_bytes": true,
+    "rigveda_english_control": {
+     "control_rv_key": "VG:RV:SAK:M06:S075:V013",
+     "control_relation": "NEAR_PARALLEL_OF",
+     "sanskrit_similarity": 0.9781,
+     "english_similarity": 0.92
+    },
+    "controls": [
+     "SOURCE_PRINTED_NEIGHBOURS_BRACKET_THE_SLOT_UNIQUELY",
+     "INDEPENDENT_RIGVEDA_ENGLISH_PARALLEL_CONTROL"
+    ]
+   },
+   "gate_b_result": "B_PASS",
+   "gate_c_result": "C_PASS",
+   "classification": "VERIFIED_INDEPENDENTLY",
+   "recommendation": "SAFE_TO_IMPORT",
+   "recommendation_basis": "independent content control present and adversarially clean: SOURCE_PRINTED_NEIGHBOURS_BRACKET_THE_SLOT_UNIQUELY, INDEPENDENT_RIGVEDA_ENGLISH_PARALLEL_CONTROL"
+  },
+  {
+   "staged_row_id": "TR02247",
+   "canonical_key": "VG:YV:VSM:A29:V059",
+   "source_coordinate": "book page wyvbk29.htm, printed page 254, document unit 58, printed label '59'",
+   "forced_canonical_target": "VG:YV:VSM:A29:V059",
+   "why_forcing_occurred": [
+    "LABEL_PRINTED_BUT_CORRUPT",
+    "LABEL_NOT_PRINTED"
+   ],
+   "payload_claims_no_content_control": true,
+   "independent_control_available": true,
+   "independent_evidence": {
+    "determination": "PRINTED_LABEL_READ_DIRECTLY",
+    "printed_label_glyphs": "59",
+    "printed_label_read": 59,
+    "printed_label_candidates": [
+     59
+    ],
+    "printed_label_equals_canonical_verse": true,
+    "neighbours": {
+     "previous": {
+      "printed_label": 58,
+      "printed_label_candidates": [
+       58
+      ],
+      "printed_label_glyphs": "58",
+      "label_was_printed": true
+     },
+     "next": {
+      "printed_label": 60,
+      "printed_label_candidates": [
+       60
+      ],
+      "printed_label_glyphs": "60",
+      "label_was_printed": true
+     }
+    },
+    "neighbours_bracket_canonical_slot_exactly": true,
+    "literal_found_in_pinned_source": true,
+    "match_score": 1.0,
+    "row_pins_its_own_source_bytes": true,
+    "rigveda_english_control": null,
+    "controls": [
+     "SOURCE_PRINTS_THE_CORRECT_LABEL"
+    ]
+   },
+   "gate_b_result": "B_NEEDS_INDEPENDENT_CONTENT_CONTROL",
+   "gate_c_result": "C_PASS",
+   "classification": "VERIFIED_INDEPENDENTLY",
+   "recommendation": "SAFE_TO_IMPORT",
+   "recommendation_basis": "independent content control present and adversarially clean: SOURCE_PRINTS_THE_CORRECT_LABEL"
+  },
+  {
+   "staged_row_id": "TR02248",
+   "canonical_key": "VG:YV:VSM:A33:V038",
+   "source_coordinate": "book page wyvbk33.htm, printed page 272, document unit 36, printed label '38'",
+   "forced_canonical_target": "VG:YV:VSM:A33:V038",
+   "why_forcing_occurred": [
+    "LABEL_PRINTED_BUT_CORRUPT",
+    "LABEL_NOT_PRINTED"
+   ],
+   "payload_claims_no_content_control": false,
+   "independent_control_available": true,
+   "independent_evidence": {
+    "determination": "PRINTED_LABEL_READ_DIRECTLY",
+    "printed_label_glyphs": "38",
+    "printed_label_read": 38,
+    "printed_label_candidates": [
+     38
+    ],
+    "printed_label_equals_canonical_verse": true,
+    "neighbours": {
+     "previous": {
+      "printed_label": 37,
+      "printed_label_candidates": [
+       37
+      ],
+      "printed_label_glyphs": "37",
+      "label_was_printed": true
+     },
+     "next": {
+      "printed_label": 39,
+      "printed_label_candidates": [
+       39
+      ],
+      "printed_label_glyphs": "39",
+      "label_was_printed": true
+     }
+    },
+    "neighbours_bracket_canonical_slot_exactly": true,
+    "literal_found_in_pinned_source": true,
+    "match_score": 1.0,
+    "row_pins_its_own_source_bytes": true,
+    "rigveda_english_control": {
+     "control_rv_key": "VG:RV:SAK:M01:S115:V005",
+     "control_relation": "NEAR_PARALLEL_OF",
+     "sanskrit_similarity": 0.9859,
+     "english_similarity": 0.9697
+    },
+    "controls": [
+     "SOURCE_PRINTS_THE_CORRECT_LABEL",
+     "INDEPENDENT_RIGVEDA_ENGLISH_PARALLEL_CONTROL"
+    ]
+   },
+   "gate_b_result": "B_PASS",
+   "gate_c_result": "C_PASS",
+   "classification": "VERIFIED_INDEPENDENTLY",
+   "recommendation": "SAFE_TO_IMPORT",
+   "recommendation_basis": "independent content control present and adversarially clean: SOURCE_PRINTS_THE_CORRECT_LABEL, INDEPENDENT_RIGVEDA_ENGLISH_PARALLEL_CONTROL"
+  },
+  {
+   "staged_row_id": "TR02249",
+   "canonical_key": "VG:YV:VSM:A33:V088",
+   "source_coordinate": "book page wyvbk33.htm, printed page 278, document unit 86, printed label '38'",
+   "forced_canonical_target": "VG:YV:VSM:A33:V088",
+   "why_forcing_occurred": [
+    "LABEL_PRINTED_BUT_CORRUPT",
+    "LABEL_NOT_PRINTED"
+   ],
+   "payload_claims_no_content_control": false,
+   "independent_control_available": true,
+   "independent_evidence": {
+    "determination": "UNIQUELY_BRACKETED_BY_PRINTED_NEIGHBOURS",
+    "printed_label_glyphs": "38",
+    "printed_label_read": 38,
+    "printed_label_candidates": [
+     38
+    ],
+    "printed_label_equals_canonical_verse": false,
+    "neighbours": {
+     "previous": {
+      "printed_label": 87,
+      "printed_label_candidates": [
+       87
+      ],
+      "printed_label_glyphs": "87",
+      "label_was_printed": true
+     },
+     "next": {
+      "printed_label": 89,
+      "printed_label_candidates": [
+       89
+      ],
+      "printed_label_glyphs": "89",
+      "label_was_printed": true
+     }
+    },
+    "neighbours_bracket_canonical_slot_exactly": true,
+    "literal_found_in_pinned_source": true,
+    "match_score": 1.0,
+    "row_pins_its_own_source_bytes": true,
+    "rigveda_english_control": {
+     "control_rv_key": "VG:RV:SAK:M07:S074:V003",
+     "control_relation": "NEAR_PARALLEL_OF",
+     "sanskrit_similarity": 0.975,
+     "english_similarity": 0.9677
+    },
+    "controls": [
+     "SOURCE_PRINTED_NEIGHBOURS_BRACKET_THE_SLOT_UNIQUELY",
+     "INDEPENDENT_RIGVEDA_ENGLISH_PARALLEL_CONTROL"
+    ]
+   },
+   "gate_b_result": "B_PASS",
+   "gate_c_result": "C_PASS",
+   "classification": "VERIFIED_INDEPENDENTLY",
+   "recommendation": "SAFE_TO_IMPORT",
+   "recommendation_basis": "independent content control present and adversarially clean: SOURCE_PRINTED_NEIGHBOURS_BRACKET_THE_SLOT_UNIQUELY, INDEPENDENT_RIGVEDA_ENGLISH_PARALLEL_CONTROL"
+  },
+  {
+   "staged_row_id": "TR02250",
+   "canonical_key": "VG:YV:VSM:A34:V013",
+   "source_coordinate": "book page wyvbk34.htm, printed page 281, document unit 12, printed label '15'",
+   "forced_canonical_target": "VG:YV:VSM:A34:V013",
+   "why_forcing_occurred": [
+    "LABEL_PRINTED_BUT_CORRUPT",
+    "LABEL_NOT_PRINTED"
+   ],
+   "payload_claims_no_content_control": true,
+   "independent_control_available": true,
+   "independent_evidence": {
+    "determination": "UNIQUELY_BRACKETED_BY_PRINTED_NEIGHBOURS",
+    "printed_label_glyphs": "15",
+    "printed_label_read": 15,
+    "printed_label_candidates": [
+     15
+    ],
+    "printed_label_equals_canonical_verse": false,
+    "neighbours": {
+     "previous": {
+      "printed_label": 12,
+      "printed_label_candidates": [
+       12
+      ],
+      "printed_label_glyphs": "12",
+      "label_was_printed": true
+     },
+     "next": {
+      "printed_label": 14,
+      "printed_label_candidates": [
+       14
+      ],
+      "printed_label_glyphs": "14",
+      "label_was_printed": true
+     }
+    },
+    "neighbours_bracket_canonical_slot_exactly": true,
+    "literal_found_in_pinned_source": true,
+    "match_score": 1.0,
+    "row_pins_its_own_source_bytes": true,
+    "rigveda_english_control": null,
+    "controls": [
+     "SOURCE_PRINTED_NEIGHBOURS_BRACKET_THE_SLOT_UNIQUELY"
+    ]
+   },
+   "gate_b_result": "B_NEEDS_INDEPENDENT_CONTENT_CONTROL",
+   "gate_c_result": "C_PASS",
+   "classification": "VERIFIED_INDEPENDENTLY",
+   "recommendation": "SAFE_TO_IMPORT",
+   "recommendation_basis": "independent content control present and adversarially clean: SOURCE_PRINTED_NEIGHBOURS_BRACKET_THE_SLOT_UNIQUELY"
+  },
+  {
+   "staged_row_id": "TR02251",
+   "canonical_key": "VG:YV:VSM:A34:V015",
+   "source_coordinate": "book page wyvbk34.htm, printed page 281, document unit 14, printed label '15'",
+   "forced_canonical_target": "VG:YV:VSM:A34:V015",
+   "why_forcing_occurred": [
+    "LABEL_PRINTED_BUT_CORRUPT",
+    "LABEL_NOT_PRINTED"
+   ],
+   "payload_claims_no_content_control": true,
+   "independent_control_available": true,
+   "independent_evidence": {
+    "determination": "PRINTED_LABEL_READ_DIRECTLY",
+    "printed_label_glyphs": "15",
+    "printed_label_read": 15,
+    "printed_label_candidates": [
+     15
+    ],
+    "printed_label_equals_canonical_verse": true,
+    "neighbours": {
+     "previous": {
+      "printed_label": 14,
+      "printed_label_candidates": [
+       14
+      ],
+      "printed_label_glyphs": "14",
+      "label_was_printed": true
+     },
+     "next": {
+      "printed_label": 16,
+      "printed_label_candidates": [
+       16
+      ],
+      "printed_label_glyphs": "16",
+      "label_was_printed": true
+     }
+    },
+    "neighbours_bracket_canonical_slot_exactly": true,
+    "literal_found_in_pinned_source": true,
+    "match_score": 1.0,
+    "row_pins_its_own_source_bytes": true,
+    "rigveda_english_control": null,
+    "controls": [
+     "SOURCE_PRINTS_THE_CORRECT_LABEL"
+    ]
+   },
+   "gate_b_result": "B_NEEDS_INDEPENDENT_CONTENT_CONTROL",
+   "gate_c_result": "C_PASS",
+   "classification": "VERIFIED_INDEPENDENTLY",
+   "recommendation": "SAFE_TO_IMPORT",
+   "recommendation_basis": "independent content control present and adversarially clean: SOURCE_PRINTS_THE_CORRECT_LABEL"
+  },
+  {
+   "staged_row_id": "TR02252",
+   "canonical_key": "VG:YV:VSM:A36:V021",
+   "source_coordinate": "book page wyvbk36.htm, printed page 292, document unit 19, printed label '21'",
+   "forced_canonical_target": "VG:YV:VSM:A36:V021",
+   "why_forcing_occurred": [
+    "LABEL_PRINTED_BUT_CORRUPT",
+    "LABEL_NOT_PRINTED"
+   ],
+   "payload_claims_no_content_control": true,
+   "independent_control_available": true,
+   "independent_evidence": {
+    "determination": "PRINTED_LABEL_READ_DIRECTLY",
+    "printed_label_glyphs": "21",
+    "printed_label_read": 21,
+    "printed_label_candidates": [
+     21
+    ],
+    "printed_label_equals_canonical_verse": true,
+    "neighbours": {
+     "previous": {
+      "printed_label": 20,
+      "printed_label_candidates": [
+       20
+      ],
+      "printed_label_glyphs": "20",
+      "label_was_printed": true
+     },
+     "next": {
+      "printed_label": 22,
+      "printed_label_candidates": [
+       22
+      ],
+      "printed_label_glyphs": "22",
+      "label_was_printed": true
+     }
+    },
+    "neighbours_bracket_canonical_slot_exactly": true,
+    "literal_found_in_pinned_source": true,
+    "match_score": 1.0,
+    "row_pins_its_own_source_bytes": true,
+    "rigveda_english_control": null,
+    "controls": [
+     "SOURCE_PRINTS_THE_CORRECT_LABEL"
+    ]
+   },
+   "gate_b_result": "B_NEEDS_INDEPENDENT_CONTENT_CONTROL",
+   "gate_c_result": "C_PASS",
+   "classification": "VERIFIED_INDEPENDENTLY",
+   "recommendation": "SAFE_TO_IMPORT",
+   "recommendation_basis": "independent content control present and adversarially clean: SOURCE_PRINTS_THE_CORRECT_LABEL"
+  },
+  {
+   "staged_row_id": "TR02253",
+   "canonical_key": "VG:YV:VSM:A36:V024",
+   "source_coordinate": "book page wyvbk36.htm, printed page 292, document unit 22, printed label '21'",
+   "forced_canonical_target": "VG:YV:VSM:A36:V024",
+   "why_forcing_occurred": [
+    "LABEL_PRINTED_BUT_CORRUPT",
+    "LABEL_NOT_PRINTED"
+   ],
+   "payload_claims_no_content_control": true,
+   "independent_control_available": false,
+   "independent_evidence": {
+    "determination": null,
+    "printed_label_glyphs": "21",
+    "printed_label_read": 21,
+    "printed_label_candidates": [
+     21
+    ],
+    "printed_label_equals_canonical_verse": null,
+    "neighbours": null,
+    "neighbours_bracket_canonical_slot_exactly": null,
+    "literal_found_in_pinned_source": false,
+    "match_score": 0.6061,
+    "row_pins_its_own_source_bytes": true,
+    "rigveda_english_control": null,
+    "controls": []
+   },
+   "gate_b_result": "B_NEEDS_INDEPENDENT_CONTENT_CONTROL",
+   "gate_c_result": "C_FAIL_UNVERIFIED_FORCED_ADDRESS",
+   "classification": "NOT_VERIFIED",
+   "recommendation": "KEEP_WITHHELD",
+   "recommendation_basis": "no independent control: the pinned source neither prints a usable label for this unit nor brackets the slot uniquely (determination=None)"
+  }
+ ]
+}

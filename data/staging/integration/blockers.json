@@ -1,0 +1,216 @@
+{
+  "schema_version": "1.0",
+  "purpose": "Integration blockers requiring an owner decision before Wave 3. A blocker is not a gap: a gap is something missing from the data, and a blocker is a question the data cannot answer about itself.",
+  "blockers": [
+    {
+      "blocker_id": "CURATION_CONTRADICTION_SOMA_PAVAMANA",
+      "status": "RESOLVED_BY_OWNER_DECISION",
+      "raised_by": "agent 15, adversarial preflight",
+      "raised_at": "2026-09-15",
+      "root_cause_type": "CURATION_CONTRADICTION",
+      "summary": "The graph asserts that Soma Pavamana is a variant name for Soma, and the deity taxonomy holds the two apart on separate axes. Both are curated, deliberate, and incompatible.",
+      "evidence": {
+        "identity_relation": "EPITHET_VARIANT_OF links Soma Pavamana to Soma, asserting they are one deity under two names.",
+        "taxonomy": "DEVATA_TAXONOMY_V1 assigns them different axes and deliberately partitions their aliases, asserting they are two.",
+        "partition_behaviour": "Every one of the six community methods separates them, which is consistent with the taxonomy and inconsistent with the identity relation.",
+        "precedent": "The taxonomy already flags a conflict of the same shape for Mitravarunau, so this is a second instance of one pattern rather than an isolated case."
+      },
+      "why_it_is_not_agent_15s_to_resolve": "It is an ontology question about what EPITHET_VARIANT_OF means, not a question about community detection. Resolving it inside the domain that noticed it would set ontology policy from one consumer's point of view.",
+      "options": [
+        {
+          "option": "A",
+          "statement": "The identity relation is correct and the taxonomy needs explicit subtype semantics.",
+          "consequence": "Soma Pavamana becomes a subtype or aspect of Soma. The taxonomy gains a subtype axis, and every deity currently distinguished only by axis must be re-examined for the same treatment."
+        },
+        {
+          "option": "B",
+          "statement": "The taxonomy distinction is correct and EPITHET_VARIANT_OF is too strong.",
+          "consequence": "The relation is weakened or retyped for this pair, and the other 10 EPITHET_VARIANT_OF pairs must be re-checked against the same standard, since the relation's meaning changes for all of them."
+        },
+        {
+          "option": "C",
+          "statement": "Both are valid at different abstraction levels, and the ontology must encode that distinction explicitly.",
+          "consequence": "A new, additive distinction between name-identity and cult-identity. The most faithful option and the most work: it requires the ontology to say which kind of sameness each relation asserts."
+        }
+      ],
+      "constraint_until_resolved": "No community membership involving this identity question may be treated as a truth test. That includes agent 15's own Soma-related diagnostics, and any semantic representation that treats deity identity as settled.",
+      "blocks_domains": [
+        "communities"
+      ],
+      "also_relevant_to": [
+        "semantic_resemblance",
+        "attribution",
+        "quality"
+      ],
+      "owner_decision": {
+        "decided_at": "2026-09-15",
+        "chosen": "a fourth option, between B and C",
+        "statement": "Both distinctions carry useful semantics and EPITHET_VARIANT_OF is too strong for this case. Keep both nodes as separate analytical entities and link them with an additive specialized-form relation. Do not merge, do not delete the analytical distinction, do not weaken EPITHET_VARIANT_OF generally.",
+        "predicate_chosen": "SPECIALIZED_FORM_OF",
+        "predicate_rationale": "Chosen over RITUAL_ASPECT_OF on two grounds. The ontology already names relations in the X_OF idiom -- EPITHET_VARIANT_OF, VARIANT_OF, MEMBER_OF, MEMBER_OF_FAMILY -- so this reads as one of the family. And it generalises: a later specialization that is functional rather than liturgical would leave a ritual-named predicate either misapplied or duplicated.",
+        "semantics": "A SPECIALIZED_FORM_OF B means A is a contextually specialized manifestation or form of B and remains separately addressable for corpus analysis. It must NOT imply an orthographic alias, an epithet spelling, a node collapse, or interchangeability in every query.",
+        "scope": "Only the Soma Pavamana -> Soma edge, unless independent review finds another relation with the same semantic problem. The other 10 EPITHET_VARIANT_OF pairs were sampled and are epithets proper -- 'Agni Jatavedas', 'Agni the slayer of demons', 'the self of Agni' -- rather than distinct cult forms.",
+        "application_status": "NOT APPLIED. Wave 3 is not authorized, so this is staged as a migration card. The former edge's provenance is preserved for the migration record.",
+        "tests_to_re_run_on_application": [
+          "deity identity invariants",
+          "community input population",
+          "deity profile queries",
+          "Ask identity and disambiguation tests",
+          "Knowledge World projection tests"
+        ]
+      }
+    },
+    {
+      "blocker_id": "NAME_COLLISION_SCOPE_TYPE",
+      "status": "RESOLVED_BY_OWNER_DECISION",
+      "raised_by": "collision audit, owner section 12",
+      "raised_at": "2026-09-15",
+      "root_cause_type": "SCOPE_MISMATCH",
+      "summary": "The property scope_type is written by the attribution domain meaning the scope of an attribution assertion, and by the audio domains meaning the scope of an audio record. Same name, different concept, on 18 shared canonical keys.",
+      "evidence": {
+        "attribution": "scope_type = SINGLE_MANTRA on 466 rows",
+        "audio_av": "scope_type = MANTRA on 771 rows",
+        "overlap": "18 canonical keys carry both"
+      },
+      "why_precedence_is_the_wrong_remedy": "The audit's own second pass classified this as DOMAIN_PRECEDENCE with the audio family authoritative. That would have overwritten one concept with another and lost the attribution meaning silently. Owner section 12 names this case explicitly as a property name with incompatible meaning.",
+      "resolution": "Namespace the property per domain at import. No owner decision needed; recorded so the import cannot quietly resolve it by precedence.",
+      "blocks_domains": [
+        "attribution",
+        "audio_av"
+      ],
+      "owner_decision": {
+        "decided_at": "2026-09-15",
+        "owner_statement": "There is no global owner-selected default scope_type. scope_type is an evidence property and must be derived from the actual subject grain, using the narrowest truthful closed-enum scope each population supports. A heterogeneous M6 must be split into homogeneous import populations.",
+        "what_the_card_got_wrong": "It asked which readers could be allowed to break. scope_type is on 0 nodes and 0 relationships of the live graph, so there is no reader to break and the ADDITIVE=false / BACKWARD_COMPATIBLE=false flags were recorded against a population that does not exist. The schema also already holds both vocabularies as separate closed enums -- AudioScope with its SCOPE_TO_ENTITY_TYPES grain contract, and ScopeType for assertion scope -- so no vocabulary had to be invented and no winner had to be picked.",
+        "populations": [
+          {
+            "population": "AUDIO_RECORD_AT_MANTRA_SCOPE",
+            "property": "audio_scope_type",
+            "scope_type": "MANTRA",
+            "enum": "AudioScope",
+            "rows": 954,
+            "domains": [
+              "audio_rv",
+              "audio_yv",
+              "audio_av"
+            ],
+            "grain_asserted": "every subject is an entity_type=MANTRA node"
+          },
+          {
+            "population": "GANA_PERFORMANCE_AT_COLLECTION_SCOPE",
+            "property": "audio_scope_type",
+            "scope_type": "COLLECTION",
+            "enum": "AudioScope",
+            "rows": 3,
+            "domains": [
+              "samaveda_music"
+            ],
+            "grain_asserted": "every subject is an entity_type=STRUCTURAL_CONTAINER node",
+            "defect_found_and_fixed": "staged as STRUCTURAL_CONTAINER, which is a graph entity_type and not an AudioScope member at all -- one axis's value cast into the other's enum. AudioScope.COLLECTION is the enum's own value for a named Samavedic collection, and all three keys are CHANDA or UTTARA containers."
+          },
+          {
+            "population": "ATTRIBUTION_ASSERTION_AT_SINGLE_MANTRA_SCOPE",
+            "property": "assertion_scope_type",
+            "scope_type": "SINGLE_MANTRA",
+            "enum": "ScopeType",
+            "rows": 466,
+            "domains": [
+              "attribution"
+            ],
+            "grain_asserted": "every subject is an entity_type=MANTRA node, and all 466 rows independently carry asserted_granularity=VERSE"
+          }
+        ],
+        "partition_is_total": true,
+        "rows_covered": 1423,
+        "flags": {
+          "ADDITIVE": true,
+          "DETERMINISTIC_IDENTITY": true,
+          "BACKWARD_COMPATIBLE": true,
+          "ROLLBACK_DEFINED": true,
+          "OLD_PREDICATE_MEANING_CHANGED": false
+        },
+        "validator": "scripts/wave3_scope_grain_repair.py -- HOMOGENEOUS_AND_ON_GRAIN",
+        "report": "data/staging/integration/wave3_scope_grain.json"
+      }
+    },
+    {
+      "blocker_id": "FOLD_FIX_BREAKS_REFERENT_IDENTITY",
+      "status": "RESOLVED_BY_OWNER_DECISION",
+      "raised_by": "lead, applying agent 10's staged fold patch and running the full suite",
+      "raised_at": "2026-09-15",
+      "root_cause_type": "SCHEMA_CANNOT_REPRESENT_DOMAIN",
+      "summary": "The cross-Veda layer needs the transcription fold corrected, and the fold is inside the referent identity contract. Correcting it in place moves the comparison digest of 5 Yajurvedic canonical keys and trips the referent-drift gate.",
+      "the_defect_being_fixed": "enrich/surfaces.build_surfaces transliterates before it folds, so all five Devanagari anusvara rules in TRANSCRIPTION_EQUIVALENCES are unreachable on the script_folded surface -- the only surface a cross-script pair can be compared on. Verified by the lead: the Devanagari cluster folds to one sentinel and its transliteration to three codepoints, with U+1CED surviving unfolded. U+0901 candrabindu transliterates to a bare ASCII tilde no rule reaches. Cost: 396 of 6,271 cross-Veda transformation types mistyped and 197 stored relationship types contradicted by their own text.",
+      "why_it_cannot_be_applied_in_place": "referent.py computes comparison_sha256 through comparison_form, which runs the fold. Applying the patch tripped ReferentDriftError on VG:YV:VSM:A06:V015, A09:V021, A09:V031, A09:V032 and A09:V034. The module exists precisely because a segmentation change once moved five Samaveda referents under unchanged UUIDs while every gate reported success, so the gate is working as designed.",
+      "why_a_migration_would_be_the_wrong_remedy": "The referent did not change. The gate's own message shows the locator and the marker byte-identical on all five keys, with only the digest differing. Recording a referent migration would assert that the source occurrence moved, which is false. What changed is the normalisation that computes the digest.",
+      "also_downstream": "The fold feeds the generated lexical layer, whose byte-identical rebuild test fails under the change, and the cross-Veda identical-pair count moves from 2,042 to 2,240 so its measured-range test fails. Both are legitimate consequences rather than defects, and both need their baselines re-recorded deliberately.",
+      "options": [
+        {
+          "option": "A",
+          "statement": "Version the comparison digest by the normalisation that produced it.",
+          "consequence": "The gate compares like with like, and a fold change stops being indistinguishable from a referent change. Most correct, and it touches the identity contract, so it needs its own migration note and a re-recorded baseline for all 20,210 keys."
+        },
+        {
+          "option": "B",
+          "statement": "Give the comparison surfaces their own fold, leaving the identity fold untouched.",
+          "consequence": "Additive and safe: cross-Veda, parallel and formula layers get a corrected comparison fold while referent identity keeps the historical one. The cost is two folds to keep honest, and a reader must know which one a figure used."
+        },
+        {
+          "option": "C",
+          "statement": "Apply the fix in place and adjudicate the 5 keys as recorded migrations.",
+          "consequence": "Cheapest and the lead recommends against it: it records a referent change that did not happen, which is exactly the kind of false statement the referent gate was built to prevent."
+        }
+      ],
+      "lead_recommendation": "B, then A when the identity contract is next revised deliberately.",
+      "blocks_domains": [
+        "cross_veda",
+        "formula"
+      ],
+      "patch_staged_at": "data/staging/cross_veda/proofs/surfaces_fold_patch.txt",
+      "note_on_the_staged_patch": "The patch is well-reasoned and its regression assertions are the right ones -- running them is what exposed both its own incompleteness and this blocker. Two corrections: its rules cover CEA + m-dot-below, and the arriving form is CEA + m-dot-below + U+1CED, so a longest-first rule for U+1CED is also needed; and it could not have anticipated the referent consequence, because normalize/unicode.py was outside the agent's write surface and it therefore never ran the full suite.",
+      "owner_decision": {
+        "decided_at": "2026-09-15",
+        "chosen": "B -- give the comparison surfaces their own fold, leaving the identity fold untouched",
+        "owner_statement": "Normalization / folding does not establish identity. It may establish NORMALIZED_SURFACE_MATCH or produce an IDENTITY_CANDIDATE, and never SAME_CANONICAL_ENTITY, SAME_CANONICAL_PASSAGE, VARIANT_OF, TEXT_REUSE or a canonical merge. Repair any blocker waiting for permission to equate folded strings; the decision is DO NOT EQUATE THEM.",
+        "why_that_selects_option_B": "This blocker is the invariant seen from the other side. The fold sits inside the identity contract, so a comparison correction was indistinguishable from a referent change. Option B separates the two, which is what the invariant requires: a comparison instrument must be free to change, and identity must not move because a comparison did.",
+        "application_status": "APPLIED",
+        "implementation": {
+          "identity_fold": "normalize.unicode.fold_transcription -- UNCHANGED",
+          "comparison_fold": "normalize.unicode.fold_transcription_cross_script -- new",
+          "named_surface": "ComparisonForm.CROSS_SCRIPT_COMPARISON",
+          "only_consumer_changed": "enrich.surfaces.build_surfaces script_folded / sandhi_insensitive",
+          "rules_added": [
+            "U+1CEC + U+0902 and U+1CEC alone -> anusvara sentinel",
+            "U+A8F7 -> anusvara sentinel",
+            "ASCII tilde (what the transliterator makes of U+0901) -> anusvara sentinel",
+            "a run of two or more anusvara sentinels collapses to one"
+          ],
+          "rules_declined": [
+            "the staged patch's (U+1CEA + U+1E43) and (U+1CEA + U+1E41): redundant, since each component already folds to the sentinel and the run collapse merges them",
+            "U+F15C: a private-use code point in the stored text of 20 unaccented Vajasaneyi records, in the position that layer elsewhere writes an anusvara. Reading it as one is a transcription judgement, not a normalisation, so it is registered as a source defect and left unfolded"
+          ],
+          "separators_widened_for_comparison_only": "+ backslash U+00AC U+2013 U+2014, on 6 of 20,210 records"
+        },
+        "verification": {
+          "released_referent_digests_reproduced": "3819 of 3819",
+          "the_five_named_keys": "VG:YV:VSM:A06:V015, A09:V021, A09:V031, A09:V032, A09:V034 -- all UNCHANGED",
+          "search_normalized_records_changed": 0,
+          "cross_script_surface_corrected_on": "891 Devanagari text records, 0 Latin",
+          "non_latin_residue_remaining": "U+F15C only, 24 occurrences over 20 records, deliberately",
+          "anusvara_sentinel_runs_remaining": 0,
+          "generated_lexical_layer": "byte-identical rebuild test PASSES, because the identity fold did not move",
+          "cross_veda_identity_baseline": "1,538 -> 1,735 re-recorded deliberately; EXACT_PARALLEL_OF +45, VARIANT_OF +152",
+          "guards_held": "the lateral series, the homorganic nasals and runs of the other three sentinels are all still unfolded"
+        },
+        "deferred": "Option A, versioning the comparison digest by the normalisation that produced it, remains the more correct end state and is deferred to the next deliberate revision of the identity contract. Recorded so it is a choice rather than an omission.",
+        "regression_tests": [
+          "tests/unit/test_normalize.py -- three formerly strict-xfail tests now run against the cross-script fold",
+          "test_the_cross_script_fold_never_moves_the_identity_fold",
+          "test_the_undefined_private_use_codepoint_is_reported_not_folded",
+          "test_cross_script_separators_do_not_widen_the_identity_separator_set",
+          "test_strip_editorial_marks_default_is_unchanged_for_every_existing_caller"
+        ]
+      }
+    }
+  ]
+}

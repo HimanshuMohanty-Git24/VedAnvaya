@@ -44,7 +44,8 @@ import sys
 from dataclasses import dataclass
 from typing import Any, Final
 
-sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8", errors="replace")
+if hasattr(sys.stdout, "reconfigure"):  # pragma: no cover - stream setup
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 
 PROJECT_ROOT = pathlib.Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(PROJECT_ROOT / "src"))
@@ -172,13 +173,35 @@ DIMENSIONS: Final[tuple[Dimension, ...]] = (
     Dimension(
         "human_concern", "(p)-[:ADDRESSES_CONCERN|TREATS|PROTECTS_FROM|USED_FOR_RITE]->()", {}
     ),
+    # The predicate here is not a bare HAS_TRANSLATION, and the difference is load-bearing.
+    # This dimension measures whether the independent English layer reaches a verse, so it
+    # excludes two things a plain edge test would count. A reused rendering is another
+    # corpus's published English on verified-identical text: counting it flipped the
+    # Samavedic translation dimension out of ABSENT_FROM_SOURCE and reported that corpus at
+    # 9.4% translated, which contradicts every other surface and is the exact kind of lie
+    # the three-kinds-of-zero distinction exists to prevent. And Griffith's Latin
+    # substitutions are his real text but are not the English layer.
+    #
+    # A MANTRA_RANGE rendering *is* counted, through its declared span rather than through
+    # its edge: one print unit over two verses reaches both of them, and counting only the
+    # anchor would report the second verse of every pair as untouched by the layer.
     Dimension(
         "translation",
-        "(p)-[:HAS_TRANSLATION]->()",
+        "("
+        "  EXISTS { (p)-[:HAS_TRANSLATION]->(t:Translation)"
+        "           WHERE t.language = 'en' AND t.reuse_kind IS NULL }"
+        "  OR EXISTS { (:Mantra)-[:HAS_TRANSLATION]->(t:Translation)"
+        "              WHERE t.alignment_level = 'MANTRA_RANGE' AND t.language = 'en'"
+        "                AND t.reuse_kind IS NULL"
+        "                AND p.canonical_key IN t.covers_canonical_keys }"
+        ")",
         {
             "SV": (
                 "No complete translation of the Kauthuma arcika is ingested; the only one "
-                "located is Ranayaniya and does not align."
+                "located is Ranayaniya and does not align. 173 Samavedic verses do now show "
+                "Griffith's Rigvedic English on text verified character-identical, disclosed "
+                "as a reused rendering; that is translation assistance and not a Samavedic "
+                "translation, so it is deliberately not counted here."
             )
         },
     ),
@@ -382,13 +405,15 @@ def land_metrics(session: Any) -> dict[str, Any]:
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--check", action="store_true")
+    parser.add_argument("--read-only-output", action="store_true",
+                        help="Write measured coverage without creating or updating graph metrics")
     parser.add_argument("--out", type=pathlib.Path, default=None)
     args = parser.parse_args()
 
     from neo4j import GraphDatabase
 
     driver = GraphDatabase.driver(BOLT_URI, auth=BOLT_AUTH)
-    with driver.session() as session:
+    with driver.session(default_access_mode="READ" if args.check or args.read_only_output else "WRITE") as session:
         coverage = measure(session)
         print("=== VEDA_KNOWLEDGE_COVERAGE_SCORE ===")
         for veda, row in coverage["vedas"].items():
@@ -399,7 +424,7 @@ def main() -> int:
             )
             if row["dimensions_absent_from_graph"]:
                 print(f"        ABSENT FROM GRAPH: {row['dimensions_absent_from_graph']}")
-        if not args.check:
+        if not args.check and not args.read_only_output:
             metrics = land_metrics(session)
             coverage["derived_metrics"] = metrics
             print("\n=== DerivedMetric rows landed ===")
@@ -412,7 +437,7 @@ def main() -> int:
     out = args.out or (
         PROJECT_ROOT / "data" / "domain" / "vedagraph_domain_v2" / "veda_coverage_v3.json"
     )
-    if not args.check:
+    if not args.check or args.read_only_output:
         out.write_text(
             json.dumps(coverage, ensure_ascii=False, indent=1, sort_keys=True) + "\n",
             encoding="utf-8",

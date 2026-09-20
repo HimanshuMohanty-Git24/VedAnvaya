@@ -1,0 +1,61 @@
+{
+  "artifact": "RELEASE_BLOCKER_R4_BASELINE",
+  "at": "2026-09-18T07:40:05.479787+00:00",
+  "head": "4108152e276bd20f13c5c6d1d76c6cf9941edc52",
+  "branch": "phase-data-completeness-v2",
+  "census": {
+    "nodes": 164201,
+    "relationships": 508042,
+    "RV": 10552,
+    "SV": 1844,
+    "YV": 1975,
+    "AV": 5839,
+    "DerivedMetric": 1085
+  },
+  "asserted_implementation_fixable": 17,
+  "measured_implementation_fixable": 17,
+  "count_matches_brief": true,
+  "not_terminated": [
+    "GAP-ATTRIBUTION-002",
+    "GAP-COMMUNITIES-002",
+    "GAP-ENTITY_COVERAGE-001",
+    "GAP-ENTITY_COVERAGE-002",
+    "GAP-ENTITY_COVERAGE-003",
+    "GAP-ENTITY_COVERAGE-004",
+    "GAP-ENTITY_COVERAGE-006",
+    "GAP-ENTITY_COVERAGE-007",
+    "GAP-PRODUCT_SURFACE-005",
+    "GAP-QUALITY-003",
+    "GAP-RITUAL-003",
+    "GAP-RITUAL-004",
+    "GAP-RITUAL-005",
+    "GAP-RITUAL-006",
+    "GAP-SAMAVEDA_MUSIC-003",
+    "GAP-SEMANTICS-003",
+    "GAP-TRANSLATION-004"
+  ],
+  "live_gated_failures_declared": [
+    {
+      "test": "tests/domain/test_v3_layers.py::test_live_every_formula_family_has_a_unique_family_id",
+      "family": "FORMULA"
+    },
+    {
+      "test": "tests/domain/test_v3_layers.py::test_live_every_membership_edge_lands_on_a_real_formula",
+      "family": "FORMULA"
+    },
+    {
+      "test": "tests/domain/test_v3_layers.py::test_live_member_role_counts_are_what_the_artifact_says",
+      "family": "FORMULA"
+    },
+    {
+      "test": "tests/domain/test_v3_layers.py::test_live_the_containment_claim_is_recomputable_from_the_graph_alone",
+      "family": "FORMULA"
+    },
+    {
+      "test": "tests/domain/test_v3_3_final_closure.py::test_live_q23_reports_insufficient_community_evidence",
+      "family": "COMMUNITY"
+    }
+  ],
+  "registry_closure_audit_source": "data/staging/wave4/registry_closure_audit.json",
+  "registry_closure_audit_sha256": "e8ee882af38868736bf1254db925fbbd12875d0df745342219900b632d4e70b3"
+}

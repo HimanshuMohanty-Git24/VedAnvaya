@@ -1,0 +1,319 @@
+{
+  "absence_reason_code": "NO_EDGE_IN_PROJECTION_DEGREE_ZERO",
+  "deities": [
+    {
+      "curated_structure": "PAIR",
+      "dedications": 9,
+      "devata_key": "VG:DEVATA:AGNIH-MARUTAH",
+      "hymns": 1,
+      "isolation_class": "ISOLATED_IN_THE_SOURCE",
+      "label_en": "Agni and the Maruts",
+      "reason": "every sukta dedicated to this deity is dedicated to it alone, so it has no co-dedication partner anywhere in the Rigveda"
+    },
+    {
+      "curated_structure": "PAIR",
+      "dedications": 12,
+      "devata_key": "VG:DEVATA:AGNISOMAU",
+      "hymns": 1,
+      "isolation_class": "ISOLATED_IN_THE_SOURCE",
+      "label_en": "Agni and Soma",
+      "reason": "every sukta dedicated to this deity is dedicated to it alone, so it has no co-dedication partner anywhere in the Rigveda"
+    },
+    {
+      "curated_structure": "PAIR",
+      "dedications": 1,
+      "devata_key": "VG:DEVATA:AGNISUYAU",
+      "hymns": 1,
+      "isolation_class": "COLLATERAL_OF_OUR_OWN_EXCLUSIONS",
+      "label_en": "Agni and Surya",
+      "reason": "its only co-dedication partner(s) were removed from the eligible population by this artifact's own filters: praise of a patron's gift (EXCLUDED_NOT_A_DEITY). Unplaceable here is our filter's consequence, not the source's silence."
+    },
+    {
+      "curated_structure": "GROUP",
+      "dedications": 4,
+      "devata_key": "VG:DEVATA:AKSAH",
+      "hymns": 1,
+      "isolation_class": "COLLATERAL_OF_OUR_OWN_EXCLUSIONS",
+      "label_en": "the dice",
+      "reason": "its only co-dedication partner(s) were removed from the eligible population by this artifact's own filters: censure of the dice and the gambler (EXCLUDED_BY_ABSTRACT_RULING), ploughing (EXCLUDED_BY_ABSTRACT_RULING). Unplaceable here is our filter's consequence, not the source's silence."
+    },
+    {
+      "curated_structure": "ABSTRACT",
+      "dedications": 11,
+      "devata_key": "VG:DEVATA:ANNAM",
+      "hymns": 1,
+      "isolation_class": "ISOLATED_IN_THE_SOURCE",
+      "label_en": "food",
+      "reason": "every sukta dedicated to this deity is dedicated to it alone, so it has no co-dedication partner anywhere in the Rigveda"
+    },
+    {
+      "curated_structure": "INDIVIDUAL",
+      "dedications": 15,
+      "devata_key": "VG:DEVATA:APAM-NAPAT",
+      "hymns": 1,
+      "isolation_class": "ISOLATED_IN_THE_SOURCE",
+      "label_en": "Apam Napat",
+      "reason": "every sukta dedicated to this deity is dedicated to it alone, so it has no co-dedication partner anywhere in the Rigveda"
+    },
+    {
+      "curated_structure": "INDIVIDUAL",
+      "dedications": 16,
+      "devata_key": "VG:DEVATA:APTRNAH-SURYAH",
+      "hymns": 1,
+      "isolation_class": "ISOLATED_IN_THE_SOURCE",
+      "label_en": "Surya, with the epithet aptrna",
+      "reason": "every sukta dedicated to this deity is dedicated to it alone, so it has no co-dedication partner anywhere in the Rigveda"
+    },
+    {
+      "curated_structure": "INDIVIDUAL",
+      "dedications": 6,
+      "devata_key": "VG:DEVATA:ARANYANI",
+      "hymns": 1,
+      "isolation_class": "ISOLATED_IN_THE_SOURCE",
+      "label_en": "Aranyani",
+      "reason": "every sukta dedicated to this deity is dedicated to it alone, so it has no co-dedication partner anywhere in the Rigveda"
+    },
+    {
+      "curated_structure": "INDIVIDUAL",
+      "dedications": 35,
+      "devata_key": "VG:DEVATA:ASHVAH",
+      "hymns": 2,
+      "isolation_class": "ISOLATED_IN_THE_SOURCE",
+      "label_en": "the horse",
+      "reason": "every sukta dedicated to this deity is dedicated to it alone, so it has no co-dedication partner anywhere in the Rigveda"
+    },
+    {
+      "curated_structure": "ABSTRACT",
+      "dedications": 11,
+      "devata_key": "VG:DEVATA:DAKSINA",
+      "hymns": 1,
+      "isolation_class": "ISOLATED_IN_THE_SOURCE",
+      "label_en": "Daksina, the priestly fee",
+      "reason": "every sukta dedicated to this deity is dedicated to it alone, so it has no co-dedication partner anywhere in the Rigveda"
+    },
+    {
+      "curated_structure": "GROUP",
+      "dedications": 20,
+      "devata_key": "VG:DEVATA:GAVAH",
+      "hymns": 3,
+      "isolation_class": "ISOLATED_IN_THE_SOURCE",
+      "label_en": "the cows",
+      "reason": "every sukta dedicated to this deity is dedicated to it alone, so it has no co-dedication partner anywhere in the Rigveda"
+    },
+    {
+      "curated_structure": "INDIVIDUAL",
+      "dedications": 13,
+      "devata_key": "VG:DEVATA:HARIH",
+      "hymns": 1,
+      "isolation_class": "ISOLATED_IN_THE_SOURCE",
+      "label_en": "the tawny one",
+      "reason": "every sukta dedicated to this deity is dedicated to it alone, so it has no co-dedication partner anywhere in the Rigveda"
+    },
+    {
+      "curated_structure": "PAIR",
+      "dedications": 5,
+      "devata_key": "VG:DEVATA:HAVIRDHANE-SAKATE",
+      "hymns": 1,
+      "isolation_class": "ISOLATED_IN_THE_SOURCE",
+      "label_en": "the two oblation carts",
+      "reason": "every sukta dedicated to this deity is dedicated to it alone, so it has no co-dedication partner anywhere in the Rigveda"
+    },
+    {
+      "curated_structure": "PAIR",
+      "dedications": 6,
+      "devata_key": "VG:DEVATA:INDRAPUSANAU",
+      "hymns": 1,
+      "isolation_class": "ISOLATED_IN_THE_SOURCE",
+      "label_en": "Indra and Pusan",
+      "reason": "every sukta dedicated to this deity is dedicated to it alone, so it has no co-dedication partner anywhere in the Rigveda"
+    },
+    {
+      "curated_structure": "INDIVIDUAL",
+      "dedications": 3,
+      "devata_key": "VG:DEVATA:JATAVEDA-AGNIH",
+      "hymns": 1,
+      "isolation_class": "ISOLATED_IN_THE_SOURCE",
+      "label_en": "Agni Jatavedas",
+      "reason": "every sukta dedicated to this deity is dedicated to it alone, so it has no co-dedication partner anywhere in the Rigveda"
+    },
+    {
+      "curated_structure": "GROUP",
+      "dedications": 10,
+      "devata_key": "VG:DEVATA:MANDUKAH",
+      "hymns": 1,
+      "isolation_class": "ISOLATED_IN_THE_SOURCE",
+      "label_en": "the frogs",
+      "reason": "every sukta dedicated to this deity is dedicated to it alone, so it has no co-dedication partner anywhere in the Rigveda"
+    },
+    {
+      "curated_structure": "ABSTRACT",
+      "dedications": 14,
+      "devata_key": "VG:DEVATA:MANYUH",
+      "hymns": 2,
+      "isolation_class": "ISOLATED_IN_THE_SOURCE",
+      "label_en": "Manyu, battle-fury",
+      "reason": "every sukta dedicated to this deity is dedicated to it alone, so it has no co-dedication partner anywhere in the Rigveda"
+    },
+    {
+      "curated_structure": "GROUP",
+      "dedications": 23,
+      "devata_key": "VG:DEVATA:OSADHAYAH",
+      "hymns": 1,
+      "isolation_class": "ISOLATED_IN_THE_SOURCE",
+      "label_en": "the healing plants",
+      "reason": "every sukta dedicated to this deity is dedicated to it alone, so it has no co-dedication partner anywhere in the Rigveda"
+    },
+    {
+      "curated_structure": "INDIVIDUAL",
+      "dedications": 19,
+      "devata_key": "VG:DEVATA:PARJANYAH",
+      "hymns": 3,
+      "isolation_class": "ISOLATED_IN_THE_SOURCE",
+      "label_en": "Parjanya",
+      "reason": "every sukta dedicated to this deity is dedicated to it alone, so it has no co-dedication partner anywhere in the Rigveda"
+    },
+    {
+      "curated_structure": "INDIVIDUAL",
+      "dedications": 16,
+      "devata_key": "VG:DEVATA:PURUSAH",
+      "hymns": 1,
+      "isolation_class": "ISOLATED_IN_THE_SOURCE",
+      "label_en": "Purusa, the cosmic Person",
+      "reason": "every sukta dedicated to this deity is dedicated to it alone, so it has no co-dedication partner anywhere in the Rigveda"
+    },
+    {
+      "curated_structure": "INDIVIDUAL",
+      "dedications": 9,
+      "devata_key": "VG:DEVATA:RAKSOHAGNIH",
+      "hymns": 1,
+      "isolation_class": "ISOLATED_IN_THE_SOURCE",
+      "label_en": "Agni the slayer of demons",
+      "reason": "every sukta dedicated to this deity is dedicated to it alone, so it has no co-dedication partner anywhere in the Rigveda"
+    },
+    {
+      "curated_structure": "ABSTRACT",
+      "dedications": 6,
+      "devata_key": "VG:DEVATA:RATIH",
+      "hymns": 1,
+      "isolation_class": "ISOLATED_IN_THE_SOURCE",
+      "label_en": "the granting, or delight",
+      "reason": "every sukta dedicated to this deity is dedicated to it alone, so it has no co-dedication partner anywhere in the Rigveda"
+    },
+    {
+      "curated_structure": "INDIVIDUAL",
+      "dedications": 8,
+      "devata_key": "VG:DEVATA:RATRIH",
+      "hymns": 1,
+      "isolation_class": "ISOLATED_IN_THE_SOURCE",
+      "label_en": "Ratri, Night",
+      "reason": "every sukta dedicated to this deity is dedicated to it alone, so it has no co-dedication partner anywhere in the Rigveda"
+    },
+    {
+      "curated_structure": "ABSTRACT",
+      "dedications": 6,
+      "devata_key": "VG:DEVATA:SACI",
+      "hymns": 1,
+      "isolation_class": "ISOLATED_IN_THE_SOURCE",
+      "label_en": "Saci, might",
+      "reason": "every sukta dedicated to this deity is dedicated to it alone, so it has no co-dedication partner anywhere in the Rigveda"
+    },
+    {
+      "curated_structure": "INDIVIDUAL",
+      "dedications": 6,
+      "devata_key": "VG:DEVATA:SAKUNTAH",
+      "hymns": 2,
+      "isolation_class": "ISOLATED_IN_THE_SOURCE",
+      "label_en": "the bird",
+      "reason": "every sukta dedicated to this deity is dedicated to it alone, so it has no co-dedication partner anywhere in the Rigveda"
+    },
+    {
+      "curated_structure": "PAIR",
+      "dedications": 6,
+      "devata_key": "VG:DEVATA:SOMAPUSANAU",
+      "hymns": 1,
+      "isolation_class": "ISOLATED_IN_THE_SOURCE",
+      "label_en": "Soma and Pusan",
+      "reason": "every sukta dedicated to this deity is dedicated to it alone, so it has no co-dedication partner anywhere in the Rigveda"
+    },
+    {
+      "curated_structure": "PAIR",
+      "dedications": 4,
+      "devata_key": "VG:DEVATA:SOMARUDRAU",
+      "hymns": 1,
+      "isolation_class": "ISOLATED_IN_THE_SOURCE",
+      "label_en": "Soma and Rudra",
+      "reason": "every sukta dedicated to this deity is dedicated to it alone, so it has no co-dedication partner anywhere in the Rigveda"
+    },
+    {
+      "curated_structure": "ABSTRACT",
+      "dedications": 5,
+      "devata_key": "VG:DEVATA:SRADDHA",
+      "hymns": 1,
+      "isolation_class": "ISOLATED_IN_THE_SOURCE",
+      "label_en": "Sraddha, Faith",
+      "reason": "every sukta dedicated to this deity is dedicated to it alone, so it has no co-dedication partner anywhere in the Rigveda"
+    },
+    {
+      "curated_structure": "INDIVIDUAL",
+      "dedications": 3,
+      "devata_key": "VG:DEVATA:TARKSYAH",
+      "hymns": 1,
+      "isolation_class": "ISOLATED_IN_THE_SOURCE",
+      "label_en": "Tarksya",
+      "reason": "every sukta dedicated to this deity is dedicated to it alone, so it has no co-dedication partner anywhere in the Rigveda"
+    },
+    {
+      "curated_structure": "INDIVIDUAL",
+      "dedications": 9,
+      "devata_key": "VG:DEVATA:URVASI",
+      "hymns": 1,
+      "isolation_class": "COLLATERAL_OF_OUR_OWN_EXCLUSIONS",
+      "label_en": "Urvasi",
+      "reason": "its only co-dedication partner(s) were removed from the eligible population by this artifact's own filters: Pururavas (EXCLUDED_NOT_A_DEITY). Unplaceable here is our filter's consequence, not the source's silence."
+    },
+    {
+      "curated_structure": "INDIVIDUAL",
+      "dedications": 8,
+      "devata_key": "VG:DEVATA:VENAH",
+      "hymns": 1,
+      "isolation_class": "ISOLATED_IN_THE_SOURCE",
+      "label_en": "Vena",
+      "reason": "every sukta dedicated to this deity is dedicated to it alone, so it has no co-dedication partner anywhere in the Rigveda"
+    },
+    {
+      "curated_structure": "INDIVIDUAL",
+      "dedications": 14,
+      "devata_key": "VG:DEVATA:VISVAKARMA",
+      "hymns": 2,
+      "isolation_class": "ISOLATED_IN_THE_SOURCE",
+      "label_en": "Visvakarman",
+      "reason": "every sukta dedicated to this deity is dedicated to it alone, so it has no co-dedication partner anywhere in the Rigveda"
+    },
+    {
+      "curated_structure": "GROUP",
+      "dedications": 10,
+      "devata_key": "VG:DEVATA:VISVE-DEVAH",
+      "hymns": 1,
+      "isolation_class": "ISOLATED_IN_THE_SOURCE",
+      "label_en": "the All-Gods",
+      "reason": "every sukta dedicated to this deity is dedicated to it alone, so it has no co-dedication partner anywhere in the Rigveda"
+    },
+    {
+      "curated_structure": "INDIVIDUAL",
+      "dedications": 11,
+      "devata_key": "VG:DEVATA:YUPAH",
+      "hymns": 1,
+      "isolation_class": "ISOLATED_IN_THE_SOURCE",
+      "label_en": "the sacrificial post",
+      "reason": "every sukta dedicated to this deity is dedicated to it alone, so it has no co-dedication partner anywhere in the Rigveda"
+    }
+  ],
+  "eligible_deities": 157,
+  "placed": 123,
+  "population_variant": "V-RULED",
+  "two_kinds_and_they_must_not_be_merged": "Most of these are isolated in the source: every sukta dedicated to them is dedicated to them alone. A few are isolated because OUR cleaning removed their only partner, which is a consequence of our filter and not a silence in the Anukramani. The adversarial preflight found the second kind, and they are typed apart rather than counted together.",
+  "unplaceable": 34,
+  "unplaceable_collateral_of_our_own_exclusions": 3,
+  "unplaceable_isolated_in_the_source": 31,
+  "what_this_is": "Eligible deities that this projection cannot place in any community, because every hymn dedicated to them is dedicated to them alone. They are NOT given a singleton community: a singleton would let a reader count them as communities and would put Indra-sized and one-verse labels on the same footing. This is a typed absence, not a missing row."
+}

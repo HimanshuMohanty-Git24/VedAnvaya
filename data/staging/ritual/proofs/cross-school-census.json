@@ -1,0 +1,189 @@
+{
+  "what_this_measures": "How often a mantra of one recension is credited to a citing work belonging to another recension's apparatus. Cross-school citation is real -- the Satapatha quotes the Rigveda constantly and the Kausikasutra quotes it too -- so a high figure is not automatically an error. It is reported because this is the axis on which a wrong-recension attribution would hide, and because the campaign forbids mapping another recension's material onto the one we hold.",
+  "rows": 2822,
+  "same_school_rows": 2043,
+  "cross_school_rows": 779,
+  "cross_school_share": 0.276,
+  "matrix": [
+    {
+      "mantra_veda": "AV",
+      "citing_work_school": "AV_SAU",
+      "confidence": "EXACT",
+      "rows": 134
+    },
+    {
+      "mantra_veda": "AV",
+      "citing_work_school": "AV_SAU",
+      "confidence": "PROBABLE",
+      "rows": 244
+    },
+    {
+      "mantra_veda": "AV",
+      "citing_work_school": "RV_SAK",
+      "confidence": "EXACT",
+      "rows": 43
+    },
+    {
+      "mantra_veda": "AV",
+      "citing_work_school": "RV_SAK",
+      "confidence": "PROBABLE",
+      "rows": 189
+    },
+    {
+      "mantra_veda": "AV",
+      "citing_work_school": "SV_KAU",
+      "confidence": "EXACT",
+      "rows": 4
+    },
+    {
+      "mantra_veda": "AV",
+      "citing_work_school": "SV_KAU",
+      "confidence": "PROBABLE",
+      "rows": 41
+    },
+    {
+      "mantra_veda": "AV",
+      "citing_work_school": "YV_VSM",
+      "confidence": "EXACT",
+      "rows": 7
+    },
+    {
+      "mantra_veda": "AV",
+      "citing_work_school": "YV_VSM",
+      "confidence": "PROBABLE",
+      "rows": 83
+    },
+    {
+      "mantra_veda": "RV",
+      "citing_work_school": "AV_SAU",
+      "confidence": "EXACT",
+      "rows": 14
+    },
+    {
+      "mantra_veda": "RV",
+      "citing_work_school": "AV_SAU",
+      "confidence": "PROBABLE",
+      "rows": 42
+    },
+    {
+      "mantra_veda": "RV",
+      "citing_work_school": "RV_SAK",
+      "confidence": "EXACT",
+      "rows": 393
+    },
+    {
+      "mantra_veda": "RV",
+      "citing_work_school": "RV_SAK",
+      "confidence": "PROBABLE",
+      "rows": 956
+    },
+    {
+      "mantra_veda": "RV",
+      "citing_work_school": "SV_KAU",
+      "confidence": "EXACT",
+      "rows": 3
+    },
+    {
+      "mantra_veda": "RV",
+      "citing_work_school": "SV_KAU",
+      "confidence": "PROBABLE",
+      "rows": 21
+    },
+    {
+      "mantra_veda": "RV",
+      "citing_work_school": "YV_VSM",
+      "confidence": "EXACT",
+      "rows": 21
+    },
+    {
+      "mantra_veda": "RV",
+      "citing_work_school": "YV_VSM",
+      "confidence": "PROBABLE",
+      "rows": 38
+    },
+    {
+      "mantra_veda": "SV",
+      "citing_work_school": "AV_SAU",
+      "confidence": "EXACT",
+      "rows": 1
+    },
+    {
+      "mantra_veda": "SV",
+      "citing_work_school": "RV_SAK",
+      "confidence": "EXACT",
+      "rows": 6
+    },
+    {
+      "mantra_veda": "SV",
+      "citing_work_school": "RV_SAK",
+      "confidence": "PROBABLE",
+      "rows": 25
+    },
+    {
+      "mantra_veda": "SV",
+      "citing_work_school": "SV_KAU",
+      "confidence": "EXACT",
+      "rows": 6
+    },
+    {
+      "mantra_veda": "SV",
+      "citing_work_school": "SV_KAU",
+      "confidence": "PROBABLE",
+      "rows": 23
+    },
+    {
+      "mantra_veda": "SV",
+      "citing_work_school": "YV_VSM",
+      "confidence": "PROBABLE",
+      "rows": 2
+    },
+    {
+      "mantra_veda": "YV",
+      "citing_work_school": "AV_SAU",
+      "confidence": "EXACT",
+      "rows": 7
+    },
+    {
+      "mantra_veda": "YV",
+      "citing_work_school": "AV_SAU",
+      "confidence": "PROBABLE",
+      "rows": 34
+    },
+    {
+      "mantra_veda": "YV",
+      "citing_work_school": "RV_SAK",
+      "confidence": "EXACT",
+      "rows": 37
+    },
+    {
+      "mantra_veda": "YV",
+      "citing_work_school": "RV_SAK",
+      "confidence": "PROBABLE",
+      "rows": 119
+    },
+    {
+      "mantra_veda": "YV",
+      "citing_work_school": "SV_KAU",
+      "confidence": "EXACT",
+      "rows": 8
+    },
+    {
+      "mantra_veda": "YV",
+      "citing_work_school": "SV_KAU",
+      "confidence": "PROBABLE",
+      "rows": 34
+    },
+    {
+      "mantra_veda": "YV",
+      "citing_work_school": "YV_VSM",
+      "confidence": "EXACT",
+      "rows": 85
+    },
+    {
+      "mantra_veda": "YV",
+      "citing_work_school": "YV_VSM",
+      "confidence": "PROBABLE",
+      "rows": 202
+    }
+  ]
+}

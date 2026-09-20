@@ -1,0 +1,30 @@
+{
+  "artifact": "AGENT_3_MENTIONS_LEMMA_PROJECTION",
+  "gap": "GAP-MORPHOLOGY-001",
+  "at": "2026-09-16T17:09:40.015426+00:00",
+  "neo4j_access": "READ_ONLY",
+  "projection_policy": "ALL_ANNOTATED_LEMMATA_ONE_EDGE_PER_MANTRA_LEMMA_PAIR_V1",
+  "source_tokens": 164758,
+  "edges_total_after_import": 154261,
+  "edges_already_present": 9000,
+  "edges_to_create": 145261,
+  "existing_edges_outside_the_projection": 0,
+  "lemma_coverage_surface_contract": {
+    "distinct_lemmas_reached_before": 39,
+    "distinct_lemmas_reached_after": 10031,
+    "mantras_reached_before": 6560,
+    "mantras_reached_after": 10552,
+    "rule": "Any surface reporting lemma coverage states distinct lemmas reached AND mantras reached. Neither alone is the coverage."
+  },
+  "zero_indegree_lemmas_before": 9992,
+  "zero_indegree_lemmas_after_import": 0,
+  "registry_claim_under_test": {
+    "claim": "projecting all 10,031 lemmas would add on the order of a million edges",
+    "measured_edges": 154261,
+    "verdict": "FALSE -- overstated by roughly 6.5x"
+  },
+  "veda_scope": "RV only. The annotation is Rigvedic; SV, YV and AV get no edge here and this artifact makes no claim about their lexical index.",
+  "files": {
+    "mentions_lemma_projection.jsonl": "ec744478500edafeb0fffcacda3d305892d71c3f6f16d6974b68239f42d6d614"
+  }
+}

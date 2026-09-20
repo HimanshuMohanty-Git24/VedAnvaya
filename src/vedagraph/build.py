@@ -65,6 +65,7 @@ from vedagraph.models.enums import (
     StoragePolicy,
     TextComparisonCategory,
     TextForm,
+    TextRole,
     TranslationAlignment,
 )
 from vedagraph.normalize import normalize_nfc
@@ -132,6 +133,32 @@ class LoadedStaging:
 def _derived_uuid(kind: str, *parts: object) -> UUID:
     component = ":".join(str(part) for part in parts)
     return uuid_for_urn(f"urn:vedagraph:{kind}:{component}")
+
+
+def looks_like_paired_verse_spine(
+    translated: int, expected_total: int, hemistichs_per_verse: set[int]
+) -> bool:
+    """True when a translation shortfall is a verse-spine mismatch, not missing coverage.
+
+    Pure, and module-level, so a test can prove it fires and prove it does not over-fire.
+    The version of this check that shipped was three lines inside a 400-line build function,
+    was never tested, and reported all six hymns of RV 1.65-1.70 as incomplete coverage --
+    asserting in its own message that the remainder "have no parsed stanza at that position,
+    which is missing rather than fabricated". It was half right: nothing was fabricated, and
+    25 rows were on the wrong verse.
+
+    BOTH conditions are required, and the second is why:
+
+    * the shortfall is exactly ``ceil(V/2)`` -- the source numbered pairs
+    * every verse of the hymn is a single hemistich -- so a pair is what a normal verse is
+
+    RV 9.7 has 8 units against 9 verses and every one of its attachments is correct, because
+    there the merge falls on the last unit. It fails the hemistich condition and must: a rule
+    resting on the count alone would move eight correct rows.
+    """
+    if translated != (expected_total + 1) // 2:
+        return False
+    return hemistichs_per_verse == {1}
 
 
 def _qa_issue(
@@ -985,23 +1012,66 @@ def build_from_config(config_path: Path) -> ConfigBuildResult:
     already_flagged_suktas = {
         int(scope.rsplit(".", 1)[-1]) for scope in staging.translation_failures
     }
+    # Hemistichs per verse, from the canonical text this build just staged. A four-pada verse
+    # divides into two segments; a dvipada verse into one. Needed here because the count
+    # mismatch below has two completely different causes and only one of them is a gap.
+    segments_by_sukta: dict[int, set[int]] = {}
+    for staged_text in staging.texts:
+        if staged_text.text_role != TextRole.PRIMARY_TEXT:
+            continue
+        sukta_of_text = int(staged_text.hierarchy["sukta"])
+        body = normalize_nfc(staged_text.text_original).replace("||", "|")
+        count = len([part for part in body.split("|") if part.strip()])
+        segments_by_sukta.setdefault(sukta_of_text, set()).add(count)
+
     for sukta, expected_total in sorted(mantra_count_by_sukta.items()):
         if sukta in already_flagged_suktas:
             continue
         translated = len(translated_targets_by_sukta.get(sukta, set()))
-        if translated < expected_total:
+        if translated >= expected_total:
+            continue
+        # GAP-TRANSLATION-006. This guard existed, fired for all six hymns of RV 1.65-1.70,
+        # and named what it found "missing rather than fabricated" -- so the campaign's own
+        # baseline recorded 30 absent verses and nobody looked at the 25 wrong ones sitting
+        # in front of them. A shortfall that is exactly half the hymn, on a hymn whose verses
+        # are single hemistichs, is not a coverage gap: it is the source counting verses in
+        # pairs, and binding its unit index to our verse number misattributes every unit
+        # after the first.
+        if looks_like_paired_verse_spine(
+            translated, expected_total, segments_by_sukta.get(sukta, set())
+        ):
             issues.append(
                 _qa_issue(
-                    "translation_coverage_incomplete",
-                    QASeverity.WARNING,
-                    f"RV {config.mandala}.{sukta}: {translated}/{expected_total} mantras have "
-                    "a Griffith translation; the remainder have no parsed stanza at that "
-                    "position, which is missing rather than fabricated",
+                    "translation_verse_spine_mismatch",
+                    QASeverity.ERROR,
+                    f"RV {config.mandala}.{sukta}: the source supplies {translated} units for "
+                    f"{expected_total} canonical verses, and every verse of this hymn is a "
+                    "single hemistich -- so the source numbers each PAIR of our verses as one "
+                    "and its unit index is not our verse number. Binding them positionally "
+                    "attaches each unit after the first to the wrong verse. Declare the spine "
+                    "in data/registry/upstream_corrections.yaml under translation_verse_spine; "
+                    "do NOT read this as missing coverage.",
                     f"RV.{config.mandala}.{sukta}",
                     translated=translated,
                     expected=expected_total,
+                    hemistichs_per_verse=1,
+                    spine="PAIRED_DVIPADA",
                 )
             )
+            continue
+        issues.append(
+            _qa_issue(
+                "translation_coverage_incomplete",
+                QASeverity.WARNING,
+                f"RV {config.mandala}.{sukta}: {translated}/{expected_total} mantras have "
+                "a Griffith translation; the remainder have no parsed stanza at that "
+                "position, which is missing rather than fabricated",
+                f"RV.{config.mandala}.{sukta}",
+                translated=translated,
+                expected=expected_total,
+                hemistichs_per_verse=sorted(segments_by_sukta.get(sukta, set())),
+            )
+        )
     issues.sort(key=lambda issue: (issue.severity, issue.check_id, str(issue.issue_id)))
 
     output_dir = config.output_location

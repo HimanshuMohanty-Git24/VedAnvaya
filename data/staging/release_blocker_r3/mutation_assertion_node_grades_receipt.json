@@ -1,0 +1,50 @@
+{
+  "artifact": "RELEASE_BLOCKER_R3_MUTATION_RECEIPT_ASSERTION_NODE_GRADES",
+  "at": "2026-09-18T05:55:45.369594+00:00",
+  "plan_sha256": "11cc5341c2f408dd451e0f6305665373b405cfc765f420bc412db5d87c75c870",
+  "promised": {
+    "nodes_written": 30266,
+    "by_derivation": {
+      "MORPHOLOGY_RULE_PREDICATE_ONLY": 28370,
+      "TREEBANK_DEPREL": 1532,
+      "CROSS_VEDA_TEXT_IDENTITY": 364
+    },
+    "ungraded_after": 0,
+    "nodes_delta": 0,
+    "relationships_delta": 0
+  },
+  "actual": {
+    "nodes_written": 30266,
+    "ungraded_after": 0,
+    "nodes_delta": 0,
+    "relationships_delta": 0
+  },
+  "after": {
+    "nodes": 164201,
+    "relationships": 508042,
+    "ungraded_after": 0,
+    "node_grade_census": {
+      "L2_DETERMINISTIC_DERIVED|TIER_B": 32672,
+      "L3_LLM_EXTRACTED|TIER_D": 2459
+    },
+    "frame_layer_partition": [
+      [
+        "ASSERTED",
+        "L2_DETERMINISTIC_DERIVED",
+        24565
+      ],
+      [
+        "None",
+        "L3_LLM_EXTRACTED",
+        2459
+      ],
+      [
+        "REQUESTED",
+        "L2_DETERMINISTIC_DERIVED",
+        8107
+      ]
+    ],
+    "edge_node_tier_disagreements": 0
+  },
+  "promised_equals_actual": true
+}

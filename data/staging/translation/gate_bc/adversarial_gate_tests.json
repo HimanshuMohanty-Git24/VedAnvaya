@@ -1,0 +1,153 @@
+{
+ "phase": 13,
+ "test_file": "tests/unit/test_translation_gate_bc.py",
+ "tests_declared": 51,
+ "pytest_result": "72 passed in 0.22s",
+ "exit_code": 0,
+ "bad_cases": 26,
+ "good_cases": 24,
+ "rule": "a gate with no failing test is an opinion; every check has a BAD case that must fail and a GOOD case that must pass",
+ "required_scenarios": {
+  "M13 positional mapping bug": {
+   "covered": true,
+   "fixtures": [
+    "test_good_a_printed_page_number_is_never_read_as_a_verse_label",
+    "test_good_the_real_duplicate_label_defect_is_reproduced"
+   ]
+  },
+  "forced address without content control": {
+   "covered": true,
+   "fixtures": [
+    "test_bad_a_forced_address_with_no_source_determination_stays_unverified",
+    "test_bad_a_forced_address_is_not_caught_by_confidence_alone"
+   ]
+  },
+  "hymn-level text pretending to be mantra-level": {
+   "covered": true,
+   "fixtures": [
+    "test_bad_hymn_level_text_must_not_pass_as_mantra_level",
+    "test_bad_a_page_level_locator_is_section_grained"
+   ]
+  },
+  "MANTRA_RANGE missing one covered key": {
+   "covered": true,
+   "fixtures": [
+    "test_bad_a_range_missing_one_covered_key_is_incomplete"
+   ]
+  },
+  "cross-Veda reused translation presented as independent": {
+   "covered": true,
+   "fixtures": [
+    "test_bad_a_reused_rendering_is_not_independent_semantic_evidence",
+    "test_bad_a_cross_corpus_reuse_without_disclosure_is_contamination"
+   ]
+  },
+  "archive page with no actual translation evidence": {
+   "covered": true,
+   "fixtures": [
+    "test_bad_an_archive_citation_without_a_content_hash_proves_nothing"
+   ]
+  },
+  "one source unit emitted twice": {
+   "covered": true,
+   "fixtures": [
+    "test_bad_one_source_unit_emitted_twice_is_visible_as_a_repeated_target",
+    "test_bad_identical_english_on_differing_sanskrit_is_duplicate_generation"
+   ]
+  },
+  "canonical target from the wrong Veda": {
+   "covered": true,
+   "fixtures": [
+    "test_bad_a_target_from_the_wrong_veda_is_detectable_from_the_key"
+   ]
+  },
+  "same counts but swapped target identities": {
+   "covered": true,
+   "fixtures": [
+    "test_bad_a_target_from_the_wrong_veda_is_detectable_from_the_key"
+   ]
+  },
+  "PROBABLE row bypassing policy": {
+   "covered": true,
+   "fixtures": [
+    "test_bad_a_non_importable_confidence_is_refused",
+    "test_the_central_policy_still_names_probable_and_unverified"
+   ]
+  },
+  "side file bypassing policy": {
+   "covered": true,
+   "fixtures": [
+    "test_no_group_can_import_a_row_the_domain_staged_as_not_importable (tests/unit/test_wave3_import_contracts.py)"
+   ]
+  },
+  "editorial cross-reference staged as translation": {
+   "covered": true,
+   "fixtures": [
+    "test_bad_an_editorial_cross_reference_is_not_a_translation",
+    "test_bad_other_cross_reference_shapes_are_caught"
+   ]
+  },
+  "non-English literal declared as English": {
+   "covered": true,
+   "fixtures": [
+    "test_bad_latin_declared_as_english_is_detected"
+   ]
+  },
+  "over-normalisation manufacturing identity": {
+   "covered": true,
+   "fixtures": [
+    "test_bad_stripping_the_acute_would_merge_the_palatal_sibilant",
+    "test_bad_the_fold_must_not_merge_a_phonemic_distinction",
+    "test_bad_a_real_variant_reading_must_not_fold_to_identical"
+   ]
+  },
+  "under-normalisation splitting one verse": {
+   "covered": true,
+   "fixtures": [
+    "test_bad_protecting_the_acute_would_split_two_identical_verses",
+    "test_bad_the_nasal_fold_must_not_be_in_the_strict_form"
+   ]
+  },
+  "a vacuous check reporting zero defects over zero rows": {
+   "covered": true,
+   "fixtures": [
+    "test_bad_a_shift_attack_with_no_neighbour_to_compare_is_vacuous_not_clean"
+   ]
+  },
+  "ambiguous glyph repaired to a single guess": {
+   "covered": true,
+   "fixtures": [
+    "test_bad_an_ambiguous_glyph_must_not_be_repaired_to_a_single_guess"
+   ]
+  }
+ },
+ "all_required_scenarios_covered": true,
+ "mutation_proofs": [
+  {
+   "mutation": "strip every combining acute (treat U+0301 as always-accent)",
+   "expected": "merges the palatal sibilant, manufacturing identity",
+   "observed": "3 targeted failures incl. test_bad_stripping_the_acute_would_merge_the_palatal_sibilant",
+   "result": "3 failed, 66 passed"
+  },
+  {
+   "mutation": "never strip the acute (treat U+0301 as always-phonemic)",
+   "expected": "splits two character-identical verses",
+   "observed": "2 targeted failures incl. test_bad_protecting_the_acute_would_split_two_identical_verses",
+   "result": "2 failed, 67 passed"
+  },
+  {
+   "mutation": "drop the vocalic r/l ring-below unification",
+   "expected": "the two romanisations of one phoneme stop comparing equal",
+   "observed": "test_good_vocalic_r_folds_across_the_two_romanisations fails",
+   "result": "1 failed, 68 passed"
+  }
+ ],
+ "why_mutation_proofs_are_included": "the fold is the load-bearing measurement for 528 rows, and a passing suite over correct code does not show the suite would catch the code being wrong. Each mutation reproduces a mistake actually made while building this module and shows which fixture bites.",
+ "gate_defects_this_suite_pins_in_my_own_analysis": [
+  "the shift attack reporting 0 suspicious rows over 0 evaluated rows",
+  "the duplication check firing on the corpus legitimately repeating a verse",
+  "the granularity classifier returning OTHER for a canonical-key coordinate",
+  "the glyph repair table mapping S to 5 only, losing VS 20.85",
+  "a metric key labelled MANTRA carrying the whole-Rigveda count"
+ ]
+}

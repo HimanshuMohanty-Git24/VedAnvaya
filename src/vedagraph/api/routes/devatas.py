@@ -31,10 +31,11 @@ router = APIRouter(tags=["Devatas"], responses=COMMON_ERROR_RESPONSES)
 
 _POPULATION_NOTE = """
 **The population contract.** The Anukramani names a *devata* for every Rigvedic hymn and
-that slot is not a theological claim: 30 of the 214 `:Devata` nodes are not gods -- 22
+that slot is not a theological claim: 57 of the 214 `:Devata` nodes are not gods -- 22
 human patrons and seers (Vasistha, Visvamitra, Brbu the carpenter), 7 danastuti labels
 naming the gift rather than a recipient ("praise of the gift of Sudas son of Pijavana"),
-and one dog. `population=deities` (the default) excludes all 30.
+and 28 abstractions ruled not to name an addressee. `population=deities` (the default)
+excludes all 57.
 `population=all_ascriptions` returns the slot as it stands, with every row's `structure`
 and `is_deity` stated, and `is_deity` false where it is false.
 
@@ -129,12 +130,17 @@ def list_devatas_endpoint(
     "co-deities, and interpretive claims.\n\n"
     "**Read `dimension_status` before reading any empty list here.** It names every "
     "dimension whose emptiness is a missing layer or unestablished evidence rather than an "
-    "absence in the corpus. It is empty for most deities and non-empty exactly where the "
+    "absence in the corpus. It is non-empty for MOST deities rather than a few: since the "
+    "profile materialisation was widened from a top-25 union to the whole eligible "
+    "population, the great majority are thin in at least one dimension, so an empty list "
+    "here is the exception and not the default. Non-empty exactly where the "
     "build recorded a dimension it could not establish, so its presence is the signal -- "
     "no count is quoted here, because a figure describing the graph invites a client to "
     "skip the field on the deities where it carries the warning.\n\n"
     "**Mention and attribution totals are counted from the edges**, not read off "
-    "materialised profile properties, which exist on only 30 of the 214 nodes. This is "
+    "materialised profile properties. Those exist on exactly the 157 deities the "
+    "eligibility contract admits -- widened from 25 at R4, and removed from the one "
+    "danastuti gift-praise label that had carried them. This is "
     "why `/devatas/{id}` and `/insights/devatas/{id}` agree.\n"
     + _POPULATION_NOTE
     + _CERTAINTY_NOTE,

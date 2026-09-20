@@ -1,0 +1,132 @@
+{
+ "assumption": "the five Yajurvedic matrix cells are complete measurements despite a character misalignment affecting 780 of 1,975 YV verses",
+ "correction_tested": "collapse a run of the same private-use sentinel to one, applied symmetrically to all four corpora",
+ "surfaces_changed": {
+  "RV": 0,
+  "SV": 0,
+  "YV": 780,
+  "AV": 0
+ },
+ "existing_edges": {
+  "AV-RV": {
+   "edges": 1325,
+   "mean_delta": 0.0,
+   "max_delta": 0.0,
+   "new_identities": 0
+  },
+  "AV-SV": {
+   "edges": 467,
+   "mean_delta": 0.0,
+   "max_delta": 0.0,
+   "new_identities": 0
+  },
+  "AV-YV": {
+   "edges": 210,
+   "mean_delta": 0.002135,
+   "max_delta": 0.019355,
+   "new_identities": 19
+  },
+  "RV-SV": {
+   "edges": 3368,
+   "mean_delta": 0.0,
+   "max_delta": 0.0,
+   "new_identities": 0
+  },
+  "RV-YV": {
+   "edges": 662,
+   "mean_delta": 0.002541,
+   "max_delta": 0.018182,
+   "new_identities": 107
+  },
+  "SV-YV": {
+   "edges": 239,
+   "mean_delta": 0.003194,
+   "max_delta": 0.017231,
+   "new_identities": 23
+  }
+ },
+ "recalibrated_ceiling": {
+  "AV-RV": {
+   "max": 0.481,
+   "p99_9": 0.4112,
+   "mean": 0.2236,
+   "at_or_above_floor": 0
+  },
+  "AV-SV": {
+   "max": 0.4952,
+   "p99_9": 0.4144,
+   "mean": 0.226,
+   "at_or_above_floor": 0
+  },
+  "AV-YV": {
+   "max": 0.5185,
+   "p99_9": 0.4096,
+   "mean": 0.2167,
+   "at_or_above_floor": 0
+  },
+  "RV-SV": {
+   "max": 0.4954,
+   "p99_9": 0.422,
+   "mean": 0.2312,
+   "at_or_above_floor": 0
+  },
+  "RV-YV": {
+   "max": 0.4748,
+   "p99_9": 0.4068,
+   "mean": 0.2208,
+   "at_or_above_floor": 0
+  },
+  "SV-YV": {
+   "max": 0.5225,
+   "p99_9": 0.4079,
+   "mean": 0.2226,
+   "at_or_above_floor": 0
+  }
+ },
+ "old_ceiling": {
+  "AV-RV": 0.481,
+  "AV-SV": 0.4952,
+  "AV-YV": 0.5185,
+  "RV-SV": 0.4954,
+  "RV-YV": 0.4714,
+  "SV-YV": 0.5225
+ },
+ "recall_rerun": {
+  "AV-RV": {
+   "assessed": 8244,
+   "above_floor_corrected": 104,
+   "net_new": 0,
+   "net_new_importable": 0
+  },
+  "AV-SV": {
+   "assessed": 890,
+   "above_floor_corrected": 29,
+   "net_new": 0,
+   "net_new_importable": 0
+  },
+  "AV-YV": {
+   "assessed": 2686,
+   "above_floor_corrected": 76,
+   "net_new": 2,
+   "net_new_importable": 0
+  },
+  "RV-SV": {
+   "assessed": 4335,
+   "above_floor_corrected": 66,
+   "net_new": 0,
+   "net_new_importable": 0
+  },
+  "RV-YV": {
+   "assessed": 3322,
+   "above_floor_corrected": 39,
+   "net_new": 0,
+   "net_new_importable": 0
+  },
+  "SV-YV": {
+   "assessed": 452,
+   "above_floor_corrected": 16,
+   "net_new": 1,
+   "net_new_importable": 0
+  }
+ }
+}

@@ -1,0 +1,141 @@
+{
+  "build_config_hashes": {},
+  "build_config_sha256": "8e50b12401eb5b28b3095d430a9e302fb7620f4a0e444da8b6cede52605bd376",
+  "built_at": "2026-09-07T04:37:06.617010Z",
+  "comparison_version": "text-compare-v1",
+  "component_manifest_hashes": {},
+  "dataset": "VedaGraph Canonical Corpus",
+  "generated_files": [
+    {
+      "path": "canonical/atharvaveda_pilot_v1/audio_recordings.jsonl",
+      "record_count": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "canonical/atharvaveda_pilot_v1/audio_segments.jsonl",
+      "record_count": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "canonical/atharvaveda_pilot_v1/citations.jsonl",
+      "record_count": 157,
+      "sha256": "c8fafc3d85a3b17a95e15540afaecea2a76cee91cb9feb6b14b892327d0ff890"
+    },
+    {
+      "path": "canonical/atharvaveda_pilot_v1/passages.jsonl",
+      "record_count": 174,
+      "sha256": "cf2d847d07df51647a8f3ec99de4c9b28a93d5f6fd0c6dbfb3e9e199009c60b4"
+    },
+    {
+      "path": "canonical/atharvaveda_pilot_v1/qa_issues.jsonl",
+      "record_count": 2,
+      "sha256": "a46d076f2919e6e49636ba66e6a94b5a0547af55a00592424a5b3dae159e7551"
+    },
+    {
+      "path": "canonical/atharvaveda_pilot_v1/source_artifacts.jsonl",
+      "record_count": 3,
+      "sha256": "0b9a9c8027449238f3f1bd4101897b630bf810126c25d0cefe9f65209e168c87"
+    },
+    {
+      "path": "canonical/atharvaveda_pilot_v1/source_assertions.jsonl",
+      "record_count": 177,
+      "sha256": "e52cc02b96ea5f274f52fd73ed8265deb3ff4393d483d46653c165e6d4b54dab"
+    },
+    {
+      "path": "canonical/atharvaveda_pilot_v1/sources.jsonl",
+      "record_count": 2,
+      "sha256": "81160791d28c556bf84b2f77ca03d1fa3dc1d3f09b8a9bc172b6e3fb6f62a2ef"
+    },
+    {
+      "path": "canonical/atharvaveda_pilot_v1/text_comparisons.jsonl",
+      "record_count": 153,
+      "sha256": "1e8d1444d1a88374009d1ff0d07f006ee43a8b021edbd03c431392e875d1e397"
+    },
+    {
+      "path": "canonical/atharvaveda_pilot_v1/text_versions.jsonl",
+      "record_count": 459,
+      "sha256": "afbdcb617c0f3828e1791a0c04d58f814e021114330573b8cdfaf8fe4391170d"
+    },
+    {
+      "path": "canonical/atharvaveda_pilot_v1/traditional_metadata.jsonl",
+      "record_count": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "canonical/atharvaveda_pilot_v1/translations.jsonl",
+      "record_count": 115,
+      "sha256": "43d0d0cc900cba4905441b17224965d6d838008aeb1b1121a946f095b5f7d81c"
+    },
+    {
+      "path": "canonical/atharvaveda_pilot_v1/works.jsonl",
+      "record_count": 1,
+      "sha256": "17e7ca77a3bf6672c09e105d06ec162686e564dcfbac3ea73d1a9deba52dfe40"
+    }
+  ],
+  "parser_versions": {
+    "GRETIL": "gretil-avs-saunaka-legacy-html-v1"
+  },
+  "passage_count": 153,
+  "qa_status": "PASSED_WITH_WARNINGS",
+  "raw_snapshot_hashes": {
+    "GRETIL.AV.SAUNAKA.ACCENTED.HTML": "cd89bd1e29e6158d7c3c7bcb607b8e4eed4c7556c8c2027dec039f56736adddb",
+    "GRETIL.AV.SAUNAKA.UNACCENTED.HTML": "7e3f74f313d1b4348bf9e1f60a80e03bb72709994b85585a4f854a51bf57272c"
+  },
+  "record_counts": {
+    "canonical/atharvaveda_pilot_v1/audio_recordings.jsonl": 0,
+    "canonical/atharvaveda_pilot_v1/audio_segments.jsonl": 0,
+    "canonical/atharvaveda_pilot_v1/citations.jsonl": 157,
+    "canonical/atharvaveda_pilot_v1/passages.jsonl": 174,
+    "canonical/atharvaveda_pilot_v1/qa_issues.jsonl": 2,
+    "canonical/atharvaveda_pilot_v1/source_artifacts.jsonl": 3,
+    "canonical/atharvaveda_pilot_v1/source_assertions.jsonl": 177,
+    "canonical/atharvaveda_pilot_v1/sources.jsonl": 2,
+    "canonical/atharvaveda_pilot_v1/text_comparisons.jsonl": 153,
+    "canonical/atharvaveda_pilot_v1/text_versions.jsonl": 459,
+    "canonical/atharvaveda_pilot_v1/traditional_metadata.jsonl": 0,
+    "canonical/atharvaveda_pilot_v1/translations.jsonl": 115,
+    "canonical/atharvaveda_pilot_v1/works.jsonl": 1
+  },
+  "rights_summary": {
+    "GRETIL.AV.SAUNAKA.ACCENTED.HTML": "REFERENCE_ONLY",
+    "GRETIL.AV.SAUNAKA.UNACCENTED.HTML": "REFERENCE_ONLY"
+  },
+  "schema_version": "1.0.0",
+  "software_git_commit": "4da5bd789ceb1f55651598320f5331c5c92675d4",
+  "source_artifact_ids": [
+    "GRETIL.AV.SAUNAKA.ACCENTED.HTML",
+    "GRETIL.AV.SAUNAKA.UNACCENTED.HTML",
+    "VEDAWEB.AVS.WHITNEY_LANMAN_1905.PLAINTEXT.L2"
+  ],
+  "source_snapshot_ids": [
+    "GRETIL_AVS:7e3f74f313d1b4348bf9e1f60a80e03bb72709994b85585a4f854a51bf57272c",
+    "GRETIL_AVS:cd89bd1e29e6158d7c3c7bcb607b8e4eed4c7556c8c2027dec039f56736adddb",
+    "VEDAWEB_AVS:0a922cbe83e8ecf8e83b27210d167c20b98d9aee237ccdee14d2d5b3909f0bc5",
+    "VEDAWEB_AVS:19591257ab941154c9e6febf33b2d87c02eb8248bd6f36e6dfd15313017cda1d",
+    "VEDAWEB_AVS:37b0d1ec7715d61c10744c877ee57ffa0c5a750d88804b0cec73273aeb045fb1",
+    "VEDAWEB_AVS:3b15ef5cc934ca67759b2496257707f989bd978bb1f2ce88c35e83e5baa276a2",
+    "VEDAWEB_AVS:451904913419d4d1e1c0e14b71c691e7a5197534c81320d8efac1a1d2df25ec3",
+    "VEDAWEB_AVS:47b4bb400220c7cb183b2cec49730cc3bf38c37f2bb711c30a257988e8659735",
+    "VEDAWEB_AVS:491ad736d61c21268329eecb4f71482ae75ef2cb6f661062d929cc2f408829dc",
+    "VEDAWEB_AVS:505c8f325cd296d74fae50fef26acba1ed5e9bc47f15ccb18f9b9ec88e9594a4",
+    "VEDAWEB_AVS:58d433b7f96d1c4148a57f199d77e11ff275a5d5c1e892e71cea327eb12b2b84",
+    "VEDAWEB_AVS:72e4d147b38e7faf0eacd0cf79247aedf5ed7f28b5e7aad5b48bcf310bc12e90",
+    "VEDAWEB_AVS:7fe880ec22e828a730181b179c18afab947cf0ce29ea289d63dcfddd2ed4c6e1",
+    "VEDAWEB_AVS:87f593a01c5d8ce92a480c36670bd4c2cfaea37677784c477139dc4c72b359d3",
+    "VEDAWEB_AVS:9014c505df94c70bc85ac74bc1beef1b633e6706d8a1a6d9a5bad7f570f5a92e",
+    "VEDAWEB_AVS:94b8949bbb24bef05b8c3d22163be4d8b057608396aaa2ac13d8c66e1a40274e",
+    "VEDAWEB_AVS:9537d85fcfff205b4e7adb4c1ad4004d36875891206a7073b03fd21b4ad817dc",
+    "VEDAWEB_AVS:9dc572545156b84b1605a59259cf6d64695d8e239ae0c1520b2a4efefcc4dc07",
+    "VEDAWEB_AVS:aa81deab3dafd266dff826f6dfaec1b82b26419f75775d5a8312de24be00932b",
+    "VEDAWEB_AVS:b8b68ac347a28df84c50dc34ea3d745f66b1c11616d281f6222be92ebebfa3bd",
+    "VEDAWEB_AVS:cf6e2395a5b84e8646457395e28883022ac2340c13bfc20cd92af3b4748464e1",
+    "VEDAWEB_AVS:d97e1b092918cb372865acd0338baef951213d720f654720a162318991469ef3",
+    "VEDAWEB_AVS:e4c1be447bee16367475e9f1e32769363b5e0eaf106d356166030badb1faf49b",
+    "VEDAWEB_AVS:e5649f78baf345bbf0a381df3e465ab184e949faf820b3ac76dd7c5b141642d0",
+    "VEDAWEB_AVS:e71176f0af9b4a6babe6742d2335ab8aeff88ead873671efa19edfd04de65708"
+  ],
+  "version": "0.1.0-avs-pilot.1",
+  "works": [
+    "VG:WORK:AV:SAU"
+  ]
+}

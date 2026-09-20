@@ -1,0 +1,133 @@
+{
+  "artifact": "RELEASE_BLOCKER_R1_LEAD_CLOSURE_RECEIPT",
+  "head": "b4b1b0beba1c499e832150b0b9363d7258e40a26",
+  "branch": "phase-data-completeness-v2",
+  "takeover": {
+    "codex_final_command": "node scripts/build-constellations.mjs; node scripts/build-world.mjs",
+    "verdict": "HALF-COMPLETED. build-constellations.mjs finished (constellations.json carried inputPublicExportHash + identityAudit); build-world.mjs never ran with the new code (public/world/world.json carried neither key, and its mtime PREDATED constellations.json).",
+    "action": "build-world.mjs re-run to completion; interiors settled in 283.9s",
+    "tracked_files_modified_since_the_starting_receipt": [
+      "frontend/scripts/build-constellations.mjs",
+      "frontend/scripts/build-world.mjs"
+    ],
+    "paths_deleted_since_the_starting_receipt": 0
+  },
+  "defects_found_and_fixed_by_the_lead": [
+    {
+      "id": "LEAD-01",
+      "severity": "MAJOR",
+      "defect": "tests/unit/public-identity.test.ts carried an unused @ts-expect-error directive; tsc --noEmit failed with TS2578, so the frontend typecheck was broken by the previous session's last edit.",
+      "fix": "directive removed",
+      "verification": "pnpm run typecheck clean; pnpm run lint clean"
+    },
+    {
+      "id": "LEAD-02",
+      "severity": "MAJOR",
+      "defect": "FOCUS_BUDGET_COMPACT had been raised 16 -> 17 on a measurement of Indra alone. Re-measured over all 471 engaged nodes: floor median 3, p99 14, worst case 22, and the worst case had moved from Indra to Agni, who binds on NODE GROUPS not predicates - at 17 his `thing` and `unresolved-deity` neighbours are never drawn.",
+      "fix": "FOCUS_BUDGET_COMPACT re-derived to 22; FOCUS_BUDGET_CRAMPED deliberately left at 12 because it is a geometric floor (a 183.1px band seats 11 orbs, and the re-derived p99 of 14 would draw 14 orbs into space for 11); all three stale prose figures corrected; the test's hardcoded 250px literal replaced by walking the ring arithmetic plus an inverse assertion, and the coverage test extended from Indra alone to Indra AND Agni over predicates AND groups with a minimality assertion at COMPACT-1.",
+      "product_behaviour_change": "narrow-viewport Focus budget 17 -> 22 orbs; geometry permits it (a 390px-wide phone seats 26). Flagged for owner override.",
+      "residual_disclosed": "455 of 471 engaged nodes cover fully at CRAMPED=12; 16 do not (previously stated as 331 of 335 with 4 exceptions)."
+    },
+    {
+      "id": "LEAD-03",
+      "severity": "MAJOR",
+      "defect": "A comment in graph_service.py justified omitting ASCRIBES_TO_DEVATA and HAS_DEVATA_DERIVED from PIPELINE_CONSTANT_PREDICATES by asserting 'Neither carries a confidence property at all -- 0 of 882 and 0 of 39'. Measured live: 882 of 882 and 39 of 39 carry confidence = 1.0, matching their already-declared parent HAS_DEVATA_ASCRIPTION (5,385 of 5,385 at 1.0). The comment's stated reason was the exact opposite of the data, and the omission it justified left 921 edges presenting an unearned per-edge confidence on a serving surface.",
+      "fix": "both declared at 1.0; the false note replaced with the measured counts and the lesson that a comment carrying a measurement goes stale silently because nothing re-measures a comment.",
+      "verification": "test_the_varying_confidence_predicates_still_vary now passes"
+    },
+    {
+      "id": "LEAD-04",
+      "severity": "MAJOR",
+      "defect": "HAS_PARALLEL_PADA (4,079 edges) and RECEIVES_OFFERING (4) were populated but classified neither traversable nor refused-for-a-reason, so /api/v1/graph would not cross them and nothing told a reader the layers existed.",
+      "owner_decision": "owner chose 'declare both traversable'",
+      "structural_blocker_found_while_implementing": "HAS_PARALLEL_PADA joins a verse to a PadaParallelGroup, and a verse may contribute more than one pada to the SAME group: 4,079 edges run over only 4,076 distinct (source,type,target) triples. VG:RV:SAK:M01:S097:V001 contributes pada a and pada c to one group, and two more verses do the same. The public relationship id IS that triple, so whitelisting it would publish 6 edges under 3 ids - reintroducing the exact two-objects-one-id defect this pass exists to close.",
+      "resolution": "RECEIVES_OFFERING declared traversable with a curated PredicateSemantics entry (4 distinct triples, worst=1, clean). HAS_PARALLEL_PADA refused with the measured structural reason stated in NON_TRAVERSABLE_REASONS, and the exact unlock named (the id must carry the pada_key the edges already store). Extending the public relationship id scheme is outside R1.",
+      "verification": "tests/api/test_graph.py 111 passed, 0 failed"
+    },
+    {
+      "id": "LEAD-05",
+      "severity": "MINOR",
+      "defect": "9 modified files had line endings inconsistent with their HEAD blob, inflating the reviewable diff from ~478 real lines to ~8,100 whole-file phantom lines.",
+      "fix": "8 files normalized to HEAD's LF (build_veda_coverage_and_metrics.py, dependency_state.py, export_graph_world.py, graph_service.py, ontology.py, formula_families.py, formulas.py, test_formula_families.py), frontend/scripts/build-constellations.mjs to LF, frontend/src/lib/world/focus.ts to CRLF.",
+      "effect": "total diff fell from 14,635 insertions / 10,901 deletions to 8,469 / 3,622; all 8 Python files re-parse; build-constellations passes node --check"
+    }
+  ],
+  "defects_found_and_NOT_fixed": [
+    {
+      "id": "LEAD-F1",
+      "severity": "CRITICAL_CANDIDATE",
+      "defect": "The /insights/cross-veda SEMANTIC_ASSERTION row is served population_status = NOT_BUILT, which the Lab renders as the mark for 'The layer does not exist anywhere in this graph' - about a layer holding 35,131 nodes. Its per-cell note contradicts itself inside one sentence: 'every one of its assertions is Rigvedic, so it has no non-Rigvedic endpoint to pair with. Measured: 35,131 assertions over AV, RV, SV, YV.' The figure was refreshed; the reasoning clause was not.",
+      "measured": "35,131 assertions: RV 27,057 / AV 6,167 / YV 1,543 / SV 364. 8,074 are non-Rigvedic, over 4,080 non-RV mantras. 0 assertions hang off no mantra.",
+      "correct_representation": "CLASS_NOT_CROSS_VEDA, already in the enum and already used for the analogous PARALLEL_TO row. The layer exists; a semantic assertion is a predication with ONE passage endpoint, so it cannot span two corpora regardless of which corpus its verse is in.",
+      "source": "_UNBUILT_CROSS_VEDA_ROWS, src/vedagraph/api/services/insight_service.py ~line 601",
+      "also_wrong": "the plate's summary sentence counts it among 'N of the 8 classes are not built at all'",
+      "why_not_fixed": "it changes a public endpoint's absence vocabulary and invalidates the cross-Veda consumer hash verified this pass; it is outside R1's declared gate set, and R1 is explicitly forbidden from opening another broad campaign. Handed to FINAL_RELEASE_CERTIFICATION already diagnosed."
+    },
+    {
+      "id": "LEAD-F2",
+      "severity": "MAJOR",
+      "defect": ":SemanticAssertion carries TWO display_type values for one object type - 'SemanticAssertion' on the 4,865 assertion_id nodes and 'SEMANTIC_ASSERTION' on the 30,266 assertion_key nodes - and both reach the shipped world.raw.json. It is the only pair among the artifact's 48 node types differing merely in spelling.",
+      "frontend_consequence": "frontend/src/lib/knowledge.ts normalizeType() only uppercases, so entityHref() mints TWO routes for one type: /entities/semanticassertion/<id> and /entities/semantic_assertion/<id>. Both resolve (the route is a dynamic [type]/[id] segment), so this is duplicate canonical URLs plus an inconsistent type label rendered to readers in graph-shell.tsx, not a broken link.",
+      "why_not_fixed": "the root cause is the graph's own display_type split, and the graph is frozen this pass. A frontend fold would hide a data inconsistency that should be repaired at source. The repo's established idiom for this is explicit enumeration of both spellings - INTERNAL_GRAPH_TYPES already lists QAISSUE/QA_ISSUE, SOURCEARTIFACT/SOURCE_ARTIFACT, TEXTVERSION/TEXT_VERSION, PIPELINERUN/PIPELINE_RUN."
+    },
+    {
+      "id": "LEAD-F3",
+      "severity": "MINOR",
+      "defect": "The AgentiveAssertionView docstring says 'All 4,865 SemanticAssertion nodes hang off Rigvedic passages.' VERIFIED TRUE as scoped - that population IS entirely Rigvedic (RV 4,865, and its 2,406/2,459 knowledge_layer split matches). But the phrase reads as a claim about the total while 35,131 SemanticAssertion nodes exist, so a reader infers a Rigveda-only layer. Ambiguous scope rather than a wrong figure; it surfaces in the generated frontend/src/lib/api-schema.ts, which must not be hand-edited."
+    }
+  ],
+  "pre_existing_test_failures_not_caused_by_this_pass": {
+    "count": 5,
+    "evidence_they_predate_the_pass": "each is a stale expectation overtaken by the earlier sprint's data movement, and both movements are recorded in registry_live_baseline.json captured at 09:24 before any edit in this session (GAP-RITUAL-006 ritual_context 0 -> 20,210; GAP-CROSS_VEDA-001 pairs 1 -> 2). None touches TRAVERSABLE_RELATIONSHIPS, PIPELINE_CONSTANT_PREDICATES, PREDICATE_SEMANTICS or the world artifacts.",
+    "failures": [
+      "tests/api/test_insights.py::test_q25_partial_semantics_are_reachable_through_the_capability_catalogue - curated_implements is 15, test expects 14",
+      "tests/api/test_insights.py::test_directed_reuse_absence_is_typed_and_carries_the_parallels_that_disprove_it - AV-RV is now MEASURED, test expects NOT_ESTABLISHED_FOR_PAIR",
+      "tests/api/test_insights.py::test_class_reaching_only_one_pair_is_visible_in_the_class_summary - pairs_reached is ['AV-RV','RV-SV'], test expects ['RV-SV']",
+      "tests/api/test_insights.py::test_every_ritual_collection_has_bounds_that_describe_itself - objects returned is 15, test expects 14",
+      "tests/api/test_cypher_property_hygiene.py::test_every_probed_absence_is_still_absent - ritual_context now EXISTS while the capability probes still publish it as ABSENT; the limit card rests on a limitation that no longer holds (MISLEADING-class)"
+    ],
+    "latency_note": "tests/api/test_graph.py::TestLivePerformance median 413ms vs a 400ms budget failed ONLY inside a multi-file run; it passes 3 of 3 in isolation, so it is cross-file warm-up, not a regression."
+  },
+  "frontend_state": {
+    "raw_export_sha256": "4ffe27f7b2fd236a3752ea689f11408b057cd873d0aa87c78a69c973c4533788",
+    "world_bin_sha256": "61deed6dff14e2404e3acc294af6b7a4ccaf7c01899269e1d783a61da8723674",
+    "world_json_sha256": "79c9e8b7924c896d6e8b600184eb6ffc28479b7440517bb841b15f88e65c5ca8",
+    "world_labels_sha256": "37f3dce658e77b6a5c4e251cc0c8e718d6f7bd0d322aefc486f46bbcf0005fd1",
+    "world_predicates_sha256": "97a2a9d0807eb29a2bb7c94422bb81d7d90c3abb52fecf27091a859e734afc3a",
+    "constellations_sha256": "a379f27f14a89d59a4ac20d24f59f1de8be759f4a2cddea2ef94ff5ebf29f44b",
+    "hash_chain": "raw export == constellations.inputPublicExportHash == world.json.inputPublicExportHash",
+    "predicate_artifact": "regenerated after the traversability change; export_predicate_semantics.py --check reports IN SYNC; 73 entries = 65 curated + 8 derived, exactly the world manifest's 73 edgeTypes",
+    "tests": "23 files, 465 passed, 0 failed (405 unit + 60 component); typecheck clean; lint clean",
+    "historical_failures_closed": "both of the historical '459 passed / 2 failed' are closed - the first by the identity repair, the second was the focus-curation mobile-budget assertion identified and re-derived here"
+  },
+  "restored_relationship_accounting": {
+    "verified_independently_from_the_artifact": true,
+    "nodes": 71373,
+    "relationships": 270646,
+    "nodes_under_semantic_assertion_namespace": 30266,
+    "HAS_SEMANTIC_ASSERTION_edges_on_them": 30266,
+    "self_edges": 0,
+    "arithmetic": "270,646 - 30,266 = 240,380, exactly the pre-repair expectation"
+  },
+  "graph_mutation": "NONE. census 164,201 / 508,042 confirmed by the lead's own READ-only queries at three separate points during the pass.",
+  "world_bin_verification_closing_agent_a_open_item": {
+    "agent_a_left_this_unverified": "whether world.bin's binary payload decodes to the 71,373 export ids",
+    "verified_by_the_lead": true,
+    "section_layout": "positions 214,119 = nodes*3; nodeType/nodeGroup/nodeDegree/nodeRegion each exactly 71,373; edgeType/edgeBridge each exactly 270,646; edgePairs 541,292 = 2*edges",
+    "file_bytes": 3991198,
+    "slack_bytes": 0,
+    "endpoint_indices": "min 0, max 71,372, every index < 71,373",
+    "self_edges_in_binary": 0,
+    "edge_multiset_equals_export": true,
+    "note_on_order": "the binary edge list is a PERMUTATION of the export's, not order-equal: build-world.mjs reorders edges by hub (the first binary edges belong to hubs[0]=10567 and hubs[1]=10495). Order equality is the WRONG invariant here; multiset equality is the right one and it holds exactly - 270,646 edges over 270,583 distinct (src,tgt,type) triples on both sides.",
+    "node_type_mismatches_by_index": 0,
+    "retracted_false_alarm": "an initial check reported 71,373 node GROUP mismatches. That was the comparison, not the data: the raw export carries only id/type/label/deg and no group key at all - node group is DERIVED by build-world.mjs from the type. No defect.",
+    "verdict": "world.bin is faithful to the public export"
+  },
+  "duplicate_public_edge_triples_observed": {
+    "count": 63,
+    "measured": "the public export holds 270,646 edges over 270,583 distinct (source,target,type) triples, so 63 edges share a triple with another edge",
+    "why_it_matters": "the API's public relationship id IS that triple, so these 63 are the population that cannot be addressed individually. 6 of them are the HAS_PARALLEL_PADA cases measured under LEAD-04; the remaining 57 are on predicates that are NOT traversable, so they are not currently reachable through /api/v1/graph and no id is published for them today.",
+    "status": "REPORTED, not fixed. It is the same defect class R1 closed for nodes, on edges, and it is the reason HAS_PARALLEL_PADA could not be whitelisted."
+  }
+}

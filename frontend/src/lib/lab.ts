@@ -109,7 +109,7 @@ export const PLATES: Plate[] = [
         summary:
             "Every corpus pair against every kind of textual relationship, with the empty cells typed rather than drawn as zeroes, and then the Rigveda-to-Samaveda reuse itself, verse by verse.",
         caution:
-            "Directed reuse — one verse carrying another's wording, in that direction — was established for one corpus pair. A pair without it is an unmeasured pair.",
+            "Directed reuse — one verse carrying another's wording, in that direction — was established for some corpus pairs and not others; the plate names which. A pair without it is an unmeasured pair.",
         reads: "Parallel layer, directed reuse edges, variant layer, formula mediation, shared-vocabulary layer",
         label: {
             measures:
@@ -119,7 +119,7 @@ export const PLATES: Plate[] = [
             excluded:
                 "Generic similarity. There is no single similarity score here, because the eight classes are not degrees of one measure.",
             notInfer:
-                "That an empty cell means the two collections share nothing. Twelve of the 48 cells are NOT_BUILT and five were never established for that pair, and those are facts about the graph.",
+                "That an empty cell means the two collections share nothing. Most of the 48 cells are not a measurement — some were never built, some hold a relationship class that cannot enter a corpus pair at all, and some were measured and came back zero. Each cell prints which it is, and those are facts about the graph rather than about the texts.",
         },
     },
     {
@@ -140,7 +140,7 @@ export const PLATES: Plate[] = [
             excluded:
                 "Wording shared by meaning rather than by letters. No semantic resemblance measure exists in this graph.",
             notInfer:
-                "That a family crossing four collections proves one borrowed from another. The census records co-occurrence of a wording, and direction is only established separately, for one pair.",
+                "That a family crossing four collections proves one borrowed from another. The census records co-occurrence of a wording; direction is established separately and only for some corpus pairs.",
         },
     },
     {
@@ -171,7 +171,7 @@ export const PLATES: Plate[] = [
         title: "The rite, as far as it is modelled",
         question: "What does the corpus say about ritual, and how much of it has been modelled?",
         summary:
-            "Eight rites carry a modelled structure and three step edges exist across all of them. The coverage statement comes before the content here, because it is the more important fact.",
+            "Two step layers exist and neither gives a rite a recoverable sequence: what a Samhita text numbers in its own words is almost nothing, and what the sutras print is numbered independently per source work so its groups do not compose. The coverage statement comes before the content here, because it is the more important fact.",
         caution:
             "This is modelled coverage, not a taxonomy of Vedic ritual. The corpus names far more rites than the layer holds, and no rite here has a recoverable order of steps.",
         reads: "Ritual layer, curated implement and offering edges, lexical mention layer",
@@ -179,7 +179,7 @@ export const PLATES: Plate[] = [
             measures:
                 "Rites and ritual implements in the curated layer, with the number of verses in which each is named.",
             mark: "One row is one modelled rite or one implement. Its figure is the number of verses a registered alias matched.",
-            scope: "The eight rites and fourteen implements that have been modelled. Named explicitly, so the denominator is visible.",
+            scope: "The rites and implements that have been modelled, with the denominator measured in the payload rather than written here. Two step layers are reported apart: what a Samhita text numbers, and what a sutra prints.",
             excluded:
                 "Every rite the corpus names that has not been modelled, and the sequence of any rite: there are three step edges in the whole layer.",
             notInfer:
@@ -233,7 +233,7 @@ export const NOT_DRAWN: { title: string; why: string; href?: string; hrefLabel?:
     },
     {
         title: "Communities of deities",
-        why: "No node in this graph carries a community, partition or cluster assignment, and none was computed. Deity pairs that share verses exist and are a different object: pairs are not a partition.",
+        why: "No deity carries a community membership. A partition was computed and its twelve community records are stored, and not one of them has a member, so there is a partition and nothing in it. The Louvain partition this map draws is over the whole world graph, not over the deities, and must not be read as a grouping of gods. Deity pairs that share verses exist and are a third thing: pairs are not a partition either.",
         href: "/limits",
         hrefLabel: "Read the recorded limit",
     },

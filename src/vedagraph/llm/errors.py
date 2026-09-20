@@ -2,11 +2,21 @@
 
 from __future__ import annotations
 
+from vedagraph.llm.redaction import scrub
+
 
 class LLMError(Exception):
-    """Base for all provider errors after normalization."""
+    """Base for all provider errors after normalization.
+
+    Every normalised error passes through here, which makes it the one place worth
+    scrubbing configured credentials out of. The adapters already refuse to quote a
+    response body, so this guards what they cannot see: an SDK that formats the request
+    into its exception, a vendor that echoes the rejected key in a 401, and the failover
+    path, which re-raises the last provider error with several credentials in memory.
+    """
 
     def __init__(self, detail: str, *, provider: str = "unknown", retryable: bool = False) -> None:
+        detail = scrub(detail)
         super().__init__(detail)
         self.detail = detail
         self.provider = provider

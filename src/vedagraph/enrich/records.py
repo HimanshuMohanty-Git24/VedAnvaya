@@ -136,6 +136,20 @@ class ConceptRow:
     #: validated for conditions in :func:`vedagraph.enrich.concepts.load_concepts`, because
     #: a condition with no kind is what made "which diseases?" answer with demons.
     condition_kind: str = ""
+    #: Forms this concept owns that may not assert it on their own. Kept on the row rather
+    #: than dropped at load, because the owner's decision is that they stay usable for
+    #: search, candidate generation, audit and manual review -- only their authority to
+    #: create an edge is withdrawn. They are deliberately NOT in ``aliases_sa`` /
+    #: ``aliases_en``, which is what the mention matcher reads.
+    non_triggering_aliases_sa: tuple[str, ...] = ()
+    non_triggering_aliases_en: tuple[str, ...] = ()
+    #: Multi-word Sanskrit aliases, matched as a run of consecutive whole tokens by the
+    #: mention layer's phrase pass. Held apart from ``aliases_sa`` because that table is
+    #: keyed by one folded token: a string with a space in it can never equal a key there,
+    #: so a multi-word alias placed in it matches nothing forever and reports nothing about
+    #: having done so. Registered for the two soma pressings whose phrase the corpus writes
+    #: and whose one-word form it does not.
+    aliases_sa_phrases: tuple[str, ...] = ()
 
     def as_row(self) -> dict[str, Any]:
         return {
@@ -149,6 +163,9 @@ class ConceptRow:
             "definition": self.definition,
             "related_devatas": list(self.related_devatas),
             "condition_kind": self.condition_kind,
+            "aliases_sa_phrases": list(self.aliases_sa_phrases),
+            "non_triggering_aliases_sa": list(self.non_triggering_aliases_sa),
+            "non_triggering_aliases_en": list(self.non_triggering_aliases_en),
         }
 
 

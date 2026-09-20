@@ -98,53 +98,6 @@
       ]
     },
     {
-      "slug": "field-light",
-      "role": "Graph and Atlas headers, light theme",
-      "source_name": "Knowledge Connection Field.png",
-      "source_sha256": "eb8ba47f3a889001b16d5e92d8192c0998c4afa81fc4b79010b741cb22f4c0e2",
-      "source_bytes": 1896089,
-      "measured_base_tone": "#EFE7DB",
-      "rebalanced_to": "#F4F0E7",
-      "derivatives": [
-        {
-          "file": "brand/textures/field-light-1920.avif",
-          "width": 1920,
-          "height": 1081,
-          "bytes": 68248
-        },
-        {
-          "file": "brand/textures/field-light-1920.webp",
-          "width": 1920,
-          "height": 1081,
-          "bytes": 59548
-        },
-        {
-          "file": "brand/textures/field-light-1280.avif",
-          "width": 1280,
-          "height": 720,
-          "bytes": 30363
-        },
-        {
-          "file": "brand/textures/field-light-1280.webp",
-          "width": 1280,
-          "height": 720,
-          "bytes": 28626
-        },
-        {
-          "file": "brand/textures/field-light-960.avif",
-          "width": 960,
-          "height": 540,
-          "bytes": 17247
-        },
-        {
-          "file": "brand/textures/field-light-960.webp",
-          "width": 960,
-          "height": 540,
-          "bytes": 16508
-        }
-      ]
-    },
-    {
       "slug": "footer-light",
       "role": "Footer, light theme",
       "source_name": "Footer Background.png",

@@ -1,0 +1,202 @@
+{
+  "ORIGINAL CLAIM": "withdrawn",
+  "REASON": "contradicted by the graph's own HIGH-confidence curation note",
+  "epithet_variant_of_edges_in_the_graph": [
+    [
+      "VG:DEVATA:AGNERATMA",
+      "VG:DEVATA:AGNIH"
+    ],
+    [
+      "VG:DEVATA:BHAVAVRTTHAM",
+      "VG:DEVATA:BHAVAVRTTAM"
+    ],
+    [
+      "VG:DEVATA:DADHIKRAH",
+      "VG:DEVATA:DADHIKRA"
+    ],
+    [
+      "VG:DEVATA:DEVYAU-HOTARAU",
+      "VG:DEVATA:DAIVYAU-HOTARAU"
+    ],
+    [
+      "VG:DEVATA:JATAVEDA-AGNIH",
+      "VG:DEVATA:AGNIH"
+    ],
+    [
+      "VG:DEVATA:MARUTVANINDRAH",
+      "VG:DEVATA:INDRAH"
+    ],
+    [
+      "VG:DEVATA:PAVAMANO-AGNIH",
+      "VG:DEVATA:AGNIH"
+    ],
+    [
+      "VG:DEVATA:RAKSOHAGNIH",
+      "VG:DEVATA:AGNIH"
+    ],
+    [
+      "VG:DEVATA:SASARPARI-VAK",
+      "VG:DEVATA:VAK"
+    ],
+    [
+      "VG:DEVATA:VISVE-DEVAH",
+      "VG:DEVATA:VISVEDEVAH"
+    ]
+  ],
+  "headline": "PROJECTION_IDENTITY_BLINDNESS: population 11, no_shared_dedication 10, shared_dedication 1. Of the 11 pairs the graph itself declares to be one deity, 10 share no dedicated hymn, so the projection cannot represent that identity at all -- only 'the self of Agni' ~ Agni shares one. 4 of the 6 testable pairs are split by every method. One further pair is BLOCKED as a referred ontology question. And 15 of Brahmanaspati's 18 co-dedication partners come from the single hymn RV 6.75, so a deity with 48 dedications across 8 hymns has his community decided by one of them.",
+  "pairs": [
+    {
+      "ORIGINAL CLAIM": "withdrawn",
+      "REASON": "contradicted by the graph's own HIGH-confidence curation note",
+      "a": "VG:DEVATA:BRHASPATIH",
+      "b": "VG:DEVATA:BRAHMANASPATIH",
+      "graph_evidence": {
+        "declared_same_deity_by_EPITHET_VARIANT_OF": false,
+        "direct_edge_exists": true,
+        "hymns_a": 13,
+        "hymns_b": 8,
+        "neighbourhood_jaccard": 0.0667,
+        "partners_a": 14,
+        "partners_b": 18,
+        "shared_hymn_keys": [
+          "VG:RV:SAK:M02:S023",
+          "VG:RV:SAK:M02:S024"
+        ],
+        "shared_hymns": 2,
+        "shared_partners": [
+          "VG:DEVATA:INDRABRAHMANASPATI",
+          "VG:DEVATA:VISVEDEVAH"
+        ]
+      },
+      "per_method": {
+        "leiden|COSINE": "SEPARATED",
+        "leiden|JACCARD": "SEPARATED",
+        "leiden|RAW": "SEPARATED",
+        "louvain|COSINE": "SEPARATED",
+        "louvain|JACCARD": "SEPARATED",
+        "louvain|RAW": "SEPARATED"
+      },
+      "relation": "the tradition largely identifies them; the registry pins them as two entities on purpose and says so in a HIGH-confidence curation_note",
+      "verdict": "NOT A DEFECT: the graph declares these separate entities, and its own dedication evidence separates them too (see neighbourhood_jaccard). The partition is following the model.",
+      "withdrawal_note": "An earlier version of this artifact recorded the separation of this pair as the decisive defect and the decisive ground for refusing to publish. The claim is WITHDRAWN. It is kept on the record here, rather than erased, because the lead had already relayed it to the owner as decisive and a deleted mistake cannot be audited. It is replaced by PROJECTION_IDENTITY_BLINDNESS."
+    },
+    {
+      "a": "VG:DEVATA:BRAHMANASPATIH",
+      "b": "VG:DEVATA:INDRABRAHMANASPATI",
+      "graph_evidence": {
+        "declared_same_deity_by_EPITHET_VARIANT_OF": false,
+        "direct_edge_exists": true,
+        "hymns_a": 8,
+        "hymns_b": 2,
+        "neighbourhood_jaccard": 0.05,
+        "partners_a": 18,
+        "partners_b": 3,
+        "shared_hymn_keys": [
+          "VG:RV:SAK:M02:S024"
+        ],
+        "shared_hymns": 1,
+        "shared_partners": [
+          "VG:DEVATA:BRHASPATIH"
+        ]
+      },
+      "per_method": {
+        "leiden|COSINE": "SEPARATED",
+        "leiden|JACCARD": "SEPARATED",
+        "leiden|RAW": "SEPARATED",
+        "louvain|COSINE": "SEPARATED",
+        "louvain|JACCARD": "SEPARATED",
+        "louvain|RAW": "SEPARATED"
+      },
+      "relation": "a deity and the dual compound that names him with Indra",
+      "verdict": "NOT A DEFECT: the graph declares these separate entities, and its own dedication evidence separates them too (see neighbourhood_jaccard). The partition is following the model."
+    },
+    {
+      "a": "VG:DEVATA:MITRAVARUNAU",
+      "b": "VG:DEVATA:MITRAH",
+      "graph_evidence": {
+        "declared_same_deity_by_EPITHET_VARIANT_OF": false,
+        "direct_edge_exists": true,
+        "hymns_a": 35,
+        "hymns_b": 2,
+        "neighbourhood_jaccard": 0.0,
+        "partners_a": 26,
+        "partners_b": 0,
+        "shared_hymn_keys": [
+          "VG:RV:SAK:M01:S151"
+        ],
+        "shared_hymns": 1,
+        "shared_partners": []
+      },
+      "per_method": {
+        "leiden|COSINE": "SAME",
+        "leiden|JACCARD": "SAME",
+        "leiden|RAW": "SAME",
+        "louvain|COSINE": "SAME",
+        "louvain|JACCARD": "SAME",
+        "louvain|RAW": "SAME"
+      },
+      "relation": "the dual Mitra-Varuna and its own member Mitra",
+      "verdict": "CO-ASSIGNED: watch this one, because a community holding a dual and its own member double-counts a deity (GAP-COMMUNITIES-002 interpretation hazard)"
+    },
+    {
+      "a": "VG:DEVATA:SOMAH",
+      "b": "VG:DEVATA:PAVAMANAH-SOMAH",
+      "blocked_by": "CURATION_CONTRADICTION_SOMA_PAVAMANA",
+      "graph_evidence": {
+        "declared_same_deity_by_EPITHET_VARIANT_OF": false,
+        "direct_edge_exists": false,
+        "hymns_a": 12,
+        "hymns_b": 113,
+        "neighbourhood_jaccard": 0.0,
+        "partners_a": 33,
+        "partners_b": 2,
+        "shared_hymn_keys": [],
+        "shared_hymns": 0,
+        "shared_partners": []
+      },
+      "per_method": {
+        "leiden|COSINE": "SEPARATED",
+        "leiden|JACCARD": "SEPARATED",
+        "leiden|RAW": "SEPARATED",
+        "louvain|COSINE": "SEPARATED",
+        "louvain|JACCARD": "SEPARATED",
+        "louvain|RAW": "SEPARATED"
+      },
+      "relation": "Soma and Soma Pavamana, which DEVATA_TAXONOMY_V1 holds apart deliberately AND which the graph links with EPITHET_VARIANT_OF",
+      "verdict": "BLOCKED by CURATION_CONTRADICTION_SOMA_PAVAMANA -- NOT A TRUTH TEST. The graph and the curation overlay disagree about whether these are one deity, the question is referred to the owner, and until it is resolved this pair's co-assignment is evidence of nothing. It is not among the grounds for the refusal."
+    },
+    {
+      "a": "VG:DEVATA:SURYAH",
+      "b": "VG:DEVATA:SAVITA",
+      "graph_evidence": {
+        "declared_same_deity_by_EPITHET_VARIANT_OF": false,
+        "direct_edge_exists": false,
+        "hymns_a": 14,
+        "hymns_b": 14,
+        "neighbourhood_jaccard": 0.0938,
+        "partners_a": 18,
+        "partners_b": 17,
+        "shared_hymn_keys": [],
+        "shared_hymns": 0,
+        "shared_partners": [
+          "VG:DEVATA:ASVINAU",
+          "VG:DEVATA:MITRAVARUNAU",
+          "VG:DEVATA:SOMAH"
+        ]
+      },
+      "per_method": {
+        "leiden|COSINE": "SEPARATED",
+        "leiden|JACCARD": "SEPARATED",
+        "leiden|RAW": "SEPARATED",
+        "louvain|COSINE": "SEPARATED",
+        "louvain|JACCARD": "SEPARATED",
+        "louvain|RAW": "SEPARATED"
+      },
+      "relation": "Surya and Savitr, which DEVATA_TAXONOMY_V1 refuses to merge",
+      "verdict": "NOT A DEFECT: the graph declares these separate entities, and its own dedication evidence separates them too (see neighbourhood_jaccard). The partition is following the model."
+    }
+  ],
+  "the_rule": "A separation counts as a DEFECT only where the graph itself declares the two nodes the same deity, via EPITHET_VARIANT_OF. That is deliberately the project's model rather than the scholarly consensus: an earlier version of this file graded the Brhaspati / Brahmanaspati separation a defect on the standard view that they are one deity, and the adversarial preflight found the registry pins them apart on purpose. Importing a prior as if it were the data is the failure this campaign exists to catch, and it happened here.",
+  "what_this_is": "Five deity pairs whose grouping a reader can judge without knowing anything about modularity, checked against all six algorithm x weighting consensuses. The cheapest available sanity test of whether the partition can be read as a statement about Vedic religion.",
+  "what_was_withdrawn": "That Brhaspati and Brahmanaspati must cluster together, and that a partition separating them is defective. Not an active claim anywhere in this artifact, and not among the grounds for the refusal. Retained as a historical record only. Replaced by PROJECTION_IDENTITY_BLINDNESS, which is entailed by the graph's own identity vocabulary and this projection's definition rather than by any external theological prior -- and that distinction is the whole reason it replaces it."
+}

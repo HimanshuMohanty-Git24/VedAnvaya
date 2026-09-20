@@ -12,10 +12,15 @@ the data it described.
 
 **The four things this file exists to get right.**
 
-*A deity list must not contain a dog.* The Anukramani names a devata for every Rigvedic
-hymn and 30 of the 214 are not gods. Every deity query interpolates
+*A deity list must not contain an abstraction.* The Anukramani names a devata for every
+Rigvedic hymn and 57 of the 214 are not gods. Every deity query interpolates
 :func:`~vedagraph.api.services.deity_population.deity_structure_clause` and binds its
-structure list; the two populations run the same Cypher and differ only in that parameter.
+admitted values; the two populations run the same Cypher and differ only in that parameter.
+
+This heading read "must not contain a dog" and the figure was 30. The recorded eligibility
+ruling admits the dog -- a deified animal beside thirteen others in the population -- and
+excludes 28 abstractions the structure filter admitted, which is why the clause now reads
+the ruling rather than ``structure``.
 
 *A co-deity list must not contain a human.* ``profile_co_devatas`` holds display labels,
 not keys, and Indra's is literally ``['Vasukra']`` -- a human patron. The labels are
@@ -81,6 +86,8 @@ from vedagraph.api.models.entity import (
     MentionCertainty,
     RecallView,
     RishiProfile,
+    RitualProcedureSource,
+    RitualProcedureStep,
     RitualProfile,
     RitualStep,
     RitualSummary,
@@ -93,6 +100,7 @@ from vedagraph.api.repositories.neo4j_repository import named_query_caveat, vali
 from vedagraph.api.services.deity_population import (
     KNOWN_DEITY_STRUCTURES,
     NOT_A_DEITY_SUBJECT,
+    DevataSubject,
     deity_structure_clause,
     deity_structure_parameters,
     filter_co_deity_labels,
@@ -101,7 +109,9 @@ from vedagraph.api.services.deity_population import (
     subject_disclosure,
 )
 from vedagraph.api.services.search_service import VEDA_ORDER, result_type_for_labels
+from vedagraph.domain import layer_figures as figures
 from vedagraph.domain.layer_figures import CORPUS_MANTRAS
+from vedagraph.domain.ontology import product_filter
 from vedagraph.domain.theonyms import AMBIGUOUS, CERTAIN, PROBABLE, referent_tiers_for_mode
 
 
@@ -119,12 +129,22 @@ class _Repository(Protocol):
 #: The attribution-scope statement. Mandatory wherever an attribution figure appears: the
 #: Anukramani layer is Rigvedic and a zero elsewhere is a missing apparatus.
 ATTRIBUTION_SCOPE_STATEMENT: Final = (
-    "ATTRIBUTION IS NOT MENTION, AND IT IS RIGVEDIC. The `attributed_*` figures come from "
-    "HAS_DEVATA, the Anukramani's hymn-level dedication: 10,558 edges, every one on the "
-    "Rigveda, and 8,329 of them a sukta's label projected onto each of its mantras rather "
-    "than a statement about the verse. A zero for the Samaveda, Yajurveda or Atharvaveda "
-    "means those corpora carry no Anukramani apparatus, NOT that the deity is absent from "
-    "them -- for that read `mentions_by_veda`, which spans all four."
+    "ATTRIBUTION IS NOT MENTION. The `attributed_*` figures come from the two resolved "
+    "dedication predicates and from no other: HAS_DEVATA, the Anukramani's own hymn-level "
+    "dedication, 10,558 edges every one Rigvedic and 8,329 of them a sukta's label projected "
+    "onto each of its mantras rather than a statement about the verse; and "
+    "HAS_DEVATA_DERIVED, 882 Atharvavedic dedications over 851 passages reaching 35 deities, "
+    "recovered from the Anukramani's Sanskrit adjective by its own morphology under Panini "
+    "4.2.24 sasya devata. The dedication there is the source's and the resolution is this "
+    "project's. Two figures, deliberately apart: 47 of the Atharvaveda's 324 descriptors "
+    "RESOLVE to a deity, and the 882 dedications above were derived from 39 of them -- R4 "
+    "widened the resolver and the derived layer has not been rebuilt from the 8 it gained "
+    "(R4-RESIDUAL-ATTRIBUTION-002), so a descriptor can be resolved and still contribute no "
+    "dedication here. The other 277 are refused with a typed reason each, so an Atharvavedic "
+    "zero here may be a refused descriptor, a resolved-but-unpropagated one, or no "
+    "dedication at all. A Samavedic or Yajurvedic zero means those corpora carry no "
+    "Anukramani apparatus of any kind, NOT that the deity is absent from them -- for that "
+    "read `mentions_by_veda`, which spans all four."
 )
 
 #: The Samaveda statement. Mandatory wherever a Samavedic figure appears, because the SV
@@ -183,13 +203,31 @@ _DIMENSION_STATUS: Final[dict[str, tuple[KnowledgeStatus, str]]] = {
         KnowledgeStatus.NOT_BUILT,
         "IS_ASKED_TO aggregates the same Rigveda-only morphology layer as PERFORMS_ACTION.",
     ),
+    # Was NOT_BUILT, "derived from the Rigveda-only semantic assertion layer", and that was
+    # false twice: this dimension does not touch the assertion layer, and the assertion
+    # layer is not Rigveda-only. profiles.py computes it as MENTIONS_DEVATA (certainty-
+    # filtered) joined to ABOUT_CONCEPT, and BOTH span four corpora -- MENTIONS_DEVATA
+    # RV 10,284 / AV 3,582 / YV 1,964 / SV 1,335, ABOUT_CONCEPT RV 14,470 / AV 6,423 /
+    # SV 2,007 / YV 1,961. profiles.py:178 says so at the source. So an empty list here is a
+    # real zero over a layer that reaches the whole corpus, which is INSUFFICIENT_EVIDENCE
+    # and not an unbuilt layer -- and it was live on 3 :Devata nodes, telling a reader a
+    # corpus-wide measurement was a Rigvedic one.
     "top_objects": (
-        KnowledgeStatus.NOT_BUILT,
-        "The object dimension is derived from the Rigveda-only semantic assertion layer.",
+        KnowledgeStatus.INSUFFICIENT_EVIDENCE,
+        "No passage that mentions this deity at CERTAIN or PROBABLE certainty also carries "
+        "an ABOUT_CONCEPT edge to an object or substance. Both layers reach all four "
+        "corpora, so this is an absence of co-occurrence in the text rather than a layer "
+        "that does not reach this deity.",
     ),
+    # "the Rigveda-only annotation layers", plural, over-generalised: top_concepts joins
+    # HAS_DEVATA, which IS Rigveda-only, to ABOUT_CONCEPT, which is not. The Rigvedic bound
+    # is real and comes from one of the two, so it is named as that one.
     "top_concepts": (
         KnowledgeStatus.NOT_BUILT,
-        "The concept dimension is derived from the Rigveda-only annotation layers.",
+        "The concept dimension joins HAS_DEVATA, the Rigveda-only dedication layer, to "
+        "ABOUT_CONCEPT, which reaches all four corpora. The Rigvedic bound is the "
+        "dedication layer's: a deity with no Rigvedic dedication has no row here, which is "
+        "an absent apparatus rather than an absence of concepts in its verses.",
     ),
     "formula_count": (
         KnowledgeStatus.INSUFFICIENT_EVIDENCE,
@@ -377,8 +415,18 @@ CALL (dv) {
     RETURN p.veda AS veda, count(DISTINCT p) AS named
 }
 WITH dv, certainty_split, mention_grid, collect([veda, named]) AS named_by_veda
+// BOTH resolved-dedication predicates, in one pattern, matching
+// insight_service._DEVATA_INSIGHT_QUERY exactly.
+//
+// This read HAS_DEVATA alone. R3 widened the /insights/devatas/{id} sibling to both routes
+// and left this one narrow, so the same product answered the same question two ways --
+// Indra attributed_total 2,869 scope ["RV"] here, ascribed_total 2,945 scope ["RV","AV"]
+// there -- and the node's own measured attribution_scope agreed with neither. That is the
+// type-level attribution failure this project has already recorded once, where three
+// mechanisms wrote one field and disagreed because no single contract was applied last.
+// HAS_DEVATA_ASCRIPTION stays out: an unresolved descriptor names no deity.
 CALL (dv) {
-    OPTIONAL MATCH (p:Passage)-[h:HAS_DEVATA]->(dv)
+    OPTIONAL MATCH (p:Passage)-[h:HAS_DEVATA|HAS_DEVATA_DERIVED]->(dv)
     RETURN count(DISTINCT p) AS ascribed,
            count(DISTINCT CASE WHEN h.attribution_precision = 'PER_PASSAGE'
                                THEN p END) AS ascribed_strict,
@@ -419,6 +467,7 @@ UNWIND profile_labels AS profile_label
 OPTIONAL MATCH (other:Devata) WHERE other.display_label = profile_label
 RETURN profile_label, other.entity_key AS entity_key,
        other.display_label AS display_label, other.structure AS structure,
+       other.is_deity AS is_deity, other.non_deity_kind AS non_deity_kind,
        other.short_description AS short_description
 """
 
@@ -446,6 +495,7 @@ WHERE {_DV_IS_DEITY}
   AND ($axis IS NULL OR EXISTS {{ (dv)-[:HAS_AXIS]->(:DeityAxis {{axis: $axis}}) }})
 RETURN dv.entity_key AS id, dv.display_label AS display_label,
        dv.label_iast AS label_iast, dv.structure AS structure,
+       dv.is_deity AS is_deity, dv.non_deity_kind AS non_deity_kind,
        dv.short_description AS short_description, dv.axes AS axes,
        dv.is_composite AS is_composite,
        dv.profile_mentions_by_veda_certainty AS tier_json,
@@ -485,9 +535,14 @@ WHERE m.referent_certainty IN $tiers AND ($veda IS NULL OR p.veda = $veda)
 RETURN count(DISTINCT p) AS total
 """
 
-#: Passages the Anukramani ASCRIBES to the deity. Rigvedic by construction.
+#: Passages the Anukramani ASCRIBES to the deity, over both RESOLVED dedication predicates.
+#:
+#: "Rigvedic by construction" was this comment and it was wrong about the corpus: the
+#: Atharvaveda's dedication reaches 851 passages and 35 deities through HAS_DEVATA_DERIVED.
+#: The rows carry their own `attribution_precision`, `evidence_basis` and `provenance_class`,
+#: so a reader can tell which route produced each one without the route being the filter.
 _DEVATA_ASCRIPTION_PASSAGES: Final = """
-MATCH (p:Passage)-[h:HAS_DEVATA]->(:Devata {entity_key: $key})
+MATCH (p:Passage)-[h:HAS_DEVATA|HAS_DEVATA_DERIVED]->(:Devata {entity_key: $key})
 WHERE ($veda IS NULL OR p.veda = $veda)
 RETURN p.canonical_key AS passage_id, p.canonical_citation AS citation, p.veda AS veda,
        h.attribution_precision AS attribution_precision, h.quality_tier AS quality_tier,
@@ -498,7 +553,7 @@ SKIP $offset LIMIT $limit
 """
 
 _DEVATA_ASCRIPTION_COUNT: Final = """
-MATCH (p:Passage)-[:HAS_DEVATA]->(:Devata {entity_key: $key})
+MATCH (p:Passage)-[:HAS_DEVATA|HAS_DEVATA_DERIVED]->(:Devata {entity_key: $key})
 WHERE ($veda IS NULL OR p.veda = $veda)
 RETURN count(DISTINCT p) AS total
 """
@@ -593,6 +648,12 @@ LIMIT $top
 def _entity_list_query(spec: EntityTypeSpec) -> str:
     """The list query for one type. Label and id property are both allow-listed first.
 
+    Carries ``product_filter`` because it did not, and the inventory endpoint beside it did:
+    /api/v1/entities/chandas returned 575 rows while /api/v1/entities reported 547 for the
+    same type, the difference being 28 nodes marked :Internal. The ontology calls
+    ``product_filter`` "the one place the product/internal boundary is written as Cypher.
+    Every product query interpolates this" -- and this was the query that showed rows.
+
     ``passage_count`` COUNTS THE EDGES, using the same ``_PASSAGE_TO_ENTITY`` predicate set
     and the same ``count(DISTINCT p)`` as the detail view, so a row and its own profile
     cannot disagree. They did: reading
@@ -611,7 +672,8 @@ def _entity_list_query(spec: EntityTypeSpec) -> str:
     id_property = _validated_id_property(spec.id_property)
     return f"""
 MATCH (n:{label})
-WHERE ($condition_kind IS NULL OR n.condition_kind = $condition_kind)
+WHERE {product_filter("n")}
+  AND ($condition_kind IS NULL OR n.condition_kind = $condition_kind)
   AND ($name IS NULL OR toLower(coalesce(n.display_label, '')) CONTAINS $name)
 CALL (n) {{
     OPTIONAL MATCH (p:Passage)-[{_PASSAGE_TO_ENTITY}]->(n)
@@ -631,9 +693,14 @@ SKIP $offset LIMIT $limit
 
 def _entity_count_query(spec: EntityTypeSpec) -> str:
     label = validated_label(spec.label)
+    # The same product filter as the list query above and the inventory beside it. Without
+    # it this total counted internal nodes: /api/v1/entities/chandas reported 575 against
+    # the inventory's 547, the difference being 28 retired metre identities marked
+    # :Internal by M10 -- and six of them were on page 1.
     return f"""
 MATCH (n:{label})
-WHERE ($condition_kind IS NULL OR n.condition_kind = $condition_kind)
+WHERE {product_filter("n")}
+  AND ($condition_kind IS NULL OR n.condition_kind = $condition_kind)
   AND ($name IS NULL OR toLower(coalesce(n.display_label, '')) CONTAINS $name)
 RETURN count(n) AS total
 """
@@ -821,25 +888,107 @@ LIMIT $top
 # Ritual queries
 # ---------------------------------------------------------------------------
 
-#: Stated on every ritual response. Eight modelled rites are not a taxonomy of Vedic
-#: ritual, and a list that happens to have eight rows in it will be read as one unless the
-#: response says otherwise.
-RITUAL_COVERAGE_STATEMENT: Final = (
-    "EIGHT MODELLED RITES, NOT A TAXONOMY. The Ritual class holds 8 nodes against a corpus "
-    "that names considerably more, so a rank in this list is a rank within 8 and says "
-    "nothing about Vedic ritual as a whole. Elaborate procedure is Brahmana and Sutra "
-    "material and was deliberately not imported into Samhita passages: only 3 HAS_STEP "
-    "edges exist in the entire graph, all three on the soma pressing, whose morning, "
-    "midday and third libations the text itself numbers. All 25 apparatus edges are "
-    "TIER_D curation, and a rite's 'purpose' is what a curator says it is for, not a "
-    "purpose clause quoted from a passage."
-)
+#: The measurement the ritual coverage statement is built from. Read from the graph rather
+#: than typed into the prose, because a figure inside a sentence is the one nothing checks:
+#: this statement said "EIGHT MODELLED RITES" for a whole wave after the rite inventory
+#: became 103, and only an API contract test asserting an unrelated total caught it.
+_RITUAL_COVERAGE_QUERY: Final = """
+CALL () { MATCH (r:Ritual) RETURN count(r) AS rites }
+CALL () { MATCH (:Ritual)-[h:HAS_STEP]->() RETURN count(h) AS samhita_steps }
+CALL () {
+    MATCH (:Ritual)-[h:HAS_RITUAL_STEP]->()
+    RETURN count(h) AS procedure_steps,
+           sum(CASE WHEN h.order_completeness = 'PARTIAL_STATED_POSITIONS' THEN 1 ELSE 0 END)
+               AS partial_steps
+}
+CALL () {
+    MATCH (r:Ritual) WHERE (r)-[:HAS_RITUAL_STEP]->()
+    RETURN count(r) AS rites_with_procedure
+}
+CALL () {
+    MATCH (:Ritual)-[a:USES_OFFERING|USES_SUBSTANCE|USES_OBJECT|PERFORMED_BY|PERFORMED_FOR]->()
+    RETURN count(a) AS apparatus_edges
+}
+RETURN rites, samhita_steps, procedure_steps, partial_steps, rites_with_procedure,
+       apparatus_edges
+"""
+
+
+def ritual_coverage_statement(
+    *,
+    rites: int,
+    samhita_steps: int,
+    procedure_steps: int,
+    partial_steps: int,
+    rites_with_procedure: int,
+    apparatus_edges: int,
+) -> str:
+    """Build the ritual bound from measured figures.
+
+    Every number in the sentence is an argument. The previous version was a literal string
+    asserting eight rites and three steps; both were true when written, and Wave 3 made the
+    first one wrong by 95 while the prose went on claiming it.
+
+    The two step families stay distinct in the wording for the same reason they are distinct
+    predicates in the graph: the Samhita numbering a hymn states and the order a sutra prints
+    are different claims, and collapsing them into one count would describe procedural
+    coverage the Samhita layer does not have.
+    """
+    partial_share = (100.0 * partial_steps / procedure_steps) if procedure_steps else 0.0
+    return (
+        f"AN INVENTORY OF {rites} RITES, NOT A TAXONOMY. The Ritual class holds {rites} "
+        f"nodes against a corpus that names considerably more, so a rank in this list is a "
+        f"rank within {rites} and says nothing about Vedic ritual as a whole. Two step "
+        f"layers exist and they are not interchangeable. The Samhita layer holds "
+        f"{samhita_steps} numbered steps in the entire graph, all on the soma pressing, "
+        f"whose morning, midday and third libations the text itself numbers. The procedural "
+        f"layer holds {procedure_steps:,} steps over {rites_with_procedure} rites, read out "
+        f"of Srautasutras and Grhyasutras rather than Samhita passages, and "
+        f"{partial_share:.0f}% of them state a position without printing the run it falls "
+        f"in -- so a procedure list is not a complete procedure. All {apparatus_edges} "
+        f"apparatus edges are TIER_D curation, and a rite's 'purpose' is what a curator says "
+        f"it is for, not a purpose clause quoted from a passage."
+    )
+
+def _work_label(work_key: object) -> str | None:
+    """The source work's short name, read off its key.
+
+    Read off the key and not fetched, because the 11 works these steps cite have no node in
+    the graph: ``work_key`` is a foreign key to a record that was never imported. Deriving
+    the label makes that visible rather than returning a null nobody can interpret.
+    """
+    text = str(work_key or "").strip()
+    if not text:
+        return None
+    return text.rsplit(":", 1)[-1] or None
+
+
+def _ritual_subtitle(samhita_steps: int | None, procedure_steps: int | None) -> str:
+    """Say which step layer a rite actually has, rather than "one of 8 modelled rites".
+
+    The old subtitle stated the inventory size on every row, which was wrong the moment the
+    inventory changed and told the reader nothing about the rite in front of them. What
+    matters per rite is which evidence layer covers it, since a rite with 227 sutra steps and
+    a rite with none are both "modelled".
+    """
+    if samhita_steps and procedure_steps:
+        return f"{samhita_steps} steps the text numbers, {procedure_steps} from the sutras"
+    if samhita_steps:
+        return f"{samhita_steps} steps the text itself numbers"
+    if procedure_steps:
+        return f"{procedure_steps} procedural steps, sutra-attested"
+    return "no step layer built for this rite"
+
 
 _RITUAL_LIST_QUERY: Final = """
 MATCH (r:Ritual)
 CALL (r) {
     OPTIONAL MATCH (r)-[:HAS_STEP]->(s)
     RETURN count(DISTINCT s) AS step_count
+}
+CALL (r) {
+    OPTIONAL MATCH (r)-[:HAS_RITUAL_STEP]->(ps)
+    RETURN count(DISTINCT ps) AS procedure_step_count
 }
 CALL (r) {
     OPTIONAL MATCH (r)-[:INVOKES_DEVATA]->(dv:Devata)
@@ -855,7 +1004,7 @@ CALL (r) {
 }
 RETURN r.entity_key AS id, r.display_label AS display_label,
        r.preferred_label_sa AS label_iast, r.short_description AS short_description,
-       step_count, devata_count, described_in_count, mention_count
+       step_count, procedure_step_count, devata_count, described_in_count, mention_count
 ORDER BY mention_count DESC, id
 SKIP $offset LIMIT $limit
 """
@@ -873,6 +1022,31 @@ CALL (r) {{
     OPTIONAL MATCH (r)-[h:HAS_STEP]->(s)
     RETURN collect({{order: h.step_order, label: s.display_label,
                      basis: h.order_basis, evidence: h.order_evidence}}) AS steps
+}}
+CALL (r) {{
+    // Grouped by the work that records it, because step_position is an ordinal WITHIN a
+    // work: 2,666 of 3,121 steps share a position with another step of the same rite, so a
+    // flat ordered list would compose eight independent sequences into one procedure.
+    OPTIONAL MATCH (r)-[h:HAS_RITUAL_STEP]->(s)
+    WITH h, s ORDER BY h.step_position, s.display_label
+    WITH h.work_key AS work_key,
+         head(collect(h.evidence_source_type)) AS source_type,
+         head(collect(h.veda_school)) AS veda_school,
+         head(collect(h.anchor_note)) AS anchoring_basis,
+         count(*) AS step_count,
+         collect({{position: h.step_position, label: s.display_label,
+                   text: s.text_iast, citation: h.citation,
+                   stated_position: h.source_stated_position,
+                   order_basis: h.order_basis,
+                   order_completeness: h.order_completeness}}) AS steps
+    WHERE work_key IS NOT NULL
+    RETURN collect({{work_key: work_key, source_type: source_type, veda_school: veda_school,
+                     step_count: step_count, anchoring_basis: anchoring_basis,
+                     steps: steps[0..$step_limit]}}) AS procedure_sources
+}}
+CALL (r) {{
+    OPTIONAL MATCH (r)-[h:HAS_RITUAL_STEP]->()
+    RETURN count(h) AS procedure_step_count
 }}
 CALL (r) {{
     OPTIONAL MATCH (r)-[:PERFORMED_BY]->(role:RitualRole)
@@ -915,8 +1089,9 @@ CALL (r) {{
     OPTIONAL MATCH (p:Passage)-[:MENTIONS_ENTITY]->(r)
     RETURN count(DISTINCT p) AS mention_count
 }}
-RETURN properties(r) AS props, steps, roles, offerings, substances, objects, devatas,
-       purposes, broader_than, passages, passage_count, mention_count
+RETURN properties(r) AS props, steps, procedure_sources, procedure_step_count, roles,
+       offerings, substances, objects, devatas, purposes, broader_than, passages,
+       passage_count, mention_count
 """
 
 
@@ -929,6 +1104,27 @@ class EntityService:
 
     def __init__(self, repository: _Repository) -> None:
         self._repository = repository
+        self._ritual_coverage_cache: str | None = None
+
+    def _ritual_coverage(self) -> str:
+        """The ritual bound, measured once per service instance.
+
+        Memoized rather than recomputed per row: ``list_rituals`` puts it on every row and
+        the figures cannot change inside one response. Cached on the instance and not at
+        module level, because a module-level cache would outlive an import and keep serving
+        the pre-import figures -- which is the failure this whole change exists to fix.
+        """
+        if self._ritual_coverage_cache is None:
+            row = self._repository.run_one(_RITUAL_COVERAGE_QUERY) or {}
+            self._ritual_coverage_cache = ritual_coverage_statement(
+                rites=_as_int(row.get("rites")) or 0,
+                samhita_steps=_as_int(row.get("samhita_steps")) or 0,
+                procedure_steps=_as_int(row.get("procedure_steps")) or 0,
+                partial_steps=_as_int(row.get("partial_steps")) or 0,
+                rites_with_procedure=_as_int(row.get("rites_with_procedure")) or 0,
+                apparatus_edges=_as_int(row.get("apparatus_edges")) or 0,
+            )
+        return self._ritual_coverage_cache
 
     # =======================================================================
     # Deities
@@ -975,7 +1171,9 @@ class EntityService:
                     subtitle=_text(row.get("structure")),
                     short_description=_text(row.get("short_description")),
                     structure=_text(row.get("structure")),
-                    is_deity=is_deity(_text(row.get("structure"))),
+                    # The ruling, not the structure. Deriving this from structure made the
+                    # flag disagree with the filter that selected the row.
+                    is_deity=row.get("is_deity") is True,
                     axes=_as_list(row.get("axes")),
                     is_composite=bool(row.get("is_composite")),
                     passage_count=_as_int(row.get("attributed_total")),
@@ -1008,7 +1206,8 @@ class EntityService:
     ) -> DevataProfile:
         """The flagship deity payload, with every empty dimension explained."""
         tiers = tiers_for(certainty, include_ambiguous)
-        structure = self._resolve_devata(entity_id, population)
+        subject = self._resolve_devata(entity_id, population)
+        structure = subject.structure
         row = self._repository.run_one(_DEVATA_NODE_QUERY, key=entity_id, tiers=sorted(tiers))
         if row is None:  # pragma: no cover - the gate already proved it exists
             raise EntityNotFoundError(f"No deity with id '{entity_id}'.")
@@ -1065,7 +1264,7 @@ class EntityService:
             )
         )
 
-        subject_is_deity, subject_caveats = subject_disclosure(structure)
+        subject_is_deity, subject_caveats = subject_disclosure(subject)
         caveats = [
             *subject_caveats,
             *population_caveats(population),
@@ -1085,6 +1284,12 @@ class EntityService:
                     "asserted to be about it.",
                     source="measured",
                 )
+            )
+            # GAP-FORMULA-003 clause 2. This is a formula frequency ranking and it stated
+            # no nesting policy, so a deity's "top formulas" could be one piece of
+            # phraseology listed at four lengths and read as four separate formulas.
+            caveats.append(
+                CaveatView(text=figures.formula_nesting_policy(), source="measured")
             )
         if structure == "ABSTRACT":
             caveats.append(
@@ -1162,7 +1367,8 @@ class EntityService:
         SUPPORTED page from an endpoint titled "Passages naming or ascribed to a deity",
         while ``/devatas/VG:DEVATA:SUNAH`` 404'd for the same id.
         """
-        structure = self._resolve_devata(entity_id, population)
+        subject = self._resolve_devata(entity_id, population)
+        structure = subject.structure
         self._validate_veda(veda)
         tiers = tiers_for(certainty, include_ambiguous)
         counts = self._mention_certainty_from_edges(entity_id, tiers)
@@ -1193,16 +1399,38 @@ class EntityService:
 
         if veda == "SV" or any(item.veda == "SV" for item in items):
             caveats.append(CaveatView(text=SAMAVEDA_SCOPE_STATEMENT, source="measured"))
-        if basis is MentionBasis.ASCRIPTION and veda in {"SV", "YV", "AV"}:
+        # "empty by construction ... the Rigveda only" was true of HAS_DEVATA and false of
+        # the corpus: HAS_DEVATA_DERIVED reaches 851 Atharvavedic passages and 35 deities, so
+        # on an AV request for one of those 35 the caveat asserted an emptiness the same graph
+        # contradicts. SV and YV genuinely carry no dedication layer of any kind; the AV case
+        # is a different statement and now gets one.
+        if basis is MentionBasis.ASCRIPTION and veda in {"SV", "YV"}:
             caveats.append(
                 CaveatView(
-                    text=f"basis=ascription with veda={veda} is empty by construction: the "
-                    "Anukramani deity apparatus exists for the Rigveda only. Use "
-                    "basis=mention to ask whether the deity is named in that corpus.",
+                    text=f"basis=ascription with veda={veda} is empty by construction: no "
+                    "Anukramani dedication apparatus was ingested for that corpus, under any "
+                    "of the three dedication predicates. Use basis=mention to ask whether the "
+                    "deity is named in it.",
                     source="measured",
                 )
             )
-        subject_is_deity, subject_caveats = subject_disclosure(structure)
+        if basis is MentionBasis.ASCRIPTION and veda == "AV":
+            caveats.append(
+                CaveatView(
+                    text="basis=ascription with veda=AV is served from HAS_DEVATA_DERIVED, "
+                    "which resolves the Anukramani's Sanskrit adjective to a deity by its own "
+                    "morphology and reaches 851 of the Atharvaveda's passages and 35 of the "
+                    "214 deities. Those 851 passages were derived from 39 descriptors; 47 "
+                    "now RESOLVE and the derived layer has not been rebuilt from the 8 it "
+                    "gained (R4-RESIDUAL-ATTRIBUTION-002), so an empty result here is a real "
+                    "absence for THIS deity, or one of the 277 descriptors refused "
+                    "resolution with a typed reason, or one of the 8 resolved but not yet "
+                    "propagated -- not an absent layer. Use basis=mention to ask whether "
+                    "the deity is named in the corpus.",
+                    source="measured",
+                )
+            )
+        subject_is_deity, subject_caveats = subject_disclosure(subject)
         caveats[:0] = subject_caveats
         total = _as_int(total_row.get("total")) if total_row else None
         page = paginate(
@@ -1235,8 +1463,9 @@ class EntityService:
         not, so the endpoint refused a non-deity as a neighbour while serving one as the
         thing being asked about.
         """
-        structure = self._resolve_devata(entity_id, population)
-        subject_is_deity, subject_caveats = subject_disclosure(structure)
+        subject = self._resolve_devata(entity_id, population)
+        structure = subject.structure
+        subject_is_deity, subject_caveats = subject_disclosure(subject)
         parameters = {
             **deity_structure_parameters(population),
             "key": entity_id,
@@ -1354,12 +1583,16 @@ class EntityService:
 
     # -- deity helpers ----------------------------------------------------------
 
-    def _resolve_devata(self, entity_id: str, population: DeityPopulation) -> str | None:
+    def _resolve_devata(
+        self, entity_id: str, population: DeityPopulation
+    ) -> DevataSubject:
         """THE deity gate. Every deity route passes through it; none can opt out.
 
-        Returns the subject's ``structure``, and raises otherwise, so a caller gets the
-        population decision and the structure from one call and cannot take one without
-        the other. It is a chokepoint rather than a check because the alternative was
+        Returns the subject's structure AND its recorded eligibility ruling, and raises
+        otherwise, so a caller gets the population decision and the subject's own ruling
+        from one call and cannot take one without the other. The gate reads the ruling:
+        it read ``structure`` and so refused the dog, whom the recorded ruling admits, while
+        admitting 28 abstractions the ruling excludes. It is a chokepoint rather than a check because the alternative was
         measured: the population contract lived in ``get_devata`` alone, and the network
         and passage routes each forgot it, so ``/devatas/VG:DEVATA:SUNAH/network`` served
         the dog as ``type=DEVATA`` under a caveat reading "This response excludes all 30"
@@ -1368,7 +1601,8 @@ class EntityService:
         without failing to type-check.
         """
         row = self._repository.run_one(
-            "MATCH (dv:Devata {entity_key: $key}) RETURN dv.structure AS structure",
+            "MATCH (dv:Devata {entity_key: $key}) RETURN dv.structure AS structure, "
+            "dv.is_deity AS is_deity, dv.non_deity_kind AS non_deity_kind",
             key=entity_id,
         )
         if row is None:
@@ -1376,15 +1610,19 @@ class EntityService:
                 f"No deity with id '{entity_id}'.",
                 hint="GET /api/v1/devatas lists them. Ids look like VG:DEVATA:INDRAH.",
             )
-        structure = _text(row.get("structure"))
-        if population is DeityPopulation.DEITIES and not is_deity(structure):
+        subject = DevataSubject(
+            structure=_text(row.get("structure")),
+            is_deity=row.get("is_deity") is True,
+            non_deity_kind=_text(row.get("non_deity_kind")),
+        )
+        if population is DeityPopulation.DEITIES and not subject.is_deity:
             raise EntityNotFoundError(
                 f"'{entity_id}' is an Anukramani devata-slot ascription, not a deity "
-                f"(structure={structure!r}).",
+                f"({subject.non_deity_kind or subject.structure}).",
                 hint="Ask again with population=all_ascriptions to read it as what it is. "
                 + DEITY_SURFACE_REDIRECT,
             )
-        return structure
+        return subject
 
     def _certainty_counts(
         self, tier_map: dict[str, dict[str, int]], tiers: frozenset[str]
@@ -1606,9 +1844,9 @@ class EntityService:
         unresolved = [str(row["profile_label"]) for row in rows if not row.get("entity_key")]
         deity_rows = filter_co_deity_labels(resolved)
         dropped = [
-            f"{row.get('display_label')} ({row.get('structure')})"
+            f"{row.get('display_label')} ({row.get('non_deity_kind') or row.get('structure')})"
             for row in resolved
-            if not is_deity(_text(row.get("structure")))
+            if row.get("is_deity") is not True
         ]
 
         refs = [
@@ -1794,7 +2032,11 @@ class EntityService:
             rows = self._repository.run(_entity_list_query(spec), **parameters)
             items = [
                 EntityListRow(
-                    type=result_type_for_labels(row.get("node_labels")).value,
+                    type=result_type_for_labels(
+                        row.get("node_labels"),
+                        row.get("display_type"),
+                        scoped_to=spec.type_name,
+                    ).value,
                     id=str(row["id"]),
                     display_label=str(row.get("display_label") or row["id"]),
                     label_iast=_text(row.get("label_iast")),
@@ -1905,7 +2147,11 @@ class EntityService:
             )
 
         return EntityProfile(
-            type=result_type_for_labels(row.get("node_labels")).value,
+            type=result_type_for_labels(
+                row.get("node_labels"),
+                props.get("display_type"),
+                scoped_to=spec.type_name,
+            ).value,
             id=str(props.get(spec.id_property) or props.get("entity_key") or entity_id),
             display_label=str(props.get("display_label") or entity_id),
             label_iast=_text(props.get("label_iast")) or _text(props.get("preferred_label")),
@@ -1992,7 +2238,7 @@ class EntityService:
                 )
             )
         if spec.label == "Ritual":
-            caveats.append(CaveatView(text=RITUAL_COVERAGE_STATEMENT, source="measured"))
+            caveats.append(CaveatView(text=self._ritual_coverage(), source="measured"))
         if spec.label == "Rishi":
             caveats.append(
                 CaveatView(
@@ -2317,19 +2563,24 @@ class EntityService:
     # =======================================================================
 
     def list_rituals(self, *, limit: int, offset: int) -> Paginated[RitualSummary]:
-        """The eight modelled rites, each row carrying the eight-rite bound."""
+        """The modelled rites, each row carrying the measured inventory bound."""
         rows = self._repository.run(_RITUAL_LIST_QUERY, limit=limit, offset=offset)
+        coverage = self._ritual_coverage()
         items = [
             RitualSummary(
                 type="RITUAL",
                 id=str(row["id"]),
                 display_label=str(row.get("display_label") or row["id"]),
                 label_iast=_text(row.get("label_iast")),
-                subtitle="one of 8 modelled rites",
+                subtitle=_ritual_subtitle(
+                    _as_int(row.get("step_count")),
+                    _as_int(row.get("procedure_step_count")),
+                ),
                 short_description=_text(row.get("short_description")),
                 passage_count=_as_int(row.get("mention_count")),
-                inventory_coverage=RITUAL_COVERAGE_STATEMENT,
+                inventory_coverage=coverage,
                 step_count=_as_int(row.get("step_count")),
+                procedure_step_count=_as_int(row.get("procedure_step_count")),
                 devata_count=_as_int(row.get("devata_count")),
                 described_in_count=_as_int(row.get("described_in_count")),
             )
@@ -2344,10 +2595,15 @@ class EntityService:
             total=_as_int(total_row.get("total")) if total_row else None,
             data_status=KnowledgeStatus.PARTIAL,
             caveats=[
-                CaveatView(text=RITUAL_COVERAGE_STATEMENT, source="measured"),
+                CaveatView(text=self._ritual_coverage(), source="measured"),
                 CaveatView(text=named_query_caveat("ritual_profile"), source="ritual_profile"),
             ],
         )
+
+    #: Procedure rows returned in one profile. One rite carries 227 sutra steps, so the
+    #: nested list needs a cap of its own; ``procedure_step_count`` reports the full figure
+    #: so a truncated list cannot read as the whole procedure.
+    PROCEDURE_LIMIT: Final = 60
 
     def get_ritual(self, entity_id: str, *, population: DeityPopulation) -> RitualProfile:
         """One rite, whose empty step list says which kind of empty it is."""
@@ -2355,12 +2611,13 @@ class EntityService:
             **deity_structure_parameters(population),
             "id": entity_id,
             "top": self.NESTED_LIMIT,
+            "step_limit": self.PROCEDURE_LIMIT,
         }
         row = self._repository.run_one(_RITUAL_PROFILE_QUERY, **parameters)
         if row is None:
             raise EntityNotFoundError(
                 f"No ritual with id '{entity_id}'.",
-                hint="GET /api/v1/rituals lists all eight.",
+                hint="GET /api/v1/rituals lists every modelled rite.",
             )
         props: dict[str, Any] = dict(row.get("props") or {})
 
@@ -2375,18 +2632,79 @@ class EntityService:
         ]
         steps.sort(key=lambda s: (s.order is None, s.order or 0, s.display_label))
 
+        procedure = [
+            RitualProcedureSource(
+                work_key=_text(source.get("work_key")),
+                work_label=_work_label(source.get("work_key")),
+                source_type=_text(source.get("source_type")),
+                veda_school=_text(source.get("veda_school")),
+                step_count=_as_int(source.get("step_count")),
+                anchoring_basis=_text(source.get("anchoring_basis")),
+                steps=[
+                    RitualProcedureStep(
+                        position=_as_int(step.get("position")),
+                        display_label=str(step.get("label")),
+                        text=_text(step.get("text")),
+                        citation=_text(step.get("citation")),
+                        stated_position=_text(step.get("stated_position")),
+                        order_basis=_text(step.get("order_basis")),
+                        order_completeness=_text(step.get("order_completeness")),
+                    )
+                    for step in (source.get("steps") or [])
+                    if isinstance(step, dict) and step.get("label")
+                ],
+            )
+            for source in (row.get("procedure_sources") or [])
+            if isinstance(source, dict) and source.get("work_key")
+        ]
+        procedure.sort(key=lambda s: (-(s.step_count or 0), s.work_key or ""))
+        procedure_total = _as_int(row.get("procedure_step_count"))
+
         dimensions: list[DimensionStatus] = []
         if not steps:
             dimensions.append(
                 DimensionStatus(
                     dimension="steps",
                     status=KnowledgeStatus.NOT_BUILT,
-                    note="Only 3 HAS_STEP edges exist in the entire graph and all three are "
-                    "on the soma pressing, whose morning, midday and third libations the "
-                    "text itself numbers. No other rite in this corpus states an order and "
-                    "none was invented for it: elaborate procedure is Brahmana and Sutra "
-                    "material, so an empty step list here is an unbuilt layer and not an "
-                    "unstructured rite.",
+                    note="This is the Samhita-numbered layer, and 3 such edges exist in the "
+                    "entire graph, all on the soma pressing, whose morning, midday and third "
+                    "libations the text itself numbers. No other rite in this corpus states "
+                    "an order in its own words and none was invented for it -- elaborate "
+                    "procedure is Brahmana and Sutra material. Read `procedure` before "
+                    "concluding the rite has no recorded sequence: an empty `steps` is an "
+                    "unbuilt Samhita layer, not an unstructured rite.",
+                )
+            )
+        if procedure:
+            listed = [step for source in procedure for step in source.steps]
+            partial = sum(
+                1 for s in listed if s.order_completeness == "PARTIAL_STATED_POSITIONS"
+            )
+            shown = (
+                f"{len(listed)} of {procedure_total} steps shown. "
+                if procedure_total and procedure_total > len(listed)
+                else ""
+            )
+            dimensions.append(
+                DimensionStatus(
+                    dimension="procedure",
+                    status=KnowledgeStatus.PARTIAL,
+                    note=f"{len(procedure)} source work(s) each record their own sequence "
+                    f"for this rite, numbered from 1 independently, so the groups do not "
+                    f"compose into one procedure. {shown}{partial} of the {len(listed)} "
+                    "steps listed state a position without printing the run it falls in. "
+                    "The evidence is Srautasutra and Grhyasutra, never a Samhita passage, "
+                    "and it is a different claim from `steps` -- which is why it is a "
+                    "different field. The cited works have no node in this graph.",
+                )
+            )
+        else:
+            dimensions.append(
+                DimensionStatus(
+                    dimension="procedure",
+                    status=KnowledgeStatus.NOT_BUILT,
+                    note="No sutra-attested procedure is recorded for this rite. That is an "
+                    "absence in the staged sources, not evidence that the rite has none.",
                 )
             )
         for name, values in (
@@ -2401,12 +2719,13 @@ class EntityService:
                     DimensionStatus(
                         dimension=name,
                         status=KnowledgeStatus.INSUFFICIENT_EVIDENCE,
-                        note="Ritual apparatus is curated and thin by design: 25 apparatus "
-                        "edges over 8 rites, all TIER_D. An empty list is uncurated, not "
-                        "a rite performed without one.",
+                        note="Ritual apparatus is curated and thin by design, and all of it "
+                        "is TIER_D; the measured edge count is in `coverage_statement`. An "
+                        "empty list is uncurated, not a rite performed without one.",
                     )
                 )
 
+        coverage = self._ritual_coverage()
         return RitualProfile(
             id=str(props.get("entity_key") or entity_id),
             display_label=str(props.get("display_label") or entity_id),
@@ -2414,6 +2733,8 @@ class EntityService:
             short_description=_text(props.get("short_description"))
             or _text(props.get("definition")),
             steps=steps,
+            procedure=procedure,
+            procedure_step_count=procedure_total,
             roles=_refs(row.get("roles")),
             offerings=_refs(row.get("offerings")),
             substances=_refs(row.get("substances")),
@@ -2424,11 +2745,11 @@ class EntityService:
             passages=_refs(row.get("passages")),
             passage_count=_as_int(row.get("passage_count")),
             mention_count=_as_int(row.get("mention_count")),
-            coverage_statement=RITUAL_COVERAGE_STATEMENT,
+            coverage_statement=coverage,
             dimension_status=dimensions,
             data_status=KnowledgeStatus.PARTIAL,
             caveats=[
-                CaveatView(text=RITUAL_COVERAGE_STATEMENT, source="measured"),
+                CaveatView(text=self._ritual_coverage(), source="measured"),
                 CaveatView(
                     text=named_query_caveat("ritual_step_sequence"), source="ritual_step_sequence"
                 ),
@@ -2580,10 +2901,10 @@ def _type_from_id(identifier: str) -> str:
 __all__ = [
     "ATTRIBUTION_SCOPE_STATEMENT",
     "NOT_A_DEITY_SUBJECT",
-    "RITUAL_COVERAGE_STATEMENT",
     "SAMAVEDA_SCOPE_STATEMENT",
     "STRICT_MODE_STATEMENT",
     "EntityService",
+    "ritual_coverage_statement",
     "subject_disclosure",
     "tiers_for",
 ]

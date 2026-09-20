@@ -31,6 +31,7 @@ from vedagraph.product.audio.vedsearch import (
     has_sanskrit_audio,
     index_rows,
     row_coordinates,
+    similarity,
     skeleton,
     vedsearch_coordinates,
     verse_matches,
@@ -225,6 +226,53 @@ def test_verse_matches_rejects_a_different_verse() -> None:
     )
     assert matched is False
     assert score < MATCH_THRESHOLD
+
+
+def test_skeleton_folds_a_colon_spelled_visarga() -> None:
+    """This corpus types visarga as an ASCII colon; the source uses the sign.
+
+    Untreated, the two spellings of one sound reduce differently -- the sign survives
+    transliteration as `h`, the colon is dropped as a non-letter -- so two word-for-word
+    identical verses differ by one letter per visarga. 893 of the 1,975 Yajurvedic verses
+    carry at least one.
+    """
+    assert skeleton("नमः") == skeleton("नम:")
+
+
+def test_skeleton_keeps_a_colon_that_is_not_a_visarga() -> None:
+    """Only a colon following Devanagari is a visarga. Latin punctuation is not folded."""
+    assert "h" not in skeleton("agnim: ile")
+
+
+def test_similarity_is_not_defeated_by_autojunk_on_long_verses() -> None:
+    """SequenceMatcher's autojunk heuristic makes long-verse similarity meaningless.
+
+    Above 200 elements it treats any element in more than 1% of the sequence as junk. A
+    verse skeleton is 200-1,100 characters over an alphabet of about thirty letters, so the
+    heuristic discards very nearly every letter and the ratio stops describing the verses.
+
+    This is the regression guard for that defect. The pair below is two 260-character
+    skeletons differing in five places -- unmistakably the same verse -- which scored 0.2342
+    while the heuristic was active. The assertion is deliberately far above any wrong pair:
+    12,000 mispaired same-Veda pairs reach a maximum of 0.8413.
+    """
+    left = "agnimileporohitamyajnasyadevamrtvijamhotaramratnadhatamam" * 5
+    right = left.replace("hotaram", "hotharam")
+    score = similarity(left, right)
+    assert len(left) > 200, "the defect only appears above SequenceMatcher's 200-element cut"
+    assert score > 0.90, f"autojunk regression: {score:.4f}"
+
+
+def test_verse_matches_accepts_a_long_verse_with_a_few_variant_letters() -> None:
+    """The population the autojunk defect destroyed: long, genuinely variant, same verse.
+
+    It stayed hidden because `verse_matches` short-circuits on exact skeleton equality, so
+    only variant pairs ever reached the fuzzy comparison at all.
+    """
+    left = "tvamnoagnemahobhihpahivisvasyaaratehutadvisomartyasya" * 5
+    matched, score = verse_matches(left, left.replace("mahobhih", "mahobhis"))
+    assert matched is True
+    assert score >= MATCH_THRESHOLD
 
 
 def test_verse_matches_refuses_an_empty_side() -> None:

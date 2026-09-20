@@ -1,0 +1,49 @@
+{
+  "artifact": "R2_3C_DISPLAY_TYPE_NORMALISATION_PLAN",
+  "at": "2026-09-17T17:20:15.804847+00:00",
+  "defect": "SEMANTICASSERTION_DISPLAY_TYPE_SPLIT",
+  "authoritative_value": "SemanticAssertion",
+  "authority": [
+    "vedagraph.domain.ontology.LABEL_SEMANTIC_ASSERTION == 'SemanticAssertion'",
+    "both domain builders write it: v3_loader.py:708 and sealed_semantics.py:199",
+    "the other spelling came from scripts/final_stabilization_contracts.py coalesce(...,'SEMANTIC_ASSERTION'), declared in no ontology module",
+    "graph-wide convention: every non-Passage entity type carries its label spelling"
+  ],
+  "identity_safety": "display_type is not in graph.public_identity.ID_PROPERTIES and is unused by public_id(); no assertion identity, key or content changes",
+  "operations": {
+    "nodes_created": 0,
+    "nodes_updated": 30266,
+    "nodes_deleted": 0,
+    "relationships_created": 0,
+    "relationships_updated": 0,
+    "relationships_deleted": 0
+  },
+  "expected_census_delta": {
+    "nodes": 0,
+    "relationships": 0,
+    "core_corpus": "unchanged",
+    "derived_metric": "unchanged"
+  },
+  "expected_after_split": {
+    "SemanticAssertion": 35131,
+    "SEMANTIC_ASSERTION": 0
+  },
+  "affected_gap_ids": [],
+  "affected_defect": "3C",
+  "census_before": {
+    "nodes": 164201,
+    "relationships": 508042,
+    "core_corpus": {
+      "RV": 10552,
+      "SV": 1844,
+      "YV": 1975,
+      "AV": 5839
+    },
+    "derived_metric": 1085,
+    "display_type_split": {
+      "SemanticAssertion": 4865,
+      "SEMANTIC_ASSERTION": 30266
+    },
+    "core_corpus_total": 20210
+  }
+}

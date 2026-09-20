@@ -30,6 +30,7 @@ from typing import Final
 import pytest
 
 from vedagraph.api.repositories.neo4j_repository import Neo4jRepository
+from vedagraph.api.services.capability_probes import PROBED_ABSENT_PROPERTIES
 
 API_ROOT: Final = Path(__file__).resolve().parents[2] / "src" / "vedagraph" / "api"
 
@@ -176,6 +177,13 @@ def test_every_referenced_property_exists_in_the_graph(
                 continue
             if prop in live_keys or prop in KNOWN_NON_GRAPH_NAMES:
                 continue
+            # The capability probes read absent properties on purpose: "no mantra carries a
+            # bridge score" can only be established by asking for m.bridge_score and
+            # counting zero. The exemption is narrow -- one module, one declared set -- and
+            # the set is itself re-measured by the test below, so it cannot be used to hide
+            # a property that exists.
+            if path.name == "capability_probes.py" and prop in PROBED_ABSENT_PROPERTIES:
+                continue
             unknown.setdefault(prop, set()).add(f"{path.name}:{alias}.{prop}")
 
     assert not unknown, (
@@ -230,3 +238,38 @@ def test_no_api_cypher_writes_to_the_graph() -> None:
         if match:
             offenders.append(f"{path.name}: {match.group(1)}")
     assert not offenders, f"write clauses in API Cypher: {offenders}"
+
+
+@pytest.mark.neo4j
+def test_every_probed_absence_is_still_absent(live_repository: Neo4jRepository) -> None:
+    """The exemption, re-measured. It is an assertion about the graph, not a waiver.
+
+    ``PROBED_ABSENT_PROPERTIES`` lets the capability probes read properties the graph does
+    not have, because measuring an absence requires naming it. That exemption is only safe
+    while the absence holds: a name here that has since appeared means one of the published
+    limit cards is asserting a limitation that no longer exists, which is the same class of
+    defect as a false finding and is exactly what the capability catalogue was rebuilt to
+    remove. So this fails loudly rather than letting the card go stale.
+    """
+    rows = live_repository.run("CALL db.propertyKeys() YIELD propertyKey RETURN propertyKey")
+    live_keys = {str(row["propertyKey"]) for row in rows}
+    appeared = sorted(PROBED_ABSENT_PROPERTIES & live_keys)
+    assert not appeared, (
+        "a property the capability probes measure as ABSENT now exists in the graph: "
+        f"{appeared}. The limit card that rests on it is publishing a limitation that no "
+        "longer holds. Re-grade the card and shrink PROBED_ABSENT_PROPERTIES."
+    )
+
+
+def test_the_probed_absence_allowlist_is_not_a_general_waiver() -> None:
+    """Guards the guard: the exemption must be scoped to the one module that needs it.
+
+    Every name in the set has to appear in that module's Cypher, or the set has grown into
+    a place to park inconvenient property names.
+    """
+    probe_cypher = "".join(
+        block for path, block in _cypher_blocks() if path.name == "capability_probes.py"
+    )
+    assert probe_cypher, "no Cypher extracted from capability_probes.py"
+    unused = sorted(name for name in PROBED_ABSENT_PROPERTIES if name not in probe_cypher)
+    assert not unused, f"exempted but never probed: {unused}"

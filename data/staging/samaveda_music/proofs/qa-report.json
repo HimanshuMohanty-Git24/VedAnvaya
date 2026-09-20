@@ -1,0 +1,128 @@
+{
+  "checks": {
+    "arcika_notation.text_redderives": {
+      "evaluated": 1136,
+      "failures": [],
+      "per_stratum": {
+        "CHANDA": {
+          "rows": 471,
+          "defects": 0
+        },
+        "ARANYA": {
+          "rows": 31,
+          "defects": 0
+        },
+        "MAHANAMNYA": {
+          "rows": 3,
+          "defects": 0
+        },
+        "UTTARA": {
+          "rows": 631,
+          "defects": 0
+        }
+      }
+    },
+    "arcika_notation.no_pua_no_u0301": {
+      "evaluated": 1136,
+      "failures": [],
+      "per_stratum": {}
+    },
+    "arcika_notation.tone_mark_present": {
+      "evaluated": 1136,
+      "failures": [],
+      "per_stratum": {}
+    },
+    "gana_rendering.join_reverified_from_graph_stored_text": {
+      "evaluated": 495,
+      "failures": [],
+      "per_stratum": {
+        "ARANYAKAGEYA": {
+          "edges": 42,
+          "defects": 0
+        },
+        "GRAMAGEYA": {
+          "edges": 126,
+          "defects": 0
+        },
+        "UHAGANA": {
+          "edges": 273,
+          "defects": 0
+        },
+        "UHYAGANA": {
+          "edges": 54,
+          "defects": 0
+        }
+      }
+    },
+    "graph_stored_text_agrees_with_canonical_file": {
+      "evaluated": 1844,
+      "failures": [],
+      "per_stratum": {}
+    },
+    "gana_rendering.adversarial_shortest_40": {
+      "evaluated": 40,
+      "failures": [],
+      "per_stratum": {}
+    },
+    "no_verse_recitation_and_no_invented_boundary": {
+      "evaluated": 1471,
+      "failures": [],
+      "per_stratum": {}
+    },
+    "recension.no_foreign_recension_inside_kauthuma": {
+      "evaluated": 1132,
+      "failures": [],
+      "per_stratum": {}
+    },
+    "performance.integrity": {
+      "evaluated": 475,
+      "failures": [],
+      "per_stratum": {
+        "CC BY-SA 4.0": 459,
+        "CC0": 16
+      }
+    },
+    "identity.uuid_recomputes_from_urn": {
+      "evaluated": 1136,
+      "failures": [],
+      "per_stratum": {}
+    },
+    "identity.keys_and_urns_unique": {
+      "evaluated": 1132,
+      "failures": [],
+      "per_stratum": {}
+    },
+    "random_sample_60_seeded_20260915": {
+      "evaluated": 60,
+      "failures": [],
+      "per_stratum": {}
+    }
+  },
+  "total_defects": 0,
+  "defects": [],
+  "gana_rendering_join_reverified_against": "graph_stored_text_containment; the running number is absent from the graph (citation labels found: [])",
+  "running_samhita_number_present_in_graph": false,
+  "running_number_finding": "The WIKISOURCE_SA_RUNNING_SAMHITA_NUMBER citation exists for all 1,844 verses in data/canonical/samaveda_arcika_v1/citations.jsonl but was never loaded into Neo4j: there is no Citation label and SV TextVersions carry no source_locator. It is the ONLY join key between the arcika and the gana corpus, so after import the MUSICALIZED_AS edges cannot be re-derived from the graph alone. Flagged for the lead.",
+  "shortest_five_gana_rendering_verses": [
+    [
+      37,
+      "VG:SV:KAU:CHANDA:P05:D05:V04"
+    ],
+    [
+      37,
+      "VG:SV:KAU:UTTARA:P05:R02:D19:V01"
+    ],
+    [
+      38,
+      "VG:SV:KAU:CHANDA:P05:D07:V06"
+    ],
+    [
+      41,
+      "VG:SV:KAU:CHANDA:P05:D05:V07"
+    ],
+    [
+      41,
+      "VG:SV:KAU:CHANDA:P05:D05:V10"
+    ]
+  ]
+}

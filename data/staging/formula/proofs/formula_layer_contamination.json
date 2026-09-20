@@ -1,0 +1,31 @@
+{
+ "question": "formulas.py mines the UNSTRIPPED surface, so VSM 7.3's commentary, the AV's section labels and the YV cross-references were all in the mining input. Did any formula come from removed material?",
+ "mantras_the_stripper_shortens_on_the_sandhi_surface": 8,
+ "by_veda": {
+  "YV": 3,
+  "SV": 4,
+  "AV": 1
+ },
+ "occurrence_rows_checked": 10,
+ "formulas_with_a_contaminated_occurrence": 1,
+ "formulas_entirely_inside_removed_material": 0,
+ "detail": [
+  {
+   "formula_id": "VG:ENRICH:FORMULA:2eb4414b05ba2ac665c5a69e8ead9e9e",
+   "normalized": "sūryāya svāhā",
+   "mantra_count": 5,
+   "vedas": [
+    "YV",
+    "AV"
+   ],
+   "cross_veda": true,
+   "contaminated_occurrences": [
+    "VSM 7.3"
+   ],
+   "contaminated_count": 1,
+   "all_occurrences_contaminated": false
+  }
+ ],
+ "verdict": "bounded and named. ONE formula of 4,825 -- 'suryaya svaha' -- has one of its five occurrences inside VSM 7.3's Uvata commentary. Its other four are genuine, so the formula stays and its row carries mantra_count_corrected=4 beside the published 5. Zero formulas rest entirely on removed material. The formula layer is not materially contaminated, and that is a measured result rather than an assumption -- the row is flagged in uses_formula_match_level.jsonl by inside_removed_structural_material.",
+ "why_only_8_mantras_shorten": "the 295 Atharvavedic brace labels are two characters and are already deleted by strip_editorial_marks, so they never reach the sandhi surface. Only 8 mantras lose sandhi-surface material: 3 YV, 4 SV, 1 AV."
+}

@@ -1,0 +1,212 @@
+{
+  "build_config_hashes": {},
+  "build_config_sha256": "134886bdbc549864b158a4712e849fcf5750723a79d80f9baede820b6180d04c",
+  "built_at": "2026-09-04T00:00:00+05:30",
+  "component_manifest_hashes": {},
+  "dataset": "VedaGraph Canonical Corpus",
+  "generated_files": [
+    {
+      "path": "canonical/rv_mandala_2_full_v1/REPORT.md",
+      "record_count": 1,
+      "sha256": "0eca303be68c4680cfe837c1cee9548c5b065f0bd3bcb9a1e9a3af986735574d"
+    },
+    {
+      "path": "canonical/rv_mandala_2_full_v1/audio_recordings.jsonl",
+      "record_count": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "canonical/rv_mandala_2_full_v1/audio_segments.jsonl",
+      "record_count": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "canonical/rv_mandala_2_full_v1/citations.jsonl",
+      "record_count": 429,
+      "sha256": "e6bb05092aa2f5141beaa2d9b38c51d26dd9aa748d2db87b17f80abde0194713"
+    },
+    {
+      "path": "canonical/rv_mandala_2_full_v1/discoveries.jsonl",
+      "record_count": 86,
+      "sha256": "0a0270eb2d3a3d141b00f30b1d9885be3f0f122ed0d86870cd622e06dee9c0e6"
+    },
+    {
+      "path": "canonical/rv_mandala_2_full_v1/passages.jsonl",
+      "record_count": 473,
+      "sha256": "c32b5650d0ee693fb2b92d7e197940cf1df9d28b75fd893634eb3e7a8872e0b2"
+    },
+    {
+      "path": "canonical/rv_mandala_2_full_v1/qa_issues.jsonl",
+      "record_count": 31,
+      "sha256": "5b8e8b0482d3827b4839d76041d0263cc651cbc4dd276f22dc0a6344acd88527"
+    },
+    {
+      "path": "canonical/rv_mandala_2_full_v1/source_artifacts.jsonl",
+      "record_count": 14,
+      "sha256": "691fe9f0a5d810b904a055ddcacd25268c6c263d4c60479bfad04acbb6ca63eb"
+    },
+    {
+      "path": "canonical/rv_mandala_2_full_v1/source_assertions.jsonl",
+      "record_count": 905,
+      "sha256": "0a276e94e3dc84e6e74a5f545ce6cd3b7581c749b799e58f584f027a24360ca3"
+    },
+    {
+      "path": "canonical/rv_mandala_2_full_v1/sources.jsonl",
+      "record_count": 8,
+      "sha256": "47de4d35e96d86046a8a7af77171bef84ae59af3b2b4a68c148b3655983b3547"
+    },
+    {
+      "path": "canonical/rv_mandala_2_full_v1/text_versions.jsonl",
+      "record_count": 858,
+      "sha256": "3ed99e7460580a010e48856330ed2231f00fb73cbe3712cfa00b47ec475dfeac"
+    },
+    {
+      "path": "canonical/rv_mandala_2_full_v1/traditional_metadata.jsonl",
+      "record_count": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "canonical/rv_mandala_2_full_v1/translations.jsonl",
+      "record_count": 429,
+      "sha256": "d7ef5a4d910ea25669b7121756a4a770b4c43899efc6ffbe1427badd34824878"
+    },
+    {
+      "path": "canonical/rv_mandala_2_full_v1/works.jsonl",
+      "record_count": 1,
+      "sha256": "477cde9b833ea9e46b3dd41a1939dce763f5984199304cb4375d53a28f299056"
+    }
+  ],
+  "parser_versions": {
+    "GRETIL:sanskrit": "gretil-rigveda-tei-v2",
+    "VEDAWEB:sanskrit_parallel": "vedaweb-rigveda-tei-v1",
+    "WIKISOURCE_GRIFFITH_RV:translation": "wikisource-griffith-v2",
+    "WIKISOURCE_GRIFFITH_RV:translation_revision": "mediawiki-revision-v1"
+  },
+  "passage_count": 429,
+  "qa_policy_version": "rigveda-full-corpus-qa-v1",
+  "qa_status": "PASSED_WITH_WARNINGS",
+  "raw_snapshot_hashes": {
+    "GRETIL:14197d9c1dcced64900ef971d9f4dc5b46aa8750780f5599453c9739d6a29edd": "14197d9c1dcced64900ef971d9f4dc5b46aa8750780f5599453c9739d6a29edd",
+    "VEDAWEB:236269da756609ef371df54bfe0734c6fc6177060a4cbcdc1fa9dc047c3a8c4b": "236269da756609ef371df54bfe0734c6fc6177060a4cbcdc1fa9dc047c3a8c4b",
+    "WIKISOURCE_GRIFFITH_RV:009afb9e6fd4088b2ba7ca0b7546405581cef21322816643feb57d52fe848cb5": "009afb9e6fd4088b2ba7ca0b7546405581cef21322816643feb57d52fe848cb5",
+    "WIKISOURCE_GRIFFITH_RV:016c615707d349b52e70f05bc7c2c4402a8e90026eca3c21fb363394531942cf": "016c615707d349b52e70f05bc7c2c4402a8e90026eca3c21fb363394531942cf",
+    "WIKISOURCE_GRIFFITH_RV:06b1f412e3b57da25cba559f5fc61c6eb7f28fd040c6775dbf2719dfab69a616": "06b1f412e3b57da25cba559f5fc61c6eb7f28fd040c6775dbf2719dfab69a616",
+    "WIKISOURCE_GRIFFITH_RV:14043154e75564513cda5ebc08079910cee029225d10df5d5cc7c128c7533287": "14043154e75564513cda5ebc08079910cee029225d10df5d5cc7c128c7533287",
+    "WIKISOURCE_GRIFFITH_RV:17e05f036646c99b853a2f6b748b5bda4981a4f3eff0d4330f32cb2d0cc1903b": "17e05f036646c99b853a2f6b748b5bda4981a4f3eff0d4330f32cb2d0cc1903b",
+    "WIKISOURCE_GRIFFITH_RV:1af2ee93d90b3568c457faf8365a8b081a119d0c54dcce0bfa7981c7af817607": "1af2ee93d90b3568c457faf8365a8b081a119d0c54dcce0bfa7981c7af817607",
+    "WIKISOURCE_GRIFFITH_RV:208363f8077d4a150ca0bb5df070286a5db93e726f715d936d9142c39de68ffc": "208363f8077d4a150ca0bb5df070286a5db93e726f715d936d9142c39de68ffc",
+    "WIKISOURCE_GRIFFITH_RV:2bf3e79e1d6c5846a15afd9b76b400f574ae211eed8513304c18aad211a116d7": "2bf3e79e1d6c5846a15afd9b76b400f574ae211eed8513304c18aad211a116d7",
+    "WIKISOURCE_GRIFFITH_RV:31940706020838ab08a51f158bbd2eea8b5b2db2cdf7e295850037ad75d7e000": "31940706020838ab08a51f158bbd2eea8b5b2db2cdf7e295850037ad75d7e000",
+    "WIKISOURCE_GRIFFITH_RV:32e612b46ce8ca3a6c757294fdd56c39ef879a73bd7881a0a65faafb2737ad2b": "32e612b46ce8ca3a6c757294fdd56c39ef879a73bd7881a0a65faafb2737ad2b",
+    "WIKISOURCE_GRIFFITH_RV:33a4f2ff61568bce16850df10564b50d47ca128246c6437a0b35e8f6ec53b418": "33a4f2ff61568bce16850df10564b50d47ca128246c6437a0b35e8f6ec53b418",
+    "WIKISOURCE_GRIFFITH_RV:38615e6bd1bba21b2e55cee16d7805e6e0af55c9ce529f2c6973304984b7ca52": "38615e6bd1bba21b2e55cee16d7805e6e0af55c9ce529f2c6973304984b7ca52",
+    "WIKISOURCE_GRIFFITH_RV:3c7c42a62d10d336cc434471793366da224bf2d2f64db4ccc9ef42a90653d9ba": "3c7c42a62d10d336cc434471793366da224bf2d2f64db4ccc9ef42a90653d9ba",
+    "WIKISOURCE_GRIFFITH_RV:4e807c27438a156567867ffb9440fd2b704d10e9b421812ac67e4ac98c1a5143": "4e807c27438a156567867ffb9440fd2b704d10e9b421812ac67e4ac98c1a5143",
+    "WIKISOURCE_GRIFFITH_RV:55ba304774f0682dfbddcc4f54c6b61d2f686141fb461d423b955b178b3651bd": "55ba304774f0682dfbddcc4f54c6b61d2f686141fb461d423b955b178b3651bd",
+    "WIKISOURCE_GRIFFITH_RV:612934260437d2c3f64332dac7e4640746b053f8b5fa6d275274fe05ae0d6a59": "612934260437d2c3f64332dac7e4640746b053f8b5fa6d275274fe05ae0d6a59",
+    "WIKISOURCE_GRIFFITH_RV:6b3e6bfcfec67c864bb2ef3bc803a281a4db8b4fc24b00c2ab551f84f8ee76a7": "6b3e6bfcfec67c864bb2ef3bc803a281a4db8b4fc24b00c2ab551f84f8ee76a7",
+    "WIKISOURCE_GRIFFITH_RV:7297bfb24a1a52ebbcc5bb91c39aa724f974006c13f050b179b8fbe8ce194866": "7297bfb24a1a52ebbcc5bb91c39aa724f974006c13f050b179b8fbe8ce194866",
+    "WIKISOURCE_GRIFFITH_RV:7371b4f88a804bacf2bd5d5e2e7bc7558d7e76b960424c806bec789116dde9b3": "7371b4f88a804bacf2bd5d5e2e7bc7558d7e76b960424c806bec789116dde9b3",
+    "WIKISOURCE_GRIFFITH_RV:7875f0a9c9d24f471b78f51880d41cb7d106c9e3e088b47ee78a7b4f9ba2b428": "7875f0a9c9d24f471b78f51880d41cb7d106c9e3e088b47ee78a7b4f9ba2b428",
+    "WIKISOURCE_GRIFFITH_RV:787d1a7361a134ed7e5a83a54020585fd97e76df0cd05610ecd47d98fba96e7a": "787d1a7361a134ed7e5a83a54020585fd97e76df0cd05610ecd47d98fba96e7a",
+    "WIKISOURCE_GRIFFITH_RV:7b4534dec3d19eecefd4c4d7f86d725ee668b30aa43db4a6529a0c1aabae6060": "7b4534dec3d19eecefd4c4d7f86d725ee668b30aa43db4a6529a0c1aabae6060",
+    "WIKISOURCE_GRIFFITH_RV:7d597c3769b09833a3e5e790783f5b9fe6472b99e5fdac0a588e12f45f9d4621": "7d597c3769b09833a3e5e790783f5b9fe6472b99e5fdac0a588e12f45f9d4621",
+    "WIKISOURCE_GRIFFITH_RV:8517a6d2ccc3689e6d899c2b63001da175eb12ae0b3087027d6342063db3fcf0": "8517a6d2ccc3689e6d899c2b63001da175eb12ae0b3087027d6342063db3fcf0",
+    "WIKISOURCE_GRIFFITH_RV:8a0a71dc9149637118962552eee66d72709ec413b9a691a04faa2e4b60378255": "8a0a71dc9149637118962552eee66d72709ec413b9a691a04faa2e4b60378255",
+    "WIKISOURCE_GRIFFITH_RV:8f34c5bf09976d90453733c14271514ac2045fc271aea697fddc2a53b68e43a7": "8f34c5bf09976d90453733c14271514ac2045fc271aea697fddc2a53b68e43a7",
+    "WIKISOURCE_GRIFFITH_RV:8fbddda86c9f8c29c51bc0b67842e4bb2101c828b5dba441e71bece1ad6015cc": "8fbddda86c9f8c29c51bc0b67842e4bb2101c828b5dba441e71bece1ad6015cc",
+    "WIKISOURCE_GRIFFITH_RV:91b957e3e0be9be0f94da94c4e499a063b8573eca1847a9e001e26a1d5d5950c": "91b957e3e0be9be0f94da94c4e499a063b8573eca1847a9e001e26a1d5d5950c",
+    "WIKISOURCE_GRIFFITH_RV:9e41784f4fed2057e5201abc6c8d7dcab172b5f6c41de3c14f78accc0b4efe6d": "9e41784f4fed2057e5201abc6c8d7dcab172b5f6c41de3c14f78accc0b4efe6d",
+    "WIKISOURCE_GRIFFITH_RV:a487c234664934908c1c53a2be3eef4eda97fd356298f69f04f6757a9d30c4ce": "a487c234664934908c1c53a2be3eef4eda97fd356298f69f04f6757a9d30c4ce",
+    "WIKISOURCE_GRIFFITH_RV:ac77a3e4504fc0f89356098fb2768896f4671ae7513b4880b40d7b21ca2d59d3": "ac77a3e4504fc0f89356098fb2768896f4671ae7513b4880b40d7b21ca2d59d3",
+    "WIKISOURCE_GRIFFITH_RV:b72df75335e556f66df60de8f09feb13e45c0fade6cd50e880f5a6873212836f": "b72df75335e556f66df60de8f09feb13e45c0fade6cd50e880f5a6873212836f",
+    "WIKISOURCE_GRIFFITH_RV:b9eeb2490a36d7eed152cb1cd9509b6d6c35c44e0951353ea26d137bfb87a281": "b9eeb2490a36d7eed152cb1cd9509b6d6c35c44e0951353ea26d137bfb87a281",
+    "WIKISOURCE_GRIFFITH_RV:bb3f407db65c2c16d493b01a31e7461ad9dd4f0c74966c1453e34e0c945d9697": "bb3f407db65c2c16d493b01a31e7461ad9dd4f0c74966c1453e34e0c945d9697",
+    "WIKISOURCE_GRIFFITH_RV:bed11cd0d19f5d482d73e5a285af3daf9b1c3ba70144b0f4201e93c201dc353a": "bed11cd0d19f5d482d73e5a285af3daf9b1c3ba70144b0f4201e93c201dc353a",
+    "WIKISOURCE_GRIFFITH_RV:c296fdb8bcc383c58bc4c598b2ae96cd6df2f63c75328a79b99234d7e9e2e5d0": "c296fdb8bcc383c58bc4c598b2ae96cd6df2f63c75328a79b99234d7e9e2e5d0",
+    "WIKISOURCE_GRIFFITH_RV:cba309da94bd8a6ea4012d105a98a2f0469a8519b399d4f7ed8b300952d0334c": "cba309da94bd8a6ea4012d105a98a2f0469a8519b399d4f7ed8b300952d0334c",
+    "WIKISOURCE_GRIFFITH_RV:d4d1fc81a693b157fe3212d88fb70742fa828fd353b1521ffa18ae794b99ee0c": "d4d1fc81a693b157fe3212d88fb70742fa828fd353b1521ffa18ae794b99ee0c",
+    "WIKISOURCE_GRIFFITH_RV:dbba6c9232f3d1cc1f9da289bae3644eab278d5fb0b760fdeda5253b06ae59bc": "dbba6c9232f3d1cc1f9da289bae3644eab278d5fb0b760fdeda5253b06ae59bc",
+    "WIKISOURCE_GRIFFITH_RV:e3015fe5fc26cd38ddd851537a4205091032cbef06373e225fa0738956b9bdb1": "e3015fe5fc26cd38ddd851537a4205091032cbef06373e225fa0738956b9bdb1",
+    "WIKISOURCE_GRIFFITH_RV:f27fb74b0ff495e410cd3db3255e80998055afb7f0260ad3b27512b8f396e914": "f27fb74b0ff495e410cd3db3255e80998055afb7f0260ad3b27512b8f396e914",
+    "WIKISOURCE_GRIFFITH_RV:f47b326c6492941b8dad77f8cdbd6acbd0850da7a66b725a667c05fdfc78680b": "f47b326c6492941b8dad77f8cdbd6acbd0850da7a66b725a667c05fdfc78680b",
+    "WIKISOURCE_GRIFFITH_RV:f59b34f522c5d0e5a283dd39f8ae93bbd96d86c672559392e6cecb4455b915f7": "f59b34f522c5d0e5a283dd39f8ae93bbd96d86c672559392e6cecb4455b915f7",
+    "WIKISOURCE_GRIFFITH_RV:f60fcc867641fbfc8545eefa8a2f46ef051150f364bf10b9a4e96ba66c90861d": "f60fcc867641fbfc8545eefa8a2f46ef051150f364bf10b9a4e96ba66c90861d"
+  },
+  "reconciliation_policy_version": "rv-shakala-v1",
+  "record_counts": {
+    "canonical/rv_mandala_2_full_v1/REPORT.md": 1,
+    "canonical/rv_mandala_2_full_v1/audio_recordings.jsonl": 0,
+    "canonical/rv_mandala_2_full_v1/audio_segments.jsonl": 0,
+    "canonical/rv_mandala_2_full_v1/citations.jsonl": 429,
+    "canonical/rv_mandala_2_full_v1/discoveries.jsonl": 86,
+    "canonical/rv_mandala_2_full_v1/passages.jsonl": 473,
+    "canonical/rv_mandala_2_full_v1/qa_issues.jsonl": 31,
+    "canonical/rv_mandala_2_full_v1/source_artifacts.jsonl": 14,
+    "canonical/rv_mandala_2_full_v1/source_assertions.jsonl": 905,
+    "canonical/rv_mandala_2_full_v1/sources.jsonl": 8,
+    "canonical/rv_mandala_2_full_v1/text_versions.jsonl": 858,
+    "canonical/rv_mandala_2_full_v1/traditional_metadata.jsonl": 0,
+    "canonical/rv_mandala_2_full_v1/translations.jsonl": 429,
+    "canonical/rv_mandala_2_full_v1/works.jsonl": 1
+  },
+  "rights_summary": {},
+  "schema_version": "1.0.0",
+  "source_artifact_ids": [
+    "GRETIL.RV.AUFRECHT.TEI.2019",
+    "GRIFFITH.RV.1896.WIKISOURCE",
+    "VEDAWEB.RV.BOOK02.TEI.D3EB8AF"
+  ],
+  "source_snapshot_ids": [
+    "GRETIL:14197d9c1dcced64900ef971d9f4dc5b46aa8750780f5599453c9739d6a29edd",
+    "VEDAWEB:236269da756609ef371df54bfe0734c6fc6177060a4cbcdc1fa9dc047c3a8c4b",
+    "WIKISOURCE_GRIFFITH_RV:009afb9e6fd4088b2ba7ca0b7546405581cef21322816643feb57d52fe848cb5",
+    "WIKISOURCE_GRIFFITH_RV:016c615707d349b52e70f05bc7c2c4402a8e90026eca3c21fb363394531942cf",
+    "WIKISOURCE_GRIFFITH_RV:06b1f412e3b57da25cba559f5fc61c6eb7f28fd040c6775dbf2719dfab69a616",
+    "WIKISOURCE_GRIFFITH_RV:14043154e75564513cda5ebc08079910cee029225d10df5d5cc7c128c7533287",
+    "WIKISOURCE_GRIFFITH_RV:17e05f036646c99b853a2f6b748b5bda4981a4f3eff0d4330f32cb2d0cc1903b",
+    "WIKISOURCE_GRIFFITH_RV:1af2ee93d90b3568c457faf8365a8b081a119d0c54dcce0bfa7981c7af817607",
+    "WIKISOURCE_GRIFFITH_RV:208363f8077d4a150ca0bb5df070286a5db93e726f715d936d9142c39de68ffc",
+    "WIKISOURCE_GRIFFITH_RV:2bf3e79e1d6c5846a15afd9b76b400f574ae211eed8513304c18aad211a116d7",
+    "WIKISOURCE_GRIFFITH_RV:31940706020838ab08a51f158bbd2eea8b5b2db2cdf7e295850037ad75d7e000",
+    "WIKISOURCE_GRIFFITH_RV:32e612b46ce8ca3a6c757294fdd56c39ef879a73bd7881a0a65faafb2737ad2b",
+    "WIKISOURCE_GRIFFITH_RV:33a4f2ff61568bce16850df10564b50d47ca128246c6437a0b35e8f6ec53b418",
+    "WIKISOURCE_GRIFFITH_RV:38615e6bd1bba21b2e55cee16d7805e6e0af55c9ce529f2c6973304984b7ca52",
+    "WIKISOURCE_GRIFFITH_RV:3c7c42a62d10d336cc434471793366da224bf2d2f64db4ccc9ef42a90653d9ba",
+    "WIKISOURCE_GRIFFITH_RV:4e807c27438a156567867ffb9440fd2b704d10e9b421812ac67e4ac98c1a5143",
+    "WIKISOURCE_GRIFFITH_RV:55ba304774f0682dfbddcc4f54c6b61d2f686141fb461d423b955b178b3651bd",
+    "WIKISOURCE_GRIFFITH_RV:612934260437d2c3f64332dac7e4640746b053f8b5fa6d275274fe05ae0d6a59",
+    "WIKISOURCE_GRIFFITH_RV:6b3e6bfcfec67c864bb2ef3bc803a281a4db8b4fc24b00c2ab551f84f8ee76a7",
+    "WIKISOURCE_GRIFFITH_RV:7297bfb24a1a52ebbcc5bb91c39aa724f974006c13f050b179b8fbe8ce194866",
+    "WIKISOURCE_GRIFFITH_RV:7371b4f88a804bacf2bd5d5e2e7bc7558d7e76b960424c806bec789116dde9b3",
+    "WIKISOURCE_GRIFFITH_RV:7875f0a9c9d24f471b78f51880d41cb7d106c9e3e088b47ee78a7b4f9ba2b428",
+    "WIKISOURCE_GRIFFITH_RV:787d1a7361a134ed7e5a83a54020585fd97e76df0cd05610ecd47d98fba96e7a",
+    "WIKISOURCE_GRIFFITH_RV:7b4534dec3d19eecefd4c4d7f86d725ee668b30aa43db4a6529a0c1aabae6060",
+    "WIKISOURCE_GRIFFITH_RV:7d597c3769b09833a3e5e790783f5b9fe6472b99e5fdac0a588e12f45f9d4621",
+    "WIKISOURCE_GRIFFITH_RV:8517a6d2ccc3689e6d899c2b63001da175eb12ae0b3087027d6342063db3fcf0",
+    "WIKISOURCE_GRIFFITH_RV:8a0a71dc9149637118962552eee66d72709ec413b9a691a04faa2e4b60378255",
+    "WIKISOURCE_GRIFFITH_RV:8f34c5bf09976d90453733c14271514ac2045fc271aea697fddc2a53b68e43a7",
+    "WIKISOURCE_GRIFFITH_RV:8fbddda86c9f8c29c51bc0b67842e4bb2101c828b5dba441e71bece1ad6015cc",
+    "WIKISOURCE_GRIFFITH_RV:91b957e3e0be9be0f94da94c4e499a063b8573eca1847a9e001e26a1d5d5950c",
+    "WIKISOURCE_GRIFFITH_RV:9e41784f4fed2057e5201abc6c8d7dcab172b5f6c41de3c14f78accc0b4efe6d",
+    "WIKISOURCE_GRIFFITH_RV:a487c234664934908c1c53a2be3eef4eda97fd356298f69f04f6757a9d30c4ce",
+    "WIKISOURCE_GRIFFITH_RV:ac77a3e4504fc0f89356098fb2768896f4671ae7513b4880b40d7b21ca2d59d3",
+    "WIKISOURCE_GRIFFITH_RV:b72df75335e556f66df60de8f09feb13e45c0fade6cd50e880f5a6873212836f",
+    "WIKISOURCE_GRIFFITH_RV:b9eeb2490a36d7eed152cb1cd9509b6d6c35c44e0951353ea26d137bfb87a281",
+    "WIKISOURCE_GRIFFITH_RV:bb3f407db65c2c16d493b01a31e7461ad9dd4f0c74966c1453e34e0c945d9697",
+    "WIKISOURCE_GRIFFITH_RV:bed11cd0d19f5d482d73e5a285af3daf9b1c3ba70144b0f4201e93c201dc353a",
+    "WIKISOURCE_GRIFFITH_RV:c296fdb8bcc383c58bc4c598b2ae96cd6df2f63c75328a79b99234d7e9e2e5d0",
+    "WIKISOURCE_GRIFFITH_RV:cba309da94bd8a6ea4012d105a98a2f0469a8519b399d4f7ed8b300952d0334c",
+    "WIKISOURCE_GRIFFITH_RV:d4d1fc81a693b157fe3212d88fb70742fa828fd353b1521ffa18ae794b99ee0c",
+    "WIKISOURCE_GRIFFITH_RV:dbba6c9232f3d1cc1f9da289bae3644eab278d5fb0b760fdeda5253b06ae59bc",
+    "WIKISOURCE_GRIFFITH_RV:e3015fe5fc26cd38ddd851537a4205091032cbef06373e225fa0738956b9bdb1",
+    "WIKISOURCE_GRIFFITH_RV:f27fb74b0ff495e410cd3db3255e80998055afb7f0260ad3b27512b8f396e914",
+    "WIKISOURCE_GRIFFITH_RV:f47b326c6492941b8dad77f8cdbd6acbd0850da7a66b725a667c05fdfc78680b",
+    "WIKISOURCE_GRIFFITH_RV:f59b34f522c5d0e5a283dd39f8ae93bbd96d86c672559392e6cecb4455b915f7",
+    "WIKISOURCE_GRIFFITH_RV:f60fcc867641fbfc8545eefa8a2f46ef051150f364bf10b9a4e96ba66c90861d"
+  ],
+  "version": "1.0.0-rc1",
+  "works": [
+    "VG:WORK:RV:SAK"
+  ]
+}

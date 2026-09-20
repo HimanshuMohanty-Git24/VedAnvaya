@@ -1,0 +1,262 @@
+{
+ "population": "EXACT MANTRA_EMPLOYED_IN_RITE rows of data/staging/ritual/rows.jsonl",
+ "population_size": 769,
+ "draw": "random.Random(20260916).sample(population, 24)",
+ "reviewed": 24,
+ "reviewer": "AGENT_4_FINAL_CLOSURE_SPRINT",
+ "review_level": "AGENT_ADJUDICATED_SINGLE_READER_NO_HUMAN_REVIEW",
+ "human_reviewed": 0,
+ "true_positives": 19,
+ "false_positives": 1,
+ "withheld_span_not_reproducible": 4,
+ "precision_over_every_reviewed_row": 0.7917,
+ "precision_over_rows_whose_evidence_is_reproducible": 0.95,
+ "precision_is_reported_as_two_figures_because": "a single figure would have to decide whether an unreproducible row is an error or an unknown, and it is an unknown. Both bounds are given.",
+ "error_modes_found": {
+  "MATCHED_RUN_BEGINS_MID_QUOTATION": "1 of 24. The matcher requires the run to END at a citing word boundary and does not require it to BEGIN where the quoted unit begins, so a mantra opening found deep inside a longer pratika is accepted.",
+  "SPAN_NOT_REPRODUCIBLE": "4 of 24 in the sample. Over the whole EXACT population the figure is 25 of 769 (3.3%): the claimed matched span cannot be found in the row's own citing text under any text form this graph stores for that mantra. The build's mantra-form input is not in the repository, so the span cannot be re-derived, and a row whose evidence cannot be checked is worse than none because it looks checkable."
+ },
+ "population_span_not_reproducible": 25,
+ "rows": [
+  {
+   "n": 1,
+   "canonical_key": "VG:YV:VSM:A06:V036",
+   "citing_citation": "PB 14.10.3",
+   "matched_normalised_letters": 12,
+   "quotation_closed_by_iti": true,
+   "span_reproducible": true,
+   "verdict": "FALSE_POSITIVE_MATCHED_RUN_BEGINS_MID_QUOTATION",
+   "reason": "VSM 6.36 opens `prag apag udag`. PB 14.10.3 quotes `yad indra prag apag udag iti` -- the quoted unit begins at `yad indra`, 87 letters into the line, so the pratika is of a verse that VSM 6.36 is not. The matcher requires the run to END at a citing word boundary and does not require it to BEGIN where the quotation begins."
+  },
+  {
+   "n": 2,
+   "canonical_key": "VG:AV:SAU:K06:S002:V001",
+   "citing_citation": "SBM 3.2.4.20.6",
+   "matched_normalised_letters": 12,
+   "quotation_closed_by_iti": true,
+   "span_reproducible": true,
+   "verdict": "TRUE",
+   "reason": "SBM 3.2.4.20.6 is `indraya somam iti` and nothing else."
+  },
+  {
+   "n": 3,
+   "canonical_key": "VG:YV:VSM:A12:V073",
+   "citing_citation": "KatySS 17.2.21",
+   "matched_normalised_letters": 12,
+   "quotation_closed_by_iti": true,
+   "span_reproducible": true,
+   "verdict": "TRUE",
+   "reason": "KatySS 17.2.21 `... vimucyadhvam iti` quotes VSM 12.73."
+  },
+  {
+   "n": 4,
+   "canonical_key": "VG:RV:SAK:M05:S051:V008",
+   "citing_citation": "AB 5.1.12",
+   "matched_normalised_letters": 22,
+   "quotation_closed_by_iti": false,
+   "span_reproducible": true,
+   "verdict": "TRUE",
+   "reason": "AB 5.1.12 lists the prauga pratikas; `sajur visvebhir devebhir` is one."
+  },
+  {
+   "n": 5,
+   "canonical_key": "VG:AV:SAU:K20:S127:V007",
+   "citing_citation": "SankhSS 12.17.1",
+   "matched_normalised_letters": 57,
+   "quotation_closed_by_iti": false,
+   "span_reproducible": true,
+   "verdict": "TRUE",
+   "reason": "SankhSS 12.17.1 quotes AVS 20.127.7 verbatim, 57 letters."
+  },
+  {
+   "n": 6,
+   "canonical_key": "VG:YV:VSM:A04:V029",
+   "citing_citation": "KatySS 7.9.4",
+   "matched_normalised_letters": 12,
+   "quotation_closed_by_iti": true,
+   "span_reproducible": true,
+   "verdict": "TRUE",
+   "reason": "KatySS 7.9.4 `prati pantham ity` quotes VSM 4.29."
+  },
+  {
+   "n": 7,
+   "canonical_key": "VG:AV:SAU:K12:S001:V038",
+   "citing_citation": "KausS 3.7.37",
+   "matched_normalised_letters": 20,
+   "quotation_closed_by_iti": true,
+   "span_reproducible": true,
+   "verdict": "TRUE",
+   "reason": "KausS 3.7.37 `yasyam sadohavirdhane iti juhoti` quotes AVS 12.1.38."
+  },
+  {
+   "n": 8,
+   "canonical_key": "VG:RV:SAK:M05:S002:V007",
+   "citing_citation": "AB 7.17.1",
+   "matched_normalised_letters": 29,
+   "quotation_closed_by_iti": true,
+   "span_reproducible": false,
+   "verdict": "WITHHELD_SPAN_NOT_REPRODUCIBLE",
+   "reason": "AB 7.17.1: the claimed 29-letter span of RV 5.2.7 is not present in the citing line under any text form this graph stores for that mantra. The line names Sunahsepa as a person in a narrative."
+  },
+  {
+   "n": 9,
+   "canonical_key": "VG:RV:SAK:M08:S022:V001",
+   "citing_citation": "AsvSS 4.15.2",
+   "matched_normalised_letters": 16,
+   "quotation_closed_by_iti": true,
+   "span_reproducible": false,
+   "verdict": "WITHHELD_SPAN_NOT_REPRODUCIBLE",
+   "reason": "AsvSS 4.15.2: the claimed 16-letter span of RV 8.22.1 is not present."
+  },
+  {
+   "n": 10,
+   "canonical_key": "VG:RV:SAK:M01:S156:V001",
+   "citing_citation": "AsvSS 8.12.7",
+   "matched_normalised_letters": 27,
+   "quotation_closed_by_iti": true,
+   "span_reproducible": true,
+   "verdict": "TRUE",
+   "reason": "AsvSS 8.12.7 states a substitution and quotes RV 1.156.1 by pratika."
+  },
+  {
+   "n": 11,
+   "canonical_key": "VG:RV:SAK:M10:S091:V001",
+   "citing_citation": "AsvSS 4.13.7",
+   "matched_normalised_letters": 13,
+   "quotation_closed_by_iti": false,
+   "span_reproducible": true,
+   "verdict": "TRUE",
+   "reason": "The row's first locus (AsvSS 4.13.7) is not reproducible, but its second locus AsvSS 4.15.8 quotes RV 10.91.1 at offset 0."
+  },
+  {
+   "n": 12,
+   "canonical_key": "VG:RV:SAK:M06:S054:V005",
+   "citing_citation": "SankhGS 3.9.1",
+   "matched_normalised_letters": 14,
+   "quotation_closed_by_iti": true,
+   "span_reproducible": true,
+   "verdict": "TRUE",
+   "reason": "SankhGS 3.9.1 `pusa ga anvetu na iti` quotes RV 6.54.5."
+  },
+  {
+   "n": 13,
+   "canonical_key": "VG:YV:VSM:A06:V036",
+   "citing_citation": "AsvSS 8.3.20",
+   "matched_normalised_letters": 12,
+   "quotation_closed_by_iti": true,
+   "span_reproducible": true,
+   "verdict": "TRUE",
+   "reason": "AsvSS 8.3.20 `ihettha prag apag udag iti catasro`. Reproducible at offset 7, immediately after one introductory word; read as a genuine pratika, but it has the same shape as sample 1 and is flagged for a human."
+  },
+  {
+   "n": 14,
+   "canonical_key": "VG:RV:SAK:M10:S051:V008",
+   "citing_citation": "KausB 1.3.10",
+   "matched_normalised_letters": 28,
+   "quotation_closed_by_iti": false,
+   "span_reproducible": true,
+   "verdict": "TRUE",
+   "reason": "KausB 1.3.10 quotes RV 10.51.8 and closes with iti."
+  },
+  {
+   "n": 15,
+   "canonical_key": "VG:RV:SAK:M10:S176:V003",
+   "citing_citation": "AB 1.28.13",
+   "matched_normalised_letters": 18,
+   "quotation_closed_by_iti": true,
+   "span_reproducible": true,
+   "verdict": "TRUE",
+   "reason": "AB 1.28.13 is `ayam u sya pra devayur iti` and nothing else."
+  },
+  {
+   "n": 16,
+   "canonical_key": "VG:RV:SAK:M08:S007:V022",
+   "citing_citation": "AB 1.22.2",
+   "matched_normalised_letters": 17,
+   "quotation_closed_by_iti": true,
+   "span_reproducible": false,
+   "verdict": "WITHHELD_SPAN_NOT_REPRODUCIBLE",
+   "reason": "AB 1.22.2: the claimed 17-letter span of RV 8.7.22 is not present."
+  },
+  {
+   "n": 17,
+   "canonical_key": "VG:YV:VSM:A23:V049",
+   "citing_citation": "SankhSS 16.6.1.1",
+   "matched_normalised_letters": 52,
+   "quotation_closed_by_iti": false,
+   "span_reproducible": true,
+   "verdict": "TRUE",
+   "reason": "SankhSS 16.6.1.1 quotes VSM 23.49 verbatim, 52 letters -- a brahmodya."
+  },
+  {
+   "n": 18,
+   "canonical_key": "VG:RV:SAK:M10:S030:V014",
+   "citing_citation": "AB 2.20.26",
+   "matched_normalised_letters": 25,
+   "quotation_closed_by_iti": true,
+   "span_reproducible": true,
+   "verdict": "TRUE",
+   "reason": "AB 2.20.26 `ema agman revatir jivadhanya iti` quotes RV 10.30.14."
+  },
+  {
+   "n": 19,
+   "canonical_key": "VG:SV:KAU:MAHANAMNYA:V01",
+   "citing_citation": "SankhSS 17.12.5",
+   "matched_normalised_letters": 16,
+   "quotation_closed_by_iti": true,
+   "span_reproducible": true,
+   "verdict": "TRUE",
+   "reason": "SankhSS 17.12.5 quotes the first Mahanamni and closes with iti."
+  },
+  {
+   "n": 20,
+   "canonical_key": "VG:RV:SAK:M08:S100:V010",
+   "citing_citation": "AsvSS 3.8.1",
+   "matched_normalised_letters": 24,
+   "quotation_closed_by_iti": false,
+   "span_reproducible": false,
+   "verdict": "WITHHELD_SPAN_NOT_REPRODUCIBLE",
+   "reason": "AsvSS 3.8.1: the claimed 24-letter span of RV 8.100.10 is not present."
+  },
+  {
+   "n": 21,
+   "canonical_key": "VG:RV:SAK:M01:S156:V004",
+   "citing_citation": "KausB 9.5.8",
+   "matched_normalised_letters": 27,
+   "quotation_closed_by_iti": true,
+   "span_reproducible": true,
+   "verdict": "TRUE",
+   "reason": "KausB 9.5.8 `tam asya raja varunas tam asvina iti` quotes RV 1.156.4."
+  },
+  {
+   "n": 22,
+   "canonical_key": "VG:RV:SAK:M01:S173:V001",
+   "citing_citation": "KausB 24.5.12",
+   "matched_normalised_letters": 26,
+   "quotation_closed_by_iti": true,
+   "span_reproducible": true,
+   "verdict": "TRUE",
+   "reason": "KausB 24.5.12 quotes RV 1.173.1 by pratika."
+  },
+  {
+   "n": 23,
+   "canonical_key": "VG:AV:SAU:K20:S133:V001",
+   "citing_citation": "SankhSS 12.22.1.1",
+   "matched_normalised_letters": 73,
+   "quotation_closed_by_iti": false,
+   "span_reproducible": true,
+   "verdict": "TRUE",
+   "reason": "SankhSS 12.22.1.1 quotes AVS 20.133.1 verbatim, 73 letters."
+  },
+  {
+   "n": 24,
+   "canonical_key": "VG:RV:SAK:M06:S054:V005",
+   "citing_citation": "KausGS 3.5.4",
+   "matched_normalised_letters": 15,
+   "quotation_closed_by_iti": true,
+   "span_reproducible": true,
+   "verdict": "TRUE",
+   "reason": "KausGS 3.5.4 `pusa ga anvetu nah iti` quotes RV 6.54.5."
+  }
+ ]
+}

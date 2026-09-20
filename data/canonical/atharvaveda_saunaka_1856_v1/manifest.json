@@ -1,0 +1,110 @@
+{
+  "build_config_hashes": {},
+  "built_at": "2026-09-08T00:00:00Z",
+  "component_manifest_hashes": {},
+  "dataset": "VedaGraph Canonical Corpus",
+  "generated_content_sha256": "22b700ae7f752f60129690a55e49b3da7594f8ea280531f4b7a13111b31da844",
+  "generated_files": [
+    {
+      "path": "audio_recordings.jsonl",
+      "record_count": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "audio_segments.jsonl",
+      "record_count": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "citations.jsonl",
+      "record_count": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "passages.jsonl",
+      "record_count": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "qa_issues.jsonl",
+      "record_count": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "referent_bindings.jsonl",
+      "record_count": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "source_artifacts.jsonl",
+      "record_count": 1,
+      "sha256": "0d4b5e9478e1e563aeba0b291c95908e5899ddab9d7f0b04653e5df165d2609a"
+    },
+    {
+      "path": "source_assertions.jsonl",
+      "record_count": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "sources.jsonl",
+      "record_count": 1,
+      "sha256": "e17d96dbc83b9ace18009430427a8753e0be82253bd64179097749ce30602564"
+    },
+    {
+      "path": "text_versions.jsonl",
+      "record_count": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "traditional_metadata.jsonl",
+      "record_count": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "translations.jsonl",
+      "record_count": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "works.jsonl",
+      "record_count": 1,
+      "sha256": "c028b32482de5d4b2e6ebcbcf5be541c04aabd885d4a6461080c1846f161d7bc"
+    }
+  ],
+  "parser_versions": {
+    "VEDAGRAPH.AVS.ROTH_WHITNEY_1856.TRANSCRIPTION": "bsb-1856-devanagari-v2"
+  },
+  "passage_count": 0,
+  "qa_status": "FAILED",
+  "raw_snapshot_hashes": {},
+  "reconciliation_policy_version": "bsb-1856-devanagari-v2",
+  "record_counts": {
+    "audio_recordings.jsonl": 0,
+    "audio_segments.jsonl": 0,
+    "citations.jsonl": 0,
+    "passages.jsonl": 0,
+    "qa_issues.jsonl": 0,
+    "referent_bindings.jsonl": 0,
+    "source_artifacts.jsonl": 1,
+    "source_assertions.jsonl": 0,
+    "sources.jsonl": 1,
+    "text_versions.jsonl": 0,
+    "traditional_metadata.jsonl": 0,
+    "translations.jsonl": 0,
+    "works.jsonl": 1
+  },
+  "rights_summary": {
+    "BSB.AV.SAUNAKA.ROTH_WHITNEY.1856.SCAN": "PUBLIC_DOMAIN"
+  },
+  "schema_version": "1.0.0",
+  "source_artifact_ids": [
+    "BSB.AV.SAUNAKA.ROTH_WHITNEY.1856.SCAN"
+  ],
+  "source_snapshot_ids": [
+    "2026-09-07"
+  ],
+  "version": "1.0.0-avs-1856.1",
+  "works": [
+    "VG:WORK:AV:SAU"
+  ]
+}

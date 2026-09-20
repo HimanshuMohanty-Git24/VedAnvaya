@@ -29,9 +29,11 @@
  *   node scripts/build-world.mjs              # composition   -> public/world/*
  */
 
+import { createHash } from "node:crypto";
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
+import { validatePublicGraph, exportHash } from "./public-identity-contract.mjs";
 import { forceCenter, forceLink, forceManyBody, forceSimulation } from "d3-force-3d";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
@@ -104,10 +106,41 @@ for (const [path, how] of [
 }
 
 console.log(`reading ${IN} ...`);
-const raw = JSON.parse(readFileSync(IN, "utf8"));
+const rawBytes = readFileSync(IN);
+const raw = JSON.parse(rawBytes.toString("utf8"));
+const identityAudit = validatePublicGraph(raw);
+const inputPublicExportHash = exportHash(rawBytes);
 const nodes = raw.nodes;
 const edges = raw.edges;
 const detected = JSON.parse(readFileSync(CONSTELLATIONS, "utf8"));
+
+/*
+ * The partition is joined BY POSITION, so it has to have been computed over this world.
+ *
+ * `community[i]` is the constellation of `nodes[i]` and nothing in the file says which world
+ * it was measured on. Wave 4 found the consequence: `world.raw.json` was re-exported after 28
+ * malformed metre identities were marked internal, the partition was not recomputed, and the
+ * build joined 35,370 assignments onto 35,648 nodes without complaint -- every node past the
+ * first divergence taking another node's constellation, and the last 278 reading `undefined`
+ * out of the end of a typed array.
+ *
+ * The exact public-export hash and assignment count must both match. Equal-size exports
+ * can contain different identities or node order; a length check alone cannot detect that.
+ */
+if (detected.inputPublicExportHash !== inputPublicExportHash) {
+    throw new Error("Constellation partition input hash does not match this public export; rebuild it");
+}
+if (detected.community.length !== nodes.length) {
+    console.error(
+        `\nConstellation partition does not fit this world.\n` +
+            `  ${CONSTELLATIONS} holds ${detected.community.length.toLocaleString()} assignments\n` +
+            `  ${IN} holds ${nodes.length.toLocaleString()} nodes\n\n` +
+            `The partition is joined by position, so a length mismatch silently gives nodes\n` +
+            `another node's constellation. Recompute it:\n\n` +
+            `  node scripts/build-constellations.mjs\n`,
+    );
+    process.exit(1);
+}
 const community = Int32Array.from(detected.community);
 const degree = nodes.map((n) => n.deg ?? 0);
 console.log(
@@ -474,8 +507,22 @@ const constellations = regionIds.map((id, i) => {
     };
 });
 
+/*
+ * world.bin is the one artifact that cannot declare its own lineage: it is a headerless
+ * typed-array blob, so there is nowhere in it to put a hash. It is pinned from the outside
+ * instead -- the manifest records its sha256 and its byte length, and the manifest is
+ * itself pinned to the public export. That closes the chain: a world.bin from a different
+ * build no longer matches the manifest that ships beside it, and `ids` is a positional join
+ * onto it, so the alternative is a silent mislabelling of every node.
+ */
+const worldBinSha256 = createHash("sha256").update(buffer).digest("hex");
+
 const manifest = {
     version: 2,
+    inputPublicExportHash,
+    worldBinSha256,
+    worldBinBytes: buffer.byteLength,
+    identityAudit,
     generated: raw.generated,
     source: { nodes: raw.counts.nodes, edges: raw.counts.edges },
     counts: { nodes: nodes.length, edges: edges.length },
@@ -503,7 +550,17 @@ const manifest = {
 mkdirSync(OUT_DIR, { recursive: true });
 writeFileSync(join(OUT_DIR, "world.bin"), buffer);
 writeFileSync(join(OUT_DIR, "world.json"), JSON.stringify(manifest));
+/*
+ * The labels sidecar carries the public-export hash for the same reason world.json does.
+ *
+ * world.json and constellations.json were pinned to the exact public export and this file
+ * was not, which left one shipped browser artifact outside the lineage contract: a
+ * labels file built from a different export would still load, and every label would be a
+ * real label -- of the wrong node. `ids` is a positional join onto world.bin, so that
+ * failure is silent and reads as data rather than as a build error.
+ */
 const labels = {
+    inputPublicExportHash,
     ids: nodes.map((n) => n.id),
     labels: nodes.map((n) => n.label ?? ""),
 };

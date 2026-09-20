@@ -1,0 +1,40 @@
+{
+  "artifact": "STAGED_AUDIO_ADDRESSABILITY_PROBE",
+  "probed_at": "2026-09-19T05:52:29Z",
+  "user_agent": "VedaGraph/1.0 (local research tool; +https://github.com/vedagraph/vedagraph)",
+  "sampling": "census -- every staged row probed, none sampled",
+  "requests_made": 954,
+  "elapsed_seconds": 497.6,
+  "workers": 6,
+  "resummarised_at": "2026-09-19T05:54:00Z",
+  "by_set": {
+    "audio_av": {
+      "probed": 771,
+      "resolves": 771,
+      "unresolved": 0,
+      "checksum_recorded_and_matches": 0,
+      "checksum_recorded_and_differs": 0,
+      "no_checksum_recorded_so_none_claimed": 771
+    },
+    "audio_rv": {
+      "probed": 150,
+      "resolves": 150,
+      "unresolved": 0,
+      "checksum_recorded_and_matches": 150,
+      "checksum_recorded_and_differs": 0,
+      "no_checksum_recorded_so_none_claimed": 0
+    },
+    "audio_yv": {
+      "probed": 33,
+      "resolves": 33,
+      "unresolved": 0,
+      "checksum_recorded_and_matches": 0,
+      "checksum_recorded_and_differs": 0,
+      "no_checksum_recorded_so_none_claimed": 33
+    }
+  },
+  "by_outcome": {
+    "RESOLVES": 954
+  },
+  "unresolved": []
+}

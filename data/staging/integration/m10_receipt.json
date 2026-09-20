@@ -1,0 +1,159 @@
+{
+  "migration": "M10_RETIRE_MALFORMED_CHANDAS_IDENTITIES",
+  "gap": "GAP-AV-CHANDOMETRE-SEGMENTATION-001",
+  "at": "2026-09-16T08:12:54.094973+00:00",
+  "executed": true,
+  "backup": "D:/vedanvaya-backups/wave4-pre-m10-20260916T134105",
+  "wave4_finding": "M9 withdrew the assertions and left the objects public. All 28 appeared in frontend/.world/world.raw.json typed Chandas, so a reader browsing the Knowledge World was shown a bracket fragment as a Vedic metre.",
+  "criterion": "Whitney's notation: a colon, or a bare N. verse address",
+  "identities": [
+    {
+      "entity_key": "VG:CHANDAS:AV:2-BHURIJ-BCC4",
+      "printed_label": "2. bhurij"
+    },
+    {
+      "entity_key": "VG:CHANDAS:AV:3-AV-6-P-VIRAD-ATIJAGATI-24-5-P-VIRAD-ATIJAGATI-D77A",
+      "printed_label": "3-av. 6-p. virāḍ atijagatī: 24. 5-p. virāḍ atijagatī"
+    },
+    {
+      "entity_key": "VG:CHANDAS:AV:3-P-PIPILIKAMADHYA-PURAUSNIH-1-11-EKAVASANA-2657",
+      "printed_label": "3-p. pipīlikamadhyā purauṣṇih: 1-11. ekāvasāna"
+    },
+    {
+      "entity_key": "VG:CHANDAS:AV:5-2-P-ASURI-GAYATRI-65E4",
+      "printed_label": "5. 2-p. āsurī gāyatrī"
+    },
+    {
+      "entity_key": "VG:CHANDAS:AV:5-JAGATI-1789",
+      "printed_label": "5. jagatī"
+    },
+    {
+      "entity_key": "VG:CHANDAS:AV:6-ANUSTUBH-E1BD",
+      "printed_label": "6. anuṣṭubh"
+    },
+    {
+      "entity_key": "VG:CHANDAS:AV:7-5-P-PATHYAPANKTI-5CD7",
+      "printed_label": "7. 5-p. pathyāpan̄kti"
+    },
+    {
+      "entity_key": "VG:CHANDAS:AV:AGNEYI-2-VAYAVYA-3-SAURYA-1-SAMNI-TRISTUBH-2-PRAJAPATYA-BRHATI-3-SAMNI-BRHATI-48A1",
+      "printed_label": "āgneyī, 2. vāyavyā, 3. sāuryā. 1. sāmnī triṣṭubh, 2. prājāpatyā bṛhatī, 3. sāmnī bṛhatī"
+    },
+    {
+      "entity_key": "VG:CHANDAS:AV:AGNEYI-JAGATAM-1-ATIJAGATIGARBHA-900C",
+      "printed_label": "āgneyī. jāgatam: 1. atijagatīgarbhā"
+    },
+    {
+      "entity_key": "VG:CHANDAS:AV:AGNEYI-TRAISTUBHAM-1-JAGATI-F59B",
+      "printed_label": "āgneyī. trāiṣṭubham: 1. jagatī"
+    },
+    {
+      "entity_key": "VG:CHANDAS:AV:AINDRI-TRAISTUBHAM-2-BHURIJ-E5EA",
+      "printed_label": "āindrī. trāiṣṭubham: 2. bhurij"
+    },
+    {
+      "entity_key": "VG:CHANDAS:AV:AINDRYAS-ANUSTUBHAM-2-3-AV-6-P-JAGATI-1341",
+      "printed_label": "āindryas. ānuṣṭubham: 2. 3-av. 6-p. jagatī"
+    },
+    {
+      "entity_key": "VG:CHANDAS:AV:BHAUMI-ANUSTUBHAM-1-3-PATHYAPANKTI-3126",
+      "printed_label": "bhāumī. ānuṣṭubham: 1, 3. pathyāpan̄kti"
+    },
+    {
+      "entity_key": "VG:CHANDAS:AV:BRAHMANASPATYA-ANUSTUBHAM-4-VIRATPRASTARAPANKTI-5B81",
+      "printed_label": "brāhmaṇaspatyā. ānuṣṭubham: 4. virāṭprastārapan̄kti"
+    },
+    {
+      "entity_key": "VG:CHANDAS:AV:MANTROKTABAHUDEVATYAM-1-PATHYABRHATI-F814",
+      "printed_label": "mantroktabahudevatyam. 1. pathyābṛhatī"
+    },
+    {
+      "entity_key": "VG:CHANDAS:AV:MANTROKTADEVATYA-ANUSTUBHAM-1-BHURIK-TRISTUBH-D1B1",
+      "printed_label": "mantroktadevatyā. anuṣṭubham: 1. bhurik triṣṭubh"
+    },
+    {
+      "entity_key": "VG:CHANDAS:AV:MANTROKTADEVATYAM-1-2-ANUSTUBH-49AE",
+      "printed_label": "mantroktadevatyam. 1, 2. anuṣṭubh"
+    },
+    {
+      "entity_key": "VG:CHANDAS:AV:MANTROKTADEVATYE-JAGATYAU-3-AINDRI-ANUSTUBH-9752",
+      "printed_label": "mantroktadevatye. jagatyāu. 3. āindrī. anuṣṭubh"
+    },
+    {
+      "entity_key": "VG:CHANDAS:AV:PRAJAPATYA-TRAISTUBHAM-2-ANUSTUBH-6B49",
+      "printed_label": "prājāpatyā. trāiṣṭubham: 2. anuṣṭubh"
+    },
+    {
+      "entity_key": "VG:CHANDAS:AV:RAUDRYAU-2-ANUSTUBH-7C91",
+      "printed_label": "rāudryāu: 2. anuṣṭubh"
+    },
+    {
+      "entity_key": "VG:CHANDAS:AV:RAUDRYAU-2-TRISTUBH-AC19",
+      "printed_label": "rāudryāu: 2. triṣṭubh"
+    },
+    {
+      "entity_key": "VG:CHANDAS:AV:SARVATMAKAM-RUDRAM-TRAISTUBHAM-2-ANUSTUBH-B201",
+      "printed_label": "sarvātmakaṁ rudram. trāiṣṭubham: 2. anuṣṭubh"
+    },
+    {
+      "entity_key": "VG:CHANDAS:AV:SAUMYA-ANUSTUBHAM-3-3-P-VIRAN-NAMA-GAYATRI-1454",
+      "printed_label": "sāumyā. ānuṣṭubham: 3. 3-p. virāṇ nāma gāyatrī"
+    },
+    {
+      "entity_key": "VG:CHANDAS:AV:SAUMYA-SAVITRI-CA-ANUSTUBHAM-3-BHURIG-BRHATI-7B05",
+      "printed_label": "sāumyā sāvitrī ca. ānuṣṭubham: 3. bhurig bṛhatī"
+    },
+    {
+      "entity_key": "VG:CHANDAS:AV:SAURYE-1-ARCY-ANUSTUBH-C81A",
+      "printed_label": "sāurye. 1. ārcy anuṣṭubh"
+    },
+    {
+      "entity_key": "VG:CHANDAS:AV:SAVITRI-1-1-P-BRAHMY-ANUSTUBH-EBBD",
+      "printed_label": "sāvitrī. 1. 1-p. brāhmy anuṣṭubh"
+    },
+    {
+      "entity_key": "VG:CHANDAS:AV:VAICVADEVI-JAGATYAM-3-TRISTUBH-5A74",
+      "printed_label": "vāiçvadevī. jāgatyam: 3. triṣṭubh"
+    },
+    {
+      "entity_key": "VG:CHANDAS:AV:VARUNASTUTI-TRAISTUBHAM-1-GAYATRI-4B5D",
+      "printed_label": "varuṇastuti. trāiṣṭubham: 1. gāyatrī"
+    }
+  ],
+  "present_in_graph": 28,
+  "nodes_marked": 28,
+  "still_public": 0,
+  "printed_literals_intact": 28,
+  "m9_records_still_resolving": 33,
+  "census_before": {
+    "nodes": 116838,
+    "relationships": 281257,
+    "public_nodes": 39692,
+    "public_chandas": 575,
+    "core": {
+      "AV": 5839,
+      "RV": 10552,
+      "SV": 1844,
+      "YV": 1975
+    }
+  },
+  "census_after": {
+    "nodes": 116838,
+    "relationships": 281257,
+    "public_nodes": 39664,
+    "public_chandas": 547,
+    "core": {
+      "AV": 5839,
+      "RV": 10552,
+      "SV": 1844,
+      "YV": 1975
+    }
+  },
+  "node_delta": 0,
+  "relationship_delta": 0,
+  "public_node_delta": -28,
+  "core_corpus_unchanged": true,
+  "additive": true,
+  "complete": true,
+  "sha256": "ce36310bb635f10f28e4f80fa99251fe644a152d4c5d88f7ac59a95d9f52db14"
+}

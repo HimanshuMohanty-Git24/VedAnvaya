@@ -1,0 +1,17 @@
+{
+  "samaveda_kauthuma": {
+    "assessed": "The reconnaissance record for the Samaveda was read rather than re-fetched: source-reconnaissance.md section 7 enumerates the four available Samavedic translations and commentaries.",
+    "reachable_and_unexploited": "The Kauthuma Arseya Brahmana WITH Sayana's commentary is on Sanskrit Wikisource in 14 pages under CC BY-SA 4.0. It is the right recension and it is a commentary. It was not worked here because it is untranslated Sanskrit: extracting an attributed position from it safely needs a translation or a Sanskritist, and inventing one is the single thing this domain must not do.",
+    "result": "Griffith, Stevenson 1842, Benfey 1848 and Samasrami's Bibliotheca Indica with Sayana are all RANAYANIYA, against our Kauthuma arcika. A disagreement recorded between two Ranayaniya witnesses would be attached to a passage of a recension we do not hold.",
+    "rows": 0,
+    "status": "VERIFIED_ZERO_OVER_AN_ASSESSED_POPULATION"
+  },
+  "yajurveda_vsm": {
+    "assessed": "The 45 locally pinned sacred-texts pages of Griffith's Texts of the White Yajurveda (data/raw/sacred_texts/2026-09-07/wyv, all 40 books plus front matter) were searched for every commentator name in the domain vocabulary.",
+    "named_dependency": "A note-bearing edition of Griffith's YV, or the Vedadipa of Mahidhara. Both are on archive.org as scans; the OCR text layer is unfit for verbatim Sanskrit quotation (see the OCR finding below).",
+    "not_a_source_absence": "Griffith's printed Texts of the White Yajurveda (1899) carries the footnotes, and the Vajasaneyi Samhita with Mahidhara's Vedadipa and Uvata is public domain. The Yajurvedic gap here is an acquisition that was not attempted in this wave, not an unavailability.",
+    "result": "Zero occurrences of Mahidhara, Uvata, Sayana, Weber or \"commentator\" in any of the 45 pages. The snapshot is of sacred-texts' reader rendering of the translation only; Griffith's footnotes, which do cite Mahidhara and Uvata, are not in it.",
+    "rows": 0,
+    "status": "VERIFIED_ZERO_OVER_AN_ASSESSED_POPULATION"
+  }
+}

@@ -1,0 +1,51 @@
+{
+  "migration": "M12_LEXICAL_PARALLEL_MATCH_LEVEL",
+  "gap": "GAP-CROSS_VEDA-003",
+  "at": "2026-09-16T09:36:20.872813+00:00",
+  "executed": true,
+  "backup": "D:/vedanvaya-backups/round4-pre-m9-20260916T124347",
+  "finding": "Two writers, one predicate. The lexical pipeline wrote its surface level under strongest_method and no parallel_id, so 256 of 1,006 edges served a null and every count over match_level measured one writer's output.",
+  "values_source": "vedagraph.graph.lexical, imported not restated",
+  "rows_levelled": 252,
+  "rows_typed_absent": 4,
+  "edges_written_with_level": 252,
+  "edges_written_with_absence": 4,
+  "still_neither_levelled_nor_typed_absent": 0,
+  "still_without_a_parallel_id": 0,
+  "enrichment_written_levels_unchanged": {
+    "SCRIPT_FOLDED": 600,
+    "ACCENT_INSENSITIVE": 150
+  },
+  "census_before": {
+    "nodes": 116838,
+    "relationships": 281257,
+    "exact_parallel_edges": 1006,
+    "with_match_level": 750,
+    "with_parallel_id": 750,
+    "core": {
+      "AV": 5839,
+      "RV": 10552,
+      "SV": 1844,
+      "YV": 1975
+    }
+  },
+  "census_after": {
+    "nodes": 116838,
+    "relationships": 281257,
+    "exact_parallel_edges": 1006,
+    "with_match_level": 1002,
+    "with_parallel_id": 1006,
+    "core": {
+      "AV": 5839,
+      "RV": 10552,
+      "SV": 1844,
+      "YV": 1975
+    }
+  },
+  "node_delta": 0,
+  "relationship_delta": 0,
+  "core_corpus_unchanged": true,
+  "additive": true,
+  "complete": true,
+  "sha256": "917b780aa4fa35a56d2ea25cf770b7dd3e5e75b956ff0b21e8bdfecc08cc9dd6"
+}

@@ -23,9 +23,11 @@ import json
 import pathlib
 import sys
 import warnings
-from typing import Any
+from collections.abc import Mapping
+from typing import Any, Final
 
-sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8", errors="replace")
+if hasattr(sys.stdout, "reconfigure"):  # pragma: no cover - stream setup
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 warnings.filterwarnings("ignore")
 
 PROJECT_ROOT = pathlib.Path(__file__).resolve().parents[1]
@@ -34,10 +36,12 @@ sys.path.insert(0, str(PROJECT_ROOT / "src"))
 from vedagraph.domain.claims import claim_summary, load_claims  # noqa: E402
 from vedagraph.domain.ontology import (  # noqa: E402
     DOMAIN_MODEL_VERSION,
-    DOMAIN_RELATIONSHIP_TYPES,
     INTERNAL_LABELS,
-    RELATIONSHIP_SIGNATURES,
+    LABEL_INTERNAL,
+    PRODUCT_LABELS,
     UNPOPULATED_BY_DESIGN,
+    all_declared_relationship_types,
+    all_endpoint_signatures,
 )
 from vedagraph.domain.queries import QUERIES, questions_served  # noqa: E402
 from vedagraph.domain.registry import (  # noqa: E402
@@ -45,6 +49,38 @@ from vedagraph.domain.registry import (  # noqa: E402
     load_domain_entities,
 )
 from vedagraph.domain.taxonomy import load_taxonomy  # noqa: E402
+from vedagraph.enrich.predicates import (  # noqa: E402
+    UNPOPULATED_BY_DESIGN as ENRICH_UNPOPULATED_BY_DESIGN,
+)
+
+#: Individual nodes exempted by name, with the evidence. Named rather than label-exempted
+#: because :ActionPredicate has 41 nodes and 40 carry edges -- exempting the label would hide
+#: the next one to lose its own.
+ORPHANS_EXEMPT_BY_NAME: Final[dict[tuple[str, str, str], str]] = {
+    ("ActionPredicate", "predicate", "CURSES"): (
+        "441 PERFORMS_ACTION edges cover 40 of 41 ActionPredicates; CURSES has none, and the "
+        "zero is measured rather than dropped. Its Rigvedic occurrences sit in "
+        "staging/semantic_roles/role_candidates.jsonl as importable: false -- 'case-scoped "
+        "role candidate. Measured against the DCS dependency parse at 24.3% wrong'. Its "
+        "Atharvavedic occurrences DID land: 3 :RoleFiller nodes carry predicate CURSES, and "
+        "that layer represents the predicate as a property rather than as an edge to this "
+        "vocabulary node."
+    ),
+}
+
+#: Product labels whose nodes are edgeless BY DESIGN, each with the reason. A reason per
+#: label, not a tolerated count: a numeric threshold would absorb the next real orphan.
+ORPHANED_BY_DESIGN: Final[dict[str, str]] = {
+    "DerivedMetric": (
+        "A metric measures a population, not a node. 1,006 of 1,085 carry no edge and the "
+        "scorecard has a separate gate asserting they do NOT point at passages, so "
+        "edgelessness is the intended shape rather than a missing link."
+    ),
+    "ScholarlyWork": (
+        "One bibliography entry that no claim cites. 16 of the 17 works appear in the rows; "
+        "this one is a reference, and the Wave 3 readback already exempted it by name."
+    ),
+}
 
 BOLT_URI = "bolt://localhost:7687"
 BOLT_AUTH = ("neo4j", "vedagraph_dev")
@@ -216,6 +252,62 @@ def measure(session: Any) -> dict[str, Any]:
     out["orphan_entities"] = _one(
         session, "MATCH (n:DomainEntity) WHERE NOT (n)--() RETURN count(n)"
     )
+    # Every product label, not just :DomainEntity. The narrow version reported 0 while 28
+    # retired :Chandas identities sat edgeless AND public, visible in the world export as
+    # Vedic metres -- :Chandas is a product label and not a :DomainEntity, so the gate could
+    # not see them. An unreachable public node is unreachable whatever its label.
+    orphans: dict[str, int] = {}
+    for label in sorted(PRODUCT_LABELS):
+        if label in ORPHANED_BY_DESIGN:
+            continue
+        exempt = [
+            (prop, value)
+            for (exempt_label, prop, value) in ORPHANS_EXEMPT_BY_NAME
+            if exempt_label == label
+        ]
+        clause = "".join(f" AND NOT n.{prop} = '{value}'" for prop, value in exempt)
+        count = _one(
+            session,
+            f"MATCH (n:`{label}`) WHERE NOT n:{LABEL_INTERNAL} AND NOT (n)--(){clause} "
+            "RETURN count(n)",
+        )
+        if count:
+            orphans[label] = count
+    out["orphan_public_nodes_by_label"] = orphans
+    out["orphan_public_nodes"] = sum(orphans.values())
+
+    # A declaration of emptiness is a claim about the graph, and nothing checked it against
+    # the graph. Wave 4 finding: enrich.predicates declared SHARES_FORMULA_WITH deliberately
+    # unpopulated -- "materialising it would add 87,296 edges and defeat the Formula hub" --
+    # and Wave 3 then materialised 6,148 of them on a distinctiveness criterion the reasoning
+    # had not considered. The declaration stayed, so generate_ontology_reference.py published
+    # it and GAP-FORMULA-001 recorded the predicate as the graph's only declared-but-empty
+    # type while it held 6,148 edges.
+    #
+    # BOTH maps, deliberately. The signature gate below reads only the domain one, so a
+    # populated predicate declared empty in the enrichment map would skip nothing there and be
+    # noticed by nothing here either.
+    falsely_empty: dict[str, int] = {}
+    for predicate in sorted(set(UNPOPULATED_BY_DESIGN) | set(ENRICH_UNPOPULATED_BY_DESIGN)):
+        edges = _one(session, f"MATCH ()-[r:{predicate}]->() RETURN count(r)")
+        if edges:
+            falsely_empty[predicate] = edges
+    out["falsely_declared_unpopulated"] = falsely_empty
+    out["declared_unpopulated"] = sorted(
+        set(UNPOPULATED_BY_DESIGN) | set(ENRICH_UNPOPULATED_BY_DESIGN)
+    )
+    out["orphans_exempted_by_name"] = {
+        f"{label}.{prop}={value}": reason
+        for (label, prop, value), reason in ORPHANS_EXEMPT_BY_NAME.items()
+    }
+    out["orphans_exempted_by_design"] = {
+        label: _one(
+            session,
+            f"MATCH (n:`{label}`) WHERE NOT n:{LABEL_INTERNAL} AND NOT (n)--() "
+            "RETURN count(n)",
+        )
+        for label in sorted(ORPHANED_BY_DESIGN)
+    }
     out["mention_edges"] = _one(
         session, "MATCH (:Passage)-[m:MENTIONS_ENTITY]->(:DomainEntity) RETURN count(m)"
     )
@@ -294,7 +386,11 @@ def measure(session: Any) -> dict[str, Any]:
     )
 
     violations: list[dict[str, Any]] = []
-    for predicate, (subjects, objects) in sorted(RELATIONSHIP_SIGNATURES.items()):
+    # Both signature dicts. Iterating only RELATIONSHIP_SIGNATURES left the eight corpus
+    # and ten campaign predicates -- 141,264 edges -- with their endpoints checked by
+    # nothing, which is how HAS_RITUAL_STEP could have pointed anywhere at all.
+    every_signature = all_endpoint_signatures()
+    for predicate, (subjects, objects) in sorted(every_signature.items()):
         if predicate in UNPOPULATED_BY_DESIGN:
             continue
         subject_ok = " OR ".join(f"a:{label}" for label in sorted(subjects))
@@ -307,17 +403,54 @@ def measure(session: Any) -> dict[str, Any]:
         if bad:
             violations.append({"predicate": predicate, "violations": bad})
     out["signature_violations"] = violations
-
-    declared = DOMAIN_RELATIONSHIP_TYPES | {row["type"] for row in out["relationship_types"]}
-    out["undeclared_rel_types"] = sorted(
+    # Populated predicates whose endpoints nothing constrains. Reported as a figure so the
+    # uncovered set cannot grow unnoticed: it was 22 before the enrichment layer's own
+    # signatures were read, and the remainder are the model-extracted semantic predicates,
+    # whose endpoints are declared nowhere. See GAP-SEMANTIC-SIGNATURE-COVERAGE-001.
+    out["populated_predicates_without_a_signature"] = sorted(
         row["type"]
         for row in out["relationship_types"]
-        if row["type"] not in declared and row["edges"] > 0
+        if row["edges"] > 0 and row["type"] not in every_signature
+    )
+
+    # The authority is the ontology, composed across layers by
+    # all_declared_relationship_types(). The graph is not an input to it, which is the whole
+    # point: the first version of this gate computed
+    #
+    #     declared = ontology | every type found in the graph
+    #
+    # and then asked which graph types were missing from `declared`. Nothing can be, so it
+    # reported 0 undeclared for a whole wave while eleven predicates went unclassified.
+    #
+    # The second version asked the API's traversable/refused lists. Better, and still wrong:
+    # those are a product decision about what a reader may cross, not a schema declaration
+    # of what may exist, so a predicate could be refused for a good reason and pass here
+    # while no ontology layer had ever declared it.
+    out["undeclared_rel_types"] = undeclared_relationship_types(
+        {row["type"]: int(row["edges"]) for row in out["relationship_types"]},
+        all_declared_relationship_types(),
     )
     out["empty_rel_types"] = sorted(
         row["type"] for row in out["relationship_types"] if row["edges"] == 0
     )
     return out
+
+
+def undeclared_relationship_types(
+    observed: Mapping[str, int], declared: frozenset[str]
+) -> list[str]:
+    """Populated relationship types no layer declares.
+
+    Two arguments and no I/O, so a test can prove this fails: hand it a fake predicate and
+    it must be reported; remove one entry from ``declared`` and the predicate using it must
+    appear. Neither earlier version of this gate was testable, which is why neither was
+    tested, and both shipped unable to fail.
+
+    Empty types are excluded deliberately. A declared-but-unpopulated predicate is
+    architecture (see UNPOPULATED_BY_DESIGN); an UNdeclared empty one cannot mislead a
+    reader because no edge carries it. Both are reported separately in ``empty_rel_types``.
+    """
+    return sorted(name for name, edges in observed.items() if edges > 0 and name not in declared)
 
 
 def _pct(numerator: float, denominator: float) -> str:
@@ -524,6 +657,8 @@ def render(m: dict[str, Any]) -> str:
         f"{'YES' if m['nodes_without_label'] == 0 else 'NO'} |",
         f"| orphan domain entities | {m['orphan_entities']} | "
         f"{'YES' if m['orphan_entities'] == 0 else 'NO'} |",
+        f"| orphan public nodes, all product labels | {m['orphan_public_nodes']} | "
+        f"{'YES' if m['orphan_public_nodes'] == 0 else 'NO'} |",
         f"| controlled-predicate violations | {len(m['signature_violations'])} | "
         f"{'YES' if not m['signature_violations'] else 'NO'} |",
         f"| undeclared relationship types | {len(m['undeclared_rel_types'])} | "
@@ -532,6 +667,15 @@ def render(m: dict[str, Any]) -> str:
         f"{'YES' if m['claims_to_passages_via_concerns'] == 0 else 'NO'} |",
         f"| metrics wrongly pointing at passages | {m['metrics_to_passages']} | "
         f"{'YES' if m['metrics_to_passages'] == 0 else 'NO'} |",
+        # These two are enforced by the runner's exit code and were missing from this
+        # table, so the report showed 9 of the 11 gates it actually checks: a reader
+        # counting rows got a different number from a reader reading the exit status.
+        # The runner is authoritative and the table now states everything it enforces.
+        f"| claims graded other than TIER_D | {m['claims_non_candidate']} | "
+        f"{'YES' if m['claims_non_candidate'] == 0 else 'NO'} |",
+        f"| predicates falsely declared unpopulated | "
+        f"{len(m['falsely_declared_unpopulated'])} | "
+        f"{'YES' if not m['falsely_declared_unpopulated'] else 'NO'} |",
         "",
     ]
     if m["signature_violations"]:
@@ -609,6 +753,14 @@ def main() -> int:
         "claims_non_candidate": measured["claims_non_candidate"],
         "claims_to_passages": measured["claims_to_passages_via_concerns"],
         "metrics_to_passages": measured["metrics_to_passages"],
+        # Added in Wave 4. The orphan_entities gate above is scoped to :DomainEntity and
+        # reported 0 while 28 retired :Chandas identities sat edgeless and PUBLIC, visible
+        # in the world export as Vedic metres. This one sweeps every product label, with
+        # ORPHANED_BY_DESIGN carrying a stated reason per exempt label.
+        "orphan_public_nodes": measured["orphan_public_nodes"],
+        # Added in Wave 4. A predicate declared deliberately empty that carries edges is a
+        # false statement on a published surface, and both declaration maps are read.
+        "falsely_declared_unpopulated": len(measured["falsely_declared_unpopulated"]),
     }
     print(f"wrote {REPORT_PATH}\n")
     print("integrity gates (all must be 0):")

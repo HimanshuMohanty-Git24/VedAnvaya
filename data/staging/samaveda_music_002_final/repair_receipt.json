@@ -1,0 +1,45 @@
+{
+  "artifact": "SAMAVEDA_NOTATION_002_REPAIR_RECEIPT",
+  "at": "2026-09-18T18:01:51.380582+00:00",
+  "head": "6e6ce43a64d4bcae63c6a99e0013489e72ae22bb",
+  "why": "The first execution wrote the notation but missed two contracts the rest of the graph already keeps: the :Internal marker every one of the 58,786 pre-existing TextVersion nodes carries, and the five grade properties every HAS_TEXT_VERSION edge carries. Neither was caught by this import's own readback -- scripts/graph_quality_scorecard.py found them, reporting exactly 1,136 on internal_leaked, ungraded_edges and nodes_without_label. An importer's own success report is not evidence; that is what the scorecard is for.",
+  "grade_source": "vedagraph.domain.tiers.grade_edge('HAS_TEXT_VERSION'), the project's single edge contract, which raises on an uncontracted relationship type rather than defaulting",
+  "edge_properties_applied": {
+    "knowledge_layer": "L1_SOURCE_EXPLICIT",
+    "quality_tier": "TIER_A",
+    "attribution_precision": "NOT_AN_ATTRIBUTION",
+    "grade_basis": "corpus structure as printed by the edition",
+    "evidence_basis": "STRUCTURAL",
+    "language": "sa",
+    "text_form": "SAMHITA"
+  },
+  "applied": {
+    "text_versions_written": 1136,
+    "mantras_typed": 1844
+  },
+  "census_after": {
+    "nodes": 165737,
+    "relationships": 510905,
+    "TextVersion": 59922,
+    "HAS_TEXT_VERSION": 59922,
+    "SV_mantras": 1844,
+    "SV_text_versions": 4824,
+    "SV_accented_text_versions": 1136,
+    "SV_mantras_with_a_notation_state": 1844,
+    "MUSICALIZED_AS": 0,
+    "TextVersion_without_the_Internal_marker": 0,
+    "HAS_TEXT_VERSION_without_a_quality_tier": 0
+  },
+  "creates_nothing": {
+    "nodes": true,
+    "relationships": true,
+    "nodes_before": 165737,
+    "nodes_after": 165737,
+    "relationships_before": 510905,
+    "relationships_after": 510905
+  },
+  "contracts_closed": {
+    "TextVersion_without_the_Internal_marker": 0,
+    "HAS_TEXT_VERSION_without_a_quality_tier": 0
+  }
+}

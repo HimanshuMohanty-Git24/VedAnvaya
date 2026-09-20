@@ -1,0 +1,40 @@
+{
+  "artifact": "RELEASE_BLOCKER_R2_BASELINE",
+  "head": "5d9c163d74356285ba3ff7d1e930f9712230121b",
+  "branch": "phase-data-completeness-v2",
+  "worktree": {
+    "modified_tracked": 1,
+    "untracked_paths": 66
+  },
+  "graph_census": {
+    "nodes": 164201,
+    "relationships": 508042,
+    "core_corpus": {
+      "RV": 10552,
+      "SV": 1844,
+      "YV": 1975,
+      "AV": 5839
+    },
+    "derived_metric": 1085,
+    "core_corpus_total": 20210
+  },
+  "registry": {
+    "entries": 85,
+    "closed": 60,
+    "execution_blockers": 5,
+    "implementation_fixable": 20,
+    "measurement_disagreements": 0,
+    "registry_status_disagreements": 0,
+    "scope_citations_naming_no_file": 0,
+    "scope_citations_only_self_cited": [
+      "GAP-SEMANTICS-004"
+    ],
+    "audit_sha256": "e93c4429ac834d0c2797927856540942bd96696917f856decb1374b635fff602"
+  },
+  "four_known_defects": {
+    "RITUAL_CONTEXT_FALSE_ABSENCE": "ritual_context in PROBED_ABSENT_PROPERTIES and Q84 grade=_always(NA) while 20,210 mantras carry it",
+    "CROSS_VEDA_FALSE_NOT_BUILT": "insight_service._UNBUILT_CROSS_VEDA_ROWS emits SEMANTIC_ASSERTION as NOT_BUILT for all 6 pairs",
+    "SEMANTIC_ASSERTION_DISPLAY_TYPE_VARIANTS": 2,
+    "WORLD_LABELS_PUBLIC_EXPORT_LINEAGE": "world.labels.json and world.predicates.json carry no inputPublicExportHash"
+  }
+}

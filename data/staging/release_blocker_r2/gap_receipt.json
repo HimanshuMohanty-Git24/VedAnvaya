@@ -1,0 +1,332 @@
+{
+  "artifact": "RELEASE_BLOCKER_R2_GAP_RECEIPT",
+  "at": "2026-09-18T05:01:31.786810+00:00",
+  "head_at_start": "5d9c163d74356285ba3ff7d1e930f9712230121b",
+  "branch": "phase-data-completeness-v2",
+  "count": 20,
+  "closed_in_r2": [
+    "GAP-FORMULA-003",
+    "GAP-SEMANTICS-001"
+  ],
+  "still_implementation_fixable": [
+    "GAP-ATTRIBUTION-002",
+    "GAP-COMMUNITIES-002",
+    "GAP-ENTITY_COVERAGE-001",
+    "GAP-ENTITY_COVERAGE-002",
+    "GAP-ENTITY_COVERAGE-003",
+    "GAP-ENTITY_COVERAGE-004",
+    "GAP-ENTITY_COVERAGE-006",
+    "GAP-ENTITY_COVERAGE-007",
+    "GAP-ENTITY_COVERAGE-008",
+    "GAP-PRODUCT_SURFACE-005",
+    "GAP-QUALITY-003",
+    "GAP-RITUAL-003",
+    "GAP-RITUAL-004",
+    "GAP-RITUAL-005",
+    "GAP-RITUAL-006",
+    "GAP-SAMAVEDA_MUSIC-003",
+    "GAP-SEMANTICS-003",
+    "GAP-TRANSLATION-004"
+  ],
+  "registry_after": {
+    "implementation_fixable": 18,
+    "measurement_disagreements": 0,
+    "status_disagreements": 0,
+    "scope_citations_naming_no_file": 0,
+    "scope_citations_only_self_cited": [
+      "GAP-SEMANTICS-004"
+    ]
+  },
+  "graph_census_before": {
+    "nodes": 164201,
+    "relationships": 508042,
+    "core_corpus": {
+      "RV": 10552,
+      "SV": 1844,
+      "YV": 1975,
+      "AV": 5839
+    },
+    "derived_metric": 1085,
+    "core_corpus_total": 20210
+  },
+  "graph_census_after": {
+    "nodes": 164201,
+    "relationships": 508042,
+    "core_corpus": {
+      "RV": 10552,
+      "SV": 1844,
+      "YV": 1975,
+      "AV": 5839
+    },
+    "derived_metric": 1085,
+    "core_corpus_total": 20210
+  },
+  "graph_mutations_in_r2": [
+    {
+      "defect": "3C",
+      "operation": "SET display_type on :SemanticAssertion",
+      "promised": 30266,
+      "actual": 30266,
+      "nodes_delta": 0,
+      "relationships_delta": 0
+    },
+    {
+      "gap": "GAP-RITUAL-006",
+      "operation": "SET ritual_context_method/vocabulary + citation + rival fields on :Mantra",
+      "promised": {
+        "method": 20210,
+        "citation": 1903,
+        "rival": 7769
+      },
+      "actual": {
+        "method": 20210,
+        "citation": 1903,
+        "rival": 7769
+      },
+      "nodes_delta": 0,
+      "relationships_delta": 0
+    }
+  ],
+  "rows": [
+    {
+      "gap_id": "GAP-ATTRIBUTION-002",
+      "domain": "attribution",
+      "before_status": "STILL_IMPLEMENTATION_FIXABLE",
+      "before_measurement": 39,
+      "declared_closure_measure": "MATCH (a:DevataAscription) WHERE (a)-->(:Devata) RETURN count(a)",
+      "implementation_performed": "Enumerated and re-measured live in R2. No implementation performed in this pass.",
+      "after_measurement": 39,
+      "final_status": "STILL_IMPLEMENTATION_FIXABLE",
+      "terminal": false,
+      "citation_artifact": "data/staging/release_blocker_r2/remaining_20.json"
+    },
+    {
+      "gap_id": "GAP-COMMUNITIES-002",
+      "domain": "communities",
+      "before_status": "STILL_IMPLEMENTATION_FIXABLE",
+      "before_measurement": 57,
+      "declared_closure_measure": "MATCH (d:Devata) WHERE d.structure IN ['PAIR','GROUP'] AND coalesce(d.component_count,0)=0 RETURN count(d)",
+      "implementation_performed": "Enumerated and re-measured live in R2. No implementation performed in this pass.",
+      "after_measurement": 57,
+      "final_status": "STILL_IMPLEMENTATION_FIXABLE",
+      "terminal": false,
+      "citation_artifact": "data/staging/release_blocker_r2/remaining_20.json"
+    },
+    {
+      "gap_id": "GAP-ENTITY_COVERAGE-001",
+      "domain": "entity_coverage",
+      "before_status": "STILL_IMPLEMENTATION_FIXABLE",
+      "before_measurement": 0,
+      "declared_closure_measure": "MATCH (e:Epithet)-[r]-(:Passage) RETURN count(r)",
+      "implementation_performed": "Enumerated and re-measured live in R2. No implementation performed in this pass.",
+      "after_measurement": 0,
+      "final_status": "STILL_IMPLEMENTATION_FIXABLE",
+      "terminal": false,
+      "citation_artifact": "data/staging/release_blocker_r2/remaining_20.json"
+    },
+    {
+      "gap_id": "GAP-ENTITY_COVERAGE-002",
+      "domain": "entity_coverage",
+      "before_status": "STILL_IMPLEMENTATION_FIXABLE",
+      "before_measurement": 25,
+      "declared_closure_measure": "MATCH (m:DerivedMetric) WHERE m.subject_key STARTS WITH 'VG:DEVATA:' RETURN count(DISTINCT m.subject_key)",
+      "implementation_performed": "Enumerated and re-measured live in R2. No implementation performed in this pass.",
+      "after_measurement": 25,
+      "final_status": "STILL_IMPLEMENTATION_FIXABLE",
+      "terminal": false,
+      "citation_artifact": "data/staging/release_blocker_r2/remaining_20.json"
+    },
+    {
+      "gap_id": "GAP-ENTITY_COVERAGE-003",
+      "domain": "entity_coverage",
+      "before_status": "STILL_IMPLEMENTATION_FIXABLE",
+      "before_measurement": 0,
+      "declared_closure_measure": "MATCH (n) WHERE n:Remedy OR n:Bhesaja RETURN count(n)",
+      "implementation_performed": "Enumerated and re-measured live in R2. No implementation performed in this pass.",
+      "after_measurement": 0,
+      "final_status": "STILL_IMPLEMENTATION_FIXABLE",
+      "terminal": false,
+      "citation_artifact": "data/staging/release_blocker_r2/remaining_20.json"
+    },
+    {
+      "gap_id": "GAP-ENTITY_COVERAGE-004",
+      "domain": "entity_coverage",
+      "before_status": "STILL_IMPLEMENTATION_FIXABLE",
+      "before_measurement": 384,
+      "declared_closure_measure": "MATCH (n:DomainEntity) WHERE n.expected_source IS NULL RETURN count(n)",
+      "implementation_performed": "Enumerated and re-measured live in R2. No implementation performed in this pass.",
+      "after_measurement": 384,
+      "final_status": "STILL_IMPLEMENTATION_FIXABLE",
+      "terminal": false,
+      "citation_artifact": "data/staging/release_blocker_r2/remaining_20.json"
+    },
+    {
+      "gap_id": "GAP-ENTITY_COVERAGE-006",
+      "domain": "entity_coverage",
+      "before_status": "STILL_IMPLEMENTATION_FIXABLE",
+      "before_measurement": 0,
+      "declared_closure_measure": "MATCH (m:Mantra {veda:'YV'})-[:MENTIONS_ENTITY]->(e) WHERE e.entity_key='VG:CONCEPT:AYAS-METAL' RETURN count(DISTINCT m)",
+      "implementation_performed": "Enumerated and re-measured live in R2. No implementation performed in this pass.",
+      "after_measurement": 0,
+      "final_status": "STILL_IMPLEMENTATION_FIXABLE",
+      "terminal": false,
+      "citation_artifact": "data/staging/release_blocker_r2/remaining_20.json"
+    },
+    {
+      "gap_id": "GAP-ENTITY_COVERAGE-007",
+      "domain": "entity_coverage",
+      "before_status": "STILL_IMPLEMENTATION_FIXABLE",
+      "before_measurement": 13,
+      "declared_closure_measure": "MATCH (n:NaturalPhenomenon) WHERE n.personification_status IS NULL RETURN count(n)",
+      "implementation_performed": "Enumerated and re-measured live in R2. No implementation performed in this pass.",
+      "after_measurement": 13,
+      "final_status": "STILL_IMPLEMENTATION_FIXABLE",
+      "terminal": false,
+      "citation_artifact": "data/staging/release_blocker_r2/remaining_20.json"
+    },
+    {
+      "gap_id": "GAP-ENTITY_COVERAGE-008",
+      "domain": "entity_coverage",
+      "before_status": "STILL_IMPLEMENTATION_FIXABLE",
+      "before_measurement": 29,
+      "declared_closure_measure": "MATCH (d:Devata) WHERE (coalesce(d.structure,'UNSPECIFIED') IN ['HUMAN','PATRON_PRAISE','UNSPECIFIED']) <> (d.is_deity = false) RETURN count(d)",
+      "implementation_performed": "Every deity surface rewired onto the one documented predicate (deity_eligibility.ELIGIBLE_DEITY_PREDICATE, d.is_deity = true): deity_structure_clause, filter_co_deity_labels, _resolve_devata, subject_disclosure, the graph node view and the deity list row all read the recorded ruling instead of `structure`. Published population moved 184 -> 157 and the exclusion caveat was corrected from \"30 ... and one dog\" to \"57 ... 28 abstractions\". NOT closed: the registry closure_measure compares structure-set membership against is_deity and returns 29 by construction, because the recorded curation rules ABSTRACT case by case and rules the dog a deity. Reaching 0 on that measure would require overturning recorded curation, so the measure is reported as conflicting rather than re-declared.",
+      "after_measurement": 29,
+      "final_status": "STILL_IMPLEMENTATION_FIXABLE",
+      "terminal": false,
+      "citation_artifact": "data/staging/release_blocker_r2/remaining_20.json"
+    },
+    {
+      "gap_id": "GAP-FORMULA-003",
+      "domain": "formula",
+      "before_status": "STILL_IMPLEMENTATION_FIXABLE",
+      "before_measurement": 0,
+      "declared_closure_measure": "MATCH (f:Formula) WHERE f.formula_nesting_type IS NULL RETURN count(f)",
+      "implementation_performed": "layer_figures.formula_nesting_policy() applied to both named rankings (formula_service._formula_caveats and the deity top_formulas ranking).",
+      "after_measurement": 0,
+      "final_status": "CLOSED_DERIVED",
+      "terminal": true,
+      "citation_artifact": "data/gap_registry.json + scripts/wave4_registry_closure_audit.py RULINGS"
+    },
+    {
+      "gap_id": "GAP-PRODUCT_SURFACE-005",
+      "domain": "product_surface",
+      "before_status": "STILL_IMPLEMENTATION_FIXABLE",
+      "before_measurement": null,
+      "declared_closure_measure": null,
+      "implementation_performed": "Enumerated and re-measured live in R2. No implementation performed in this pass.",
+      "after_measurement": null,
+      "final_status": "STILL_IMPLEMENTATION_FIXABLE",
+      "terminal": false,
+      "citation_artifact": "data/staging/release_blocker_r2/remaining_20.json"
+    },
+    {
+      "gap_id": "GAP-QUALITY-003",
+      "domain": "quality",
+      "before_status": "STILL_IMPLEMENTATION_FIXABLE",
+      "before_measurement": null,
+      "declared_closure_measure": null,
+      "implementation_performed": "Enumerated and re-measured live in R2. No implementation performed in this pass.",
+      "after_measurement": null,
+      "final_status": "STILL_IMPLEMENTATION_FIXABLE",
+      "terminal": false,
+      "citation_artifact": "data/staging/release_blocker_r2/remaining_20.json"
+    },
+    {
+      "gap_id": "GAP-RITUAL-003",
+      "domain": "ritual",
+      "before_status": "STILL_IMPLEMENTATION_FIXABLE",
+      "before_measurement": 24,
+      "declared_closure_measure": "MATCH ()-[r:USES_OBJECT]->() RETURN count(r)",
+      "implementation_performed": "Enumerated and re-measured live in R2. No implementation performed in this pass.",
+      "after_measurement": 24,
+      "final_status": "STILL_IMPLEMENTATION_FIXABLE",
+      "terminal": false,
+      "citation_artifact": "data/staging/release_blocker_r2/remaining_20.json"
+    },
+    {
+      "gap_id": "GAP-RITUAL-004",
+      "domain": "ritual",
+      "before_status": "STILL_IMPLEMENTATION_FIXABLE",
+      "before_measurement": 2,
+      "declared_closure_measure": "MATCH (r:RitualRole) WHERE r.in_classical_sixteen IS NULL RETURN count(r)",
+      "implementation_performed": "Enumerated and re-measured live in R2. No implementation performed in this pass.",
+      "after_measurement": 2,
+      "final_status": "STILL_IMPLEMENTATION_FIXABLE",
+      "terminal": false,
+      "citation_artifact": "data/staging/release_blocker_r2/remaining_20.json"
+    },
+    {
+      "gap_id": "GAP-RITUAL-005",
+      "domain": "ritual",
+      "before_status": "STILL_IMPLEMENTATION_FIXABLE",
+      "before_measurement": 4,
+      "declared_closure_measure": "MATCH ()-[r:RECEIVES_OFFERING]->() RETURN count(r)",
+      "implementation_performed": "Enumerated and re-measured live in R2. No implementation performed in this pass.",
+      "after_measurement": 4,
+      "final_status": "STILL_IMPLEMENTATION_FIXABLE",
+      "terminal": false,
+      "citation_artifact": "data/staging/release_blocker_r2/remaining_20.json"
+    },
+    {
+      "gap_id": "GAP-RITUAL-006",
+      "domain": "ritual",
+      "before_status": "STILL_IMPLEMENTATION_FIXABLE",
+      "before_measurement": 20210,
+      "declared_closure_measure": "MATCH (m:Mantra) WHERE m.ritual_context IS NOT NULL RETURN count(m)",
+      "implementation_performed": "Clause 1 closed by landing ritual_context_method on all 20,210 mantras plus per-row citation evidence on 1,903 and rival counts on 7,769, from already-held staged evidence. Clauses 2 (precision surfaced) and 3 (material-culture split by context) NOT done.",
+      "after_measurement": 20210,
+      "final_status": "STILL_IMPLEMENTATION_FIXABLE",
+      "terminal": false,
+      "citation_artifact": "data/staging/release_blocker_r2/migration_ritual006_receipt.json"
+    },
+    {
+      "gap_id": "GAP-SAMAVEDA_MUSIC-003",
+      "domain": "samaveda_music",
+      "before_status": "STILL_IMPLEMENTATION_FIXABLE",
+      "before_measurement": 1844,
+      "declared_closure_measure": "MATCH (m:Mantra {veda:'SV'}) WHERE m.running_samhita_number IS NULL RETURN count(m)",
+      "implementation_performed": "Enumerated and re-measured live in R2. No implementation performed in this pass.",
+      "after_measurement": 1844,
+      "final_status": "STILL_IMPLEMENTATION_FIXABLE",
+      "terminal": false,
+      "citation_artifact": "data/staging/release_blocker_r2/remaining_20.json"
+    },
+    {
+      "gap_id": "GAP-SEMANTICS-001",
+      "domain": "semantics",
+      "before_status": "STILL_IMPLEMENTATION_FIXABLE",
+      "before_measurement": 35131,
+      "declared_closure_measure": "MATCH (:Mantra)-[:HAS_SEMANTIC_ASSERTION]->() RETURN count(*)",
+      "implementation_performed": "Cross-Veda assertion cell rebuilt: per-derivation breakdown, model-assisted share named, human-reviewed count carried, coverage stated incomplete. Blended total removed.",
+      "after_measurement": 35131,
+      "final_status": "CLOSED_DERIVED",
+      "terminal": true,
+      "citation_artifact": "data/gap_registry.json + scripts/wave4_registry_closure_audit.py RULINGS"
+    },
+    {
+      "gap_id": "GAP-SEMANTICS-003",
+      "domain": "semantics",
+      "before_status": "STILL_IMPLEMENTATION_FIXABLE",
+      "before_measurement": 0,
+      "declared_closure_measure": "MATCH (a:SemanticAssertion)-[:ASSERTION_TARGET]->(x) WHERE NOT x:Devata RETURN count(*)",
+      "implementation_performed": "Enumerated and re-measured live in R2. No implementation performed in this pass.",
+      "after_measurement": 0,
+      "final_status": "STILL_IMPLEMENTATION_FIXABLE",
+      "terminal": false,
+      "citation_artifact": "data/staging/release_blocker_r2/remaining_20.json"
+    },
+    {
+      "gap_id": "GAP-TRANSLATION-004",
+      "domain": "translation",
+      "before_status": "STILL_IMPLEMENTATION_FIXABLE",
+      "before_measurement": 36,
+      "declared_closure_measure": "MATCH (m:Mantra {veda:'RV'}) WHERE NOT (m)-[:HAS_TRANSLATION]->() RETURN count(m)",
+      "implementation_performed": "Enumerated and re-measured live in R2. No implementation performed in this pass.",
+      "after_measurement": 36,
+      "final_status": "STILL_IMPLEMENTATION_FIXABLE",
+      "terminal": false,
+      "citation_artifact": "data/staging/release_blocker_r2/remaining_20.json"
+    }
+  ]
+}

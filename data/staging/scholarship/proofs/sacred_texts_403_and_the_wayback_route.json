@@ -1,0 +1,7 @@
+{
+  "finding": "sacred-texts.com answers 403 from this host, as Wave 0 recorded and Wave 1 re-confirmed. The Internet Archive Wayback Machine serves the same pages: 98 of 98 SBE 32 pages and 167 of 167 SBE 46 pages returned 200 through https://web.archive.org/web/2023id_/<url>.",
+  "two_traps_met": [
+    "The Wayback id_ form answers 302 and must be followed; curl without -L reports 302 with a zero-byte body, which looks like a dead URL and is not.",
+    "archive.org rate-limits: the first probe of the availability API returned 429 while other agents were fetching. It was not retried in a loop; the fetch was run once at 1.2 requests per second and completed with zero failures."
+  ]
+}

@@ -1,0 +1,164 @@
+{
+  "artifact": "AGENT_3_SEMANTIC_ASSERTION_DELTA",
+  "gaps": [
+    "GAP-SEMANTICS-001",
+    "GAP-SEMANTICS-003"
+  ],
+  "at": "2026-09-16T18:21:52.356803+00:00",
+  "neo4j_access": "READ_ONLY",
+  "live_before": {
+    "has_semantic_assertion_edges": 4865,
+    "rv_mantras_covered": 2542,
+    "non_rv_mantras_covered": 0,
+    "assertion_role_from_assertion": 0,
+    "assertion_role_from_passage": 2052,
+    "rolefiller_passages_also_holding_an_assertion": 0,
+    "live_derivations": {
+      "MORPHOLOGY_RULE": 2406,
+      "MODEL_EXTRACTION": 2459
+    },
+    "non_devata_refers_to": 245,
+    "assertions_unreviewed": 4865
+  },
+  "defect_found": {
+    "what": "ASSERTION_ROLE was anchored on :Passage instead of :SemanticAssertion, and the assertions the fillers belong to were never imported at all",
+    "where": "scripts/wave3_import_plan.py:220-257 (SR_ASSERTION_ROLE_EDGES start_label='Passage') and the NOT_IMPORTED entry for semantic_roles/rows.jsonl at scripts/wave3_import_plan.py:205-208",
+    "contract_violated": "SCHEMA_MIGRATION_CARDS.md M1: (:SemanticAssertion)-[:ASSERTION_ROLE]->(:RoleFiller), and its migration test 'every :RoleFiller resolves to exactly one :SemanticAssertion'",
+    "measured_conformance": "0 of 2,052"
+  },
+  "staged": {
+    "assertions": 30266,
+    "assertion_role_edges": 2052,
+    "per_veda_assertions": {
+      "RV": 22192,
+      "AV": 6167,
+      "YV": 1543,
+      "SV": 364
+    },
+    "per_veda_mantras_covered": {
+      "AV": 3295,
+      "RV": 10150,
+      "SV": 211,
+      "YV": 574
+    },
+    "role_derivations_never_summed": {
+      "MORPHOLOGY_RULE_PREDICATE_ONLY": 28370,
+      "TREEBANK_DEPREL": 1532,
+      "CROSS_VEDA_TEXT_IDENTITY": 364
+    },
+    "three_slot_complete": 341,
+    "three_slot_per_veda": {
+      "AV": 285,
+      "YV": 56
+    },
+    "verb_feature_schemes_never_merged": {
+      "ZURICH_VEDAWEB": 22556,
+      "DCS_UD": 7710
+    },
+    "non_devata_target_fillers": 691,
+    "unknown_predicates_not_in_the_41_registry": []
+  },
+  "cross_veda_projection_evidence": {
+    "projected_rows": 364,
+    "target_verses": 211,
+    "pairs_with_no_parallel_edge": 0,
+    "live_edge_type_sets_over_the_importable_pairs": {
+      "REUSES_TEXT_FROM+VARIANT_OF": 306,
+      "EXACT_PARALLEL_OF+REUSES_TEXT_FROM": 58
+    },
+    "artifact_single_valued_claim": {
+      "VARIANT_OF": 263,
+      "EXACT_PARALLEL_OF": 49,
+      "REUSES_TEXT_FROM": 52
+    },
+    "every_claimed_type_present_in_the_live_set": true,
+    "ruling_basis_verified": "every one of the 216 pairs carries REUSES_TEXT_FROM; 0 rest on a fold computed at staging time",
+    "withheld_projections": {
+      "assertions": 8,
+      "pairs": 5,
+      "reason": "GRAPH_TYPES_PAIR_NEAR_PARALLEL_NOT_EXACT",
+      "rule": "When a staged claim contradicts the graph's own typing, the graph's typing wins unless the staged claim independently re-establishes itself. A letter comparison computed at staging time is not independent re-establishment.",
+      "deleted": false,
+      "artifact": "semantic_assertions_withheld.jsonl",
+      "made_visible_by": "the projection_edge_types field added in round two. The artifact's single-valued field named REUSES_TEXT_FROM on these pairs and would have hidden the NEAR_PARALLEL_OF typing entirely.",
+      "cost": "8 assertions of 30274",
+      "corroborated_by_the_artifacts_own_score": {
+        "pairs_scoring_below_1.0": [
+          0.923077,
+          0.941365,
+          0.948718,
+          0.958542,
+          0.972006
+        ],
+        "pairs_scoring_exactly_1.0": 211,
+        "sub_1_0_set_equals_near_parallel_set": [
+          "VG:SV:KAU:CHANDA:P03:D06:V09",
+          "VG:SV:KAU:UTTARA:P01:R02:D10:V01",
+          "VG:SV:KAU:UTTARA:P05:R01:D01:V03",
+          "VG:SV:KAU:UTTARA:P05:R02:D03:V06",
+          "VG:SV:KAU:UTTARA:P05:R02:D09:V02"
+        ],
+        "note": "Independent of both of the lead's failed probes. The projection asserted letter identity on five pairs its own containment score already said were not identical."
+      }
+    }
+  },
+  "closure_measures_after_import": {
+    "GAP-SEMANTICS-001": {
+      "has_semantic_assertion_reaches_non_rv": [
+        "AV",
+        "SV",
+        "YV"
+      ],
+      "rv_mantras_covered": 10150,
+      "rv_before": 2542,
+      "blended_total_forbidden": true,
+      "five_instruments": {
+        "live_MORPHOLOGY_RULE": 2406,
+        "live_MODEL_EXTRACTION": 2459,
+        "MORPHOLOGY_RULE_PREDICATE_ONLY": 28370,
+        "TREEBANK_DEPREL": 1532,
+        "CROSS_VEDA_TEXT_IDENTITY": 364
+      }
+    },
+    "GAP-SEMANTICS-003": {
+      "assertions_with_all_three_slots": 341,
+      "at_least_one_non_devata_target": true,
+      "non_devata_target_fillers": 691,
+      "note": "A RoleFiller fills the slot as an occurrence. It is promoted to an entity only where an independent resolution produced a REFERS_TO edge; 1,665 of 2,052 fillers carry none and stay occurrences."
+    },
+    "GAP-SEMANTICS-002": {
+      "live_unreviewed_before": 4865,
+      "staged_assertions_all_unreviewed": 30266,
+      "unreviewed_after_import": 35131,
+      "multiple": 7.22,
+      "closes": false
+    }
+  },
+  "trade_this_import_makes": {
+    "improves": "GAP-SEMANTICS-001 -- HAS_SEMANTIC_ASSERTION reaches all four corpora and RV coverage goes 2542 -> 10150 of 10,552.",
+    "worsens_SEMANTICS_002": "the unreviewed population goes 4865 -> 35131, a 7.2x multiplication. Closing coverage makes the review gap larger, not smaller.",
+    "deepens_SEMANTICS_003": "28370 of the staged rows are MORPHOLOGY_RULE_PREDICATE_ONLY and carry no role slot at all, so the share of assertions with an incomplete triple rises even as the absolute count of complete triples goes 0 -> 341.",
+    "rule": "None of these three figures may be reported without the other two."
+  },
+  "samaveda_standing_constraint": {
+    "rule": "The Samavedic assertions may NEVER be counted as Samaveda morphology or as Samavedic annotation, on any surface. The figure is 364 assertions over 211 verses after the NEAR_PARALLEL_OF withholding, down from 372 over 216.",
+    "sv_assertions": 364,
+    "sv_verses_with_an_assertion": 211,
+    "sv_morphological_tokens_analysed": 0,
+    "sv_assertions_before_the_near_parallel_withholding": 372,
+    "sv_verses_before_the_near_parallel_withholding": 216,
+    "why_both_figures_travel_together": "The assertion count is a count of transferred Rigvedic analyses. The token yield is what the Samaveda itself contributed, and it is zero. Publishing the first without the second is the misleading form of a true sentence.",
+    "per_row_disclosure_kept_verbatim": [
+      "cautions: [ANALYSIS_IS_OF_A_LETTER_IDENTICAL_RIGVEDIC_VERSE_NOT_OF_A_SAMAVEDIC_ANNOTATION]",
+      "human_annotated: false",
+      "model_assisted: false",
+      "provenance: deterministic",
+      "roles_withheld: true, with its reason"
+    ]
+  },
+  "files": {
+    "semantic_assertions.jsonl": "5c904af624d149a06dc55aeedf4702b5418e21a0bba32a9d56797b238fd08e7e",
+    "semantic_assertions_withheld.jsonl": "e60203def20de2db3a8fa43897d9003608c1dbde889784fc660f78d688c15967",
+    "assertion_role_edges.jsonl": "bb50918575f6a89beeeca8a48a3a6ea8c77eac91ec51daf29ca918ec0f97f77c"
+  }
+}

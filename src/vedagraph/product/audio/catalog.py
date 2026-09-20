@@ -41,6 +41,7 @@ from vedagraph.product.audio.models import (
     AudioRecord,
     AudioScope,
     MappingConfidence,
+    PublicationTier,
 )
 
 #: Path of the committed catalog, relative to the data directory.
@@ -208,6 +209,26 @@ class AudioCatalog:
     def mapped_confidences(self) -> dict[str, int]:
         return self.counts_by("mapping_confidence")
 
+    def for_tier(self, tier: PublicationTier) -> tuple[AudioRecord, ...]:
+        """Every record in one publication tier."""
+        return tuple(r for r in self._records if r.publication_tier is tier)
+
+    def counts_by_veda_and_tier(self) -> dict[str, dict[str, int]]:
+        """Per-Veda counts split by tier, with **every** tier present for every Veda.
+
+        The zeros are the point. A Veda whose reviewed count is absent from the mapping
+        reads, to anything that iterates the keys, as a Veda with no reviewed tier at all
+        -- which is the same rendering as a Veda not in the catalogue. Typing the absence
+        as a zero is what lets a client say "0 reviewed" instead of saying nothing.
+        """
+        counts: dict[str, dict[str, int]] = {
+            veda: {tier.value: 0 for tier in PublicationTier}
+            for veda in sorted(set(VEDA_RECENSIONS) | {r.veda for r in self._records})
+        }
+        for record in self._records:
+            counts[record.veda][record.publication_tier.value] += 1
+        return counts
+
     def playable(self) -> tuple[AudioRecord, ...]:
         """Records the product can actually sound, as opposed to link out to."""
         return tuple(
@@ -236,6 +257,37 @@ def scope_plural(scope: AudioScope) -> str:
         AudioScope.WORK: "whole Samhitas",
         AudioScope.UNKNOWN: "unstated spans",
     }[scope]
+
+
+def tier_label(tier: PublicationTier) -> str:
+    """Short reader-facing name for a tier. Never the word "verified" for the weaker one."""
+    return {
+        PublicationTier.RELEASED_VERIFIED: "Human-verified recording",
+        PublicationTier.SOURCE_MAPPED_UNREVIEWED: "Source-mapped recording, not yet reviewed",
+    }[tier]
+
+
+def tier_note(tier: PublicationTier) -> str:
+    """The one sentence a client may render verbatim about a recording's review status.
+
+    Written in exactly one place for the same reason :func:`scope_label` is: the failure
+    mode here is a second code path that phrases an unheard recording as a checked one, and
+    a single function is the only thing that makes that failure impossible rather than
+    merely unlikely. The unreviewed sentence names what *was* done -- the mapping and the
+    text comparison are real work -- before naming what was not, because a note that says
+    only "unverified" understates the evidence as badly as "verified" overstates it.
+    """
+    return {
+        PublicationTier.RELEASED_VERIFIED: (
+            "A named reviewer played this recording and confirmed it is the passage it is "
+            "mapped to."
+        ),
+        PublicationTier.SOURCE_MAPPED_UNREVIEWED: (
+            "This recording's mapping was checked against the source's own coordinates and "
+            "against this corpus's text, and its media was confirmed to resolve. No person "
+            "has listened to it, so it is not described as verified."
+        ),
+    }[tier]
 
 
 def scope_label(scope: AudioScope) -> str:

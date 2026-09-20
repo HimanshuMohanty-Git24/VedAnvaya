@@ -314,10 +314,31 @@ const round3 = (value) => Math.round(value * 1000) / 1000;
 
 /* ----------------------------------------------------------------- write - */
 
+/*
+ * The lineage this file ships 50 real node positions on.
+ *
+ * `source: "public/world/world.bin"` named the input and recorded nothing identifying it,
+ * which left the homepage the one graph-derived artifact under public/ that nothing pins:
+ * a slice taken from one export, served beside a world rebuilt from another, and every
+ * coordinate a real coordinate of the wrong world. The manifest already carries both
+ * hashes, so this carries them through -- the export the world was built from, and the
+ * binary the positions were read out of.
+ */
+const inputPublicExportHash = manifest.inputPublicExportHash;
+const inputWorldBinSha256 = manifest.worldBinSha256;
+if (!inputPublicExportHash || !inputWorldBinSha256) {
+    throw new Error(
+        "public/world/world.json carries no inputPublicExportHash or worldBinSha256; " +
+            "rebuild the world before slicing the homepage out of it",
+    );
+}
+
 const payload = {
     version: 1,
     generated: new Date().toISOString().replace(/\.\d+Z$/, "Z"),
     source: "public/world/world.bin",
+    inputPublicExportHash,
+    inputWorldBinSha256,
     note: "A real slice of the world artifact. Coordinates are the world's own, recentred and uniformly scaled into a unit cube; nothing is moved. Subjects standing within 0.08 of one already selected are refused rather than repositioned, so the slice is sparser than the world at this scale but every position in it is the world's.",
     minSeparation: MIN_SEPARATION,
     groups: manifest.groups,

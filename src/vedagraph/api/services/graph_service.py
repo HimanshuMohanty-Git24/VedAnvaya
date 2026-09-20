@@ -119,14 +119,15 @@ from vedagraph.api.repositories.neo4j_repository import (
     validated_label,
     validated_relationship_types,
 )
-from vedagraph.api.services.deity_population import subject_disclosure
+from vedagraph.api.services.deity_population import DevataSubject, subject_disclosure
+from vedagraph.domain import layer_figures
 from vedagraph.domain.ontology import LABEL_DEVATA
 
 # ---------------------------------------------------------------------------
 # Traversal whitelists
 # ---------------------------------------------------------------------------
 
-#: Predicates a neighbourhood may follow. Every one of the 57 is a knowledge claim about
+#: Predicates a neighbourhood may follow. Every one of the 58 is a knowledge claim about
 #: the corpus; the exclusions below are the corpus's plumbing and its own build's opinions.
 TRAVERSABLE_RELATIONSHIPS: Final[frozenset[str]] = frozenset(
     {
@@ -136,6 +137,7 @@ TRAVERSABLE_RELATIONSHIPS: Final[frozenset[str]] = frozenset(
         "REUSES_TEXT_FROM",
         "VARIANT_OF",
         "PARALLEL_TO",
+
         # formulaic diction
         "HAS_FORMULA",
         "MEMBER_OF_FAMILY",
@@ -143,6 +145,12 @@ TRAVERSABLE_RELATIONSHIPS: Final[frozenset[str]] = frozenset(
         # what a passage names or is about
         "MENTIONS_DEVATA",
         "MENTIONS_ENTITY",
+        # GAP-ENTITY_COVERAGE-001. Traversable rather than refused: "where does this
+        # epithet occur" is the question the layer was built to answer, and refusing the
+        # predicate would make the answer unreachable from /api/v1/graph while the edges
+        # sit in the graph. Rigveda-only by construction; the bound is on every edge and
+        # in the predicate's own limit.
+        "MENTIONS_EPITHET",
         "ABOUT_CONCEPT",
         "SHARES_ENTITY_VOCABULARY_WITH",
         # the Anukramani's ascriptions
@@ -150,6 +158,8 @@ TRAVERSABLE_RELATIONSHIPS: Final[frozenset[str]] = frozenset(
         "HAS_CHANDAS",
         "HAS_DEVATA",
         "HAS_DEVATA_ASCRIPTION",
+        "ASCRIBES_TO_DEVATA",
+        "HAS_DEVATA_DERIVED",
         "BELONGS_TO_FAMILY",
         # deity structure
         "CO_OCCURS_WITH",
@@ -157,6 +167,7 @@ TRAVERSABLE_RELATIONSHIPS: Final[frozenset[str]] = frozenset(
         "HAS_AXIS",
         "HAS_EPITHET",
         "EPITHET_VARIANT_OF",
+        "SPECIALIZED_FORM_OF",
         "MEMBER_OF",
         "COMPOSED_OF",
         # what a passage is for
@@ -165,15 +176,25 @@ TRAVERSABLE_RELATIONSHIPS: Final[frozenset[str]] = frozenset(
         "ADDRESSES_CONCERN",
         "USED_FOR_RITE",
         "DESCRIBED_IN",
+        "ATTESTED_IN",
         "BROADER_THAN",
+        # what a scholar says about a passage
+        "SCHOLARLY_CLAIM_ABOUT",
+        # the formula layer, populated by Wave 3
+        "SHARES_FORMULA_WITH",
         # the morphology-derived agentive layer
         "PERFORMS_ACTION",
         "IS_ASKED_TO",
         "HAS_SEMANTIC_ASSERTION",
         # ritual structure
+        "HAS_RITUAL_STEP",
         "USES_OBJECT",
         "USES_SUBSTANCE",
         "USES_OFFERING",
+        # 4 edges, Devata -> Offering, on 3 of 103 rites. Sparse, and whitelisted anyway:
+        # scarcity is a reason to disclose a layer, not a reason to make it unreachable,
+        # and its siblings on either side of it here are followed at every size.
+        "RECEIVES_OFFERING",
         "INVOKES_DEVATA",
         "PERFORMED_BY",
         "PERFORMED_FOR",
@@ -209,12 +230,12 @@ LEMMA_RELATIONSHIP: Final = "MENTIONS_LEMMA"
 #: Predicates deliberately NOT traversable, with the reason, because "we forgot" and "we
 #: decided" are indistinguishable from the outside.
 #:
-#: ``CONTAINS`` (22,537), ``HAS_TEXT_VERSION`` (44,276), ``HAS_TRANSLATION`` (17,283) are
+#: ``CONTAINS`` (22,537), ``HAS_TEXT_VERSION`` (44,276), ``HAS_TRANSLATION`` (18,415) are
 #: the corpus's own tree and its stored surfaces: structure and text, not claims, and
 #: navigating them is what the passage endpoints are for. ``MENTIONS_LEMMA`` (9,000) is
 #: behind ``include_internal``. ``QA_ISSUE_ON`` (915) attaches this repository's doubts about
 #: itself to passages and is never product content. ``ASSERTION_PREDICATE`` (2,672),
-#: ``ASSERTION_AGENT`` (2,502) and ``ASSERTION_TARGET`` (799) are the internal wiring of the
+#: ``ASSERTION_AGENT`` (2,660) and ``ASSERTION_TARGET`` (918) are the internal wiring of the
 #: reified ``SemanticAssertion`` node: a client reaches an assertion through
 #: ``HAS_SEMANTIC_ASSERTION`` and reads its roles off the node, so exposing the spokes would
 #: add three hops that mean nothing to a reader.
@@ -227,8 +248,45 @@ NON_TRAVERSABLE_REASONS: Final[dict[str, str]] = {
     "ASSERTION_PREDICATE": "internal wiring of a reified assertion node",
     "ASSERTION_AGENT": "internal wiring of a reified assertion node",
     "ASSERTION_TARGET": "internal wiring of a reified assertion node",
-    "SHARES_FORMULA_WITH": "declared in the ontology and deliberately unpopulated; "
-    "it carries 0 edges, so traversing it would traverse nothing",
+    # SHARES_FORMULA_WITH used to be refused here, on the stated grounds that it "carries 0
+    # edges, so traversing it would traverse nothing". Wave 3 wrote 6,148 of them and the
+    # sentence became a false statement about the graph -- the worst kind of refusal, because
+    # it tells a reader the layer is empty. It is traversable above.
+    # HAS_RITUAL_STEP was refused here until M7. The reason was measurable and it is now
+    # false: the step nodes carry display_type = RITUAL_STEP and a step_key that is
+    # deterministic, URN-backed and collision-free over all 3,121 of them, so a traversal
+    # reaching one can name it. See docs/reports/data-completeness/SCHEMA_MIGRATION_CARDS.md.
+    # Superseded, not abandoned. RESOLVES_TO_DEVATA was invented for a relation the
+    # ontology already declares as ASCRIBES_TO_DEVATA, with the right signature and a
+    # docstring describing the same derivation; the 39 live edges are staged for retyping
+    # into it at zero census delta. It is refused rather than left unclassified because an
+    # unclassified populated type is invisible to /api/v1/graph and nothing tells the reader
+    # it exists -- and this entry must be DELETED, not amended, once the retype lands.
+    "RESOLVES_TO_DEVATA": "superseded by ASCRIBES_TO_DEVATA, which the ontology already "
+    "declares for this relation; the 39 edges are staged for retyping and this refusal "
+    "comes out in the same change",
+    # Measured, not assumed: the 4,079 edges run over only 4,076 distinct (source, type,
+    # target) triples, because a verse may contribute more than one pada to the same group.
+    # VG:RV:SAK:M01:S097:V001 contributes pada a and pada c to one group, and two more
+    # verses do the same. The public relationship id IS that triple, so whitelisting this
+    # predicate would publish 6 edges under 3 ids -- the same two-objects-one-id defect the
+    # publication-identity repair exists to close, reintroduced on a different layer.
+    #
+    # This is a refusal about our id scheme, not about the layer, and it is stated rather
+    # than left blank so a reader is told the layer is there. It comes out as soon as the
+    # relationship id can carry the pada discriminator the edges already store in pada_key.
+    "HAS_PARALLEL_PADA": "the public relationship id is the (source, type, target) triple, "
+    "and 3 verses each contribute two padas to one group, so 6 of the 4,079 edges would "
+    "share an id with another edge; refused until the id can carry the stored pada_key",
+    "ASSERTION_ROLE": "internal wiring of a reified assertion node",
+    "REFERS_TO": "internal wiring of the semantic-role layer: it resolves a role filler to "
+    "its referent, and the filler is not a thing a reader asked to see",
+    "QUALITY_VERDICT_ABOUT": "this repository's assessment of its own passages; never "
+    "product content, on the same footing as QA_ISSUE_ON",
+    "POSITION_ASSERTED_BY": "internal wiring of a reified scholarly position; read the "
+    "position through /api/v1/insights, where it arrives with its falsifier",
+    "POSITION_STATED_IN": "internal wiring of a reified scholarly position",
+    "REPORTED_IN": "internal wiring of a reified scholarly position",
 }
 
 #: Predicates a path may cross. Narrower than the neighbourhood set on purpose: a path is a
@@ -302,7 +360,7 @@ FAMILY_MEMBERSHIP_MIRROR: Final = "HAS_FORMULA"
 #: Predicates whose ``confidence`` is a single constant on every edge, with that constant.
 #:
 #: Measured by the frozen query ``confidence_is_a_pipeline_constant``, which grades each
-#: confidence-bearing predicate: these five come back ``SINGLE_CONSTANT`` with
+#: confidence-bearing predicate: these seven come back ``SINGLE_CONSTANT`` with
 #: ``distinct_values = 1``. A value identical on 17,889 edges orders none of them, so
 #: filtering on it selects a pipeline branch and not a quality. The API therefore returns
 #: null for ``confidence`` on these and surfaces the constant as ``pipeline_prior``.
@@ -316,8 +374,26 @@ PIPELINE_CONSTANT_PREDICATES: Final[dict[str, float]] = {
     "HAS_CHANDAS": 1.0,
     "HAS_DEVATA": 1.0,
     "HAS_DEVATA_ASCRIPTION": 1.0,
+    "HAS_DEVATA_DERIVED": 1.0,
+    "ASCRIBES_TO_DEVATA": 1.0,
     "BELONGS_TO_FAMILY": 1.0,
 }
+#: ``HAS_DEVATA_DERIVED`` and ``ASCRIBES_TO_DEVATA`` are the two most recent entries, and the
+#: note they replace is worth recording because it was wrong in a way nothing caught.
+#:
+#: That note said they were "deliberately ABSENT" because "neither carries a ``confidence``
+#: property at all -- 0 of 882 and 0 of 39", and told the next reader to add them only in the
+#: same change that landed a staged property correction. The property correction had already
+#: landed. Measured live: 882 of 882 ``HAS_DEVATA_DERIVED`` edges and 39 of 39
+#: ``ASCRIBES_TO_DEVATA`` edges carry ``confidence = 1.0``, matching the parent
+#: ``HAS_DEVATA_ASCRIPTION`` (5,385 of 5,385 at 1.0) exactly as that note predicted they
+#: would. So the stated reason for the omission had become the opposite of the data, and the
+#: omission it justified made ``test_the_varying_confidence_predicates_still_vary`` red -- the
+#: 921 edges were presenting an unearned per-edge confidence on a serving surface.
+#:
+#: The lesson is the one the old note was itself drawing, pointed the other way: a comment
+#: that carries a measurement goes stale silently, because nothing re-measures a comment.
+#: The counts above are asserted by the two live-invariant tests, not by this prose.
 
 #: Predicates where ``confidence`` genuinely varies, so a per-edge value means something
 #: relative to its siblings. Still a pipeline output: ``confidence_is_a_pipeline_constant``
@@ -336,6 +412,13 @@ VARYING_CONFIDENCE_PREDICATES: Final[frozenset[str]] = frozenset(
         "HAS_THEME",
         "CONTRASTS_WITH",
         "REFERS_TO_NATURAL_PHENOMENON",
+        # These two carried a single value because they are tiny -- 3 edges and 1 -- which
+        # is a sample size and not a pipeline constant. R5 withdrew their confidence too,
+        # to uncalibrated_pipeline_score, and deliberately did NOT give them the
+        # source-explicit tier marker: 0.85 and 0.75 are not the source-explicit 1.0, and
+        # marking them so would assert something false about their evidence. They stay
+        # listed here as declared members of the varying set, so that a future edge of
+        # either predicate arriving with a real varying confidence is not a surprise.
         "INVOLVES_SUBSTANCE",
         "REFERS_TO_PLACE",
     }
@@ -349,10 +432,13 @@ CONFIDENCE_FILTER_CAVEAT: Final = (
     + " predicates stamp one value on every edge they have ("
     + ", ".join(f"{name} = {value}" for name, value in sorted(PIPELINE_CONSTANT_PREDICATES.items()))
     + "), so a threshold either keeps all of their edges or none, and keeping them is not "
-    "evidence of quality. Those edges return confidence = null and the constant as "
-    "pipeline_prior; edges of predicates where the value varies are filtered on it. No "
-    "predicate in this graph has a labelled evaluation set or a reliability curve behind "
-    "its confidence."
+    "evidence of quality. GAP-QUALITY-003 WITHDREW the stored field from those seven: the "
+    "edges carry source_explicit_tier_marker instead, because the value encoded an evidence "
+    "TIER and not a probability, and this map is now the one place the prior is declared. "
+    "Those edges return confidence = null and the constant as pipeline_prior; edges of "
+    "predicates where the value varies are filtered on it, and every one of those carries "
+    "calibration_status = NOT_CALIBRATED_NO_HUMAN_LABELLED_SAMPLE. No predicate in this "
+    "graph has a labelled evaluation set or a reliability curve behind its confidence."
 )
 
 # ---------------------------------------------------------------------------
@@ -363,7 +449,10 @@ CONFIDENCE_FILTER_CAVEAT: Final = (
 #: endpoints. Calibrated against the live degree distribution rather than chosen: the
 #: maximum degree of a mantra is 88, of a formula 95, of a hymn 95, of a formula family 28,
 #: of a seer family 51 -- so 200 sits clear of every node class a reader would call a
-#: *subject*. Above it are 137 of 108,779 nodes (0.13%): the frequent metres, the twenty
+#: *subject*. Above it are 137 of 108,779 nodes (0.13%) -- measured on the Product-V1
+#: graph, and left dated rather than restated, because re-running it is a separate
+#: decision and a figure re-attributed to a graph it was not taken on is worse than an
+#: old one: the frequent metres, the twenty
 #: highest-degree deities, and the concept hubs (*soma*, *heaven*, *sacrifice*, *cattle*).
 #:
 #: Total degree is used and not degree over the traversable set, for a measured reason: the
@@ -436,6 +525,7 @@ RESOLVABLE_KINDS: Final[tuple[NodeKind, ...]] = (
     NodeKind("RishiFamily", "family_key", "RISHI_FAMILY"),
     NodeKind("DerivedMetric", "metric_id", "DERIVED_METRIC"),
     NodeKind("InterpretiveClaim", "claim_id", "INTERPRETIVE_CLAIM"),
+    NodeKind("RitualStep", "step_key", "RITUAL_STEP"),
     NodeKind("Work", "work_id", "WORK"),
     NodeKind("DevataAscription", "entity_key", "DEVATA_ASCRIPTION", indexed=False),
     NodeKind("ActionPredicate", "predicate", "ACTION_PREDICATE", indexed=False),
@@ -445,28 +535,19 @@ RESOLVABLE_KINDS: Final[tuple[NodeKind, ...]] = (
 #: an id back off a node the traversal reached rather than one the client named. Measured
 #: complete: of the edges carried by the 57 traversable predicates, none has an endpoint
 #: for which every one of these is null.
-STABLE_ID_PROPERTIES: Final[tuple[str, ...]] = (
-    "canonical_key",
-    "entity_key",
-    "formula_id",
-    "family_id",
-    "epithet_key",
-    "axis_key",
-    "family_key",
-    "group_key",
-    "metric_id",
-    "claim_id",
-    "work_id",
-    "assertion_id",
-    "lemma",
-    "predicate",
+from vedagraph.graph.public_identity import (
+    ASSERTION_PREFIX, ID_PROPERTIES, public_id, public_id_cypher,
 )
+
+STABLE_ID_PROPERTIES: Final[tuple[str, ...]] = ID_PROPERTIES
+
 
 #: Product type names, keyed by the graph's own ``display_type``. Every non-internal node
 #: carries one and there are 42 distinct values; this map covers all of them, and
 #: ``tests/api/test_graph.py`` asserts against the live graph that it still does, so a
 #: rebuild that introduces a new type fails a test instead of shipping a raw label.
 PRODUCT_TYPE_BY_DISPLAY_TYPE: Final[dict[str, str]] = {
+    "RITUAL_STEP": "RITUAL_STEP",
     "MANTRA": "MANTRA",
     "HYMN": "HYMN",
     "SECTION": "SECTION",
@@ -481,7 +562,31 @@ PRODUCT_TYPE_BY_DISPLAY_TYPE: Final[dict[str, str]] = {
     "DeityGroup": "DEITY_GROUP",
     "DevataAscription": "DEVATA_ASCRIPTION",
     "ActionPredicate": "ACTION_PREDICATE",
+    # One key, because the graph now holds one spelling. It held two: 4,865 nodes carried
+    # "SemanticAssertion" from the two domain builders and 30,266 carried
+    # "SEMANTIC_ASSERTION" from a stabilisation backfill's
+    # coalesce(s.display_type, 'SEMANTIC_ASSERTION') -- a value declared in no ontology
+    # module. Mapping both here served one product type under two names and papered over
+    # the split rather than closing it; downstream, frontend/scripts/world-groups.json has
+    # an entry for the label spelling only, so those 30,266 nodes were drawn in the browser
+    # world as "other" while the other 4,865 were drawn as "record". The 30,266 were
+    # normalised to the label spelling and the second key is deliberately NOT kept as a
+    # tolerance: if a builder writes it again, the live-graph coverage test fails loudly
+    # instead of the value being quietly accepted a second time.
+    #
+    # PADA_PARALLEL_GROUP below is the same shape and was NOT harmless, contrary to an
+    # earlier note here: its 1,434 nodes have no entry in world-groups.json either, so they
+    # are drawn in the browser world as "other" exactly as the 30,266 assertions were. What
+    # differs is the remedy -- no node has ever carried the PascalCase spelling, so there
+    # was nothing in the graph to normalise, and the fix is a missing group mapping rather
+    # than a migration. It is left open and reported rather than described as benign.
     "SemanticAssertion": "SEMANTIC_ASSERTION",
+    # The graph's own spelling, and only it. A "PadaParallelGroup" key sat beside this one
+    # and no node has ever carried that value -- measured: 1,434 nodes, all
+    # PADA_PARALLEL_GROUP -- so unlike the assertion case there was nothing in the graph to
+    # normalise and removing the dead key changes no data. It was NOT harmless: see the
+    # note above.
+    "PADA_PARALLEL_GROUP": "PADA_PARALLEL_GROUP",
     "DerivedMetric": "DERIVED_METRIC",
     "InterpretiveClaim": "INTERPRETIVE_CLAIM",
     "Formula": "FORMULA",
@@ -528,6 +633,10 @@ NODE_METADATA_KEYS: Final[frozenset[str]] = frozenset(
         "sequence_in_parent",
         # deity
         "structure",
+        # The recorded eligibility ruling, so a client reading the graph sees the same
+        # decision the deity routes filter on rather than re-deriving one from `structure`.
+        "non_deity_kind",
+        "deity_eligibility_ruling",
         "is_composite",
         "component_count",
         "axes",
@@ -875,6 +984,19 @@ PREDICATE_SEMANTICS: Final[dict[str, PredicateSemantics]] = {
         "An alias match. Where the alias is also a deity name the edge is flagged "
         "theonym_ambiguous, because agni is fire and it is also Agni.",
     ),
+    "MENTIONS_EPITHET": PredicateSemantics(
+        "attests the epithet",
+        "The passage attests this epithet, per the Rigvedic morphological annotation.",
+        "RIGVEDA ONLY, and the bound is a property of the evidence rather than of the "
+        "epithets: the annotation layer covers the Rigveda's 10,552 mantras and none of "
+        "the other 9,658, so an epithet with no Samavedic edge is UNANNOTATED there and "
+        "not absent. Read `epithet_match_tier`: STEM_LEMMA edges come from the "
+        "annotator's own lemma and cover every inflection of it, while "
+        "ATTESTED_SURFACE_FORM edges cover one attested word form because the epithet is "
+        "itself an inflected form -- the duals dasrā, nāsatyā and rudravartanī, whose "
+        "stems the annotator names and whose wider inflection is deliberately not "
+        "claimed.",
+    ),
     "ABOUT_CONCEPT": PredicateSemantics(
         "is about",
         "The passage was judged to concern this concept.",
@@ -900,20 +1022,44 @@ PREDICATE_SEMANTICS: Final[dict[str, PredicateSemantics]] = {
     "HAS_CHANDAS": PredicateSemantics(
         "is in the metre",
         "The Anukramani names this metre for this passage.",
-        "10,388 of 16,331 arrive by projecting a hymn's label downward. The Samaveda "
+        "10,399 of 16,298 arrive by projecting a hymn's label downward. The Samaveda "
         "carries no metre layer at all, so its absence there is a missing layer.",
     ),
     "HAS_DEVATA": PredicateSemantics(
         "is ascribed to the deity",
         "The Anukramani names this deity as the passage's addressee.",
         "Rigveda-only -- all 10,558 edges -- and 8,329 of them are inherited from a hymn "
-        "label. The devata slot is also not a theological claim: it holds human patrons and "
-        "praise of a gift as well as gods.",
+        "label. This predicate's Rigvedic bound is NOT the corpus's: the Atharvaveda "
+        "records its dedications under HAS_DEVATA_ASCRIPTION and HAS_DEVATA_DERIVED, so a "
+        "reader must not take a zero here as a corpus that names no addressee. The devata "
+        "slot is also not a theological claim: it holds human patrons and praise of a gift "
+        "as well as gods.",
     ),
     "HAS_DEVATA_ASCRIPTION": PredicateSemantics(
         "carries the deity ascription",
         "The passage carries this Anukramani ascription descriptor.",
-        "A descriptor of the ascription's form, not a second deity attribution.",
+        "The Atharvaveda's own dedication layer, 5,385 edges over 4,665 of its 6,590 "
+        "passages, holding Whitney's verbatim descriptor rather than a deity name. It is a "
+        "descriptor of the dedication's FORM and not itself an attribution to a named god "
+        "-- but 47 of its 324 descriptors now resolve to one through ASCRIBES_TO_DEVATA, "
+        "and the other 277 are refused with a typed reason each rather than unprocessed.",
+    ),
+    "ASCRIBES_TO_DEVATA": PredicateSemantics(
+        "is derived from the deity",
+        "This ascription descriptor is morphologically derived from that deity's name.",
+        "A grammatical fact, not a reading: aagneyam is the vrddhi taddhita of agni under "
+        "Panini 4.2.24 sasya devata. 47 of 324 descriptors resolve; the other 277 keep "
+        "their descriptor form and a typed reason, and are NOT silently absent.",
+    ),
+    "HAS_DEVATA_DERIVED": PredicateSemantics(
+        "is dedicated by resolved ascription",
+        "The Atharvavedic index dedicates this passage's hymn to that deity.",
+        "Separate from HAS_DEVATA on purpose: HAS_DEVATA is the Rigvedic Anukramani naming "
+        "a deity directly, this is the Atharvavedic apparatus naming an adjective that a "
+        "morphological derivation resolves. Every edge is CONTAINER_INHERITED at SUKTA_WIDE "
+        "scope -- the index states a deity for the hymn, and no Atharvavedic verse is "
+        "ascribed differently from its sukta. The resolution being exact does not make the "
+        "scope per-verse; read `ascription_resolution_*` for that axis.",
     ),
     "BELONGS_TO_FAMILY": PredicateSemantics(
         "belongs to the seer family",
@@ -988,7 +1134,7 @@ PREDICATE_SEMANTICS: Final[dict[str, PredicateSemantics]] = {
     "DESCRIBED_IN": PredicateSemantics(
         "is described in",
         "This rite or role is described in the passage.",
-        "A curated pointer for the eight modelled rites, not a concordance.",
+        "A curated pointer for the modelled rites, not a concordance.",
     ),
     "BROADER_THAN": PredicateSemantics(
         "is broader than",
@@ -1010,30 +1156,41 @@ PREDICATE_SEMANTICS: Final[dict[str, PredicateSemantics]] = {
     "HAS_SEMANTIC_ASSERTION": PredicateSemantics(
         "carries the semantic assertion",
         "This passage carries a reified assertion about who does what.",
-        "One label over two layers of unequal strength that must not be summed: 2,406 "
-        "assertions derived by rule from the Sanskrit annotation, and 2,459 extracted "
-        "unreviewed by a model from an English translation. All 4,865 are Rigvedic. "
-        "Read the assertion's own `derivation` before using it.",
+        "One label over five derivations of unequal strength that must not be summed: "
+        "28,370 and 2,406 derived by rule from the Sanskrit annotation, 1,532 from the "
+        "treebank dependency layer, 364 projected from a letter-identical Rigvedic verse "
+        "rather than annotated in their own corpus, and 2,459 extracted unreviewed by a "
+        "model from an English translation. The layer reaches all four corpora unevenly "
+        "-- RV 27,057, AV 6,167, YV 1,543, SV 364 -- and none of it is human-reviewed. "
+        "This said 'All 4,865 are Rigvedic', which was true of an earlier state of the "
+        "layer and is now false in both halves. Read the assertion's own `derivation` "
+        "before using it.",
     ),
     "USES_OBJECT": PredicateSemantics(
         "uses the object",
         "The rite uses this object.",
-        "Curated for the eight modelled rites only.",
+        "Curated for the modelled rites only.",
     ),
     "USES_SUBSTANCE": PredicateSemantics(
         "uses the substance",
         "The rite uses this substance.",
-        "Curated for the eight modelled rites only.",
+        "Curated for the modelled rites only.",
     ),
     "USES_OFFERING": PredicateSemantics(
         "uses the offering",
         "The rite uses this offering.",
-        "Curated for the eight modelled rites only.",
+        "Curated for the modelled rites only.",
+    ),
+    "RECEIVES_OFFERING": PredicateSemantics(
+        "receives the offering",
+        "The deity is named as the recipient of this offering.",
+        "Four edges, on 3 of the 103 modelled rites. Each carries its cited verse loci, so "
+        "an edge can be checked; the layer is too sparse to support a count over deities.",
     ),
     "INVOKES_DEVATA": PredicateSemantics(
         "invokes the deity",
         "The rite invokes this deity.",
-        "Curated for the eight modelled rites only.",
+        "Curated for the modelled rites only.",
     ),
     "PERFORMED_BY": PredicateSemantics(
         "is performed by",
@@ -1047,9 +1204,45 @@ PREDICATE_SEMANTICS: Final[dict[str, PredicateSemantics]] = {
     ),
     "HAS_STEP": PredicateSemantics(
         "has the step",
-        "This action is a step of the rite.",
-        "Three steps exist across the whole layer, so a rite without them is unmodelled "
-        "rather than stepless.",
+        "This action is a step of the rite, in the Samhita text's own numbering.",
+        "Three steps exist across the whole layer, all on the soma pressing, so a rite "
+        "without them is unmodelled rather than stepless. The sutra-attested procedure is a "
+        "separate predicate, HAS_RITUAL_STEP, and the two must not be added together.",
+    ),
+    "HAS_RITUAL_STEP": PredicateSemantics(
+        "has the procedural step",
+        "A Srautasutra or Grhyasutra prints this step as part of the rite.",
+        "Not the Samhita's own numbering -- that is HAS_STEP, and the two are never summed. "
+        "Each source work numbers its own sequence from 1, so these edges do not compose "
+        "into one procedure, and most state a position without printing the run it falls "
+        "in. Read /api/v1/rituals/{id}, which returns them grouped by source work.",
+    ),
+    "ATTESTED_IN": PredicateSemantics(
+        "is attested in",
+        "The registry records this passage as an attestation of the entity.",
+        "An attestation locator taken from the entity registry, not a re-reading of the "
+        "passage. Absence means the registry recorded no example, not that the passage "
+        "does not name the entity.",
+    ),
+    "SCHOLARLY_CLAIM_ABOUT": PredicateSemantics(
+        "is a scholarly claim about",
+        "A named scholar's recorded position concerns this passage.",
+        "A position held, not a finding accepted. The graph records that someone argued it "
+        "and where; it takes no view on whether they were right, and a passage with several "
+        "of these has a disagreement rather than an answer.",
+    ),
+    "SHARES_FORMULA_WITH": PredicateSemantics(
+        "shares a formula with",
+        "Both mantras contain the same registered formula.",
+        "Derived from the formula layer rather than stated by any source: nothing in a text "
+        "says these two are related. A shared formula is a shared phrase, which is weaker "
+        "than a parallel and much weaker than textual reuse.",
+    ),
+    "SPECIALIZED_FORM_OF": PredicateSemantics(
+        "is a specialized form of",
+        "This deity name is a narrower form of the broader one.",
+        "Narrower than the broader name, not an alias for it: unlike EPITHET_VARIANT_OF it "
+        "does not assert the two are the same referent under two names.",
     ),
     "INVOKES": PredicateSemantics(
         "invokes",
@@ -1153,11 +1346,12 @@ PREDICATE_SEMANTICS: Final[dict[str, PredicateSemantics]] = {
 
 #: What every response says about review, because the honest answer is uniform across the
 #: graph and a client must not have to infer it from a null.
+#: The population sentence is built from the measured figures rather than typed. "ten
+#: predicates" was wrong -- MODEL_ADJUDICATED spans twelve -- and the same paragraph in
+#: three other modules had drifted in three different directions.
 NO_HUMAN_REVIEW_CAVEAT: Final = (
-    "No edge in this graph is HUMAN_REVIEWED and none may claim to be; there is still no "
-    "human gold set. The strongest review state that exists is MODEL_ADJUDICATED, carried "
-    "by 613 edges across ten predicates, where a model re-read the passage and accepted "
-    "the edge with a stated reason. Everything else carries either UNREVIEWED or no review "
+    layer_figures.adjudication_disclosure()
+    + " Everything else carries either UNREVIEWED or no review "
     "record at all, and those two are different: the second means the layer never had a "
     "review step, not that a reviewer passed it."
 )
@@ -1205,7 +1399,8 @@ def _resolution_clause(variable: str, parameter: str) -> str:
 
     Written as a union of narrow lookups rather than the obvious
     ``MATCH (n) WHERE n.canonical_key = $id OR n.entity_key = $id ...``, which was measured:
-    that form is an all-node scan over 108,779 nodes with a disjunction the planner cannot
+    that form is an all-node scan -- over 108,779 nodes when this was measured, on the
+    Product-V1 graph -- with a disjunction the planner cannot
     index, and it did not finish inside a two-minute probe. This form is 9-17 ms.
     """
     branches = [
@@ -1213,6 +1408,18 @@ def _resolution_clause(variable: str, parameter: str) -> str:
         f"{{{kind.property}: ${parameter}}}) RETURN {variable}"
         for kind in RESOLVABLE_KINDS
     ]
+    branches.append(
+        f"MATCH ({variable}:SemanticAssertion) "
+        f"WHERE {variable}.assertion_id = ${parameter} "
+        f"RETURN {variable}"
+    )
+    branches.append(
+        f"WITH ${parameter} AS public_id "
+        f"WHERE public_id STARTS WITH '{ASSERTION_PREFIX}' "
+        f"MATCH ({variable}:SemanticAssertion) "
+        f"WHERE {variable}.assertion_key = substring(public_id, {len(ASSERTION_PREFIX)}) "
+        f"AND {variable}.assertion_id IS NULL RETURN {variable}"
+    )
     return "CALL () {\n  " + "\n  UNION ".join(branches) + "\n}"
 
 
@@ -1336,8 +1543,8 @@ LIMIT 2
 
 
 def _stable_id_expression(variable: str) -> str:
-    """``coalesce`` over the id properties, in the precedence order this module fixes."""
-    return "coalesce(" + ", ".join(f"{variable}.{name}" for name in STABLE_ID_PROPERTIES) + ")"
+    """The same public identity expression used by the offline exporter."""
+    return public_id_cypher(variable)
 
 
 def _path_cypher(types: tuple[str, ...], max_depth: int) -> str:
@@ -1426,12 +1633,8 @@ DISCLOSABLE_EXCLUDED_TYPES: Final[tuple[str, ...]] = tuple(
 
 
 def stable_id(properties: dict[str, Any]) -> str | None:
-    """The node's stable product id, by the precedence this module fixes."""
-    for name in STABLE_ID_PROPERTIES:
-        value = properties.get(name)
-        if isinstance(value, str) and value:
-            return value
-    return None
+    """The shared publication contract, never the assertion's passage context."""
+    return public_id(properties)
 
 
 def product_type(properties: dict[str, Any], labels: list[str]) -> str:
@@ -1493,12 +1696,25 @@ def node_view(properties: dict[str, Any], labels: list[str]) -> GraphNodeView:
     label = properties.get("display_label")
     is_deity: bool | None = None
     if LABEL_DEVATA in labels:
-        is_deity, _ = subject_disclosure(_as_optional_str(properties.get("structure")))
+        # The ruling, carried on the node. Deriving it from ``structure`` here made a graph
+        # node's is_deity flag disagree with the deity routes' own gate on 29 nodes.
+        is_deity, _ = subject_disclosure(
+            DevataSubject(
+                structure=_as_optional_str(properties.get("structure")),
+                is_deity=properties.get("is_deity") is True,
+                non_deity_kind=_as_optional_str(properties.get("non_deity_kind")),
+            )
+        )
     return GraphNodeView(
         id=node_id or "",
         type=product_type(properties, labels),
         label=str(label) if label else (node_id or ""),
-        description=_first_string(properties, ("short_description", "definition", "scope_note")),
+        # text_iast last, and only reached by nodes that carry no curated description:
+        # a :RitualStep IS its sutra, so projecting the locator as the label and nothing as
+        # the description showed a reader a citation with no content behind it.
+        description=_first_string(
+            properties, ("short_description", "definition", "scope_note", "text_iast")
+        ),
         is_deity=is_deity,
         metadata=_node_metadata(properties),
     )
@@ -1526,10 +1742,20 @@ def non_deity_subject_caveats(nodes: Sequence[GraphNodeView]) -> list[CaveatView
     seen: set[str] = set()
     for node in offenders:
         structure = str(node.metadata.get("structure") or "UNSPECIFIED")
-        if structure in seen:
+        kind = node.metadata.get("non_deity_kind")
+        key = f"{structure}|{kind}"
+        if key in seen:
             continue
-        seen.add(structure)
-        caveats.extend(subject_disclosure(structure)[1])
+        seen.add(key)
+        caveats.extend(
+            subject_disclosure(
+                DevataSubject(
+                    structure=structure,
+                    is_deity=False,
+                    non_deity_kind=str(kind) if kind else None,
+                )
+            )[1]
+        )
     named = ", ".join(f"{node.label} ({node.id})" for node in offenders[:8])
     more = "" if len(offenders) <= 8 else f", and {len(offenders) - 8:,} more"
     count = len(offenders)
@@ -1684,7 +1910,19 @@ def _confidence(
     predicate and reporting it as a confidence is how a reader comes to believe a filter
     raised precision.
     """
+    # Three fields, because GAP-QUALITY-003 split one into three. `confidence` survives only
+    # where the value genuinely varies; `source_explicit_tier_marker` carries the constant
+    # 1.0 of the seven source-explicit predicates; `uncalibrated_pipeline_score` carries the
+    # 0.85 and 0.75 of the two predicates that were constant because they are tiny. Reading
+    # only `confidence` made the last of those UNREACHABLE through the API -- the edge went
+    # from reporting VARIES_WITHIN_PREDICATE with its value to reporting nothing at all,
+    # which is information the product used to publish disappearing rather than being
+    # relabelled. Agent B's M19.
     raw = properties.get("confidence")
+    if raw is None:
+        raw = properties.get("source_explicit_tier_marker")
+    if raw is None:
+        raw = properties.get("uncalibrated_pipeline_score")
     value = float(raw) if isinstance(raw, (int, float)) else None
     if relationship_type in PIPELINE_CONSTANT_PREDICATES:
         return (
@@ -1692,6 +1930,10 @@ def _confidence(
             None,
             value if value is not None else PIPELINE_CONSTANT_PREDICATES[relationship_type],
         )
+    if properties.get("uncalibrated_pipeline_score") is not None:
+        # Constant on a 3-edge and a 1-edge population: a sample size, not a tier. Reported
+        # as a prior rather than a confidence, for the same reason as the seven.
+        return (ConfidenceBasis.PIPELINE_CONSTANT, None, value)
     if value is None:
         return ConfidenceBasis.ABSENT, None, None
     return ConfidenceBasis.VARIES_WITHIN_PREDICATE, value, None
@@ -1883,7 +2125,8 @@ class GraphService:
     Every method here bounds its own result before the repository sees it: a page limit, a
     per-type fan-out limit, a node budget, a path candidate cap and a depth ceiling. That
     is not defensive style, it is the requirement -- a request must not be able to make this
-    server enumerate a 265,295-edge graph, and the enumeration is genuinely reachable. A
+    server enumerate the whole edge set -- 265,295 edges when this was measured, on the
+    Product-V1 graph -- and the enumeration is genuinely reachable. A
     two-hop expansion from Indra with no frontier cap touches 6,539 edges at the first step
     alone.
     """

@@ -1,0 +1,410 @@
+{
+  "agent": "AGENT_5_QUALITY_REFERENCE_CONFIDENCE",
+  "domain": "quality, reference sets, confidence, seer families, the withheld Whitney attributions",
+  "measurement_note": "Every figure below was measured read-only against bolt://localhost:7687 db neo4j during the sprint. Other specialists were landing layers concurrently, so any figure over a layer they own may move before integration.",
+  "binding_rules_observed": [
+    "confidence != probability -- no confidence figure here is presented as a likelihood",
+    "quality_tier != confidence -- kept as two axes; the TIER_C finding is about the tier, not the number",
+    "source-adjudicated != human gold -- INDEPENDENT_SOURCE_ADJUDICATED_REFERENCE_SET is not renamed and no model output is called human",
+    "no annotation was fabricated; no model was asked to label rows that would then be called gold",
+    "normalization is comparison, not identity -- the 5 SOURCE_SPELLING_OUTSIDE_TABLE seers stay unresolved for this reason",
+    "no write to canonical Neo4j; every mutation is staged as a proposal"
+  ],
+  "gaps": {
+    "GAP-QUALITY-001": {
+      "declared_closure_test": "data/gold/rigveda_semantic_gold_v1.jsonl has zero rows with annotator UNANNOTATED, the adjudication and manifest files exist, and /api/v1/insights/capabilities reports human_annotated_assertions above 0.",
+      "measured": {
+        "rows": 120,
+        "rows_with_annotator_UNANNOTATED": 120,
+        "rows_with_any_entity": 0,
+        "rows_with_any_relation": 0,
+        "distinct_annotated_at": [
+          "1970-01-01T00:00:00Z"
+        ],
+        "adjudication_file_exists": false,
+        "manifest_file_exists": false,
+        "capabilities_human_annotated_assertions": 0,
+        "capabilities_source": "insight_service.py:2734 counts (s:SemanticAssertion) WHERE s.human_gold_status='ANNOTATED'; the live value of human_gold_status is UNANNOTATED on all 2,459 nodes that carry it"
+      },
+      "closure_test_result": "FAILS AS WRITTEN on all three clauses",
+      "agreement_with_registry": "EXACT on every figure",
+      "root_cause_measured": "SOURCE_TRULY_ABSENT, where the source is human annotator labour. The harness is complete and is built to REFUSE machine filling: vedagraph.semantic.gold._contains_model_data rejects any record carrying confidence, model, model_snapshot, candidate or candidate_assertion_id, and data/gold/.reviewer_identity.json names a human reviewer who has not annotated. Implementation is not the blocker and no implementation change can close this.",
+      "classification": "BLOCKED_EXTERNAL_SOURCE_UNAVAILABLE",
+      "blocked_external_source_required_fields": {
+        "sources_searched": [
+          "UD_Sanskrit-Vedic / Treebank of Vedic Sanskrit (CC BY-SA 4.0), 27,182 sentences -- morphology and dependency syntax, no semantic agent/predicate/target annotation in this ontology",
+          "DCS, 271 corpora -- negative for the Samaveda and carries no VedaGraph semantic layer",
+          "VedaWeb / Zurich -- already inside the graph as 10,031 :Lemma nodes; a lemma inventory, not semantic assertions",
+          "no published human-annotated set exists for a privately defined ontology"
+        ],
+        "search_date": "2026-09-16, standing on the fetch of 2026-09-15 recorded in docs/reports/data-completeness/quality.md section 1",
+        "addressing_proof": "Addressing is not the blocker and was checked. The 120 frame rows carry well-formed VG:RV:SAK canonical keys, and the treebank alignment in quality.md section 1 reaches 4,057 of 4,352 Rigvedic sentences on those same addresses. The absence is of the annotation kind, not of the address.",
+        "why_no_lawful_source": "The rows require entity and relation annotation in VedaGraph's own semantic ontology. No external corpus annotates a privately defined schema, so no acquisition can supply it; only a human reviewer working on these 120 passages can. ADR-014 states the constraint and the harness enforces it.",
+        "absence_not_inferred_from_not_looking": "Three independent published annotation projects were fetched or inspected and each was checked for the specific thing needed -- entities and relations per verse -- rather than for annotation in general. The negative is per-source and recorded above."
+      },
+      "residual": "120 rows of human annotation. Nothing in this repository can produce it without becoming the failure mode ADR-014 names."
+    },
+    "GAP-QUALITY-002": {
+      "declared_closure_test": "A human-annotated subsample of theonym_mention_gold_v1.jsonl exists with its agreement against the model labels measured and reported per ambiguity class.",
+      "measured": {
+        "rows": 575,
+        "annotator": {
+          "MODEL_ADJUDICATED": 575
+        },
+        "annotator_model": {
+          "claude-opus-5": 575
+        },
+        "rows_with_a_human_annotator": 0,
+        "borderline_true": 44,
+        "run_id": "theonym-mention-gold-v1:claude-opus-5:2026-09-09",
+        "strongest_independent_test_that_exists": "quality.md section 9 -- 74 rows reachable by the published human treebank, 72 decidable, model and human agree on 54, which is 75 percent. Not per ambiguity class, and a proxy test."
+      },
+      "closure_test_result": "FAILS AS WRITTEN. No human-annotated subsample exists, so there is nothing to compute agreement against.",
+      "agreement_with_registry": "EXACT",
+      "classification": "BLOCKED_EXTERNAL_SOURCE_UNAVAILABLE",
+      "blocked_external_source_required_fields": "the same five fields as GAP-QUALITY-001; the missing source is the same one -- human review of VedaGraph's own rows -- and the same three published corpora were searched",
+      "what_must_not_happen": "Having a second model label the subsample and reporting the agreement would measure two model passes, which is exactly the failure ADR-014 names, and it would convert a MODEL_ADJUDICATED set into an apparent gold set. Not done.",
+      "residual": "A stratified human pass over the 44 borderline rows plus a sample of the 531 others. The stratification key already exists on the rows."
+    },
+    "GAP-QUALITY-003": {
+      "declared_closure_test": "Each predicate carrying a confidence has a calibration curve measured against a human-labelled sample, and no predicate carries a single constant confidence on every edge.",
+      "measured_at": "2026-09-16T16:57:47Z",
+      "measured": {
+        "confidence_bearing_relationships": 75909,
+        "edges_at_exactly_one_point_zero": 50435,
+        "predicates_carrying_confidence": 18,
+        "single_constant_predicates": {
+          "HAS_RISHI": [
+            17889,
+            1.0
+          ],
+          "HAS_CHANDAS": [
+            16298,
+            1.0
+          ],
+          "HAS_DEVATA": [
+            10558,
+            1.0
+          ],
+          "HAS_DEVATA_ASCRIPTION": [
+            5385,
+            1.0
+          ],
+          "BELONGS_TO_FAMILY": [
+            305,
+            1.0
+          ],
+          "INVOLVES_SUBSTANCE": [
+            3,
+            0.85
+          ],
+          "REFERS_TO_PLACE": [
+            1,
+            0.75
+          ]
+        },
+        "human_labelled_samples_available": 0,
+        "calibration_curves_that_exist": 0,
+        "second_axis_found": "InterpretiveClaim.confidence is an ordinal STRING (HIGH/MEDIUM/LOW) on 6 nodes. One field name, two types, two axes -- reported so no consumer averages them."
+      },
+      "disagreements_with_the_registry_and_report": [
+        "quality.md section 4 states 76,050 confidence-bearing edges; live is 75,909. The 141 delta is the 33 HAS_CHANDAS assertions withdrawn under OWNER_DECISIONS section 27 plus 108 ABOUT_CONCEPT edges.",
+        "quality.md section 4 names FIVE single-constant predicates; benchmark Q77 names SEVEN. Both are right on their own definition: five are pipeline constants and two are single-valued because they are tiny. graph_service.PIPELINE_CONSTANT_PREDICATES documents that distinction, excludes the two deliberately, and is correct as of this measurement."
+      ],
+      "closure_test_result": "FAILS AS WRITTEN on both clauses. Clause one is blocked behind GAP-QUALITY-001 and -002. Clause two cannot be satisfied by any honest change: giving a constant-valued predicate a spread would be inventing a signal.",
+      "classification": "BLOCKED_EXTERNAL_SOURCE_UNAVAILABLE",
+      "why_not_implementation_fixable": "The only implementation-fixable reading of clause two is to stop the field reading as a probability, and that is ALREADY DONE and verified live. The API returns confidence=null and the constant as pipeline_prior for the five; CONFIDENCE_FILTER_CAVEAT is built from the map so the sentence cannot drift; and two live tests guard the map in both directions, at tests/api/test_graph.py:523 and :539. The remaining work is calibration, and calibration needs labels that do not exist.",
+      "note_kept_separate": "quality_tier is a different axis and it DOES order accuracy where confidence does not. quality.md section 4 measures HAS_CHANDAS at one nominal confidence of 1.0 spanning 0.714 to 0.976 observed accuracy, separated by quality_tier. That is not a calibration curve and is not reported as one."
+    },
+    "GAP-QUALITY-004": {
+      "declared_closure_test": "A re-run of the 100-question benchmark against the post-campaign graph shows FULLY_ANSWERABLE well above 11 with MISLEADING still 0, and the re-grade is a re-run rather than a re-scoring of the frozen answers.",
+      "measured_at": "2026-09-16T17:05Z",
+      "recorded_verdicts": {
+        "PARTIALLY_ANSWERABLE": 68,
+        "NOT_ANSWERABLE": 21,
+        "FULLY_ANSWERABLE": 11,
+        "MISLEADING": 0
+      },
+      "agreement_with_registry": "EXACT",
+      "what_was_actually_re_run": {
+        "instrument": "data/staging/final_closure_sprint/agent5/benchmark_reprobe.py",
+        "probes_recorded": 370,
+        "probes_runnable": 367,
+        "probes_executed_without_error": 360,
+        "probes_returning_zero_rows": 1,
+        "questions_with_an_errored_probe": 5
+      },
+      "closure_test_result": "NOT MEASURED TO CLOSURE. A verdict is a judgement over evidence and this agent did not assign 100 of them. Assigning them now would also be premature: five other agents are landing layers into the same graph during this sprint.",
+      "findings_from_the_re_run": [
+        "Q82 and Q93 record probes that are not valid Cypher and never were: the second disjunct of 'CONTAINS x OR CONTAINS y' has no left operand. Both questions are graded NOT_ANSWERABLE and their recorded evidence rests on a query that cannot execute.",
+        "Q23 records two queries on one line separated by a slash, and a second probe that ends in WITH. Neither runs as recorded.",
+        "Q15 and Q93 fail with a Cypher type error because 12 :Internal :DeityCommunity nodes carry an INTEGER display_label, 0 through 11. They are :Internal so no product surface reads them, but any probe that lowercases display_label graph-wide dies on them. Reported for the communities owner.",
+        "Q78's orphan_domain_entities returns zero rows, which is the answer rather than a failure.",
+        "8 of the 14 first-pass probe failures were the harness splitting a list or map argument on every comma. Fixed in the instrument before reporting, because reporting them would have said the graph refuses queries it in fact answers."
+      ],
+      "classification": "STILL_IMPLEMENTATION_FIXABLE",
+      "precise_reason": "This row is a roll-up over the layer gaps the other six agents own, and its own registry entry says so. It cannot close on this agent's work and must be re-measured after integration. The re-run instrument and a full per-question fingerprint of today's graph are staged so the post-integration re-run is a diff and not a fresh judgement."
+    },
+    "GAP-ATTRIBUTION-007": {
+      "declared_closure_test": "MATCH (r:Rishi) WHERE NOT (r)-[:BELONGS_TO_FAMILY]->() RETURN count(r) falls well below 427, and tests/domain/test_rishi_families.py runs rather than skipping.",
+      "measured_at": "2026-09-16T16:54:41Z",
+      "clause_one": {
+        "measured": 427,
+        "target": "well below 427",
+        "result": "FAILS"
+      },
+      "clause_two": {
+        "measured": "tests/domain/test_rishi_families.py -> 14 passed, 1 skipped",
+        "the_one_skip": "tests/domain/test_rishi_families.py:276, gated on VEDAGRAPH_LIVE_NEO4J by design, not on the artifact",
+        "result": "PASSES"
+      },
+      "registry_claim_that_is_now_stale": "The row states the test skips because data/domain/vedagraph_domain_v2/rishi_families_v1.json is not built in this checkout. The artifact IS built and committed at 538,478 bytes and the fixture does not skip.",
+      "disagreement_with_the_registry_wording": "The row says 427 of 729 SEERS are not resolved to a family. Measured: 427 of 729 :Rishi NODES, of which only 616 are seers. 113 of the 427 are not seers at all -- 58 deities, 21 abstractions, 13 mythic beings, 11 deity groups, 5 plants or animals, 3 collectives, 2 objects -- and a gotra is not applicable to them. Of the 616 actual seers, 314 lack a family, not 427.",
+      "every_one_of_the_427_carries_a_typed_reason": {
+        "NO_PATRONYMIC_STATED": 170,
+        "NON_SEER_ASCRIPTION": 113,
+        "EPONYM_WITHOUT_STATED_PATRONYMIC": 69,
+        "THEONYMIC_DESCENT": 45,
+        "COLLECTIVE_LINEAGE_COMPOUND": 12,
+        "TITULAR_NOT_DESCENT": 8,
+        "SOURCE_SPELLING_OUTSIDE_TABLE": 5,
+        "KINSHIP_NOT_DESCENT": 3,
+        "ETYMON_UNCERTAIN": 1,
+        "MYTHIC_DESCENT": 1
+      },
+      "per_namespace": {
+        "RV_WSC2023_ANUKRAMANI": {
+          "total": 367,
+          "assigned": 260
+        },
+        "YV_VSM_RSISUCI": {
+          "total": 228,
+          "assigned": 34
+        },
+        "AV_WHITNEY_ANUKRAMANI": {
+          "total": 134,
+          "assigned": 8
+        }
+      },
+      "headroom_assessed_and_refused": [
+        "EPONYM_WITHOUT_STATED_PATRONYMIC, 69: joining bharadvaja to bharadvaja would assert every ancestor is his own descendant. tests/domain/test_rishi_families.py::test_the_eponym_is_not_a_member_of_his_own_family exists to catch exactly that change.",
+        "THEONYMIC_DESCENT, 45: descent from Indra, Prajapati, Vivasvan or Varuna is divine parentage, not a gotra.",
+        "SOURCE_SPELLING_OUTSIDE_TABLE, 5: each is a printing defect in the source -- bhagavo for bhargava with the r dropped, daivaodasih with an extra a, atreyyapala with two names run together, angirhavirdhanah truncated mid-stem. Resolving them means emending the printed page, which is normalization acting as identity evidence, and is barred.",
+        "NON_SEER_ASCRIPTION, 113: a family is not applicable, and the closure test's own denominator is what makes them look like a gap."
+      ],
+      "classification": "BLOCKED_EXTERNAL_SOURCE_UNAVAILABLE",
+      "blocked_external_source_required_fields": {
+        "sources_searched": [
+          "VHP -- the rights policy in this repository restricts bulk use, and a genealogy layer requires exactly that bulk extraction",
+          "public structured scholarly datasets -- none rights-compatible supplies Vedic rsi genealogy with per-claim provenance",
+          "encyclopaedic and community sources -- they exist and carry no per-statement citation",
+          "an LLM's common knowledge -- explicitly excluded by this phase's rule"
+        ],
+        "search_date": "recorded in docs/architecture/RIGVEDA_RISHI_STRUCTURE_FINDINGS.md, re-read 2026-09-16",
+        "addressing_proof": "Not an addressing failure. All three registries were re-derived through the shipped builder this session and every one of the 427 comes back with the same class it carries in the graph, so the refusal is the layer's rule firing and not a key or script mismatch.",
+        "why_no_lawful_source": "docs/architecture/RIGVEDA_RISHI_STRUCTURE_FINDINGS.md records that no rights-compatible structured dataset supplies the genealogy, and the 170 NO_PATRONYMIC_STATED seers are precisely the ones whose patronymic the Anukramani does not print.",
+        "absence_not_inferred_from_not_looking": "Four channels were named and each refused for its own stated reason, and the reasons differ per channel."
+      },
+      "precise_residual": "170 seers whose source states no patronymic. The other 257 are typed refusals the layer exists to make, and closing them would require inventing descent."
+    },
+    "GAP-ATTRIBUTION-WHITNEY-UNRESOLVED-OBJECT-001": {
+      "declared_closure_test": "Every one of the 466 rows either resolves to an identity and lands as an edge, or is rejected with a stated reason. Read back from canonical Neo4j.",
+      "measured_at": "2026-09-16T17:12Z",
+      "measured": {
+        "rows_in_staging_carrying_VERBATIM_SOURCE_STRING_NOT_RESOLVED": 466,
+        "split": {
+          "WHITNEY_AV_PERVERSE_CHANDAS": 383,
+          "WHITNEY_AV_PERVERSE_DEVATA": 83
+        },
+        "distinct_passages_addressed": 443,
+        "all_443_exist_as_Passage_nodes": true,
+        "edges_in_canonical_neo4j_from_these_rows": 0,
+        "nodes_in_canonical_neo4j_from_these_rows": 0,
+        "rejection_reason_readable_from_canonical_neo4j": false
+      },
+      "closure_test_result": "First clause SATISFIED -- every one of the 466 is rejected with a stated reason, entity_resolution_method = VERBATIM_SOURCE_STRING_NOT_RESOLVED on the row, classified RETAINED_NON_IMPORTABLE_UNRESOLVED_OBJECT by the owner. Second clause NOT SATISFIABLE TODAY -- the reason lives in staging and in OWNER_DECISIONS.md and nothing about these 466 is readable from canonical Neo4j.",
+      "owner_decision_cited_not_reopened": [
+        "docs/reports/data-completeness/OWNER_DECISIONS.md section 20, lines 432-449: withheld, classified RETAINED_NON_IMPORTABLE_UNRESOLVED_OBJECT, and resolving them by normalized string equality is what the owner's rules forbid.",
+        "docs/reports/data-completeness/OWNER_DECISIONS.md section 25, lines 542-565: four channels attempted, three refused with stated reasons; all 466 stay RETAINED_NON_IMPORTABLE_UNRESOLVED_OBJECT and the graph is not mutated."
+      ],
+      "registry_row_claim_that_conflicts_with_the_owner_decision": "The row's closure_basis says Wave 4 fixed the metre vocabulary so the stated precondition is now met and the import has not been run. That reads as an invitation to import. OWNER_DECISIONS section 25 does not make the segmentation fix the sole precondition: it also refuses the devata half on entity-hood grounds and states the graph is not mutated. The registry row must not be read as authorising the import; the owner decision governs.",
+      "new_finding_the_withholding_produced": {
+        "headline": "150 verse-dimension pairs are asserted ASSESSED_SOURCE_ABSENT in canonical Neo4j while Whitney's printed bracket does state a verse-level value that this repository holds.",
+        "chandas_withheld_while_graph_says_ASSESSED_SOURCE_ABSENT": 117,
+        "devata_withheld_while_graph_says_ASSESSED_SOURCE_ABSENT": 33,
+        "chandas_withheld_while_graph_says_DERIVED_PRESENT": 258,
+        "devata_withheld_while_graph_says_DERIVED_PRESENT": 50,
+        "chandas_withheld_while_graph_says_SOURCE_EXPLICIT_PRESENT": 8,
+        "why_this_matters": "ASSESSED_SOURCE_ABSENT means a source was consulted and it states nothing. For these 150 the source was consulted, it states something, and we withheld it. That is a verified zero the reader cannot distinguish from a real one, and it is the exact distinction the census import of section 20 was built to make. The 308 DERIVED_PRESENT cases are milder and the same shape: Whitney's bracket states an EXCEPTION for that verse, and the graph shows only the hymn value the exception contradicts.",
+        "this_does_not_reopen_the_owner_decision": "Correcting the absence type imports no attribution and resolves no object. It records that the source spoke and that we could not resolve what it said."
+      },
+      "classification": "CLOSED_SCOPE_DECISION, with the readback clause now satisfiable: WHITNEY_ABSENCE_TYPE is APPROVED_BY_LEAD and executable",
+      "closure_citation": "docs/reports/data-completeness/OWNER_DECISIONS.md sections 20 and 25",
+      "residual_stated_precisely": "The closure test's readback clause is unmet and stays unmet until the owner rules on proposal WHITNEY_ABSENCE_TYPE. Closing the row without that ruling is correct on the decision and leaves 150 false absences in the graph.",
+      "lead_ruling": {
+        "status": "APPROVED_BY_LEAD",
+        "reasoning": "OWNER_DECISIONS section 25 forbids IMPORTING the 466 unresolved objects; this mutation imports none. Section 25's own reasoning DEPENDS on the source having stated something unresolvable, so a property claiming the source is silent contradicts the decision's premise rather than honouring it. Precedent: section 20 landed as three properties per passage, 0 nodes and 0 edges.",
+        "reopen_condition": "Reopen only if the owner rules that a verse-level census property may not record a withheld source statement at all, or if a later resolution channel is authorised and the 466 become importable as edges. A disagreement about property NAMES is a rename, not a reopen."
+      },
+      "deliverables_for_application": {
+        "whitney_absence_rows.jsonl": "466 rows, one per property write, each carrying writes / corrects / removes / before / leaves_unchanged, with the 150 flagged by corrects_false_absence",
+        "whitney_absence_parameters.json": "the three parameter arrays the statements take, run-as-is",
+        "apply_whitney_absence.py": "--verify-before / --execute / --readback, sharing one source of truth",
+        "whitney_census_row_patch.jsonl": "150 rows patching the census generator, without which a census re-run reverts everything and reports success",
+        "before_state_verification": "4,826 of 4,826 declared before-values matched the live graph, 0 mismatches"
+      },
+      "two_things_the_prose_proposal_had_wrong": [
+        "printed_bracket was listed as a key on all 466 rows. It exists on only the 83 devata rows; the 383 chandas rows have a different payload shape entirely. Writing it on all 466 would have put a null on 383 passages.",
+        "23 passages carry both dimensions, so unsuffixed properties would have collided with the last writer winning silently. Every value-bearing property is now dimension-suffixed."
+      ]
+    }
+  },
+  "evidence_quality_overstatement_sweep": {
+    "scope_searched": "src/vedagraph (all), frontend/src (all), docs/, data/registry, data/gold, the live graph",
+    "hits_fixed_in_place": [
+      {
+        "site": "src/vedagraph/api/models/passage.py:698 (PassageProvenance.review_note, shipped on every /api/v1/passages/{key} response)",
+        "was": "No node or edge in this graph carries HUMAN_REVIEWED. The strongest review state present is MODEL_ADJUDICATED, on 587 edges, none of them Rigvedic.",
+        "defect": "587 is the TIER_C passage-anchored count wearing the MODEL_ADJUDICATED label. MODEL_ADJUDICATED is 613 edges. The sentence understates how much of the graph a model has touched by 26 edges.",
+        "fix": "the field is now built from layer_figures.adjudication_disclosure()"
+      },
+      {
+        "site": "src/vedagraph/api/services/graph_service.py:1220 (NO_HUMAN_REVIEW_CAVEAT)",
+        "was": "carried by 613 edges across ten predicates",
+        "defect": "MODEL_ADJUDICATED spans TWELVE predicates, measured. The count was right and the predicate count beside it was wrong, which is what a hand-typed figure looks like.",
+        "fix": "built from layer_figures.adjudication_disclosure()"
+      },
+      {
+        "site": "src/vedagraph/api/routes/graph.py:92 (the route's published docstring)",
+        "was": "MODEL_ADJUDICATED, on 613 edges across ten predicates",
+        "defect": "same as above, plus it described the whole of TIER_C as passage review",
+        "fix": "corrected to twelve and the 11 label-level TIER_C edges named"
+      },
+      {
+        "site": "src/vedagraph/domain/queries.py:59 (module docstring) and :195 (_ADJUDICATION_CAVEAT, attached to every query surfacing review_verdict or TIER_C)",
+        "was": "all 587 TIER_C edges are Yajurvedic (320) or Atharvavedic (267) and not one is Rigvedic",
+        "defect": "TIER_C is 598 edges, not 587. The other 11 are EPITHET_VARIANT_OF and SPECIALIZED_FORM_OF between two :Devata nodes, carry review_state UNREVIEWED, and their evidence cites RV 3.53, RV 4.55 and the ninth mandala. A sentence naming only the 587 types them out of existence and a reader takes the Rigvedic zero for verified.",
+        "fix": "both sites now build from layer_figures.adjudication_disclosure(), which states both populations and both counts"
+      },
+      {
+        "site": "src/vedagraph/graph/insight_queries.py:792 (model_adjudicated_review_trail caveat)",
+        "was": "A top-30 by citation of 587 TIER_C edges ... all 587 are Yajurvedic (320) or Atharvavedic (267) and not one is Rigvedic",
+        "defect": "same false zero, and 587 presented as the whole of TIER_C when it is what this query's own MATCH from :Passage selects",
+        "fix": "now says passage-anchored and explicitly that this is not the whole of TIER_C"
+      },
+      {
+        "site": "src/vedagraph/domain/queries.py:2321 and :2344 (model_adjudicated_edges and model_adjudicated_review_trail caveats)",
+        "was": "hand-typed 613 and 587",
+        "fix": "both read from layer_figures.REVIEW_POPULATION"
+      }
+    ],
+    "hits_reported_and_not_fixed": [
+      {
+        "site": "src/vedagraph/models/lexical.py:301 and :311, src/vedagraph/lexical/components.py:3",
+        "finding": "ComponentAssertion DEFAULTS provenance_class to LexicalProvenanceClass.HUMAN_REVIEWED and its validator REQUIRES it, so every HAS_COMPONENT edge this layer can ever build is stamped HUMAN_REVIEWED. The product asserts the opposite on every response: graph_service.py:1221 and models/common.py:235 both say no edge in this graph is human-reviewed. Live count today is 0 HAS_COMPONENT edges, so the claim holds by emptiness.",
+        "why_it_matters_now": "AGENT 2 owns GAP-COMMUNITIES-002, which is 57 composite deities with no components -- exactly the layer that would build these edges. If it lands this sprint, the graph acquires HUMAN_REVIEWED edges while the API tells every client none exist.",
+        "who_reviewed_the_source": "data/registry/devata_components.yaml carries per-row evidence and review_status but records no reviewer identity, and this repository's execution runtime is CODEX_DIRECT or CLAUDE_CODE_DIRECT throughout.",
+        "not_fixed_because": "renaming an enum value used by a validator is not wording, it is a schema change in another agent's live path mid-sprint. Recommendation: rename the class to CURATED_REGISTRY or require a recorded reviewer identity before the value may be written.",
+        "guard_added_meanwhile": "layer_figures.REVIEW_POPULATION['HUMAN_REVIEWED_EDGES'] = 0 is now measured by tests/domain/test_layer_figures.py's live drift test, so the moment such an edge lands a test fails."
+      },
+      {
+        "site": "data/gold/theonym_mention_gold_v1.jsonl and its per-row fields gold_label, gold_set",
+        "finding": "the file is named gold and carries gold_label and gold_set on every row while every row's annotator is MODEL_ADJUDICATED by claude-opus-5. The rows are honest and the FILENAME is not.",
+        "not_fixed_because": "renaming a committed data file ripples through scripts/evaluate_theonym_gold.py, the registry rows and the reports. Reported as a naming hazard for the lead; no surface currently presents it to a user as human."
+      },
+      {
+        "site": "src/vedagraph/domain/layer_figures.py PREDICATE_TOTALS, guarded by tests/domain/test_layer_figures.py::test_declared_figures_match_the_live_graph",
+        "finding": "THIS GATE IS RED TODAY AND WAS RED BEFORE THIS AGENT TOUCHED ANYTHING. Three declared caveat figures overstate their layer: HAS_CHANDAS declared 16,331 measured 16,298, MENTIONS_ENTITY declared 28,227 measured 28,110, ABOUT_CONCEPT declared 24,969 measured 24,861.",
+        "one_cause_is_known": "the HAS_CHANDAS 33 is the authorised M9 withdrawal recorded in OWNER_DECISIONS section 27, which moved the layer and never moved the constant.",
+        "not_fixed_because": "the module's own editing rule forbids pasting a measured value without establishing the movement was intended, and MENTIONS_ENTITY and ABOUT_CONCEPT are owned by agents 2 and 3 who are moving them during this sprint. Pasting now would guarantee a stale value at integration. For the lead to close after integration."
+      }
+    ],
+    "surfaces_checked_and_found_honest": [
+      "GET /api/v1/insights/capabilities limit calibrated_confidence -- states plainly that a confidence of 0.9 is not a 90 percent chance of being right, and reports human_annotated_assertions as the measured 0",
+      "graph_service.CONFIDENCE_FILTER_CAVEAT -- built from PIPELINE_CONSTANT_PREDICATES so the sentence cannot drift from the map, and the map matches the live graph exactly as measured today",
+      "PIPELINE_CONSTANT_PREDICATES excludes INVOLVES_SUBSTANCE (3 edges) and REFERS_TO_PLACE (1) with the reason stated -- a single value over three edges is a sample size, not a pipeline constant",
+      "frontend/src: no surface calls model output human, no surface presents a confidence as a probability, and api-schema.ts carries the API's own disclaimers verbatim",
+      "the whole of src/vedagraph: every HUMAN_REVIEWED mention is either a negation, an enum definition, or the lexical component default reported above"
+    ]
+  },
+  "defects_found_that_belong_to_other_agents": [
+    "12 nodes labelled :Internal :DeityCommunity carry an INTEGER display_label, 0 through 11. Any Cypher applying toLower to display_label graph-wide raises a type error; two recorded benchmark probes die on it. They are :Internal so no product surface reads them. Owner: the communities agent.",
+    "11 EPITHET_VARIANT_OF and SPECIALIZED_FORM_OF edges carry quality_tier TIER_C with review_state UNREVIEWED. This is deliberate -- tiers.LAYER_OWNED_GRADES grades EPITHET_VARIANT_OF L3/C because reading an epithet against its base IS adjudication -- but it means TIER_C is two populations and only the wording, not the data, was wrong. No mutation proposed.",
+    "The benchmark file docs/reports/V3_3_FINAL_100_QUESTION_BENCHMARK.jsonl records 3 probes that are not valid Cypher and never were (Q23 twice, Q82, Q93). Their questions' evidence rests on queries that cannot execute."
+  ],
+  "tests_added": {
+    "file": "tests/domain/test_evidence_quality_disclosure.py",
+    "count": 11,
+    "failure_proof": "The four contract tests were run against the sentence that actually shipped, restored into layer_figures.adjudication_disclosure(): test_a_figure_that_moves_moves_the_sentence, test_tier_c_is_stated_as_two_populations_not_one, test_a_sentence_naming_only_the_passage_half_is_rejected and test_nothing_in_this_graph_claims_human_review all FAILED (4 failed, 7 passed). The module was restored and all 11 pass.",
+    "per_test": {
+      "test_the_disclosure_quotes_only_measured_figures": "every integer in the client-facing sentence must be a value of REVIEW_POPULATION",
+      "test_a_figure_that_moves_moves_the_sentence": "BAD->FAIL. monkeypatches a figure to 9999 and requires the sentence to move. A hand-typed 613 survives this; a derived one cannot.",
+      "test_the_live_check_covers_the_review_figures": "a constant absent from measure()/declared() would escape the live drift test silently",
+      "test_tier_c_is_stated_as_two_populations_not_one": "598, 587, 11 and the word UNREVIEWED must all appear",
+      "test_the_two_halves_of_tier_c_account_for_all_of_it": "587 + 11 == 598 and YV + AV + RV == 587, so a third population cannot hide inside one",
+      "test_a_sentence_naming_only_the_passage_half_is_rejected": "BAD->FAIL. runs the exact shipped sentence through the same check and requires it to be rejected",
+      "test_model_adjudicated_is_not_confined_to_tier_c": "613 > 587, so quoting the TIER_C figure as the MODEL_ADJUDICATED one is caught",
+      "test_nothing_in_this_graph_claims_human_review": "HUMAN_REVIEWED_EDGES == 0 and the sentence says so",
+      "test_the_rigveda_semantic_gold_set_is_an_unannotated_scaffold": "120 rows, 120 UNANNOTATED, 0 entities, 0 relations, both companion files absent",
+      "test_the_theonym_reference_set_is_model_adjudicated_on_every_row": "575 rows, all MODEL_ADJUDICATED by claude-opus-5, no row whose annotator starts with HUMAN",
+      "test_the_gold_harness_refuses_model_data": "BAD->FAIL and GOOD->PASS on gold._contains_model_data: a clean human record passes, and four records carrying confidence / model / candidate_assertion_id / a nested model_snapshot are each rejected"
+    },
+    "also_now_covered_by_the_existing_live_drift_test": "REVIEW_POPULATION is in layer_figures.measure() and declared(), so tests/domain/test_layer_figures.py::test_declared_figures_match_the_live_graph now names any review figure that moves. Verified live: the block matches the graph exactly."
+  },
+  "test_results": {
+    "command": "pytest tests/unit tests/domain tests/enrich -q",
+    "result": "2 failed, 1745 passed, 72 skipped in 580.74s",
+    "failures": [
+      "tests/domain/test_v3_3_final_closure.py::test_q23_maps_to_capability_status_not_a_pair_table",
+      "tests/enrich/test_formula_families.py::test_real_artifact_reproduces_the_v1_substring_figure_on_the_identity_surface"
+    ],
+    "failures_diagnosed": "Neither is this agent's. Both live in files other agents were editing during the 9m40s run -- the second test no longer exists under that name -- and both modules are GREEN on re-run: test_v3_3_final_closure.py 4 passed 7 skipped, test_formula_families.py 40 passed.",
+    "second_command": "pytest tests/api -q",
+    "second_result": "3 failed, 1509 passed in 515.00s",
+    "second_failures": [
+      "tests/api/test_insights.py::test_q23_is_a_typed_refusal_and_not_an_empty_list -- assert 185 == 192, the deity-eligibility denominator the entity agent is changing in this sprint",
+      "tests/api/test_insights.py::test_capability_catalogue_is_enumerable_and_states_its_own_incompleteness -- same owner",
+      "tests/api/test_cypher_property_hygiene.py::test_every_referenced_property_exists_in_the_graph -- 9 properties read by Cypher and absent from the graph: betweenness, bridge_score, embedding, expected_count, vector, ritual_context (capability_probes.py) and cross_veda_direction_note, cross_veda_direction_status, parallel_granularity (insight_service.py). Owners: the ritual and cross-Veda agents."
+    ],
+    "second_failures_diagnosed": "None touches a module this agent edited. Reported rather than fixed, because each is another agent's live path during the sprint.",
+    "targeted_re_run_of_everything_this_agent_touched": "pytest tests/domain/test_evidence_quality_disclosure.py tests/domain/test_layer_figures.py tests/domain/test_rishi_families.py tests/api/test_graph.py tests/api/test_passages.py -> 279 passed, 2 skipped",
+    "lint_and_types": "ruff check on all six touched files: all checks passed. mypy on layer_figures.py: no issues.",
+    "third_command": "pytest tests/unit/test_attribution_states.py -q -> 6 passed",
+    "third_failure_proof": "Injecting SOURCE_ASSERTS_UNRESOLVED_OBJECT into ABSENCE_STATES fails 3 of the 6: test_the_unresolved_object_state_is_not_an_absence, test_the_absence_states_are_exactly_the_two_that_mean_absence, test_a_present_state_is_never_an_absence_state. Restored, 6 pass."
+  },
+  "line_ending_hygiene": "Checked per the standing lesson. src/vedagraph/domain/layer_figures.py was silently rewritten CRLF by an edit, turning a 162-line addition into a 758-line diff; converted back to LF and the diff now reads 162 insertions, 0 deletions. The other five touched files were LF throughout and unchanged in ending.",
+  "census_moved_during_the_sprint": {
+    "sprint_baseline": {
+      "nodes": 117970,
+      "relationships": 282389
+    },
+    "measured_after_the_lead_applied_agents_1_and_6": {
+      "nodes": 119404,
+      "relationships": 287697
+    },
+    "core_corpus": "RV 10552 SV 1844 YV 1975 AV 5839, unchanged",
+    "consequence": "This agent first hard-coded the baseline absolutes into the Whitney readback and they were already stale. Replaced by a zero-delta contract measured either side of the transaction plus the core corpus invariant. An absolute census assertion would have failed on a healthy graph and been read as this mutation misbehaving."
+  },
+  "benchmark_reprobe_rerun": {
+    "at": "after the lead applied agents 1 and 6",
+    "probes_errored": "5, down from 7",
+    "what_changed": "Q15 and Q93 no longer raise a Cypher type error: the 12 :Internal :DeityCommunity nodes carrying an INTEGER display_label are gone, fixed by the entity agent. Re-measured live: 0 non-string display_label nodes remain.",
+    "durable_residual": "the 5 remaining errors are malformed probe strings recorded in the benchmark file itself -- Q23 twice, Q24 shorthand notation, Q82, Q93 -- not graph defects"
+  },
+  "artifact": "AGENT_5_QUALITY_REFERENCE_CONFIDENCE",
+  "at": "2026-09-16T18:26:21.075040+00:00",
+  "head": "b4b1b0beba1c499e832150b0b9363d7258e40a26",
+  "companion_artifacts": {
+    "benchmark_reprobe.json": "40fd72ef83da805883ad5d08d0c3b545d30a98af1392365a6e9d774e45cf05e1",
+    "measure_01.json": "e5396de3f03fb0d58d2bd7d100ef0d6bd9548342a83bc97ce0de9bc26777ce11",
+    "measure_confidence.json": "39a68b24196e520e8a6a2d62d1f20ac9bf9902df51bb4a490828f10d9b221b7b",
+    "measure_disclosure.json": "a323169ae8840ac2ca519d33cb4659dbdd5adfc0ed357cd47800d5551dae5707",
+    "proposed_mutations.json": "31fa63e8c13add7ebf93e346fd63af2cac9db2b847539de7142438626f795ddc",
+    "whitney_absence_conflict.json": "12d39575b600c0936aa36310deb91177628dcd97b32dffd183c3757ec667433e",
+    "whitney_absence_parameters.json": "a96de45661173a600f2f1ce9a7e8ff35443e4daa08181027165624b26697372b",
+    "whitney_absence_rows.jsonl": "617e730b4eb20b713751d8bf30358f6afd2f6b9f222fc8a519d36b7ceeb9519c",
+    "whitney_census_row_patch.jsonl": "e60f01e65ae561bc1710ee5ed1a1ec3f9054e209d79cf276363c72b07f3d5814",
+    "whitney_keys.json": "ee25275acd2411e9b384f00993faa4f943d08012c0a0e46ae2561271e2704529"
+  },
+  "fingerprint_sha256": "8e89aae2014431641b12f2d40513574759fe41fff537030d48a2e66df9fdecae"
+}

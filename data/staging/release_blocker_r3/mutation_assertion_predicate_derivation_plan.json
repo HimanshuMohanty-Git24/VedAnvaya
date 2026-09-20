@@ -1,0 +1,32 @@
+{
+  "artifact": "RELEASE_BLOCKER_R3_MUTATION_PLAN_ASSERTION_PREDICATE_DERIVATION",
+  "at": "2026-09-18T05:49:05.376382+00:00",
+  "found_by": "tests/domain/test_v3_1_formula_and_assertion.py::test_live_the_two_assertion_layers_remain_separable_on_the_predicate_edge",
+  "related_gap": "GAP-SEMANTICS-001 (no surface reports a blended assertion total)",
+  "operation": "SET r.derivation = s.derivation on (:SemanticAssertion)-[:ASSERTION_PREDICATE]->(:ActionPredicate)",
+  "derivation_source": "each edge's own source :SemanticAssertion node",
+  "promised": {
+    "edges_written": 30266,
+    "by_derivation": {
+      "CROSS_VEDA_TEXT_IDENTITY": 364,
+      "MORPHOLOGY_RULE_PREDICATE_ONLY": 28370,
+      "TREEBANK_DEPREL": 1532
+    },
+    "edges_ungraded_after": 0,
+    "nodes_delta": 0,
+    "relationships_delta": 0,
+    "tiers_touched": 0
+  },
+  "context": {
+    "assertion_predicate_edges_total": 32938,
+    "edge_tiers_before": {
+      "TIER_B": 30266
+    }
+  },
+  "refusals_checked": [
+    "an edge whose source node has no derivation (would invent a value): 0",
+    "more than one tier among the target edges (would hide a mixed population): none",
+    "the declared derivation census must match before any write"
+  ],
+  "reversal": "REMOVE r.derivation on the same edge set; no prior value existed (all null)."
+}

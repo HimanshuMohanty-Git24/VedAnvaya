@@ -24,7 +24,7 @@ const LENSES = [
         title: "Ritual",
         blurb: "The rites the corpus names, who performs them, what is offered, and what the text actually describes.",
         reads: "Ritual layer, curated apparatus edges",
-        limit: "Eight modelled rites against a corpus that names many more. Not a taxonomy.",
+        limit: "Modelled rites against a corpus that names many more. Not a taxonomy.",
     },
     {
         href: "/explore/atharvaveda",

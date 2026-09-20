@@ -1,0 +1,1260 @@
+{
+  "reran_measures": {
+    "GAP-ATTRIBUTION-001": {
+      "measure": "MATCH (a:DevataAscription) WHERE (a)-->(:Devata) RETURN count(a)",
+      "agentB_measured": 47,
+      "registry_recorded": 47,
+      "audit_recorded": 47,
+      "audit_expected": 47,
+      "status": "BLOCKED_EXTERNAL_SOURCE_UNAVAILABLE"
+    },
+    "GAP-ATTRIBUTION-002": {
+      "measure": "MATCH (a:DevataAscription) WHERE (a)-->(:Devata) RETURN count(a)",
+      "agentB_measured": 47,
+      "registry_recorded": 47,
+      "audit_recorded": 47,
+      "audit_expected": 47,
+      "status": "CLOSED_DERIVED"
+    },
+    "GAP-ATTRIBUTION-003": {
+      "measure": "MATCH ()-[r:HAS_DEVATA_ASCRIPTION]->() RETURN count(r)",
+      "agentB_measured": 5385,
+      "registry_recorded": 5385,
+      "audit_recorded": 5385,
+      "audit_expected": 5385,
+      "status": "CLOSED_DERIVED"
+    },
+    "GAP-ATTRIBUTION-004": {
+      "measure": "MATCH (m:Mantra {veda:'SV'})-[:HAS_RISHI]->() RETURN count(m)",
+      "agentB_measured": 0,
+      "registry_recorded": 0,
+      "audit_recorded": 0,
+      "audit_expected": 0,
+      "status": "BLOCKED_EXTERNAL_SOURCE_UNAVAILABLE"
+    },
+    "GAP-ATTRIBUTION-005": {
+      "measure": "MATCH (m:Mantra {veda:'AV'})-[:HAS_RISHI]->() RETURN count(DISTINCT m)",
+      "agentB_measured": 4542,
+      "registry_recorded": 4542,
+      "audit_recorded": 4542,
+      "audit_expected": 4542,
+      "status": "CLOSED_NOT_APPLICABLE"
+    },
+    "GAP-ATTRIBUTION-006": {
+      "measure": "MATCH (m:Mantra)-[:HAS_CHANDAS]->() WHERE m.veda IN ['SV','YV'] RETURN count(m)",
+      "agentB_measured": 0,
+      "registry_recorded": 0,
+      "audit_recorded": 0,
+      "audit_expected": 0,
+      "status": "BLOCKED_EXTERNAL_SOURCE_UNAVAILABLE"
+    },
+    "GAP-ATTRIBUTION-007": {
+      "measure": "MATCH (r:Rishi) WHERE NOT (r)-[:BELONGS_TO_FAMILY]->() RETURN count(r)",
+      "agentB_measured": 427,
+      "registry_recorded": 427,
+      "audit_recorded": 427,
+      "audit_expected": 427,
+      "status": "BLOCKED_EXTERNAL_SOURCE_UNAVAILABLE"
+    },
+    "GAP-ATTRIBUTION-008": {
+      "measure": "MATCH (f:RishiFamily) RETURN count(f)",
+      "agentB_measured": 87,
+      "registry_recorded": 87,
+      "audit_recorded": 87,
+      "audit_expected": 87,
+      "status": "CLOSED_DERIVED"
+    },
+    "GAP-ATTRIBUTION-009": {
+      "measure": "MATCH (d:Devata) WHERE d.attribution_scope_note CONTAINS 'no attribution layer' RETURN count(d)",
+      "agentB_measured": 0,
+      "registry_recorded": 0,
+      "audit_recorded": 0,
+      "audit_expected": 0,
+      "status": "CLOSED_DERIVED"
+    },
+    "GAP-AUDIO-001": {
+      "measure": "",
+      "agentB_measured": "NOT_CYPHER",
+      "registry_recorded": null,
+      "audit_recorded": null,
+      "status": "CLOSED_VERIFIED_ZERO"
+    },
+    "GAP-AUDIO-002": {
+      "measure": "",
+      "agentB_measured": "NOT_CYPHER",
+      "registry_recorded": null,
+      "audit_recorded": null,
+      "status": "NEEDS_AUDIBLE_REVIEW"
+    },
+    "GAP-AUDIO-003": {
+      "measure": "",
+      "agentB_measured": "NOT_CYPHER",
+      "registry_recorded": null,
+      "audit_recorded": null,
+      "status": "NEEDS_AUDIBLE_REVIEW"
+    },
+    "GAP-AUDIO-004": {
+      "measure": "",
+      "agentB_measured": "NOT_CYPHER",
+      "registry_recorded": null,
+      "audit_recorded": null,
+      "status": "NEEDS_AUDIBLE_REVIEW"
+    },
+    "GAP-AUDIO-005": {
+      "measure": "",
+      "agentB_measured": "NOT_CYPHER",
+      "registry_recorded": null,
+      "audit_recorded": null,
+      "status": "CLOSED_SCOPE_DECISION"
+    },
+    "GAP-AUDIO-006": {
+      "measure": "",
+      "agentB_measured": "NOT_CYPHER",
+      "registry_recorded": null,
+      "audit_recorded": null,
+      "status": "CLOSED_SCOPE_DECISION"
+    },
+    "GAP-COMMUNITIES-001": {
+      "measure": "MATCH (c:DeityCommunity) WHERE NOT c:Internal RETURN count(c)",
+      "agentB_measured": 0,
+      "registry_recorded": 0,
+      "audit_recorded": 0,
+      "audit_expected": 0,
+      "status": "CLOSED_DERIVED"
+    },
+    "GAP-COMMUNITIES-002": {
+      "measure": "MATCH (d:Devata) WHERE d.structure IN ['PAIR','GROUP'] AND coalesce(d.component_count,0)=0 RETURN count(d)",
+      "agentB_measured": 55,
+      "registry_recorded": 55,
+      "audit_recorded": 55,
+      "audit_expected": 55,
+      "status": "CLOSED_DERIVED"
+    },
+    "GAP-COMMUNITIES-003": {
+      "measure": "MATCH ()-[r:CO_OCCURS_WITH]->() RETURN count(r)",
+      "agentB_measured": 306,
+      "registry_recorded": 306,
+      "audit_recorded": 306,
+      "audit_expected": 306,
+      "status": "CLOSED_DERIVED"
+    },
+    "GAP-CROSS_VEDA-001": {
+      "measure": "MATCH (a)-[:REUSES_TEXT_FROM]->(b) RETURN count(DISTINCT a.veda + '-' + b.veda)",
+      "agentB_measured": 2,
+      "registry_recorded": 2,
+      "audit_recorded": 2,
+      "audit_expected": 2,
+      "status": "CLOSED_DERIVED"
+    },
+    "GAP-CROSS_VEDA-002": {
+      "measure": "MATCH ()-[r]->() WHERE r.cross_veda_transformation IS NOT NULL RETURN count(r)",
+      "agentB_measured": 6271,
+      "registry_recorded": 6271,
+      "audit_recorded": 6271,
+      "audit_expected": 6271,
+      "status": "CLOSED_DERIVED"
+    },
+    "GAP-CROSS_VEDA-003": {
+      "measure": "MATCH ()-[r:EXACT_PARALLEL_OF]->() WHERE r.match_level IS NULL AND r.match_level_absence IS NULL RETURN count(r)",
+      "agentB_measured": 0,
+      "registry_recorded": 0,
+      "audit_recorded": 0,
+      "audit_expected": 0,
+      "status": "CLOSED_DERIVED"
+    },
+    "GAP-CROSS_VEDA-004": {
+      "measure": "MATCH ()-[r:HAS_PARALLEL_PADA]->() WHERE r.parallel_granularity IS NULL RETURN count(r)",
+      "agentB_measured": 0,
+      "registry_recorded": 0,
+      "audit_recorded": 0,
+      "audit_expected": 0,
+      "status": "CLOSED_DERIVED"
+    },
+    "GAP-ENTITY_COVERAGE-001": {
+      "measure": "MATCH (e:Epithet)-[r]-(:Passage) RETURN count(r)",
+      "agentB_measured": 1035,
+      "registry_recorded": 1035,
+      "audit_recorded": 1035,
+      "audit_expected": 1035,
+      "status": "CLOSED_DERIVED"
+    },
+    "GAP-ENTITY_COVERAGE-002": {
+      "measure": "MATCH (m:DerivedMetric) WHERE m.subject_key STARTS WITH 'VG:DEVATA:' RETURN count(DISTINCT m.subject_key)",
+      "agentB_measured": 157,
+      "registry_recorded": 157,
+      "audit_recorded": 157,
+      "audit_expected": 157,
+      "status": "CLOSED_DERIVED"
+    },
+    "GAP-ENTITY_COVERAGE-003": {
+      "measure": "MATCH (n) WHERE n:Remedy OR n:Bhesaja RETURN count(n)",
+      "agentB_measured": 0,
+      "registry_recorded": 0,
+      "audit_recorded": 0,
+      "audit_expected": 0,
+      "status": "CLOSED_DERIVED"
+    },
+    "GAP-ENTITY_COVERAGE-004": {
+      "measure": "MATCH (n:DomainEntity) WHERE n.expectation_origin IS NULL RETURN count(n)",
+      "agentB_measured": 0,
+      "registry_recorded": 0,
+      "audit_recorded": 0,
+      "audit_expected": 0,
+      "status": "CLOSED_DERIVED"
+    },
+    "GAP-ENTITY_COVERAGE-005": {
+      "measure": "MATCH (m:Metal) WHERE toLower(coalesce(m.entity_key,'')) CONTAINS 'trapu' RETURN count(m)",
+      "agentB_measured": 1,
+      "registry_recorded": 1,
+      "audit_recorded": 1,
+      "audit_expected": 1,
+      "status": "CLOSED_DERIVED"
+    },
+    "GAP-ENTITY_COVERAGE-006": {
+      "measure": "MATCH (n:DomainEntity) WHERE n.recall_applicability IS NULL RETURN count(n)",
+      "agentB_measured": 0,
+      "registry_recorded": 0,
+      "audit_recorded": 0,
+      "audit_expected": 0,
+      "status": "CLOSED_DERIVED"
+    },
+    "GAP-ENTITY_COVERAGE-007": {
+      "measure": "MATCH (n:NaturalPhenomenon) WHERE n.personification_match_basis IS NULL RETURN count(n)",
+      "agentB_measured": 0,
+      "registry_recorded": 0,
+      "audit_recorded": 0,
+      "audit_expected": 0,
+      "status": "CLOSED_DERIVED"
+    },
+    "GAP-ENTITY_COVERAGE-008": {
+      "measure": "MATCH (d:Devata) WHERE d.is_deity IS NULL RETURN count(d)",
+      "agentB_measured": 0,
+      "registry_recorded": 0,
+      "audit_recorded": 0,
+      "audit_expected": 0,
+      "status": "CLOSED_DERIVED"
+    },
+    "GAP-FORMULA-001": {
+      "measure": "MATCH ()-[r:SHARES_FORMULA_WITH]->() RETURN count(r)",
+      "agentB_measured": 6148,
+      "registry_recorded": 6148,
+      "audit_recorded": 6148,
+      "audit_expected": 6148,
+      "status": "CLOSED_DERIVED"
+    },
+    "GAP-FORMULA-002": {
+      "measure": "MATCH ()-[r]->() WHERE r.formula_transformation_type IS NOT NULL RETURN count(r)",
+      "agentB_measured": 4368,
+      "registry_recorded": 4368,
+      "audit_recorded": 4368,
+      "audit_expected": 4368,
+      "status": "CLOSED_DERIVED"
+    },
+    "GAP-FORMULA-003": {
+      "measure": "MATCH (f:Formula) WHERE f.formula_nesting_type IS NULL RETURN count(f)",
+      "agentB_measured": 0,
+      "registry_recorded": 0,
+      "audit_recorded": 0,
+      "audit_expected": 0,
+      "status": "CLOSED_DERIVED"
+    },
+    "GAP-MORPHOLOGY-001": {
+      "measure": "MATCH (:Mantra)-[:MENTIONS_LEMMA]->(l:Lemma) RETURN count(DISTINCT l)",
+      "agentB_measured": 10031,
+      "registry_recorded": 10031,
+      "audit_recorded": 10031,
+      "audit_expected": 10031,
+      "status": "CLOSED_DERIVED"
+    },
+    "GAP-MORPHOLOGY-002": {
+      "measure": "MATCH (m:Mantra) WHERE m.veda <> 'RV' AND NOT (m)-[:MENTIONS_LEMMA]->() RETURN count(m)",
+      "agentB_measured": 9658,
+      "registry_recorded": 9658,
+      "audit_recorded": 9658,
+      "audit_expected": 9658,
+      "status": "BLOCKED_EXTERNAL_SOURCE_UNAVAILABLE"
+    },
+    "GAP-MORPHOLOGY-003": {
+      "measure": "MATCH (t:TextVersion) WHERE t.text_form <> 'SAMHITA' RETURN count(t)",
+      "agentB_measured": 0,
+      "registry_recorded": 0,
+      "audit_recorded": 0,
+      "audit_expected": 0,
+      "status": "CLOSED_DERIVED"
+    },
+    "GAP-MORPHOLOGY-004": {
+      "measure": "",
+      "agentB_measured": "NOT_CYPHER",
+      "registry_recorded": null,
+      "audit_recorded": null,
+      "status": "CLOSED_DERIVED"
+    },
+    "GAP-MORPHOLOGY-005": {
+      "measure": "MATCH (t:TextVersion) WHERE t.text_role = 'SEARCH_DERIVATIVE' RETURN count(t)",
+      "agentB_measured": 20210,
+      "registry_recorded": 20210,
+      "audit_recorded": 20210,
+      "audit_expected": 20210,
+      "status": "CLOSED_SCOPE_DECISION"
+    },
+    "GAP-MORPHOLOGY-006": {
+      "measure": "MATCH (t:TextVersion) WHERE t.text_role = 'SEARCH_DERIVATIVE' RETURN count(t)",
+      "agentB_measured": 20210,
+      "registry_recorded": 20210,
+      "audit_recorded": 20210,
+      "audit_expected": 20210,
+      "status": "CLOSED_DERIVED"
+    },
+    "GAP-OTHER-001": {
+      "measure": "MATCH (m:Mantra {veda:'YV'}) RETURN count(m)",
+      "agentB_measured": 1975,
+      "registry_recorded": 1975,
+      "audit_recorded": 1975,
+      "audit_expected": 1975,
+      "status": "CLOSED_SCOPE_DECISION"
+    },
+    "GAP-OTHER-002": {
+      "measure": "MATCH (m:Mantra {veda:'AV'}) RETURN count(m)",
+      "agentB_measured": 5839,
+      "registry_recorded": 5839,
+      "audit_recorded": 5839,
+      "audit_expected": 5839,
+      "status": "CLOSED_SCOPE_DECISION"
+    },
+    "GAP-OTHER-003": {
+      "measure": "MATCH (m:Mantra {veda:'AV'}) RETURN count(m)",
+      "agentB_measured": 5839,
+      "registry_recorded": 5839,
+      "audit_recorded": 5839,
+      "audit_expected": 5839,
+      "status": "CLOSED_VERIFIED_ZERO"
+    },
+    "GAP-OTHER-004": {
+      "measure": "MATCH (m:Mantra {veda:'SV'}) RETURN count(m)",
+      "agentB_measured": 1844,
+      "registry_recorded": 1844,
+      "audit_recorded": 1844,
+      "audit_expected": 1844,
+      "status": "CLOSED_VERIFIED_ZERO"
+    },
+    "GAP-OTHER-005": {
+      "measure": "MATCH (w:Work) WHERE w.scope IS NULL RETURN count(w)",
+      "agentB_measured": 0,
+      "registry_recorded": 0,
+      "audit_recorded": 0,
+      "audit_expected": 0,
+      "status": "CLOSED_DERIVED"
+    },
+    "GAP-OTHER-006": {
+      "measure": "",
+      "agentB_measured": "NOT_CYPHER",
+      "registry_recorded": null,
+      "audit_recorded": null,
+      "status": "CLOSED_DERIVED"
+    },
+    "GAP-PRODUCT_SURFACE-001": {
+      "measure": "",
+      "agentB_measured": "NOT_CYPHER",
+      "registry_recorded": null,
+      "audit_recorded": null,
+      "status": "CLOSED_DERIVED"
+    },
+    "GAP-PRODUCT_SURFACE-002": {
+      "measure": "",
+      "agentB_measured": "NOT_CYPHER",
+      "registry_recorded": null,
+      "audit_recorded": null,
+      "status": "CLOSED_DERIVED"
+    },
+    "GAP-PRODUCT_SURFACE-003": {
+      "measure": "",
+      "agentB_measured": "NOT_CYPHER",
+      "registry_recorded": null,
+      "audit_recorded": null,
+      "status": "CLOSED_DERIVED"
+    },
+    "GAP-PRODUCT_SURFACE-004": {
+      "measure": "MATCH (m:Mantra {veda:'SV'}) RETURN count(m)",
+      "agentB_measured": 1844,
+      "registry_recorded": 1844,
+      "audit_recorded": 1844,
+      "audit_expected": 1844,
+      "status": "ASK_FORMAL_REGRADE_BLOCKED_EXTERNAL_QUOTA"
+    },
+    "GAP-PRODUCT_SURFACE-005": {
+      "measure": "MATCH (p:Passage)-[:HAS_TEXT_VERSION]->(t:TextVersion) WHERE p.canonical_key IN ['VG:SV:KAU:CHANDA:P01:D08:V04','VG:SV:KAU:ARANYA:D01:V04','VG:SV:KAU:CHANDA:P04:D05:V06','VG:SV:KAU:CHANDA:P02:D07:V07'] AND (t.text_nfc STARTS WITH 'dra ' OR t.text_nfc STARTS WITH 'araṇyaka' OR t.text_nfc STARTS WITH 'āraṇyaka' OR t.text_nfc CONTAINS 'द्र. ' OR t.text_nfc STARTS WITH '(आरण्यक') RETURN count(t)",
+      "agentB_measured": 0,
+      "registry_recorded": 0,
+      "audit_recorded": 0,
+      "audit_expected": 0,
+      "status": "CLOSED_DERIVED"
+    },
+    "GAP-QUALITY-001": {
+      "measure": "",
+      "agentB_measured": "NOT_CYPHER",
+      "registry_recorded": null,
+      "audit_recorded": null,
+      "status": "CLOSED_SCOPE_DECISION"
+    },
+    "GAP-QUALITY-002": {
+      "measure": "",
+      "agentB_measured": "NOT_CYPHER",
+      "registry_recorded": null,
+      "audit_recorded": null,
+      "status": "CLOSED_SCOPE_DECISION"
+    },
+    "GAP-QUALITY-003": {
+      "measure": "MATCH ()-[r]->() WHERE r.confidence IS NOT NULL AND r.calibration_status IS NULL RETURN count(r)",
+      "agentB_measured": 0,
+      "registry_recorded": 0,
+      "audit_recorded": 0,
+      "audit_expected": 0,
+      "status": "CLOSED_DERIVED"
+    },
+    "GAP-QUALITY-004": {
+      "measure": "",
+      "agentB_measured": "NOT_CYPHER",
+      "registry_recorded": null,
+      "audit_recorded": null,
+      "status": "CLOSED_NOT_APPLICABLE"
+    },
+    "GAP-QUALITY-005": {
+      "measure": "MATCH (:Mantra)-[:MENTIONS_LEMMA]->(l:Lemma) RETURN count(DISTINCT l)",
+      "agentB_measured": 10031,
+      "registry_recorded": 10031,
+      "audit_recorded": 10031,
+      "audit_expected": 10031,
+      "status": "CLOSED_DERIVED"
+    },
+    "GAP-QUALITY-006": {
+      "measure": "MATCH (r:Rishi) WHERE r.occurrence_count = 0 RETURN count(r)",
+      "agentB_measured": 0,
+      "registry_recorded": 0,
+      "audit_recorded": 0,
+      "audit_expected": 0,
+      "status": "CLOSED_DERIVED"
+    },
+    "GAP-RITUAL-001": {
+      "measure": "MATCH (n:Ritual) RETURN count(n)",
+      "agentB_measured": 103,
+      "registry_recorded": 103,
+      "audit_recorded": 103,
+      "audit_expected": 103,
+      "status": "CLOSED_DERIVED"
+    },
+    "GAP-RITUAL-002": {
+      "measure": "MATCH ()-[r:HAS_RITUAL_STEP]->() RETURN count(r)",
+      "agentB_measured": 3121,
+      "registry_recorded": 3121,
+      "audit_recorded": 3121,
+      "audit_expected": 3121,
+      "status": "CLOSED_DERIVED"
+    },
+    "GAP-RITUAL-003": {
+      "measure": "MATCH ()-[r:USES_OBJECT]->() RETURN count(r)",
+      "agentB_measured": 24,
+      "registry_recorded": 24,
+      "audit_recorded": 24,
+      "audit_expected": 24,
+      "status": "CLOSED_DERIVED"
+    },
+    "GAP-RITUAL-004": {
+      "measure": "MATCH (r:RitualRole) WHERE r.in_classical_sixteen IS NULL RETURN count(r)",
+      "agentB_measured": 0,
+      "registry_recorded": 0,
+      "audit_recorded": 0,
+      "audit_expected": 0,
+      "status": "CLOSED_DERIVED"
+    },
+    "GAP-RITUAL-005": {
+      "measure": "MATCH (r:Ritual) WHERE r.offering_status IS NULL RETURN count(r)",
+      "agentB_measured": 0,
+      "registry_recorded": 0,
+      "audit_recorded": 0,
+      "audit_expected": 0,
+      "status": "CLOSED_DERIVED"
+    },
+    "GAP-RITUAL-006": {
+      "measure": "MATCH (m:Mantra) WHERE m.ritual_context_precision IS NULL RETURN count(m)",
+      "agentB_measured": 0,
+      "registry_recorded": 0,
+      "audit_recorded": 0,
+      "audit_expected": 0,
+      "status": "CLOSED_DERIVED"
+    },
+    "GAP-RITUAL-007": {
+      "measure": "MATCH (n:Ritual) WHERE n.entity_key = 'VG:CONCEPT:ASVAMEDHA-HORSE-SACRIFICE' RETURN count(n)",
+      "agentB_measured": 1,
+      "registry_recorded": 1,
+      "audit_recorded": 1,
+      "audit_expected": 1,
+      "status": "CLOSED_DERIVED"
+    },
+    "GAP-SAMAVEDA_MUSIC-001": {
+      "measure": "",
+      "agentB_measured": "NOT_CYPHER",
+      "registry_recorded": null,
+      "audit_recorded": null,
+      "status": "CLOSED_SCOPE_DECISION"
+    },
+    "GAP-SAMAVEDA_MUSIC-002": {
+      "measure": "MATCH ()-[r:MUSICALIZED_AS]->() RETURN count(r)",
+      "agentB_measured": 0,
+      "registry_recorded": 0,
+      "audit_recorded": 0,
+      "audit_expected": 0,
+      "status": "BLOCKED_OWNER_DECISION_REQUIRED"
+    },
+    "GAP-SAMAVEDA_MUSIC-003": {
+      "measure": "MATCH (m:Mantra {veda:'SV'}) WHERE m.running_samhita_number IS NULL RETURN count(m)",
+      "agentB_measured": 0,
+      "registry_recorded": 0,
+      "audit_recorded": 0,
+      "audit_expected": 0,
+      "status": "BLOCKED_OWNER_DECISION_REQUIRED"
+    },
+    "GAP-SCHOLARSHIP-001": {
+      "measure": "MATCH (d:ScholarlyDisagreement) RETURN count(d)",
+      "agentB_measured": 113,
+      "registry_recorded": 113,
+      "audit_recorded": 113,
+      "audit_expected": 113,
+      "status": "CLOSED_DERIVED"
+    },
+    "GAP-SCHOLARSHIP-002": {
+      "measure": "",
+      "agentB_measured": "NOT_CYPHER",
+      "registry_recorded": null,
+      "audit_recorded": null,
+      "status": "CLOSED_SCOPE_DECISION"
+    },
+    "GAP-SEMANTICS-001": {
+      "measure": "MATCH (:Mantra)-[:HAS_SEMANTIC_ASSERTION]->() RETURN count(*)",
+      "agentB_measured": 35131,
+      "registry_recorded": 35131,
+      "audit_recorded": 35131,
+      "audit_expected": 35131,
+      "status": "CLOSED_DERIVED"
+    },
+    "GAP-SEMANTICS-002": {
+      "measure": "MATCH (a:SemanticAssertion) WHERE a.review_state = 'UNREVIEWED' RETURN count(a)",
+      "agentB_measured": 35131,
+      "registry_recorded": 35131,
+      "audit_recorded": 35131,
+      "audit_expected": 35131,
+      "status": "CLOSED_SCOPE_DECISION"
+    },
+    "GAP-SEMANTICS-003": {
+      "measure": "MATCH (a:SemanticAssertion)-[:ASSERTION_TARGET]->(x) WHERE NOT x:Devata RETURN count(*)",
+      "agentB_measured": 103,
+      "registry_recorded": 103,
+      "audit_recorded": 103,
+      "audit_expected": 103,
+      "status": "CLOSED_DERIVED"
+    },
+    "GAP-SEMANTICS-004": {
+      "measure": "",
+      "agentB_measured": "NOT_CYPHER",
+      "registry_recorded": null,
+      "audit_recorded": null,
+      "status": "CLOSED_SCOPE_DECISION"
+    },
+    "GAP-SEMANTICS-005": {
+      "measure": "MATCH (e:DomainEntity) WHERE e.domain IS NULL RETURN count(e)",
+      "agentB_measured": 0,
+      "registry_recorded": 0,
+      "audit_recorded": 0,
+      "audit_expected": 0,
+      "status": "CLOSED_DERIVED"
+    },
+    "GAP-SEMANTICS-006": {
+      "measure": "",
+      "agentB_measured": "NOT_CYPHER",
+      "registry_recorded": null,
+      "audit_recorded": null,
+      "status": "CLOSED_SCOPE_DECISION"
+    },
+    "GAP-TRANSLATION-001": {
+      "measure": "MATCH (m:Mantra {veda:'SV'}) WHERE NOT (m)-[:HAS_TRANSLATION]->() RETURN count(m)",
+      "agentB_measured": 1671,
+      "registry_recorded": 1671,
+      "audit_recorded": 1671,
+      "audit_expected": 1671,
+      "status": "BLOCKED_EXTERNAL_SOURCE_UNAVAILABLE"
+    },
+    "GAP-TRANSLATION-002": {
+      "measure": "MATCH (m:Mantra {veda:'AV'}) WHERE NOT (m)-[:HAS_TRANSLATION]->() RETURN count(m)",
+      "agentB_measured": 51,
+      "registry_recorded": 51,
+      "audit_recorded": 51,
+      "audit_expected": 51,
+      "status": "BLOCKED_EXTERNAL_SOURCE_UNAVAILABLE"
+    },
+    "GAP-TRANSLATION-003": {
+      "measure": "MATCH (m:Mantra {veda:'YV'}) WHERE NOT (m)-[:HAS_TRANSLATION]->() RETURN count(m)",
+      "agentB_measured": 25,
+      "registry_recorded": 25,
+      "audit_recorded": 25,
+      "audit_expected": 25,
+      "status": "CLOSED_VERIFIED_ZERO"
+    },
+    "GAP-TRANSLATION-004": {
+      "measure": "MATCH (m:Mantra) WHERE m.translation_coverage_state IS NULL RETURN count(m)",
+      "agentB_measured": 0,
+      "registry_recorded": 0,
+      "audit_recorded": 0,
+      "audit_expected": 0,
+      "status": "CLOSED_DERIVED"
+    },
+    "GAP-TRANSLATION-005": {
+      "measure": "MATCH (t:Translation) WHERE t.alignment_confidence IS NULL RETURN count(t)",
+      "agentB_measured": 0,
+      "registry_recorded": 0,
+      "audit_recorded": 0,
+      "audit_expected": 0,
+      "status": "CLOSED_DERIVED"
+    },
+    "GAP-TRANSLATION-006": {
+      "measure": "MATCH (m:Mantra {veda:'RV'})-[:HAS_TRANSLATION]->() WHERE m.canonical_key STARTS WITH 'VG:RV:SAK:M01:S065:'   OR m.canonical_key STARTS WITH 'VG:RV:SAK:M01:S066:'   OR m.canonical_key STARTS WITH 'VG:RV:SAK:M01:S067:'   OR m.canonical_key STARTS WITH 'VG:RV:SAK:M01:S068:'   OR m.canonical_key STARTS WITH 'VG:RV:SAK:M01:S069:'   OR m.canonical_key STARTS WITH 'VG:RV:SAK:M01:S070:' RETURN sum(CASE WHEN toInteger(substring(split(m.canonical_key,':')[5],1)) % 2 = 0   THEN 1 ELSE 0 END)",
+      "agentB_measured": 0,
+      "registry_recorded": 0,
+      "audit_recorded": 0,
+      "audit_expected": 0,
+      "status": "CLOSED_DERIVED"
+    },
+    "GAP-CROSS-VEDA-DEVATA-IDENTITY-BRIDGE-001": {
+      "measure": "MATCH (a:DevataAscription) WHERE (a)-->(:Devata) RETURN count(a)",
+      "agentB_measured": 47,
+      "registry_recorded": 47,
+      "audit_recorded": 47,
+      "audit_expected": 47,
+      "status": "CLOSED_DERIVED"
+    },
+    "GAP-ATTRIBUTION-WHITNEY-UNRESOLVED-OBJECT-001": {
+      "measure": "MATCH (c:Chandas) WHERE NOT c:Internal AND c.preferred_label CONTAINS ':' RETURN count(c)",
+      "agentB_measured": 0,
+      "registry_recorded": 0,
+      "audit_recorded": 0,
+      "audit_expected": 0,
+      "status": "CLOSED_SCOPE_DECISION"
+    },
+    "GAP-RITUAL-STEP-LOCATOR-COLLISION-001": {
+      "measure": "MATCH (s:RitualStep) RETURN count(s)",
+      "agentB_measured": 3121,
+      "registry_recorded": 3121,
+      "audit_recorded": 3121,
+      "audit_expected": 3121,
+      "status": "CLOSED_VERIFIED_ZERO"
+    },
+    "GAP-AV-CHANDOMETRE-SEGMENTATION-001": {
+      "measure": "MATCH (c:Chandas) WHERE NOT c:Internal AND c.preferred_label CONTAINS ':' RETURN count(c)",
+      "agentB_measured": 0,
+      "registry_recorded": 0,
+      "audit_recorded": 0,
+      "audit_expected": 0,
+      "status": "CLOSED_DERIVED"
+    },
+    "GAP-SEMANTIC-SIGNATURE-COVERAGE-001": {
+      "measure": "",
+      "agentB_measured": "NOT_CYPHER",
+      "registry_recorded": null,
+      "audit_recorded": null,
+      "status": "CLOSED_DERIVED"
+    }
+  },
+  "extra": {
+    "census": {
+      "nodes": 164601,
+      "rels": 509769,
+      "RV": 10552,
+      "SV": 1844,
+      "YV": 1975,
+      "AV": 5839,
+      "Mantra": 20210,
+      "DerivedMetric": 1485,
+      "Passage": 22537,
+      "Formula": 4825,
+      "SemanticAssertion": 35131,
+      "DomainEntity": 384,
+      "NaturalPhenomenon": 13,
+      "Ritual": 103,
+      "TextVersion": 58786,
+      "Translation": 18427,
+      "RoleFiller": 2052,
+      "Devata": 214,
+      "Epithet": 13,
+      "FormulaFamily": 720
+    },
+    "rel_types": [
+      {
+        "relationshipType": "ABOUT_CONCEPT"
+      },
+      {
+        "relationshipType": "ADDRESSES_CONCERN"
+      },
+      {
+        "relationshipType": "ASCRIBES_TO_DEVATA"
+      },
+      {
+        "relationshipType": "ASSERTION_AGENT"
+      },
+      {
+        "relationshipType": "ASSERTION_PREDICATE"
+      },
+      {
+        "relationshipType": "ASSERTION_ROLE"
+      },
+      {
+        "relationshipType": "ASSERTION_TARGET"
+      },
+      {
+        "relationshipType": "ATTESTED_IN"
+      },
+      {
+        "relationshipType": "BELONGS_TO_FAMILY"
+      },
+      {
+        "relationshipType": "BROADER_THAN"
+      },
+      {
+        "relationshipType": "COMPOSED_OF"
+      },
+      {
+        "relationshipType": "CONCERNS"
+      },
+      {
+        "relationshipType": "CONTAINS"
+      },
+      {
+        "relationshipType": "CONTRADICTS"
+      },
+      {
+        "relationshipType": "CONTRASTS_WITH"
+      },
+      {
+        "relationshipType": "CO_OCCURS_WITH"
+      },
+      {
+        "relationshipType": "DESCRIBED_IN"
+      },
+      {
+        "relationshipType": "DESCRIBES"
+      },
+      {
+        "relationshipType": "DESCRIBES_ACTION"
+      },
+      {
+        "relationshipType": "DEVATA_ASSOCIATED_WITH"
+      },
+      {
+        "relationshipType": "EPITHET_VARIANT_OF"
+      },
+      {
+        "relationshipType": "EXACT_PARALLEL_OF"
+      },
+      {
+        "relationshipType": "HAS_AXIS"
+      },
+      {
+        "relationshipType": "HAS_CHANDAS"
+      },
+      {
+        "relationshipType": "HAS_DEVATA"
+      },
+      {
+        "relationshipType": "HAS_DEVATA_ASCRIPTION"
+      },
+      {
+        "relationshipType": "HAS_DEVATA_DERIVED"
+      },
+      {
+        "relationshipType": "HAS_EPITHET"
+      },
+      {
+        "relationshipType": "HAS_FORMULA"
+      },
+      {
+        "relationshipType": "HAS_PARALLEL_PADA"
+      },
+      {
+        "relationshipType": "HAS_RISHI"
+      },
+      {
+        "relationshipType": "HAS_RITUAL_STEP"
+      },
+      {
+        "relationshipType": "HAS_SEMANTIC_ASSERTION"
+      },
+      {
+        "relationshipType": "HAS_STEP"
+      },
+      {
+        "relationshipType": "HAS_TEXT_VERSION"
+      },
+      {
+        "relationshipType": "HAS_THEME"
+      },
+      {
+        "relationshipType": "HAS_TRANSLATION"
+      },
+      {
+        "relationshipType": "INVOKES"
+      },
+      {
+        "relationshipType": "INVOKES_DEVATA"
+      },
+      {
+        "relationshipType": "INVOLVES_OFFERING"
+      },
+      {
+        "relationshipType": "INVOLVES_RITUAL"
+      },
+      {
+        "relationshipType": "INVOLVES_SUBSTANCE"
+      },
+      {
+        "relationshipType": "IS_ASKED_TO"
+      },
+      {
+        "relationshipType": "MEASURES"
+      },
+      {
+        "relationshipType": "MEMBER_OF"
+      },
+      {
+        "relationshipType": "MEMBER_OF_FAMILY"
+      },
+      {
+        "relationshipType": "MENTIONS_DEVATA"
+      },
+      {
+        "relationshipType": "MENTIONS_ENTITY"
+      },
+      {
+        "relationshipType": "MENTIONS_EPITHET"
+      },
+      {
+        "relationshipType": "MENTIONS_LEMMA"
+      },
+      {
+        "relationshipType": "NEAR_PARALLEL_OF"
+      },
+      {
+        "relationshipType": "PARALLEL_TO"
+      },
+      {
+        "relationshipType": "PERFORMED_BY"
+      },
+      {
+        "relationshipType": "PERFORMED_FOR"
+      },
+      {
+        "relationshipType": "PERFORMS_ACTION"
+      },
+      {
+        "relationshipType": "POSITION_ASSERTED_BY"
+      },
+      {
+        "relationshipType": "POSITION_STATED_IN"
+      },
+      {
+        "relationshipType": "PRAISES"
+      },
+      {
+        "relationshipType": "PROTECTS_FROM"
+      },
+      {
+        "relationshipType": "QA_ISSUE_ON"
+      },
+      {
+        "relationshipType": "QUALITY_VERDICT_ABOUT"
+      },
+      {
+        "relationshipType": "RECEIVES_OFFERING"
+      },
+      {
+        "relationshipType": "REFERS_TO"
+      },
+      {
+        "relationshipType": "REFERS_TO_NATURAL_PHENOMENON"
+      },
+      {
+        "relationshipType": "REFERS_TO_PLACE"
+      },
+      {
+        "relationshipType": "REPORTED_IN"
+      },
+      {
+        "relationshipType": "REQUESTS"
+      },
+      {
+        "relationshipType": "REUSES_TEXT_FROM"
+      },
+      {
+        "relationshipType": "SCHOLARLY_CLAIM_ABOUT"
+      },
+      {
+        "relationshipType": "SHARES_ENTITY_VOCABULARY_WITH"
+      },
+      {
+        "relationshipType": "SHARES_FORMULA_WITH"
+      },
+      {
+        "relationshipType": "SPECIALIZED_FORM_OF"
+      },
+      {
+        "relationshipType": "SUPPORTED_BY"
+      },
+      {
+        "relationshipType": "SUPPORTED_BY_STATISTIC"
+      },
+      {
+        "relationshipType": "TREATS"
+      },
+      {
+        "relationshipType": "USED_FOR_RITE"
+      },
+      {
+        "relationshipType": "USES_FORMULA"
+      },
+      {
+        "relationshipType": "USES_OBJECT"
+      },
+      {
+        "relationshipType": "USES_OFFERING"
+      },
+      {
+        "relationshipType": "USES_SUBSTANCE"
+      },
+      {
+        "relationshipType": "VARIANT_OF"
+      }
+    ],
+    "rel_type_counts": [
+      {
+        "t": "ABOUT_CONCEPT",
+        "c": 24861
+      },
+      {
+        "t": "ADDRESSES_CONCERN",
+        "c": 326
+      },
+      {
+        "t": "ASCRIBES_TO_DEVATA",
+        "c": 47
+      },
+      {
+        "t": "ASSERTION_AGENT",
+        "c": 2660
+      },
+      {
+        "t": "ASSERTION_PREDICATE",
+        "c": 32938
+      },
+      {
+        "t": "ASSERTION_ROLE",
+        "c": 2052
+      },
+      {
+        "t": "ASSERTION_TARGET",
+        "c": 918
+      },
+      {
+        "t": "ATTESTED_IN",
+        "c": 1267
+      },
+      {
+        "t": "BELONGS_TO_FAMILY",
+        "c": 305
+      },
+      {
+        "t": "BROADER_THAN",
+        "c": 97
+      },
+      {
+        "t": "COMPOSED_OF",
+        "c": 32
+      },
+      {
+        "t": "CONCERNS",
+        "c": 7
+      },
+      {
+        "t": "CONTAINS",
+        "c": 22537
+      },
+      {
+        "t": "CONTRADICTS",
+        "c": 2
+      },
+      {
+        "t": "CONTRASTS_WITH",
+        "c": 8
+      },
+      {
+        "t": "CO_OCCURS_WITH",
+        "c": 306
+      },
+      {
+        "t": "DESCRIBED_IN",
+        "c": 71
+      },
+      {
+        "t": "DESCRIBES",
+        "c": 199
+      },
+      {
+        "t": "DESCRIBES_ACTION",
+        "c": 35
+      },
+      {
+        "t": "DEVATA_ASSOCIATED_WITH",
+        "c": 160
+      },
+      {
+        "t": "EPITHET_VARIANT_OF",
+        "c": 10
+      },
+      {
+        "t": "EXACT_PARALLEL_OF",
+        "c": 1006
+      },
+      {
+        "t": "HAS_AXIS",
+        "c": 289
+      },
+      {
+        "t": "HAS_CHANDAS",
+        "c": 16298
+      },
+      {
+        "t": "HAS_DEVATA",
+        "c": 10558
+      },
+      {
+        "t": "HAS_DEVATA_ASCRIPTION",
+        "c": 5385
+      },
+      {
+        "t": "HAS_DEVATA_DERIVED",
+        "c": 882
+      },
+      {
+        "t": "HAS_EPITHET",
+        "c": 13
+      },
+      {
+        "t": "HAS_FORMULA",
+        "c": 2037
+      },
+      {
+        "t": "HAS_PARALLEL_PADA",
+        "c": 4079
+      },
+      {
+        "t": "HAS_RISHI",
+        "c": 17889
+      },
+      {
+        "t": "HAS_RITUAL_STEP",
+        "c": 3121
+      },
+      {
+        "t": "HAS_SEMANTIC_ASSERTION",
+        "c": 35131
+      },
+      {
+        "t": "HAS_STEP",
+        "c": 3
+      },
+      {
+        "t": "HAS_TEXT_VERSION",
+        "c": 58786
+      },
+      {
+        "t": "HAS_THEME",
+        "c": 8
+      },
+      {
+        "t": "HAS_TRANSLATION",
+        "c": 18427
+      },
+      {
+        "t": "INVOKES",
+        "c": 207
+      },
+      {
+        "t": "INVOKES_DEVATA",
+        "c": 16
+      },
+      {
+        "t": "INVOLVES_OFFERING",
+        "c": 11
+      },
+      {
+        "t": "INVOLVES_RITUAL",
+        "c": 9
+      },
+      {
+        "t": "INVOLVES_SUBSTANCE",
+        "c": 3
+      },
+      {
+        "t": "IS_ASKED_TO",
+        "c": 224
+      },
+      {
+        "t": "MEASURES",
+        "c": 472
+      },
+      {
+        "t": "MEMBER_OF",
+        "c": 13
+      },
+      {
+        "t": "MEMBER_OF_FAMILY",
+        "c": 2037
+      },
+      {
+        "t": "MENTIONS_DEVATA",
+        "c": 17165
+      },
+      {
+        "t": "MENTIONS_ENTITY",
+        "c": 28122
+      },
+      {
+        "t": "MENTIONS_EPITHET",
+        "c": 1035
+      },
+      {
+        "t": "MENTIONS_LEMMA",
+        "c": 154261
+      },
+      {
+        "t": "NEAR_PARALLEL_OF",
+        "c": 3049
+      },
+      {
+        "t": "PARALLEL_TO",
+        "c": 69
+      },
+      {
+        "t": "PERFORMED_BY",
+        "c": 32
+      },
+      {
+        "t": "PERFORMED_FOR",
+        "c": 9
+      },
+      {
+        "t": "PERFORMS_ACTION",
+        "c": 441
+      },
+      {
+        "t": "POSITION_ASSERTED_BY",
+        "c": 226
+      },
+      {
+        "t": "POSITION_STATED_IN",
+        "c": 226
+      },
+      {
+        "t": "PRAISES",
+        "c": 38
+      },
+      {
+        "t": "PROTECTS_FROM",
+        "c": 659
+      },
+      {
+        "t": "QA_ISSUE_ON",
+        "c": 915
+      },
+      {
+        "t": "QUALITY_VERDICT_ABOUT",
+        "c": 2568
+      },
+      {
+        "t": "RECEIVES_OFFERING",
+        "c": 4
+      },
+      {
+        "t": "REFERS_TO",
+        "c": 387
+      },
+      {
+        "t": "REFERS_TO_NATURAL_PHENOMENON",
+        "c": 5
+      },
+      {
+        "t": "REFERS_TO_PLACE",
+        "c": 1
+      },
+      {
+        "t": "REPORTED_IN",
+        "c": 113
+      },
+      {
+        "t": "REQUESTS",
+        "c": 89
+      },
+      {
+        "t": "REUSES_TEXT_FROM",
+        "c": 1995
+      },
+      {
+        "t": "SCHOLARLY_CLAIM_ABOUT",
+        "c": 113
+      },
+      {
+        "t": "SHARES_ENTITY_VOCABULARY_WITH",
+        "c": 2141
+      },
+      {
+        "t": "SHARES_FORMULA_WITH",
+        "c": 6148
+      },
+      {
+        "t": "SPECIALIZED_FORM_OF",
+        "c": 1
+      },
+      {
+        "t": "SUPPORTED_BY",
+        "c": 7
+      },
+      {
+        "t": "SUPPORTED_BY_STATISTIC",
+        "c": 6
+      },
+      {
+        "t": "TREATS",
+        "c": 160
+      },
+      {
+        "t": "USED_FOR_RITE",
+        "c": 529
+      },
+      {
+        "t": "USES_FORMULA",
+        "c": 22686
+      },
+      {
+        "t": "USES_OBJECT",
+        "c": 24
+      },
+      {
+        "t": "USES_OFFERING",
+        "c": 4
+      },
+      {
+        "t": "USES_SUBSTANCE",
+        "c": 11
+      },
+      {
+        "t": "VARIANT_OF",
+        "c": 788
+      }
+    ]
+  }
+}

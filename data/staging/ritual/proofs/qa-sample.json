@@ -1,0 +1,828 @@
+{
+  "seed": 20260915,
+  "method": "both",
+  "random_sample_of_exact_bridge_rows": [
+    {
+      "canonical_key": "VG:YV:VSM:A04:V012",
+      "work": "VG:SUPPWORK:SBM",
+      "loci": [
+        "SBM 3.2.2.19.1",
+        "SBM 3.2.2.19.10"
+      ],
+      "best_matched_letters": 109,
+      "iti": true,
+      "citing_text": "atha vrataṃ vratayitvā nābhim upaspṛśate śvātrāḥ pītā bhavata yūyam āpo asmākam antar udare suśevāḥ tā asmabhyam ayakṣmā anamīvā anāgasaḥ svadantu devīr amṛtā ṛtāvṛdhā iti"
+    },
+    {
+      "canonical_key": "VG:RV:SAK:M10:S063:V001",
+      "work": "VG:SUPPWORK:KausB",
+      "loci": [
+        "KausB 22.6.11"
+      ],
+      "best_matched_letters": 25,
+      "iti": true,
+      "citing_text": "parāvato ye didhiṣanta āpyam iti vaiśvadevam"
+    },
+    {
+      "canonical_key": "VG:YV:VSM:A15:V011",
+      "work": "VG:SUPPWORK:SBM",
+      "loci": [
+        "SBM 8.3.1.14.2",
+        "SBM 8.6.1.6.1"
+      ],
+      "best_matched_letters": 18,
+      "iti": true,
+      "citing_text": "virāḍ asi dakṣiṇā dik"
+    },
+    {
+      "canonical_key": "VG:AV:SAU:K11:S006:V023",
+      "work": "VG:SUPPWORK:KausS",
+      "loci": [
+        "KausS 7.9.25"
+      ],
+      "best_matched_letters": 20,
+      "iti": true,
+      "citing_text": "uttamāsu yan mātalī rathakrītam iti sarvāsāṃ dvitīyā"
+    },
+    {
+      "canonical_key": "VG:YV:VSM:A23:V033",
+      "work": "VG:SUPPWORK:KatySS",
+      "loci": [
+        "KatySS 2.1.19",
+        "KatySS 20.7.1"
+      ],
+      "best_matched_letters": 14,
+      "iti": true,
+      "citing_text": "vṛto japaty ahaṃ bhūpatir ahaṃ bhuvanapatir ahaṃ mahato bhūtasya patir bhūr bhuvaḥ svar deva savitar etaṃ tvā vṛṇate bṛhaspatiṃ brahmāṇaṃ tad ahaṃ manase prabravīmi mano gāyatryai gāyatrī triṣṭubhe tr"
+    },
+    {
+      "canonical_key": "VG:RV:SAK:M01:S082:V005",
+      "work": "VG:SUPPWORK:SankhGS",
+      "loci": [
+        "SankhGS 1.15.8"
+      ],
+      "best_matched_letters": 19,
+      "iti": true,
+      "citing_text": "athosrau yuñjanti yuktas te astu dakṣiṇa iti dvābhyāṃ śukrāv anaḍvāhāv ity etenārdharcena yuktāv abhimantrya"
+    },
+    {
+      "canonical_key": "VG:AV:SAU:K11:S006:V001",
+      "work": "VG:SUPPWORK:KausS",
+      "loci": [
+        "KausS 1.9.1",
+        "KausS 1.9.3"
+      ],
+      "best_matched_letters": 20,
+      "iti": true,
+      "citing_text": "ambayo yanti śaṃbhumayobhū hiraṇyavarṇāḥ nissālām ye agnayaḥ brahma jajñānam ity ekā uta devāḥ mṛgārasūktāny uttamaṃ varjayitvā apa naḥ śośucad agham punantu mā sasruṣīḥ himavataḥ prasravanti vāyoḥ pū"
+    },
+    {
+      "canonical_key": "VG:RV:SAK:M03:S053:V005",
+      "work": "VG:SUPPWORK:SankhSS",
+      "loci": [
+        "SankhSS 10.1.11"
+      ],
+      "best_matched_letters": 17,
+      "iti": true,
+      "citing_text": "ananuvaṣaṭkṛta evāsaṃpreṣito maitrāvaruṇaḥ parā yāhi maghavann ity anūcya jāyed astam iti veha mada eva maghavann ity atipraiṣam āha dvitīyaprabhṛtiṣu"
+    },
+    {
+      "canonical_key": "VG:YV:VSM:A17:V067",
+      "work": "VG:SUPPWORK:VaitS",
+      "loci": [
+        "VaitS 4.3.5"
+      ],
+      "best_matched_letters": 12,
+      "iti": true,
+      "citing_text": "yūpam ārohyamāṇo yajamāna āha devasya savituḥ save svargaṃ varṣiṣṭhaṃ nākaṃ ruheyam pṛṣṭhāt pṛthivyā aham iti"
+    },
+    {
+      "canonical_key": "VG:AV:SAU:K03:S014:V002",
+      "work": "VG:SUPPWORK:VaitS",
+      "loci": [
+        "VaitS 3.11.26"
+      ],
+      "best_matched_letters": 12,
+      "iti": true,
+      "citing_text": "agreṇa gārhapatyaṃ jaghanena sado 'ntar āgnīdhrīyaṃ ca sadaś ca cātvālaṃ codīcīr dakṣiṇā utsṛjyamānāḥ saṃ vaḥ sṛjatv iti dvābhyām anumantrayate"
+    },
+    {
+      "canonical_key": "VG:RV:SAK:M06:S003:V001",
+      "work": "VG:SUPPWORK:SankhSS",
+      "loci": [
+        "SankhSS 14.53.7"
+      ],
+      "best_matched_letters": 12,
+      "iti": true,
+      "citing_text": "agne sa kṣeṣad iti nividdhānam"
+    },
+    {
+      "canonical_key": "VG:RV:SAK:M03:S013:V006",
+      "work": "VG:SUPPWORK:AB",
+      "loci": [
+        "AB 2.40.4",
+        "AB 2.41.6"
+      ],
+      "best_matched_letters": 18,
+      "iti": true,
+      "citing_text": "uta no brahmann aviṣa iti śaṃsati śrotraṃ vai brahma śrotreṇa hi brahma śṛṇoti śrotre brahma pratiṣṭhitaṃ śrotram eva tat saṃbhāvayati śrotraṃ saṃskurute"
+    },
+    {
+      "canonical_key": "VG:AV:SAU:K14:S002:V041",
+      "work": "VG:SUPPWORK:KausS",
+      "loci": [
+        "KausS 10.5.21"
+      ],
+      "best_matched_letters": 12,
+      "iti": true,
+      "citing_text": "devair dattam iti pratigṛhṇāti"
+    },
+    {
+      "canonical_key": "VG:RV:SAK:M10:S030:V012",
+      "work": "VG:SUPPWORK:KausB",
+      "loci": [
+        "KausB 11.3.5",
+        "KausB 11.9.10"
+      ],
+      "best_matched_letters": 25,
+      "iti": true,
+      "citing_text": "āpo revatīḥ kṣayathā hi vasva iti pratipadyate"
+    },
+    {
+      "canonical_key": "VG:RV:SAK:M06:S070:V004",
+      "work": "VG:SUPPWORK:KausB",
+      "loci": [
+        "KausB 20.6.6",
+        "KausB 21.5.4"
+      ],
+      "best_matched_letters": 27,
+      "iti": true,
+      "citing_text": "ghṛtena dyāvāpṛthivī abhīvṛte iti dyāvāpṛthivīyaṃ ghṛtavat tasyoktaṃ brāhmaṇam"
+    },
+    {
+      "canonical_key": "VG:YV:VSM:A17:V062",
+      "work": "VG:SUPPWORK:SBM",
+      "loci": [
+        "SBM 9.2.3.20.3"
+      ],
+      "best_matched_letters": 21,
+      "iti": false,
+      "citing_text": "devahūr yajña ā ca vakṣat"
+    },
+    {
+      "canonical_key": "VG:AV:SAU:K20:S127:V010",
+      "work": "VG:SUPPWORK:SankhSS",
+      "loci": [
+        "SankhSS 12.17.4"
+      ],
+      "best_matched_letters": 82,
+      "iti": false,
+      "citing_text": "abhīva svaḥ pra jihīte yavaḥ pakvaḥ patho bilam / janaḥ sa bhadram edhati rāṣṭre rājñaḥ parikṣitaḥ"
+    },
+    {
+      "canonical_key": "VG:AV:SAU:K05:S024:V007",
+      "work": "VG:SUPPWORK:VaitS",
+      "loci": [
+        "VaitS 2.4.7",
+        "VaitS 2.4.13"
+      ],
+      "best_matched_letters": 12,
+      "iti": true,
+      "citing_text": "yad vidvāṃso dyāvāpṛthivī upaśrutyā somo vīrudhām iti vaiśvadevadyāvāpṛthivīyasaumyān"
+    },
+    {
+      "canonical_key": "VG:AV:SAU:K06:S085:V002",
+      "work": "VG:SUPPWORK:KausS",
+      "loci": [
+        "KausS 1.6.17"
+      ],
+      "best_matched_letters": 38,
+      "iti": false,
+      "citing_text": "indrasya vacasā vayaṃ mitrasya varuṇasya ca brahmaṇā sthāpitaṃ pātraṃ punar utthāpayāmasi ity apareṇāgnim udapātraṃ parihṛtyottareṇāgnim āpo hi ṣṭhā mayobhuvaḥ iti mārjayitvā barhiṣi patnyāñjalau nina"
+    },
+    {
+      "canonical_key": "VG:AV:SAU:K12:S002:V005",
+      "work": "VG:SUPPWORK:KausS",
+      "loci": [
+        "KausS 9.2.6"
+      ],
+      "best_matched_letters": 13,
+      "iti": true,
+      "citing_text": "yat tvā kruddhā iti coṃ bhūr bhuvaḥ svar janad om ity aṅgirasāṃ tvā devānām ādityānāṃ vratenādadhe / dyaur mahnāsi bhūmir bhūmnā tasyās te devy aditir upasthe 'nnādāyānnapatyāyādadhad iti"
+    },
+    {
+      "canonical_key": "VG:AV:SAU:K20:S067:V004",
+      "work": "VG:SUPPWORK:VaitS",
+      "loci": [
+        "VaitS 6.1.26"
+      ],
+      "best_matched_letters": 34,
+      "iti": true,
+      "citing_text": "pṛṣṭhyaṣaṣṭhe vanoti hi sunvan kṣayaṃ parīṇaso viśveṣu hi tvā savaneṣu tuñjata iti pārucchepīr upadadhati dvayoḥ savanayoḥ purastāt prasthitayājyānām / yajñaiḥ saṃmiślāḥ pṛṣatībhir ṛṣṭibhir ity ṛtuyāj"
+    },
+    {
+      "canonical_key": "VG:RV:SAK:M01:S028:V005",
+      "work": "VG:SUPPWORK:SankhSS",
+      "loci": [
+        "SankhSS 15.23.1"
+      ],
+      "best_matched_letters": 21,
+      "iti": true,
+      "citing_text": "atha hainam añjaḥsavaṃ śunaḥśepo dadarśa / yac cid dhi tvaṃ gṛhegṛha iti tam etābhiś catasṛbhir abhiṣutyocchiṣṭaṃ camvor bhareti droṇakalapśeṣamavanināya / athāsminn anvārabdha etasyaiva sūktasya pūrv"
+    },
+    {
+      "canonical_key": "VG:RV:SAK:M01:S183:V001",
+      "work": "VG:SUPPWORK:SankhSS",
+      "loci": [
+        "SankhSS 6.6.6"
+      ],
+      "best_matched_letters": 12,
+      "iti": true,
+      "citing_text": "ā bhātīti sūkte / nāsatyābhyām iti trīṇi / vasū rudreti tisraḥ / yuvo rajāṃsīti sūkte / taṃ yuñjāthām iti sūkte / grāvāṇeva / dhenuḥ pratnasya / ka u śravad iti sūkte / stuṣe nareti sūkte parihāpya pa"
+    },
+    {
+      "canonical_key": "VG:YV:VSM:A05:V019",
+      "work": "VG:SUPPWORK:SBM",
+      "loci": [
+        "SBM 3.5.3.22.1"
+      ],
+      "best_matched_letters": 49,
+      "iti": false,
+      "citing_text": "atha pratiprasthātottaraṃ havirdhānam upastabhnāti divo vā viṣṇa uta vā pṛthivyā maho vā viṣṇa uror antarikṣāt"
+    },
+    {
+      "canonical_key": "VG:AV:SAU:K03:S010:V003",
+      "work": "VG:SUPPWORK:GB",
+      "loci": [
+        "GB 1.2.15.25",
+        "GB 1.4.16.3",
+        "GB 1.5.5.40",
+        "GB 2.1.17.26"
+      ],
+      "best_matched_letters": 20,
+      "iti": false,
+      "citing_text": "tā hi saṃvatsarasya pratimā"
+    },
+    {
+      "canonical_key": "VG:RV:SAK:M02:S039:V001",
+      "work": "VG:SUPPWORK:AB",
+      "loci": [
+        "AB 1.21.11"
+      ],
+      "best_matched_letters": 27,
+      "iti": true,
+      "citing_text": "grāvāṇeva tad id arthaṃ jarethe iti sūktam akṣī iva karṇāv iva nāsevety aṅgasamākhyāyam evāsmiṃs tad indriyāṇi dadhāti"
+    },
+    {
+      "canonical_key": "VG:YV:VSM:A20:V013",
+      "work": "VG:SUPPWORK:KatySS",
+      "loci": [
+        "KatySS 19.5.10"
+      ],
+      "best_matched_letters": 14,
+      "iti": true,
+      "citing_text": "pratyakṣabhakṣaṃ yajamāno lomāni prayatir iti"
+    },
+    {
+      "canonical_key": "VG:RV:SAK:M08:S002:V007",
+      "work": "VG:SUPPWORK:SankhSS",
+      "loci": [
+        "SankhSS 10.4.6"
+      ],
+      "best_matched_letters": 17,
+      "iti": true,
+      "citing_text": "taṃ tam it traya indrasya somā iti marutvatīyasya pratipadanucarau"
+    },
+    {
+      "canonical_key": "VG:RV:SAK:M07:S036:V009",
+      "work": "VG:SUPPWORK:AsvSS",
+      "loci": [
+        "AsvSS 6.12.11"
+      ],
+      "best_matched_letters": 25,
+      "iti": true,
+      "citing_text": "pāṇīṃś camaseṣv avadhāyāpsu dhūtasya deva soma te mativido nṛbhiḥ sutasya stutastomasya śastvokthasyeṣṭayajuṣo yo bhakṣo goṣanir aśvasanis tasya ta upahūtasyopahūto bhakṣayāmīti prāṇabhakṣān bhakṣayit"
+    },
+    {
+      "canonical_key": "VG:YV:VSM:A05:V028",
+      "work": "VG:SUPPWORK:SBM",
+      "loci": [
+        "SBM 3.6.1.20.1"
+      ],
+      "best_matched_letters": 44,
+      "iti": false,
+      "citing_text": "athaivam abhipadya vācayati dhruvāsi dhruvo 'yaṃ yajamāno 'sminn āyatane prajayā bhūyād iti"
+    },
+    {
+      "canonical_key": "VG:YV:VSM:A17:V079",
+      "work": "VG:SUPPWORK:SBM",
+      "loci": [
+        "SBM 9.2.3.44.1"
+      ],
+      "best_matched_letters": 18,
+      "iti": true,
+      "citing_text": "sapta te agne samidha iti"
+    },
+    {
+      "canonical_key": "VG:AV:SAU:K20:S128:V006",
+      "work": "VG:SUPPWORK:SankhSS",
+      "loci": [
+        "SankhSS 12.21.2.1"
+      ],
+      "best_matched_letters": 78,
+      "iti": false,
+      "citing_text": "yo 'nāktākṣo anabhyakto amaṇivo ahiraṇyavaḥ / abrahmābrahmaṇaḥ putras to tā kalpeṣu saṃmitā"
+    },
+    {
+      "canonical_key": "VG:RV:SAK:M08:S001:V005",
+      "work": "VG:SUPPWORK:SankhSS",
+      "loci": [
+        "SankhSS 18.9.2"
+      ],
+      "best_matched_letters": 18,
+      "iti": true,
+      "citing_text": "mahe cana tvām adriva iti pañcaviṃśatiḥ"
+    },
+    {
+      "canonical_key": "VG:AV:SAU:K12:S003:V018",
+      "work": "VG:SUPPWORK:KausS",
+      "loci": [
+        "KausS 8.2.22"
+      ],
+      "best_matched_letters": 14,
+      "iti": true,
+      "citing_text": "nirbhinddhy aṃśūn grāhiṃ pāpmānam ity avahanti"
+    },
+    {
+      "canonical_key": "VG:RV:SAK:M06:S034:V001",
+      "work": "VG:SUPPWORK:AB",
+      "loci": [
+        "AB 5.21.1"
+      ],
+      "best_matched_letters": 29,
+      "iti": true,
+      "citing_text": "saṃ ca tve jagmur gira indra pūrvīr iti sūktaṃ gatavan navame 'hani navamasyāhno rūpam"
+    },
+    {
+      "canonical_key": "VG:RV:SAK:M03:S026:V004",
+      "work": "VG:SUPPWORK:SankhSS",
+      "loci": [
+        "SankhSS 10.8.19",
+        "SankhSS 14.3.12"
+      ],
+      "best_matched_letters": 12,
+      "iti": true,
+      "citing_text": "pra yantu vājā iti tisro 'nte mārutasya"
+    },
+    {
+      "canonical_key": "VG:RV:SAK:M01:S064:V006",
+      "work": "VG:SUPPWORK:KausB",
+      "loci": [
+        "KausB 15.3.11"
+      ],
+      "best_matched_letters": 26,
+      "iti": true,
+      "citing_text": "pinvanty apo marutaḥ sudānava iti pinvanty apīyā"
+    },
+    {
+      "canonical_key": "VG:RV:SAK:M03:S036:V002",
+      "work": "VG:SUPPWORK:SankhSS",
+      "loci": [
+        "SankhSS 7.17.10"
+      ],
+      "best_matched_letters": 25,
+      "iti": true,
+      "citing_text": "indrāya somāḥ pradivo vidānā ity acchāvākasya"
+    },
+    {
+      "canonical_key": "VG:RV:SAK:M10:S030:V010",
+      "work": "VG:SUPPWORK:KausB",
+      "loci": [
+        "KausB 12.2.3"
+      ],
+      "best_matched_letters": 25,
+      "iti": true,
+      "citing_text": "āvarvṛtatīr adha nu dvidhārā ity āvṛttāsu"
+    },
+    {
+      "canonical_key": "VG:RV:SAK:M01:S189:V004",
+      "work": "VG:SUPPWORK:AsvSS",
+      "loci": [
+        "AsvSS 2.10.4",
+        "AsvSS 3.7.5"
+      ],
+      "best_matched_letters": 26,
+      "iti": false,
+      "citing_text": "āyuṣ ṭe viśvato dadhad ayam agnir vareṇyaḥ / punas te prāṇa āyātu parā yakṣmaṃ suvāmi te / āyurdā agne haviṣo juṣāṇo ghṛtapratīko ghṛtayonir edhi / ghṛtaṃ pītvā madhu cāru gavyaṃ piteva putram abhirak"
+    }
+  ],
+  "adversarial_sample_shortest_matches": [
+    {
+      "canonical_key": "VG:AV:SAU:K01:S030:V004",
+      "work": "VG:SUPPWORK:VaitS",
+      "loci": [
+        "VaitS 1.4.15"
+      ],
+      "best_matched_letters": 12,
+      "iti": true,
+      "citing_text": "yeṣāṃ prayājā iti yajamānam āśāste"
+    },
+    {
+      "canonical_key": "VG:AV:SAU:K03:S002:V001",
+      "work": "VG:SUPPWORK:KausS",
+      "loci": [
+        "KausS 2.5.17"
+      ],
+      "best_matched_letters": 12,
+      "iti": true,
+      "citing_text": "agnir naḥ śatrūn agnir no dūtaḥ iti mohanāni"
+    },
+    {
+      "canonical_key": "VG:AV:SAU:K03:S014:V002",
+      "work": "VG:SUPPWORK:VaitS",
+      "loci": [
+        "VaitS 3.11.26"
+      ],
+      "best_matched_letters": 12,
+      "iti": true,
+      "citing_text": "agreṇa gārhapatyaṃ jaghanena sado 'ntar āgnīdhrīyaṃ ca sadaś ca cātvālaṃ codīcīr dakṣiṇā utsṛjyamānāḥ saṃ vaḥ sṛjatv iti dvābhyām anumantrayate"
+    },
+    {
+      "canonical_key": "VG:AV:SAU:K03:S019:V006",
+      "work": "VG:SUPPWORK:VaitS",
+      "loci": [
+        "VaitS 6.4.16"
+      ],
+      "best_matched_letters": 12,
+      "iti": true,
+      "citing_text": "uddharṣantām ity ārūḍham anumantrayate"
+    },
+    {
+      "canonical_key": "VG:AV:SAU:K04:S008:V001",
+      "work": "VG:SUPPWORK:KausS",
+      "loci": [
+        "KausS 2.8.1"
+      ],
+      "best_matched_letters": 12,
+      "iti": true,
+      "citing_text": "bhūto bhūteṣu iti rājānam abhiṣekṣyan mahānade śāntyudakaṃ karoty ādiṣṭānām"
+    },
+    {
+      "canonical_key": "VG:AV:SAU:K04:S008:V001",
+      "work": "VG:SUPPWORK:VaitS",
+      "loci": [
+        "VaitS 7.1.6"
+      ],
+      "best_matched_letters": 12,
+      "iti": true,
+      "citing_text": "havirdhānayoḥ purastād vaiyāghracarmopabarhaṇāyām āsandyām bhūto bhūteṣu ity ārohayaty abhiṣiñcati ca"
+    },
+    {
+      "canonical_key": "VG:AV:SAU:K04:S016:V003",
+      "work": "VG:SUPPWORK:KausS",
+      "loci": [
+        "KausS 13.35.3"
+      ],
+      "best_matched_letters": 12,
+      "iti": true,
+      "citing_text": "uteyaṃ bhūmir iti trir varuṇam abhiṣṭūya"
+    },
+    {
+      "canonical_key": "VG:AV:SAU:K04:S027:V004",
+      "work": "VG:SUPPWORK:VaitS",
+      "loci": [
+        "VaitS 3.2.12"
+      ],
+      "best_matched_letters": 12,
+      "iti": true,
+      "citing_text": "apaḥ samudrād ity anācchāditābhivarṣaṇe"
+    },
+    {
+      "canonical_key": "VG:AV:SAU:K04:S027:V007",
+      "work": "VG:SUPPWORK:VaitS",
+      "loci": [
+        "VaitS 2.5.2"
+      ],
+      "best_matched_letters": 12,
+      "iti": true,
+      "citing_text": "pūrvedyur iṣṭyām agner anīkavato 'cikradad iti / madhyaṃdine sāṃtapanānāṃ marutāṃ sāṃtapanā idam iti / sāyaṃ gṛhamedhināṃ tigmam anīkam iti"
+    },
+    {
+      "canonical_key": "VG:AV:SAU:K05:S024:V007",
+      "work": "VG:SUPPWORK:VaitS",
+      "loci": [
+        "VaitS 2.4.7",
+        "VaitS 2.4.13"
+      ],
+      "best_matched_letters": 12,
+      "iti": true,
+      "citing_text": "yad vidvāṃso dyāvāpṛthivī upaśrutyā somo vīrudhām iti vaiśvadevadyāvāpṛthivīyasaumyān"
+    },
+    {
+      "canonical_key": "VG:AV:SAU:K05:S026:V001",
+      "work": "VG:SUPPWORK:KausS",
+      "loci": [
+        "KausS 3.6.1"
+      ],
+      "best_matched_letters": 12,
+      "iti": true,
+      "citing_text": "yajūṃṣi yajñe iti navaśālāyāṃ sarpir madhumiśram aśnāti"
+    },
+    {
+      "canonical_key": "VG:AV:SAU:K06:S002:V001",
+      "work": "VG:SUPPWORK:SBM",
+      "loci": [
+        "SBM 3.2.4.20.6"
+      ],
+      "best_matched_letters": 12,
+      "iti": true,
+      "citing_text": "indrāya somam iti"
+    },
+    {
+      "canonical_key": "VG:AV:SAU:K06:S054:V002",
+      "work": "VG:SUPPWORK:VaitS",
+      "loci": [
+        "VaitS 1.3.4"
+      ],
+      "best_matched_letters": 12,
+      "iti": true,
+      "citing_text": "paurṇamāsyām āgneyāgnīṣomīyāv antaropāṃśuyājam agnīṣomīyam asmai kṣatram iti / nāmāvāsyāyām avidhānāt"
+    },
+    {
+      "canonical_key": "VG:AV:SAU:K06:S068:V002",
+      "work": "VG:SUPPWORK:KausS",
+      "loci": [
+        "KausS 7.4.18"
+      ],
+      "best_matched_letters": 12,
+      "iti": true,
+      "citing_text": "aditiḥ śmaśru ity undati"
+    },
+    {
+      "canonical_key": "VG:AV:SAU:K07:S028:V001",
+      "work": "VG:SUPPWORK:VaitS",
+      "loci": [
+        "VaitS 1.4.12",
+        "VaitS 3.3.2"
+      ],
+      "best_matched_letters": 12,
+      "iti": true,
+      "citing_text": "vedaḥ svastir iti vedaṃ vicṛtati"
+    },
+    {
+      "canonical_key": "VG:AV:SAU:K07:S041:V002",
+      "work": "VG:SUPPWORK:VaitS",
+      "loci": [
+        "VaitS 3.12.22"
+      ],
+      "best_matched_letters": 12,
+      "iti": true,
+      "citing_text": "atra pitara iti japitvaitaṃ bhāgam etaṃ sadhasthāḥ śyeno nṛcakṣā ity anumantrayate"
+    },
+    {
+      "canonical_key": "VG:AV:SAU:K07:S052:V001",
+      "work": "VG:SUPPWORK:KausS",
+      "loci": [
+        "KausS 2.3.5"
+      ],
+      "best_matched_letters": 12,
+      "iti": true,
+      "citing_text": "sahṛdayaṃ tad ū ṣu saṃ jānīdhvam eha yātu saṃ vaḥ pṛcyantāṃ saṃ vo manāṃsi saṃjñānaṃ naḥ iti sāṃmanasyāni"
+    },
+    {
+      "canonical_key": "VG:AV:SAU:K07:S060:V001",
+      "work": "VG:SUPPWORK:KausS",
+      "loci": [
+        "KausS 3.7.11",
+        "KausS 9.4.5",
+        "KausS 11.3.15"
+      ],
+      "best_matched_letters": 12,
+      "iti": true,
+      "citing_text": "proṣya samidha ādāya ūrjaṃ bibhrad iti gṛhasaṃkāśe japati"
+    },
+    {
+      "canonical_key": "VG:AV:SAU:K08:S002:V001",
+      "work": "VG:SUPPWORK:KausS",
+      "loci": [
+        "KausS 7.9.14"
+      ],
+      "best_matched_letters": 12,
+      "iti": true,
+      "citing_text": "ā rabhasvemām ity avichinnām udakadhārām ālambhayati"
+    },
+    {
+      "canonical_key": "VG:AV:SAU:K08:S008:V022",
+      "work": "VG:SUPPWORK:KausS",
+      "loci": [
+        "KausS 2.6.11"
+      ],
+      "best_matched_letters": 12,
+      "iti": true,
+      "citing_text": "ni tad dadhiṣe vanaspate ayā viṣṭhā agna indraś diśaś catasro iti navaṃ rathaṃ rājānaṃ sasārathim āsthāpayati"
+    },
+    {
+      "canonical_key": "VG:AV:SAU:K10:S006:V003",
+      "work": "VG:SUPPWORK:KausS",
+      "loci": [
+        "KausS 1.8.13"
+      ],
+      "best_matched_letters": 12,
+      "iti": true,
+      "citing_text": "yat tvā śikvaḥ iti prakṣālayati"
+    },
+    {
+      "canonical_key": "VG:AV:SAU:K11:S001:V003",
+      "work": "VG:SUPPWORK:KausS",
+      "loci": [
+        "KausS 8.1.23"
+      ],
+      "best_matched_letters": 12,
+      "iti": true,
+      "citing_text": "agne 'janiṣṭhā iti jātam"
+    },
+    {
+      "canonical_key": "VG:AV:SAU:K11:S001:V006",
+      "work": "VG:SUPPWORK:KausS",
+      "loci": [
+        "KausS 8.2.11"
+      ],
+      "best_matched_letters": 12,
+      "iti": true,
+      "citing_text": "yo devānāṃ tam agne sahasvān iti dakṣiṇaṃ jānv ācyāparājitābhimukhaḥ prahvo vā muṣṭiprasṛtāñjalibhiḥ kumbhyāṃ nirvapati"
+    },
+    {
+      "canonical_key": "VG:AV:SAU:K12:S001:V052",
+      "work": "VG:SUPPWORK:KausS",
+      "loci": [
+        "KausS 3.7.41"
+      ],
+      "best_matched_letters": 12,
+      "iti": true,
+      "citing_text": "yasyāṃ kṛṣṇam iti vārṣakṛtasyācamati śirasy ānayate"
+    },
+    {
+      "canonical_key": "VG:AV:SAU:K12:S003:V012",
+      "work": "VG:SUPPWORK:KausS",
+      "loci": [
+        "KausS 8.2.4"
+      ],
+      "best_matched_letters": 12,
+      "iti": true,
+      "citing_text": "piteva putrān ity avarohya bhūmiṃ tenodakārthān kurvanti"
+    },
+    {
+      "canonical_key": "VG:AV:SAU:K14:S001:V043",
+      "work": "VG:SUPPWORK:KausS",
+      "loci": [
+        "KausS 10.1.27"
+      ],
+      "best_matched_letters": 12,
+      "iti": true,
+      "citing_text": "yac ca varco yathā sindhur ity utkrāntām anyenāvasiñcati"
+    },
+    {
+      "canonical_key": "VG:AV:SAU:K14:S002:V025",
+      "work": "VG:SUPPWORK:KausS",
+      "loci": [
+        "KausS 10.4.9"
+      ],
+      "best_matched_letters": 12,
+      "iti": true,
+      "citing_text": "vi tiṣṭhantām iti pramadanaṃ pramāyotthāpayati"
+    },
+    {
+      "canonical_key": "VG:AV:SAU:K14:S002:V041",
+      "work": "VG:SUPPWORK:KausS",
+      "loci": [
+        "KausS 10.5.21"
+      ],
+      "best_matched_letters": 12,
+      "iti": true,
+      "citing_text": "devair dattam iti pratigṛhṇāti"
+    },
+    {
+      "canonical_key": "VG:AV:SAU:K14:S002:V049",
+      "work": "VG:SUPPWORK:KausS",
+      "loci": [
+        "KausS 10.5.23"
+      ],
+      "best_matched_letters": 12,
+      "iti": true,
+      "citing_text": "yāvatīḥ kṛtyā iti vrajet"
+    },
+    {
+      "canonical_key": "VG:AV:SAU:K18:S002:V059",
+      "work": "VG:SUPPWORK:KausS",
+      "loci": [
+        "KausS 11.1.48"
+      ],
+      "best_matched_letters": 12,
+      "iti": true,
+      "citing_text": "daṇḍaṃ hastād iti mantroktaṃ brāhmaṇasyādāpayati"
+    },
+    {
+      "canonical_key": "VG:AV:SAU:K18:S004:V051",
+      "work": "VG:SUPPWORK:KausS",
+      "loci": [
+        "KausS 11.1.51"
+      ],
+      "best_matched_letters": 12,
+      "iti": true,
+      "citing_text": "idaṃ pitṛbhya iti darbhān edhān stṛṇāti"
+    },
+    {
+      "canonical_key": "VG:AV:SAU:K19:S064:V001",
+      "work": "VG:SUPPWORK:KausB",
+      "loci": [
+        "KausB 8.9.16",
+        "KausB 8.9.19"
+      ],
+      "best_matched_letters": 12,
+      "iti": true,
+      "citing_text": "imāṃ me agne samidham ity aparāhṇe tad rātre rūpam"
+    },
+    {
+      "canonical_key": "VG:AV:SAU:K19:S064:V001",
+      "work": "VG:SUPPWORK:SankhSS",
+      "loci": [
+        "SankhSS 5.11.10"
+      ],
+      "best_matched_letters": 12,
+      "iti": true,
+      "citing_text": "imāṃ me agne samidham iti dvitīye 'hani pūrvāhṇe tisraḥ sāmidhenīḥ"
+    },
+    {
+      "canonical_key": "VG:RV:SAK:M01:S102:V001",
+      "work": "VG:SUPPWORK:SankhSS",
+      "loci": [
+        "SankhSS 9.17.3",
+        "SankhSS 10.10.6"
+      ],
+      "best_matched_letters": 12,
+      "iti": true,
+      "citing_text": "imāṃ te dhiyam iti jāgatasyottamām uddhṛtya tad asyedaṃ paśyateti paridhāya pro droṇa iti yajati"
+    },
+    {
+      "canonical_key": "VG:RV:SAK:M01:S107:V001",
+      "work": "VG:SUPPWORK:KatySS",
+      "loci": [
+        "KatySS 10.4.6"
+      ],
+      "best_matched_letters": 12,
+      "iti": true,
+      "citing_text": "dadhnā śrīṇāty enaṃ paścime 'nte madhye vā yajño devānām iti"
+    },
+    {
+      "canonical_key": "VG:RV:SAK:M01:S183:V001",
+      "work": "VG:SUPPWORK:SankhSS",
+      "loci": [
+        "SankhSS 6.6.6"
+      ],
+      "best_matched_letters": 12,
+      "iti": true,
+      "citing_text": "ā bhātīti sūkte / nāsatyābhyām iti trīṇi / vasū rudreti tisraḥ / yuvo rajāṃsīti sūkte / taṃ yuñjāthām iti sūkte / grāvāṇeva / dhenuḥ pratnasya / ka u śravad iti sūkte / stuṣe nareti sūkte parihāpya pa"
+    },
+    {
+      "canonical_key": "VG:RV:SAK:M02:S030:V009",
+      "work": "VG:SUPPWORK:SankhSS",
+      "loci": [
+        "SankhSS 5.9.10"
+      ],
+      "best_matched_letters": 12,
+      "iti": true,
+      "citing_text": "bhavā no 'gne sumanās tapo ṣv agne yo naḥ sanutya ity aṅgāreṣūpohyamāneṣu"
+    },
+    {
+      "canonical_key": "VG:RV:SAK:M02:S041:V021",
+      "work": "VG:SUPPWORK:SankhSS",
+      "loci": [
+        "SankhSS 5.13.8"
+      ],
+      "best_matched_letters": 12,
+      "iti": true,
+      "citing_text": "ā vām upastham iti nabhyasthayoḥ"
+    },
+    {
+      "canonical_key": "VG:RV:SAK:M03:S021:V001",
+      "work": "VG:SUPPWORK:AsvSS",
+      "loci": [
+        "AsvSS 3.4.1"
+      ],
+      "best_matched_letters": 12,
+      "iti": true,
+      "citing_text": "vapāyāṃ śrapyamāṇāyāṃ preṣitaḥ stokebhyo 'nvāha juṣa saprathas tam imaṃ no yajñam iti"
+    },
+    {
+      "canonical_key": "VG:RV:SAK:M03:S021:V001",
+      "work": "VG:SUPPWORK:SankhSS",
+      "loci": [
+        "SankhSS 5.18.1"
+      ],
+      "best_matched_letters": 12,
+      "iti": true,
+      "citing_text": "stokebhya ity ukto juṣasva saprathastamam imaṃ no yajñam iti ca sūktam anvāha"
+    }
+  ],
+  "adversarial_target": "The 40 shortest accepted matches, where a chance agreement is likeliest. The first tuning pass without the two-word rule produced five plain false positives in a sample of 25 -- single common words such as samvatsarasya and vaisvanaram matching Brahmana prose that quotes nothing."
+}

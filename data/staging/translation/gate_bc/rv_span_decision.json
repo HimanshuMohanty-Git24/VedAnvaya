@@ -1,0 +1,342 @@
+{
+ "phase": 7,
+ "decision": "OWNER_DECISION_A_RV_SPAN",
+ "question_1_what_did_it_originally_protect": {
+  "answer": "the 50 Sakala mantras with no translation, and specifically the risk that Griffith's merged dvipada units would be bound 1:1 to canonical verses. GAP-TRANSLATION-004 records it as: 'Griffith renders each pair of our Sakala verses as one merged unit, so unit k covers verses 2k-1 and 2k. The import bound unit k to verse k. 30 of the 50 were never a source gap.'",
+  "registry_gap": "GAP-TRANSLATION-004",
+  "population_protected": 50,
+  "of_which_paired_span": 30
+ },
+ "question_2_which_part_is_now_mechanically_resolved_by_m13": {
+  "rv_1_65_to_1_70_verses_without_their_own_translation": 30,
+  "of_those_covered_by_a_mantra_range_on_the_paired_odd_verse": 30,
+  "of_those_genuinely_missing_a_translation": 0,
+  "live_mantra_range_translations_in_the_span": 30,
+  "live_mantra_translations_in_the_span": 1,
+  "live_translations_in_the_span_by_alignment_level": {
+   "MANTRA_RANGE": 30,
+   "MANTRA": 1
+  },
+  "staged_rows_still_targeting_the_span": 0,
+  "conclusion": "every one of the 30 is covered by a MANTRA_RANGE attached to its paired odd verse, and no staged row targets the span at all. They are canonical verses covered by a multi-verse translation span, NOT missing translations, and the distinction is the whole substance of decision A. The coordinate repair the decision was waiting on has been made and read back clean (M13, 31 rows, 25 moved, 6 already correct, 0 unresolved)."
+ },
+ "question_3_which_rows_remain_missing_or_unimported": {
+  "rv_verses_with_no_translation_of_their_own": 50,
+  "inside_the_m13_span_and_covered_by_a_range": 30,
+  "outside_the_span": 20,
+  "outside_and_staged": 17,
+  "outside_and_never_staged": 3,
+  "never_staged_keys": [
+   "VG:RV:SAK:M08:S093:V029",
+   "VG:RV:SAK:M10:S086:V016",
+   "VG:RV:SAK:M10:S086:V017"
+  ],
+  "staged_outside_verdicts": {
+   "B_PASS/C_PASS": 8,
+   "B_PASS/C_WITHHOLD_AMBIGUOUS": 5,
+   "B_FAIL_POLICY/C_PASS": 4
+  }
+ },
+ "question_4_why_are_they_absent": {
+  "because_no_source_unit_exists": {
+   "count": 3,
+   "keys": [
+    "VG:RV:SAK:M08:S093:V029",
+    "VG:RV:SAK:M10:S086:V016",
+    "VG:RV:SAK:M10:S086:V017"
+   ],
+   "note": "not staged by the translation agent and not covered by any span. These are the only Rigvedic verses in the corpus for which this campaign has produced no candidate at all."
+  },
+  "because_one_source_unit_spans_several_canonical_verses": {
+   "count": 30,
+   "note": "the paired dvipada verses of RV 1.65-1.70. A translation covering them exists and is typed MANTRA_RANGE; they lack a dedicated 1:1 rendering because Griffith did not print one."
+  },
+  "because_another_staged_source_exists_but_is_withheld": {
+   "count": 17,
+   "verdicts": {
+    "B_PASS/C_PASS": 8,
+    "B_PASS/C_WITHHOLD_AMBIGUOUS": 5,
+    "B_FAIL_POLICY/C_PASS": 4
+   },
+   "note": "17 rows outside the span. 4 are PROBABLE and withheld by the central policy; of the 13 that pass Gate B, 5 carry Griffith's Latin rather than English (RV 1.179 and 10.61, his Victorian substitution for explicit passages) and 8 pass Gate C."
+  }
+ },
+ "question_5_recommended_disposition": {
+  "recommendation": "CLOSED_DERIVED_ON_THE_SPAN_PLUS_REPLACED_BY_SCOPE_DECISION",
+  "reasoning": "Decision A exists to stop a merged unit being bound 1:1. That hazard is gone: the span is typed MANTRA_RANGE, the readback is clean, and no staged row targets the span, so there is nothing left for the owner to approve or refuse about it. What remains under the decision's old boundary is a different question -- whether to publish Griffith's Latin, and what to do about three verses with no candidate source -- and neither involves the paired spine. Keeping one gate over both would make the owner re-decide a resolved coordinate question in order to reach an unrelated editorial one.",
+  "mechanically_decided_part": {
+   "scope": "RV 1.65-1.70 paired dvipada span",
+   "status": "CLOSED_DERIVED",
+   "evidence": "30 of 30 covered by MANTRA_RANGE; 0 staged rows targeting the span; M13 readback clean with 0 findings; canonical census unchanged",
+   "needs_owner_judgement": false
+  },
+  "residual_requiring_owner_judgement": [
+   {
+    "scope": "Griffith's Latin substitutions",
+    "population": 5,
+    "keys": [
+     "VG:RV:SAK:M01:S179:V003",
+     "VG:RV:SAK:M01:S179:V004",
+     "VG:RV:SAK:M10:S061:V005",
+     "VG:RV:SAK:M10:S061:V007",
+     "VG:RV:SAK:M10:S061:V008"
+    ],
+    "question": "Griffith renders explicit passages into Latin. The text is his and is public domain, but it is not an English translation and the rows declare language 'en'. Publish with a language correction and a disclosure, or leave the verses uncovered?",
+    "new_decision_id": "OWNER_DECISION_F_LATIN_SUBSTITUTION"
+   },
+   {
+    "scope": "Rigvedic verses with no candidate source",
+    "population": 3,
+    "keys": [
+     "VG:RV:SAK:M08:S093:V029",
+     "VG:RV:SAK:M10:S086:V016",
+     "VG:RV:SAK:M10:S086:V017"
+    ],
+    "question": "these are a scope statement, not a gate: no source has been found. They belong in GAP-TRANSLATION-004's residual, not behind an owner decision.",
+    "new_decision_id": null
+   }
+  ]
+ },
+ "per_verse_table_in_span": [
+  {
+   "canonical_key": "VG:RV:SAK:M01:S065:V002",
+   "has_its_own_translation": false,
+   "paired_odd_sibling": "VG:RV:SAK:M01:S065:V001",
+   "sibling_carries_a_mantra_range": true,
+   "covered_by_a_multi_verse_span": true,
+   "is_a_missing_translation": false
+  },
+  {
+   "canonical_key": "VG:RV:SAK:M01:S065:V004",
+   "has_its_own_translation": false,
+   "paired_odd_sibling": "VG:RV:SAK:M01:S065:V003",
+   "sibling_carries_a_mantra_range": true,
+   "covered_by_a_multi_verse_span": true,
+   "is_a_missing_translation": false
+  },
+  {
+   "canonical_key": "VG:RV:SAK:M01:S065:V006",
+   "has_its_own_translation": false,
+   "paired_odd_sibling": "VG:RV:SAK:M01:S065:V005",
+   "sibling_carries_a_mantra_range": true,
+   "covered_by_a_multi_verse_span": true,
+   "is_a_missing_translation": false
+  },
+  {
+   "canonical_key": "VG:RV:SAK:M01:S065:V008",
+   "has_its_own_translation": false,
+   "paired_odd_sibling": "VG:RV:SAK:M01:S065:V007",
+   "sibling_carries_a_mantra_range": true,
+   "covered_by_a_multi_verse_span": true,
+   "is_a_missing_translation": false
+  },
+  {
+   "canonical_key": "VG:RV:SAK:M01:S065:V010",
+   "has_its_own_translation": false,
+   "paired_odd_sibling": "VG:RV:SAK:M01:S065:V009",
+   "sibling_carries_a_mantra_range": true,
+   "covered_by_a_multi_verse_span": true,
+   "is_a_missing_translation": false
+  },
+  {
+   "canonical_key": "VG:RV:SAK:M01:S066:V002",
+   "has_its_own_translation": false,
+   "paired_odd_sibling": "VG:RV:SAK:M01:S066:V001",
+   "sibling_carries_a_mantra_range": true,
+   "covered_by_a_multi_verse_span": true,
+   "is_a_missing_translation": false
+  },
+  {
+   "canonical_key": "VG:RV:SAK:M01:S066:V004",
+   "has_its_own_translation": false,
+   "paired_odd_sibling": "VG:RV:SAK:M01:S066:V003",
+   "sibling_carries_a_mantra_range": true,
+   "covered_by_a_multi_verse_span": true,
+   "is_a_missing_translation": false
+  },
+  {
+   "canonical_key": "VG:RV:SAK:M01:S066:V006",
+   "has_its_own_translation": false,
+   "paired_odd_sibling": "VG:RV:SAK:M01:S066:V005",
+   "sibling_carries_a_mantra_range": true,
+   "covered_by_a_multi_verse_span": true,
+   "is_a_missing_translation": false
+  },
+  {
+   "canonical_key": "VG:RV:SAK:M01:S066:V008",
+   "has_its_own_translation": false,
+   "paired_odd_sibling": "VG:RV:SAK:M01:S066:V007",
+   "sibling_carries_a_mantra_range": true,
+   "covered_by_a_multi_verse_span": true,
+   "is_a_missing_translation": false
+  },
+  {
+   "canonical_key": "VG:RV:SAK:M01:S066:V010",
+   "has_its_own_translation": false,
+   "paired_odd_sibling": "VG:RV:SAK:M01:S066:V009",
+   "sibling_carries_a_mantra_range": true,
+   "covered_by_a_multi_verse_span": true,
+   "is_a_missing_translation": false
+  },
+  {
+   "canonical_key": "VG:RV:SAK:M01:S067:V002",
+   "has_its_own_translation": false,
+   "paired_odd_sibling": "VG:RV:SAK:M01:S067:V001",
+   "sibling_carries_a_mantra_range": true,
+   "covered_by_a_multi_verse_span": true,
+   "is_a_missing_translation": false
+  },
+  {
+   "canonical_key": "VG:RV:SAK:M01:S067:V004",
+   "has_its_own_translation": false,
+   "paired_odd_sibling": "VG:RV:SAK:M01:S067:V003",
+   "sibling_carries_a_mantra_range": true,
+   "covered_by_a_multi_verse_span": true,
+   "is_a_missing_translation": false
+  },
+  {
+   "canonical_key": "VG:RV:SAK:M01:S067:V006",
+   "has_its_own_translation": false,
+   "paired_odd_sibling": "VG:RV:SAK:M01:S067:V005",
+   "sibling_carries_a_mantra_range": true,
+   "covered_by_a_multi_verse_span": true,
+   "is_a_missing_translation": false
+  },
+  {
+   "canonical_key": "VG:RV:SAK:M01:S067:V008",
+   "has_its_own_translation": false,
+   "paired_odd_sibling": "VG:RV:SAK:M01:S067:V007",
+   "sibling_carries_a_mantra_range": true,
+   "covered_by_a_multi_verse_span": true,
+   "is_a_missing_translation": false
+  },
+  {
+   "canonical_key": "VG:RV:SAK:M01:S067:V010",
+   "has_its_own_translation": false,
+   "paired_odd_sibling": "VG:RV:SAK:M01:S067:V009",
+   "sibling_carries_a_mantra_range": true,
+   "covered_by_a_multi_verse_span": true,
+   "is_a_missing_translation": false
+  },
+  {
+   "canonical_key": "VG:RV:SAK:M01:S068:V002",
+   "has_its_own_translation": false,
+   "paired_odd_sibling": "VG:RV:SAK:M01:S068:V001",
+   "sibling_carries_a_mantra_range": true,
+   "covered_by_a_multi_verse_span": true,
+   "is_a_missing_translation": false
+  },
+  {
+   "canonical_key": "VG:RV:SAK:M01:S068:V004",
+   "has_its_own_translation": false,
+   "paired_odd_sibling": "VG:RV:SAK:M01:S068:V003",
+   "sibling_carries_a_mantra_range": true,
+   "covered_by_a_multi_verse_span": true,
+   "is_a_missing_translation": false
+  },
+  {
+   "canonical_key": "VG:RV:SAK:M01:S068:V006",
+   "has_its_own_translation": false,
+   "paired_odd_sibling": "VG:RV:SAK:M01:S068:V005",
+   "sibling_carries_a_mantra_range": true,
+   "covered_by_a_multi_verse_span": true,
+   "is_a_missing_translation": false
+  },
+  {
+   "canonical_key": "VG:RV:SAK:M01:S068:V008",
+   "has_its_own_translation": false,
+   "paired_odd_sibling": "VG:RV:SAK:M01:S068:V007",
+   "sibling_carries_a_mantra_range": true,
+   "covered_by_a_multi_verse_span": true,
+   "is_a_missing_translation": false
+  },
+  {
+   "canonical_key": "VG:RV:SAK:M01:S068:V010",
+   "has_its_own_translation": false,
+   "paired_odd_sibling": "VG:RV:SAK:M01:S068:V009",
+   "sibling_carries_a_mantra_range": true,
+   "covered_by_a_multi_verse_span": true,
+   "is_a_missing_translation": false
+  },
+  {
+   "canonical_key": "VG:RV:SAK:M01:S069:V002",
+   "has_its_own_translation": false,
+   "paired_odd_sibling": "VG:RV:SAK:M01:S069:V001",
+   "sibling_carries_a_mantra_range": true,
+   "covered_by_a_multi_verse_span": true,
+   "is_a_missing_translation": false
+  },
+  {
+   "canonical_key": "VG:RV:SAK:M01:S069:V004",
+   "has_its_own_translation": false,
+   "paired_odd_sibling": "VG:RV:SAK:M01:S069:V003",
+   "sibling_carries_a_mantra_range": true,
+   "covered_by_a_multi_verse_span": true,
+   "is_a_missing_translation": false
+  },
+  {
+   "canonical_key": "VG:RV:SAK:M01:S069:V006",
+   "has_its_own_translation": false,
+   "paired_odd_sibling": "VG:RV:SAK:M01:S069:V005",
+   "sibling_carries_a_mantra_range": true,
+   "covered_by_a_multi_verse_span": true,
+   "is_a_missing_translation": false
+  },
+  {
+   "canonical_key": "VG:RV:SAK:M01:S069:V008",
+   "has_its_own_translation": false,
+   "paired_odd_sibling": "VG:RV:SAK:M01:S069:V007",
+   "sibling_carries_a_mantra_range": true,
+   "covered_by_a_multi_verse_span": true,
+   "is_a_missing_translation": false
+  },
+  {
+   "canonical_key": "VG:RV:SAK:M01:S069:V010",
+   "has_its_own_translation": false,
+   "paired_odd_sibling": "VG:RV:SAK:M01:S069:V009",
+   "sibling_carries_a_mantra_range": true,
+   "covered_by_a_multi_verse_span": true,
+   "is_a_missing_translation": false
+  },
+  {
+   "canonical_key": "VG:RV:SAK:M01:S070:V002",
+   "has_its_own_translation": false,
+   "paired_odd_sibling": "VG:RV:SAK:M01:S070:V001",
+   "sibling_carries_a_mantra_range": true,
+   "covered_by_a_multi_verse_span": true,
+   "is_a_missing_translation": false
+  },
+  {
+   "canonical_key": "VG:RV:SAK:M01:S070:V004",
+   "has_its_own_translation": false,
+   "paired_odd_sibling": "VG:RV:SAK:M01:S070:V003",
+   "sibling_carries_a_mantra_range": true,
+   "covered_by_a_multi_verse_span": true,
+   "is_a_missing_translation": false
+  },
+  {
+   "canonical_key": "VG:RV:SAK:M01:S070:V006",
+   "has_its_own_translation": false,
+   "paired_odd_sibling": "VG:RV:SAK:M01:S070:V005",
+   "sibling_carries_a_mantra_range": true,
+   "covered_by_a_multi_verse_span": true,
+   "is_a_missing_translation": false
+  },
+  {
+   "canonical_key": "VG:RV:SAK:M01:S070:V008",
+   "has_its_own_translation": false,
+   "paired_odd_sibling": "VG:RV:SAK:M01:S070:V007",
+   "sibling_carries_a_mantra_range": true,
+   "covered_by_a_multi_verse_span": true,
+   "is_a_missing_translation": false
+  },
+  {
+   "canonical_key": "VG:RV:SAK:M01:S070:V010",
+   "has_its_own_translation": false,
+   "paired_odd_sibling": "VG:RV:SAK:M01:S070:V009",
+   "sibling_carries_a_mantra_range": true,
+   "covered_by_a_multi_verse_span": true,
+   "is_a_missing_translation": false
+  }
+ ]
+}

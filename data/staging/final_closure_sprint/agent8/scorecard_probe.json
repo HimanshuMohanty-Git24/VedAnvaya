@@ -1,0 +1,34 @@
+{
+ "gates": {
+  "internal_leaked": 0,
+  "ungraded_edges": 0,
+  "nodes_without_label": 0,
+  "orphan_entities": 0,
+  "signature_violations": 0,
+  "undeclared_rel_types": 0,
+  "claims_non_candidate": 0,
+  "claims_to_passages": 0,
+  "metrics_to_passages": 0,
+  "orphan_public_nodes": 0,
+  "falsely_declared_unpopulated": 0
+ },
+ "verdict": "PASS",
+ "polarity_probes": {
+  "internal_leaked__flipped": 78306,
+  "ungraded_edges__population": 282389,
+  "graded_edges": 282389,
+  "nodes_without_label__population": 39664,
+  "orphan_public__population": 39664,
+  "orphan_public__flipped_any_edgeless_node_anywhere": 11049,
+  "declared_rel_types": null
+ },
+ "headline": {
+  "nodes_total": 117970,
+  "relationships_total": 282389,
+  "nodes_product": 39664,
+  "tier_coverage": 1.0,
+  "unknown_label_rate": 0.0
+ },
+ "signature_violations_sample": [],
+ "falsely_declared_unpopulated": {}
+}

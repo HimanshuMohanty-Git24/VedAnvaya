@@ -92,6 +92,14 @@ const NAME_MEASURE_CLASS = "va-world-label is-measuring";
 const SETTLE_MS = 120;
 
 /** Below this the geometry counts as still. Sub-pixel drift is not movement. */
+/**
+ * How far clear of the chrome a label anchor must fall, in px.
+ *
+ * 10 rather than 0, because the test is on the anchor point and the phrase is set around
+ * it: a candidate one pixel outside a panel still puts half its plate behind it.
+ */
+const OBSTACLE_MARGIN = 10;
+
 const STILL_PX = 0.75;
 
 /** What the renderer tells this file about the scene. It supplies facts and places nothing. */
@@ -138,6 +146,27 @@ export class EdgeLabelView {
     private readonly positionOf?: (node: number) => { x: number; y: number } | null;
     private scene: LabelScene = NO_SCENE;
     private relationCap: number;
+    /**
+     * Regions of the canvas the chrome is standing on, in canvas coordinates.
+     *
+     * Not to be confused with `obstacles` above, which is the 2D canvas handing this layer
+     * the boxes of the names it has already painted so a phrase is not laid over one. These
+     * are the *chrome*: DOM panels standing between the canvas and the reader.
+     *
+     * A label placed under the subject panel, the graph's own control rail or the
+     * relationship inspector is drawn, composited, counted as placed, and invisible. The
+     * viewport test below was the whole of the placement bound, and the viewport is the
+     * canvas rather than what a reader can see of it: measured over four subjects at 1440px
+     * one phrase in 102 landed under the chrome, and nothing in the product could report it
+     * because from the layout's point of view it had been placed successfully.
+     *
+     * Rectangles rather than one inset per edge, and that is the point. The chrome is a
+     * 368x233 block in the top-left and the panel is a 352-wide rail on the right; expressed
+     * as insets that removes 784 of 1440 px of width including the 600 px band *below* the
+     * chrome where nothing is standing. A candidate is tested against each box, so only the
+     * area actually covered is refused.
+     */
+    private chromeBoxes: ReadonlyArray<{ x: number; y: number; w: number; h: number }> = [];
     private capOverride: number | null = null;
     /** The relationship the inspector is open on. Tier 90. */
     private inspected: number | null = null;
@@ -334,6 +363,31 @@ export class EdgeLabelView {
         this.requestAssignment();
     }
 
+    /**
+     * Where the chrome is standing, so nothing is placed underneath it.
+     *
+     * Called by whichever canvas owns the layer, from the same measurement the camera's safe
+     * area comes from. Idempotent on an unchanged set: a ResizeObserver fires on every frame
+     * of a sheet animation and re-running the assignment each time would make the labels
+     * jump for the length of it.
+     */
+    setObstacles(boxes: ReadonlyArray<{ x: number; y: number; w: number; h: number }>) {
+        const same =
+            boxes.length === this.chromeBoxes.length &&
+            boxes.every((box, i) => {
+                const was = this.chromeBoxes[i];
+                return (
+                    Math.abs(box.x - was.x) < 1 &&
+                    Math.abs(box.y - was.y) < 1 &&
+                    Math.abs(box.w - was.w) < 1 &&
+                    Math.abs(box.h - was.h) < 1
+                );
+            });
+        if (same) return;
+        this.chromeBoxes = boxes;
+        this.requestAssignment();
+    }
+
     /** The relationship-phrase cap changed, because the mode or the width did. */
     setRelationCap(max: number) {
         if (this.relationCap === max) return;
@@ -461,6 +515,29 @@ export class EdgeLabelView {
         this.writeTransforms(points, viewport, now);
     }
 
+    /**
+     * Whether a candidate position is under the chrome.
+     *
+     * A point test rather than a box test, deliberately. The label's own box is not known
+     * until it is measured and its quadrant chosen, and an anchor whose *point* clears the
+     * chrome by a few pixels still reads: what this refuses is the phrase sitting squarely
+     * behind a panel, which is what was happening. A margin is added so a label anchored
+     * exactly on the chrome's edge does not half-disappear under it.
+     */
+    private covered(x: number, y: number): boolean {
+        for (const box of this.chromeBoxes) {
+            if (
+                x >= box.x - OBSTACLE_MARGIN &&
+                x <= box.x + box.w + OBSTACLE_MARGIN &&
+                y >= box.y - OBSTACLE_MARGIN &&
+                y <= box.y + box.h + OBSTACLE_MARGIN
+            ) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     /* --------------------------------------------------------------- the anchors - */
 
     /**
@@ -493,7 +570,12 @@ export class EdgeLabelView {
                    canvas simply takes the next one along the same line rather than losing the
                    label. Marked rather than removed; see `LabelCandidate.usable`. */
                 const usable =
-                    projected && x >= 0 && y >= 0 && x <= viewport.width && y <= viewport.height;
+                    projected &&
+                    x >= 0 &&
+                    y >= 0 &&
+                    x <= viewport.width &&
+                    y <= viewport.height &&
+                    !this.covered(x, y);
                 if (usable) anyUsable = true;
                 candidates.push({ x, y, usable });
             }
@@ -579,7 +661,29 @@ export class EdgeLabelView {
             anchors,
             viewport,
             measure: (text, kind) => this.measure(text, kind),
-            reserved: this.obstacles?.() ?? [],
+            /*
+             * Two kinds of reserved space, and the layout only needs to know they are both
+             * occupied.
+             *
+             * `obstacles` is the 2D canvas handing over the boxes of the names it has already
+             * painted, so a phrase is not laid on top of one. `chromeBoxes` is the DOM chrome
+             * standing between the canvas and the reader: the control rail, the subject panel
+             * and the relationship inspector. The anchor filter in `buildAnchors` refuses a
+             * candidate *point* inside one of those, and this refuses a placed *box* that
+             * overlaps one - which is the case the point test cannot catch, because a label
+             * hangs off its anchor and an anchor clear of a panel by ten pixels can still put
+             * three quarters of its plate behind it. Measured: the point test alone left one
+             * phrase in 102 under the chrome, and this is the one it left.
+             */
+            reserved: [
+                ...(this.obstacles?.() ?? []),
+                ...this.chromeBoxes.map((box) => ({
+                    x: box.x,
+                    y: box.y,
+                    width: box.w,
+                    height: box.h,
+                })),
+            ],
             /* The benchmark's override bounds the total as well as the phrase cap, so its zero arm
                is genuinely zero labels rather than zero phrases beside an unchanged set of names.
                A paired delta against a moving control measures nothing. */

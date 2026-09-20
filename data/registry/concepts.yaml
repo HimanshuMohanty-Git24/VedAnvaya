@@ -190,6 +190,46 @@ ambiguous_aliases:
       than assigned, because assigning it would put ~750 Rigvedic passages on one side of
       a distinction the translation does not make.
 
+# Forms a concept legitimately owns -- no other concept claims them -- that are
+# nonetheless too weak to ASSERT that concept on their own. The distinction from
+# ambiguous_aliases above matters: those are contested between two concepts and withdrawn
+# from everyone, while these are uncontested and unsound, so they are withdrawn from
+# assertion for ONE concept and stay available for search, candidate generation, audit and
+# manual review.
+#
+# The criterion is measured, not editorial: h2_verdict = AMBIGUOUS_SURFACE in
+# data/staging/quality/proofs/alias_soundness.json, meaning the alias's dominant human
+# lemma holds under 80% of its occurrences in a published human treebank. An alias whose
+# surface denotes two different words half the time cannot carry a MENTIONS_ENTITY or
+# ABOUT_CONCEPT edge by itself, however confident the matcher was.
+#
+# Owner decision, section 3: SOMA-PRESSING stays as a canonical ritual object; its weak
+# lexical aliases lose assertion authority. Applied to SOMA-PRESSING only. The same
+# criterion selects 24 further aliases across 18 other entities, measured and recorded in
+# the campaign report rather than applied here, because that is a wider decision than the
+# one taken.
+non_triggering_aliases:
+  - concept_id: VG:CONCEPT:SOMA-PRESSING
+    alias: sute
+    kind: sa
+    reason: >-
+      The human treebank reads this surface as the verb su 6 times and the noun suta 6
+      times -- a dominant share of 0.500, the worst of any SOMA-PRESSING form. A coin
+      toss between the pressing and the pressed thing is not evidence for either.
+  - concept_id: VG:CONCEPT:SOMA-PRESSING
+    alias: suteṣu
+    kind: sa
+    reason: >-
+      su 2, suta 2, dominant share 0.500. The same split as sute in the same locative
+      formation, so retiring one and keeping the other would be arbitrary. Not named by
+      the owner; selected by the same measurement the owner's two examples come from.
+  - concept_id: VG:CONCEPT:SOMA-PRESSING
+    alias: sutāsaḥ
+    kind: sa
+    reason: >-
+      su 9, suta 4, dominant share 0.692, below the 0.80 purity floor. Named by the owner
+      as a measured bad example.
+
 concepts:
 
   # -------------------------------------------------------------------------

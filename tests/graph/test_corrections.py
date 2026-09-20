@@ -123,9 +123,22 @@ def test_the_corrected_rows_land_on_the_passages_that_had_no_translation() -> No
         for row in iter_translation_nodes(PROJECT_ROOT, applier)
         if row["upstream_correction_id"]
     }
-    assert set(landed) == {"VG:RV:SAK:M01:S091:V018", "VG:RV:SAK:M05:S044:V014"}
-    assert landed["VG:RV:SAK:M01:S091:V018"].startswith("In thee be juicy")
-    assert landed["VG:RV:SAK:M05:S044:V014"].startswith("The sacred hymns love him")
+    # Scoped to the mis-printed-number class by its own correction ids, because the registry
+    # now carries a second class. Filtering on "has a correction id" would have made this
+    # test pass or fail on the verse-spine rows, which it says nothing about --
+    # tests/graph/test_verse_spine_corrections.py is where those are asserted.
+    number_class = {
+        key_by_id[row["passage_id"]]: row["text"][:30]
+        for row in iter_translation_nodes(PROJECT_ROOT, applier)
+        if row["upstream_correction_id"].endswith(("PRINTED_AS_16", "PRINTED_AS_11"))
+    }
+    assert set(number_class) == {"VG:RV:SAK:M01:S091:V018", "VG:RV:SAK:M05:S044:V014"}
+    assert number_class["VG:RV:SAK:M01:S091:V018"].startswith("In thee be juicy")
+    assert number_class["VG:RV:SAK:M05:S044:V014"].startswith("The sacred hymns love him")
+    # And no corrected row of either class may land outside what the registry declares.
+    assert set(number_class) <= set(landed)
+    spine_class = set(landed) - set(number_class)
+    assert all(key.startswith("VG:RV:SAK:M01:S0") for key in spine_class), sorted(spine_class)
 
 
 def test_qa_issues_project_for_every_veda_with_stable_unique_ids() -> None:

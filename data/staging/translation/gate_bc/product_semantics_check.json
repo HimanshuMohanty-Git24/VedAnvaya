@@ -1,0 +1,153 @@
+{
+ "phase": 11,
+ "rule_applied": "a population requiring a semantic distinction the product cannot express is marked BLOCKED_PRODUCT_SEMANTICS and is not imported ahead of the representation",
+ "surfaces_checked": {
+  "graph_vocabulary": {
+   "alignment_level_enum_has_MANTRA": true,
+   "alignment_level_enum_has_MANTRA_RANGE": true,
+   "translation_node_carries_alignment_level": true,
+   "translation_node_carries_language": true,
+   "translation_node_can_name_the_verse_a_rendering_was_borrowed_from": false,
+   "note": "MANTRA and MANTRA_RANGE are both first-class members of AlignmentLevel, and MANTRA_RANGE was added by GAP-TRANSLATION-006 for exactly this shape. There is no property anywhere on :Translation that records the passage a reused rendering was taken from: the graph has REUSES_TEXT_FROM and VARIANT_OF edges between the two mantras, but nothing ties the Translation node to the verse whose rendering it is."
+  },
+  "passage_api": {
+   "translation_view_exposes_alignment_level": true,
+   "translation_view_exposes_language": true,
+   "translation_view_exposes_quality_status": true,
+   "translation_view_exposes_work_edition": true,
+   "service_selects_alignment_level": true,
+   "translation_view_exposes_a_reuse_disclosure_field": false,
+   "note": "TranslationView carries alignment_level, language, quality_status and work_edition, and the service projects them, so MANTRA vs MANTRA_RANGE is fully expressible over the API today. A reused rendering has no field: the only signal would be work_edition reading 'The Hymns of the Rigveda' on a Samavedic verse, which is accurate and unexplained."
+  },
+  "coverage_statistics": {
+   "percent_is_computed_not_transcribed": true,
+   "counts_verses_carrying_an_edge": true,
+   "separates_dedicated_from_range_covered": false,
+   "separates_reused_renderings": false,
+   "carries_a_machine_aligned_caveat": true,
+   "note": "TranslationCoverage counts mantras carrying a HAS_TRANSLATION edge and divides. It cannot currently distinguish a verse with its own rendering from one sharing a neighbour's span or showing another corpus's rendering, so an import of the reuse or range classes would move a single percentage that three different kinds of coverage feed into."
+  },
+  "frontend_reader": {
+   "renders_translation_text": true,
+   "renders_translator_and_year": true,
+   "renders_work_edition": true,
+   "renders_alignment_level": false,
+   "renders_language": false,
+   "alignment_level_present_in_generated_client_types": true,
+   "empty_state_copy": "No released translation covers this passage in the current build. The verse is held; its translation layer is not.",
+   "note": "the reader shows text, translator, year and edition. It does not read alignment_level, although the generated client types carry it, so a MANTRA_RANGE rendering is displayed exactly like a dedicated one. And its empty state asserts that no translation covers the passage, which is already false for the 30 even verses of RV 1.65-1.70: a MANTRA_RANGE on the paired odd verse does cover them. That defect is a consequence of M13 landing correctly in the data and is live now, independent of any import."
+  },
+  "ask_evidence": {
+   "retriever_selects_translation_text": true,
+   "retriever_selects_alignment_level": false,
+   "note": "src/vedagraph/api/ask/retriever.py matches HAS_TRANSLATION and reads the text for evidence. It does not read alignment_level, so an answer quoting a reused Rigvedic rendering as evidence about a Samavedic verse would cite it as that verse's translation, and a quote drawn from a MANTRA_RANGE would be attributed to one verse of the span."
+  }
+ },
+ "distinction_verdicts": {
+  "MANTRA": {
+   "representable_in_graph": true,
+   "representable_in_api": true,
+   "rendered_truthfully_in_frontend": true,
+   "verdict": "REPRESENTABLE",
+   "blocking": false
+  },
+  "MANTRA_RANGE": {
+   "representable_in_graph": true,
+   "representable_in_api": true,
+   "rendered_truthfully_in_frontend": false,
+   "verdict": "REPRESENTABLE_IN_DATA_NOT_YET_IN_PRODUCT",
+   "blocking": true,
+   "what_is_missing": [
+    "the reader does not display alignment_level, so a rendering covering two verses is shown as if it were this verse's own",
+    "the reader's empty state says no translation covers a passage that a sibling's MANTRA_RANGE does cover",
+    "TranslationCoverage cannot separate dedicated from range-covered verses"
+   ],
+   "already_live_defect": true,
+   "note": "this is not introduced by the candidate import. M13 has already put 30 MANTRA_RANGE translations into the Rigveda, so the gap between the typed data and the rendered product exists today."
+  },
+  "REUSED_CROSS_CORPUS_RENDERING": {
+   "representable_in_graph": false,
+   "representable_in_api": false,
+   "rendered_truthfully_in_frontend": false,
+   "verdict": "NOT_REPRESENTABLE",
+   "blocking": true,
+   "what_is_missing": [
+    "no property on :Translation names the passage whose rendering this is",
+    "TranslationView has no disclosure field, so a client cannot tell",
+    "the reader would present Griffith's Rigveda English as the Samavedic or Atharvavedic verse's translation, with 'The Hymns of the Rigveda' in the edition line as the only clue",
+    "Ask would cite it as evidence about the target corpus"
+   ],
+   "already_live_defect": false
+  },
+  "LATIN_SUBSTITUTION": {
+   "representable_in_graph": true,
+   "representable_in_api": true,
+   "rendered_truthfully_in_frontend": false,
+   "verdict": "REPRESENTABLE_ONLY_AFTER_THE_LANGUAGE_FIELD_IS_CORRECTED",
+   "blocking": true,
+   "what_is_missing": [
+    "the 22 rows declare language 'en' and the literal is Latin, so the field would have to be corrected before import, not after",
+    "the reader displays no language marker, so a Latin rendering appears under the heading 'Translation' with no indication"
+   ],
+   "already_live_defect": false
+  }
+ },
+ "evidence_paths": {
+  "alignment_level_enum": "src/vedagraph/models/enums.py::AlignmentLevel",
+  "api_model": "src/vedagraph/api/models/passage.py::TranslationView",
+  "api_projection": "src/vedagraph/api/services/passage_service.py",
+  "coverage_model": "src/vedagraph/api/models/work.py::TranslationCoverage",
+  "frontend_reader": "frontend/src/app/passage/[key]/page.tsx",
+  "frontend_types": "frontend/src/lib/api-schema.ts",
+  "ask_retriever": "src/vedagraph/api/ask/retriever.py"
+ },
+ "import_plan_split_by_product_readiness": {
+  "approvable_on_evidence_and_representable_now": {
+   "SAFE_IMPORT_SOURCE_EXPLICIT": {
+    "count": 846,
+    "by_veda": {
+     "AV": 838,
+     "RV": 8
+    }
+   },
+   "SAFE_IMPORT_DETERMINISTIC_VERIFIED_ALIGNMENT": {
+    "count": 36,
+    "by_veda": {
+     "YV": 36
+    }
+   }
+  },
+  "approvable_on_evidence_but_BLOCKED_PRODUCT_SEMANTICS": {
+   "SAFE_IMPORT_REUSED_RENDERING_WITH_DISCLOSURE": {
+    "count": 194,
+    "by_veda": {
+     "AV": 21,
+     "SV": 173
+    },
+    "blocked_on": "REUSED_CROSS_CORPUS_RENDERING",
+    "verdict": "NOT_REPRESENTABLE"
+   },
+   "SAFE_IMPORT_MULTI_VERSE_RANGE": {
+    "count": 68,
+    "by_veda": {
+     "AV": 68
+    },
+    "blocked_on": "MANTRA_RANGE",
+    "verdict": "REPRESENTABLE_IN_DATA_NOT_YET_IN_PRODUCT"
+   }
+  },
+  "totals": {
+   "evidence_safe": 1144,
+   "representable_now": 882,
+   "blocked_on_product_semantics": 262
+  }
+ },
+ "pre_existing_product_defect_found_by_this_review": {
+  "what": "the passage reader tells a visitor that no translation covers RV 1.65.2, 1.65.4, 1.65.6, 1.65.8, 1.65.10 and the 25 other even verses of RV 1.65-1.70, while a MANTRA_RANGE translation on the paired odd verse does cover them",
+  "population": 30,
+  "introduced_by": "GAP-TRANSLATION-006 / M13, which typed the data correctly",
+  "caused_by_this_task": false,
+  "in_scope_of_this_task": false,
+  "recommended_owner_action": "fix the reader and TranslationCoverage before importing any further MANTRA_RANGE population, because the same 68 Atharvavedic rows would extend a defect that is currently 30 verses wide"
+ }
+}

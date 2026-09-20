@@ -128,6 +128,50 @@ class MappingConfidence(StrEnum):
     """
 
 
+class PublicationTier(StrEnum):
+    """Whether a human has heard this recording, kept apart from whether it is published.
+
+    **Why the two were ever one field.** Until 2026-09-19 they were not fields at all:
+    publication *was* the gate. ``OWNER_DECISION_E_AUDIO_GATE`` (OWNER_DECISIONS.md §8 and
+    §14) held that no fragile audio entered the canonical layer until its row had been
+    listened to, so 954 staged rows sat outside the catalogue and the catalogue carried no
+    review vocabulary because everything in it was, by construction, on the same footing.
+
+    ``OWNER_DECISION_AUDIO_TWO_TIER_PUBLICATION`` of 2026-09-19 supersedes that gate and
+    replaces it with this enum. Audible review is now a badge. The one thing the new policy
+    does not permit is the collapse these two values exist to prevent: describing an
+    unreviewed recording as verified. Hence
+    :attr:`AudioRecord.audible_review_evidence`, which
+    :meth:`AudioRecord._check_internal_consistency` requires before
+    :attr:`RELEASED_VERIFIED` may be written and refuses on
+    :attr:`SOURCE_MAPPED_UNREVIEWED` -- so the tier cannot be typed, only earned, and
+    cannot be half-typed either.
+
+    The default is :attr:`SOURCE_MAPPED_UNREVIEWED` on purpose. A catalogue line written
+    before this field existed carries no tier, and the honest reading of a row that says
+    nothing about review is that nobody reviewed it. A default of
+    ``RELEASED_VERIFIED`` would have promoted all 16,834 incumbent records to a verdict no
+    listener ever gave.
+    """
+
+    RELEASED_VERIFIED = "RELEASED_VERIFIED"
+    """A named person played this recording and confirmed it is the passage it is mapped to.
+
+    The evidence is a decision row in ``data/manual/audio_review/sample_decisions.jsonl``
+    naming the reviewer, the time, the media URL actually played and the bytes heard.
+    """
+
+    SOURCE_MAPPED_UNREVIEWED = "SOURCE_MAPPED_UNREVIEWED"
+    """Mapped and checked by instrument, never heard by a person.
+
+    Published because the source resolves, the canonical mapping is evidenced, the text
+    comparison passed and no rejection stands against it -- and *not* published as
+    verified. Every reader-facing surface must say so, and
+    :func:`~vedagraph.product.audio.catalog.tier_note` is the one place that sentence is
+    written.
+    """
+
+
 class Availability(StrEnum):
     """Whether the media answered when last checked.
 
@@ -290,6 +334,18 @@ class AudioRecord(BaseModel):
     availability: Availability = Availability.EXTERNAL_ONLY
     playback_mode: PlaybackMode
 
+    publication_tier: PublicationTier = Field(
+        default=PublicationTier.SOURCE_MAPPED_UNREVIEWED,
+        description="Whether a person has heard this recording. Defaults to the unreviewed "
+        "tier, so a row written before this field existed is never silently promoted.",
+    )
+    audible_review_evidence: str | None = Field(
+        default=None,
+        description="Where the hearing is recorded, for a RELEASED_VERIFIED row: the "
+        "artifact, the reviewer and the timestamp, in one phrase. Required for that tier "
+        "and refused for the other, so the two fields can never disagree.",
+    )
+
     licence: str | None = Field(
         default=None,
         description="The per-file licence where the source states one. Per-file and never "
@@ -386,6 +442,25 @@ class AudioRecord(BaseModel):
             raise ValueError(
                 f"{self.audio_id}: EXACT mapping without text_verified. An exact claim here "
                 f"is earned by matching the recited text against this corpus, not asserted."
+            )
+
+        # The two-tier contract, in the only two clauses that can enforce it. A tier is a
+        # claim about a person's ear, so RELEASED_VERIFIED must name where that hearing is
+        # written down -- and SOURCE_MAPPED_UNREVIEWED must name none, because a row
+        # carrying review evidence while declaring itself unreviewed is two statements
+        # about the same fact and a reader would be entitled to believe either.
+        if self.publication_tier is PublicationTier.RELEASED_VERIFIED:
+            if not (self.audible_review_evidence or "").strip():
+                raise ValueError(
+                    f"{self.audio_id}: RELEASED_VERIFIED names no audible_review_evidence. "
+                    f"That tier asserts a named person heard this recording; it is earned "
+                    f"by citing the decision row, never by typing the value."
+                )
+        elif self.audible_review_evidence is not None:
+            raise ValueError(
+                f"{self.audio_id}: audible_review_evidence is set on a "
+                f"{self.publication_tier.value} row. Evidence of a hearing and a tier that "
+                f"denies one cannot both stand."
             )
 
         if self.local_cache_path and self.local_cache_path.startswith(("/", "\\")):

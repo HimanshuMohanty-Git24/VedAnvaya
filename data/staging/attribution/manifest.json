@@ -1,0 +1,74 @@
+{
+  "domain": "attribution",
+  "agent": 8,
+  "schema_version": "1.0",
+  "algorithm_version": "vg-attribution-census-v1",
+  "created_at": "2026-09-15T07:38:00.499772Z",
+  "code_commit": "564d43fd5f62f892fb565693dcd3c02c5d36893c",
+  "config_hash": "37d16fba3ffe258056025d7ae24746336927cf70217cc663e63fe65a4e447eda",
+  "source_snapshot_ids": [
+    "VG_ATTRIBUTION_CENSUS_2026_09_15",
+    "WHITNEY_AV_PERVERSE_DEVATA",
+    "WHITNEY_AV_PERVERSE_CHANDAS"
+  ],
+  "files": [
+    {
+      "path": "rows.jsonl",
+      "sha256": "3577b87142f710d570de47fcd75e46199b2c4823eea73de56875d342b7b710df",
+      "rows": 23003,
+      "bytes": 35849112
+    },
+    {
+      "path": "rejected.jsonl",
+      "sha256": "042f161f3160f1d2a7be6dc457d835a46369be7952a359322ee86771b765f6d2",
+      "rows": 18,
+      "bytes": 7300
+    },
+    {
+      "path": "sources.jsonl",
+      "sha256": "3c1c9e5b1d6755af17bbef40681f7aee20f9f9b914c63d5e6268a575d684c389",
+      "rows": 3,
+      "bytes": 2356
+    }
+  ],
+  "counts": {
+    "candidates_considered": 23037,
+    "accepted": 23003,
+    "rejected": 18,
+    "verified_zero": 1285,
+    "not_applicable": 568,
+    "unresolved": 16
+  },
+  "closes_gaps": [
+    "GAP-ATTRIBUTION-003",
+    "GAP-ATTRIBUTION-008"
+  ],
+  "advances_gaps": {
+    "GAP-ATTRIBUTION-001": "reduces the no-dedication population by 33 Atharvavedic mantras (5,498 -> 5,465) and, separately, takes Atharvavedic SOURCE_EXPLICIT deity coverage from 0 mantras to 83.",
+    "GAP-ATTRIBUTION-006": "reduces the no-metre population by 117 Atharvavedic mantras (5,610 -> 5,493) and upgrades 258 more from CONTAINER_INHERITED to verse-level SOURCE_EXPLICIT.",
+    "GAP-ATTRIBUTION-007": "does not close it; RECLASSIFIES it. 427 seers lack a family edge, 421 of them for a reason the layer already states, and 6 for an unresolved reason (5 SOURCE_SPELLING_OUTSIDE_TABLE, 1 ETYMON_UNCERTAIN). See proofs/stale_claim_disproofs.json.",
+    "GAP-ATTRIBUTION-004": "confirmed source-blocked at verse scope, with the reason measured rather than assumed. See proofs/sv_saman_scope_decision.json.",
+    "GAP-PRODUCT_SURFACE-001": "supplies the per-Veda per-dimension matrix the deity insight endpoint needs in order to stop reporting a corpus as both in scope and not covered. See proofs/per_veda_attribution_matrix.json."
+  },
+  "qa": {
+    "sampled": 97,
+    "sample_method": "both",
+    "sample_note": "every accepted per-verse deity row was read against its printed bracket, twice -- once at 67 rows and once at 97 after the recall fix. The census rows were not sampled: they are a deterministic restatement of edges that already exist, so a sample of them would only re-measure the graph.",
+    "defects_found": 3,
+    "defects": [
+      "'virat pathyabrhati' (AVS 8.1.8) was emitted as a deity. It is the metre 'pathya brhati' printed without the vowel mark under the r, so neither the builder's stem list nor an exact lookup against the metre registry caught it. Fixed by folding combining marks before the registry lookup.",
+      "'i-p' (AVS 2.16.2) was emitted as a deity. It is an OCR reading of the pada address '1-p'. Fixed by admitting i and l into the pada-address class.",
+      "'martvyah' (AVS 12.2, verses 21-33) was emitted as a deity for thirteen verses. Lanman's own note reads the Anukramani's 'martvi' as an ascription of AUTHORSHIP. Hand-refused and recorded as a lead for a per-verse rsi claim."
+    ],
+    "human_reviewed": 0,
+    "reviewed_by": "claude-opus-5 acting as Agent 8. This is model adjudication, not human gold, and campaign section 26 forbids calling it gold. The 83 accepted deity rows and all 18 rejections are small enough to be re-read by hand and are printed verbatim beside their source bracket in every row."
+  },
+  "known_residuals": {
+    "note": "recall limits of the tail grammar, measured rather than left implicit. None of these is a wrong value; each is a value this pass declined to extract.",
+    "semicolon_segmentation": "the tail is split on ';' only, so where Whitney separates two per-verse statements with a bare period inside one semicolon segment, only the first is reached. AVS 6.40 verse 3 ('aindri') is the clear case.",
+    "comma_separated_devata_lists": "1 segment refused whole (AVS 6.10, 'agneyi, 2. vayavya, 3. saurya...'), covering 3 verses, because a comma-delimited list of three verse-and-deity pairs inside one segment cannot be attributed to verses without guessing the pairing.",
+    "gate_refused_hymns": "17 hymns emit nothing at all because the builder's stated-verse-count gate refuses their bracket. That is the gate working, not a defect, and the refusal is typed per mantra in the census rows.",
+    "multi_part_ascriptions": "6 hymns (AVS 7.45, 7.54, 7.68, 7.72, 7.76 and 10.5) carry two or more part-scoped ascriptions in one bracket, covering 66 mantras. They are genuinely recoverable at MANTRA_RANGE scope -- the ranges are printed ('A. (vss. 1-24)', '1-2. Camtati') -- and they need their own grammar. Named as an unlock, not attempted here.",
+    "kanda_20": "143 hymns / 958 mantras are absent from this index at source and no amount of parsing reaches them."
+  }
+}

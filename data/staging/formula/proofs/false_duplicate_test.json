@@ -1,0 +1,136 @@
+{
+ "question": "are the within-recension identities genuine repetition, or ingestion duplicates?",
+ "within_recension_identity_pairs": {
+  "AV": 244,
+  "RV": 190,
+  "SV": 405,
+  "YV": 128
+ },
+ "discrimination": {
+  "AV|DISTINCT_PARENTS": 125,
+  "AV|SAME_PARENT_NON_ADJACENT": 6,
+  "RV|DISTINCT_PARENTS": 251,
+  "RV|SAME_PARENT_NON_ADJACENT": 1,
+  "SV|DISTINCT_PARENTS": 204,
+  "YV|DISTINCT_PARENTS": 69,
+  "YV|SAME_PARENT_NON_ADJACENT": 11
+ },
+ "candidate_ingestion_duplicates": [],
+ "verdict": "0 of 667. No pair shares a canonical_citation and no pair is two adjacent sequence positions under one parent, so every one joins two distinct printed addresses. 18 pairs sit under one parent at non-adjacent positions (11 YV, 6 AV, 1 RV) -- a refrain repeating inside one adhyaya or hymn, which is repetition, not duplication.",
+ "correction_to_CORPUS_D11": {
+  "committed": "by content_sha256 within one text_role: RV 190, SV 349, YV 6, AV 42 = 587 mantras",
+  "measured_here": "RV 190, SV 405, YV 128, AV 244 = 967 mantras",
+  "why_they_differ": "content_sha256 is byte identity. The ladder also reaches identity after editorial apparatus, accent placement, orthography and word division are set aside. The RV figure agrees exactly because one consistently-spelled edition has nothing below byte identity to find; the SV, YV and AV figures do not, and the 587 understates within-recension repetition by 380 mantras.",
+  "per_level": {
+   "SOURCE_EXACT": {
+    "groups": 274,
+    "members": 585,
+    "largest": 14
+   },
+   "UNICODE_NORMALIZED": {
+    "groups": 274,
+    "members": 585,
+    "largest": 14
+   },
+   "PUNCTUATION_NORMALIZED": {
+    "groups": 411,
+    "members": 869,
+    "largest": 14
+   },
+   "ACCENT_INSENSITIVE": {
+    "groups": 533,
+    "members": 1138,
+    "largest": 14
+   },
+   "SCRIPT_FOLDED": {
+    "groups": 975,
+    "members": 2091,
+    "largest": 15
+   },
+   "SANDHI_INSENSITIVE": {
+    "groups": 1333,
+    "members": 2997,
+    "largest": 15
+   }
+  }
+ },
+ "correction_to_the_samavedic_characterisation": {
+  "committed": "the Samavedic cases concentrate on Aranya-versus-Uttararcika pairs",
+  "measured": {
+   "CHANDA|UTTARA": 191,
+   "ARANYA|UTTARA": 8,
+   "UTTARA|UTTARA": 5
+  },
+  "verdict": "wrong segment. 191 of the 204 SV-SV identity pairs join CHANDA to UTTARA -- the Chandas-arcika (Purvarcika) against the Uttararcika -- and only 8 join ARANYA to UTTARA. The Aranya parvan holds 55 of the 1,844 verses, so it could not carry the concentration.",
+  "sv_segment_vocabulary": {
+   "ARANYA": 55,
+   "CHANDA": 585,
+   "MAHANAMNYA": 10,
+   "UTTARA": 1194
+  }
+ },
+ "av_kanda_pairs": {
+  "K20|K20": 64,
+  "K13|K20": 8,
+  "K05|K20": 5,
+  "K13|K13": 5,
+  "K07|K20": 4,
+  "K18|K18": 4,
+  "K02|K05": 3,
+  "K02|K20": 3,
+  "K07|K09": 3,
+  "K03|K06": 2,
+  "K04|K05": 2,
+  "K06|K20": 2,
+  "K01|K04": 1,
+  "K02|K19": 1,
+  "K03|K08": 1,
+  "K03|K19": 1,
+  "K03|K20": 1,
+  "K03|K09": 1,
+  "K04|K10": 1,
+  "K04|K07": 1,
+  "K05|K06": 1,
+  "K05|K11": 1,
+  "K05|K08": 1,
+  "K06|K16": 1,
+  "K06|K06": 1,
+  "K06|K10": 1,
+  "K06|K07": 1,
+  "K06|K19": 1,
+  "K07|K08": 1,
+  "K07|K10": 1
+ },
+ "yv_adhyaya_pairs": {
+  "A12|A15": 4,
+  "A23|A23": 4,
+  "A03|A15": 3,
+  "A07|A33": 3,
+  "A11|A36": 3,
+  "A12|A12": 3,
+  "A12|A17": 3,
+  "A13|A18": 3,
+  "A02|A08": 2,
+  "A03|A12": 2,
+  "A09|A21": 2,
+  "A15|A18": 2,
+  "A23|A25": 2,
+  "A27|A36": 2,
+  "A33|A33": 2,
+  "A35|A38": 2,
+  "A03|A33": 1,
+  "A03|A22": 1,
+  "A03|A30": 1,
+  "A04|A11": 1,
+  "A04|A22": 1,
+  "A05|A12": 1,
+  "A05|A37": 1,
+  "A05|A40": 1,
+  "A05|A07": 1,
+  "A05|A05": 1,
+  "A06|A13": 1,
+  "A08|A08": 1,
+  "A08|A13": 1,
+  "A09|A10": 1
+ }
+}

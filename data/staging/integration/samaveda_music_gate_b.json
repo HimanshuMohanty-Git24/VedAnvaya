@@ -1,0 +1,352 @@
+{
+  "artifact": "SAMAVEDA_MUSIC_GATE_B",
+  "gate": "B",
+  "gate_definition": "SEMANTIC -- classification, population, source meaning, relation meaning (data/staging/integration/wave3_eligibility.json)",
+  "domain": "samaveda_music",
+  "at": "2026-09-18T18:16:22.574854+00:00",
+  "deterministic": true,
+  "determinism_note": "Every check is a total pass over the population -- no sample, no seed, no model call. Re-running it on the same rows and the same graph gives the same artifact byte for byte apart from the timestamp.",
+  "required_inputs": {
+    "staging_rows": "data/staging/samaveda_music/rows.jsonl",
+    "staging_rejected": "data/staging/samaveda_music/rejected.jsonl",
+    "staging_sources": "data/staging/samaveda_music/sources.jsonl",
+    "graph": "bolt://localhost:7687 db=neo4j",
+    "declared_enum": "src/vedagraph/models/enums.py TextRole"
+  },
+  "population_under_test": {
+    "layer": "ARCIKA_NOTATION",
+    "rows": 1136,
+    "withheld_rows_also_adjudicated": 708,
+    "denominator": 1844,
+    "out_of_scope_layers": {
+      "GANA_RENDERING": 332,
+      "GANA_PERFORMANCE_AT_ARCIKA_CONTAINER_SCOPE": 3
+    },
+    "out_of_scope_reason": "OWNER_DECISION_G_GANA_OBJECT_OUT_OF_V1 places the object-side Gana model outside Product V1. The 332 GANA_RENDERING rows and the 3 container-scope performance rows stay staged and are not adjudicated for import here. They are not averaged into any figure above: a file holding two kinds of claim has no single pass rate."
+  },
+  "pass_condition": "Every check reports zero failures AND full coverage of its own eligible population. A check below full coverage fails the GATE, not the data.",
+  "checks": [
+    {
+      "name": "classification.source_explicit_is_earned_not_asserted",
+      "section": "classification",
+      "asks": "Every row calls itself SOURCE_EXPLICIT. Does each one actually carry a mark the source supplied, rather than a mark this pipeline could have inferred?",
+      "eligible": 1136,
+      "evaluated": 1136,
+      "coverage": 1.0,
+      "at_full_coverage": true,
+      "failures": 0,
+      "failure_examples": [],
+      "observed": {
+        "evidence_layer_value_space": {
+          "SOURCE_EXPLICIT": 1136
+        },
+        "quality_class_value_space": {
+          "COMMUNITY_ARCHIVE": 1136
+        },
+        "mapping_confidence_value_space": {
+          "EXACT": 1136
+        },
+        "notation_system_value_space": {
+          "KAUTHUMA_NUMERIC_SVARA": 1136
+        },
+        "notation_encoding_value_space": {
+          "UNICODE_DEVANAGARI_EXTENDED_PLUS_VEDIC_EXTENSIONS": 1136
+        },
+        "rows_with_zero_tone_marks": 0,
+        "total_tone_marks": 25542
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "classification.not_importable_vocabulary_is_absent",
+      "section": "classification",
+      "asks": "The campaign forbids importing a PROBABLE or UNVERIFIED row. Does any field of any row carry either word?",
+      "eligible": 1136,
+      "evaluated": 1136,
+      "coverage": 1.0,
+      "at_full_coverage": true,
+      "failures": 0,
+      "failure_examples": [],
+      "observed": {
+        "forbidden_words": [
+          "PROBABLE",
+          "UNVERIFIED"
+        ]
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "classification.notation_is_not_audio",
+      "section": "classification",
+      "asks": "OWNER_DECISION_F rules the audible gate covers audio only. Does any notation row borrow audio vocabulary or claim aural verification?",
+      "eligible": 1136,
+      "evaluated": 1136,
+      "coverage": 1.0,
+      "at_full_coverage": true,
+      "failures": 0,
+      "failure_examples": [],
+      "observed": {
+        "is_a_rendering_value_space": {
+          "false": 1136
+        },
+        "listening_review_population_declared_by_manifest": 0,
+        "manifest_human_reviewed": 0
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "classification.marks_are_recorded_not_interpreted",
+      "section": "classification",
+      "asks": "Is the payload field space the declared closed set, and does nothing in it name a pitch, a svara name or a decipherment the project does not hold?",
+      "eligible": 1136,
+      "evaluated": 1136,
+      "coverage": 1.0,
+      "at_full_coverage": true,
+      "failures": 0,
+      "failure_examples": [],
+      "observed": {
+        "payload_field_space_actually_present": [
+          "devanagari_extended_marks",
+          "is_a_rendering",
+          "layer",
+          "notated_text_devanagari",
+          "notation_encoding",
+          "notation_system",
+          "note",
+          "private_use_codepoints",
+          "tone_mark_count",
+          "tone_marks_by_codepoint",
+          "tone_stripped_text",
+          "u0301_combining_acute",
+          "vedic_extensions_marks"
+        ],
+        "declared_payload_field_space": [
+          "devanagari_extended_marks",
+          "is_a_rendering",
+          "layer",
+          "notated_text_devanagari",
+          "notation_encoding",
+          "notation_system",
+          "note",
+          "private_use_codepoints",
+          "tone_mark_count",
+          "tone_marks_by_codepoint",
+          "tone_stripped_text",
+          "u0301_combining_acute",
+          "vedic_extensions_marks"
+        ],
+        "codepoints_recorded": [
+          "U+A8E1",
+          "U+A8E2",
+          "U+A8E3",
+          "U+A8EB",
+          "U+A8EC",
+          "U+A8EF"
+        ]
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "population.every_samavedic_verse_carries_one_typed_disposition",
+      "section": "population",
+      "asks": "Completeness here is a truthful disposition per verse, not universal coverage. Do the notated and the withheld partition the 1,844 exactly once each?",
+      "eligible": 1844,
+      "evaluated": 1844,
+      "coverage": 1.0,
+      "at_full_coverage": true,
+      "failures": 0,
+      "failure_examples": [],
+      "observed": {
+        "sv_verses_in_graph": 1844,
+        "notated": 1136,
+        "notated_distinct": 1136,
+        "withheld": 708,
+        "withheld_distinct": 708,
+        "notated_plus_withheld": 1844,
+        "keys_in_both": [],
+        "verses_with_no_disposition": []
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "population.coverage_is_reported_per_collection_not_only_as_a_total",
+      "section": "population",
+      "asks": "A 1,136 total hides which arcika a reader can and cannot see notation for. Does every collection's notated count sit inside its own denominator?",
+      "eligible": 4,
+      "evaluated": 4,
+      "coverage": 1.0,
+      "at_full_coverage": true,
+      "failures": 0,
+      "failure_examples": [],
+      "observed": {
+        "notated_by_collection": {
+          "ARANYA": 31,
+          "CHANDA": 471,
+          "MAHANAMNYA": 3,
+          "UTTARA": 631
+        },
+        "denominator_by_collection": {
+          "ARANYA": 55,
+          "CHANDA": 585,
+          "MAHANAMNYA": 10,
+          "UTTARA": 1194
+        },
+        "coverage_by_collection": {
+          "ARANYA": 0.5636,
+          "CHANDA": 0.8051,
+          "MAHANAMNYA": 0.3,
+          "UTTARA": 0.5285
+        },
+        "collections_with_no_notation_at_all": []
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "population.withheld_absence_is_typed_in_the_row",
+      "section": "population",
+      "asks": "A withheld verse must say WHY in its own row. Does each of the 708 carry a reason from the closed set, and are the two kinds of absence kept apart?",
+      "eligible": 708,
+      "evaluated": 708,
+      "coverage": 1.0,
+      "at_full_coverage": true,
+      "failures": 0,
+      "failure_examples": [],
+      "observed": {
+        "withheld_reason_classes": {
+          "NEAR_LINE_EXISTS_WITNESS_DISAGREEMENT": 599,
+          "NO_NEAR_LINE_PROBABLE_ABSENCE": 109
+        },
+        "declared_classes": [
+          "NEAR_LINE_EXISTS_WITNESS_DISAGREEMENT",
+          "NO_NEAR_LINE_PROBABLE_ABSENCE"
+        ],
+        "distinct_reason_strings": 2,
+        "is_a_rejection": false,
+        "note": "A withheld row is not a rejection. 599 are a witness disagreement that needs philological adjudication and 109 are a probable absence from this witness; neither is a statement that the verse has no notation in the tradition."
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "source.every_row_cites_one_pinned_revision_of_one_page",
+      "section": "source",
+      "asks": "A witness that moved mid-harvest would make the 1,136 a mixture of two texts. Do all rows cite the same page_id and revid, and is every line cited once?",
+      "eligible": 1136,
+      "evaluated": 1136,
+      "coverage": 1.0,
+      "at_full_coverage": true,
+      "failures": 0,
+      "failure_examples": [],
+      "observed": {
+        "page_and_revision_cited": {
+          "page_id 93360 revid 231091": 1136
+        },
+        "sources_jsonl_pins": {
+          "page_id": 93360,
+          "revision_pinned": 231091,
+          "revision_timestamp": "2020-04-21T01:24:02Z"
+        },
+        "row_locator_agrees_with_sources_jsonl": true,
+        "distinct_witness_lines": 1136,
+        "line_span": [
+          4,
+          2114
+        ],
+        "lines_strictly_increasing_in_canonical_file_order": true
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "source.the_witness_is_labelled_what_it_is",
+      "section": "source",
+      "asks": "This is a community transcription, not a critical edition. Does the source record say so, carry a licence, and does every row inherit that quality class?",
+      "eligible": 1137,
+      "evaluated": 1137,
+      "coverage": 1.0,
+      "at_full_coverage": true,
+      "failures": 0,
+      "failure_examples": [],
+      "observed": {
+        "source_id": "WIKISOURCE_SA.SV.KAU.SASVARA_PURNA",
+        "authority_tier": "COMMUNITY_TRANSCRIPTION",
+        "quality_class": "COMMUNITY_ARCHIVE",
+        "licence": "CC BY-SA 4.0",
+        "is_a_critical_edition": false,
+        "what_this_is_not": "Not a critical edition and not a school-certified notation. It is one pinned revision of a community transcription that prints the Kauthuma numeric svara marks, and it must be presented as a witness rather than as the text."
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "source.the_recension_claim_is_about_this_witness",
+      "section": "source",
+      "asks": "A notation from another school laid over Kauthuma verses would be wrong in a way no count could show. Does every row carry the recension finding, and does the finding name what it excludes?",
+      "eligible": 1137,
+      "evaluated": 1137,
+      "coverage": 1.0,
+      "at_full_coverage": true,
+      "failures": 0,
+      "failure_examples": [],
+      "observed": {
+        "distinct_recension_evidence_strings_on_rows": 1,
+        "schools_explicitly_excluded": [
+          "Ranayaniya",
+          "Jaiminiya"
+        ],
+        "qa_report_foreign_marker_check": [
+          "arcika collection",
+          "gana book",
+          "licence"
+        ]
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "relation.the_row_asks_for_a_text_witness_not_a_melodic_object",
+      "section": "relation",
+      "asks": "Owner decision G places the object-side Gana model outside Product V1. Does any notation row ask for MUSICALIZED_AS, a Gana node, or any object this graph has no canonical identity for?",
+      "eligible": 1136,
+      "evaluated": 1136,
+      "coverage": 1.0,
+      "at_full_coverage": true,
+      "failures": 0,
+      "failure_examples": [],
+      "observed": {
+        "target_predicate": "HAS_TEXT_VERSION",
+        "target_predicate_already_in_the_graphs_type_store": true,
+        "target_text_role": "PARALLEL_TEXT",
+        "target_text_role_in_the_declared_enum": true,
+        "target_text_role_already_populated_in_the_graph": true,
+        "forbidden_predicate": "MUSICALIZED_AS",
+        "forbidden_predicate_in_the_graphs_type_store": false,
+        "labels_matching_melodic_object_vocabulary": [],
+        "what_the_row_is": "A second, accented WITNESS of a verse's own text. The claim is textual: this source prints these marks on this verse. It is not a claim that the verse is sung as any named saman, which would need an object side this corpus excludes."
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "relation.the_subject_grain_is_the_verse",
+      "section": "relation",
+      "asks": "Notation printed on a verse belongs to that verse. Does every key resolve to a verse-grained Mantra rather than to a container?",
+      "eligible": 1136,
+      "evaluated": 1136,
+      "coverage": 1.0,
+      "at_full_coverage": true,
+      "failures": 0,
+      "failure_examples": [],
+      "observed": {
+        "all_keys_resolve_to_a_mantra": true,
+        "container_grained_rows": 0,
+        "container_passages_in_scope": 498
+      },
+      "status": "PASS"
+    }
+  ],
+  "summary": {
+    "checks_run": 12,
+    "checks_passing": 12,
+    "checks_failing": 0,
+    "rows_evaluated_across_all_checks": 12782,
+    "checks_below_full_coverage": [],
+    "total_failures": 0
+  },
+  "verdict": "PASS"
+}

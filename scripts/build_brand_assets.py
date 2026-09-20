@@ -80,7 +80,17 @@ class Texture:
 TEXTURES: tuple[Texture, ...] = (
     Texture("Hero Background.png", "hero-light", "Homepage hero, light theme", "paper", (1920, 1280, 960)),
     Texture("Dark-Mode Manuscript Texture.png", "hero-dark", "Homepage hero, dark theme", "carbon", (1920, 1280, 960)),
-    Texture("Knowledge Connection Field.png", "field-light", "Graph and Atlas headers, light theme", "paper", (1920, 1280, 960)),
+    # "Knowledge Connection Field.png" is deliberately not encoded.
+    #
+    # It was carried at three widths for "Graph and Atlas headers" and was requested by
+    # nothing: 220 KB across six files, shipped on every deploy, referenced in no stylesheet
+    # and no component. Inspected for a home during the final revamp and refused one. The
+    # graph stage is a live rendering of 71,773 real subjects, and the asset is a picture of
+    # a field of connections - laid behind the canvas it is a decorative connection field
+    # competing with a measured one, and laid behind the chrome it sits between the reader
+    # and the graph. The artwork is unchanged and still in the source set; only the encoding
+    # step is removed, so re-adding this line is all it takes if a genuine placement is
+    # found.
     Texture("Footer Background.png", "footer-light", "Footer, light theme", "paper", (1920, 1280)),
     Texture("Quote Backdrop.png", "quote-light", "Featured verse panel", "paper", (1280, 960)),
     Texture("Thread of Inquiry.png", "inquiry-light", "Ask, pre-query state", "paper", (1600, 1120)),

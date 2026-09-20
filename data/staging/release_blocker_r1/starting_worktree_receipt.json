@@ -1,0 +1,2489 @@
+{
+  "head": "b4b1b0beba1c499e832150b0b9363d7258e40a26",
+  "status_short": " M .gitignore\n M data/domain/vedagraph_domain_v2/veda_coverage_v3.json\n M data/enrichment/vedagraph_enrichment_v1/manifest.json\n M data/source_registry/four_veda_backlog.jsonl\n M data/staging/attribution/rows.jsonl\n M data/staging/audio_review_queue.jsonl\n M data/staging/communities/build_communities_staging.py\n M data/staging/communities/communities.jsonl\n M data/staging/communities/manifest.json\n M data/staging/communities/proofs/adversarial_preflight.json\n M data/staging/communities/proofs/diagnostic_pairs.json\n M data/staging/communities/proofs/gds_cross_check.json\n M data/staging/communities/rows.jsonl\n M data/staging/communities/sources.jsonl\n M data/staging/integration/dependency_ledger.json\n M data/staging/integration/dependency_status.json\n M data/staging/wave4/registry_closure_audit.json\n M docs/architecture/RIGVEDA_LEXICAL_MENTION_POLICY.md\n M docs/design/research/04-visualization-research.md\n M docs/reports/GRAPH_QUALITY_V2_SCORECARD.md\n M frontend/public/world/world.bin\n M frontend/public/world/world.json\n M frontend/public/world/world.labels.json\n M frontend/public/world/world.predicates.json\n M frontend/src/app/about/page.tsx\n M frontend/src/app/explore/page.tsx\n M frontend/src/app/limits/page.tsx\n M frontend/src/app/sources/page.tsx\n M frontend/src/app/vedas/[veda]/page.tsx\n M frontend/src/app/vedas/page.tsx\n M frontend/src/components/home/world-preview-panel.tsx\n M frontend/src/components/world/relationship-inspector.tsx\n M frontend/src/lib/api-schema.ts\n M frontend/src/lib/lab.ts\n M frontend/src/lib/world/focus.ts\n M frontend/tests/unit/focus-curation.test.ts\n M scripts/attribution_import.py\n M scripts/audio/audit_mappings.py\n M scripts/audio/cache_audio.py\n M scripts/audio/discover_vedsearch.py\n M scripts/audio/harvest_vedsearch.py\n M scripts/audio/validate_catalog.py\n M scripts/build_anukramani_knowledge_layer.py\n M scripts/build_atharvaveda_anukramani.py\n M scripts/build_audio_review_queue.py\n M scripts/build_domain_v2.py\n M scripts/build_knowledge_model_v3.py\n M scripts/build_rishi_families.py\n M scripts/build_theonym_dossier.py\n M scripts/build_veda_coverage_and_metrics.py\n M scripts/build_yajurveda_anukramani.py\n M scripts/check_live_invariants.py\n M scripts/dependency_state.py\n M scripts/discover_theonym_forms.py\n M scripts/export_graph_world.py\n M scripts/generate_ontology_reference.py\n M scripts/graph_quality_scorecard.py\n M scripts/merge_theonym_forms.py\n M scripts/report_knowledge_model_v3.py\n M scripts/run_domain_demos.py\n M scripts/show_passage.py\n M scripts/verify_v3_demonstrations.py\n M scripts/wave3_dependency_invalidation.py\n M scripts/wave3_import_plan.py\n M scripts/wave4_registry_closure_audit.py\n M src/vedagraph/api/app.py\n M src/vedagraph/api/ask/evidence.py\n M src/vedagraph/api/ask/planner.py\n M src/vedagraph/api/ask/retriever.py\n M src/vedagraph/api/models/common.py\n M src/vedagraph/api/models/entity.py\n M src/vedagraph/api/models/insight.py\n M src/vedagraph/api/models/passage.py\n M src/vedagraph/api/routes/graph.py\n M src/vedagraph/api/routes/insights.py\n M src/vedagraph/api/services/graph_service.py\n M src/vedagraph/api/services/insight_service.py\n M src/vedagraph/api/services/search_service.py\n M src/vedagraph/domain/layer_figures.py\n M src/vedagraph/domain/ontology.py\n M src/vedagraph/domain/profiles.py\n M src/vedagraph/domain/queries.py\n M src/vedagraph/domain/tiers.py\n M src/vedagraph/enrich/formula_families.py\n M src/vedagraph/enrich/formulas.py\n M src/vedagraph/graph/insight_queries.py\n M tests/api/test_cypher_property_hygiene.py\n M tests/api/test_insights.py\n M tests/domain/test_deity_population_counting.py\n M tests/domain/test_v3_3_final_closure.py\n M tests/enrich/test_formula_families.py\n M tests/unit/test_audio_review_harness.py\n M tests/unit/test_dependency_state.py\n M tests/unit/test_registry_closure.py\n?? data/canonical/atharvaveda_pilot_v1/\n?? data/canonical/atharvaveda_saunaka_1856_provisional/\n?? data/canonical/atharvaveda_saunaka_1856_v1/\n?? data/canonical/atharvaveda_saunaka_digital_working_v1/\n?? data/canonical/rigveda_full_v1/\n?? data/canonical/rv_1_1_pilot/\n?? data/canonical/rv_mandala_10_full_v1/\n?? data/canonical/rv_mandala_1_full_v1/\n?? data/canonical/rv_mandala_1_sample_v2/\n?? data/canonical/rv_mandala_2_full_v1/\n?? data/canonical/rv_mandala_3_full_v1/\n?? data/canonical/rv_mandala_4_full_v1/\n?? data/canonical/rv_mandala_5_full_v1/\n?? data/canonical/rv_mandala_6_full_v1/\n?? data/canonical/rv_mandala_7_full_v1/\n?? data/canonical/rv_mandala_8_full_v1/\n?? data/canonical/rv_mandala_9_full_v1/\n?? data/canonical/samaveda_arcika_v1/\n?? data/canonical/yajurveda_pilot_v1/\n?? data/canonical/yajurveda_vsm_v1/\n?? data/staging/final_closure_sprint/\n?? data/staging/final_stabilization/\n?? frontend/tests/unit/world-figures.test.ts\n?? scripts/agent1_final_closure.py\n?? scripts/build_agent3_closure_report.py\n?? scripts/build_agent3_proposed_mutations.py\n?? scripts/build_domain_entity_domains.py\n?? scripts/build_lemma_mention_projection.py\n?? scripts/build_lexical_nonresolution_reasons.py\n?? scripts/build_semantic_assertion_delta.py\n?? scripts/build_semantic_review_frame.py\n?? scripts/build_text_version_derivatives.py\n?? scripts/final_stabilization_contracts.py\n?? scripts/formula_identity_impact.py\n?? scripts/snapshot_canonical_release.py\n?? scripts/verify_agent3_cypher.py\n?? src/vedagraph/api/services/capability_probes.py\n?? src/vedagraph/domain/ascription_bridge.py\n?? src/vedagraph/domain/deity_eligibility.py\n?? src/vedagraph/domain/occurrence_contract.py\n?? src/vedagraph/enrich/pada_parallels.py\n?? src/vedagraph/enrich/reuse_direction.py\n?? src/vedagraph/enrich/text_derivatives.py\n?? src/vedagraph/ingest/ocr_labels.py\n?? tests/api/ask/test_product_surface_closure.py\n?? tests/api/test_capability_catalogue.py\n?? tests/api/test_coverage_dimensions.py\n?? tests/api/test_cross_veda_granularity_and_direction.py\n?? tests/api/test_search_normalized_fold.py\n?? tests/api/test_visualization_aggregates.py\n?? tests/domain/test_agent3_closure.py\n?? tests/domain/test_agent4_ritual_closure.py\n?? tests/domain/test_ascription_bridge.py\n?? tests/domain/test_attribution_scope_note.py\n?? tests/domain/test_deity_community_labels.py\n?? tests/domain/test_deity_eligibility.py\n?? tests/domain/test_evidence_quality_disclosure.py\n?? tests/domain/test_formula_nesting_policy.py\n?? tests/domain/test_occurrence_contract.py\n?? tests/enrich/test_formula_display_surface.py\n?? tests/enrich/test_pada_parallels.py\n?? tests/enrich/test_reuse_direction.py\n?? tests/enrich/test_text_derivatives.py\n?? tests/product/test_canonical_release_snapshot.py\n?? tests/unit/test_attribution_states.py\n?? tests/unit/test_ocr_labels.py\n?? tests/unit/test_stdout_capture_safety.py\n?? tests/unit/test_translation_alignment_confidence.py\n",
+  "diff_stat": " .gitignore                                         |   12 +\n .../vedagraph_domain_v2/veda_coverage_v3.json      |   20 +-\n .../vedagraph_enrichment_v1/manifest.json          |   22 +-\n data/source_registry/four_veda_backlog.jsonl       |    4 +-\n data/staging/attribution/rows.jsonl                |  280 +-\n data/staging/audio_review_queue.jsonl              | 1950 +++++++-------\n .../communities/build_communities_staging.py       |   15 +\n data/staging/communities/communities.jsonl         |   24 +-\n data/staging/communities/manifest.json             |   24 +-\n .../communities/proofs/adversarial_preflight.json  |   26 +-\n .../communities/proofs/diagnostic_pairs.json       |    6 +-\n .../communities/proofs/gds_cross_check.json        |   16 +-\n data/staging/communities/rows.jsonl                | 2370 ++++++++---------\n data/staging/communities/sources.jsonl             |    6 +-\n data/staging/integration/dependency_ledger.json    |   75 +-\n data/staging/integration/dependency_status.json    |   66 +-\n data/staging/wave4/registry_closure_audit.json     |  186 +-\n .../architecture/RIGVEDA_LEXICAL_MENTION_POLICY.md |   49 +-\n docs/design/research/04-visualization-research.md  |   58 +-\n docs/reports/GRAPH_QUALITY_V2_SCORECARD.md         |   46 +-\n frontend/public/world/world.bin                    |  Bin 2576935 -> 3688540 bytes\n frontend/public/world/world.json                   |    2 +-\n frontend/public/world/world.labels.json            |    2 +-\n frontend/public/world/world.predicates.json        |   55 +-\n frontend/src/app/about/page.tsx                    |   20 +-\n frontend/src/app/explore/page.tsx                  |    2 +-\n frontend/src/app/limits/page.tsx                   |   23 +-\n frontend/src/app/sources/page.tsx                  |   30 +-\n frontend/src/app/vedas/[veda]/page.tsx             |    2 +-\n frontend/src/app/vedas/page.tsx                    |    2 +-\n .../src/components/home/world-preview-panel.tsx    |    2 +-\n .../components/world/relationship-inspector.tsx    |   15 +-\n frontend/src/lib/api-schema.ts                     |  642 ++++-\n frontend/src/lib/lab.ts                            |    2 +-\n frontend/src/lib/world/focus.ts                    |   24 +-\n frontend/tests/unit/focus-curation.test.ts         |    6 +-\n scripts/attribution_import.py                      |   18 +\n scripts/audio/audit_mappings.py                    |    3 +-\n scripts/audio/cache_audio.py                       |    3 +-\n scripts/audio/discover_vedsearch.py                |    3 +-\n scripts/audio/harvest_vedsearch.py                 |    3 +-\n scripts/audio/validate_catalog.py                  |    3 +-\n scripts/build_anukramani_knowledge_layer.py        |    3 +-\n scripts/build_atharvaveda_anukramani.py            |    3 +-\n scripts/build_audio_review_queue.py                |   51 +-\n scripts/build_domain_v2.py                         |   11 +-\n scripts/build_knowledge_model_v3.py                |    3 +-\n scripts/build_rishi_families.py                    |    3 +-\n scripts/build_theonym_dossier.py                   |    3 +-\n scripts/build_veda_coverage_and_metrics.py         |    3 +-\n scripts/build_yajurveda_anukramani.py              |    3 +-\n scripts/check_live_invariants.py                   |    3 +-\n scripts/dependency_state.py                        |  971 +++----\n scripts/discover_theonym_forms.py                  |    3 +-\n scripts/export_graph_world.py                      |  362 +--\n scripts/generate_ontology_reference.py             |    3 +-\n scripts/graph_quality_scorecard.py                 |    3 +-\n scripts/merge_theonym_forms.py                     |    3 +-\n scripts/report_knowledge_model_v3.py               |    3 +-\n scripts/run_domain_demos.py                        |    3 +-\n scripts/show_passage.py                            |    3 +-\n scripts/verify_v3_demonstrations.py                |    3 +-\n scripts/wave3_dependency_invalidation.py           |   13 +-\n scripts/wave3_import_plan.py                       |   47 +-\n scripts/wave4_registry_closure_audit.py            |  145 +-\n src/vedagraph/api/app.py                           |    7 +-\n src/vedagraph/api/ask/evidence.py                  |   60 +\n src/vedagraph/api/ask/planner.py                   |  119 +-\n src/vedagraph/api/ask/retriever.py                 |   88 +-\n src/vedagraph/api/models/common.py                 |  105 +\n src/vedagraph/api/models/entity.py                 |    8 +-\n src/vedagraph/api/models/insight.py                |  159 ++\n src/vedagraph/api/models/passage.py                |    9 +-\n src/vedagraph/api/routes/graph.py                  |    9 +-\n src/vedagraph/api/routes/insights.py               |  128 +\n src/vedagraph/api/services/graph_service.py        |   61 +-\n src/vedagraph/api/services/insight_service.py      |  720 +++++-\n src/vedagraph/api/services/search_service.py       |   33 +-\n src/vedagraph/domain/layer_figures.py              |  162 ++\n src/vedagraph/domain/ontology.py                   | 2707 ++++++++++----------\n src/vedagraph/domain/profiles.py                   |  206 +-\n src/vedagraph/domain/queries.py                    |  127 +-\n src/vedagraph/domain/tiers.py                      |   15 +\n src/vedagraph/enrich/formula_families.py           | 2254 ++++++++--------\n src/vedagraph/enrich/formulas.py                   | 1745 +++++++------\n src/vedagraph/graph/insight_queries.py             |   13 +-\n tests/api/test_cypher_property_hygiene.py          |   43 +\n tests/api/test_insights.py                         |   36 +-\n tests/domain/test_deity_population_counting.py     |   72 +-\n tests/domain/test_v3_3_final_closure.py            |   20 +-\n tests/enrich/test_formula_families.py              | 1427 ++++++-----\n tests/unit/test_audio_review_harness.py            |   61 +\n tests/unit/test_dependency_state.py                |  104 +\n tests/unit/test_registry_closure.py                |  201 ++\n 94 files changed, 11113 insertions(+), 7351 deletions(-)\n",
+  "diff_name_only": [
+    ".gitignore",
+    "data/domain/vedagraph_domain_v2/veda_coverage_v3.json",
+    "data/enrichment/vedagraph_enrichment_v1/manifest.json",
+    "data/source_registry/four_veda_backlog.jsonl",
+    "data/staging/attribution/rows.jsonl",
+    "data/staging/audio_review_queue.jsonl",
+    "data/staging/communities/build_communities_staging.py",
+    "data/staging/communities/communities.jsonl",
+    "data/staging/communities/manifest.json",
+    "data/staging/communities/proofs/adversarial_preflight.json",
+    "data/staging/communities/proofs/diagnostic_pairs.json",
+    "data/staging/communities/proofs/gds_cross_check.json",
+    "data/staging/communities/rows.jsonl",
+    "data/staging/communities/sources.jsonl",
+    "data/staging/integration/dependency_ledger.json",
+    "data/staging/integration/dependency_status.json",
+    "data/staging/wave4/registry_closure_audit.json",
+    "docs/architecture/RIGVEDA_LEXICAL_MENTION_POLICY.md",
+    "docs/design/research/04-visualization-research.md",
+    "docs/reports/GRAPH_QUALITY_V2_SCORECARD.md",
+    "frontend/public/world/world.bin",
+    "frontend/public/world/world.json",
+    "frontend/public/world/world.labels.json",
+    "frontend/public/world/world.predicates.json",
+    "frontend/src/app/about/page.tsx",
+    "frontend/src/app/explore/page.tsx",
+    "frontend/src/app/limits/page.tsx",
+    "frontend/src/app/sources/page.tsx",
+    "frontend/src/app/vedas/[veda]/page.tsx",
+    "frontend/src/app/vedas/page.tsx",
+    "frontend/src/components/home/world-preview-panel.tsx",
+    "frontend/src/components/world/relationship-inspector.tsx",
+    "frontend/src/lib/api-schema.ts",
+    "frontend/src/lib/lab.ts",
+    "frontend/src/lib/world/focus.ts",
+    "frontend/tests/unit/focus-curation.test.ts",
+    "scripts/attribution_import.py",
+    "scripts/audio/audit_mappings.py",
+    "scripts/audio/cache_audio.py",
+    "scripts/audio/discover_vedsearch.py",
+    "scripts/audio/harvest_vedsearch.py",
+    "scripts/audio/validate_catalog.py",
+    "scripts/build_anukramani_knowledge_layer.py",
+    "scripts/build_atharvaveda_anukramani.py",
+    "scripts/build_audio_review_queue.py",
+    "scripts/build_domain_v2.py",
+    "scripts/build_knowledge_model_v3.py",
+    "scripts/build_rishi_families.py",
+    "scripts/build_theonym_dossier.py",
+    "scripts/build_veda_coverage_and_metrics.py",
+    "scripts/build_yajurveda_anukramani.py",
+    "scripts/check_live_invariants.py",
+    "scripts/dependency_state.py",
+    "scripts/discover_theonym_forms.py",
+    "scripts/export_graph_world.py",
+    "scripts/generate_ontology_reference.py",
+    "scripts/graph_quality_scorecard.py",
+    "scripts/merge_theonym_forms.py",
+    "scripts/report_knowledge_model_v3.py",
+    "scripts/run_domain_demos.py",
+    "scripts/show_passage.py",
+    "scripts/verify_v3_demonstrations.py",
+    "scripts/wave3_dependency_invalidation.py",
+    "scripts/wave3_import_plan.py",
+    "scripts/wave4_registry_closure_audit.py",
+    "src/vedagraph/api/app.py",
+    "src/vedagraph/api/ask/evidence.py",
+    "src/vedagraph/api/ask/planner.py",
+    "src/vedagraph/api/ask/retriever.py",
+    "src/vedagraph/api/models/common.py",
+    "src/vedagraph/api/models/entity.py",
+    "src/vedagraph/api/models/insight.py",
+    "src/vedagraph/api/models/passage.py",
+    "src/vedagraph/api/routes/graph.py",
+    "src/vedagraph/api/routes/insights.py",
+    "src/vedagraph/api/services/graph_service.py",
+    "src/vedagraph/api/services/insight_service.py",
+    "src/vedagraph/api/services/search_service.py",
+    "src/vedagraph/domain/layer_figures.py",
+    "src/vedagraph/domain/ontology.py",
+    "src/vedagraph/domain/profiles.py",
+    "src/vedagraph/domain/queries.py",
+    "src/vedagraph/domain/tiers.py",
+    "src/vedagraph/enrich/formula_families.py",
+    "src/vedagraph/enrich/formulas.py",
+    "src/vedagraph/graph/insight_queries.py",
+    "tests/api/test_cypher_property_hygiene.py",
+    "tests/api/test_insights.py",
+    "tests/domain/test_deity_population_counting.py",
+    "tests/domain/test_v3_3_final_closure.py",
+    "tests/enrich/test_formula_families.py",
+    "tests/unit/test_audio_review_harness.py",
+    "tests/unit/test_dependency_state.py",
+    "tests/unit/test_registry_closure.py"
+  ],
+  "classification_counts": {
+    "INTENDED_STABILIZATION_CHANGE": 119,
+    "GENERATED_ARTIFACT": 168,
+    "UNKNOWN": 50,
+    "TEMPORARY": 3
+  },
+  "paths": [
+    {
+      "path": ".gitignore",
+      "status": " M",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "Existing implementation, test, or documentation change; candidate only, not staging authorization",
+      "sha256": "903733d2840a79bce0e999137c2be18a7d3acffed09ca891919bf7124fa64928"
+    },
+    {
+      "path": "data/domain/vedagraph_domain_v2/veda_coverage_v3.json",
+      "status": " M",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "Existing data or receipt; inspect policy and provenance before staging",
+      "sha256": "01c18e57ca5519750f61d09c3ca80c892652f96d3503a2d86c1f2bce9aa80834"
+    },
+    {
+      "path": "data/enrichment/vedagraph_enrichment_v1/manifest.json",
+      "status": " M",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "Existing data or receipt; inspect policy and provenance before staging",
+      "sha256": "d6e33b63a6e9836ada539ac50d09072a9f86f7cef549d37776728e00702b597c"
+    },
+    {
+      "path": "data/source_registry/four_veda_backlog.jsonl",
+      "status": " M",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "Existing data or receipt; inspect policy and provenance before staging",
+      "sha256": "cb10cb1b35f438ae2ac3eb23ed0b4bff7bd3959ea08333384f494dfeb18e77f9"
+    },
+    {
+      "path": "data/staging/attribution/rows.jsonl",
+      "status": " M",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "Existing data or receipt; inspect policy and provenance before staging",
+      "sha256": "44133a98caad9a3cc79987559eefb1c147c41ec9f575746db93c5cc8bcff23fc"
+    },
+    {
+      "path": "data/staging/audio_review_queue.jsonl",
+      "status": " M",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "Existing data or receipt; inspect policy and provenance before staging",
+      "sha256": "fbb7cf876ed7afcced4d2f274f31ea98c5ca6d497c3e917d9e6b5a9503a5503f"
+    },
+    {
+      "path": "data/staging/communities/build_communities_staging.py",
+      "status": " M",
+      "classification": "UNKNOWN",
+      "reason": "Preserved; requires scope review before staging",
+      "sha256": "60147455e1dbc6094a45573b30a716ed32ff4929fa965a66f2cc9ebc009db0f9"
+    },
+    {
+      "path": "data/staging/communities/communities.jsonl",
+      "status": " M",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "Existing data or receipt; inspect policy and provenance before staging",
+      "sha256": "c96061701e0761e51d20c09635c4f1499b87eb6cf0ccc627b469163c1ad9436b"
+    },
+    {
+      "path": "data/staging/communities/manifest.json",
+      "status": " M",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "Existing data or receipt; inspect policy and provenance before staging",
+      "sha256": "672664ce8652d59806d919fdf8011029ad4d4047c44fb3be41e700e6ef620908"
+    },
+    {
+      "path": "data/staging/communities/proofs/adversarial_preflight.json",
+      "status": " M",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "Existing data or receipt; inspect policy and provenance before staging",
+      "sha256": "02630771b89c02fe41dd02975f5447dac6a1d061518e234b9b5784989824acb8"
+    },
+    {
+      "path": "data/staging/communities/proofs/diagnostic_pairs.json",
+      "status": " M",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "Existing data or receipt; inspect policy and provenance before staging",
+      "sha256": "ebf802ab8ca25e62c5cf207d4d569aa13f3cccd136cd438a6ebd0e303a41f1c4"
+    },
+    {
+      "path": "data/staging/communities/proofs/gds_cross_check.json",
+      "status": " M",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "Existing data or receipt; inspect policy and provenance before staging",
+      "sha256": "220146043898c408e9fc4dc5751145a1fd9bd3730a9a6cf5dbe191934fa5a1f2"
+    },
+    {
+      "path": "data/staging/communities/rows.jsonl",
+      "status": " M",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "Existing data or receipt; inspect policy and provenance before staging",
+      "sha256": "96cec83a5b5a5f64f7595274e3be8966ef014279c3e77391f49282674cf0f497"
+    },
+    {
+      "path": "data/staging/communities/sources.jsonl",
+      "status": " M",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "Existing data or receipt; inspect policy and provenance before staging",
+      "sha256": "05409bb8ebd8e0ae3b71b3f6e06b053f5123b37705a48ea550bb3b5502d18176"
+    },
+    {
+      "path": "data/staging/integration/dependency_ledger.json",
+      "status": " M",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "Existing data or receipt; inspect policy and provenance before staging",
+      "sha256": "c572b0d8046b1f6d3792ae6ccf3f15cbfb385fa2beb95dc4ac1d2c8e5305876f"
+    },
+    {
+      "path": "data/staging/integration/dependency_status.json",
+      "status": " M",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "Existing data or receipt; inspect policy and provenance before staging",
+      "sha256": "2d19edb8e1d093893b51ae1f8ba2e0f987fd99445cf9d38732b3e45b307b8227"
+    },
+    {
+      "path": "data/staging/wave4/registry_closure_audit.json",
+      "status": " M",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "Existing data or receipt; inspect policy and provenance before staging",
+      "sha256": "3733a843a2088f630e456a626d971d81653935203aabf8f83d25b1aa697b0d56"
+    },
+    {
+      "path": "docs/architecture/RIGVEDA_LEXICAL_MENTION_POLICY.md",
+      "status": " M",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "Existing implementation, test, or documentation change; candidate only, not staging authorization",
+      "sha256": "4cfadc3cb73d72c75e227577fce97406afada3b60c9022beee956babacfd189b"
+    },
+    {
+      "path": "docs/design/research/04-visualization-research.md",
+      "status": " M",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "Existing implementation, test, or documentation change; candidate only, not staging authorization",
+      "sha256": "265ff6790ff19481b5871be4d680ae98d0b6e3fed1a597c7821845c9a6e9f63f"
+    },
+    {
+      "path": "docs/reports/GRAPH_QUALITY_V2_SCORECARD.md",
+      "status": " M",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "Existing implementation, test, or documentation change; candidate only, not staging authorization",
+      "sha256": "1ecad92ff3605eed081a30d4e46b5c4ce44427096437f2cfa45477692f961c56"
+    },
+    {
+      "path": "frontend/public/world/world.bin",
+      "status": " M",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "Existing data or receipt; inspect policy and provenance before staging",
+      "sha256": "4297f7adc47c6cae8a40cf72577e3223fca2886ef3550862fb058f7455f2c8c2"
+    },
+    {
+      "path": "frontend/public/world/world.json",
+      "status": " M",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "Existing data or receipt; inspect policy and provenance before staging",
+      "sha256": "11ae120435c378980d62d35bfa053acf9433869a8580a3a3c0b3e50d96954661"
+    },
+    {
+      "path": "frontend/public/world/world.labels.json",
+      "status": " M",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "Existing data or receipt; inspect policy and provenance before staging",
+      "sha256": "cc4952e2bcc08a0287e3d5831f5965ba3b562d01f1637af7fda333f013aa4959"
+    },
+    {
+      "path": "frontend/public/world/world.predicates.json",
+      "status": " M",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "Existing data or receipt; inspect policy and provenance before staging",
+      "sha256": "54a49078d9ad11e496bec5500de8e09e88ad60976768f5f2783cac1facfa7254"
+    },
+    {
+      "path": "frontend/src/app/about/page.tsx",
+      "status": " M",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "Existing implementation, test, or documentation change; candidate only, not staging authorization",
+      "sha256": "5a676cb1ad16bee5792ee2316d371516be9b358ba0bf1a6b4ddca521759d180c"
+    },
+    {
+      "path": "frontend/src/app/explore/page.tsx",
+      "status": " M",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "Existing implementation, test, or documentation change; candidate only, not staging authorization",
+      "sha256": "328086c353f447678b61a96005fa7e9a21ca6e659e207720c39bd47cd5ec9e81"
+    },
+    {
+      "path": "frontend/src/app/limits/page.tsx",
+      "status": " M",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "Existing implementation, test, or documentation change; candidate only, not staging authorization",
+      "sha256": "00b2e1f96ed47e1b9a7622104a1e736a0108775327f1ee3ea0471893967caa34"
+    },
+    {
+      "path": "frontend/src/app/sources/page.tsx",
+      "status": " M",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "Existing implementation, test, or documentation change; candidate only, not staging authorization",
+      "sha256": "190e4d9308239689c88e60a2bcafa49a6d6d92faf2035b68498ca6d534fad7d8"
+    },
+    {
+      "path": "frontend/src/app/vedas/[veda]/page.tsx",
+      "status": " M",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "Existing implementation, test, or documentation change; candidate only, not staging authorization",
+      "sha256": "bd5b96fba098a069cb32f343606832610b62f3ac113814fa781217fa7e1f2fd0"
+    },
+    {
+      "path": "frontend/src/app/vedas/page.tsx",
+      "status": " M",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "Existing implementation, test, or documentation change; candidate only, not staging authorization",
+      "sha256": "b83fc4a3ec573bb7eeecb292cebaf7320fe794da809c78d602c3b4e289308032"
+    },
+    {
+      "path": "frontend/src/components/home/world-preview-panel.tsx",
+      "status": " M",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "Existing implementation, test, or documentation change; candidate only, not staging authorization",
+      "sha256": "108cd0f84aebabafcf3ca6e76cf462e1b8b0d8db85225e3f79401447c10da0ef"
+    },
+    {
+      "path": "frontend/src/components/world/relationship-inspector.tsx",
+      "status": " M",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "Existing implementation, test, or documentation change; candidate only, not staging authorization",
+      "sha256": "865e2b1cf914033e8b2f1227e32ae4b675afeb8fca06709b08f0cb9d43a42fb0"
+    },
+    {
+      "path": "frontend/src/lib/api-schema.ts",
+      "status": " M",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "Existing implementation, test, or documentation change; candidate only, not staging authorization",
+      "sha256": "4c2755227986a3f2b575fd7d48ad48b6fc66ca333e1b253e90ce701ac1930ca7"
+    },
+    {
+      "path": "frontend/src/lib/lab.ts",
+      "status": " M",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "Existing implementation, test, or documentation change; candidate only, not staging authorization",
+      "sha256": "e27fc4fa8163236ddc0a639102145a05b83b211df6f3ac8774fdff328e785a8f"
+    },
+    {
+      "path": "frontend/src/lib/world/focus.ts",
+      "status": " M",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "Existing implementation, test, or documentation change; candidate only, not staging authorization",
+      "sha256": "458484167f563fd2e4eec23b3efb5c2f3b43e56fcf36258d77959d34123cf011"
+    },
+    {
+      "path": "frontend/tests/unit/focus-curation.test.ts",
+      "status": " M",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "Existing implementation, test, or documentation change; candidate only, not staging authorization",
+      "sha256": "9cf5f9d850b3325cf5d9d870e1a058d3e2ccdd58b11a7a1df98c5aee112c1838"
+    },
+    {
+      "path": "scripts/attribution_import.py",
+      "status": " M",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "Existing implementation, test, or documentation change; candidate only, not staging authorization",
+      "sha256": "c57b0d1aeb8f5439dbda768382b2977b86fad151a307a4b7fa30824a740bc9db"
+    },
+    {
+      "path": "scripts/audio/audit_mappings.py",
+      "status": " M",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "Existing implementation, test, or documentation change; candidate only, not staging authorization",
+      "sha256": "7de433fc83df1aeebfc00786b0ea7f58269403fbc5eb9f002c2bdbb4838157af"
+    },
+    {
+      "path": "scripts/audio/cache_audio.py",
+      "status": " M",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "Existing implementation, test, or documentation change; candidate only, not staging authorization",
+      "sha256": "53df43dec4031c12eb625561f5daf83d20af77974483fd05645e782e85a424bd"
+    },
+    {
+      "path": "scripts/audio/discover_vedsearch.py",
+      "status": " M",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "Existing implementation, test, or documentation change; candidate only, not staging authorization",
+      "sha256": "36d45d4af547086775ac88a707e29e05a41c635c9d82fed19169ff4cbcddd69f"
+    },
+    {
+      "path": "scripts/audio/harvest_vedsearch.py",
+      "status": " M",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "Existing implementation, test, or documentation change; candidate only, not staging authorization",
+      "sha256": "533d0d8bd2bbf88b64e654122976cd494413aa1a0efe35f334ca2d6a13c5007d"
+    },
+    {
+      "path": "scripts/audio/validate_catalog.py",
+      "status": " M",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "Existing implementation, test, or documentation change; candidate only, not staging authorization",
+      "sha256": "34d3eaaa29f739d848f6631f10643a2d02cc8f6d508b899814e45488c52132ab"
+    },
+    {
+      "path": "scripts/build_anukramani_knowledge_layer.py",
+      "status": " M",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "Existing implementation, test, or documentation change; candidate only, not staging authorization",
+      "sha256": "8953d6f6c88581eede5d617b5a0ef4600c547191e5878fe129e408d7c39d0cda"
+    },
+    {
+      "path": "scripts/build_atharvaveda_anukramani.py",
+      "status": " M",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "Existing implementation, test, or documentation change; candidate only, not staging authorization",
+      "sha256": "1ecfc18e718c09a76e20abf4a784c0e44321df9ac21cc0c6b05df1664febfb60"
+    },
+    {
+      "path": "scripts/build_audio_review_queue.py",
+      "status": " M",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "Existing implementation, test, or documentation change; candidate only, not staging authorization",
+      "sha256": "794b9ceb643e40f76c62bd7dffd87fb97905e6ce17758c015e72182c5b2aa8ff"
+    },
+    {
+      "path": "scripts/build_domain_v2.py",
+      "status": " M",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "Existing implementation, test, or documentation change; candidate only, not staging authorization",
+      "sha256": "668eab831ea271e62358a0e397f4403828fbb6d1984b4154d1f079a9a390bb3d"
+    },
+    {
+      "path": "scripts/build_knowledge_model_v3.py",
+      "status": " M",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "Existing implementation, test, or documentation change; candidate only, not staging authorization",
+      "sha256": "658b951e6c5eeec2f6b198cc483c1159e2af8db7175e873df469f315b6607459"
+    },
+    {
+      "path": "scripts/build_rishi_families.py",
+      "status": " M",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "Existing implementation, test, or documentation change; candidate only, not staging authorization",
+      "sha256": "2f5cd90126a4e3917e528fc0f603c228724998666b59a251670486269aedfb7b"
+    },
+    {
+      "path": "scripts/build_theonym_dossier.py",
+      "status": " M",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "Existing implementation, test, or documentation change; candidate only, not staging authorization",
+      "sha256": "cbc156c776067244e3e0b501a7884c24965c2065fe09c5f605dcc0850abfd542"
+    },
+    {
+      "path": "scripts/build_veda_coverage_and_metrics.py",
+      "status": " M",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "Existing implementation, test, or documentation change; candidate only, not staging authorization",
+      "sha256": "81ac390c160066f6eade44454ce39c225abe6b16b94791d1e0ebe70f40454566"
+    },
+    {
+      "path": "scripts/build_yajurveda_anukramani.py",
+      "status": " M",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "Existing implementation, test, or documentation change; candidate only, not staging authorization",
+      "sha256": "1d3ddcd475ba3cc819bb623e65aaca4564b9062601b8528c69729eed95bdde15"
+    },
+    {
+      "path": "scripts/check_live_invariants.py",
+      "status": " M",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "Existing implementation, test, or documentation change; candidate only, not staging authorization",
+      "sha256": "2e005be55b99099315d02326be1501d7ccf3bbe35e25932fdba5df3cb96c36a2"
+    },
+    {
+      "path": "scripts/dependency_state.py",
+      "status": " M",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "Existing implementation, test, or documentation change; candidate only, not staging authorization",
+      "sha256": "59d3a553d9543deb28dc5b02edde1d81a7b51b49c3db4c37698f212779c2dd7f"
+    },
+    {
+      "path": "scripts/discover_theonym_forms.py",
+      "status": " M",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "Existing implementation, test, or documentation change; candidate only, not staging authorization",
+      "sha256": "b2172e1c2525b8e336d14ff7d68c3e8cb7c086fad4ca43d2f9dd14c5cb5526dc"
+    },
+    {
+      "path": "scripts/export_graph_world.py",
+      "status": " M",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "Existing implementation, test, or documentation change; candidate only, not staging authorization",
+      "sha256": "069512ef0b0848742742b58b59ae9d08a006fed5c5fbe040ec41df60a1cc5c73"
+    },
+    {
+      "path": "scripts/generate_ontology_reference.py",
+      "status": " M",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "Existing implementation, test, or documentation change; candidate only, not staging authorization",
+      "sha256": "7ccb0ccfb999c0ba488a5e8cdf88fdd08f4e645a9a9f464f0ccd513916aff857"
+    },
+    {
+      "path": "scripts/graph_quality_scorecard.py",
+      "status": " M",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "Existing implementation, test, or documentation change; candidate only, not staging authorization",
+      "sha256": "6a598bea93646c66ff950e5c03fc20d28fca35da85ca24c4b20a5a6e4085496f"
+    },
+    {
+      "path": "scripts/merge_theonym_forms.py",
+      "status": " M",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "Existing implementation, test, or documentation change; candidate only, not staging authorization",
+      "sha256": "c2dbb7adbbcfed89c5983277fa159b01ebd43e7a18127fe6f1e1f7f9ae0665c3"
+    },
+    {
+      "path": "scripts/report_knowledge_model_v3.py",
+      "status": " M",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "Existing implementation, test, or documentation change; candidate only, not staging authorization",
+      "sha256": "8d24a33dbdfc02ca228d8dd8cf77070b987107e80b5152b01424c7469f564eae"
+    },
+    {
+      "path": "scripts/run_domain_demos.py",
+      "status": " M",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "Existing implementation, test, or documentation change; candidate only, not staging authorization",
+      "sha256": "c154bd4c61184f47014b0862e07120c6ddb4381ec136f58d8926b38d1df6b508"
+    },
+    {
+      "path": "scripts/show_passage.py",
+      "status": " M",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "Existing implementation, test, or documentation change; candidate only, not staging authorization",
+      "sha256": "cf09e59143e163071e5b843af9d202d8702e507941c88a89bfa65bc92a38df57"
+    },
+    {
+      "path": "scripts/verify_v3_demonstrations.py",
+      "status": " M",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "Existing implementation, test, or documentation change; candidate only, not staging authorization",
+      "sha256": "ecc1dfe58cd26427e2da3a2c4c609d59c24b8a8003143c8b183ee578802bce87"
+    },
+    {
+      "path": "scripts/wave3_dependency_invalidation.py",
+      "status": " M",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "Existing implementation, test, or documentation change; candidate only, not staging authorization",
+      "sha256": "678ab7c9175f2edae95ef19707315ca7a5f3b8ed6b770bf3326b26723d075a8f"
+    },
+    {
+      "path": "scripts/wave3_import_plan.py",
+      "status": " M",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "Existing implementation, test, or documentation change; candidate only, not staging authorization",
+      "sha256": "d37decdf6e179eea4f90711765cd0a844bbf9142faa1174804609b2dd372ca9f"
+    },
+    {
+      "path": "scripts/wave4_registry_closure_audit.py",
+      "status": " M",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "Existing implementation, test, or documentation change; candidate only, not staging authorization",
+      "sha256": "a635d97b3d8299367223204a3e2b6495f72b2f510bf04133b5f14b42a9e8f614"
+    },
+    {
+      "path": "src/vedagraph/api/app.py",
+      "status": " M",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "Existing implementation, test, or documentation change; candidate only, not staging authorization",
+      "sha256": "cf899781b9547e96ef5498e1a67b02956c61e01faded720629e95d0d5ec59b0b"
+    },
+    {
+      "path": "src/vedagraph/api/ask/evidence.py",
+      "status": " M",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "Existing implementation, test, or documentation change; candidate only, not staging authorization",
+      "sha256": "225a21ffa73a5e02c514a7b5f22800572f19aaf7830f3ab6853427bc22a7aecb"
+    },
+    {
+      "path": "src/vedagraph/api/ask/planner.py",
+      "status": " M",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "Existing implementation, test, or documentation change; candidate only, not staging authorization",
+      "sha256": "9eb569994122d00dde56c63429d9a9855929e95eefe12b4dace7c87ac3c5e580"
+    },
+    {
+      "path": "src/vedagraph/api/ask/retriever.py",
+      "status": " M",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "Existing implementation, test, or documentation change; candidate only, not staging authorization",
+      "sha256": "d26f48b86e83e1242395c52650572fa2a018ff22ade59db8d8dcb5349d96e802"
+    },
+    {
+      "path": "src/vedagraph/api/models/common.py",
+      "status": " M",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "Existing implementation, test, or documentation change; candidate only, not staging authorization",
+      "sha256": "0da8d809d2d95595d49cfccfc77a5b2293cb28765a92a8acee49ab5a194f15f4"
+    },
+    {
+      "path": "src/vedagraph/api/models/entity.py",
+      "status": " M",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "Existing implementation, test, or documentation change; candidate only, not staging authorization",
+      "sha256": "99173e21b94dc44d4ee2ea9ca5f32ce7b62d4530b71b7fee49b634934d9bcb99"
+    },
+    {
+      "path": "src/vedagraph/api/models/insight.py",
+      "status": " M",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "Existing implementation, test, or documentation change; candidate only, not staging authorization",
+      "sha256": "a574fc8447e0d8bd5d85f9c4c4f431a8863706652a86ebf4d341c14e3d9f6c08"
+    },
+    {
+      "path": "src/vedagraph/api/models/passage.py",
+      "status": " M",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "Existing implementation, test, or documentation change; candidate only, not staging authorization",
+      "sha256": "8ede068dea645902a4c9a94b8cc7f6c53da1b702ca752cad3e6cd4ed257120b6"
+    },
+    {
+      "path": "src/vedagraph/api/routes/graph.py",
+      "status": " M",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "Existing implementation, test, or documentation change; candidate only, not staging authorization",
+      "sha256": "9d34035c8183840b69bed585f8c56119a6bf07155288c565af2d4e78c36edd3a"
+    },
+    {
+      "path": "src/vedagraph/api/routes/insights.py",
+      "status": " M",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "Existing implementation, test, or documentation change; candidate only, not staging authorization",
+      "sha256": "006d9114fa0631e112ad337df941580962d2fa63a3c8a2b5270cf751eaf630f1"
+    },
+    {
+      "path": "src/vedagraph/api/services/graph_service.py",
+      "status": " M",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "Existing implementation, test, or documentation change; candidate only, not staging authorization",
+      "sha256": "83e94d87ea1d7fa82ed57510ebbbf0a53c62455e6f987d4440c68bc91fc8101f"
+    },
+    {
+      "path": "src/vedagraph/api/services/insight_service.py",
+      "status": " M",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "Existing implementation, test, or documentation change; candidate only, not staging authorization",
+      "sha256": "601298d681548c23dcb9160feb555788d250ac2ab899bd4fa9a0dd7632f4930c"
+    },
+    {
+      "path": "src/vedagraph/api/services/search_service.py",
+      "status": " M",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "Existing implementation, test, or documentation change; candidate only, not staging authorization",
+      "sha256": "2a273f25cd25c4faea0ff5eaaf3808618cb1b11a44eaa974950e3ab4bebb54fe"
+    },
+    {
+      "path": "src/vedagraph/domain/layer_figures.py",
+      "status": " M",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "Existing implementation, test, or documentation change; candidate only, not staging authorization",
+      "sha256": "8335d00cd3c1177b0465d7dda866bde39b26739f57ec6008942784dc9a6efec4"
+    },
+    {
+      "path": "src/vedagraph/domain/ontology.py",
+      "status": " M",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "Existing implementation, test, or documentation change; candidate only, not staging authorization",
+      "sha256": "7294c3755ed4931a6465eed38dd1969f846dc3e59cd865883b97329a05345532"
+    },
+    {
+      "path": "src/vedagraph/domain/profiles.py",
+      "status": " M",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "Existing implementation, test, or documentation change; candidate only, not staging authorization",
+      "sha256": "9745bafdd835e7952181e422216a26bc801823eb01a2ed6e0f4ad264fcb1dd2d"
+    },
+    {
+      "path": "src/vedagraph/domain/queries.py",
+      "status": " M",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "Existing implementation, test, or documentation change; candidate only, not staging authorization",
+      "sha256": "bed6d1bbe70e87c25c71f4b2a67ba5d3b46d900ded3786d56a0c0164ac28f483"
+    },
+    {
+      "path": "src/vedagraph/domain/tiers.py",
+      "status": " M",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "Existing implementation, test, or documentation change; candidate only, not staging authorization",
+      "sha256": "4c7a56bb12c9464215d1707f99c59bc71f4d34c52475436c80e3ee3212318e2c"
+    },
+    {
+      "path": "src/vedagraph/enrich/formula_families.py",
+      "status": " M",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "Existing implementation, test, or documentation change; candidate only, not staging authorization",
+      "sha256": "8e0a60efb9e2cf226e5ec989d120b01a0b07f1aaa6765140b19c23a64f1a649f"
+    },
+    {
+      "path": "src/vedagraph/enrich/formulas.py",
+      "status": " M",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "Existing implementation, test, or documentation change; candidate only, not staging authorization",
+      "sha256": "80dda1e4ae406aa5034456c3d0689865039192f9461f165810b88bfb514771c3"
+    },
+    {
+      "path": "src/vedagraph/graph/insight_queries.py",
+      "status": " M",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "Existing implementation, test, or documentation change; candidate only, not staging authorization",
+      "sha256": "533c1ee73e6b77d6f37add32f2fdf7c0e8c6dc0513fbe238cf394267d1ab7acf"
+    },
+    {
+      "path": "tests/api/test_cypher_property_hygiene.py",
+      "status": " M",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "Existing implementation, test, or documentation change; candidate only, not staging authorization",
+      "sha256": "301cc28c6e16aad0578d1d2000e93306e2446ed56b05c8968615ce612a564239"
+    },
+    {
+      "path": "tests/api/test_insights.py",
+      "status": " M",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "Existing implementation, test, or documentation change; candidate only, not staging authorization",
+      "sha256": "fe7128b1a2480f05d919d714f763aa032b975af3ac8f3611263960e9e0cf0f2f"
+    },
+    {
+      "path": "tests/domain/test_deity_population_counting.py",
+      "status": " M",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "Existing implementation, test, or documentation change; candidate only, not staging authorization",
+      "sha256": "2c4725d468bdd3f3116c5511dae9d5ec0905b9ee864fcdf459366d4d64e6a436"
+    },
+    {
+      "path": "tests/domain/test_v3_3_final_closure.py",
+      "status": " M",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "Existing implementation, test, or documentation change; candidate only, not staging authorization",
+      "sha256": "4c257827cbd2a7875ab3186186aa6fdb98406f435624f03e76bc5be48ae04e76"
+    },
+    {
+      "path": "tests/enrich/test_formula_families.py",
+      "status": " M",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "Existing implementation, test, or documentation change; candidate only, not staging authorization",
+      "sha256": "381f70250c8540cf7566494d5b49e074a706281ca2ce3afa2e9d0454b3d955fc"
+    },
+    {
+      "path": "tests/unit/test_audio_review_harness.py",
+      "status": " M",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "Existing implementation, test, or documentation change; candidate only, not staging authorization",
+      "sha256": "cf8dc66d0774d561fe0e2c9b01d5a9d9a70c1fc8740be602fe9b2387af11dcb1"
+    },
+    {
+      "path": "tests/unit/test_dependency_state.py",
+      "status": " M",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "Existing implementation, test, or documentation change; candidate only, not staging authorization",
+      "sha256": "e570b5581908b5e4741a25380e78eb1447af01b3e2f1225c362c2a61d00cc51c"
+    },
+    {
+      "path": "tests/unit/test_registry_closure.py",
+      "status": " M",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "Existing implementation, test, or documentation change; candidate only, not staging authorization",
+      "sha256": "1d0a7dfcdb37e14c6a68f4ddfd490ed31e22261ae5c8ed8414772732e39d102f"
+    },
+    {
+      "path": "data/canonical/atharvaveda_pilot_v1/manifest.json",
+      "status": "??",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "Existing data or receipt; inspect policy and provenance before staging",
+      "sha256": "0af8568cc8c5627e0912c652af20b35edf1caa733376ec182a1de13830faa2a6"
+    },
+    {
+      "path": "data/canonical/atharvaveda_saunaka_1856_provisional/manifest.json",
+      "status": "??",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "Existing data or receipt; inspect policy and provenance before staging",
+      "sha256": "e67c8088a8de28735023521f0178fe69ef9f6123b45dd963fc598f637f2d8550"
+    },
+    {
+      "path": "data/canonical/atharvaveda_saunaka_1856_v1/manifest.json",
+      "status": "??",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "Existing data or receipt; inspect policy and provenance before staging",
+      "sha256": "467f4c9ce0ecec1e0c48e4a0cae52fde04ed85f1d018cb1dd771cf6a95037e84"
+    },
+    {
+      "path": "data/canonical/atharvaveda_saunaka_digital_working_v1/manifest.json",
+      "status": "??",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "Existing data or receipt; inspect policy and provenance before staging",
+      "sha256": "2212989d33b8f41b16f32b4f89ef04ded8f18f9f72e98b2f791cd28cf49e6434"
+    },
+    {
+      "path": "data/canonical/rigveda_full_v1/manifest.json",
+      "status": "??",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "Existing data or receipt; inspect policy and provenance before staging",
+      "sha256": "b67c3175cc35f1b6a1eb6766ed085a56785194cd731f8c05a2343e847df19736"
+    },
+    {
+      "path": "data/canonical/rv_1_1_pilot/manifest.json",
+      "status": "??",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "Existing data or receipt; inspect policy and provenance before staging",
+      "sha256": "f66f0e8d141b6d1d241471ea691b1dbc6d63603fead74956327bc76d39a58ed2"
+    },
+    {
+      "path": "data/canonical/rv_mandala_10_full_v1/manifest.json",
+      "status": "??",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "Existing data or receipt; inspect policy and provenance before staging",
+      "sha256": "700caed9a676b19c73e0cf3e8431bb2fe64b6a4a8af6f445491fb72c480746ea"
+    },
+    {
+      "path": "data/canonical/rv_mandala_1_full_v1/manifest.json",
+      "status": "??",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "Existing data or receipt; inspect policy and provenance before staging",
+      "sha256": "c43c36028108593460880fcf91521652e43b68e50ca5527d4b7d3ab1ed1f86ed"
+    },
+    {
+      "path": "data/canonical/rv_mandala_1_sample_v2/manifest.json",
+      "status": "??",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "Existing data or receipt; inspect policy and provenance before staging",
+      "sha256": "fdc2d60f531a70ead88752cfc1ce89a603fcfcabc6f1ce8838dfe7b4e2461988"
+    },
+    {
+      "path": "data/canonical/rv_mandala_2_full_v1/manifest.json",
+      "status": "??",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "Existing data or receipt; inspect policy and provenance before staging",
+      "sha256": "9db55eda4ff40d467c7112631e700e106b4d85dc4844df6610e7350c23742397"
+    },
+    {
+      "path": "data/canonical/rv_mandala_3_full_v1/manifest.json",
+      "status": "??",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "Existing data or receipt; inspect policy and provenance before staging",
+      "sha256": "d4ce738344fbdf7cb590d9712712707d9a91e7c5ad92362d19ec95a9c7e226aa"
+    },
+    {
+      "path": "data/canonical/rv_mandala_4_full_v1/manifest.json",
+      "status": "??",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "Existing data or receipt; inspect policy and provenance before staging",
+      "sha256": "b0bb6a3aa5236d8e6128dd0ad74391f5df1c59e849ad6a047af7c107c8b8f179"
+    },
+    {
+      "path": "data/canonical/rv_mandala_5_full_v1/manifest.json",
+      "status": "??",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "Existing data or receipt; inspect policy and provenance before staging",
+      "sha256": "b308c95d349bbac91bd5cb89618b5fb3c7afa994b6d4e8edf8c247a057a87c8e"
+    },
+    {
+      "path": "data/canonical/rv_mandala_6_full_v1/manifest.json",
+      "status": "??",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "Existing data or receipt; inspect policy and provenance before staging",
+      "sha256": "2ea908d39902d1ac71023d0dd0b66c940169ad2fd573e294e6face9b9a5dec8a"
+    },
+    {
+      "path": "data/canonical/rv_mandala_7_full_v1/manifest.json",
+      "status": "??",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "Existing data or receipt; inspect policy and provenance before staging",
+      "sha256": "8ccf9c6678c06394dbedc33e99b31c2872b30041caf4ee683dc4af5e2e47e49e"
+    },
+    {
+      "path": "data/canonical/rv_mandala_8_full_v1/manifest.json",
+      "status": "??",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "Existing data or receipt; inspect policy and provenance before staging",
+      "sha256": "71555b23dd8263ed30ee9bd8136d0204dbb229e5cf9d554bf44977e38654dfda"
+    },
+    {
+      "path": "data/canonical/rv_mandala_9_full_v1/manifest.json",
+      "status": "??",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "Existing data or receipt; inspect policy and provenance before staging",
+      "sha256": "16a0eb06ba5cb7fa517ae2639eca826a02d9d7cf7b854aaf56ba5bc43ccd7684"
+    },
+    {
+      "path": "data/canonical/samaveda_arcika_v1/manifest.json",
+      "status": "??",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "Existing data or receipt; inspect policy and provenance before staging",
+      "sha256": "173dd473659a26e598b1d66daec205dfa34357af00cf7729a1cce77c664c7328"
+    },
+    {
+      "path": "data/canonical/yajurveda_pilot_v1/manifest.json",
+      "status": "??",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "Existing data or receipt; inspect policy and provenance before staging",
+      "sha256": "c7869eef9533f950b32656fca3470a01ff02c13b9eebd743a4b14cbeb16aa119"
+    },
+    {
+      "path": "data/canonical/yajurveda_vsm_v1/manifest.json",
+      "status": "??",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "Existing data or receipt; inspect policy and provenance before staging",
+      "sha256": "e30603043dbe615bf87d4f956bdae3089df27385e94b5b6a0512cc27da5372a1"
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent1/CLOSURE_CONDITIONS.md",
+      "status": "??",
+      "classification": "UNKNOWN",
+      "reason": "Preserved; requires scope review before staging",
+      "sha256": "5ae1d960e3d748c77c1e3042b2cf79e3f1fe7948671f0c35804b9f897953fb87"
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent1/deferred_formula_layer_refresh.json",
+      "status": "??",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "Existing data or receipt; inspect policy and provenance before staging",
+      "sha256": "029b8957f80b730c7ce44ca52fd73ff30da9345c6ac38f16b874c101218f96ff"
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent1/formula_1103_vs_1064_accounting.json",
+      "status": "??",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "Existing data or receipt; inspect policy and provenance before staging",
+      "sha256": "ccf3e2d6344ff70cccb6cca65e15eabff5008c5bd4e070c0b2c6f85d027b4bc9"
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent1/formula_display_form_basis_partition.json",
+      "status": "??",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "Existing data or receipt; inspect policy and provenance before staging",
+      "sha256": "35fdbb0e970fd33a190c2386d78f1a4ef404851107df7bfa4d2c138036855184"
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent1/formula_display_form_repair.json",
+      "status": "??",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "Existing data or receipt; inspect policy and provenance before staging",
+      "sha256": "6b1df86a75d58c7f76a36f4c5face48a1263021cdc03de141acd711d8efec39a"
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent1/formula_nesting_audit.json",
+      "status": "??",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "Existing data or receipt; inspect policy and provenance before staging",
+      "sha256": "44575a60dbbf8d7858efeb6032163fe6d155145de28fe1d35328f055ec21dd15"
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent1/manifest.json",
+      "status": "??",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "Existing data or receipt; inspect policy and provenance before staging",
+      "sha256": "9680b9007ee4ee41806f072cc346196c7bea0b74c8b933fccb4f33a7012f3180"
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent1/pada_parallel_groups.jsonl",
+      "status": "??",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "Existing data or receipt; inspect policy and provenance before staging",
+      "sha256": "4d5d210b034be7efb79ca22bcc9412909a809742c9420c76a05666b357d07306"
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent1/pada_parallel_report.json",
+      "status": "??",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "Existing data or receipt; inspect policy and provenance before staging",
+      "sha256": "95e7766065ce922d2a1b3be76152e76de7f4c6c69a760f3041837e3ec8b0b2ab"
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent1/proposed_mutations.json",
+      "status": "??",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "Existing data or receipt; inspect policy and provenance before staging",
+      "sha256": "7f79ada3e15ef9093fc44b05a39039061c2bdac2f57f673f3c6703936ee34870"
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent1/registry_outcomes.json",
+      "status": "??",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "Existing data or receipt; inspect policy and provenance before staging",
+      "sha256": "21b43fef0486f77500d266f7069ba3271e95cc8bdda22a1fa77993c91ae55966"
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent1/reuse_direction_edges.jsonl",
+      "status": "??",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "Existing data or receipt; inspect policy and provenance before staging",
+      "sha256": "65a4ae3ffe158e6f511b4caa37531ba921f54987d560fdbc5aeb961b0f95afff"
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent1/reuse_direction_pairs.jsonl",
+      "status": "??",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "Existing data or receipt; inspect policy and provenance before staging",
+      "sha256": "44de251c20eb15006e5e58112453513f46a41fbf6dfd2d2aab46548020fb2450"
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent2/_q.py",
+      "status": "??",
+      "classification": "UNKNOWN",
+      "reason": "Preserved; requires scope review before staging",
+      "sha256": "675a5aff0ea53f9f0edeac76d21f95a8b6fad756e80c739e2f3cacdbb67a1dd0"
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent2/ascription_resolutions.jsonl",
+      "status": "??",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "Existing data or receipt; inspect policy and provenance before staging",
+      "sha256": "4983d1815809fc0aab3a91333f04c26b7bed8b0035b39c0f8c01cf74f3d085cf"
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent2/av_derived_dedications.jsonl",
+      "status": "??",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "Existing data or receipt; inspect policy and provenance before staging",
+      "sha256": "69b661ecbf90579865ccbada736d677fcdc9cdc5d23b2c31822dabde9b893a42"
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent2/build_agent2_staging.py",
+      "status": "??",
+      "classification": "UNKNOWN",
+      "reason": "Preserved; requires scope review before staging",
+      "sha256": "149acf7e0bbcfbfde27ffa549e0552f3ac877a914633e651ffa3aa0cc536b2fc"
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent2/composite_decomposition_packet.jsonl",
+      "status": "??",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "Existing data or receipt; inspect policy and provenance before staging",
+      "sha256": "4697ddd33b863cd7e0270beeeb6738e373ac290b52d643b7272616122edaea45"
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent2/deity_community_labels.jsonl",
+      "status": "??",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "Existing data or receipt; inspect policy and provenance before staging",
+      "sha256": "94b4e985e9aa394078ed9e33c859851fbc0651a3e2415d8d0c6073eef9617358"
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent2/deity_eligibility_rows.jsonl",
+      "status": "??",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "Existing data or receipt; inspect policy and provenance before staging",
+      "sha256": "347fb5b7f66f1bcd35e7869365b32a981664d13535c5be5cbe6f63eb2f19ca34"
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent2/devata_profile_metrics.jsonl",
+      "status": "??",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "Existing data or receipt; inspect policy and provenance before staging",
+      "sha256": "a9fa1be0522f5238cda4138237f22247ada2c84bd22f483a5a04b04cf327320f"
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent2/devata_profiles.jsonl",
+      "status": "??",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "Existing data or receipt; inspect policy and provenance before staging",
+      "sha256": "7c935dda0addff13122f8c1d765de040c29e2c14f7eefbd217db685a8013b9ac"
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent2/findings.json",
+      "status": "??",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "Existing data or receipt; inspect policy and provenance before staging",
+      "sha256": "e9dbbbd21b623230ac927801ae7c0a8a8132bafa32fd826e80477dc434df0940"
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent2/manifest.json",
+      "status": "??",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "Existing data or receipt; inspect policy and provenance before staging",
+      "sha256": "e8b3a610c63829f67142832e7bdc1ede66625e2f17cabfe30fc5f6026e25d84d"
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent2/occurrence_contract_rows.jsonl",
+      "status": "??",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "Existing data or receipt; inspect policy and provenance before staging",
+      "sha256": "e020d6ae15a1fcd222f2ada89f56440259153ac1d969d6e1e30963bd8a1f9d26"
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent2/proposed_mutations.json",
+      "status": "??",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "Existing data or receipt; inspect policy and provenance before staging",
+      "sha256": "e56399403c91201630feebdaf59991408c616492487fc323508be60cacef3d2d"
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent2/registry_outcomes.json",
+      "status": "??",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "Existing data or receipt; inspect policy and provenance before staging",
+      "sha256": "fd5f65dee0b4e21611a8ee993623c0a6b13d2f9f7cecbd90b3ad12d3a6585f65"
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent2/sv_derived_dedications.jsonl",
+      "status": "??",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "Existing data or receipt; inspect policy and provenance before staging",
+      "sha256": "ed36a61e9589889c5cc1f896ac6ef52396e2d0bd80b0cc25d996c135cd21d27e"
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent3/assertion_role_edges.jsonl",
+      "status": "??",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "Existing data or receipt; inspect policy and provenance before staging",
+      "sha256": "bb50918575f6a89beeeca8a48a3a6ea8c77eac91ec51daf29ca918ec0f97f77c"
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent3/closure_conditions.json",
+      "status": "??",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "Existing data or receipt; inspect policy and provenance before staging",
+      "sha256": "3f17279a9c5ce9de1220269814aa031069d155ef1816fc4929fca06788c963ca"
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent3/closure_report.json",
+      "status": "??",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "Existing data or receipt; inspect policy and provenance before staging",
+      "sha256": "d6944e0d0c99bce1116244ed0718c0966e73df0007ca9bc671ff97e7fd983282"
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent3/domain_entity_domains.jsonl",
+      "status": "??",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "Existing data or receipt; inspect policy and provenance before staging",
+      "sha256": "ce3d7d29a4c41c8f91b1da0c06bd59c7728ac1d6a96d3fc2caebab530b60dba9"
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent3/domain_entity_domains_manifest.json",
+      "status": "??",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "Existing data or receipt; inspect policy and provenance before staging",
+      "sha256": "8c0147b7a7418bfcd5f7064221687801563947f7daf7f7189032ed40586d5706"
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent3/lexical_nonresolution_manifest.json",
+      "status": "??",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "Existing data or receipt; inspect policy and provenance before staging",
+      "sha256": "ad54cc867a6d096570d89e216367575a4ef7c86b079e2f37b3acc5e85083e723"
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent3/lexical_nonresolution_typed.jsonl",
+      "status": "??",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "Existing data or receipt; inspect policy and provenance before staging",
+      "sha256": "7cf9e23b7be32616a40a110851ec485ab971047f59206784a46f058b35ecac12"
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent3/mentions_lemma_manifest.json",
+      "status": "??",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "Existing data or receipt; inspect policy and provenance before staging",
+      "sha256": "b038793950a311e2f87aa355a6f13914808faad324179c054012e303ad629d59"
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent3/mentions_lemma_projection.jsonl",
+      "status": "??",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "Existing data or receipt; inspect policy and provenance before staging",
+      "sha256": "ec744478500edafeb0fffcacda3d305892d71c3f6f16d6974b68239f42d6d614"
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent3/proposed_mutations.json",
+      "status": "??",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "Existing data or receipt; inspect policy and provenance before staging",
+      "sha256": "b94441ce3c5769cc6e4b406d8dc6524796db13714a3d9de18645277f398c1bce"
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent3/semantic_assertion_delta_manifest.json",
+      "status": "??",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "Existing data or receipt; inspect policy and provenance before staging",
+      "sha256": "cb54b64706f5f10e727db55ce77069a96ca11a7a29fa1b2dd1e99bd43fecbf89"
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent3/semantic_assertions.jsonl",
+      "status": "??",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "Existing data or receipt; inspect policy and provenance before staging",
+      "sha256": "5c904af624d149a06dc55aeedf4702b5418e21a0bba32a9d56797b238fd08e7e"
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent3/semantic_assertions_withheld.jsonl",
+      "status": "??",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "Existing data or receipt; inspect policy and provenance before staging",
+      "sha256": "e60203def20de2db3a8fa43897d9003608c1dbde889784fc660f78d688c15967"
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent3/semantic_review_frame.jsonl",
+      "status": "??",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "Existing data or receipt; inspect policy and provenance before staging",
+      "sha256": "2c696aeae5a85601408f32536b6f7dee0f75b350718def1b6e183e66243c57d7"
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent3/semantic_review_frame_manifest.json",
+      "status": "??",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "Existing data or receipt; inspect policy and provenance before staging",
+      "sha256": "2c6c2db09242d0501509ffbcca755039d0021ec723bafc054ef03ee0e1033205"
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent3/text_versions_manifest.json",
+      "status": "??",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "Existing data or receipt; inspect policy and provenance before staging",
+      "sha256": "96baa079354f2bea15e2a4d8bab13234efa90c52b5aa3e511ef0ee144820bd84"
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent3/text_versions_search_derivative.jsonl",
+      "status": "??",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "Existing data or receipt; inspect policy and provenance before staging",
+      "sha256": "eb442cc6972f69f4542d82de3b7c6c0e813e887dc0a4a1d343c816c1c5a5b4d4"
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent3/text_versions_yv_unaccented_derived.jsonl",
+      "status": "??",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "Existing data or receipt; inspect policy and provenance before staging",
+      "sha256": "2a516931e41b3c5d711f155b94a57c963f1bade34d58ac3c7e927eccac0fecd9"
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent4/agent4_build_body.py",
+      "status": "??",
+      "classification": "UNKNOWN",
+      "reason": "Preserved; requires scope review before staging",
+      "sha256": "d9e7dbbcd5a1f6d0ebcb3bcc716da3dc54b1be17ca601c70f9481068c04f6ae1"
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent4/agent4_overlay.py",
+      "status": "??",
+      "classification": "UNKNOWN",
+      "reason": "Preserved; requires scope review before staging",
+      "sha256": "5c1d7d377993865206d6d3978f4882816d0625e21e6621ef6428d4d449b60f26"
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent4/agent4_verdicts.py",
+      "status": "??",
+      "classification": "UNKNOWN",
+      "reason": "Preserved; requires scope review before staging",
+      "sha256": "52876adfeb69e8fdc034357cb9af0dec82d2e13fbe7926a639e44b8053a73da2"
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent4/audumbara_sense_audit.json",
+      "status": "??",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "Existing data or receipt; inspect policy and provenance before staging",
+      "sha256": "b0323ef2cd91fbdb87306a3c714435d02e66d205e785deb7d57bf114b14716b7"
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent4/build_agent4_ritual_closure.py",
+      "status": "??",
+      "classification": "UNKNOWN",
+      "reason": "Preserved; requires scope review before staging",
+      "sha256": "ce8033c3846bf2e7bd06c6fd4d70de4d3b43539ee1191f5a31c6ca980b6c05bf"
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent4/closure_report.json",
+      "status": "??",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "Existing data or receipt; inspect policy and provenance before staging",
+      "sha256": "c7187f7b1080ed4069d666c514a0543332f01f3893ecdf9b831eeb6b0a286856"
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent4/manifest.json",
+      "status": "??",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "Existing data or receipt; inspect policy and provenance before staging",
+      "sha256": "5ca332a408a308bf503749a9bef063315a3d48ec3b9d70a164e4843765247399"
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent4/material_culture_by_ritual_context.json",
+      "status": "??",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "Existing data or receipt; inspect policy and provenance before staging",
+      "sha256": "562bf5fd5fb67809d60e0fd26a25bfa89ab74651bba9c758261323dc43a0aa34"
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent4/measurements.json",
+      "status": "??",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "Existing data or receipt; inspect policy and provenance before staging",
+      "sha256": "fbed8eec858ab0394e9032ee3db5a7cd9d7e68da18ffcf2eeb7cf948a5dd8adb"
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent4/performed_by.jsonl",
+      "status": "??",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "Existing data or receipt; inspect policy and provenance before staging",
+      "sha256": "f4ad82bcee76411038f28b86121ea3f7be534fd2e494104fd448030fc687dab6"
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent4/proposed_mutations.json",
+      "status": "??",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "Existing data or receipt; inspect policy and provenance before staging",
+      "sha256": "58d3cdb3620ee41712520c40ddc943ca90adb3cd65692cacef1c8a45d9bb1a07"
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent4/receives_offering.jsonl",
+      "status": "??",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "Existing data or receipt; inspect policy and provenance before staging",
+      "sha256": "647c98dacd5c5a9abe02e5da3d343cb034cd874ef0fc392c76a455d459d5fb5c"
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent4/receives_offering_rejected.jsonl",
+      "status": "??",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "Existing data or receipt; inspect policy and provenance before staging",
+      "sha256": "7514787419963ab230eaabd66e365529b14dda0f5625dce479a286d20f0f256f"
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent4/ritual_context.jsonl",
+      "status": "??",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "Existing data or receipt; inspect policy and provenance before staging",
+      "sha256": "0ae5a662ccfd962c6b36dab8af0212f584db9c0d0e093a5066304fd692eda499"
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent4/ritual_context_precision.json",
+      "status": "??",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "Existing data or receipt; inspect policy and provenance before staging",
+      "sha256": "b11bfcf6772c4d3ffc4a50c22f49a22bd7cf334b0c9b6d5e376fc92cfe3db2f3"
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent4/ritual_context_vocabulary.json",
+      "status": "??",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "Existing data or receipt; inspect policy and provenance before staging",
+      "sha256": "2040e0168234c41f99123d03c81ffcb9941f514d712b536e080a6f0835f74bc0"
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent4/ritual_registry_overlay.json",
+      "status": "??",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "Existing data or receipt; inspect policy and provenance before staging",
+      "sha256": "9c5440dc69d37346c120dd1005af2295555295ac935e7819ea3a2a8bdb3f6ebb"
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent4/ritual_roles.jsonl",
+      "status": "??",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "Existing data or receipt; inspect policy and provenance before staging",
+      "sha256": "c292cb4ca1d0fb48fa368da81b1527e88675fe3559145f82a41a13b2defc069d"
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent4/uses_object_adjudication.jsonl",
+      "status": "??",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "Existing data or receipt; inspect policy and provenance before staging",
+      "sha256": "52a7cdc7035ce007b987bc96843d8803f446d8616b5095f05d0cdcbe4fbdfaf9"
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent4/yupa_alias_fix.json",
+      "status": "??",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "Existing data or receipt; inspect policy and provenance before staging",
+      "sha256": "1b0b05b5ef433a14e29f368a4fe724aa962f16dcdabc857916c1fc035d4dff40"
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent5/apply_whitney_absence.py",
+      "status": "??",
+      "classification": "UNKNOWN",
+      "reason": "Preserved; requires scope review before staging",
+      "sha256": "481cde32e90c7183638a24a4e118b02c7f6fa76a5d30b0fceb33147a82e9d3fe"
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent5/benchmark_reprobe.json",
+      "status": "??",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "Existing data or receipt; inspect policy and provenance before staging",
+      "sha256": "40fd72ef83da805883ad5d08d0c3b545d30a98af1392365a6e9d774e45cf05e1"
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent5/benchmark_reprobe.py",
+      "status": "??",
+      "classification": "UNKNOWN",
+      "reason": "Preserved; requires scope review before staging",
+      "sha256": "51395e0f35a2e4f215a9b8bf4d7a9e4768514bc054ed9829bc859aba9ddb8676"
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent5/build_artifact.py",
+      "status": "??",
+      "classification": "UNKNOWN",
+      "reason": "Preserved; requires scope review before staging",
+      "sha256": "822688dca896c44108654e4810f5c31b7656c6c43d953b6fa864b6de1a504318"
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent5/build_census_row_patch.py",
+      "status": "??",
+      "classification": "UNKNOWN",
+      "reason": "Preserved; requires scope review before staging",
+      "sha256": "065742afd652f80633fce556b7162512a5f94b9bd91ca3145439e687a7574f74"
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent5/build_whitney_absence_rows.py",
+      "status": "??",
+      "classification": "UNKNOWN",
+      "reason": "Preserved; requires scope review before staging",
+      "sha256": "b628357c293d8b246ed76efc07d9f216bfb3a539881ede846ad5e3acd0928992"
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent5/findings.body.json",
+      "status": "??",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "Existing data or receipt; inspect policy and provenance before staging",
+      "sha256": "710bdd544358882c8f64f39b41c4f7a39c3a8346a24ec90b18a69a6c7911c348"
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent5/findings.json",
+      "status": "??",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "Existing data or receipt; inspect policy and provenance before staging",
+      "sha256": "fbcc8e0ba88101768116b3d26f7051bedb42c1d46af0c530b8ed64ad2400519a"
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent5/findings.json.sha256",
+      "status": "??",
+      "classification": "UNKNOWN",
+      "reason": "Preserved; requires scope review before staging",
+      "sha256": "764d2d2337699d0c421f8d4131aacf063d79626ab76e4ba0abc880ea88b51c5a"
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent5/m_attrprops.py",
+      "status": "??",
+      "classification": "UNKNOWN",
+      "reason": "Preserved; requires scope review before staging",
+      "sha256": "80216dc144283026e74cb50088306285e678b930b587af3671e6c2bd73c165f8"
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent5/m_disclosure.py",
+      "status": "??",
+      "classification": "UNKNOWN",
+      "reason": "Preserved; requires scope review before staging",
+      "sha256": "e6689765a1f523ddc0add81085027001a975144a452dffc1106381951c53aa86"
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent5/m_label.py",
+      "status": "??",
+      "classification": "UNKNOWN",
+      "reason": "Preserved; requires scope review before staging",
+      "sha256": "bba83cbbeacca68ed1125af2966fd37b5caafb311a529576665ea57e1305c6cd"
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent5/m_ma.py",
+      "status": "??",
+      "classification": "UNKNOWN",
+      "reason": "Preserved; requires scope review before staging",
+      "sha256": "1a5fe79ed3de3c0c8254e78f07275d2cb5d3d01dad439b1b36f163658ea889d5"
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent5/m_seers.py",
+      "status": "??",
+      "classification": "UNKNOWN",
+      "reason": "Preserved; requires scope review before staging",
+      "sha256": "f449709c2fb9ad7a7dc20ea661d362e1913d8cfc552df2a0432cf55a5caf6c2a"
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent5/m_tierc.py",
+      "status": "??",
+      "classification": "UNKNOWN",
+      "reason": "Preserved; requires scope review before staging",
+      "sha256": "59d710885f083ea07f98b580207433ef9cf2ed4f3a3fde4e5b49a7dd8dca7047"
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent5/m_tierc11.py",
+      "status": "??",
+      "classification": "UNKNOWN",
+      "reason": "Preserved; requires scope review before staging",
+      "sha256": "10ea8f2247686a46c870eb63bea7c386d4310a5b5b444357c4a48fb937deb9bf"
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent5/m_whitney.py",
+      "status": "??",
+      "classification": "UNKNOWN",
+      "reason": "Preserved; requires scope review before staging",
+      "sha256": "7aed2994cfd5c84a7cbfd1f577fe71877fc30fa056f7d558c93a28eb6e21675e"
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent5/m_whitney_absence.py",
+      "status": "??",
+      "classification": "UNKNOWN",
+      "reason": "Preserved; requires scope review before staging",
+      "sha256": "cb8ad0e69bfc5a162da0022d04a5c1d0416e259b1a0f703997cca383c2f4c509"
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent5/m_whitney_keys.py",
+      "status": "??",
+      "classification": "UNKNOWN",
+      "reason": "Preserved; requires scope review before staging",
+      "sha256": "83898c794dc674996f2c6cfd868b2c9739f5b545127cb87d6e28dcfe1ba0837d"
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent5/measure_01.json",
+      "status": "??",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "Existing data or receipt; inspect policy and provenance before staging",
+      "sha256": "e5396de3f03fb0d58d2bd7d100ef0d6bd9548342a83bc97ce0de9bc26777ce11"
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent5/measure_01.py",
+      "status": "??",
+      "classification": "UNKNOWN",
+      "reason": "Preserved; requires scope review before staging",
+      "sha256": "6cd35d206125c7fab204e1e4040506ce7c130a7210f2a3e85ff3d8d9637e1288"
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent5/measure_02.py",
+      "status": "??",
+      "classification": "UNKNOWN",
+      "reason": "Preserved; requires scope review before staging",
+      "sha256": "4b1f4b24db81fcfaa1611c46dd1accda86487e9f07412fcc0127f85536db61f1"
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent5/measure_03.py",
+      "status": "??",
+      "classification": "UNKNOWN",
+      "reason": "Preserved; requires scope review before staging",
+      "sha256": "aa800459a65cbf3b9c1c87552e05b917ea0b3fb4b2a15041f87e8de0cf627fb6"
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent5/measure_confidence.json",
+      "status": "??",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "Existing data or receipt; inspect policy and provenance before staging",
+      "sha256": "39a68b24196e520e8a6a2d62d1f20ac9bf9902df51bb4a490828f10d9b221b7b"
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent5/measure_confidence.py",
+      "status": "??",
+      "classification": "UNKNOWN",
+      "reason": "Preserved; requires scope review before staging",
+      "sha256": "2d3acf223f182ac5c8ad7cdf673df5e4e9ff4a36ec5155acb5636cfc66ac35da"
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent5/measure_disclosure.json",
+      "status": "??",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "Existing data or receipt; inspect policy and provenance before staging",
+      "sha256": "a323169ae8840ac2ca519d33cb4659dbdd5adfc0ed357cd47800d5551dae5707"
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent5/measure_gold.py",
+      "status": "??",
+      "classification": "UNKNOWN",
+      "reason": "Preserved; requires scope review before staging",
+      "sha256": "a817d8ac4a8de1e7a36f77b398002d2f150979f932a0c07dd454d108f6fe9fb5"
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent5/measure_humanclaims.py",
+      "status": "??",
+      "classification": "UNKNOWN",
+      "reason": "Preserved; requires scope review before staging",
+      "sha256": "e8e1a947bae3d2e687b0648deed4294e4c7b5837b4fc5c1c64fb024cacfbd818"
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent5/proposed_mutations.json",
+      "status": "??",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "Existing data or receipt; inspect policy and provenance before staging",
+      "sha256": "31fa63e8c13add7ebf93e346fd63af2cac9db2b847539de7142438626f795ddc"
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent5/whitney_absence_conflict.json",
+      "status": "??",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "Existing data or receipt; inspect policy and provenance before staging",
+      "sha256": "12d39575b600c0936aa36310deb91177628dcd97b32dffd183c3757ec667433e"
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent5/whitney_absence_parameters.json",
+      "status": "??",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "Existing data or receipt; inspect policy and provenance before staging",
+      "sha256": "a96de45661173a600f2f1ce9a7e8ff35443e4daa08181027165624b26697372b"
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent5/whitney_absence_rows.jsonl",
+      "status": "??",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "Existing data or receipt; inspect policy and provenance before staging",
+      "sha256": "617e730b4eb20b713751d8bf30358f6afd2f6b9f222fc8a519d36b7ceeb9519c"
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent5/whitney_census_row_patch.jsonl",
+      "status": "??",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "Existing data or receipt; inspect policy and provenance before staging",
+      "sha256": "e60f01e65ae561bc1710ee5ed1a1ec3f9054e209d79cf276363c72b07f3d5814"
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent5/whitney_keys.json",
+      "status": "??",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "Existing data or receipt; inspect policy and provenance before staging",
+      "sha256": "ee25275acd2411e9b384f00993faa4f943d08012c0a0e46ae2561271e2704529"
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent6/REBUILD_ORDER.json",
+      "status": "??",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "Existing data or receipt; inspect policy and provenance before staging",
+      "sha256": "374804eaff6d411d765eff9a7be9f36535d5993bd837e0642b4cf564d7791854"
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent6/SHA256SUMS.txt",
+      "status": "??",
+      "classification": "UNKNOWN",
+      "reason": "Preserved; requires scope review before staging",
+      "sha256": "a584edce15542f70f20b1173fdc55179dc3c6b670133105e306ea050d5fab2b4"
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent6/gap001_coverage_dimensions.json",
+      "status": "??",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "Existing data or receipt; inspect policy and provenance before staging",
+      "sha256": "5d150b09d5fee38d88d6cdb1a66dd49dee4cc22a2f1ee435d3c440b8b95c8d00"
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent6/gap002_capability_catalogue.json",
+      "status": "??",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "Existing data or receipt; inspect policy and provenance before staging",
+      "sha256": "8ba1d166939564d1cb87ba30289b2d00645980afd05860f3dcacae4bd3ec7154"
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent6/gap003_visualization_aggregates.json",
+      "status": "??",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "Existing data or receipt; inspect policy and provenance before staging",
+      "sha256": "34e7f09b78be42915b4dbbbd00c6b59a47a977235e79dde72f1c26a57b3055f6"
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent6/gap004_retrieval_before_after.json",
+      "status": "??",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "Existing data or receipt; inspect policy and provenance before staging",
+      "sha256": "955c39ec075c8069984c4d8e007e5ce9ca61ccfc01a36b824a0b687c3fe92683"
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent6/gap005_canonical_release_manifest.json",
+      "status": "??",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "Existing data or receipt; inspect policy and provenance before staging",
+      "sha256": "d76b5c22cce9bd9f53a14d92f435b3c379e27b1fecaf3990371f18cab0a13bf3"
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent6/gap005_sv_apparatus_corrections.json",
+      "status": "??",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "Existing data or receipt; inspect policy and provenance before staging",
+      "sha256": "0998def3365c4f8ff821bd59826b72b15c941dc0f11b0ceeac1bfc5c2cc416b1"
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent6/proposed_mutations.json",
+      "status": "??",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "Existing data or receipt; inspect policy and provenance before staging",
+      "sha256": "5ccd8a2f8dc20272f5ef9cec30d0f8c5c478239a40a2751a350a54d5e035b958"
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent6/public_truth_audit.json",
+      "status": "??",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "Existing data or receipt; inspect policy and provenance before staging",
+      "sha256": "9e2162cf648e20395431c52e5aa0d79cc362ed29a2f769acffce2b515ba33268"
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent6/search_normalized_fold.json",
+      "status": "??",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "Existing data or receipt; inspect policy and provenance before staging",
+      "sha256": "ead99d09c4cab1010c0c7f1b95964268c3cb72956fd210f4b4562e7aead47593"
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent7/alignment_confidence.json",
+      "status": "??",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "Existing data or receipt; inspect policy and provenance before staging",
+      "sha256": "a54ba6c8e3414f79122df19c9fbe192bb6e45124beb27531d6370fc085b0777c"
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent7/alignment_confidence.py",
+      "status": "??",
+      "classification": "UNKNOWN",
+      "reason": "Preserved; requires scope review before staging",
+      "sha256": "391a6bbc7f41ed6bf99ad97199f571f90df9a1cac2c7978668fb848d120ed2f2"
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent7/alignment_confidence_rows.jsonl",
+      "status": "??",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "Existing data or receipt; inspect policy and provenance before staging",
+      "sha256": "e589647ce400f477ef6855db2ecc6f00cc85740ee5b1bf7c6313ab679a5c2f97"
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent7/av_residual_full.py",
+      "status": "??",
+      "classification": "UNKNOWN",
+      "reason": "Preserved; requires scope review before staging",
+      "sha256": "be38c27b51514242a8968b3c43d31b159effacff9eff8193b96fab0c2c9f87a8"
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent7/av_residual_scan.json",
+      "status": "??",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "Existing data or receipt; inspect policy and provenance before staging",
+      "sha256": "e1a689f0c7058798ae160adc067d77ea1df70a8400ececdced030b6aa05f3706"
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent7/build_closure_report.py",
+      "status": "??",
+      "classification": "UNKNOWN",
+      "reason": "Preserved; requires scope review before staging",
+      "sha256": "6cbb470582ae988e55145fe515edc125bdd14d8b247a993df155fbb7e07f8fb0"
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent7/build_manifest.py",
+      "status": "??",
+      "classification": "UNKNOWN",
+      "reason": "Preserved; requires scope review before staging",
+      "sha256": "39d079838502cc1c81e55ce07f120d8eebc67df519935238accd043b2a6aecfe"
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent7/build_proposed_mutations.py",
+      "status": "??",
+      "classification": "UNKNOWN",
+      "reason": "Preserved; requires scope review before staging",
+      "sha256": "345f73f166e451072a93ed72bbf05dadcbb12d1e373120149ca2438d5fa75da9"
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent7/build_residual_disposition.py",
+      "status": "??",
+      "classification": "UNKNOWN",
+      "reason": "Preserved; requires scope review before staging",
+      "sha256": "9c792fc560dfeffd503e99a34abae86c03176c3894404f5a04fa34dfdaa06ed4"
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent7/build_rows.py",
+      "status": "??",
+      "classification": "UNKNOWN",
+      "reason": "Preserved; requires scope review before staging",
+      "sha256": "4bcf1bc49617d79b549604dc41e8b0fdc5e98a94d368e44a93ba4673392ed99d"
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent7/closure_report.json",
+      "status": "??",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "Existing data or receipt; inspect policy and provenance before staging",
+      "sha256": "1bc23e7adf6a5f3288e8d00e5b024560a279823018e1677a4f87dee248a6e441"
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent7/defects_found.json",
+      "status": "??",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "Existing data or receipt; inspect policy and provenance before staging",
+      "sha256": "d185646aa913755b1db54212f371bb89a5d2b5f4338852dd0bd20fb5c1e5a197"
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent7/embedded_label_sweep.json",
+      "status": "??",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "Existing data or receipt; inspect policy and provenance before staging",
+      "sha256": "14491580ee5ab249166eeefc96003a18ba036ca0bf1fc6510424949ed8ff6376"
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent7/embedded_label_sweep.py",
+      "status": "??",
+      "classification": "UNKNOWN",
+      "reason": "Preserved; requires scope review before staging",
+      "sha256": "5d547d71a67e2ec3ab7a513d50a59bbc8cad63c36d6a7d530fafa84c652b7948"
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent7/gate_regression.json",
+      "status": "??",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "Existing data or receipt; inspect policy and provenance before staging",
+      "sha256": "a498a000a0880b8ed769d6b52cc80af4579ff37a84c7c3b86facba39945f8f64"
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent7/gate_regression.py",
+      "status": "??",
+      "classification": "UNKNOWN",
+      "reason": "Preserved; requires scope review before staging",
+      "sha256": "c8d0d2aee64ee08035a10fa3ddef1f18ad5e908052f9fd05ecca4da013544c1c"
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent7/gate_run_control/gate_b_failures.jsonl",
+      "status": "??",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "Existing data or receipt; inspect policy and provenance before staging",
+      "sha256": "7a1b48c9dc27e7f5b9ec29902cecca69d3cdac0dd23c6027a21c71d4bdbc4d97"
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent7/gate_run_control/gate_b_rows.jsonl",
+      "status": "??",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "Existing data or receipt; inspect policy and provenance before staging",
+      "sha256": "dfea6f42f7f70a79331115eccaf00abb699bdc0114ea2335c898fb8d56ff87e1"
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent7/gate_run_control/gate_b_summary.json",
+      "status": "??",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "Existing data or receipt; inspect policy and provenance before staging",
+      "sha256": "6ca22164a16864a37e7e70ce1ba1e62e0252e16ec6138b6be9d25a9e09b066e9"
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent7/gate_run_control/gate_c_findings.jsonl",
+      "status": "??",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "Existing data or receipt; inspect policy and provenance before staging",
+      "sha256": "faa0f0ff70237fb739bbe3b85dfd793f123616f9fe426bf39cd4934237ebddbb"
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent7/gate_run_control/gate_c_rows.jsonl",
+      "status": "??",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "Existing data or receipt; inspect policy and provenance before staging",
+      "sha256": "91fadfa947ee48e128782d35b3a24343eb48ff24263ea8abeb678b64047b7137"
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent7/gate_run_control/gate_c_summary.json",
+      "status": "??",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "Existing data or receipt; inspect policy and provenance before staging",
+      "sha256": "53d693d10fb05a1e1d75333baf7c5017d87d9504dc6a5a84e61b0e535f63bcc0"
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent7/gate_run_treatment/gate_b_failures.jsonl",
+      "status": "??",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "Existing data or receipt; inspect policy and provenance before staging",
+      "sha256": "3f9fabf9b9077179d34c1718b69e3a0a245189a32c3d5c3c8a2ff9c80a3465ba"
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent7/gate_run_treatment/gate_b_rows.jsonl",
+      "status": "??",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "Existing data or receipt; inspect policy and provenance before staging",
+      "sha256": "e7f4e1223dd2f363cc75ed1a5882058aec5232d52c0f58cbc22f257793c2964e"
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent7/gate_run_treatment/gate_b_summary.json",
+      "status": "??",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "Existing data or receipt; inspect policy and provenance before staging",
+      "sha256": "9a59f35456a7009f1dd61d660a9c967c8e2eeca8ddac45e965808b9346a8bd30"
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent7/gate_run_treatment/gate_c_findings.jsonl",
+      "status": "??",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "Existing data or receipt; inspect policy and provenance before staging",
+      "sha256": "faa0f0ff70237fb739bbe3b85dfd793f123616f9fe426bf39cd4934237ebddbb"
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent7/gate_run_treatment/gate_c_rows.jsonl",
+      "status": "??",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "Existing data or receipt; inspect policy and provenance before staging",
+      "sha256": "92c55d4e8b6ae42ac5ae4f3663ddc867a508a7b69aa3461d225673588e0de346"
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent7/gate_run_treatment/gate_c_summary.json",
+      "status": "??",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "Existing data or receipt; inspect policy and provenance before staging",
+      "sha256": "2b40e4c436a340bd355a58d2574174a4aa628780627b864b0b4d0cfabe92a624"
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent7/graph_facts.json",
+      "status": "??",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "Existing data or receipt; inspect policy and provenance before staging",
+      "sha256": "bdaffce57ff9e79a8e0b12f35231a2a13c6ad21bf0ff36999c17662c3194d634"
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent7/manifest.json",
+      "status": "??",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "Existing data or receipt; inspect policy and provenance before staging",
+      "sha256": "4f5e54773b92dd639459f2fc8501a0b2c30e222428e1e1e42c3ee7d9d682bfdc"
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent7/proposed_mutations.json",
+      "status": "??",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "Existing data or receipt; inspect policy and provenance before staging",
+      "sha256": "2e8e46997a267c0ffdceef80838091175fd18957ccf936454dee88ff3a2569f0"
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent7/rejected.jsonl",
+      "status": "??",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "Existing data or receipt; inspect policy and provenance before staging",
+      "sha256": "5068cf89dc0cba362d9c426b4136a97d73863d2be7136352b3ba999dd7064000"
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent7/residual_disposition.json",
+      "status": "??",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "Existing data or receipt; inspect policy and provenance before staging",
+      "sha256": "7b13bbac80769c4f7e3b2353bc9954e543ec44e4f692b0a9cd35c7171dcf54a8"
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent7/rows.jsonl",
+      "status": "??",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "Existing data or receipt; inspect policy and provenance before staging",
+      "sha256": "e81d01320edc0d1161b3f276d881ad3ad274a0c53975f82462c680db19807103"
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent7/rv_addressing_probe.json",
+      "status": "??",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "Existing data or receipt; inspect policy and provenance before staging",
+      "sha256": "fe43928401c979ebf52ed43ff3e12f6ef5cf941f01e507a45b9c69ff8c5df08a"
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent7/rv_addressing_probe.py",
+      "status": "??",
+      "classification": "UNKNOWN",
+      "reason": "Preserved; requires scope review before staging",
+      "sha256": "2d36e2f452f09ae4bedd90f748c8c1f279d531b585ff3dadcf17b2916cf54df9"
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent7/sv_running_number_derivation.json",
+      "status": "??",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "Existing data or receipt; inspect policy and provenance before staging",
+      "sha256": "57e05b43f579a52f4ca15784f6dd7aeaa14f312ad49d57c5c861d0511732d318"
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent7/sv_running_number_derivation.py",
+      "status": "??",
+      "classification": "UNKNOWN",
+      "reason": "Preserved; requires scope review before staging",
+      "sha256": "7bcf3e4710ce2aa891db6417f86b6930f2fec402adb11ed9617c1d237cae0745"
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent7/sv_running_number_probe.json",
+      "status": "??",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "Existing data or receipt; inspect policy and provenance before staging",
+      "sha256": "ade32d5cc94843ce4b38e73d8ad4d243c474f8b427b95bd035532e4894b383be"
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent7/sv_running_number_probe.py",
+      "status": "??",
+      "classification": "UNKNOWN",
+      "reason": "Preserved; requires scope review before staging",
+      "sha256": "0c521b4d7d9b1378be1773b304fe8510793c541fab077bd04c99e058537b4b13"
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent7/uncovered_sets.json",
+      "status": "??",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "Existing data or receipt; inspect policy and provenance before staging",
+      "sha256": "cea3082f08b14899d24bffbcd92dfe4e47d84447fc41bcc27250640455f4febc"
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent7/yv_provenance_rederivation.json",
+      "status": "??",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "Existing data or receipt; inspect policy and provenance before staging",
+      "sha256": "ca6ebcb4b4a7223da5d15095eec56ebcedae070467d3fc3da23851cadaa53e73"
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent7/yv_provenance_rederivation.py",
+      "status": "??",
+      "classification": "UNKNOWN",
+      "reason": "Preserved; requires scope review before staging",
+      "sha256": "c65b26cd43888254bd1a8d87ed9a6a76baa25bedce25889e7245d83d7707424c"
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent8/audit_findings.json",
+      "status": "??",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "Existing data or receipt; inspect policy and provenance before staging",
+      "sha256": "8d54ea4b1018c280e4198f78aa3c001582bfe846eb5054cd0bacc0c62fdd1721"
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent8/fold_probe.txt",
+      "status": "??",
+      "classification": "UNKNOWN",
+      "reason": "Preserved; requires scope review before staging",
+      "sha256": "112487481119be3833b6c5ee1316ae54734a938aaa69f2740541c467ac2719e8"
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent8/m_untranslated.py",
+      "status": "??",
+      "classification": "UNKNOWN",
+      "reason": "Preserved; requires scope review before staging",
+      "sha256": "10443c475c5d76cbd2906d1170dfdfebe710981c4efd6a4ff8ce37a449ea0c12"
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent8/m_world_exact.py",
+      "status": "??",
+      "classification": "UNKNOWN",
+      "reason": "Preserved; requires scope review before staging",
+      "sha256": "fa6c92f68839fdf55f11e8a4d60840b38373f6f78aa392fe957d3152a398108d"
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent8/m_world_inputs.py",
+      "status": "??",
+      "classification": "UNKNOWN",
+      "reason": "Preserved; requires scope review before staging",
+      "sha256": "6a833ca67986bfd9c025b6f548806180987cb36b02f85daf6ddd8dda3beddbf0"
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent8/probe_agent3_fold.py",
+      "status": "??",
+      "classification": "UNKNOWN",
+      "reason": "Preserved; requires scope review before staging",
+      "sha256": "5d55265284e526fb19b9218bb3bb44e56ea42731f0b358f9875e7cfd71310064"
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent8/probe_scorecard.py",
+      "status": "??",
+      "classification": "UNKNOWN",
+      "reason": "Preserved; requires scope review before staging",
+      "sha256": "b178e35076af9e796ad7689d1b786da551b8f243f1106e01fd58e6e7458aa406"
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent8/registry_closure_audit.BEFORE_AGENT8.json",
+      "status": "??",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "Existing data or receipt; inspect policy and provenance before staging",
+      "sha256": "5809b94b6d3665ac54c722a463b24a7b6874e4a5abfa0b7c0ab8cf13c18c77dd"
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent8/scorecard_probe.json",
+      "status": "??",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "Existing data or receipt; inspect policy and provenance before staging",
+      "sha256": "407215eafffa4238269f7431be61db47cf26ca6083495099f56a0484581a8ef0"
+    },
+    {
+      "path": "data/staging/final_closure_sprint/agent8/world_input_coverage.json",
+      "status": "??",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "Existing data or receipt; inspect policy and provenance before staging",
+      "sha256": "0ea1e3f7b1c0d0f247b20256eec5a478da957cf67a9cbcb17629f1d00663dd8d"
+    },
+    {
+      "path": "data/staging/final_closure_sprint/backup_manifest.json",
+      "status": "??",
+      "classification": "TEMPORARY",
+      "reason": "Local execution/backup artifact; retain, do not commit",
+      "sha256": "6754b87ad4beb94e2fedb1cd05cf2f7bbee8744cf4c1495d1f2179ef949bbc4d"
+    },
+    {
+      "path": "data/staging/final_closure_sprint/baseline.json",
+      "status": "??",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "Existing data or receipt; inspect policy and provenance before staging",
+      "sha256": "0b30b458a998c66885435115960f8d87836d4dc7bd1f0924c1369d126428a8d9"
+    },
+    {
+      "path": "data/staging/final_closure_sprint/gap_assignment.json",
+      "status": "??",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "Existing data or receipt; inspect policy and provenance before staging",
+      "sha256": "9a1559c33b72c282e73245cc3f1006d0ea4ba0ba05cf506d28011460cf4fe7f0"
+    },
+    {
+      "path": "data/staging/final_closure_sprint/graph_fingerprint_before.json",
+      "status": "??",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "Existing data or receipt; inspect policy and provenance before staging",
+      "sha256": "01659bcb926d007bdc1ee1815cf904174b941d7cbfe90c5aaad4012cad3cebd5"
+    },
+    {
+      "path": "data/staging/final_closure_sprint/lead/audio_engineering.json",
+      "status": "??",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "Existing data or receipt; inspect policy and provenance before staging",
+      "sha256": "2d1160c265bc2fb304caadd01b438899ee611fc5419f5930349b3194df05530f"
+    },
+    {
+      "path": "data/staging/final_closure_sprint/lead/dependency_declaration_fix.json",
+      "status": "??",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "Existing data or receipt; inspect policy and provenance before staging",
+      "sha256": "f06363dce1a6c383c1782c74857ba74f8701139bb0e5aaef2d667a35afa1eb45"
+    },
+    {
+      "path": "data/staging/final_closure_sprint/lead/final_state.json",
+      "status": "??",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "Existing data or receipt; inspect policy and provenance before staging",
+      "sha256": "48c1b343a3da774131ab333d093b3dce3dfbaa566a807588e0ba1b3f6c30a49f"
+    },
+    {
+      "path": "data/staging/final_closure_sprint/lead/integration_plan.json",
+      "status": "??",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "Existing data or receipt; inspect policy and provenance before staging",
+      "sha256": "a60ffc5fb3e1dcc0b40a9f111e04a4db28bfbd89a3927145f3ad06e199b75758"
+    },
+    {
+      "path": "data/staging/final_closure_sprint/lead/integration_receipt.json",
+      "status": "??",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "Existing data or receipt; inspect policy and provenance before staging",
+      "sha256": "9005f634e97cbe389b4cb670bd6c1f4a129e62c0e5ca7da2003fdfd71717173f"
+    },
+    {
+      "path": "data/staging/final_closure_sprint/lead/rulings.json",
+      "status": "??",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "Existing data or receipt; inspect policy and provenance before staging",
+      "sha256": "9f33cc5e930a5035b24842a1a52c8d4b30f7f3bd4d5fba5cdaf3086e795648cf"
+    },
+    {
+      "path": "data/staging/final_closure_sprint/lead/test_harness_fix.json",
+      "status": "??",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "Existing data or receipt; inspect policy and provenance before staging",
+      "sha256": "ffc958379e08631b50c5e336c637e8d4cb4e3c3b6e92a8f3de73dc5f8a4af79e"
+    },
+    {
+      "path": "data/staging/final_closure_sprint/registry_before.json",
+      "status": "??",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "Existing data or receipt; inspect policy and provenance before staging",
+      "sha256": "aedf569bbcfb379e7f64f08f248d5036f2759010f9f86d73858ef0c471d8c804"
+    },
+    {
+      "path": "data/staging/final_stabilization/formula_identity_impact.json",
+      "status": "??",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "Existing data or receipt; inspect policy and provenance before staging",
+      "sha256": "63c723a22d8b3b83993df198b723e4055a11542148a02a908b201e394e32d090"
+    },
+    {
+      "path": "data/staging/final_stabilization/immutable_mutation_plan.json",
+      "status": "??",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "Existing data or receipt; inspect policy and provenance before staging",
+      "sha256": "b5cdaa34028001598c933d1e53580baa6fb3af0d1f3e13f057bedfd8bd4c37d2"
+    },
+    {
+      "path": "data/staging/final_stabilization/neo4j_backup_20260917/neo4j.dump",
+      "status": "??",
+      "classification": "TEMPORARY",
+      "reason": "Local execution/backup artifact; retain, do not commit",
+      "sha256": "eccbba4926b2e433637cc41cec95fc49a009dd8361029d61499247cb36428555"
+    },
+    {
+      "path": "data/staging/final_stabilization/provenance_display_contract_receipt.json",
+      "status": "??",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "Existing data or receipt; inspect policy and provenance before staging",
+      "sha256": "489041a72ad89781f8e34833a1bcd53d0e0003ddf568edbb0c2eddb65f69a723"
+    },
+    {
+      "path": "frontend/tests/unit/world-figures.test.ts",
+      "status": "??",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "Existing implementation, test, or documentation change; candidate only, not staging authorization",
+      "sha256": "e0de69e8cae4e0d3a195b2f10816e9f16c1106f45245aee8e0f1f672764b1048"
+    },
+    {
+      "path": "scripts/agent1_final_closure.py",
+      "status": "??",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "Existing implementation, test, or documentation change; candidate only, not staging authorization",
+      "sha256": "b04e0185d19553534c82282d38d7a24c241b9add68b0398c888e4b0b193bc8e5"
+    },
+    {
+      "path": "scripts/build_agent3_closure_report.py",
+      "status": "??",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "Existing implementation, test, or documentation change; candidate only, not staging authorization",
+      "sha256": "eab45b1bed70e7af5477879ffbd3448a824b32336e69189ea41a4227c7ed9852"
+    },
+    {
+      "path": "scripts/build_agent3_proposed_mutations.py",
+      "status": "??",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "Existing implementation, test, or documentation change; candidate only, not staging authorization",
+      "sha256": "785b2f983387a479c8097ddfc8838da574e2c4779dbb4dfd2aeb66264a07f20d"
+    },
+    {
+      "path": "scripts/build_domain_entity_domains.py",
+      "status": "??",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "Existing implementation, test, or documentation change; candidate only, not staging authorization",
+      "sha256": "6067be585cf3237d11b2defd2b84562e3c313dbed06046410f82a09b22abc15c"
+    },
+    {
+      "path": "scripts/build_lemma_mention_projection.py",
+      "status": "??",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "Existing implementation, test, or documentation change; candidate only, not staging authorization",
+      "sha256": "e9b6e71ef27df611a2e16082f78e10132dd2e08f052b8982e787324b6b72cad7"
+    },
+    {
+      "path": "scripts/build_lexical_nonresolution_reasons.py",
+      "status": "??",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "Existing implementation, test, or documentation change; candidate only, not staging authorization",
+      "sha256": "3ae0b3ae8e1123ea9652024f8e26e495eefddcfb8d27f707e7085991fd55f6d7"
+    },
+    {
+      "path": "scripts/build_semantic_assertion_delta.py",
+      "status": "??",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "Existing implementation, test, or documentation change; candidate only, not staging authorization",
+      "sha256": "71d6ac695813fdd071ce438fcf5e0d9adfaa505d11ccc236470979914575c432"
+    },
+    {
+      "path": "scripts/build_semantic_review_frame.py",
+      "status": "??",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "Existing implementation, test, or documentation change; candidate only, not staging authorization",
+      "sha256": "99d7aeab69d9a510bc5c38ea9180f8965084b1cc24093df504fdad4136261040"
+    },
+    {
+      "path": "scripts/build_text_version_derivatives.py",
+      "status": "??",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "Existing implementation, test, or documentation change; candidate only, not staging authorization",
+      "sha256": "1e720676c42f9544ea1370219c60cdf7b84d5a2c7dc6daeb694a1989c8436e56"
+    },
+    {
+      "path": "scripts/final_stabilization_contracts.py",
+      "status": "??",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "Existing implementation, test, or documentation change; candidate only, not staging authorization",
+      "sha256": "5a7d289ae9c2593626df5c3d2262eb56b5df410aac278d3ea5c89ebbd7f7a626"
+    },
+    {
+      "path": "scripts/formula_identity_impact.py",
+      "status": "??",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "Existing implementation, test, or documentation change; candidate only, not staging authorization",
+      "sha256": "659d2944c0260f0b103ba0de561b655cc87f8d2271b9f77611ecd6c5765d1fd6"
+    },
+    {
+      "path": "scripts/snapshot_canonical_release.py",
+      "status": "??",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "Existing implementation, test, or documentation change; candidate only, not staging authorization",
+      "sha256": "7ba42c2e97db9246d4fbaea9ed4715f7b71796649c20c716cae37490e71e71b4"
+    },
+    {
+      "path": "scripts/verify_agent3_cypher.py",
+      "status": "??",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "Existing implementation, test, or documentation change; candidate only, not staging authorization",
+      "sha256": "896da64d144427545b82b257ef0bdae4d770fe6d3b27ad86434738feffc144a0"
+    },
+    {
+      "path": "src/vedagraph/api/services/capability_probes.py",
+      "status": "??",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "Existing implementation, test, or documentation change; candidate only, not staging authorization",
+      "sha256": "c81a156efeb09f5800cff7d6aaa31af4384b1e969a5837e49d3b27538457bbd5"
+    },
+    {
+      "path": "src/vedagraph/domain/ascription_bridge.py",
+      "status": "??",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "Existing implementation, test, or documentation change; candidate only, not staging authorization",
+      "sha256": "0b60c257a792ccf11f49c297368d08a597b45bfe20c7871855e189bd5505b970"
+    },
+    {
+      "path": "src/vedagraph/domain/deity_eligibility.py",
+      "status": "??",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "Existing implementation, test, or documentation change; candidate only, not staging authorization",
+      "sha256": "d17ddf7397414a506c7f56448dfdcc0cad691505bc6bb84ab19204cac2657c62"
+    },
+    {
+      "path": "src/vedagraph/domain/occurrence_contract.py",
+      "status": "??",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "Existing implementation, test, or documentation change; candidate only, not staging authorization",
+      "sha256": "7d1e4185f8b92302e224c151597c6546fb8b2cda6cbbfe22c15735c8d6721471"
+    },
+    {
+      "path": "src/vedagraph/enrich/pada_parallels.py",
+      "status": "??",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "Existing implementation, test, or documentation change; candidate only, not staging authorization",
+      "sha256": "4156c1a4e739bd158a0b4bfcf3e8d005b4e71266c85bf0b99ad0460f2600e175"
+    },
+    {
+      "path": "src/vedagraph/enrich/reuse_direction.py",
+      "status": "??",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "Existing implementation, test, or documentation change; candidate only, not staging authorization",
+      "sha256": "f545034d1d728a184a776f3c1eac32505d45c47bdb04deebb8e2b53f9d4d9151"
+    },
+    {
+      "path": "src/vedagraph/enrich/text_derivatives.py",
+      "status": "??",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "Existing implementation, test, or documentation change; candidate only, not staging authorization",
+      "sha256": "b69b3ebc3406036ee7878f5dba231643d5d65a2795d66236058b651fc6292172"
+    },
+    {
+      "path": "src/vedagraph/ingest/ocr_labels.py",
+      "status": "??",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "Existing implementation, test, or documentation change; candidate only, not staging authorization",
+      "sha256": "1ab6d2c3287be2409286e665357d19157ace63e9f659b5fc41c2efd43c1cab0d"
+    },
+    {
+      "path": "tests/api/ask/test_product_surface_closure.py",
+      "status": "??",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "Existing implementation, test, or documentation change; candidate only, not staging authorization",
+      "sha256": "a9cdedc7354d4293c660a9848f9e0ce36984ebd5fdb579093ddbf041922e3384"
+    },
+    {
+      "path": "tests/api/test_capability_catalogue.py",
+      "status": "??",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "Existing implementation, test, or documentation change; candidate only, not staging authorization",
+      "sha256": "7f5ed53edb3c97640d29ace047f1381715af92da346be352cd0a0597d3edfe4a"
+    },
+    {
+      "path": "tests/api/test_coverage_dimensions.py",
+      "status": "??",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "Existing implementation, test, or documentation change; candidate only, not staging authorization",
+      "sha256": "111dfa2c4d144c45312d985bf0ec50fc687cbad5a950a0bf54e986a35ec1fdba"
+    },
+    {
+      "path": "tests/api/test_cross_veda_granularity_and_direction.py",
+      "status": "??",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "Existing implementation, test, or documentation change; candidate only, not staging authorization",
+      "sha256": "27544d7d3ccc44d3e363670d5927af6c8dca14fc8a2f1b3e871b4818242f902a"
+    },
+    {
+      "path": "tests/api/test_search_normalized_fold.py",
+      "status": "??",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "Existing implementation, test, or documentation change; candidate only, not staging authorization",
+      "sha256": "acc00356da3c17852b4fa5f7fe9cad7cde7a07c871adc9295c67df4185b962d4"
+    },
+    {
+      "path": "tests/api/test_visualization_aggregates.py",
+      "status": "??",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "Existing implementation, test, or documentation change; candidate only, not staging authorization",
+      "sha256": "33a3bfc0800e55a24f8050f016710641f75b3066c79f652a7888397cc01a1660"
+    },
+    {
+      "path": "tests/domain/test_agent3_closure.py",
+      "status": "??",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "Existing implementation, test, or documentation change; candidate only, not staging authorization",
+      "sha256": "e1478a4bf2e4af99d278728d0956c7317749f677c7fcf5ebe49d87030f9c2bc6"
+    },
+    {
+      "path": "tests/domain/test_agent4_ritual_closure.py",
+      "status": "??",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "Existing implementation, test, or documentation change; candidate only, not staging authorization",
+      "sha256": "c44c881f637f880c72c27b5567d18dfe02b9d8a630d5877b751df4c45bbf7426"
+    },
+    {
+      "path": "tests/domain/test_ascription_bridge.py",
+      "status": "??",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "Existing implementation, test, or documentation change; candidate only, not staging authorization",
+      "sha256": "031caa13ef3d29845cf8044a656762d16bd20a71276a70286c137a1e44e66c75"
+    },
+    {
+      "path": "tests/domain/test_attribution_scope_note.py",
+      "status": "??",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "Existing implementation, test, or documentation change; candidate only, not staging authorization",
+      "sha256": "699653098e7dd5fd6374cb75f0e6e889ac75d62cfee340efcdffb4a66ba2e3a0"
+    },
+    {
+      "path": "tests/domain/test_deity_community_labels.py",
+      "status": "??",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "Existing implementation, test, or documentation change; candidate only, not staging authorization",
+      "sha256": "3a3f66e09954608a4aed3630dfbe1da3de4ba7335fc4b0ac50c4054e05de15b9"
+    },
+    {
+      "path": "tests/domain/test_deity_eligibility.py",
+      "status": "??",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "Existing implementation, test, or documentation change; candidate only, not staging authorization",
+      "sha256": "9dc985af843e72ab439c26dc9541bf308af6c17d0c9b8a8471b1ad82114777ca"
+    },
+    {
+      "path": "tests/domain/test_evidence_quality_disclosure.py",
+      "status": "??",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "Existing implementation, test, or documentation change; candidate only, not staging authorization",
+      "sha256": "c0eb0c463af0e846ac21b097fdb3a7c389452c90576559d7fd1ca2bcc4e98a95"
+    },
+    {
+      "path": "tests/domain/test_formula_nesting_policy.py",
+      "status": "??",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "Existing implementation, test, or documentation change; candidate only, not staging authorization",
+      "sha256": "88b945a5868f2f7d7151e0903c2dc7a0d7f9383f0ce08ae101d2eaa8dc46f129"
+    },
+    {
+      "path": "tests/domain/test_occurrence_contract.py",
+      "status": "??",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "Existing implementation, test, or documentation change; candidate only, not staging authorization",
+      "sha256": "0224fade2f1ebebf5ddc166b5a00ae1a889a99406ba16658beb95a85274ac774"
+    },
+    {
+      "path": "tests/enrich/test_formula_display_surface.py",
+      "status": "??",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "Existing implementation, test, or documentation change; candidate only, not staging authorization",
+      "sha256": "2466ca26cebff192b994aefbbc6247f997425d3583bbd6467513412b0893ea66"
+    },
+    {
+      "path": "tests/enrich/test_pada_parallels.py",
+      "status": "??",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "Existing implementation, test, or documentation change; candidate only, not staging authorization",
+      "sha256": "a87f26900a9882d8325548218fc4c98841297ac04067975dd782de3a97b8355a"
+    },
+    {
+      "path": "tests/enrich/test_reuse_direction.py",
+      "status": "??",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "Existing implementation, test, or documentation change; candidate only, not staging authorization",
+      "sha256": "d2c7314f21df35168ecc26b6698ce5b1fdb9a1e89a759d2497037f53b41a7475"
+    },
+    {
+      "path": "tests/enrich/test_text_derivatives.py",
+      "status": "??",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "Existing implementation, test, or documentation change; candidate only, not staging authorization",
+      "sha256": "494b669fe3550df9c030bc9060a31865cbd76c343263df368587132244d22fde"
+    },
+    {
+      "path": "tests/product/test_canonical_release_snapshot.py",
+      "status": "??",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "Existing implementation, test, or documentation change; candidate only, not staging authorization",
+      "sha256": "4500c193ac31a4b465d6f1b58b797caf43eec2ca711aa00aaeb9479a47cd8068"
+    },
+    {
+      "path": "tests/unit/test_attribution_states.py",
+      "status": "??",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "Existing implementation, test, or documentation change; candidate only, not staging authorization",
+      "sha256": "9d683ab12795a86c4f27b372c0e106d1c72bd2e07f029b4aa3f4818dafa4e5e8"
+    },
+    {
+      "path": "tests/unit/test_ocr_labels.py",
+      "status": "??",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "Existing implementation, test, or documentation change; candidate only, not staging authorization",
+      "sha256": "e87fccbc61ad1ae6e08789d632a83a7774d5574db01d9aa2690622d699c0e0c6"
+    },
+    {
+      "path": "tests/unit/test_stdout_capture_safety.py",
+      "status": "??",
+      "classification": "TEMPORARY",
+      "reason": "Local execution/backup artifact; retain, do not commit",
+      "sha256": "067bd565049d9406f3c341fc3853bb93d2fa78689799289b4335bbd58f598d15"
+    },
+    {
+      "path": "tests/unit/test_translation_alignment_confidence.py",
+      "status": "??",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "Existing implementation, test, or documentation change; candidate only, not staging authorization",
+      "sha256": "a865d464db034f37cbf1e7c66433a3968761bdde4a2a01665e0f169977f30297"
+    }
+  ]
+}

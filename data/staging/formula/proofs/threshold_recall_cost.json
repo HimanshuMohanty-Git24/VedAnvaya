@@ -1,0 +1,96 @@
+{
+ "question": "what does every threshold cost in recall, and can the cost be enumerated?",
+ "MIN_COMPARABLE_LENGTH": {
+  "value": 20,
+  "unit": "characters on the sandhi-insensitive surface",
+  "mantras_excluded": 115,
+  "by_veda": {
+   "AV": 114,
+   "SV": 1
+  },
+  "identity_pairs_lost": 6,
+  "cost_is_exact_and_enumerated": "all 6 are staged in relations.jsonl with importable=false. They are the AV 5.9 svaha formulae (dive svaha at 9 characters, prthivyai svaha at 14, antariksaya svaha at 16, each recurring once) and tasya vratyasya (AVS 15.15.1 == 15.18.1). This is the short-high-frequency-phrase case: the identity is exact and the claim is weak, so the pair is staged and flagged rather than either imported or silently dropped.",
+  "near_parallels_lost": "not separately measurable -- an excluded mantra is never scored"
+ },
+ "MIN_FORMULA_WORDS": {
+  "value": 2,
+  "cost": "a one-word repetition is a lexeme, and 2,038 of the 4,825 formulas are two-word. Measured in FORMULA_FAMILY_RECONSTRUCTION_V3 section 4 and reproduced here: 0 of 2,038 have both tokens at 5 folded characters or fewer, so MIN_FORMULA_CHARS already excludes function-word pairs."
+ },
+ "MIN_FORMULA_CHARS": {
+  "value": 12,
+  "unit": "characters on the collapsed form",
+  "emitted_formula_char_count": "min 13, p10 13, median 18",
+  "cost": "no emitted formula sits at the floor, so the floor binds only on candidates"
+ },
+ "MIN_FORMULA_OCCURRENCES": {
+  "value": 3,
+  "formulas_at_exactly_three_mantras": 2351,
+  "share_of_the_layer": 0.487,
+  "cost": "measured separately; see the min_formula_occurrences block below if present",
+  "measured_cost": {
+   "mined_grams_at_mining_floor": 142710,
+   "word_aligned_df_distribution": {
+    "2": 109118,
+    "3": 18910,
+    "4": 5872,
+    "5": 2482,
+    "6": 1778,
+    "7": 1143,
+    "8": 814,
+    "9": 447,
+    "10": 257,
+    "11": 330
+   },
+   "grams_at_df_exactly_two": 109118,
+   "clearing_min_formula_chars": 94452,
+   "distinct_collapsed_forms": 93501,
+   "of_those_spanning_two_or_more_vedas": 66086,
+   "cross_veda_examples": [
+    "bhuvanānāmabhiśriyorvīpṛthvīmadhudughesupeśasādyāvāpṛthivīvaruṇasyadharmaṇāviṣkabhite",
+    "ghṛtavatībhuvanānāmabhiśriyorvīpṛthvīmadhudughesupeśasādyāvāpṛthivīvaruṇasyadharmaṇā",
+    "pratilobhayantīgṛhāṇāṅgānyapveparehiabhiprehinirdahahṛtsuśokairandhenāmitrāstamasā",
+    "bṛhaspatirdakṣiṇāyajñaḥpuraetusomaḥdevasenānāmabhibhañjatīnāṃjayantīnāṃmaruto",
+    "puruścandrairabhidyubhiḥsaṃdevyāpramatyāvīraśuṣmayāgoagrayāśvāvatyārabhemahi",
+    "ghṛtavatībhuvanānāmabhiśriyorvīpṛthvīmadhudughesupeśasādyāvāpṛthivīvaruṇasya",
+    "vājebhiḥpuruścandrairabhidyubhiḥsaṃdevyāpramatyāvīraśuṣmayāgoagrayāśvāvatyā",
+    "marutaḥpṛśnimātaraḥśubhaṃyāvānovidatheṣujagmayaḥagnijihvāmanavaḥsūracakṣaso",
+    "bhuvanānāmabhiśriyorvīpṛthvīmadhudughesupeśasādyāvāpṛthivīvaruṇasyadharmaṇā",
+    "netābṛhaspatirdakṣiṇāyajñaḥpuraetusomaḥdevasenānāmabhibhañjatīnāṃjayantīnāṃ",
+    "indrāsomāvartayataṃdivasparyagnitaptebhiryuvamaśmahanmabhiḥtapurvadhebhir",
+    "vartayataṃdivasparyagnitaptebhiryuvamaśmahanmabhiḥtapurvadhebhirajarebhir",
+    "pṛṣadaśvāmarutaḥpṛśnimātaraḥśubhaṃyāvānovidatheṣujagmayaḥagnijihvāmanavaḥ",
+    "pṛśnimātaraḥśubhaṃyāvānovidatheṣujagmayaḥagnijihvāmanavaḥsūracakṣasoviśve",
+    "tvāmagneaṅgirasoguhāhitamanvavindañchiśriyāṇaṃvanevanesajāyasemathyamānaḥ",
+    "pāvakavarcāḥśukravarcāanūnavarcāudiyarṣibhānunāputromātarāvicarannupāvasi",
+    "gotrāṇisahasāgāhamānodayovīraḥśatamanyurindraḥduścyavanaḥpṛtanāṣāḍayudhyo",
+    "adribhitprathamajāṛtāvābṛhaspatirāṅgirasohaviṣmāndvibarhajmāprāgharmasat",
+    "tejiṣṭhayātithigvasyavartanītvaṃśatāvaṅgṛdasyābhinatpuronānudaḥpariṣūtā",
+    "ivasakhibhirvāvadadbhiraśmanmayāninahanāvyasyanbṛhaspatirabhikanikradad",
+    "pratnasyaukasaḥpriyamedhāsaeṣāmpūrvāmanuprayatiṃvṛktabarhiṣohitaprayasa",
+    "yadvāhiṣṭhaṃtadagnayebṛhadarcavibhāvasomahiṣīvatvadrayistvadvājāudīrate",
+    "ūrdhvāyasyāmatirbhāadidyutatsavīmanihiraṇyapāṇiramimītasukratuḥkṛpāsvaḥ",
+    "bṛhaspatirdakṣiṇāyajñaḥpuraetusomaḥdevasenānāmabhibhañjatīnāṃjayantīnāṃ",
+    "parṇayaṃvadhīstejiṣṭhayātithigvasyavartanītvaṃśatāvaṅgṛdasyābhinatpuro"
+   ],
+   "maximality_not_applied": "these are raw spans, so a long span and its sub-spans are counted separately; the figure is an upper bound on what lowering the floor to 2 would emit, not a formula count",
+   "min_formula_occurrences": 3,
+   "min_formula_chars": 12
+  }
+ },
+ "MAX_NEAR_PARALLELS_PER_MANTRA": {
+  "value": 5,
+  "cut": "both-sided intersection",
+  "within_recension_pairs_dropped": 562,
+  "cost_is_enumerated": "all 562 are written individually to rejected_pairs.jsonl with their similarity"
+ },
+ "NEAR_PARALLEL_FLOOR": {
+  "value": 0.72,
+  "within_recension_pairs_rejected": 1101,
+  "cost_is_enumerated": "all 1,101 are written individually to rejected_pairs.jsonl"
+ },
+ "lossless_prunes_that_cost_no_recall": {
+  "below_floor_by_ngram_bound": 13342,
+  "below_floor_by_length_bound": 3,
+  "why_lossless": "similarity = 0.5*ngram + 0.5*lcs with both terms bounded by 1, so a pair below (0.72-0.5)/0.5 = 0.44 on either term provably cannot reach the floor. Counted separately from real floor rejections so the distinction stays visible."
+ }
+}

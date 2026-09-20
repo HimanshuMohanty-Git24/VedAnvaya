@@ -43,10 +43,13 @@ from vedagraph.api.services.graph_service import (
     PIPELINE_CONSTANT_PREDICATES,
     PREDICATE_SEMANTICS,
     PRODUCT_TYPE_BY_DISPLAY_TYPE,
+    STABLE_ID_PROPERTIES,
     TRAVERSABLE_RELATIONSHIPS,
     decode_relationship_id,
     encode_relationship_id,
 )
+
+from vedagraph.domain.ontology import LABEL_SEMANTIC_ASSERTION
 
 INDRA = "VG:DEVATA:INDRAH"
 AGNI = "VG:DEVATA:AGNIH"
@@ -56,7 +59,11 @@ ALTAR = "VG:CONCEPT:VEDI-ALTAR"
 GAYATRI = "VG:CHANDAS:GAYATRI"
 VISVA_BHUVANA = "VG:ENRICH:FORMULA-FAMILY:709faeaecdc5a79716fa565ce0a051f0"
 #: The one UNSPECIFIED entry in the Anukramani's devata slot. It is a dog.
+#: A DEITY under the recorded ruling -- see tests/api/test_devatas.py. Retained as the
+#: example of a subject the superseded structure predicate wrongly refused.
 THE_DOG = "VG:DEVATA:SUNAH"
+#: A ruled non-deity: ABSTRACTION_NOT_AN_ADDRESSEE, the class the old predicate admitted.
+AN_ABSTRACTION = "VG:DEVATA:BHAVAVRTTAM"
 #: A HUMAN entry and a PATRON_PRAISE entry, both with real traversable degree, so both
 #: can be reached as a root and as a neighbour rather than only looked up directly.
 VASISTHA_THE_PATRON = "VG:DEVATA:VASISTHAH"
@@ -234,6 +241,63 @@ class TestWhitelists:
         for name, semantics in PREDICATE_SEMANTICS.items():
             assert semantics.limit.strip(), f"{name} has no stated limit"
             assert semantics.asserts.strip(), f"{name} has no stated assertion"
+
+    @pytest.mark.neo4j
+    def test_every_relationship_type_in_the_graph_is_classified(
+        self, live_repository: Neo4jRepository
+    ) -> None:
+        """Every type is traversable or refused for a stated reason. No third state.
+
+        An unclassified type is invisible: the graph endpoints will not cross it and nothing
+        tells the reader it exists. Wave 3 added eleven and this test did not exist, so the
+        ritual procedure layer and the shared-formula layer were both unreachable through
+        /api/v1/graph while sitting in the database.
+
+        Read from the database rather than from the ontology declaration, because the
+        question is what the graph HOLDS, not what it is allowed to hold.
+        """
+        live = {
+            str(row["relationshipType"])
+            for row in live_repository.run("CALL db.relationshipTypes()")
+        }
+        # Types the ontology declares but nothing has written are not this test's business:
+        # an empty predicate cannot surprise a reader.
+        populated = {
+            name
+            for name in live
+            if (row := live_repository.run_one(f"MATCH ()-[r:{name}]->() RETURN count(r) AS c"))
+            is not None
+            and int(row["c"]) > 0
+        }
+        classified = (
+            TRAVERSABLE_RELATIONSHIPS | set(NON_TRAVERSABLE_REASONS) | {LEMMA_RELATIONSHIP}
+        )
+        unclassified = sorted(populated - classified)
+        assert not unclassified, (
+            f"{len(unclassified)} populated relationship type(s) are neither traversable nor "
+            f"refused for a stated reason, so they are invisible to /api/v1/graph: "
+            f"{unclassified}. Classify each one deliberately."
+        )
+
+    @pytest.mark.neo4j
+    def test_no_predicate_is_refused_for_being_empty_while_carrying_edges(
+        self, live_repository: Neo4jRepository
+    ) -> None:
+        """A refusal that describes the graph must still describe it.
+
+        SHARES_FORMULA_WITH was declined with "it carries 0 edges, so traversing it would
+        traverse nothing" while carrying 6,148. A reason that has become false is worse than
+        no reason: it tells the reader the layer is empty.
+        """
+        for name, reason in sorted(NON_TRAVERSABLE_REASONS.items()):
+            if "0 edges" not in reason and "unpopulated" not in reason:
+                continue
+            row = live_repository.run_one(f"MATCH ()-[r:{name}]->() RETURN count(r) AS c")
+            assert row is not None and int(row["c"]) == 0, (
+                f"{name} is refused on the grounds that it is unpopulated and it carries "
+                f"{int(row['c']) if row else '?'} edges. Re-decide it, or state a reason "
+                f"that is true."
+            )
 
     def test_path_whitelist_excludes_the_plumbing(self) -> None:
         for excluded in (
@@ -448,35 +512,58 @@ class TestLiveInvariants:
     def test_every_traversable_endpoint_has_a_stable_product_id(
         self, live_repository: Neo4jRepository
     ) -> None:
+        # Derived from STABLE_ID_PROPERTIES rather than restated. The hand-written copy
+        # drifted the moment step_key was added to the real list: the traversal could name a
+        # :RitualStep and this test said 3,121 endpoints were unidentifiable, which is the
+        # test describing its own staleness rather than the graph.
         pattern = "|".join(sorted(TRAVERSABLE_RELATIONSHIPS))
+        ka = ", ".join(f"a.{name}" for name in STABLE_ID_PROPERTIES)
+        kb = ", ".join(f"b.{name}" for name in STABLE_ID_PROPERTIES)
         row = live_repository.run_one(
             f"MATCH (a)-[r:{pattern}]->(b) "
-            "WITH coalesce(a.canonical_key, a.entity_key, a.formula_id, a.family_id, "
-            "  a.epithet_key, a.axis_key, a.family_key, a.group_key, a.metric_id, "
-            "  a.claim_id, a.work_id, a.assertion_id, a.lemma, a.predicate) AS ka, "
-            "  coalesce(b.canonical_key, b.entity_key, b.formula_id, b.family_id, "
-            "  b.epithet_key, b.axis_key, b.family_key, b.group_key, b.metric_id, "
-            "  b.claim_id, b.work_id, b.assertion_id, b.lemma, b.predicate) AS kb "
+            f"WITH coalesce({ka}) AS ka, coalesce({kb}) AS kb "
             "WHERE ka IS NULL OR kb IS NULL RETURN count(*) AS unidentifiable"
         )
         assert row is not None
         assert int(row["unidentifiable"]) == 0
 
-    def test_the_pipeline_constant_predicates_are_still_constant(
+    def test_the_pipeline_constant_predicates_carry_a_tier_and_not_a_confidence(
         self, live_repository: Neo4jRepository
     ) -> None:
+        """GAP-QUALITY-003 withdrew ``confidence`` from these seven, and this pins both halves.
+
+        The test this replaces asserted ``count(DISTINCT r.confidence) == 1`` as the
+        justification for the API returning null. That premise is now VOID rather than
+        false: the field is gone. A constant 1.0 on every edge of a predicate encoded the
+        evidence TIER -- the source says so -- and not a calibrated probability, so it
+        offered a numeric filter that selects everything or nothing.
+
+        Two things must hold, and asserting only the first would let the tier be lost:
+
+        1.  no edge of these predicates carries ``confidence`` at all, so the null the
+            serving layer returns is hiding nothing; and
+        2.  every edge carries ``source_explicit_tier_marker`` equal to the constant the
+            map still declares, so the fact that the edge is source-explicit survived the
+            withdrawal. :data:`PIPELINE_CONSTANT_PREDICATES` remains the one home of that
+            value and the serving layer still returns it as ``pipeline_prior``.
+        """
         for predicate, expected in PIPELINE_CONSTANT_PREDICATES.items():
             rows = live_repository.run(
                 f"MATCH ()-[r:{predicate}]->() "
-                "RETURN count(DISTINCT r.confidence) AS distinct_values, "
-                "collect(DISTINCT r.confidence)[0] AS value"
+                "RETURN count(r) AS edges, "
+                "count(r.confidence) AS with_confidence, "
+                "count(DISTINCT r.source_explicit_tier_marker) AS distinct_markers, "
+                "collect(DISTINCT r.source_explicit_tier_marker)[0] AS marker"
             )
             assert rows, predicate
-            assert int(rows[0]["distinct_values"]) == 1, (
-                f"{predicate} confidence is no longer a single constant, so returning null "
-                "for it is now hiding a value that varies"
+            assert int(rows[0]["with_confidence"]) == 0, (
+                f"{predicate} still carries a confidence, so a tier is still wearing a "
+                "probability's name"
             )
-            assert float(rows[0]["value"]) == expected
+            assert int(rows[0]["distinct_markers"]) == 1, (
+                f"{predicate} lost its source-explicit tier marker in the withdrawal"
+            )
+            assert float(rows[0]["marker"]) == expected
 
     def test_the_varying_confidence_predicates_still_vary(
         self, live_repository: Neo4jRepository
@@ -510,6 +597,49 @@ class TestLiveInvariants:
             f"a node type has no product type name and would fall back to a derived one: "
             f"{sorted(missing)}"
         )
+
+    def test_semantic_assertion_carries_one_display_type_spelling(
+        self, live_repository: Neo4jRepository
+    ) -> None:
+        """One graph type, one product route. It was two.
+
+        4,865 :SemanticAssertion nodes carried display_type "SemanticAssertion" from the
+        domain builders and 30,266 carried "SEMANTIC_ASSERTION" from a stabilisation
+        backfill that chose a spelling declared in no ontology module. Both were mapped to
+        the same product type here, which hid the split from the API and not from anything
+        else: the public export ships display_type verbatim as the node's ``type``, and
+        ``world-groups.json`` maps the label spelling only -- so the browser world drew
+        30,266 of them as "other" and the other 4,865 as "record".
+
+        The authoritative value is asserted against the ontology constant rather than a
+        literal, so renaming the label moves this test with it.
+        """
+        rows = live_repository.run(
+            "MATCH (a:SemanticAssertion) RETURN a.display_type AS display_type, "
+            "count(*) AS n"
+        )
+        spellings = {row["display_type"]: row["n"] for row in rows}
+        assert list(spellings) == [LABEL_SEMANTIC_ASSERTION], (
+            f"one graph type is being served under {len(spellings)} product names: {spellings}"
+        )
+        assert spellings[LABEL_SEMANTIC_ASSERTION] > 0
+        assert "SEMANTIC_ASSERTION" not in spellings
+
+    def test_every_display_type_maps_to_exactly_one_product_type(self) -> None:
+        """Two display_type keys may not collapse onto one product type name.
+
+        That collapse is what let the split ship: mapping both spellings to
+        SEMANTIC_ASSERTION made the API look consistent while the graph, the export and the
+        browser world stayed inconsistent. A duplicate here is either a real synonym --
+        which belongs in the graph, normalised -- or the same defect returning.
+        """
+        seen: dict[str, str] = {}
+        duplicates: list[str] = []
+        for display_type, product_type in PRODUCT_TYPE_BY_DISPLAY_TYPE.items():
+            if product_type in seen:
+                duplicates.append(f"{seen[product_type]} and {display_type} -> {product_type}")
+            seen[product_type] = display_type
+        assert not duplicates, f"one product type served under two display_type keys: {duplicates}"
 
     def test_the_hub_ceiling_still_sits_above_every_subject_class(
         self, live_repository: Neo4jRepository
@@ -800,25 +930,32 @@ class TestLiveNeighbourhood:
             edge = next(e for e in body["edges"] if e["id_basis"] == basis)
             assert live_client.get(f"/api/v1/graph/relationships/{edge['id']}").status_code == 200
 
-    def test_exact_parallel_edges_without_a_domain_id_still_get_an_identity(
-        self, live_client: TestClient, live_repository: Neo4jRepository
+    def test_every_exact_parallel_edge_now_carries_a_domain_id(
+        self, live_repository: Neo4jRepository
     ) -> None:
-        """256 of the 1,006 EXACT_PARALLEL_OF edges carry no parallel_id. Deciding the basis
-        per type instead of per edge would have minted a broken token for every one."""
+        """M12 closed the 256, so this asserts the closure rather than skipping past it.
+
+        It used to read: "256 of the 1,006 EXACT_PARALLEL_OF edges carry no parallel_id", and
+        it exercised the ENDPOINT_TRIPLE fallback on one of them. When Wave 4 gave all 256 an
+        id the test began SKIPPING -- quietly turning the one assertion about this population
+        into nothing. A test that goes silent when its subject is fixed is a test that stops
+        noticing a regression, so it is inverted here.
+
+        The fallback mechanism itself stays covered by the test above, which asserts both
+        ``DOMAIN_ID`` and ``ENDPOINT_TRIPLE`` are still reachable on other predicates.
+        """
         row = live_repository.run_one(
-            "MATCH (a:Passage)-[r:EXACT_PARALLEL_OF]->(b:Passage) "
-            "WHERE r.parallel_id IS NULL "
-            "RETURN a.canonical_key AS source LIMIT 1"
+            "MATCH ()-[r:EXACT_PARALLEL_OF]->() "
+            "RETURN count(r) AS total, "
+            "sum(CASE WHEN r.parallel_id IS NULL THEN 1 ELSE 0 END) AS idless"
         )
-        if row is None:
-            pytest.skip("every EXACT_PARALLEL_OF edge now carries a parallel_id")
-        body = live_client.get(
-            f"/api/v1/graph/neighborhood/{row['source']}",
-            params={"types": ["EXACT_PARALLEL_OF"], "limit_per_type": 50},
-        ).json()
-        idless = [e for e in body["edges"] if e["id_basis"] == "ENDPOINT_TRIPLE"]
-        assert idless, "an EXACT_PARALLEL_OF edge with no parallel_id must fall back"
-        assert live_client.get(f"/api/v1/graph/relationships/{idless[0]['id']}").status_code == 200
+        assert row is not None
+        assert int(row["total"]) > 0, "no EXACT_PARALLEL_OF edges, so this proves nothing"
+        assert int(row["idless"]) == 0, (
+            f"{row['idless']} EXACT_PARALLEL_OF edge(s) carry no parallel_id. Two writers "
+            "share this predicate and only one of them minted ids; M12 gave the lexical "
+            "writer's 256 the enrichment convention."
+        )
 
 
 @pytest.mark.neo4j
@@ -1099,7 +1236,26 @@ class TestLivePerformance:
         # as written -- five samples, the first of them cold.
         assert live_client.get(f"/api/v1/graph/relationships/{token}").status_code == 200
         timings.sort()
-        assert timings[len(timings) // 2] < 150
+        # 150 -> 250 ms, re-baselined on a MEASURED cause rather than because it went red.
+        #
+        # R5's closures added ten properties to every one of the 20,210 :Mantra nodes --
+        # translation_coverage_state, ritual_context_precision and its five companions,
+        # running_samhita_number and its five, r5_contract -- taking the average :Mantra
+        # from 25.5 keys to 36.2 and RV 1.1.1 specifically from 27 to 37. This route
+        # returns ``properties(source)`` and ``properties(target)`` in FULL, over an
+        # unindexed ``coalesce`` across nineteen id properties on both ends, so a 42%
+        # growth in property volume lands directly on it.
+        #
+        # Measured over ten runs of five samples: medians 150-197 ms, straddling the old
+        # budget -- 5 of 6 consecutive runs passed and one failed at 150.35. A test that
+        # flakes on the boundary is worse than one with an honest budget, because the next
+        # pass cannot tell a real regression from noise. The new figure has real headroom
+        # over the observed maximum.
+        #
+        # This is a PERF RESIDUAL and not a fix: the underlying cost is that the route ships
+        # whole property maps through an unindexed scan, which no amount of budget changes.
+        # Recorded as PERF_BACKLOG_02 beside PERF_BACKLOG_01 (full-ladder Sanskrit >300ms).
+        assert timings[len(timings) // 2] < 250
 
 
 @pytest.mark.neo4j
@@ -1131,7 +1287,7 @@ class TestNonDeitySubjects:
     ``entity_service.subject_disclosure`` and nothing here re-implements it.
     """
 
-    @pytest.mark.parametrize("node_id", [THE_DOG, VASISTHA_THE_PATRON, GIFT_PRAISE])
+    @pytest.mark.parametrize("node_id", [AN_ABSTRACTION, VASISTHA_THE_PATRON, GIFT_PRAISE])
     def test_a_non_deity_root_is_flagged_and_caveated(
         self, live_client: TestClient, node_id: str
     ) -> None:
@@ -1143,10 +1299,12 @@ class TestNonDeitySubjects:
         # and a graph endpoint inventing a different type would make following an EntityRef
         # change a node's type.
         assert body["root"]["type"] == "DEVATA"
-        assert body["root"]["metadata"]["structure"] in {
-            "HUMAN",
-            "PATRON_PRAISE",
-            "UNSPECIFIED",
+        # The ruling, not the structure: ABSTRACT is the class the superseded structure
+        # predicate admitted, so a structure allowlist here would have missed all 28.
+        assert body["root"]["metadata"]["non_deity_kind"] in {
+            "HUMAN_PATRON",
+            "DANASTUTI_GIFT_PRAISE",
+            "ABSTRACTION_NOT_AN_ADDRESSEE",
         }
         assert "THIS SUBJECT IS NOT A DEITY" in body["caveats"][0]["text"], (
             "the disclosure must come first; a reader who stops after one caveat must not "
@@ -1167,9 +1325,18 @@ class TestNonDeitySubjects:
             subject_disclosure,
         )
 
-        expected = subject_disclosure("UNSPECIFIED")[1][0].text
-        assert expected == NOT_A_DEITY_SUBJECT.format(structure="UNSPECIFIED")
-        body = live_client.get(f"/api/v1/graph/neighborhood/{THE_DOG}").json()
+        from vedagraph.api.services.deity_population import DevataSubject
+
+        subject = DevataSubject(
+            structure="ABSTRACT",
+            is_deity=False,
+            non_deity_kind="ABSTRACTION_NOT_AN_ADDRESSEE",
+        )
+        expected = subject_disclosure(subject)[1][0].text
+        assert expected == NOT_A_DEITY_SUBJECT.format(
+            structure="ABSTRACT", kind="ABSTRACTION_NOT_AN_ADDRESSEE"
+        )
+        body = live_client.get(f"/api/v1/graph/neighborhood/{AN_ABSTRACTION}").json()
         assert body["caveats"][0]["text"] == expected
 
     def test_a_real_deity_is_not_flagged_and_carries_no_disclosure(
@@ -1220,10 +1387,15 @@ class TestNonDeitySubjects:
     def test_a_path_touching_a_non_deity_discloses_it(self, live_client: TestClient) -> None:
         body = live_client.get(
             "/api/v1/graph/path",
-            params={"from": THE_DOG, "to": "VG:CONCEPT:SOMA-DRINK", "max_depth": 4},
+            params={"from": AN_ABSTRACTION, "to": "VG:CONCEPT:SOMA-DRINK", "max_depth": 4},
         ).json()
         assert body["source"]["is_deity"] is False
-        assert "THIS SUBJECT IS NOT A DEITY" in body["caveats"][0]["text"]
+        # Present, not necessarily first: a hub-mediated path puts its own routing caveat
+        # ahead of the disclosure. That the disclosure leads on a *root* payload is
+        # asserted by test_a_non_deity_root_is_flagged_and_caveated.
+        assert any(
+            "THIS SUBJECT IS NOT A DEITY" in caveat["text"] for caveat in body["caveats"]
+        )
 
     def test_a_path_between_two_non_deities_names_both(self, live_client: TestClient) -> None:
         body = live_client.get(
@@ -1241,9 +1413,32 @@ class TestNonDeitySubjects:
             "number agreement: two subjects take the plural reading"
         )
 
-    def test_the_singular_reading_is_used_for_one_subject(self, live_client: TestClient) -> None:
-        body = live_client.get(f"/api/v1/graph/neighborhood/{THE_DOG}").json()
-        naming = next(caveat for caveat in body["caveats"] if "devata-slot entry" in caveat["text"])
+    def test_the_singular_reading_is_used_for_one_subject(
+        self, live_client: TestClient, live_repository: Neo4jRepository
+    ) -> None:
+        # The subject is FOUND, not skipped. An earlier version of this test picked one
+        # exemplar and skipped when its payload held two non-deities, which turned the
+        # singular-number assertion off entirely -- invisible in a passed/failed count.
+        # 55 of the 57 ruled non-deities yield exactly one, so the singular case is found
+        # by looking rather than hoped for, and it fails if NONE of them is singular.
+        singular = None
+        for row in live_repository.run(
+            "MATCH (d:Devata) WHERE d.is_deity = false RETURN d.entity_key AS key "
+            "ORDER BY d.entity_key"
+        ):
+            body = live_client.get(
+                f"/api/v1/graph/neighborhood/{row['key']}", params={"limit_per_type": 1}
+            ).json()
+            if len([n for n in body["nodes"] if n["is_deity"] is False]) == 1:
+                singular = body
+                break
+        assert singular is not None, (
+            "no ruled non-deity yields a payload with exactly one, so the singular reading "
+            "of the caveat is now unreachable and untested"
+        )
+        naming = next(
+            caveat for caveat in singular["caveats"] if "devata-slot entry" in caveat["text"]
+        )
         assert "is a devata-slot entry that is NOT a deity" in naming["text"]
 
     def test_an_explanation_of_an_edge_touching_a_non_deity_discloses_it(
@@ -1266,7 +1461,7 @@ class TestNonDeitySubjects:
         population=all_ascriptions was requested", which is true of the deity routes and
         false here: these endpoints have no such parameter and resolve whatever id they are
         given. The adjacent sentence corrects the scope rather than forking the template."""
-        body = live_client.get(f"/api/v1/graph/neighborhood/{THE_DOG}").json()
+        body = live_client.get(f"/api/v1/graph/neighborhood/{AN_ABSTRACTION}").json()
         text = " ".join(caveat["text"] for caveat in body["caveats"])
         assert "has no `population` parameter" in text
         assert "population" not in " ".join(
@@ -1276,18 +1471,16 @@ class TestNonDeitySubjects:
             .get("parameters", [])
         )
 
-    def test_all_thirty_non_deity_subjects_are_flagged(
+    def test_all_ruled_non_deity_subjects_are_flagged(
         self, live_client: TestClient, live_repository: Neo4jRepository
     ) -> None:
         """Per subject, not per sample. This project has twice certified an absence from a
         sample that happened to miss the failing rows."""
         rows = live_repository.run(
-            "MATCH (d:Devata) "
-            "WHERE coalesce(d.structure, 'UNSPECIFIED') IN "
-            "  ['HUMAN', 'PATRON_PRAISE', 'UNSPECIFIED'] "
+            "MATCH (d:Devata) WHERE d.is_deity = false "
             "RETURN d.entity_key AS key ORDER BY d.entity_key"
         )
-        assert len(rows) == 30, f"the non-deity population moved: {len(rows)}"
+        assert len(rows) == 57, f"the non-deity population moved: {len(rows)}"
         for row in rows:
             body = live_client.get(f"/api/v1/graph/neighborhood/{row['key']}").json()
             assert body["root"]["is_deity"] is False, row["key"]
@@ -1299,13 +1492,15 @@ class TestNonDeitySubjects:
         """The other half of the partition, so a change that flagged everything as a
         non-deity would fail rather than look like a clean pass."""
         rows = live_repository.run(
-            "MATCH (d:Devata) "
-            "WHERE coalesce(d.structure, 'UNSPECIFIED') IN "
-            "  ['INDIVIDUAL', 'PAIR', 'GROUP', 'ABSTRACT'] "
+            "MATCH (d:Devata) WHERE d.is_deity = true "
             "RETURN d.entity_key AS key ORDER BY d.entity_key LIMIT 25"
         )
         assert len(rows) == 25
         for row in rows:
             body = live_client.get(f"/api/v1/graph/neighborhood/{row['key']}").json()
             assert body["root"]["is_deity"] is True, row["key"]
-            assert not any("NOT A DEITY" in c["text"] for c in body["caveats"]), row["key"]
+            # The disclosure may still appear -- a deity's neighbourhood can contain a
+            # ruled non-deity, and naming it is the point. What must never happen is the
+            # ROOT being named as one.
+            named = [c["text"] for c in body["caveats"] if "NOT deities" in c["text"] or "NOT a deity" in c["text"]]
+            assert not any(row["key"] in text for text in named), row["key"]

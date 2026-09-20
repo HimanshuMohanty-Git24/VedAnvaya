@@ -4,6 +4,7 @@ import { ArrowSquareOut } from "@phosphor-icons/react/dist/ssr";
 import {
     encoded,
     load,
+    loadCompleteness,
     vedaNames,
     vedaOrder,
     workSlugs,
@@ -77,7 +78,7 @@ const LAYERS: { label: string; technical: string; body: string }[] = [
     {
         label: "What a model extracted",
         technical: "Semantic or model-assisted",
-        body: "Statements pulled out of a translation by a language model and kept as candidates. Every one is marked, none is treated as a source statement, and this layer reaches the Rigveda only. It is the smallest layer here and the one held at the greatest distance.",
+        body: "Statements pulled out of a translation by a language model and kept as candidates. Every one is marked, none is treated as a source statement, and this layer reaches the Rigveda only \u2014 2,459 of them, a small share of a 35,131-assertion layer that itself spans all four collections. It is held at the greatest distance of anything here.",
     },
     {
         label: "What someone concluded",
@@ -112,7 +113,7 @@ const RELATIONSHIPS: { label: string; body: string }[] = [
     },
     {
         label: "Text reuse",
-        body: "One verse carries another's wording, with the direction recorded. Direction is expensive to establish and exists here for one corpus pair.",
+        body: "One verse carries another's wording, with the direction recorded. Direction is expensive to establish and exists here for two of the six corpus pairs — Rigveda to Samaveda, and Atharvaveda to Rigveda.",
     },
     {
         label: "Variant",
@@ -128,7 +129,10 @@ const RELATIONSHIPS: { label: string; body: string }[] = [
     },
     {
         label: "Semantic assertion",
-        body: "A statement about a verse extracted by a model from its translation. Rigvedic only, permanently marked as a candidate, and never counted as a textual relationship.",
+        // Was "extracted by a model ... Rigvedic only". Both halves were false: most of the
+        // layer is derived by rule from source annotation rather than by a model, and it
+        // reaches all four collections, not one.
+        body: "A statement about a single verse. Most are derived by rule from scholarly morphological annotation and a minority are extracted by a model from a translation; the layer reaches all four collections, none of it has been reviewed by a human, and it is never counted as a textual relationship.",
     },
 ];
 
@@ -150,12 +154,13 @@ function rightsLabel(status: string | null | undefined) {
 }
 
 export default async function SourcesPage() {
-    const [provenance, works, capabilities, audio, indra] = await Promise.all([
+    const [provenance, works, capabilities, audio, indra, completeness] = await Promise.all([
         readProvenance(),
         load<WorksResponse>("/works"),
         load<Capabilities>("/insights/capabilities"),
         load<AudioStats>("/audio/stats"),
         load<DevataInsight>(`/insights/devatas/${encoded("VG:DEVATA:INDRAH")}`),
+        loadCompleteness(),
     ]);
 
     const collections = [...(works.ok ? (works.data.items ?? []) : [])].sort(
@@ -178,6 +183,25 @@ export default async function SourcesPage() {
     for (const entry of provenance.entries) {
         byLayer.set(entry.layer, [...(byLayer.get(entry.layer) ?? []), entry]);
     }
+
+    const transByVeda = completeness.translations.by_veda;
+    /*
+     * Recitation counts come from `/audio/stats` and from nowhere else. The completeness
+     * record carries a second per-Veda recitation block which disagrees with it on this
+     * build, reporting one corpus's recording count as that corpus's entire mantra total.
+     */
+    const audioByVeda = audioStats?.mapped_scope_keys_by_veda ?? {};
+    /*
+     * `by_publication_tier` is newer than the generated schema, so it is read through a local
+     * shape rather than asserted onto the generated one. Absent, it reads as "not stated"
+     * rather than as zero, because "no recording has been heard" and "we did not ask" are
+     * different claims and only one of them belongs in this paragraph.
+     */
+    const tiers = (audioStats as { by_publication_tier?: Record<string, number> } | null)
+        ?.by_publication_tier;
+    const earVerified = tiers ? (tiers.RELEASED_VERIFIED ?? 0) : null;
+    const notation = completeness.samaveda_notation;
+    const askBenchmark = completeness.ask_benchmark;
 
     return (
         <div className="va-doc">
@@ -210,10 +234,11 @@ export default async function SourcesPage() {
                     <section id="scope">
                         <h2>What is in this corpus</h2>
                         <p className="va-doc-open">
-                            Four Samhitas, one recension each. No separate Brahmana, Aranyaka, or
-                            Upanisad corpus is included. The Samaveda&apos;s ARANYA section is a
-                            structural division of the modeled Kauthuma Arcika, not an independent
-                            Aranyaka corpus. Three of the four are missing a body of
+                            Four Samhitas, one recension each. Certified invariant core holds 20,210
+                            canonical mantras (release commit: {completeness.certified_release_commit.slice(0, 7)}).
+                            No separate Brahmana, Aranyaka, or Upanisad corpus is included. The Samaveda&apos;s
+                            ARANYA section is a structural division of the modeled Kauthuma Arcika, not an
+                            independent Aranyaka corpus. Three of the four are missing a body of
                             material that their ordinary name covers, and in one case that missing
                             body is larger than what is held.
                         </p>
@@ -224,6 +249,9 @@ export default async function SourcesPage() {
                                     const registryWork = provenance.works.find(
                                         (row) => row.veda === code,
                                     );
+                                    const trans = transByVeda[code];
+                                    const audioCount = audioByVeda[code] ?? 0;
+
                                     return (
                                         <div key={work.work_id}>
                                             <dt>
@@ -234,10 +262,45 @@ export default async function SourcesPage() {
                                                     {registryWork?.recension ?? work.recension}
                                                 </small>
                                             </dt>
+                                            {/*
+                                              * Every figure in this cell is read from the
+                                              * certified completeness record rather than typed
+                                              * into the sentence. An earlier version spelled
+                                              * each corpus out by hand, and the four branches
+                                              * drifted apart from the record they were copied
+                                              * from: one of them printed a corpus total in the
+                                              * slot where a translation count belongs.
+                                              */}
                                             <dd>
-                                                {count(work.mantra_count)} verses,{" "}
-                                                {count(work.translated_mantra_count)} with an
-                                                English translation. Not held:{" "}
+                                                {count(trans?.total_mantras ?? work.mantra_count)} verses.{" "}
+                                                {trans?.dedicated_english
+                                                    ? `${count(trans.dedicated_english)} dedicated English translations`
+                                                    : "No English translation of its own"}
+                                                {trans?.range_covered
+                                                    ? `, ${count(trans.range_covered)} covered by a multi-verse range`
+                                                    : ""}
+                                                {trans?.reused_rendering
+                                                    ? `, ${count(trans.reused_rendering)} covered by a verified reused parallel rendering`
+                                                    : ""}
+                                                {trans?.non_english
+                                                    ? `, ${count(trans.non_english)} carrying a non-English scholarly note`
+                                                    : ""}
+                                                {trans?.uncovered
+                                                    ? `, ${count(trans.uncovered)} with none`
+                                                    : ""}
+                                                .{" "}
+                                                {code === "SV" ? (
+                                                    <>
+                                                        {count(notation.validated_notation_witnesses)} verses
+                                                        carry a validated source-explicit notation witness and{" "}
+                                                        {count(notation.unaligned_withheld_verses)} await
+                                                        alignment.{" "}
+                                                    </>
+                                                ) : null}
+                                                {audioCount
+                                                    ? `${count(audioCount)} recitation records released.`
+                                                    : "No recitation released; the queue is still in review."}{" "}
+                                                Not addressed:{" "}
                                                 {(work.excluded_corpora ?? [])
                                                     .map((item) =>
                                                         item.toLowerCase().replaceAll("_", " "),
@@ -294,6 +357,19 @@ export default async function SourcesPage() {
                             and the visualizations mark an interpretation as an interpretation even
                             when it is the obvious reading of the bars above it.
                         </p>
+                        <h3>The Normalization Rule</h3>
+                        <p>
+                            Surface Sanskrit text is preserved and normalized to Unicode NFC across all witnesses.
+                            Accents (svara marks) are stripped solely for secondary phonetic search indexing
+                            and parallel token matching; accents are never permanently removed or mutated
+                            in source-explicit text representations.
+                        </p>
+                        <h3>The Predicate Scope Rule</h3>
+                        <p>
+                            Knowledge graph relationships (such as <code>EXACT_PARALLEL</code>, <code>TEXT_REUSE</code>,{" "}
+                            <code>PARALLEL_WITNESS</code>, and <code>DEVATA_IN_MANTRA</code>) model witnessed structural,
+                            lexical, and philological evidence. They do not assert doctrinal or theological equivalence.
+                        </p>
                     </section>
 
                     <section id="method-attribution">
@@ -313,12 +389,14 @@ export default async function SourcesPage() {
                         </p>
                         <p>
                             They also have different scopes, and this is where a merged count goes
-                            wrong. The naming layer reaches all four collections. The traditional
-                            ascription exists for the Rigveda. So a merged &ldquo;Indra count&rdquo;
-                            would be four collections of one measure plus one collection of another,
-                            and a zero for the Atharvaveda would look like a statement about the
-                            Atharvaveda when it is a statement about which collections have a
-                            surviving index in this build.
+                            wrong. The naming layer reaches all four collections. The ascription that
+                            resolves to a named deity exists for the Rigveda; the Atharvaveda has an
+                            index of its own, and it records descriptive phrases rather than registry
+                            names, so its dedications are real and are not the same measurement. So a
+                            merged &ldquo;Indra count&rdquo; would be four collections of one measure
+                            plus one collection of another, and a zero for the Atharvaveda would look
+                            like a statement about the Atharvaveda when it is a statement about which
+                            index this build can join to the deity registry.
                         </p>
                         {example ? (
                             <div className="va-doc-example">
@@ -463,6 +541,17 @@ export default async function SourcesPage() {
                             prevent. Answer quality does depend in part on which model is
                             configured, and that is a real limitation rather than a footnote.
                         </p>
+                        <p>
+                            Measured on a fixed benchmark of {askBenchmark.total_questions}{" "}
+                            questions, the current build returned{" "}
+                            {askBenchmark.effective_acceptable} acceptable outcomes:{" "}
+                            {askBenchmark.supported_correct} answered from evidence,{" "}
+                            {askBenchmark.partial_correct} answered in part,{" "}
+                            {askBenchmark.insufficient_evidence_refused} refused for want of
+                            evidence, {askBenchmark.misleading} misleading and{" "}
+                            {askBenchmark.hallucinated} invented. A refusal is counted as a correct
+                            outcome, because it is one.
+                        </p>
                     </section>
 
                     <section id="method-audio">
@@ -489,10 +578,28 @@ export default async function SourcesPage() {
                             playing nothing.
                         </p>
                         <p>
-                            One collection has no recitation at all. No Samavedic recording is
-                            catalogued here, which is conspicuous given that the Samaveda is the
-                            Veda defined by its sung realisation — and it is a gap in what has been
-                            published in a form this product can use, not a gap in the tradition.
+                            <b>A checked mapping is not an audible review.</b> A recording is
+                            catalogued because its mapping was established &mdash; the source&rsquo;s
+                            own verse coordinates resolve to our canonical key, the Sanskrit matches
+                            this corpus&rsquo;s text, and the media resolves &mdash; and not because
+                            anyone has listened to it.{" "}
+                            {earVerified === 0
+                                ? "None of the catalogued recordings carries an audible review, so the total must not be described as human-verified."
+                                : earVerified === null
+                                  ? "How many carry an audible review is stated on the scope page."
+                                  : `${count(earVerified)} of them carry an audible review.`}{" "}
+                            An owner sample of {completeness.audio.owner_sample_reviewed} recordings
+                            was listened to in full, with{" "}
+                            {completeness.audio.owner_sample_verified} verified and{" "}
+                            {completeness.audio.owner_sample_rejected} rejected, and a separate
+                            queue of {count(completeness.audio.queue_total)} recordings is held
+                            outside the catalogue with{" "}
+                            {count(completeness.audio.not_individually_heard)} of them not yet heard
+                            individually.{" "}
+                            <Link href="/limits#recitation">
+                                The per-collection figures are on the scope page
+                            </Link>
+                            .
                         </p>
                     </section>
 
@@ -506,25 +613,37 @@ export default async function SourcesPage() {
                         </p>
                         <ul>
                             <li>
-                                <b>The Samavedic gana corpus is absent.</b> A parallel and larger
-                                body than the verse collection held here, and the reason the
-                                Samaveda is a distinct Veda. Nothing here shows, notates or infers
-                                melody.
+                                <b>The Samavedic gāna corpus is outside this edition.</b> A parallel
+                                and larger body than the verse collection held here, and the reason
+                                the Samaveda is a distinct Veda.{" "}
+                                {count(notation.validated_notation_witnesses)} of{" "}
+                                {count(notation.canonical_corpus_mantras)} ārcika verses carry a
+                                validated source-explicit notation witness and{" "}
+                                {count(notation.unaligned_withheld_verses)} await textual alignment.
+                                The marks are recorded as codepoints and never extrapolated into
+                                sung melodies.
                             </li>
                             <li>
                                 <b>The Krishna Yajurveda is absent entirely</b>, and the
-                                Atharvavedic Paippalada recension with it. Both are substantially
+                                Atharvavedic Paippalāda recension with it. Both are substantially
                                 different collections rather than minor variants.
                             </li>
                             <li>
-                                <b>The Samaveda has no released translation</b>, so every
-                                translation-derived layer excludes it rather than being empty in it.
+                                <b>The Samaveda has no English translation of its own.</b>{" "}
+                                {count(transByVeda.SV?.reused_rendering)} verses are covered by a
+                                verified reused Rigvedic rendering, aligned against text whose
+                                identity was checked character by character, and{" "}
+                                {count(transByVeda.SV?.uncovered)} carry none. A reused rendering is
+                                labelled as borrowed and is never counted as independent Samavedic
+                                English evidence.
                             </li>
                             <li>
-                                <b>Several layers reach one collection and not the others.</b> The
-                                traditional deity ascription is Rigvedic; the semantic layer is
-                                Rigvedic; the metre layer does not reach outside the Rigveda in a
-                                form these surfaces can read.
+                                <b>Several layers reach some collections and not others.</b> The
+                                deity ascription that resolves to a named god is Rigvedic; the
+                                Atharvaveda has its own index and it records descriptive phrases
+                                rather than registry names, so the two are not one layer. The
+                                semantic layer is Rigvedic. The metre layer reaches the Rigveda and
+                                the Atharvaveda and neither of the other two.
                             </li>
                             <li>
                                 <b>The mention layer is not one instrument.</b> Rigvedic mentions

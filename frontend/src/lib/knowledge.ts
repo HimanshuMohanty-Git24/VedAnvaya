@@ -50,6 +50,30 @@ export function titleCase(value: string) {
     return value.charAt(0).toUpperCase() + value.slice(1);
 }
 
+/**
+ * A graph class name, as a reader would say it.
+ *
+ * The ontology writes its classes in Pascal case - `NaturalPhenomenon`, `CosmicEntity`,
+ * `RitualRole` - and `humanizePredicate` cannot help, because it lower-cases and splits on
+ * underscores and there are none: it turns `NaturalPhenomenon` into `naturalphenomenon`.
+ * So fifteen class names were printed raw on the evidence page, in the middle of English
+ * sentences, and read as identifiers rather than as the things they name.
+ *
+ * Splits on a lower-to-upper boundary and on the underscore, so both spellings in the
+ * ontology land in the same place. `RitualRole` becomes "Ritual role" rather than "Ritual
+ * Role": this is a noun phrase in running text, not a heading.
+ */
+export function className(value?: string | null) {
+    if (!value) return "not supplied";
+    const spaced = value
+        .replaceAll("_", " ")
+        .replace(/([a-z0-9])([A-Z])/g, "$1 $2")
+        .replace(/([A-Z]+)([A-Z][a-z])/g, "$1 $2")
+        .trim();
+    if (!spaced) return "not supplied";
+    return spaced.charAt(0).toUpperCase() + spaced.slice(1).toLowerCase();
+}
+
 export type StatusTone = "supported" | "partial" | "insufficient" | "not-built" | "unknown";
 
 export type StatusCopy = {

@@ -1,0 +1,992 @@
+{
+  "algorithm": "leiden",
+  "per_node": [
+    {
+      "consensus_community": 0,
+      "dedications": 3,
+      "devata_key": "VG:DEVATA:ADITIH",
+      "fraction_of_seeds_in_consensus_community": 1.0,
+      "hymns": 1,
+      "label_en": "Aditi"
+    },
+    {
+      "consensus_community": 0,
+      "dedications": 100,
+      "devata_key": "VG:DEVATA:ADITYAH",
+      "fraction_of_seeds_in_consensus_community": 1.0,
+      "hymns": 11,
+      "label_en": "the Adityas"
+    },
+    {
+      "consensus_community": 0,
+      "dedications": 5,
+      "devata_key": "VG:DEVATA:ADITYOSASAH",
+      "fraction_of_seeds_in_consensus_community": 1.0,
+      "hymns": 1,
+      "label_en": "the Adityas and the Dawns"
+    },
+    {
+      "consensus_community": 1,
+      "dedications": 1,
+      "devata_key": "VG:DEVATA:AGNAMARUTAH",
+      "fraction_of_seeds_in_consensus_community": 1.0,
+      "hymns": 1,
+      "label_en": "Agni and the Maruts (agnāmarutaḥ)"
+    },
+    {
+      "consensus_community": 1,
+      "dedications": 1988,
+      "devata_key": "VG:DEVATA:AGNIH",
+      "fraction_of_seeds_in_consensus_community": 1.0,
+      "hymns": 223,
+      "label_en": "Agni"
+    },
+    {
+      "consensus_community": 2,
+      "dedications": 1,
+      "devata_key": "VG:DEVATA:AGNIH-MITRAVARUNAU-RATRIH-SAVITA",
+      "fraction_of_seeds_in_consensus_community": 1.0,
+      "hymns": 1,
+      "label_en": "Agni, Mitra-Varuna, Ratri and Savitr"
+    },
+    {
+      "consensus_community": 3,
+      "dedications": 1,
+      "devata_key": "VG:DEVATA:AGNINDRAU",
+      "fraction_of_seeds_in_consensus_community": 1.0,
+      "hymns": 1,
+      "label_en": "Agni and Indra"
+    },
+    {
+      "consensus_community": 0,
+      "dedications": 1,
+      "devata_key": "VG:DEVATA:AGNISURYANILAH",
+      "fraction_of_seeds_in_consensus_community": 1.0,
+      "hymns": 1,
+      "label_en": "Agni, Surya and Anila"
+    },
+    {
+      "consensus_community": 4,
+      "dedications": 1,
+      "devata_key": "VG:DEVATA:AHIH",
+      "fraction_of_seeds_in_consensus_community": 1.0,
+      "hymns": 1,
+      "label_en": "the serpent"
+    },
+    {
+      "consensus_community": 4,
+      "dedications": 1,
+      "devata_key": "VG:DEVATA:AHIRBUDHNYAH",
+      "fraction_of_seeds_in_consensus_community": 1.0,
+      "hymns": 1,
+      "label_en": "Ahi Budhnya"
+    },
+    {
+      "consensus_community": 0,
+      "dedications": 45,
+      "devata_key": "VG:DEVATA:APAH",
+      "fraction_of_seeds_in_consensus_community": 1.0,
+      "hymns": 6,
+      "label_en": "the Waters"
+    },
+    {
+      "consensus_community": 5,
+      "dedications": 1,
+      "devata_key": "VG:DEVATA:ARTNI",
+      "fraction_of_seeds_in_consensus_community": 1.0,
+      "hymns": 1,
+      "label_en": "the two bow-tips"
+    },
+    {
+      "consensus_community": 5,
+      "dedications": 1,
+      "devata_key": "VG:DEVATA:ASHVAAH",
+      "fraction_of_seeds_in_consensus_community": 1.0,
+      "hymns": 1,
+      "label_en": "the horses"
+    },
+    {
+      "consensus_community": 2,
+      "dedications": 2,
+      "devata_key": "VG:DEVATA:ASUNITIH",
+      "fraction_of_seeds_in_consensus_community": 1.0,
+      "hymns": 1,
+      "label_en": "the conducting of the life-breath"
+    },
+    {
+      "consensus_community": 0,
+      "dedications": 631,
+      "devata_key": "VG:DEVATA:ASVINAU",
+      "fraction_of_seeds_in_consensus_community": 1.0,
+      "hymns": 68,
+      "label_en": "the Asvins"
+    },
+    {
+      "consensus_community": 2,
+      "dedications": 30,
+      "devata_key": "VG:DEVATA:ATMA",
+      "fraction_of_seeds_in_consensus_community": 1.0,
+      "hymns": 4,
+      "label_en": "the self"
+    },
+    {
+      "consensus_community": 1,
+      "dedications": 9,
+      "devata_key": "VG:DEVATA:BARHIH",
+      "fraction_of_seeds_in_consensus_community": 1.0,
+      "hymns": 9,
+      "label_en": "the sacred grass"
+    },
+    {
+      "consensus_community": 5,
+      "dedications": 1,
+      "devata_key": "VG:DEVATA:BRAHMA",
+      "fraction_of_seeds_in_consensus_community": 1.0,
+      "hymns": 1,
+      "label_en": "the sacred formulation"
+    },
+    {
+      "consensus_community": 5,
+      "dedications": 1,
+      "devata_key": "VG:DEVATA:BRAHMANAPITRSOMADYAVAPRTHIVIPUSANAH",
+      "fraction_of_seeds_in_consensus_community": 1.0,
+      "hymns": 1,
+      "label_en": "the Brahmana, the Fathers, Soma, Heaven-and-Earth and Pusan"
+    },
+    {
+      "consensus_community": 5,
+      "dedications": 48,
+      "devata_key": "VG:DEVATA:BRAHMANASPATIH",
+      "fraction_of_seeds_in_consensus_community": 1.0,
+      "hymns": 8,
+      "label_en": "Brahmanaspati"
+    },
+    {
+      "consensus_community": 3,
+      "dedications": 74,
+      "devata_key": "VG:DEVATA:BRHASPATIH",
+      "fraction_of_seeds_in_consensus_community": 1.0,
+      "hymns": 13,
+      "label_en": "Brhaspati"
+    },
+    {
+      "consensus_community": 3,
+      "dedications": 1,
+      "devata_key": "VG:DEVATA:CANDRAMAH",
+      "fraction_of_seeds_in_consensus_community": 1.0,
+      "hymns": 1,
+      "label_en": "the Moon"
+    },
+    {
+      "consensus_community": 0,
+      "dedications": 4,
+      "devata_key": "VG:DEVATA:DADHIKRA",
+      "fraction_of_seeds_in_consensus_community": 1.0,
+      "hymns": 1,
+      "label_en": "Dadhikra"
+    },
+    {
+      "consensus_community": 2,
+      "dedications": 19,
+      "devata_key": "VG:DEVATA:DADHIKRAH",
+      "fraction_of_seeds_in_consensus_community": 1.0,
+      "hymns": 3,
+      "label_en": "Dadhikra"
+    },
+    {
+      "consensus_community": 1,
+      "dedications": 9,
+      "devata_key": "VG:DEVATA:DAIVYAU-HOTARAU",
+      "fraction_of_seeds_in_consensus_community": 1.0,
+      "hymns": 9,
+      "label_en": "the two divine Hotrs"
+    },
+    {
+      "consensus_community": 6,
+      "dedications": 5,
+      "devata_key": "VG:DEVATA:DAMPATI",
+      "fraction_of_seeds_in_consensus_community": 1.0,
+      "hymns": 1,
+      "label_en": "the married pair"
+    },
+    {
+      "consensus_community": 3,
+      "dedications": 30,
+      "devata_key": "VG:DEVATA:DEVAH",
+      "fraction_of_seeds_in_consensus_community": 1.0,
+      "hymns": 7,
+      "label_en": "the gods"
+    },
+    {
+      "consensus_community": 0,
+      "dedications": 2,
+      "devata_key": "VG:DEVATA:DEVAPATNYAH",
+      "fraction_of_seeds_in_consensus_community": 1.0,
+      "hymns": 1,
+      "label_en": "the wives of the gods"
+    },
+    {
+      "consensus_community": 1,
+      "dedications": 10,
+      "devata_key": "VG:DEVATA:DEVIRDVARAH",
+      "fraction_of_seeds_in_consensus_community": 1.0,
+      "hymns": 10,
+      "label_en": "the divine doors"
+    },
+    {
+      "consensus_community": 2,
+      "dedications": 1,
+      "devata_key": "VG:DEVATA:DEVYAH",
+      "fraction_of_seeds_in_consensus_community": 1.0,
+      "hymns": 1,
+      "label_en": "the goddesses"
+    },
+    {
+      "consensus_community": 1,
+      "dedications": 1,
+      "devata_key": "VG:DEVATA:DEVYAU-HOTARAU",
+      "fraction_of_seeds_in_consensus_community": 1.0,
+      "hymns": 1,
+      "label_en": "the two divine Hotrs"
+    },
+    {
+      "consensus_community": 5,
+      "dedications": 1,
+      "devata_key": "VG:DEVATA:DHANUH",
+      "fraction_of_seeds_in_consensus_community": 1.0,
+      "hymns": 1,
+      "label_en": "the bow"
+    },
+    {
+      "consensus_community": 1,
+      "dedications": 1,
+      "devata_key": "VG:DEVATA:DHATA",
+      "fraction_of_seeds_in_consensus_community": 1.0,
+      "hymns": 1,
+      "label_en": "Dhatr"
+    },
+    {
+      "consensus_community": 0,
+      "dedications": 4,
+      "devata_key": "VG:DEVATA:DRAVINODAH",
+      "fraction_of_seeds_in_consensus_community": 1.0,
+      "hymns": 1,
+      "label_en": "the bestower of goods"
+    },
+    {
+      "consensus_community": 3,
+      "dedications": 3,
+      "devata_key": "VG:DEVATA:DUNDUBHIH",
+      "fraction_of_seeds_in_consensus_community": 1.0,
+      "hymns": 1,
+      "label_en": "the war drum"
+    },
+    {
+      "consensus_community": 0,
+      "dedications": 1,
+      "devata_key": "VG:DEVATA:DYAVABHUMI",
+      "fraction_of_seeds_in_consensus_community": 1.0,
+      "hymns": 1,
+      "label_en": "Heaven and Earth (dyāvābhūmī)"
+    },
+    {
+      "consensus_community": 2,
+      "dedications": 47,
+      "devata_key": "VG:DEVATA:DYAVAPRTHIVYAU",
+      "fraction_of_seeds_in_consensus_community": 1.0,
+      "hymns": 11,
+      "label_en": "Heaven and Earth"
+    },
+    {
+      "consensus_community": 0,
+      "dedications": 1,
+      "devata_key": "VG:DEVATA:DYUBHUMYASVINAH",
+      "fraction_of_seeds_in_consensus_community": 1.0,
+      "hymns": 1,
+      "label_en": "Heaven, Earth and the Asvins"
+    },
+    {
+      "consensus_community": 0,
+      "dedications": 2,
+      "devata_key": "VG:DEVATA:GAUH",
+      "fraction_of_seeds_in_consensus_community": 1.0,
+      "hymns": 1,
+      "label_en": "the cow"
+    },
+    {
+      "consensus_community": 3,
+      "dedications": 27,
+      "devata_key": "VG:DEVATA:GRAVANAH",
+      "fraction_of_seeds_in_consensus_community": 1.0,
+      "hymns": 4,
+      "label_en": "the pressing stones"
+    },
+    {
+      "consensus_community": 5,
+      "dedications": 1,
+      "devata_key": "VG:DEVATA:HASTAGHNAH",
+      "fraction_of_seeds_in_consensus_community": 1.0,
+      "hymns": 1,
+      "label_en": "the archer's hand-guard"
+    },
+    {
+      "consensus_community": 1,
+      "dedications": 1,
+      "devata_key": "VG:DEVATA:ILA-SARASVATI-MAHI",
+      "fraction_of_seeds_in_consensus_community": 1.0,
+      "hymns": 1,
+      "label_en": "Ila, Sarasvati and Mahi"
+    },
+    {
+      "consensus_community": 3,
+      "dedications": 3,
+      "devata_key": "VG:DEVATA:INDRABRAHMANASPATI",
+      "fraction_of_seeds_in_consensus_community": 1.0,
+      "hymns": 2,
+      "label_en": "Indra and Brahmanaspati"
+    },
+    {
+      "consensus_community": 3,
+      "dedications": 11,
+      "devata_key": "VG:DEVATA:INDRABRHASPATI",
+      "fraction_of_seeds_in_consensus_community": 1.0,
+      "hymns": 5,
+      "label_en": "Indra and Brhaspati"
+    },
+    {
+      "consensus_community": 3,
+      "dedications": 117,
+      "devata_key": "VG:DEVATA:INDRAGNI",
+      "fraction_of_seeds_in_consensus_community": 1.0,
+      "hymns": 15,
+      "label_en": "Indra and Agni"
+    },
+    {
+      "consensus_community": 3,
+      "dedications": 2869,
+      "devata_key": "VG:DEVATA:INDRAH",
+      "fraction_of_seeds_in_consensus_community": 1.0,
+      "hymns": 273,
+      "label_en": "Indra"
+    },
+    {
+      "consensus_community": 0,
+      "dedications": 3,
+      "devata_key": "VG:DEVATA:INDRAH-MARUTAH",
+      "fraction_of_seeds_in_consensus_community": 1.0,
+      "hymns": 1,
+      "label_en": "Indra and the Maruts"
+    },
+    {
+      "consensus_community": 2,
+      "dedications": 1,
+      "devata_key": "VG:DEVATA:INDRANI-VARUNANI-AGNAYI",
+      "fraction_of_seeds_in_consensus_community": 1.0,
+      "hymns": 1,
+      "label_en": "Indrani, Varunani and Agnayi"
+    },
+    {
+      "consensus_community": 7,
+      "dedications": 1,
+      "devata_key": "VG:DEVATA:INDRAPARVATAU",
+      "fraction_of_seeds_in_consensus_community": 1.0,
+      "hymns": 1,
+      "label_en": "Indra and Parvata"
+    },
+    {
+      "consensus_community": 3,
+      "dedications": 17,
+      "devata_key": "VG:DEVATA:INDRASOMAU",
+      "fraction_of_seeds_in_consensus_community": 1.0,
+      "hymns": 4,
+      "label_en": "Indra and Soma"
+    },
+    {
+      "consensus_community": 3,
+      "dedications": 2,
+      "devata_key": "VG:DEVATA:INDRASYASVAU",
+      "fraction_of_seeds_in_consensus_community": 1.0,
+      "hymns": 1,
+      "label_en": "the two horses of Indra"
+    },
+    {
+      "consensus_community": 2,
+      "dedications": 70,
+      "devata_key": "VG:DEVATA:INDRAVARUNAU",
+      "fraction_of_seeds_in_consensus_community": 1.0,
+      "hymns": 9,
+      "label_en": "Indra and Varuna"
+    },
+    {
+      "consensus_community": 0,
+      "dedications": 33,
+      "devata_key": "VG:DEVATA:INDRAVAYU",
+      "fraction_of_seeds_in_consensus_community": 1.0,
+      "hymns": 10,
+      "label_en": "Indra and Vayu"
+    },
+    {
+      "consensus_community": 2,
+      "dedications": 14,
+      "devata_key": "VG:DEVATA:INDRAVISNU",
+      "fraction_of_seeds_in_consensus_community": 1.0,
+      "hymns": 3,
+      "label_en": "Indra and Visnu"
+    },
+    {
+      "consensus_community": 3,
+      "dedications": 3,
+      "devata_key": "VG:DEVATA:INDROSASAU",
+      "fraction_of_seeds_in_consensus_community": 1.0,
+      "hymns": 1,
+      "label_en": "Indra and Usas"
+    },
+    {
+      "consensus_community": 5,
+      "dedications": 4,
+      "devata_key": "VG:DEVATA:ISAVAH",
+      "fraction_of_seeds_in_consensus_community": 1.0,
+      "hymns": 1,
+      "label_en": "the arrows"
+    },
+    {
+      "consensus_community": 5,
+      "dedications": 1,
+      "devata_key": "VG:DEVATA:ISUDHIH",
+      "fraction_of_seeds_in_consensus_community": 1.0,
+      "hymns": 1,
+      "label_en": "the quiver"
+    },
+    {
+      "consensus_community": 5,
+      "dedications": 1,
+      "devata_key": "VG:DEVATA:JYA",
+      "fraction_of_seeds_in_consensus_community": 1.0,
+      "hymns": 1,
+      "label_en": "the bowstring"
+    },
+    {
+      "consensus_community": 2,
+      "dedications": 11,
+      "devata_key": "VG:DEVATA:KAH",
+      "fraction_of_seeds_in_consensus_community": 1.0,
+      "hymns": 2,
+      "label_en": "Ka, the Who"
+    },
+    {
+      "consensus_community": 8,
+      "dedications": 3,
+      "devata_key": "VG:DEVATA:KSETRAPATIH",
+      "fraction_of_seeds_in_consensus_community": 1.0,
+      "hymns": 1,
+      "label_en": "Ksetrapati"
+    },
+    {
+      "consensus_community": 1,
+      "dedications": 1,
+      "devata_key": "VG:DEVATA:MARUDRUDRAVISNAVAH",
+      "fraction_of_seeds_in_consensus_community": 1.0,
+      "hymns": 1,
+      "label_en": "the Maruts, Rudra and Visnu"
+    },
+    {
+      "consensus_community": 3,
+      "dedications": 428,
+      "devata_key": "VG:DEVATA:MARUTAH",
+      "fraction_of_seeds_in_consensus_community": 1.0,
+      "hymns": 42,
+      "label_en": "the Maruts"
+    },
+    {
+      "consensus_community": 3,
+      "dedications": 19,
+      "devata_key": "VG:DEVATA:MARUTVANINDRAH",
+      "fraction_of_seeds_in_consensus_community": 1.0,
+      "hymns": 2,
+      "label_en": "Indra accompanied by the Maruts"
+    },
+    {
+      "consensus_community": 0,
+      "dedications": 10,
+      "devata_key": "VG:DEVATA:MITRAH",
+      "fraction_of_seeds_in_consensus_community": 1.0,
+      "hymns": 2,
+      "label_en": "Mitra"
+    },
+    {
+      "consensus_community": 0,
+      "dedications": 184,
+      "devata_key": "VG:DEVATA:MITRAVARUNAU",
+      "fraction_of_seeds_in_consensus_community": 1.0,
+      "hymns": 35,
+      "label_en": "Mitra and Varuna"
+    },
+    {
+      "consensus_community": 1,
+      "dedications": 4,
+      "devata_key": "VG:DEVATA:MRTYUH",
+      "fraction_of_seeds_in_consensus_community": 1.0,
+      "hymns": 1,
+      "label_en": "Death"
+    },
+    {
+      "consensus_community": 0,
+      "dedications": 18,
+      "devata_key": "VG:DEVATA:NADYAH",
+      "fraction_of_seeds_in_consensus_community": 1.0,
+      "hymns": 3,
+      "label_en": "the rivers"
+    },
+    {
+      "consensus_community": 2,
+      "dedications": 4,
+      "devata_key": "VG:DEVATA:NIRRTIH",
+      "fraction_of_seeds_in_consensus_community": 1.0,
+      "hymns": 1,
+      "label_en": "Nirrti, dissolution"
+    },
+    {
+      "consensus_community": 9,
+      "dedications": 6,
+      "devata_key": "VG:DEVATA:PANAYAH",
+      "fraction_of_seeds_in_consensus_community": 1.0,
+      "hymns": 1,
+      "label_en": "the Panis"
+    },
+    {
+      "consensus_community": 0,
+      "dedications": 2,
+      "devata_key": "VG:DEVATA:PATHYASVASTIH",
+      "fraction_of_seeds_in_consensus_community": 1.0,
+      "hymns": 1,
+      "label_en": "Pathya Svasti, well-being on the road"
+    },
+    {
+      "consensus_community": 0,
+      "dedications": 1,
+      "devata_key": "VG:DEVATA:PAVAMANAH",
+      "fraction_of_seeds_in_consensus_community": 1.0,
+      "hymns": 1,
+      "label_en": "Pavamana, the one being clarified"
+    },
+    {
+      "consensus_community": 10,
+      "dedications": 1087,
+      "devata_key": "VG:DEVATA:PAVAMANAH-SOMAH",
+      "fraction_of_seeds_in_consensus_community": 1.0,
+      "hymns": 113,
+      "label_en": "Soma Pavamana"
+    },
+    {
+      "consensus_community": 10,
+      "dedications": 8,
+      "devata_key": "VG:DEVATA:PAVAMANO-AGNIH",
+      "fraction_of_seeds_in_consensus_community": 1.0,
+      "hymns": 2,
+      "label_en": "Agni Pavamana"
+    },
+    {
+      "consensus_community": 11,
+      "dedications": 18,
+      "devata_key": "VG:DEVATA:PITARAH",
+      "fraction_of_seeds_in_consensus_community": 1.0,
+      "hymns": 2,
+      "label_en": "the Fathers"
+    },
+    {
+      "consensus_community": 5,
+      "dedications": 1,
+      "devata_key": "VG:DEVATA:PRATODAH",
+      "fraction_of_seeds_in_consensus_community": 1.0,
+      "hymns": 1,
+      "label_en": "the goad"
+    },
+    {
+      "consensus_community": 2,
+      "dedications": 4,
+      "devata_key": "VG:DEVATA:PRTHIVI",
+      "fraction_of_seeds_in_consensus_community": 1.0,
+      "hymns": 2,
+      "label_en": "Prthivi"
+    },
+    {
+      "consensus_community": 3,
+      "dedications": 1,
+      "devata_key": "VG:DEVATA:PRTHIVYANTARIKSE",
+      "fraction_of_seeds_in_consensus_community": 1.0,
+      "hymns": 1,
+      "label_en": "Earth and the midspace"
+    },
+    {
+      "consensus_community": 0,
+      "dedications": 77,
+      "devata_key": "VG:DEVATA:PUSA",
+      "fraction_of_seeds_in_consensus_community": 1.0,
+      "hymns": 13,
+      "label_en": "Pusan"
+    },
+    {
+      "consensus_community": 2,
+      "dedications": 2,
+      "devata_key": "VG:DEVATA:RAKA",
+      "fraction_of_seeds_in_consensus_community": 1.0,
+      "hymns": 1,
+      "label_en": "Raka"
+    },
+    {
+      "consensus_community": 5,
+      "dedications": 1,
+      "devata_key": "VG:DEVATA:RATHAGOPAH",
+      "fraction_of_seeds_in_consensus_community": 1.0,
+      "hymns": 1,
+      "label_en": "the guardian of the chariot"
+    },
+    {
+      "consensus_community": 5,
+      "dedications": 4,
+      "devata_key": "VG:DEVATA:RATHAH",
+      "fraction_of_seeds_in_consensus_community": 1.0,
+      "hymns": 2,
+      "label_en": "the chariot"
+    },
+    {
+      "consensus_community": 7,
+      "dedications": 4,
+      "devata_key": "VG:DEVATA:RATHANGANI",
+      "fraction_of_seeds_in_consensus_community": 1.0,
+      "hymns": 1,
+      "label_en": "the parts of the chariot"
+    },
+    {
+      "consensus_community": 0,
+      "dedications": 96,
+      "devata_key": "VG:DEVATA:RBHAVAH",
+      "fraction_of_seeds_in_consensus_community": 1.0,
+      "hymns": 13,
+      "label_en": "the Rbhus"
+    },
+    {
+      "consensus_community": 3,
+      "dedications": 4,
+      "devata_key": "VG:DEVATA:RNANCAYENDRAU",
+      "fraction_of_seeds_in_consensus_community": 1.0,
+      "hymns": 1,
+      "label_en": "Rnancaya and Indra"
+    },
+    {
+      "consensus_community": 3,
+      "dedications": 38,
+      "devata_key": "VG:DEVATA:RUDRAH",
+      "fraction_of_seeds_in_consensus_community": 1.0,
+      "hymns": 6,
+      "label_en": "Rudra"
+    },
+    {
+      "consensus_community": 0,
+      "dedications": 1,
+      "devata_key": "VG:DEVATA:SADHYAH",
+      "fraction_of_seeds_in_consensus_community": 1.0,
+      "hymns": 1,
+      "label_en": "the Sadhyas"
+    },
+    {
+      "consensus_community": 9,
+      "dedications": 5,
+      "devata_key": "VG:DEVATA:SARAMA",
+      "fraction_of_seeds_in_consensus_community": 1.0,
+      "hymns": 1,
+      "label_en": "Sarama"
+    },
+    {
+      "consensus_community": 11,
+      "dedications": 3,
+      "devata_key": "VG:DEVATA:SARAMEYAU-SVANAU",
+      "fraction_of_seeds_in_consensus_community": 1.0,
+      "hymns": 1,
+      "label_en": "the two dogs of Sarama"
+    },
+    {
+      "consensus_community": 0,
+      "dedications": 2,
+      "devata_key": "VG:DEVATA:SARANYUH",
+      "fraction_of_seeds_in_consensus_community": 1.0,
+      "hymns": 1,
+      "label_en": "Saranyu"
+    },
+    {
+      "consensus_community": 0,
+      "dedications": 4,
+      "devata_key": "VG:DEVATA:SARASVAN",
+      "fraction_of_seeds_in_consensus_community": 1.0,
+      "hymns": 2,
+      "label_en": "Sarasvan"
+    },
+    {
+      "consensus_community": 0,
+      "dedications": 32,
+      "devata_key": "VG:DEVATA:SARASVATI",
+      "fraction_of_seeds_in_consensus_community": 1.0,
+      "hymns": 7,
+      "label_en": "Sarasvati"
+    },
+    {
+      "consensus_community": 1,
+      "dedications": 9,
+      "devata_key": "VG:DEVATA:SARASVATI-ILA-BHARATI",
+      "fraction_of_seeds_in_consensus_community": 1.0,
+      "hymns": 9,
+      "label_en": "Sarasvati, Ila and Bharati"
+    },
+    {
+      "consensus_community": 5,
+      "dedications": 1,
+      "devata_key": "VG:DEVATA:SARATHIH-RASMAYAH",
+      "fraction_of_seeds_in_consensus_community": 1.0,
+      "hymns": 1,
+      "label_en": "the charioteer and the reins"
+    },
+    {
+      "consensus_community": 7,
+      "dedications": 2,
+      "devata_key": "VG:DEVATA:SASARPARI-VAK",
+      "fraction_of_seeds_in_consensus_community": 1.0,
+      "hymns": 1,
+      "label_en": "Sasarpari, the Voice"
+    },
+    {
+      "consensus_community": 2,
+      "dedications": 82,
+      "devata_key": "VG:DEVATA:SAVITA",
+      "fraction_of_seeds_in_consensus_community": 1.0,
+      "hymns": 14,
+      "label_en": "Savitr"
+    },
+    {
+      "consensus_community": 3,
+      "dedications": 16,
+      "devata_key": "VG:DEVATA:SAVITRI-SURYA",
+      "fraction_of_seeds_in_consensus_community": 1.0,
+      "hymns": 1,
+      "label_en": "Surya, daughter of Savitr"
+    },
+    {
+      "consensus_community": 2,
+      "dedications": 2,
+      "devata_key": "VG:DEVATA:SINIVALI",
+      "fraction_of_seeds_in_consensus_community": 1.0,
+      "hymns": 1,
+      "label_en": "Sinivali"
+    },
+    {
+      "consensus_community": 8,
+      "dedications": 2,
+      "devata_key": "VG:DEVATA:SITA",
+      "fraction_of_seeds_in_consensus_community": 1.0,
+      "hymns": 1,
+      "label_en": "Sita, the Furrow"
+    },
+    {
+      "consensus_community": 3,
+      "dedications": 80,
+      "devata_key": "VG:DEVATA:SOMAH",
+      "fraction_of_seeds_in_consensus_community": 1.0,
+      "hymns": 12,
+      "label_en": "Soma"
+    },
+    {
+      "consensus_community": 3,
+      "dedications": 1,
+      "devata_key": "VG:DEVATA:SOMARKAU",
+      "fraction_of_seeds_in_consensus_community": 1.0,
+      "hymns": 1,
+      "label_en": "Soma and the Sun"
+    },
+    {
+      "consensus_community": 5,
+      "dedications": 1,
+      "devata_key": "VG:DEVATA:SOMAVARUNAU",
+      "fraction_of_seeds_in_consensus_community": 1.0,
+      "hymns": 1,
+      "label_en": "Soma and Varuna"
+    },
+    {
+      "consensus_community": 8,
+      "dedications": 1,
+      "devata_key": "VG:DEVATA:SUNAH",
+      "fraction_of_seeds_in_consensus_community": 1.0,
+      "hymns": 1,
+      "label_en": "the dog"
+    },
+    {
+      "consensus_community": 8,
+      "dedications": 2,
+      "devata_key": "VG:DEVATA:SUNASIRAU",
+      "fraction_of_seeds_in_consensus_community": 1.0,
+      "hymns": 1,
+      "label_en": "Suna and Sira"
+    },
+    {
+      "consensus_community": 0,
+      "dedications": 63,
+      "devata_key": "VG:DEVATA:SURYAH",
+      "fraction_of_seeds_in_consensus_community": 1.0,
+      "hymns": 14,
+      "label_en": "Surya"
+    },
+    {
+      "consensus_community": 3,
+      "dedications": 8,
+      "devata_key": "VG:DEVATA:SYENAH",
+      "fraction_of_seeds_in_consensus_community": 1.0,
+      "hymns": 2,
+      "label_en": "the falcon"
+    },
+    {
+      "consensus_community": 1,
+      "dedications": 13,
+      "devata_key": "VG:DEVATA:TVASTA",
+      "fraction_of_seeds_in_consensus_community": 1.0,
+      "hymns": 13,
+      "label_en": "Tvastr"
+    },
+    {
+      "consensus_community": 3,
+      "dedications": 2,
+      "devata_key": "VG:DEVATA:ULUKHALAM",
+      "fraction_of_seeds_in_consensus_community": 1.0,
+      "hymns": 1,
+      "label_en": "the mortar"
+    },
+    {
+      "consensus_community": 3,
+      "dedications": 2,
+      "devata_key": "VG:DEVATA:ULUKHALAMUSALE",
+      "fraction_of_seeds_in_consensus_community": 1.0,
+      "hymns": 1,
+      "label_en": "the mortar and pestle"
+    },
+    {
+      "consensus_community": 0,
+      "dedications": 182,
+      "devata_key": "VG:DEVATA:USAH",
+      "fraction_of_seeds_in_consensus_community": 1.0,
+      "hymns": 23,
+      "label_en": "Usas"
+    },
+    {
+      "consensus_community": 1,
+      "dedications": 10,
+      "devata_key": "VG:DEVATA:USASANAKTA",
+      "fraction_of_seeds_in_consensus_community": 1.0,
+      "hymns": 10,
+      "label_en": "Dawn and Night"
+    },
+    {
+      "consensus_community": 2,
+      "dedications": 2,
+      "devata_key": "VG:DEVATA:VAJINAH",
+      "fraction_of_seeds_in_consensus_community": 1.0,
+      "hymns": 1,
+      "label_en": "the steeds"
+    },
+    {
+      "consensus_community": 0,
+      "dedications": 3,
+      "devata_key": "VG:DEVATA:VAK",
+      "fraction_of_seeds_in_consensus_community": 1.0,
+      "hymns": 2,
+      "label_en": "Vac, Speech"
+    },
+    {
+      "consensus_community": 0,
+      "dedications": 1,
+      "devata_key": "VG:DEVATA:VAK-APAH",
+      "fraction_of_seeds_in_consensus_community": 1.0,
+      "hymns": 1,
+      "label_en": "Vac and the Waters"
+    },
+    {
+      "consensus_community": 1,
+      "dedications": 10,
+      "devata_key": "VG:DEVATA:VANASPATIH",
+      "fraction_of_seeds_in_consensus_community": 1.0,
+      "hymns": 10,
+      "label_en": "Vanaspati"
+    },
+    {
+      "consensus_community": 5,
+      "dedications": 1,
+      "devata_key": "VG:DEVATA:VARMA",
+      "fraction_of_seeds_in_consensus_community": 1.0,
+      "hymns": 1,
+      "label_en": "the armour"
+    },
+    {
+      "consensus_community": 2,
+      "dedications": 99,
+      "devata_key": "VG:DEVATA:VARUNAH",
+      "fraction_of_seeds_in_consensus_community": 1.0,
+      "hymns": 13,
+      "label_en": "Varuna"
+    },
+    {
+      "consensus_community": 3,
+      "dedications": 5,
+      "devata_key": "VG:DEVATA:VASTOSPATIH",
+      "fraction_of_seeds_in_consensus_community": 1.0,
+      "hymns": 3,
+      "label_en": "Vastospati"
+    },
+    {
+      "consensus_community": 0,
+      "dedications": 53,
+      "devata_key": "VG:DEVATA:VAYUH",
+      "fraction_of_seeds_in_consensus_community": 1.0,
+      "hymns": 17,
+      "label_en": "Vayu"
+    },
+    {
+      "consensus_community": 2,
+      "dedications": 31,
+      "devata_key": "VG:DEVATA:VISNUH",
+      "fraction_of_seeds_in_consensus_community": 1.0,
+      "hymns": 6,
+      "label_en": "Visnu"
+    },
+    {
+      "consensus_community": 0,
+      "dedications": 805,
+      "devata_key": "VG:DEVATA:VISVEDEVAH",
+      "fraction_of_seeds_in_consensus_community": 1.0,
+      "hymns": 86,
+      "label_en": "the All-Gods"
+    },
+    {
+      "consensus_community": 6,
+      "dedications": 4,
+      "devata_key": "VG:DEVATA:YAJNAYAJAMANAU",
+      "fraction_of_seeds_in_consensus_community": 1.0,
+      "hymns": 1,
+      "label_en": "the sacrifice and the sacrificer"
+    },
+    {
+      "consensus_community": 11,
+      "dedications": 23,
+      "devata_key": "VG:DEVATA:YAMAH",
+      "fraction_of_seeds_in_consensus_community": 1.0,
+      "hymns": 3,
+      "label_en": "Yama"
+    },
+    {
+      "consensus_community": 11,
+      "dedications": 7,
+      "devata_key": "VG:DEVATA:YAMI",
+      "fraction_of_seeds_in_consensus_community": 1.0,
+      "hymns": 1,
+      "label_en": "Yami"
+    }
+  ],
+  "resolution": 1.0,
+  "seeds": 200,
+  "weighting": "COSINE"
+}

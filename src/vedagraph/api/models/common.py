@@ -58,7 +58,7 @@ class EvidenceBasis(StrEnum):
        **This enum is NOT the graph's ``evidence_basis`` property.** The two share a name
        and describe different axes, and the collision is a trap that was walked into during
        this build: reading ``r.evidence_basis`` straight into this enum mapped *every*
-       attribution edge in the corpus to ``UNKNOWN`` -- all 17,889 seer edges, all 16,331
+       attribution edge in the corpus to ``UNKNOWN`` -- all 17,889 seer edges, all 16,298
        metre edges, all 10,558 deity edges -- because the value spaces are disjoint.
 
        The graph property answers "off which textual surface was the evidence read?" and
@@ -150,6 +150,91 @@ def evidence_surface(value: str | None) -> EvidenceSurface:
         return EvidenceSurface.UNKNOWN
 
 
+def _reject_contradictory_coverage(
+    *,
+    where: str,
+    vedas_in_scope: list[str],
+    vedas_not_covered: list[str],
+    measured: dict[str, int],
+) -> None:
+    """Raise when a coverage block says two incompatible things about one Veda.
+
+    Two contradictions, and the second is the one that shipped. A Veda listed in both
+    ``vedas_in_scope`` and ``vedas_not_covered`` is a flat self-contradiction. A Veda
+    carrying a non-zero ``measured`` figure *and* sitting in ``vedas_not_covered`` is the
+    subtler one: the endpoint publishes a count and then tells a machine consumer to
+    discard it as an artefact of an absent layer.
+
+    Both arose the same way -- two dimensions with different reach (naming spans four
+    corpora, ascription reaches one) merged into a single coverage block. The cure is
+    :class:`CoverageDimension`, and this guard is what makes the merged form
+    unrepresentable rather than merely discouraged.
+
+    A measured **zero** beside ``vedas_not_covered`` is legal and wanted: stating the zero
+    is how an absent layer is distinguished from a silent corpus.
+    """
+    both = [veda for veda in vedas_in_scope if veda in set(vedas_not_covered)]
+    if both:
+        raise ValueError(
+            f"{where}: {', '.join(both)} reported as both in scope and not covered. A "
+            "response whose dimensions have different reach must report coverage per "
+            "dimension rather than merge them into one block."
+        )
+    contradicted = [
+        veda
+        for veda in vedas_not_covered
+        if measured.get(veda)  # non-zero only; a stated zero is the point
+    ]
+    if contradicted:
+        raise ValueError(
+            f"{where}: {', '.join(contradicted)} carries a non-zero measured figure while "
+            "listed as not covered. A client filtering on vedas_not_covered would discard "
+            "the very figures this response measured."
+        )
+
+
+class CoverageDimension(ApiModel):
+    """One dimension's reach, where a response carries more than one.
+
+    A deity's *naming* is read off the verse text and spans all four corpora; its
+    *ascription* is the traditional apparatus and reaches the Rigveda alone. Those are two
+    populations with two different scopes, and a single ``vedas_not_covered`` cannot state
+    both -- it once stated the ascription scope beside the naming figures, so the endpoint
+    published AV 635, YV 221 and SV 405 and simultaneously told a machine consumer that
+    AV, YV and SV were not covered.
+    """
+
+    dimension: str = Field(
+        description="What is being counted, e.g. 'naming' or 'ascription'. Names the axis, "
+        "so a reader never has to infer which figures a scope applies to."
+    )
+    vedas_in_scope: list[str] = Field(
+        default_factory=list,
+        description="Veda codes THIS dimension measurably reaches.",
+    )
+    vedas_not_covered: list[str] = Field(
+        default_factory=list,
+        description="Veda codes where THIS dimension's zero means an absent layer.",
+    )
+    measured: dict[str, int] = Field(
+        default_factory=dict, description="Per-Veda counts for this dimension."
+    )
+    denominator: dict[str, int] = Field(
+        default_factory=dict, description="Per-Veda mantra totals for normalisation."
+    )
+    means: str = Field(description="What this dimension counts and what it must not be added to.")
+
+    @model_validator(mode="after")
+    def _scope_and_not_covered_are_disjoint(self) -> Self:
+        _reject_contradictory_coverage(
+            where=f"coverage dimension {self.dimension!r}",
+            vedas_in_scope=self.vedas_in_scope,
+            vedas_not_covered=self.vedas_not_covered,
+            measured=self.measured,
+        )
+        return self
+
+
 class CoverageView(ApiModel):
     """What corpus this answer actually reached.
 
@@ -157,6 +242,11 @@ class CoverageView(ApiModel):
     graph is treating a Veda's zero as textual absence when the annotation layer simply
     does not reach that corpus, and a coverage block beside the counts is what makes the
     two distinguishable without reading prose.
+
+    The top-level fields describe the dimension ``measured`` belongs to. Where a response
+    carries figures from more than one dimension, each gets a :class:`CoverageDimension`
+    in ``dimensions`` rather than having its scope folded into the block above -- folding
+    is what made three Vedas in-scope, not-covered and measured at the same time.
     """
 
     vedas_in_scope: list[str] = Field(
@@ -175,6 +265,21 @@ class CoverageView(ApiModel):
         description="Per-Veda mantra totals, so a client can normalise rather than "
         "compare raw counts across corpora of different size.",
     )
+    dimensions: list[CoverageDimension] = Field(
+        default_factory=list,
+        description="Per-dimension coverage, present whenever this response reports "
+        "figures from more than one dimension with different corpus reach.",
+    )
+
+    @model_validator(mode="after")
+    def _scope_and_not_covered_are_disjoint(self) -> Self:
+        _reject_contradictory_coverage(
+            where="coverage",
+            vedas_in_scope=self.vedas_in_scope,
+            vedas_not_covered=self.vedas_not_covered,
+            measured=self.measured,
+        )
+        return self
 
 
 class CaveatView(ApiModel):

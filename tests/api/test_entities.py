@@ -58,7 +58,12 @@ def test_deities_are_refused_by_the_generic_surface(client: TestClient, slug: st
     assert response.status_code == 400
     body = response.json()
     assert "/api/v1/devatas" in body["detail"] or "/api/v1/devatas" in (body["hint"] or "")
-    assert "dog" in body["detail"], "the reason must be stated, not just the redirect"
+    # The reason, not just the redirect. "dog" was the exemplar and the dog is a deity now
+    # under the recorded ruling, so the sentence names the exclusion classes that remain.
+    assert "human patrons" in body["detail"], (
+        "the reason must be stated, not just the redirect"
+    )
+    assert "abstractions ruled not to name an addressee" in body["detail"]
 
 
 def test_kind_is_refused_on_a_type_that_has_no_kind(client: TestClient) -> None:

@@ -1,0 +1,25 @@
+{
+ "coordinators_correction": "the entity grain now accepts a declared subject_id_property, so formula_id and family_id subjects can be first-class rows.",
+ "decision": "taken. The sidecar subjects are now rows.jsonl entity rows.",
+ "rows_by_grain": {
+  "PASSAGE (mantra)": 5636,
+  "ENTITY Formula": 4825,
+  "ENTITY FormulaFamily": 720,
+  "total": 11181
+ },
+ "declared_per_row": {
+  "subject_kind": "ENTITY",
+  "subject_id_property": "formula_id or family_id",
+  "subject_label": "Formula or FormulaFamily"
+ },
+ "why_this_is_the_right_grain": "GAP-FORMULA-003's subject is a Formula, not a mantra. While it lived in a sidecar the gate could resolve the domain's per-mantra rows at full coverage and never touch its formula-grained output at all -- the exact shape the gate fix was written to prevent. rows.jsonl was not a proxy before, but it was not the whole subject either.",
+ "accounting_consequence": {
+  "candidates_considered": 25755,
+  "composition": "20,210 mantras + 4,825 Formula + 720 FormulaFamily",
+  "accepted": 11181,
+  "rejected": 14574,
+  "unresolved": 0,
+  "balance": "11181 + 14574 = 25755"
+ },
+ "kept_from_the_previous_round": "the sidecar key resolution against the live store is retained as proofs/sidecar_keys_resolve_against_the_live_store.json, because the flat files are still published for readers and because the 22,686 backfill rows proven to target a live USES_FORMULA edge is a check the gate still does not perform."
+}

@@ -1,0 +1,31 @@
+{
+  "verdict": "NOT_EXTRACTABLE_AT_SOURCE_EXPLICIT",
+  "artifact_id": "WIKISOURCE_SA.YV.VSM.SARVANUKRAMANI",
+  "page_title": "शुक्लयजुर्वेदः/सर्वानुक्रमणी",
+  "revid": 311321,
+  "local_path": "data/raw/wikisource_sa/2026-09-07/91203256234de6dbe6fa626c911a9bb674aebe0a6688acd2ba2a5388c0208e28.php",
+  "recension": "Madhyandina (Sukla Yajurveda) -- the correct recension for VG:WORK:YV:VSM, so the verdict is not a recension mismatch",
+  "characters": 49708,
+  "numbered_sutra_terminators": 168,
+  "highest_sutra_number": 124,
+  "section_headings": 0,
+  "adhyaya_markers": 0,
+  "anuvaka_markers": 0,
+  "numeric_mantra_coordinates": 0,
+  "lingokta_occurrences": 102,
+  "anadista_occurrences": 1,
+  "devata_token_occurrences": 161,
+  "chandas_token_occurrences": 35,
+  "why_not_extractable": [
+    "ZERO numeric mantra coordinates in 49,708 characters. The Yajurvedic rsi layer that DID parse -- 2,240 assertions over 1,960 of 1,975 mantras -- parsed because the Wikisource rsisuci prints explicit numeric ranges ('atrih 8.15-22, 24-30'). Katyayana prints none. It addresses mantras by pratika (incipit) only, so the join to our 1,975 keys would require sandhi-splitting a continuous stream and matching incipits, which is an interpretive act and not a parse.",
+    "102 lingokta deferrals. In 102 places the sutra does not name the deity; it says the deity is 'stated by the characteristic mark' in the mantra. Resolving those means reading the mantra and judging, which is SEMANTIC_MODEL_EXTRACTION at best and INTERPRETIVE_CLAIM in practice. No LLM was used on this source and none may be.",
+    "No field delimiters and no headings. The rsi, devata and chandas run together in sandhi-fused prose with no markers, so even a correctly segmented sutra does not say which slot a token belongs to."
+  ],
+  "constraints_the_source_itself_imposes": [
+    "chandas is legitimately ASSERTED-ABSENT for many yajus. The opening sutra reads 'yajusam aniyataksaratvad ekesam chando na vidyate' -- because the yajus have an unfixed syllable count, for some of them no metre is known. That absence needs a reason code; it must not be ingested as unknown and must not be filled.",
+    "the devata co-domain includes ritual implements as pratimabhuta. The same sutra lists anas (cart), sakha (branch), ukha (pot), sabhya, upavesa, kapala (potsherd), idhma (firewood), ulukhala (mortar) among the devatas. A shared RV/YV devata enum would therefore be a modelling error, and Agent 15's contamination sweep must not treat a YV ritual implement as contamination.",
+    "the tradition keeps its own register of non-assignments, anadista-devatadayah. A pipeline must reproduce those gaps rather than fill them."
+  ],
+  "if_attempted_anyway": "evidence_layer would be INTERPRETIVE_CLAIM, never SOURCE_EXPLICIT, and mapping_confidence UNVERIFIED -- so every row would stage and none would import. Nothing was attempted here and nothing is staged.",
+  "the_one_lead_that_would_change_this": "reconnaissance names an UNCHECKED lead: printed Indian editions commonly head each mantra with rsih / devata / chandah / svarah. Weber 1852 (in.ernet.dli.2015.345056) and the Uvata+Mahidhara printings are the candidates. If one prints the apparatus per mantra it is the fastest route to YV devata and chandas -- with the caveat that a printed edition's headings are an EDITORIAL apparatus and not the Sarvanukramani itself, the two can disagree, and whichever is used must be recorded as the attributing authority. This agent did not check it: it is a page-image inspection, not a fetch, and it is out of this agent's reach."
+}

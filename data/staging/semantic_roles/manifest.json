@@ -1,0 +1,477 @@
+{
+  "domain": "semantic_roles",
+  "agent": 9,
+  "schema_version": "1.0",
+  "algorithm_version": "vedagraph-semantic-roles-four-veda-v1",
+  "created_at": "2026-09-15T10:55:42.626459Z",
+  "code_commit": "fd3512043c8f9125ba5b9a052b7f25205a4c6db1",
+  "config_hash": "4f7ca2f226442aef4dc4fe7ebd1050055e651ddd45ce2d870f15532069e2478c",
+  "config": {
+    "algorithm_version": "vedagraph-semantic-roles-four-veda-v1",
+    "predicate_vocabulary": "vedagraph-action-predicates-v1",
+    "root_map": "vedagraph-action-root-map-v1",
+    "registry_roles": [
+      "AGENT",
+      "PATIENT",
+      "BENEFICIARY",
+      "INSTRUMENT",
+      "LOCATION"
+    ],
+    "proposed_roles": [
+      "SOURCE",
+      "GOAL"
+    ],
+    "brief_role_aliases": {
+      "RECIPIENT": "BENEFICIARY",
+      "ACTION": "ActionPredicate"
+    },
+    "sentence_match_floor": 0.6,
+    "verse_concentration_floor": 0.7,
+    "hymn_match_floor": 0.7,
+    "sv_requires_skeleton_identity": true,
+    "model_assisted_extraction_used": false,
+    "lib_roles_sha256": "b46a03ff8fc6aa8197d3ca222480540d741f681fa19910513c4d0eb881974b44",
+    "extract_rv_sha256": "7f8178bcb3dfeff7f6c9785a77ec9b82d5af305326d43d244b20b0b908441592",
+    "extract_dcs_sha256": "f5d3768935b599b739dcefa71653693234fe56e6e9ba3fbbd056cd89116a30d1",
+    "extract_sv_sha256": "d3e07fdd7a2289d0b5c278617cf351a36e18955f843aa4360eb213fc6a3f9eb6"
+  },
+  "source_snapshot_ids": [
+    "DCS_CONLLU_2026_09",
+    "VEDAWEB_ZURICH_RIGVEDA_LEXICAL_V1"
+  ],
+  "source_snapshot": {
+    "DCS": "DCS:6897b38484ac97507bae90c578f2fb2b801646093c16b6f689a51ad2e1fb607e",
+    "VEDAWEB": "VEDAWEB:ZURICH:rigveda_lexical_v1"
+  },
+  "files": [
+    {
+      "path": "rows.jsonl",
+      "sha256": "9ec93cae78c1d1d90bc6873fc1c28cfabb496601f5838e87dccb3e52c319ef35",
+      "rows": 14235,
+      "bytes": 71876857
+    },
+    {
+      "path": "rejected.jsonl",
+      "sha256": "55ef422e0e45ca1d74616b93045ce9fee878963fb027c0af6a88a050020de45c",
+      "rows": 5975,
+      "bytes": 4078096
+    },
+    {
+      "path": "sources.jsonl",
+      "sha256": "59f6e2e93295b7f8b03b87369f0d4473698e17bbbea1419a9f34abecc353b881",
+      "rows": 4,
+      "bytes": 3943
+    },
+    {
+      "path": "role_fillers.jsonl",
+      "sha256": "332d7733a3ddb81d631aada347b2899043605b18eaaa69c48aae82bb81c7ce2a",
+      "rows": 2052,
+      "bytes": 1789236
+    },
+    {
+      "path": "role_candidates.jsonl",
+      "sha256": "17eced79c08a5dcc141c9f09184f3cabc4e4751bb835f43c177b0c1216b78742",
+      "rows": 15704,
+      "bytes": 21350273
+    }
+  ],
+  "counts": {
+    "candidates_considered": 20210,
+    "accepted": 14235,
+    "rejected": 5965,
+    "verified_zero": 5965,
+    "not_applicable": 0,
+    "unresolved": 10
+  },
+  "counts_note": "candidates_considered is every mantra in the graph, 20,210, because section 32 requires the assessed set rather than the positives. verified_zero repeats the rejected figure deliberately: every rejected row is a measured zero over an examined mantra with a named reason, not a mantra that was skipped. unresolved counts only mantras a source does cover and whose address could not be established.",
+  "population": {
+    "RV": 10552,
+    "SV": 1844,
+    "YV": 1975,
+    "AV": 5839
+  },
+  "processed_count": 20210,
+  "positive_count": 14235,
+  "quality_counts": {
+    "rows_importable": 14235,
+    "rows_staged_not_importable": 0,
+    "rows_by_mapping_confidence": {
+      "EXACT": 13763,
+      "VERIFIED_SEGMENT": 472
+    },
+    "assertions_total": 30274,
+    "assertions_by_derivation": {
+      "MORPHOLOGY_RULE_PREDICATE_ONLY": 28370,
+      "TREEBANK_DEPREL": 1532,
+      "CROSS_VEDA_TEXT_IDENTITY": 372
+    },
+    "asserted_role_fillers_all_parse_backed": 2052,
+    "asserted_role_fillers_by_role": {
+      "AGENT": 702,
+      "PATIENT": 707,
+      "BENEFICIARY": 167,
+      "LOCATION": 116,
+      "INSTRUMENT": 133,
+      "GOAL": 163,
+      "SOURCE": 64
+    },
+    "assertions_with_roles_withheld": 28742,
+    "role_candidates_not_importable": 32025,
+    "role_candidate_assertions_not_importable": 15704
+  },
+  "census": {
+    "population_per_veda": {
+      "RV": 10552,
+      "SV": 1844,
+      "YV": 1975,
+      "AV": 5839
+    },
+    "source_reachable_per_veda": {
+      "RV": 10552,
+      "AV": 4439,
+      "YV": 784
+    },
+    "positive_per_veda": {
+      "RV": 10150,
+      "AV": 3295,
+      "YV": 574,
+      "SV": 216
+    },
+    "tokens_processed_per_veda": {
+      "RV": 164758,
+      "AV": 71252,
+      "YV": 15687,
+      "SV": 0
+    },
+    "tokens_processed_note": "SV is 0 because no morphological token of the Sāmaveda Saṃhitā exists in any public resource. It is a measured zero over an enumerated search, not an unknown: see proofs/sv_morphology_unavailable.json."
+  },
+  "per_veda": {
+    "RV": {
+      "population": 10552,
+      "source_reachable": 10552,
+      "passages_processed": 10552,
+      "tokens_processed": 164758,
+      "passages_with_at_least_one_assertion": 10150,
+      "assertions": 22192,
+      "distinct_predicates": 40,
+      "assertions_with_agent_predicate_and_patient": 0,
+      "asserted_role_fillers_parse_backed": 0,
+      "asserted_role_fillers_by_role": {},
+      "assertions_with_roles_withheld": 22192,
+      "role_candidates_not_importable": 28341,
+      "role_fillers": {},
+      "proposed_role_fillers": {},
+      "role_fillers_that_are_not_a_deity": 0,
+      "derivations": {
+        "MORPHOLOGY_RULE_PREDICATE_ONLY": 22192
+      },
+      "abstentions": {
+        "NO_MAPPED_FINITE_VERB_IN_THE_ANNOTATION": 402
+      },
+      "filler_types": {}
+    },
+    "SV": {
+      "population": 1844,
+      "source_reachable": 0,
+      "passages_processed": 1844,
+      "tokens_processed": 0,
+      "passages_with_at_least_one_assertion": 216,
+      "assertions": 372,
+      "distinct_predicates": 37,
+      "assertions_with_agent_predicate_and_patient": 0,
+      "asserted_role_fillers_parse_backed": 0,
+      "asserted_role_fillers_by_role": {},
+      "assertions_with_roles_withheld": 372,
+      "role_candidates_not_importable": 0,
+      "role_fillers": {},
+      "proposed_role_fillers": {},
+      "role_fillers_that_are_not_a_deity": 0,
+      "derivations": {
+        "CROSS_VEDA_TEXT_IDENTITY": 372
+      },
+      "abstentions": {
+        "NO_RIGVEDIC_PARALLEL_EDGE": 182,
+        "SKELETON_NOT_IDENTICAL_TO_RIGVEDIC_SOURCE": 1436,
+        "IDENTICAL_BUT_RIGVEDIC_SOURCE_CARRIES_NO_ASSERTION": 10
+      },
+      "filler_types": {}
+    },
+    "YV": {
+      "population": 1975,
+      "source_reachable": 784,
+      "passages_processed": 1975,
+      "tokens_processed": 15687,
+      "passages_with_at_least_one_assertion": 574,
+      "assertions": 1543,
+      "distinct_predicates": 36,
+      "assertions_with_agent_predicate_and_patient": 56,
+      "asserted_role_fillers_parse_backed": 387,
+      "asserted_role_fillers_by_role": {
+        "PATIENT": 138,
+        "AGENT": 110,
+        "INSTRUMENT": 30,
+        "LOCATION": 31,
+        "BENEFICIARY": 37,
+        "GOAL": 33,
+        "SOURCE": 8
+      },
+      "assertions_with_roles_withheld": 1198,
+      "role_candidates_not_importable": 599,
+      "role_fillers": {
+        "PATIENT": 138,
+        "AGENT": 110,
+        "INSTRUMENT": 30,
+        "LOCATION": 31,
+        "BENEFICIARY": 37,
+        "GOAL": 33,
+        "SOURCE": 8
+      },
+      "proposed_role_fillers": {
+        "GOAL": 33,
+        "SOURCE": 8
+      },
+      "role_fillers_that_are_not_a_deity": 344,
+      "derivations": {
+        "MORPHOLOGY_RULE_PREDICATE_ONLY": 1198,
+        "TREEBANK_DEPREL": 345
+      },
+      "abstentions": {
+        "NO_MAPPED_FINITE_VERB_IN_THE_ADDRESSED_SENTENCES": 210,
+        "SOURCE_COVERAGE_ENDS_BEFORE_THIS_VERSE": 1191
+      },
+      "filler_types": {
+        "CONCEPT:PHILOSOPHICAL_CONCEPT": 11,
+        "UNREGISTERED_NOMINAL": 179,
+        "DEITY": 43,
+        "CONCEPT:RITUAL": 5,
+        "CONCEPT:OBJECT": 5,
+        "PRONOUN_UNRESOLVED": 25,
+        "CONCEPT:SUBSTANCE": 5,
+        "CONCEPT:CONCEPT": 19,
+        "RITUAL_PARTICIPANT_PRONOUN": 75,
+        "CONCEPT:PLANT": 4,
+        "CONCEPT:NATURAL_PHENOMENON": 2,
+        "CONCEPT:OFFERING": 4,
+        "CONCEPT:COSMIC_ENTITY": 7,
+        "CONCEPT:PLACE": 2,
+        "CONCEPT:ANIMAL": 1
+      }
+    },
+    "AV": {
+      "population": 5839,
+      "source_reachable": 4439,
+      "passages_processed": 5839,
+      "tokens_processed": 71252,
+      "passages_with_at_least_one_assertion": 3295,
+      "assertions": 6167,
+      "distinct_predicates": 36,
+      "assertions_with_agent_predicate_and_patient": 285,
+      "asserted_role_fillers_parse_backed": 1665,
+      "asserted_role_fillers_by_role": {
+        "AGENT": 592,
+        "PATIENT": 569,
+        "BENEFICIARY": 130,
+        "LOCATION": 85,
+        "INSTRUMENT": 103,
+        "GOAL": 130,
+        "SOURCE": 56
+      },
+      "assertions_with_roles_withheld": 4980,
+      "role_candidates_not_importable": 3085,
+      "role_fillers": {
+        "AGENT": 592,
+        "PATIENT": 569,
+        "BENEFICIARY": 130,
+        "LOCATION": 85,
+        "INSTRUMENT": 103,
+        "GOAL": 130,
+        "SOURCE": 56
+      },
+      "proposed_role_fillers": {
+        "GOAL": 130,
+        "SOURCE": 56
+      },
+      "role_fillers_that_are_not_a_deity": 1566,
+      "derivations": {
+        "TREEBANK_DEPREL": 1187,
+        "MORPHOLOGY_RULE_PREDICATE_ONLY": 4980
+      },
+      "abstentions": {
+        "NO_MAPPED_FINITE_VERB_IN_THE_ADDRESSED_SENTENCES": 1144,
+        "SOURCE_COVERAGE_ENDS_BEFORE_THIS_VERSE": 1390,
+        "HYMN_REFUSED_BELOW_SKELETON_MATCH_FLOOR": 10
+      },
+      "filler_types": {
+        "UNREGISTERED_NOMINAL": 817,
+        "RITUAL_PARTICIPANT_PRONOUN": 223,
+        "CONCEPT:CONCEPT": 65,
+        "PRONOUN_UNRESOLVED": 346,
+        "CONCEPT:OFFERING": 6,
+        "DEITY": 99,
+        "CONCEPT:RITUAL": 7,
+        "CONCEPT:PLANT": 16,
+        "CONCEPT:ACTION": 6,
+        "CONCEPT:PLACE": 4,
+        "CONCEPT:PHILOSOPHICAL_CONCEPT": 29,
+        "CONCEPT:ANIMAL": 7,
+        "CONCEPT:NATURAL_PHENOMENON": 14,
+        "CONCEPT:OBJECT": 10,
+        "CONCEPT:COSMIC_ENTITY": 9,
+        "CONCEPT:QUALITY": 1,
+        "CONCEPT:SUBSTANCE": 5,
+        "CONCEPT:STATE": 1
+      }
+    }
+  },
+  "closes_gaps": [
+    "GAP-SEMANTICS-001",
+    "GAP-SEMANTICS-003",
+    "GAP-MORPHOLOGY-002"
+  ],
+  "gap_closure_notes": {
+    "GAP-SEMANTICS-001": "HAS_SEMANTIC_ASSERTION would reach all four corpora and Rigvedic coverage would rise from 2,542 to 10,150 of 10,552. The two existing derivations and the three new ones stay separately typed; nothing here may be summed with the 2,459 TIER_D model-extraction assertions.",
+    "GAP-SEMANTICS-003": "Assertions carrying agent, predicate and patient together go from 0 to a measured non-zero. The :Devata-only endpoint range is NOT closed by this artifact and cannot be: see the additive schema proposal in the report.",
+    "GAP-MORPHOLOGY-002": "Partially. A morphological layer reaches AV and YV for the first time, typed distinctly from the Rigveda's manual annotation. It does not reach the Samaveda, and the negative is evidenced rather than deferred."
+  },
+  "qa": {
+    "sampled": 1158,
+    "sample_method": "both",
+    "defects_found": 5,
+    "sampled_note": "44 assertions adjudicated by reading, plus 1,114 scored mechanically against the dependency parse in the Wave-3 adversarial preflight.",
+    "human_reviewed": 0,
+    "adjudicator": "MODEL_ADJUDICATED",
+    "adjudicator_model": "claude-opus-5",
+    "adjudication_is_not_human_annotation": true,
+    "note": "51 assertions were drawn -- 31 adversarially across eight strata that each exercise a rule which could force a wrong answer, and 20 at random -- and 44 were adjudicated against the verse text and the source sentence. This is a model reading its own output and is recorded as such; it is not a gold set and it is not a human review. The defect rate it produces, 4 in 44, is a floor on the true rate, not an estimate of it.",
+    "defects": [
+      {
+        "id": "QA-1",
+        "example": "AVŚ 14.2.22, upastṛ",
+        "found": "the ritual spreading of the hide came out as DESTROYS",
+        "cause": "DCS never writes a long vocalic r -- measured: 0 of 1,651 verb lemmas -- so its stṛ is both Zurich's str̥- (DESTROYS, 8 tokens) and str̥̄- (ESTABLISHES, the strewing of the barhis, 30 tokens)",
+        "status": "CLOSED IN CODE",
+        "fix": "DCS lemmas now resolve over a length-neutral bucket; a bucket with two mapped predicates resolves only when one holds 95% or more of the key's Rigvedic tokens, and names the loser on the assertion"
+      },
+      {
+        "id": "QA-2",
+        "example": "RV 8.48.10, 'ayaṁ yaḥ somo ny adhāyy asme'",
+        "found": "a passive verb's nominative was labelled AGENT, making the deposited Soma the depositor",
+        "cause": "the case rule read any agreeing nominative as the agent",
+        "status": "CLOSED IN CODE",
+        "fix": "under voice=PASS a nominative is PATIENT; 467 Rigvedic, 116 Atharvavedic and 9 Yajurvedic case-scoped fillers moved, plus 25 Atharvavedic and 3 Yajurvedic nsubj fillers under a parsed passive"
+      },
+      {
+        "id": "QA-3",
+        "example": "VSM 6.22, 'mā apaḥ mā oṣadhīḥ hiṃsīḥ'",
+        "found": "a prohibition came out as a requested SLAYS with the plants as PATIENT -- the opposite of the verse",
+        "cause": "the predicate vocabulary has no polarity field and only two frames",
+        "status": "MITIGATED, NOT CLOSED",
+        "fix": "every assertion in the scope of a negation or prohibition particle now carries POLARITY_NOT_MODELLED_NEGATION_PARTICLE_IN_SCOPE with the particle named. A polarity field is proposed in the report; it is an ontology change and not this agent's to make."
+      },
+      {
+        "id": "QA-4",
+        "example": "AVŚ 6.114.2, upaśak",
+        "found": "'we could not accomplish the sacrifice' came out as BLESSES",
+        "cause": "inherited: action_root_map.yaml maps √śak- to BLESSES on the lexicalised desiderative 'helps, teaches', which is defensible for the simplex and wrong for upa-śak 'be able to'",
+        "status": "OPEN, INHERITED FROM THE ROOT MAP",
+        "fix": "none applied. Overriding a hand-adjudicated root map from a string operation would be worse than the defect."
+      },
+      {
+        "id": "QA-5",
+        "example": "AVS 1.1.4 asmanam tanvam kridhi; AVS 1.4.4 amuh yah upa surye ... tah nah hinvantu",
+        "found": "the case-scoped rule attaches roles across a clause boundary. Scored against the dependency parse on 1,114 sentences: 623 of 2,715 emitted fillers (23.0%) belong to another clause and 50 more carry the wrong role, 24.8% wrong in total.",
+        "cause": "the deployed gate counts FINITE verbs, and the leakage comes from non-finite clauses (acl, xcomp, advcl) and from subjects internal to a nominal, none of which the gate can see",
+        "status": "CLOSED BY WITHDRAWING THE RULE",
+        "fix": "The clause gate was widened to catch non-finite clause heads and relative pronouns, which moved the error only from 24.8% to 24.3% at a cost of 18 recall points, and no role reached an importable standard. So the rule was withdrawn across all four corpora rather than tuned: asserted role fillers now come only from the DCS parse, 51,231 -> 2,052. The gated candidates are retained as a non-importable verification queue."
+      }
+    ],
+    "limitations_the_sample_exposed_that_are_not_defects": [
+      "A dative of purpose is read as BENEFICIARY, because the registry defines BENEFICIARY as a dative. 'for lasting might' becomes a beneficiary.",
+      "A first-person optative wish is filed ASSERTED, because the registry's two frames are ASSERTED and REQUESTED only.",
+      "Pronoun referents are not resolved: 2,250 AGENT and 2,412 PATIENT fillers are pronouns, many of them deities addressed as 'thee'.",
+      "Directional and causative nuance carried by a preverb or a secondary stem is lost, which action_root_map.yaml explicitly instructs ('record the particle as a qualifier; do not derive a new predicate')."
+    ]
+  },
+  "evaluation": {
+    "human_annotated": 0,
+    "human_gold_available": false,
+    "gold_set_note": "There is no human gold set for Vedic semantic roles in this repository. rigveda_semantic_gold_v1.jsonl holds 120 rows, every one UNANNOTATED, and theonym_mention_gold_v1.jsonl is MODEL_ADJUDICATED by the same model family it would score. So no precision figure is claimed here, for any corpus.",
+    "what_is_measured_instead": [
+      "Predicate resolution rate per corpus, with every abstention typed by cause.",
+      "Alignment strength per addressed verse: the fraction of the treebank sentence's letters matched and the fraction of those falling inside one verse, both carried on the row.",
+      "Refusal counts for each rule that could have forced a wrong answer: number disagreement on a nominative, a homonym fold, a particle-sensitive root, a conjugation-sensitive root, a sentence spanning a verse boundary."
+    ],
+    "adversarial_preflight_before_wave_3_and_the_correction_it_forced": {
+      "assumption_tested": "A role read from morphological case standing beside a finite verb, scoped to one pada (Rigveda) or one sentence (unparsed DCS), is the role a dependency parse would assign. 28,370 of 30,274 assertions rested on it.",
+      "why_a_test_was_possible_at_all": "An earlier version of this report said no agreement figure could be computed because no independent source exists. That is true of the SOURCE and false of the RULE: 2,823 DCS sentences carry a human-validated dependency parse, so the case rule can be run on exactly those and scored against it. Not seeing that was a gap in the original evaluation design.",
+      "result_before_correction": {
+        "fillers_emitted": 2715,
+        "agreement_with_the_parse": 1318,
+        "raw_precision": 0.4855,
+        "cross_clause_leakage": 623,
+        "role_disagreements": 50,
+        "same_argument_expansion": 580,
+        "wrong_share": 0.2479
+      },
+      "attempt_to_repair_the_rule_and_why_it_failed": {
+        "the_repair": "The gate was widened from 'more than one FINITE verb' to 'more than one verbal anchor of any kind, and no relative pronoun', which is where the leakage analysis pointed: acl 75, xcomp:result 56, xcomp 34, advcl 42 and nsubj-inside-a-nominal 106 are all clauses headed by something other than a finite verb. An agreement-based merge was added to collapse a modifier onto the argument it agrees with.",
+        "gate_sweep": [
+          {
+            "anchor_gate": false,
+            "relative_gate": false,
+            "precision": 0.5518,
+            "recall": 0.8693
+          },
+          {
+            "anchor_gate": false,
+            "relative_gate": true,
+            "precision": 0.5668,
+            "recall": 0.8181
+          },
+          {
+            "anchor_gate": true,
+            "relative_gate": false,
+            "precision": 0.5823,
+            "recall": 0.7251
+          },
+          {
+            "anchor_gate": true,
+            "relative_gate": true,
+            "precision": 0.5985,
+            "recall": 0.686
+          }
+        ],
+        "decomposed_wrong_share_with_both_gates": 0.2432,
+        "per_role_wrong_share_with_both_gates": {
+          "GOAL": 0.1136,
+          "SOURCE": 0.1803,
+          "INSTRUMENT": 0.184,
+          "PATIENT": 0.188,
+          "BENEFICIARY": 0.3025,
+          "AGENT": 0.309,
+          "LOCATION": 0.3116
+        },
+        "agent_split_by_case": {
+          "vocative_under_a_second_person_verb": {
+            "agree": 77,
+            "wrong": 23
+          },
+          "agreeing_nominative_under_a_third_person_verb": {
+            "agree": 218,
+            "wrong": 144
+          }
+        },
+        "verdict": "The repair failed. 24.8% wrong became 24.3% wrong while recall fell from 0.869 to 0.686 -- 0.5 points of precision for 18 of recall. Not one role reached an importable standard: the best, GOAL, is still 11.4% wrong, and the nominative-derived AGENT, which is the single largest class, is 39.8% wrong. There is no threshold at which this rule is safe to assert."
+      },
+      "the_correction_applied": "The case-scoped role reading is withdrawn as a source of asserted roles across all four corpora, not only on the sentences the probe covered. Role fillers are now asserted ONLY where the DCS parse supplies them. Everywhere else the assertion carries predicate, frame, verb surface and verb features -- all read off the verb token and none of them dependent on role scope -- and is marked roles_withheld with its reason. The gated candidates are kept as an explicitly non-importable verification queue in role_candidates.jsonl.",
+      "what_this_cost": {
+        "asserted_role_fillers": "51,231 -> 2,052, a 96.0% reduction",
+        "agent_predicate_patient_triples": "5,219 -> 341, all parse-backed",
+        "assertions": "30,274 -> 30,274, unchanged, because predicate and frame never depended on role scope. This is not a preserved count: 28,742 of those assertions now carry roles_withheld and assert strictly less than before.",
+        "rigvedic_role_layer": "gone. The Rigveda has no dependency parse at all, so it now has a predicate layer and no role layer."
+      },
+      "what_it_bought": "Every asserted role filler in the artifact is now a label taken from a human-validated dependency parse rather than inferred from case. There is no known error rate left to discount, because the instrument with the measured error rate no longer produces asserted output."
+    },
+    "why_no_cross_source_agreement_figure": "UD_Sanskrit-Vedic looked like an independent second witness and is not. Measured here: 2,160 of 9,105 DCS Atharvavedic sentences and 619 of 2,516 Vājasaneyi sentences carry a dependency parse, against UD's own 2,175 AVŚ and 622 VSM sentences. UD is the treebanked slice of DCS re-released, not a second opinion, so agreement between them would measure nothing."
+  }
+}

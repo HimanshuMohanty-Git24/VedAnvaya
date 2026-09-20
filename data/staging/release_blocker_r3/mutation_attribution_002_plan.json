@@ -1,0 +1,53 @@
+{
+  "artifact": "RELEASE_BLOCKER_R3_MUTATION_PLAN_ATTRIBUTION_002",
+  "at": "2026-09-18T05:31:59.895163+00:00",
+  "gap_id": "GAP-ATTRIBUTION-002",
+  "clause": "clause 3 -- 'the unresolvable descriptors carry an explicit reason'",
+  "operation": "SET ascription_resolution_status, ascription_unresolved_reason, ascription_derivation_path, ascription_comparison_tier, ascription_resolution_contract on :DevataAscription",
+  "derivation": "vedagraph.domain.ascription_bridge.resolve_all -- repository-held resolver",
+  "promised": {
+    "nodes_written": 324,
+    "status_writes": 324,
+    "unresolved_reason_writes": 285,
+    "derivation_path_writes": 39,
+    "nodes_delta": 0,
+    "relationships_delta": 0
+  },
+  "status_distribution": {
+    "RESOLVED_TO_CANONICAL_DEVATA": 39,
+    "UNRESOLVED_COMPOUND_TWO_ASCRIPTIONS": 67,
+    "UNRESOLVED_NAMES_A_PLURALITY": 3,
+    "UNRESOLVED_SOURCE_DEFERS_TO_THE_MANTRA": 1,
+    "UNRESOLVED_STEM_MATCHES_NO_CANONICAL_DEVATA": 210,
+    "UNRESOLVED_SUBJECT_DESCRIPTOR_NOT_A_DEITY": 4
+  },
+  "closed_vocabulary": [
+    "RESOLVED_TO_CANONICAL_DEVATA",
+    "UNRESOLVED_AMBIGUOUS_TWO_OR_MORE_DEVATAS",
+    "UNRESOLVED_COMPOUND_TWO_ASCRIPTIONS",
+    "UNRESOLVED_NAMES_A_PLURALITY",
+    "UNRESOLVED_SOURCE_DEFERS_TO_THE_MANTRA",
+    "UNRESOLVED_STEM_MATCHES_NO_CANONICAL_DEVATA",
+    "UNRESOLVED_SUBJECT_DESCRIPTOR_NOT_A_DEITY"
+  ],
+  "vocabulary_members_unused": [
+    "UNRESOLVED_AMBIGUOUS_TWO_OR_MORE_DEVATAS"
+  ],
+  "resolver_self_check": {
+    "every_status_in_vocabulary": true,
+    "statuses_outside_vocabulary": [],
+    "every_unresolved_has_a_reason": true,
+    "rows_without_a_reason": [],
+    "no_display_label_join": true,
+    "resolutions_without_a_derivation_path": [],
+    "soma_and_pavamana_not_merged": true,
+    "passes": true
+  },
+  "reversal": "data/staging/release_blocker_r3/attribution_002_backup.jsonl holds the prior value of all five keys for every one of the 324 nodes; every prior value is null, so the reversal is REMOVE of the five keys.",
+  "never_changed": [
+    "passage canonical identity",
+    "SemanticAssertion public identity",
+    "Formula identity",
+    "ascription entity_key"
+  ]
+}

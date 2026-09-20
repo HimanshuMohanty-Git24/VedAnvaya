@@ -321,8 +321,8 @@ export async function DeitiesPlate({ certainty = "default" }: { certainty?: Cert
                 links={[
                     {
                         href: "/devatas",
-                        label: "All 184 deities",
-                        note: "The resolved pantheon, with the 30 non-divine ascription subjects refused",
+                        label: "All 157 deities",
+                        note: "The resolved pantheon, with the 57 non-divine ascription subjects refused",
                     },
                     leader
                         ? {

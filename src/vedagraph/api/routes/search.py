@@ -50,7 +50,8 @@ unreachable corpus. Where the strongest rungs already fill the requested page th
 surfaces are not read, `total` is null, and a caveat says so.
 
 **Deities are population-resolved.** The Anukramani's devata slot holds 22 human patrons,
-7 praise-of-a-gift labels and one dog, and none of them is returned typed `DEVATA`.
+7 praise-of-a-gift labels and 28 abstractions ruled not to name an addressee, and none of
+them is returned typed `DEVATA`.
 Searching *Vasistha* will not offer him as a god; a caveat states how many such
 ascriptions the query matched and where to read them.
 """

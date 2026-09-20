@@ -9,7 +9,11 @@ from typing import Any
 
 import orjson
 
-from vedagraph.graph.corrections import CorrectionApplier, load_corrections
+from vedagraph.graph.corrections import (
+    CorrectionApplier,
+    load_corrections,
+    load_spine_corrections,
+)
 
 # ---------------------------------------------------------------------------
 # Canonical dataset directories (relative to data root)
@@ -159,9 +163,18 @@ def _passage_key_maps(project_root: pathlib.Path) -> tuple[dict[str, str], dict[
 
 
 def build_correction_applier(project_root: pathlib.Path) -> CorrectionApplier:
-    """Construct the applier for declared upstream corrections."""
+    """Construct the applier for declared upstream corrections.
+
+    Both classes: mis-printed verse numbers and differing verse spines. Wiring only the
+    first is how GAP-TRANSLATION-006 would survive a rebuild.
+    """
     key_by_id, id_by_key = _passage_key_maps(project_root)
-    return CorrectionApplier(load_corrections(project_root), key_by_id, id_by_key)
+    return CorrectionApplier(
+        load_corrections(project_root),
+        key_by_id,
+        id_by_key,
+        spine_corrections=load_spine_corrections(project_root),
+    )
 
 
 def iter_translation_nodes(
@@ -197,6 +210,12 @@ def iter_translation_nodes(
                 "work_edition": rec.get("work_edition", ""),
                 "upstream_correction_id": rec.get("upstream_correction_id", ""),
                 "upstream_correction_reason": rec.get("upstream_correction_reason", ""),
+                # Carried so the claim a row makes is inspectable in the graph rather than
+                # only in the registry. A MANTRA_RANGE row that does not say which mantras
+                # it covers is no more honest than the MANTRA claim it replaced.
+                "source_unit": rec.get("source_unit", 0),
+                "source_verse_spine": rec.get("source_verse_spine", ""),
+                "covers_canonical_keys": rec.get("covers_canonical_keys", []),
             }
 
 

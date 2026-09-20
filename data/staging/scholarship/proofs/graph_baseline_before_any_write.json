@@ -1,0 +1,17 @@
+{
+  "agrees_with_relationship_type_exists": false,
+  "contradicts_edges": 2,
+  "contradicts_edges_between_attributed_positions": 0,
+  "interpretive_claim_nodes": 6,
+  "interpretive_claims_asserted_by_values": [
+    ""
+  ],
+  "interpretive_claims_with_a_named_asserter": 0,
+  "labels_matching_scholar_commentator_person_author_asserter": [],
+  "measured_at": "2026-09-15T09:36:38.070051+00:00",
+  "method": "read-only Cypher against the live store",
+  "nodes": 108779,
+  "note": "This is the starting position GAP-SCHOLARSHIP-001 describes, re-measured rather than accepted. All four of its claims hold: 6 claims, every asserted_by empty, no scholar or commentator entity, and no two claims about the text contradicting each other.",
+  "qualifies_relationship_type_exists": false,
+  "relationships": 265295
+}

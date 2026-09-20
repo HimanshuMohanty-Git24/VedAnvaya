@@ -1,0 +1,53 @@
+{
+  "read_only_accounting": {
+    "graph_counts_after": {
+      "nodes": 117970,
+      "relationships": 282389
+    },
+    "graph_counts_before": {
+      "nodes": 117970,
+      "relationships": 282389
+    },
+    "note": "gds.graph.project writes to the in-memory catalog only and the entry is dropped in the same function. No CREATE, MERGE, SET or DELETE was issued against the store at any point in this run.",
+    "unchanged": true
+  },
+  "result": {
+    "attempted": true,
+    "gds_version": "2.13.12",
+    "in_memory_graph_dropped": true,
+    "leiden": {
+      "ari_gds_vs_mine": 0.879479,
+      "community_count_on_5_identical_repeat_calls": [
+        9,
+        10,
+        10,
+        10,
+        10
+      ],
+      "gds_communities": 10,
+      "gds_is_reproducible_across_identical_calls": false,
+      "mine_communities": 10,
+      "nmi_gds_vs_mine": 0.924357,
+      "nodes_compared": 123
+    },
+    "louvain": {
+      "ari_gds_vs_mine": 0.97794,
+      "community_count_on_5_identical_repeat_calls": [
+        10,
+        10,
+        10,
+        10,
+        10
+      ],
+      "gds_communities": 10,
+      "gds_is_reproducible_across_identical_calls": true,
+      "mine_communities": 10,
+      "nmi_gds_vs_mine": 0.98235,
+      "nodes_compared": 123
+    },
+    "projected_nodes": 123,
+    "projected_relationships": 950
+  },
+  "what_is_compared": "GDS runs over a Cypher projection of the same co-dedication pattern with the raw shared-hymn count as the relationship weight, so it is compared against the RAW-weighted partitions from this module, not against the cosine-weighted reference partition. Comparing it against COSINE would report a weighting difference as an implementation disagreement.",
+  "why_this_is_a_cross_check_and_not_the_source": "nothing in this artifact may depend on GDS. Every published number comes from community_algorithms.py, which is stdlib-only and re-runnable by a reader who has the staged files and no database."
+}

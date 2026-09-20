@@ -1,0 +1,86 @@
+{
+  "artifact": "AGENT_3_SEMANTIC_REVIEW_FRAME",
+  "gap": "GAP-SEMANTICS-002",
+  "at": "2026-09-16T18:07:53.179017+00:00",
+  "neo4j_access": "READ_ONLY",
+  "property_name_read_from_the_database": "review_state",
+  "review_status_property_exists": false,
+  "live_review_state_values": {
+    "UNREVIEWED": 4865
+  },
+  "unreviewed_population": {
+    "live_now": 4865,
+    "staged_by_agent_3_all_unreviewed": 30266,
+    "after_integration": 35131,
+    "multiple": 7.22,
+    "note": "Report the post-integration figure. Quoting 4,865 after the import would understate the gap by 30,274."
+  },
+  "review_state_vocabulary": {
+    "UNREVIEWED": {
+      "meaning": "nothing has checked this assertion",
+      "requires": [],
+      "counts_as_human_review": false
+    },
+    "HUMAN_REVIEWED": {
+      "meaning": "a person read the verse and the assertion",
+      "requires": [
+        "reviewer_kind='human'",
+        "reviewer_id",
+        "reviewed_at"
+      ],
+      "counts_as_human_review": true
+    },
+    "SOURCE_ADJUDICATED": {
+      "meaning": "an independent published source decides it",
+      "requires": [
+        "reviewer_kind='source'",
+        "source_id",
+        "source_locator",
+        "reviewed_at"
+      ],
+      "counts_as_human_review": false
+    },
+    "MODEL_ADJUDICATED": {
+      "meaning": "a model re-read it; evidence about the model",
+      "requires": [
+        "reviewer_kind='model'",
+        "model_id",
+        "reviewed_at"
+      ],
+      "counts_as_human_review": false
+    }
+  },
+  "strata": [
+    {
+      "derivation": "MODEL_EXTRACTION",
+      "quality_tier": "TIER_D",
+      "population": 2459
+    },
+    {
+      "derivation": "MORPHOLOGY_RULE",
+      "quality_tier": "TIER_B",
+      "population": 2406
+    }
+  ],
+  "sample_per_stratum": 60,
+  "sample_rows": 120,
+  "sample_by_derivation": {
+    "MODEL_EXTRACTION": 60,
+    "MORPHOLOGY_RULE": 60
+  },
+  "assertions_per_veda": {
+    "RV": 4865
+  },
+  "independent_source_adjudication_reach": {
+    "only_independent_adjudicator_held": "DCS dependency treebank",
+    "dcs_rigvedic_coverage": 0,
+    "live_assertions_that_are_rigvedic": 4865,
+    "live_assertions_an_independent_source_could_decide": 0,
+    "conclusion": "SOURCE_ADJUDICATED reaches 0 of the live layer. What remains is a human reading verses. That is reviewer time, not an unavailable external source, and it is not an implementation gap either."
+  },
+  "rows_written_to_a_reviewed_state_by_this_script": 0,
+  "human_annotation_claimed": false,
+  "files": {
+    "semantic_review_frame.jsonl": "2c696aeae5a85601408f32536b6f7dee0f75b350718def1b6e183e66243c57d7"
+  }
+}

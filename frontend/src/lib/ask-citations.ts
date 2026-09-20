@@ -19,16 +19,54 @@ const CITATION_GROUP = /\[([^[\]]{0,120}?)\]/g;
 /** One evidence id inside a group. Word boundaries accept `,` `;` and `and` spellings. */
 const ID_IN_GROUP = /\bE(\d+)\b/g;
 
-/** Prose, or a bracket that turned out not to hold any evidence id. */
-export type AnswerTextSegment = { kind: "text"; text: string };
+/**
+ * Prose, or a bracket that turned out not to hold any evidence id.
+ *
+ * `emphasis` is set where the model wrapped the run in `**`. See `splitEmphasis`.
+ */
+export type AnswerTextSegment = { kind: "text"; text: string; emphasis?: boolean };
 
 /** One rendered marker. Holds every id in the group, in the order written. */
 export type AnswerCitationSegment = { kind: "citation"; ids: string[] };
 
 export type AnswerSegment = AnswerTextSegment | AnswerCitationSegment;
 
-/** One paragraph of the answer, already split into prose and markers. */
-export type AnswerParagraph = { segments: AnswerSegment[] };
+/**
+ * One paragraph of the answer, already split into prose and markers.
+ *
+ * `bullets` is set where the whole block was written as a markdown list. See `parseAnswer`.
+ */
+export type AnswerParagraph = { segments: AnswerSegment[]; bullets?: AnswerSegment[][] };
+
+/**
+ * `**bold**`, rendered rather than printed.
+ *
+ * The synthesis models write markdown, because that is what models write. Nothing asks them
+ * to and nothing here can stop them, and the backend does not strip it: measured on a live
+ * answer, the prose arrived reading `**Indra together with Vayu**, not Agni` and the page
+ * printed the asterisks. That is the frontend failing to render what it was given rather
+ * than the model failing to answer, and it is fixed here rather than by asking the
+ * generator for something different - which would be a change to a system this phase must
+ * not touch.
+ *
+ * Only a doubled asterisk. A single one is left alone: in a scope note it is far more
+ * likely to be a footnote mark or a multiplication sign than an italic, and guessing wrong
+ * turns a scholar's asterisk into invisible formatting.
+ */
+const BOLD_RUN = /\*\*(.+?)\*\*/g;
+
+function splitEmphasis(text: string): AnswerTextSegment[] {
+    const out: AnswerTextSegment[] = [];
+    let cursor = 0;
+    for (const match of text.matchAll(BOLD_RUN)) {
+        const start = match.index ?? 0;
+        if (start > cursor) out.push({ kind: "text", text: text.slice(cursor, start) });
+        out.push({ kind: "text", text: match[1], emphasis: true });
+        cursor = start + match[0].length;
+    }
+    if (cursor < text.length) out.push({ kind: "text", text: text.slice(cursor) });
+    return out;
+}
 
 function idsInGroup(body: string): string[] {
     const ids: string[] = [];
@@ -50,7 +88,7 @@ export function parseAnswerSegments(paragraph: string): AnswerSegment[] {
     let cursor = 0;
 
     const push = (text: string) => {
-        if (text) segments.push({ kind: "text", text });
+        if (text) segments.push(...splitEmphasis(text));
     };
 
     for (const match of paragraph.matchAll(CITATION_GROUP)) {
@@ -72,12 +110,42 @@ export function parseAnswerSegments(paragraph: string): AnswerSegment[] {
  * A single trailing or leading blank line must not produce an empty paragraph, because
  * an empty `<p>` reads as a gap in the answer rather than as whitespace.
  */
+const BULLET_LINE = /^\s*[-*•]\s+/;
+
 export function parseAnswer(answer: string): AnswerParagraph[] {
     return (answer ?? "")
         .split(/\n\s*\n/)
         .map((block) => block.trim())
         .filter(Boolean)
-        .map((block) => ({ segments: parseAnswerSegments(block) }));
+        .map((block) => {
+            /*
+             * A block written as a markdown list is rendered as one.
+             *
+             * Paragraphs are split on blank lines, so a four-item list arrives as a single
+             * block with newlines inside it - and a newline inside a `<p>` collapses to a
+             * space. Measured on a live answer, four separate findings about four separate
+             * hymns ran together into one line reading "- RV 1.2.5-6 invoke ... - RV 1.3.4-5
+             * address ... - RV 1.1.1-4 address ...", which is the author's own structure
+             * being discarded at the last step.
+             *
+             * Every line must be a bullet. A block with one dashed line in it is prose that
+             * happens to contain a dash, and turning that into a list would be inventing
+             * structure rather than keeping it.
+             */
+            const lines = block
+                .split("\n")
+                .map((line) => line.trim())
+                .filter(Boolean);
+            if (lines.length > 1 && lines.every((line) => BULLET_LINE.test(line))) {
+                return {
+                    segments: [],
+                    bullets: lines.map((line) =>
+                        parseAnswerSegments(line.replace(BULLET_LINE, "")),
+                    ),
+                };
+            }
+            return { segments: parseAnswerSegments(block) };
+        });
 }
 
 /**

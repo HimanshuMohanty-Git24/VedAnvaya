@@ -536,24 +536,40 @@ class TestFullCorpusSlow:
     ) -> None:
         """Identity is the load-bearing half of this stage, so its total is pinned.
 
-        1,538 as measured: 750 ``EXACT_PARALLEL_OF`` and 788 ``VARIANT_OF``. The range is
+        1,735 as measured: 795 ``EXACT_PARALLEL_OF`` and 940 ``VARIANT_OF``. The range is
         wide enough to survive a corpus revision and narrow enough that losing the
         Yajurveda, or double-counting a level, fails here rather than in review.
 
-        This number was 1,404 until ``surfaces.build_surfaces`` was corrected to fold
-        Devanagari source conventions *before* transliterating. The accented Vajasaneyi
-        layer types visarga as an ASCII colon, and transliterating first let that colon be
-        deleted as punctuation instead of folded to a visarga -- so a colon-visarga mantra
-        and a real-visarga mantra were unequal on the only surfaces a cross-script pair can
-        be compared on. The 134 recovered pairs are almost all Yajurveda; the lower bound
-        here is deliberately above 1,450 so that regression cannot pass silently.
+        This figure has now moved twice, and both moves were normalisation reaching the
+        only surfaces a cross-script pair can be compared on at all.
+
+        **1,404 to 1,538.** ``surfaces.build_surfaces`` was corrected to fold Devanagari
+        source conventions *before* transliterating. The accented Vajasaneyi layer types
+        visarga as an ASCII colon, and transliterating first let that colon be deleted as
+        punctuation instead of folded to a visarga, so a colon-visarga mantra and a
+        real-visarga mantra compared unequal.
+
+        **1,538 to 1,735, re-recorded here deliberately.** The five Devanagari anusvara
+        rules were dead on the script-folded surface for the same reason in reverse: by the
+        time the fold ran, transliteration had left no Devanagari for them to match. The
+        Vajasaneyi cluster therefore arrived as two adjacent sentinels on 1,232 of 3,811
+        Yajurvedic text records, U+0901 candrabindu arrived as a bare ASCII tilde no rule
+        reached, and enumerating the residue found U+1CEC and U+A8F7 as well. The fix is on
+        ``fold_transcription_cross_script``, a fold separate from the identity one, because
+        correcting it in place moved the released comparison digest of 5 Yajurvedic keys and
+        the referent gate reported drift -- correctly, since the gate cannot tell a
+        normalisation change from a key starting to denote a different verse.
+
+        The +197 is attributed rather than absorbed: EXACT_PARALLEL_OF +45 and VARIANT_OF
+        +152, spread over all six pairs, and all 3,819 released referent digests still
+        reproduce byte for byte.
         """
         counts = rows_by_predicate(discovered)
         identities = (
             counts[str(TextualPredicate.EXACT_PARALLEL_OF)]
             + counts[str(TextualPredicate.VARIANT_OF)]
         )
-        assert 1470 <= identities <= 1620
+        assert 1660 <= identities <= 1810
         assert counts[str(TextualPredicate.EXACT_PARALLEL_OF)] > 0
         assert counts[str(TextualPredicate.VARIANT_OF)] > 0
 

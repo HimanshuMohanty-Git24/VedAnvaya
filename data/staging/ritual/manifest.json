@@ -1,0 +1,404 @@
+{
+  "domain": "ritual",
+  "agent": 13,
+  "schema_version": "1.0",
+  "algorithm_version": "ritual-expansion-1.0.0",
+  "created_at": "2026-09-15T09:38:26Z",
+  "code_commit": "5a9af5547f253f4b66f0d4dcf974409d48e90ad2",
+  "config_hash": "b2fe9cb336a0011cf9ea0b471c8bfc747434c22d4434c3334acfa4f759df015e",
+  "config": {
+    "algorithm_version": "ritual-expansion-1.0.0",
+    "dcs_commit": "8aeed5a1343d0e48b64eb32af8c00e8c6eb29359",
+    "bridge_min_letters": 12,
+    "bridge_min_mantra_words": 2,
+    "bridge_exact_letters_without_iti": 20,
+    "bridge_exact_requires_clean_word_end": true,
+    "min_prefix_alias_len": 5,
+    "allowed_short_prefixes": [
+      "yūpa"
+    ],
+    "negative_prefixes": {
+      "grāva": [
+        "grāvastut"
+      ],
+      "madhu": [
+        "madhupark",
+        "madhumat",
+        "madhumant",
+        "madhumatt"
+      ],
+      "śyāma": [
+        "śyāmāk"
+      ],
+      "dakṣiṇā": [
+        "dakṣiṇāgn",
+        "dakṣiṇāvṛt",
+        "dakṣiṇārdh",
+        "dakṣiṇāgr",
+        "dakṣiṇāt",
+        "dakṣiṇāhi",
+        "dakṣiṇāmukh"
+      ]
+    },
+    "supplementary_works": [
+      "SBM",
+      "KatySS",
+      "ParGS",
+      "GB",
+      "VaitS",
+      "KausS",
+      "PB",
+      "SadvB",
+      "SVidhB",
+      "LatSS",
+      "GobhGS",
+      "AB",
+      "KausB",
+      "AsvSS",
+      "SankhSS",
+      "AsvGS",
+      "SankhGS",
+      "KausGS"
+    ],
+    "seed": 20260915,
+    "sutra_works_used_for_procedure": [
+      "KatySS",
+      "ParGS",
+      "VaitS",
+      "KausS",
+      "LatSS",
+      "GobhGS",
+      "AsvSS",
+      "SankhSS",
+      "AsvGS",
+      "SankhGS",
+      "KausGS"
+    ]
+  },
+  "source_snapshot_ids": [
+    "DCS_VPC_SBM",
+    "DCS_VPC_KATYSS",
+    "DCS_VPC_PARGS",
+    "DCS_VPC_GB",
+    "DCS_VPC_VAITS",
+    "DCS_VPC_KAUSS",
+    "DCS_VPC_PB",
+    "DCS_VPC_SADVB",
+    "DCS_VPC_SVIDHB",
+    "DCS_VPC_LATSS",
+    "DCS_VPC_GOBHGS",
+    "DCS_VPC_AB",
+    "DCS_VPC_KAUSB",
+    "DCS_VPC_ASVSS",
+    "DCS_VPC_SANKHSS",
+    "DCS_VPC_ASVGS",
+    "DCS_VPC_SANKHGS",
+    "DCS_VPC_KAUSGS",
+    "DCS_TRANSLATIONS_ATTRIBUTED",
+    "VEDAGRAPH_CANONICAL_GRAPH"
+  ],
+  "files": [
+    {
+      "path": "actions.jsonl",
+      "sha256": "44600b8c8617feb978b8d3eb0b6b54f0fb88265fc10251a1772faedbea8a07e6",
+      "rows": 35,
+      "bytes": 52190
+    },
+    {
+      "path": "deity_offerings.jsonl",
+      "sha256": "f4fa1b9e4d54cd8459df23b77c4bd53ace2237e5759c88cb24ff8b341d612f01",
+      "rows": 27,
+      "bytes": 70508
+    },
+    {
+      "path": "implements.jsonl",
+      "sha256": "2d7bece02ae90f8c9c5794c97a6cb86177656563be52be4657c21569a8a3738d",
+      "rows": 47,
+      "bytes": 72807
+    },
+    {
+      "path": "materials.jsonl",
+      "sha256": "791f97306e4a267e3061e16e5337b2cf1f3a206a5974e809133f46878357dc15",
+      "rows": 32,
+      "bytes": 45073
+    },
+    {
+      "path": "offerings.jsonl",
+      "sha256": "ab91d3560ab30c64a3a8259fe8eb04237e48229e65cc48cefbc0a5609e3eb981",
+      "rows": 21,
+      "bytes": 36838
+    },
+    {
+      "path": "proofs/alias-host-forms.json",
+      "sha256": "1c8792846854ac37388ffa26d772cabd59698c020ed17a5c73ab9097e4cae5b5",
+      "rows": null,
+      "bytes": 295639
+    },
+    {
+      "path": "proofs/combining-mark-census.json",
+      "sha256": "941fd556d8b1d746aa7e3e010d1d70d98bdd42f352a750c3a91bb1bfc2f86cdd",
+      "rows": null,
+      "bytes": 11052
+    },
+    {
+      "path": "proofs/cross-school-census.json",
+      "sha256": "3cf5fb8d5feb02d1f2c436074345d17c286c7596f0630631f06022d3fd092880",
+      "rows": null,
+      "bytes": 4556
+    },
+    {
+      "path": "proofs/evidence-type-distribution.json",
+      "sha256": "8b7fa6895ffc3bbb0e2f7c158cdda7aed0968756c3bfcbef8ec94872a8c0cd6e",
+      "rows": null,
+      "bytes": 3673
+    },
+    {
+      "path": "proofs/gap-closure-tests.json",
+      "sha256": "f3ef9fdfbf420644c4eacb69f154c17b74c23d851d509ad210c22c1d188a6c65",
+      "rows": null,
+      "bytes": 6316
+    },
+    {
+      "path": "proofs/procedure-order-basis.json",
+      "sha256": "88bbf2c1287bffad1baf70dd30786dc77f08d55c1f08eaa0d9508f5de0c90d8d",
+      "rows": null,
+      "bytes": 277536
+    },
+    {
+      "path": "proofs/qa-sample.json",
+      "sha256": "bda9bcfa303480534158ded0add53447c13ab1768b8663be0824dfc7e8dbd173",
+      "rows": null,
+      "bytes": 27667
+    },
+    {
+      "path": "proofs/role-enumeration-loci.json",
+      "sha256": "a7c38e86f0bcc0335734272feaf00b3c4b0e573c2f1b6c6aab5018e3570ecd80",
+      "rows": null,
+      "bytes": 10371
+    },
+    {
+      "path": "proofs/samhita-boundary.json",
+      "sha256": "bdca9ed0a5911166fe6a14aa72b5c653f109a08ff0b8f317ccb14fd69af5b654",
+      "rows": null,
+      "bytes": 3498
+    },
+    {
+      "path": "rejected.jsonl",
+      "sha256": "fb153b263c72eac21384411a63c33e4ff0a41135dae0d2acfec497af03f6b86c",
+      "rows": 47,
+      "bytes": 13244
+    },
+    {
+      "path": "rite_edges.jsonl",
+      "sha256": "22e21a5cb2c556c034b3e52394d968a66a40f9f4a79469517510df4a8f79e6b7",
+      "rows": 685,
+      "bytes": 706448
+    },
+    {
+      "path": "rite_relations.jsonl",
+      "sha256": "314559936e8513e5ba82b3139cfa4105fb5ce5866fa270370b44d310717cacd7",
+      "rows": 23,
+      "bytes": 21970
+    },
+    {
+      "path": "rites.jsonl",
+      "sha256": "7694f55403d0a41474a89a005b48b5abd39a9de137d10e5231632cac42217448",
+      "rows": 103,
+      "bytes": 419627
+    },
+    {
+      "path": "role_assignments.jsonl",
+      "sha256": "8df7b6ab59a7ee2e205ad3da84862cd0342d0f7607e0d6b6c3c301c5fd3661ac",
+      "rows": 179,
+      "bytes": 194866
+    },
+    {
+      "path": "roles.jsonl",
+      "sha256": "8620ed11e84c3b83cb61f58b4298566a13111bf98e14b0b1e5db3d459d83e7a5",
+      "rows": 27,
+      "bytes": 68319
+    },
+    {
+      "path": "rows.jsonl",
+      "sha256": "433b0409aabb3396684b409f941bfedc5446a7428511a9b3855f8c0a46d1a48c",
+      "rows": 3045,
+      "bytes": 11829102
+    },
+    {
+      "path": "sources.jsonl",
+      "sha256": "89f508c9ff0f425d4c638d92f0e79048499848dc35c644754f49804076397f42",
+      "rows": 20,
+      "bytes": 22935
+    },
+    {
+      "path": "steps.jsonl",
+      "sha256": "0a56c6afddabd4bf62eaffd5499a2cfff2202a5a0a32f5caeecb683cb7113635",
+      "rows": 9273,
+      "bytes": 11587632
+    },
+    {
+      "path": "supplementary_passages.jsonl",
+      "sha256": "61ce275a11599a18621d7b935882f797fbd1428428bd70ebe149d017e48be389",
+      "rows": 12393,
+      "bytes": 12162569
+    },
+    {
+      "path": "unresolved.jsonl",
+      "sha256": "a7f55dafe0427483e35c9d23e9b8698cfaa9f53b09500c354006ccb876b38ccd",
+      "rows": 7851,
+      "bytes": 5666120
+    },
+    {
+      "path": "works.jsonl",
+      "sha256": "29791f70de55e4f8166c0ca9c82166ffa74b024d289b42db25e3bcb5f07f4e30",
+      "rows": 18,
+      "bytes": 22311
+    }
+  ],
+  "counts": {
+    "candidates_considered": 10943,
+    "accepted": 3045,
+    "rejected": 47,
+    "verified_zero": 12,
+    "not_assessed_aliases_refused": 0,
+    "not_applicable": 0,
+    "unresolved": 7851
+  },
+  "counts_note": "candidates_considered is the arithmetic sum the lead checks. The populations each bucket was drawn from are stated separately in `populations` below, because this domain assesses three different populations -- 20,210 mantras, 61,393 supplementary lines, and a named candidate vocabulary -- and one number cannot honestly stand for all three.",
+  "populations": {
+    "samhita_mantras_assessed": 20210,
+    "samhita_mantras_by_veda": {
+      "AV": 5839,
+      "RV": 10552,
+      "SV": 1844,
+      "YV": 1975
+    },
+    "supplementary_lines_assessed": 61393,
+    "supplementary_lines_by_work": {
+      "SBM": 17492,
+      "KatySS": 6111,
+      "ParGS": 702,
+      "GB": 4391,
+      "VaitS": 965,
+      "KausS": 3043,
+      "PB": 3562,
+      "SadvB": 497,
+      "SVidhB": 289,
+      "LatSS": 2634,
+      "GobhGS": 1088,
+      "AB": 2997,
+      "KausB": 6848,
+      "AsvSS": 2836,
+      "SankhSS": 5238,
+      "AsvGS": 763,
+      "SankhGS": 1085,
+      "KausGS": 852
+    },
+    "rite_candidates_assessed": 108,
+    "role_candidates_assessed": 27,
+    "implement_candidates_assessed": 47,
+    "offering_candidates_assessed": 21,
+    "material_candidates_assessed": 35,
+    "action_candidates_assessed": 36,
+    "deity_dative_candidates_assessed": 30,
+    "supplementary_work_candidates_assessed": 53,
+    "total_candidate_assessments": 20572
+  },
+  "dimension_counts": {
+    "supplementary_works_ingested": 18,
+    "supplementary_works_refused": 35,
+    "supplementary_passages_cited": 12393,
+    "rites": 103,
+    "rites_proposed_new": 92,
+    "rites_samhita_attested": 45,
+    "sub_rite_relations": 23,
+    "steps_total": 9273,
+    "steps_anchored": 3123,
+    "steps_section_expanded": 6150,
+    "procedures": 544,
+    "roles": 27,
+    "roles_proposed_new": 16,
+    "roles_in_classical_sixteen_attested": 16,
+    "role_assignments": 179,
+    "offerings": 21,
+    "implements": 47,
+    "implements_proposed_new": 24,
+    "materials": 32,
+    "actions": 35,
+    "rite_edges": 685,
+    "deity_offering_edges": 27,
+    "passage_rows_bridge": 2822,
+    "passage_rows_samhita_rite": 223,
+    "mantras_with_a_ritual_context": 1717
+  },
+  "bridge_stats": {
+    "no_quotation_found": 10642,
+    "unresolved_shared_opening": 7851,
+    "mantras_reached": 1717,
+    "links_PROBABLE": 2843,
+    "rows_PROBABLE": 2053,
+    "links_EXACT": 870,
+    "rows_EXACT": 769
+  },
+  "closes_gaps": [],
+  "gap_closure_tests": {
+    "GAP-RITUAL-001": "ADVANCED_NOT_CLOSED",
+    "GAP-RITUAL-002": "ADVANCED_NOT_CLOSED",
+    "GAP-RITUAL-003": "TEST_SATISFIED_IN_STAGING",
+    "GAP-RITUAL-004": "TEST_SATISFIED_IN_STAGING",
+    "GAP-RITUAL-005": "ADVANCED_NOT_CLOSED",
+    "GAP-RITUAL-006": "ADVANCED_NOT_CLOSED",
+    "GAP-RITUAL-007": "CONFIRMED_STALE"
+  },
+  "samhita_boundary": {
+    "graph_nodes_after": 108779,
+    "graph_relationships_after": 265295,
+    "nodes_unchanged": true,
+    "relationships_unchanged": true,
+    "mantras_per_veda_after": {
+      "RV": 10552,
+      "SV": 1844,
+      "YV": 1975,
+      "AV": 5839
+    },
+    "work_nodes_after": 4
+  },
+  "advances_gaps": [
+    "GAP-RITUAL-001",
+    "GAP-RITUAL-002",
+    "GAP-RITUAL-003",
+    "GAP-RITUAL-004",
+    "GAP-RITUAL-005",
+    "GAP-RITUAL-006"
+  ],
+  "confirms_stale": [
+    "GAP-RITUAL-007"
+  ],
+  "qa": {
+    "sampled": 80,
+    "sample_method": "both",
+    "defects_found": 1,
+    "human_reviewed": 0,
+    "detail": {
+      "row_level_checks_are_exhaustive_not_sampled": true,
+      "samples_emitted": 80,
+      "samples_actually_read_by_the_agent": 30,
+      "samples_read_note": "80 rows were emitted into proofs/qa-sample.json and 30 of them -- the 16 shortest accepted matches and 14 of the random 40 -- were read line by line. The other 50 are emitted for a reviewer and have not been read by anyone. `sampled` above counts what was emitted, not what was read, and the two figures are reported separately because a sample size is the easiest number in a QA block to overstate.",
+      "normaliser_validated_by": "Two independent witnesses of RV 1.1.1 -- VedaWeb's Aufrecht and GRETIL's Aufrecht, which differ in accent scheme, in anusvara and in the retroflex lateral -- normalise to a byte-identical string. That is what caught the first version of strip_accents, which stripped the long-vowel macron as though it were an accent and would have made every pratika match unfalsifiable.",
+      "precision_control_history": "Three controls were each added because a measured sample showed they were needed: word-boundary anchoring, a two-word minimum span, and refusal to attribute a shared opening.",
+      "listening_or_reading_review_population": 0,
+      "reading_review_note": "NO HUMAN READ ANY LOCUS. Every claim here rests on a mechanical match plus this agent's own reading of samples. The PROBABLE tiers exist precisely because they need a human read, and none has had one."
+    }
+  },
+  "lead_corrections": [
+    {
+      "correction_id": "LEAD-RITUAL-01",
+      "found_by": "lead adversarial test, owner attack list section 13",
+      "defect": "27 rows asserted rite membership where the only rite named is a category term: 24 on YAJNA-SACRIFICE and 3 on bare ISTI. A mantra that names 'sacrifice' is not thereby a member of a specific rite.",
+      "fix": "Retyped to NAMES_RITE_CATEGORY_GENERICALLY and downgraded to PROBABLE, so the validator treats them as staged and not importable. Prior row_kind preserved on each row.",
+      "value_space_enumerated": "All 45 rite keys were listed before choosing these two, rather than grepping for the term the lead expected. The other 43 are genuine named rites -- agnihotra, agnistoma, asvamedha, darsapurnamasa, rajasuya, vajapeya, upanayana and so on.",
+      "deliberately_not_retyped": "SOMA-PRESSING, 22 rows. It is a ritual act rather than a named rite, which is a different objection from being a category: soma pressing occurs inside many rites, so a mantra naming it has named something specific. Referred to the owner rather than swept in.",
+      "unchanged_and_verified_clean": "The core boundary: 0 of 3,045 rows keyed outside the four recensions, and evidence_source_type still distinguishes SRAUTASUTRA 1,303 / BRAHMANA 992 / GRHYASUTRA 527 / SAMHITA 223."
+    }
+  ]
+}

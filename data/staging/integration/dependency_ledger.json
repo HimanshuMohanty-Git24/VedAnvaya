@@ -1,0 +1,212 @@
+{
+  "cross-Veda matrices": {
+    "consumer": "cross-Veda matrices",
+    "input_hashes": {
+      "label:Mantra": "n=20210;keyless=0;keys=a83c3a79343bf58135f64d89d8c1befe87455f09765662257388aac6507523a6",
+      "label:Passage": "n=22537;keyless=0;keys=39a13384921e22b23f9cd72bd9b4b26b462b22a089de2a09f6b2f6ecfb2eaaf7",
+      "type:EXACT_PARALLEL_OF": "n=1006;unnamed=0;pairs=5ac03309835151d861d938548a85a2703ebef99e440c14041fff33632f2caede",
+      "type:NEAR_PARALLEL_OF": "n=3049;unnamed=0;pairs=571f6ac173ea86fde9ed7296d8e14be1aa2b1326649de1f3b3009a984898b800",
+      "type:REUSES_TEXT_FROM": "n=1995;unnamed=0;pairs=c7f0b182cddb994fd0976a463e95f3566d87fc1ab0e73400f80c9dbd2f24659c",
+      "type:VARIANT_OF": "n=788;unnamed=0;pairs=76e3fd14b7e11b6bc5525f30f0fe368d1a9511efff2635d42dc6b0ea2fbfddc5",
+      "builder:scripts/build_enrichment.py": "011eee43b34b8798754e293bc0b0ba544e13a42385d3bfd24b6338fb272debf4"
+    },
+    "built_at": "2026-09-17T15:35:51.953590+00:00",
+    "graph_census": {
+      "nodes": 164201,
+      "relationships": 508042
+    },
+    "output_hashes": {
+      "data/enrichment/vedagraph_enrichment_v1/manifest.json": "d6e33b63a6e9836ada539ac50d09072a9f86f7cef549d37776728e00702b597c"
+    }
+  },
+  "formula / parallel / variant relations": {
+    "consumer": "formula / parallel / variant relations",
+    "input_hashes": {
+      "label:Formula": "n=4825;keyless=0;keys=a2821991639882b6cf84b845ede27de8d7838c84f3c647c238a65f5640949705",
+      "label:FormulaFamily": "n=720;keyless=0;keys=9855069860f5ce30abef0302cf2be6da893b29f01efae542c664da502b4af04c",
+      "label:Passage": "n=22537;keyless=0;keys=39a13384921e22b23f9cd72bd9b4b26b462b22a089de2a09f6b2f6ecfb2eaaf7",
+      "type:HAS_FORMULA": "n=2037;unnamed=0;pairs=7655b3659f1da06ebb709963c804638580a1f5732d559590477f5d86d89c0468",
+      "type:MEMBER_OF_FAMILY": "n=2037;unnamed=0;pairs=dcc907998607eb2fe09c1398b2d633cb855d78b6bb9771fc9b5f4e384033ce49",
+      "type:SHARES_FORMULA_WITH": "n=6148;unnamed=0;pairs=ff2ed3a01406f466f726dc35de97929201961388869fe32e93e1e96835fdf406",
+      "type:USES_FORMULA": "n=22686;unnamed=0;pairs=f5aece67e80837ed2dce219d18a17b78cb60c1609018f4f92be0bff9dde68a38",
+      "file:data/enrichment/vedagraph_enrichment_v1/manifest.json": "d6e33b63a6e9836ada539ac50d09072a9f86f7cef549d37776728e00702b597c",
+      "builder:scripts/build_formula_families.py": "95281a9571b3addb8c2736c6e51bac4398e73a8b7ed016caf712cd1d1b426375"
+    },
+    "built_at": "2026-09-17T15:36:25.939077+00:00",
+    "graph_census": {
+      "nodes": 164201,
+      "relationships": 508042
+    },
+    "blocked_reason": "FORMULA_FAMILY_REBUILD_BARRED_BY_FROZEN_IDENTITY_POLICY. The declared input data/enrichment/vedagraph_enrichment_v1/manifest.json moved (058439bd -> d6e33b63) because the enrichment layer was rebuilt from the canonical corpus, and its formula population is now 4,729 while the frozen graph holds 4,825 :Formula, 720 :FormulaFamily and 2,037 MEMBER_OF_FAMILY edges. The declared output formula_families.jsonl (cc1ff965, unmoved) carries 702 families and 1,969 member rows, so artifact and graph already disagree by 18 families and 68 member rows. Rebuilding it means running scripts/build_formula_families.py over the changed population, which re-derives family identity for a layer already published in a graph that must not change: data/staging/final_stabilization/formula_identity_impact.json records migration_permitted=false under the owner rule that formula_id is a published stable product ID which a recomputation cannot silently re-key, and all 217 affected formulas are verified in place with 0 re-keys, 0 dangling ids, 0 duplicate stable ids and 0 unresolved FormulaFamily references (data/staging/release_blocker_r1/formula_identity_verification_receipt.json). The exact unresolved blocker is therefore the GAP-FORMULA-003 miner population question, resolved and owned outside this pass; rebuilding here would move the artifact further from the frozen graph, not closer. Nothing served reads this artifact: the API and the frontend read the graph :FormulaFamily nodes, and the JSONL is consumed only by graph importers (scripts/build_knowledge_model_v3.py, vedagraph.domain.v3_loader), which cannot run while the census is frozen. The release-critical formula consumer is instead the read-only snapshot data/derived/release_blocker_r1/formula_consumer.json, CURRENT at 164,201/508,042 with 5,545 nodes and byte-identical output over four builds."
+  },
+  "entity coverage": {
+    "consumer": "entity coverage",
+    "input_hashes": {
+      "label:Chandas": "n=575;keyless=0;keys=27b65de5e279caac0f1e48de30ff2fd2a1c2e59a23fd63d66c692d9aab7a1742",
+      "label:Concept": "n=384;keyless=0;keys=400f2010abb625c2140a3ab58c8e62161d20998f0c6b63b03a195e512114ad87",
+      "label:Devata": "n=214;keyless=0;keys=2c4a14b6bf91f0806acbb0870661713c886928d869db02685e6f05dd38a2f8f4",
+      "label:DomainEntity": "n=384;keyless=0;keys=400f2010abb625c2140a3ab58c8e62161d20998f0c6b63b03a195e512114ad87",
+      "label:Rishi": "n=729;keyless=0;keys=ef3dc133d32b2d4096d7a4ffdac456fc38d84200fad0f6732eefa785b158cf3b",
+      "label:Translation": "n=18427;keyless=18427;keys=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "type:ABOUT_CONCEPT": "n=24861;unnamed=0;pairs=499c5d65713399051f8903e60791ef04e3c2bd911d799cd6eff0892d7bd89999",
+      "type:HAS_DEVATA": "n=10558;unnamed=0;pairs=8e4eea692c244357e1b3bdd2106719549f5a37430fa668977c59636ac0fedde8",
+      "type:HAS_TRANSLATION": "n=18427;unnamed=18427;pairs=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "type:MENTIONS_DEVATA": "n=17165;unnamed=0;pairs=bd51583b55154c393e05621ca50cb935896b3420a14061f530b27794519c22da",
+      "type:MENTIONS_ENTITY": "n=28122;unnamed=0;pairs=7d20224a1d37805f2fbdb451488eb2877b53301424683bf3f74c04115ae01e6f",
+      "file:data/domain/vedagraph_domain_v2/veda_coverage_v3.json": "8f89dd32fac6dfcfc971327a79d994c34957cafdacfceba099051419408cd915",
+      "builder:scripts/build_veda_coverage_and_metrics.py": "b4ddfc1b34ba1766b109881a1f6c07d5d68d5d742bb370fbc5061255ee72cee0"
+    },
+    "built_at": "2026-09-18T15:14:06.017212+00:00",
+    "graph_census": {
+      "nodes": 164601,
+      "relationships": 509769
+    },
+    "output_hashes": {
+      "data/domain/vedagraph_domain_v2/veda_coverage_v3.json": "8f89dd32fac6dfcfc971327a79d994c34957cafdacfceba099051419408cd915"
+    }
+  },
+  "quality evaluation": {
+    "consumer": "quality evaluation",
+    "input_hashes": {
+      "subgraph:whole-graph": "nodes=165737;keyless=80843;nodekeys=73e1d6b64b1ba8bb421b34dcdd249ab33ec8fd22efbdd5497ffe0f3b8c1dcc26;labels=9cf2e8ef9a55e558b4122c7d9f9b0b062a21b00b692e21f63cf45934f1f9302d;edges=510905;unnamed=84998;edgekeys=cd2b92b2e78f23dc8b7e1939938003b3f6c8ca294e39151818a828a9fe1b53fe",
+      "label:Passage": "n=22537;keyless=0;keys=39a13384921e22b23f9cd72bd9b4b26b462b22a089de2a09f6b2f6ecfb2eaaf7",
+      "label:QAIssue": "n=915;keyless=915;keys=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "label:QualityVerdict": "n=2568;keyless=0;keys=a5c86f381d9a071f796af09129c4d1f378658c95df8c702345036780301a3b30",
+      "type:QA_ISSUE_ON": "n=915;unnamed=915;pairs=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "type:QUALITY_VERDICT_ABOUT": "n=2568;unnamed=0;pairs=81b929c8b243d02d718fa8b26866b0a9a63b7aff37bd4bd8f47df6cb0b3b281c",
+      "builder:scripts/graph_quality_scorecard.py": "81c51a88557629fdd2aca7bf561b6e7e1a6e76045997c91fcff0bfd7e62b3758"
+    },
+    "built_at": "2026-09-18T18:17:38.738064+00:00",
+    "graph_census": {
+      "nodes": 165737,
+      "relationships": 510905
+    },
+    "output_hashes": {
+      "docs/reports/GRAPH_QUALITY_V2_SCORECARD.md": "8e6df8c3ba3e297db8642989ae3523e3e86183f2a0740b58e38bb32f7c38c430"
+    }
+  },
+  "Visualization Lab aggregates": {
+    "consumer": "Visualization Lab aggregates",
+    "input_hashes": {
+      "subgraph:public": "nodes=71773;keyless=1558;nodekeys=5cab304906bc11ef52e72fd15dd11222fd5e26b7c489c9b7a209b1854ebbfb1d;labels=3e4a2cf3c77337a90b8dda0f1fa012da67719236e8560619fec8968780d5db66;edges=272373;unnamed=5734;edgekeys=96e5f23eb6e28bf70e78aae53907dc4f1001ad7ae8bf8f37b4ac0f53d632c744",
+      "label:Concept": "n=384;keyless=0;keys=400f2010abb625c2140a3ab58c8e62161d20998f0c6b63b03a195e512114ad87",
+      "label:DerivedMetric": "n=1485;keyless=0;keys=d726599161922588ddf0c70bb9c69ec6095c9213e23a542217c02366d28c32e0",
+      "label:Devata": "n=214;keyless=0;keys=2c4a14b6bf91f0806acbb0870661713c886928d869db02685e6f05dd38a2f8f4",
+      "label:Passage": "n=22537;keyless=0;keys=39a13384921e22b23f9cd72bd9b4b26b462b22a089de2a09f6b2f6ecfb2eaaf7",
+      "type:ABOUT_CONCEPT": "n=24861;unnamed=0;pairs=499c5d65713399051f8903e60791ef04e3c2bd911d799cd6eff0892d7bd89999",
+      "type:CO_OCCURS_WITH": "n=306;unnamed=0;pairs=6f0e1863edc369837b53bb837d28c4b264c0c6142c7151f4b451e799c372c169",
+      "type:HAS_DEVATA": "n=10558;unnamed=0;pairs=8e4eea692c244357e1b3bdd2106719549f5a37430fa668977c59636ac0fedde8",
+      "type:MENTIONS_ENTITY": "n=28122;unnamed=0;pairs=7d20224a1d37805f2fbdb451488eb2877b53301424683bf3f74c04115ae01e6f",
+      "file:frontend/.world/world.raw.json": "dee0876531490c48939d456b586b2cb0fd66dc487617a4cb44ad20a17326ae40",
+      "builder:frontend/scripts/build-constellations.mjs": "202681694940d68dcb9ae0d9d893cd649dfcd07c94d600aaabfc6047a47fa9b4",
+      "builder:frontend/scripts/build-world.mjs": "a0de0bd2952f6c843b6d57b0cd5e47031d08201a43b7da76308118690a9343d6",
+      "builder:frontend/scripts/world-groups.json": "81080312834b9a0b04320b829e909c1fe20c2b593565593cc177f378d685b16d"
+    },
+    "built_at": "2026-09-18T15:14:29.791645+00:00",
+    "graph_census": {
+      "nodes": 164601,
+      "relationships": 509769
+    },
+    "output_hashes": {
+      "frontend/.world/constellations.json": "dc95068d9514886ba26d545f041274a06bb5439417391cdd7e9d7e936e45eff9",
+      "frontend/public/world/world.bin": "8c0375f6fb8e9cf1b59ad1aece576676118972c0477337e2b4fb90d0009471e6",
+      "frontend/public/world/world.json": "8aff232726d412f3dcb5786003c52e0247fded6451874c0c2203609195d70ec5",
+      "frontend/public/world/world.labels.json": "df6acf2be4a6ac0be0a9d861f06706facb0aa6676ccbe60d9475127802798ce6"
+    }
+  },
+  "Knowledge World public projection": {
+    "consumer": "Knowledge World public projection",
+    "input_hashes": {
+      "subgraph:public": "nodes=71773;keyless=1558;nodekeys=5cab304906bc11ef52e72fd15dd11222fd5e26b7c489c9b7a209b1854ebbfb1d;labels=3e4a2cf3c77337a90b8dda0f1fa012da67719236e8560619fec8968780d5db66;edges=272373;unnamed=5734;edgekeys=96e5f23eb6e28bf70e78aae53907dc4f1001ad7ae8bf8f37b4ac0f53d632c744",
+      "label:Concept": "n=384;keyless=0;keys=400f2010abb625c2140a3ab58c8e62161d20998f0c6b63b03a195e512114ad87",
+      "label:Devata": "n=214;keyless=0;keys=2c4a14b6bf91f0806acbb0870661713c886928d869db02685e6f05dd38a2f8f4",
+      "label:DomainEntity": "n=384;keyless=0;keys=400f2010abb625c2140a3ab58c8e62161d20998f0c6b63b03a195e512114ad87",
+      "label:Passage": "n=22537;keyless=0;keys=39a13384921e22b23f9cd72bd9b4b26b462b22a089de2a09f6b2f6ecfb2eaaf7",
+      "type:ABOUT_CONCEPT": "n=24861;unnamed=0;pairs=499c5d65713399051f8903e60791ef04e3c2bd911d799cd6eff0892d7bd89999",
+      "type:MENTIONS_ENTITY": "n=28122;unnamed=0;pairs=7d20224a1d37805f2fbdb451488eb2877b53301424683bf3f74c04115ae01e6f",
+      "type:SPECIALIZED_FORM_OF": "n=1;unnamed=0;pairs=312df33d6faee2051c8ae81913aa8f94d6e5cc63fb73b4cd7e8302b932dffea4",
+      "builder:scripts/export_graph_world.py": "8f8fd4f41094c673df8e9a366a812752ad2454c0b417736ec11c7d445b65998c",
+      "builder:scripts/export_predicate_semantics.py": "adf5fc1028fbaab5fc48fd1288ec06f1803cb0feed119590355d1889639607a4",
+      "builder:src/vedagraph/api/services/graph_service.py": "40c65aca96b83f8bc09c051c81f1b8888ddaa6f95cae40a87b09f118be585a35",
+      "builder:frontend/scripts/build-home-world.mjs": "a5109269ec36a54a6c850026a4617d626923ee35e6b801d859a8498a42c1a771"
+    },
+    "built_at": "2026-09-18T15:14:23.123853+00:00",
+    "graph_census": {
+      "nodes": 164601,
+      "relationships": 509769
+    },
+    "output_hashes": {
+      "frontend/.world/world.raw.json": "dee0876531490c48939d456b586b2cb0fd66dc487617a4cb44ad20a17326ae40",
+      "frontend/public/world/world.predicates.json": "d86af246a386a5ea845aed6fb230bc078e758166e3b3473fe5b579a6af196ab6",
+      "frontend/public/data/home-world.json": "bd0241cfb2f75d3f10deae06866df03c6359327613ed5b4aee26fa2f9984fe52"
+    }
+  },
+  "ritual aggregates": {
+    "consumer": "ritual aggregates",
+    "input_hashes": {
+      "label:Action": "n=26;keyless=0;keys=6b0bfbe0e4ac5206ce958d718330c5f277e28b8eb3861a796b1af01ad04e5940",
+      "label:Offering": "n=21;keyless=0;keys=1c6d6cb88d0957c4bdd24843bf3fde5336063350b8367da3124ca5570e1dfa08",
+      "label:Ritual": "n=103;keyless=0;keys=582a14c338a69400cda3c84b24efa5e18a2a4062525e273764f553580b001bf3",
+      "label:RitualRole": "n=20;keyless=0;keys=a1e268d0ee27183ef1b74b35bef4565c506d737f770fd02678657cd9f08087e3",
+      "label:RitualStep": "n=3121;keyless=0;keys=ba17f9267e1f15fdbb212c6047473a7d09bbcf2fa79e997902ea3cac0b17e98e",
+      "type:ATTESTED_IN": "n=1266;unnamed=0;pairs=80fe874370d4ed55660732b94f2cf9678cdd0589a318da3a5314142d3a12208c",
+      "type:HAS_RITUAL_STEP": "n=3121;unnamed=0;pairs=660c312b29319a94df9ce05c12cbd1b62f5d69c8c9ab1128cb8db9d9904fbf23",
+      "type:PERFORMED_BY": "n=32;unnamed=0;pairs=512ac2f26ac91d04f184eeee47e91e414d8128ff239774d6f33a33c36a2f0687",
+      "type:RITE_INVOLVES_ACTION": "n=0;unnamed=0;pairs=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "type:USES_OBJECT": "n=24;unnamed=0;pairs=7537c5d47070b141d2686739822f96837081a7bad0884c0fa096e25322145239",
+      "type:USES_OFFERING": "n=4;unnamed=0;pairs=f562eae018934e20e1450692350c722ec909633984e09c828e0027a397816c62",
+      "type:USES_SUBSTANCE": "n=11;unnamed=0;pairs=f09e230eeb3a4b81e62523bfd65c4ac68beb34c83d0726ddf32ab401c0043298",
+      "file:data/staging/final_closure_sprint/agent4/ritual_context.jsonl": "0ae5a662ccfd962c6b36dab8af0212f584db9c0d0e093a5066304fd692eda499",
+      "builder:data/staging/final_closure_sprint/agent4/build_agent4_ritual_closure.py": "ce8033c3846bf2e7bd06c6fd4d70de4d3b43539ee1191f5a31c6ca980b6c05bf"
+    },
+    "built_at": "2026-09-17T15:36:26.872019+00:00",
+    "graph_census": {
+      "nodes": 164201,
+      "relationships": 508042
+    },
+    "not_applicable_reason": "NOT_REQUIRED for this release, with the previous ruling corrected rather than restated. The earlier reason said \"no ritual aggregate artifact exists\"; one now does, at data/staging/final_closure_sprint/agent4/material_culture_by_ritual_context.json (sha256 562bf5fd5fb67809d60e0fd26a25bfa89ab74651bba9c758261323dc43a0aa34), so that half of the ruling has expired and is withdrawn here. The load-bearing half holds: nothing downstream consumes it. Every reference to the filename in the repository is the dependency machinery itself (scripts/dependency_state.py, scripts/wave3_dependency_invalidation.py, the status and starting-worktree receipts) or its own producer directory; no API route, no world export and no frontend file reads it. It was produced at graph census 116,838 / 281,290, two graph generations before the frozen release state of 164,201 / 508,042, so its figures must not be read as current, and re-deriving it would mean running data/staging/final_closure_sprint/agent4/build_agent4_ritual_closure.py, which is outside this read-only pass and is not release-critical."
+  },
+  "semantic resemblance": {
+    "consumer": "semantic resemblance",
+    "input_hashes": {
+      "label:Mantra": "n=20210;keyless=0;keys=a83c3a79343bf58135f64d89d8c1befe87455f09765662257388aac6507523a6",
+      "label:Passage": "n=22537;keyless=0;keys=39a13384921e22b23f9cd72bd9b4b26b462b22a089de2a09f6b2f6ecfb2eaaf7",
+      "label:RoleFiller": "n=2052;keyless=0;keys=32404ceaeee1a6337807c30d6c856f545bc9756b9e30282a420e717cff3a51be",
+      "label:SemanticAssertion": "n=4865;keyless=0;keys=5af7a679acf3425d2aec72de3775d7efffe4c457f99680e4e4245cf387cb6f5a",
+      "label:Translation": "n=17283;keyless=17283;keys=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "type:ASSERTION_ROLE": "n=2052;unnamed=0;pairs=d5a4a076b17e3e8ea6ccf7cad2e72519fa591e868a08d28f2208343c7a7a7080",
+      "type:HAS_TRANSLATION": "n=17283;unnamed=17283;pairs=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "type:REFERS_TO": "n=387;unnamed=0;pairs=147b1341bd046bacd4d688894809e413008c3906cf9bafa43fb16bd2aa92f1cc",
+      "type:USES_FORMULA": "n=22686;unnamed=0;pairs=f5aece67e80837ed2dce219d18a17b78cb60c1609018f4f92be0bff9dde68a38",
+      "file:data/staging/semantic_resemblance/manifest.json": "dd3e6a5ab9fc9127d208f0f7ea3b91d05f09c7063b50809b1b4e8d983fb360cc",
+      "file:data/staging/semantic_resemblance/rows.jsonl": "37be8f726d4514029f383d5b5d1ed4d20fb07618a37d939922aaa091b58c5e19"
+    },
+    "built_at": "2026-09-16T06:06:39.974394+00:00",
+    "graph_census": {
+      "nodes": 116838,
+      "relationships": 281290
+    },
+    "blocked_reason": "Requires re-derivation from the final canonical snapshot, not a rebuild: the staged artifact is pre-Wave-3 semantic-resemblance-hybrid-v2 and owner section 5 bars importing an old score artifact. See PHASE E in the round-four report for the refusal and its evidence."
+  },
+  "Ask retrieval": {
+    "consumer": "Ask retrieval",
+    "input_hashes": {
+      "label:Concept": "n=384;keyless=0;keys=400f2010abb625c2140a3ab58c8e62161d20998f0c6b63b03a195e512114ad87",
+      "label:Devata": "n=214;keyless=0;keys=2c4a14b6bf91f0806acbb0870661713c886928d869db02685e6f05dd38a2f8f4",
+      "label:Mantra": "n=20210;keyless=0;keys=a83c3a79343bf58135f64d89d8c1befe87455f09765662257388aac6507523a6",
+      "label:Passage": "n=22537;keyless=0;keys=39a13384921e22b23f9cd72bd9b4b26b462b22a089de2a09f6b2f6ecfb2eaaf7",
+      "label:Translation": "n=18427;keyless=18427;keys=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "type:ABOUT_CONCEPT": "n=24861;unnamed=0;pairs=499c5d65713399051f8903e60791ef04e3c2bd911d799cd6eff0892d7bd89999",
+      "type:HAS_DEVATA": "n=10558;unnamed=0;pairs=8e4eea692c244357e1b3bdd2106719549f5a37430fa668977c59636ac0fedde8",
+      "type:HAS_TRANSLATION": "n=18427;unnamed=18427;pairs=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "type:MENTIONS_ENTITY": "n=28122;unnamed=0;pairs=7d20224a1d37805f2fbdb451488eb2877b53301424683bf3f74c04115ae01e6f",
+      "file:data/gold/ask_benchmark_v1.jsonl": "bdeb057586b2f0df25cef1dba4a0f309c9b329bbfe7d1080539bdc2bde3be9a5"
+    },
+    "built_at": "2026-09-19T00:12:06.098201+00:00",
+    "graph_census": {
+      "nodes": 165737,
+      "relationships": 510905
+    },
+    "blocked_reason": "ASK_FORMAL_60_GATE_PASSES_REBUILD_NEEDS_A_PROVIDER_ALLOWANCE. The gate this consumer was blocked on is met. The effective result is 60 of 60 acceptable at MISLEADING 0 and HALLUCINATED 0 -- the immutable 60-question run at de7195c, run_id openrouter-nvidia_nemotron-3-ultra-550b-a55b:free-dddb14430cac6c58, plus one formally graded remediation delta for Q38 at 2b74525, run_id openrouter-nvidia_nemotron-3-ultra-550b-a55b:free-07997da672f3155b, graded SUPPORTED_CORRECT with 0 quantitative findings, 6 resolving citations, 0 invented and 0 Sanskrit absent from the packet. Measurement: data/staging/release_prep/ask_formal_60_post_remediation.json. This consumer nevertheless stays BLOCKED, and the reason is now a plain one rather than a failing gate: it declares no output artifact, so it can never read CURRENT, and its only rebuild is a fresh sixty provider questions. That rebuild is not runnable today -- the free daily allowance was exhausted before the Q38 delta and the delta itself was answered on the allowance that reset at 00:00Z. Nothing in the graph or in the declared inputs moved: 10 of 10 input hashes are unchanged. SUPERSEDED REASON, kept because it was true when written: ASK_FORMAL_60_GRADED_GATE_FAILED -- MISLEADING = 1 against a required 0, at Q38, which asserted two deity rankings the live graph contradicts while every figure it printed was real and correctly cited; retrieval was not implicated then either, with 60 of 60 packets replaying to identical item counts and 304 citations all resolving. SUPERSEDED EARLIER REASON, likewise kept: a fresh commit-keyed run at b986193 reached 0 of 60 and stopped at Q01 with LLMRateLimitError, the daily allowance being exhausted."
+  }
+}

@@ -1,0 +1,96 @@
+{
+  "schema_version": "1.0",
+  "owner_decision": "section 2 -- scope_type comes from the evidence grain; split M6",
+  "supersedes": "M6 scope_type namespacing, one card, returned to owner",
+  "graph_readers_of_bare_scope_type": 0,
+  "graph_readers_note": "Measured, not assumed: scope_type is on 0 nodes and 0 relationships of the live graph, so no existing reader's meaning changes and the card's ADDITIVE=false / BACKWARD_COMPATIBLE=false flags were recorded against a population that does not exist.",
+  "populations": [
+    {
+      "population": "AUDIO_RECORD_AT_MANTRA_SCOPE",
+      "domains": [
+        "audio_rv",
+        "audio_yv",
+        "audio_av"
+      ],
+      "graph_property": "audio_scope_type",
+      "enum": "AudioScope",
+      "scope_type": "MANTRA",
+      "staged_value": "MANTRA",
+      "value_corrected": false,
+      "row_count": 954,
+      "distinct_keys": 954,
+      "why": "The source addresses one verse and the file is that verse's recitation. Every subject is an entity_type=MANTRA node, the only type AudioScope.MANTRA admits.",
+      "grain_required_entity_types": [
+        "MANTRA"
+      ],
+      "grain_observed": {
+        "MANTRA": 954
+      },
+      "subjects_off_grain": [],
+      "homogeneous": true
+    },
+    {
+      "population": "GANA_PERFORMANCE_AT_COLLECTION_SCOPE",
+      "domains": [
+        "samaveda_music"
+      ],
+      "graph_property": "audio_scope_type",
+      "enum": "AudioScope",
+      "scope_type": "COLLECTION",
+      "staged_value": "STRUCTURAL_CONTAINER",
+      "value_corrected": true,
+      "row_count": 3,
+      "distinct_keys": 3,
+      "why": "Gana performances the source places on a container page, 82-399s over containers holding many verses, with no source-stated internal boundary. The staged value STRUCTURAL_CONTAINER is a graph entity_type, not an AudioScope member; AudioScope.COLLECTION is the enum's own value for a named Samavedic collection and every key here is a CHANDA or UTTARA container.",
+      "grain_required_entity_types": [
+        "STRUCTURAL_CONTAINER"
+      ],
+      "grain_observed": {
+        "STRUCTURAL_CONTAINER": 3
+      },
+      "subjects_off_grain": [],
+      "homogeneous": true
+    },
+    {
+      "population": "ATTRIBUTION_ASSERTION_AT_SINGLE_MANTRA_SCOPE",
+      "domains": [
+        "attribution"
+      ],
+      "graph_property": "assertion_scope_type",
+      "enum": "ScopeType",
+      "scope_type": "SINGLE_MANTRA",
+      "staged_value": "SINGLE_MANTRA",
+      "value_corrected": false,
+      "row_count": 466,
+      "distinct_keys": 443,
+      "why": "The scope of an attribution assertion, a different axis from a recording's span. The printed bracket addresses a numbered verse and all 466 rows also carry asserted_granularity=VERSE, a 466/466 agreement.",
+      "grain_required_entity_types": [
+        "MANTRA"
+      ],
+      "grain_observed": {
+        "MANTRA": 443
+      },
+      "subjects_off_grain": [],
+      "homogeneous": true
+    }
+  ],
+  "rows_covered": 1423,
+  "domains_writing_scope_type": [
+    "attribution",
+    "audio_av",
+    "audio_rv",
+    "audio_yv",
+    "samaveda_music"
+  ],
+  "partition_is_total": true,
+  "findings": [],
+  "verdict": "HOMOGENEOUS_AND_ON_GRAIN",
+  "flags": {
+    "ADDITIVE": true,
+    "DETERMINISTIC_IDENTITY": true,
+    "BACKWARD_COMPATIBLE": true,
+    "ROLLBACK_DEFINED": true,
+    "OLD_PREDICATE_MEANING_CHANGED": false
+  },
+  "flags_rationale": "Each population writes a new property under its own axis's name. No property called scope_type is written at all and none exists in the graph, so no predicate or property changes meaning for any reader. Rollback is removing the two new properties."
+}

@@ -1,0 +1,1251 @@
+{
+ "first_guard": {
+  "G1_guard_applicability": {
+   "assertion": "applicable on strictly fewer than half the pool, and inapplicable to every pair with an SV or YV endpoint",
+   "pool_pairs": 1133311,
+   "by_state": {
+    "UPHELD": 243785,
+    "VIOLATED": 522590,
+    "NOT_APPLICABLE_DEDICATION_UNKNOWN": 366936
+   },
+   "applicable_share": 0.6762,
+   "assertion_held_under_half": false,
+   "mantras_with_a_dedication": 14712,
+   "mantras_without": 5498,
+   "dedication_coverage_per_veda": {
+    "RV": {
+     "with": 10552,
+     "total": 10552
+    },
+    "SV": {
+     "with": 0,
+     "total": 1844
+    },
+    "YV": {
+     "with": 0,
+     "total": 1975
+    },
+    "AV": {
+     "with": 4160,
+     "total": 5839
+    }
+   },
+   "any_sv_or_yv_endpoint_pair_declared_applicable": 0
+  },
+  "G3_novelty_filter": {
+   "assertion": "every removal attributable to a named existing predicate or to the declared lexical ceiling; no unattributed removal",
+   "pool_pairs": 1133311,
+   "removed": 29052,
+   "kept": 1104259,
+   "primary_reason_counts": {
+    "ABOVE_DECLARED_LEXICAL_CEILING_0.20": 3837,
+    "SHARED_FORMULA_REACHABLE_VIA_USES_FORMULA_HUB": 19047,
+    "IN_AGENT_12_STAGED_RELATIONS": 1256,
+    "EXISTING_TEXTUAL_PARALLEL": 4912
+   },
+   "unattributed_removals": 0,
+   "assertion_held": true
+  },
+  "threshold_on_the_asserted_population": {
+   "precision_floor_declared_before_the_sweep": 0.85,
+   "min_true_positives_required": 8,
+   "chosen_threshold_z": -0.0,
+   "dev": {
+    "n": 44,
+    "tp": 24,
+    "fp": 4,
+    "fn": 5,
+    "tn": 11,
+    "precision": 0.8571,
+    "recall": 0.8276,
+    "f1": 0.8421
+   },
+   "test": {
+    "n": 54,
+    "tp": 29,
+    "fp": 6,
+    "fn": 7,
+    "tn": 12,
+    "precision": 0.8286,
+    "recall": 0.8056,
+    "f1": 0.8169
+   },
+   "auc_dev": 0.8023,
+   "auc_test": 0.7809,
+   "sweep": [
+    {
+     "n": 44,
+     "tp": 28,
+     "fp": 9,
+     "fn": 1,
+     "tn": 6,
+     "precision": 0.7568,
+     "recall": 0.9655,
+     "f1": 0.8485,
+     "threshold_z": -0.5,
+     "pool_pairs_asserted": 478133
+    },
+    {
+     "n": 44,
+     "tp": 28,
+     "fp": 8,
+     "fn": 1,
+     "tn": 7,
+     "precision": 0.7778,
+     "recall": 0.9655,
+     "f1": 0.8615,
+     "threshold_z": -0.45,
+     "pool_pairs_asserted": 465884
+    },
+    {
+     "n": 44,
+     "tp": 28,
+     "fp": 8,
+     "fn": 1,
+     "tn": 7,
+     "precision": 0.7778,
+     "recall": 0.9655,
+     "f1": 0.8615,
+     "threshold_z": -0.4,
+     "pool_pairs_asserted": 454136
+    },
+    {
+     "n": 44,
+     "tp": 28,
+     "fp": 8,
+     "fn": 1,
+     "tn": 7,
+     "precision": 0.7778,
+     "recall": 0.9655,
+     "f1": 0.8615,
+     "threshold_z": -0.35,
+     "pool_pairs_asserted": 442547
+    },
+    {
+     "n": 44,
+     "tp": 27,
+     "fp": 8,
+     "fn": 2,
+     "tn": 7,
+     "precision": 0.7714,
+     "recall": 0.931,
+     "f1": 0.8438,
+     "threshold_z": -0.3,
+     "pool_pairs_asserted": 431106
+    },
+    {
+     "n": 44,
+     "tp": 27,
+     "fp": 8,
+     "fn": 2,
+     "tn": 7,
+     "precision": 0.7714,
+     "recall": 0.931,
+     "f1": 0.8438,
+     "threshold_z": -0.25,
+     "pool_pairs_asserted": 419017
+    },
+    {
+     "n": 44,
+     "tp": 26,
+     "fp": 8,
+     "fn": 3,
+     "tn": 7,
+     "precision": 0.7647,
+     "recall": 0.8966,
+     "f1": 0.8254,
+     "threshold_z": -0.2,
+     "pool_pairs_asserted": 405406
+    },
+    {
+     "n": 44,
+     "tp": 26,
+     "fp": 8,
+     "fn": 3,
+     "tn": 7,
+     "precision": 0.7647,
+     "recall": 0.8966,
+     "f1": 0.8254,
+     "threshold_z": -0.15,
+     "pool_pairs_asserted": 389827
+    },
+    {
+     "n": 44,
+     "tp": 26,
+     "fp": 8,
+     "fn": 3,
+     "tn": 7,
+     "precision": 0.7647,
+     "recall": 0.8966,
+     "f1": 0.8254,
+     "threshold_z": -0.1,
+     "pool_pairs_asserted": 372078
+    },
+    {
+     "n": 44,
+     "tp": 25,
+     "fp": 8,
+     "fn": 4,
+     "tn": 7,
+     "precision": 0.7576,
+     "recall": 0.8621,
+     "f1": 0.8065,
+     "threshold_z": -0.05,
+     "pool_pairs_asserted": 353981
+    },
+    {
+     "n": 44,
+     "tp": 24,
+     "fp": 4,
+     "fn": 5,
+     "tn": 11,
+     "precision": 0.8571,
+     "recall": 0.8276,
+     "f1": 0.8421,
+     "threshold_z": -0.0,
+     "pool_pairs_asserted": 336418
+    },
+    {
+     "n": 44,
+     "tp": 23,
+     "fp": 4,
+     "fn": 6,
+     "tn": 11,
+     "precision": 0.8519,
+     "recall": 0.7931,
+     "f1": 0.8214,
+     "threshold_z": 0.05,
+     "pool_pairs_asserted": 320612
+    },
+    {
+     "n": 44,
+     "tp": 22,
+     "fp": 4,
+     "fn": 7,
+     "tn": 11,
+     "precision": 0.8462,
+     "recall": 0.7586,
+     "f1": 0.8,
+     "threshold_z": 0.1,
+     "pool_pairs_asserted": 306250
+    },
+    {
+     "n": 44,
+     "tp": 22,
+     "fp": 4,
+     "fn": 7,
+     "tn": 11,
+     "precision": 0.8462,
+     "recall": 0.7586,
+     "f1": 0.8,
+     "threshold_z": 0.15,
+     "pool_pairs_asserted": 292612
+    },
+    {
+     "n": 44,
+     "tp": 21,
+     "fp": 3,
+     "fn": 8,
+     "tn": 12,
+     "precision": 0.875,
+     "recall": 0.7241,
+     "f1": 0.7925,
+     "threshold_z": 0.2,
+     "pool_pairs_asserted": 278852
+    },
+    {
+     "n": 44,
+     "tp": 20,
+     "fp": 3,
+     "fn": 9,
+     "tn": 12,
+     "precision": 0.8696,
+     "recall": 0.6897,
+     "f1": 0.7692,
+     "threshold_z": 0.25,
+     "pool_pairs_asserted": 264992
+    },
+    {
+     "n": 44,
+     "tp": 18,
+     "fp": 3,
+     "fn": 11,
+     "tn": 12,
+     "precision": 0.8571,
+     "recall": 0.6207,
+     "f1": 0.72,
+     "threshold_z": 0.3,
+     "pool_pairs_asserted": 250907
+    },
+    {
+     "n": 44,
+     "tp": 18,
+     "fp": 3,
+     "fn": 11,
+     "tn": 12,
+     "precision": 0.8571,
+     "recall": 0.6207,
+     "f1": 0.72,
+     "threshold_z": 0.35,
+     "pool_pairs_asserted": 237002
+    },
+    {
+     "n": 44,
+     "tp": 17,
+     "fp": 3,
+     "fn": 12,
+     "tn": 12,
+     "precision": 0.85,
+     "recall": 0.5862,
+     "f1": 0.6939,
+     "threshold_z": 0.4,
+     "pool_pairs_asserted": 223128
+    },
+    {
+     "n": 44,
+     "tp": 16,
+     "fp": 3,
+     "fn": 13,
+     "tn": 12,
+     "precision": 0.8421,
+     "recall": 0.5517,
+     "f1": 0.6667,
+     "threshold_z": 0.45,
+     "pool_pairs_asserted": 209153
+    },
+    {
+     "n": 44,
+     "tp": 15,
+     "fp": 3,
+     "fn": 14,
+     "tn": 12,
+     "precision": 0.8333,
+     "recall": 0.5172,
+     "f1": 0.6383,
+     "threshold_z": 0.5,
+     "pool_pairs_asserted": 195239
+    },
+    {
+     "n": 44,
+     "tp": 14,
+     "fp": 3,
+     "fn": 15,
+     "tn": 12,
+     "precision": 0.8235,
+     "recall": 0.4828,
+     "f1": 0.6087,
+     "threshold_z": 0.55,
+     "pool_pairs_asserted": 181653
+    },
+    {
+     "n": 44,
+     "tp": 12,
+     "fp": 2,
+     "fn": 17,
+     "tn": 13,
+     "precision": 0.8571,
+     "recall": 0.4138,
+     "f1": 0.5581,
+     "threshold_z": 0.6,
+     "pool_pairs_asserted": 168421
+    },
+    {
+     "n": 44,
+     "tp": 11,
+     "fp": 1,
+     "fn": 18,
+     "tn": 14,
+     "precision": 0.9167,
+     "recall": 0.3793,
+     "f1": 0.5366,
+     "threshold_z": 0.65,
+     "pool_pairs_asserted": 155529
+    },
+    {
+     "n": 44,
+     "tp": 10,
+     "fp": 1,
+     "fn": 19,
+     "tn": 14,
+     "precision": 0.9091,
+     "recall": 0.3448,
+     "f1": 0.5,
+     "threshold_z": 0.7,
+     "pool_pairs_asserted": 143005
+    },
+    {
+     "n": 44,
+     "tp": 9,
+     "fp": 1,
+     "fn": 20,
+     "tn": 14,
+     "precision": 0.9,
+     "recall": 0.3103,
+     "f1": 0.4615,
+     "threshold_z": 0.75,
+     "pool_pairs_asserted": 130711
+    },
+    {
+     "n": 44,
+     "tp": 9,
+     "fp": 1,
+     "fn": 20,
+     "tn": 14,
+     "precision": 0.9,
+     "recall": 0.3103,
+     "f1": 0.4615,
+     "threshold_z": 0.8,
+     "pool_pairs_asserted": 118864
+    },
+    {
+     "n": 44,
+     "tp": 8,
+     "fp": 1,
+     "fn": 21,
+     "tn": 14,
+     "precision": 0.8889,
+     "recall": 0.2759,
+     "f1": 0.4211,
+     "threshold_z": 0.85,
+     "pool_pairs_asserted": 107641
+    },
+    {
+     "n": 44,
+     "tp": 7,
+     "fp": 1,
+     "fn": 22,
+     "tn": 14,
+     "precision": 0.875,
+     "recall": 0.2414,
+     "f1": 0.3784,
+     "threshold_z": 0.9,
+     "pool_pairs_asserted": 96990
+    },
+    {
+     "n": 44,
+     "tp": 6,
+     "fp": 1,
+     "fn": 23,
+     "tn": 14,
+     "precision": 0.8571,
+     "recall": 0.2069,
+     "f1": 0.3333,
+     "threshold_z": 0.95,
+     "pool_pairs_asserted": 86840
+    },
+    {
+     "n": 44,
+     "tp": 3,
+     "fp": 1,
+     "fn": 26,
+     "tn": 14,
+     "precision": 0.75,
+     "recall": 0.1034,
+     "f1": 0.1818,
+     "threshold_z": 1.0,
+     "pool_pairs_asserted": 77443
+    },
+    {
+     "n": 44,
+     "tp": 3,
+     "fp": 0,
+     "fn": 26,
+     "tn": 15,
+     "precision": 1.0,
+     "recall": 0.1034,
+     "f1": 0.1875,
+     "threshold_z": 1.05,
+     "pool_pairs_asserted": 68699
+    },
+    {
+     "n": 44,
+     "tp": 2,
+     "fp": 0,
+     "fn": 27,
+     "tn": 15,
+     "precision": 1.0,
+     "recall": 0.069,
+     "f1": 0.129,
+     "threshold_z": 1.1,
+     "pool_pairs_asserted": 60365
+    },
+    {
+     "n": 44,
+     "tp": 2,
+     "fp": 0,
+     "fn": 27,
+     "tn": 15,
+     "precision": 1.0,
+     "recall": 0.069,
+     "f1": 0.129,
+     "threshold_z": 1.15,
+     "pool_pairs_asserted": 52767
+    },
+    {
+     "n": 44,
+     "tp": 2,
+     "fp": 0,
+     "fn": 27,
+     "tn": 15,
+     "precision": 1.0,
+     "recall": 0.069,
+     "f1": 0.129,
+     "threshold_z": 1.2,
+     "pool_pairs_asserted": 45710
+    },
+    {
+     "n": 44,
+     "tp": 2,
+     "fp": 0,
+     "fn": 27,
+     "tn": 15,
+     "precision": 1.0,
+     "recall": 0.069,
+     "f1": 0.129,
+     "threshold_z": 1.25,
+     "pool_pairs_asserted": 39271
+    },
+    {
+     "n": 44,
+     "tp": 2,
+     "fp": 0,
+     "fn": 27,
+     "tn": 15,
+     "precision": 1.0,
+     "recall": 0.069,
+     "f1": 0.129,
+     "threshold_z": 1.3,
+     "pool_pairs_asserted": 33490
+    },
+    {
+     "n": 44,
+     "tp": 2,
+     "fp": 0,
+     "fn": 27,
+     "tn": 15,
+     "precision": 1.0,
+     "recall": 0.069,
+     "f1": 0.129,
+     "threshold_z": 1.35,
+     "pool_pairs_asserted": 28130
+    },
+    {
+     "n": 44,
+     "tp": 2,
+     "fp": 0,
+     "fn": 27,
+     "tn": 15,
+     "precision": 1.0,
+     "recall": 0.069,
+     "f1": 0.129,
+     "threshold_z": 1.4,
+     "pool_pairs_asserted": 23184
+    },
+    {
+     "n": 44,
+     "tp": 2,
+     "fp": 0,
+     "fn": 27,
+     "tn": 15,
+     "precision": 1.0,
+     "recall": 0.069,
+     "f1": 0.129,
+     "threshold_z": 1.45,
+     "pool_pairs_asserted": 18854
+    },
+    {
+     "n": 44,
+     "tp": 2,
+     "fp": 0,
+     "fn": 27,
+     "tn": 15,
+     "precision": 1.0,
+     "recall": 0.069,
+     "f1": 0.129,
+     "threshold_z": 1.5,
+     "pool_pairs_asserted": 15062
+    },
+    {
+     "n": 44,
+     "tp": 2,
+     "fp": 0,
+     "fn": 27,
+     "tn": 15,
+     "precision": 1.0,
+     "recall": 0.069,
+     "f1": 0.129,
+     "threshold_z": 1.55,
+     "pool_pairs_asserted": 11835
+    },
+    {
+     "n": 44,
+     "tp": 2,
+     "fp": 0,
+     "fn": 27,
+     "tn": 15,
+     "precision": 1.0,
+     "recall": 0.069,
+     "f1": 0.129,
+     "threshold_z": 1.6,
+     "pool_pairs_asserted": 9053
+    },
+    {
+     "n": 44,
+     "tp": 2,
+     "fp": 0,
+     "fn": 27,
+     "tn": 15,
+     "precision": 1.0,
+     "recall": 0.069,
+     "f1": 0.129,
+     "threshold_z": 1.65,
+     "pool_pairs_asserted": 6802
+    },
+    {
+     "n": 44,
+     "tp": 0,
+     "fp": 0,
+     "fn": 29,
+     "tn": 15,
+     "precision": null,
+     "recall": 0.0,
+     "f1": null,
+     "threshold_z": 1.7,
+     "pool_pairs_asserted": 4989
+    },
+    {
+     "n": 44,
+     "tp": 0,
+     "fp": 0,
+     "fn": 29,
+     "tn": 15,
+     "precision": null,
+     "recall": 0.0,
+     "f1": null,
+     "threshold_z": 1.75,
+     "pool_pairs_asserted": 3646
+    },
+    {
+     "n": 44,
+     "tp": 0,
+     "fp": 0,
+     "fn": 29,
+     "tn": 15,
+     "precision": null,
+     "recall": 0.0,
+     "f1": null,
+     "threshold_z": 1.8,
+     "pool_pairs_asserted": 2607
+    },
+    {
+     "n": 44,
+     "tp": 0,
+     "fp": 0,
+     "fn": 29,
+     "tn": 15,
+     "precision": null,
+     "recall": 0.0,
+     "f1": null,
+     "threshold_z": 1.85,
+     "pool_pairs_asserted": 1893
+    },
+    {
+     "n": 44,
+     "tp": 0,
+     "fp": 0,
+     "fn": 29,
+     "tn": 15,
+     "precision": null,
+     "recall": 0.0,
+     "f1": null,
+     "threshold_z": 1.9,
+     "pool_pairs_asserted": 1345
+    },
+    {
+     "n": 44,
+     "tp": 0,
+     "fp": 0,
+     "fn": 29,
+     "tn": 15,
+     "precision": null,
+     "recall": 0.0,
+     "f1": null,
+     "threshold_z": 1.95,
+     "pool_pairs_asserted": 922
+    },
+    {
+     "n": 44,
+     "tp": 0,
+     "fp": 0,
+     "fn": 29,
+     "tn": 15,
+     "precision": null,
+     "recall": 0.0,
+     "f1": null,
+     "threshold_z": 2.0,
+     "pool_pairs_asserted": 589
+    },
+    {
+     "n": 44,
+     "tp": 0,
+     "fp": 0,
+     "fn": 29,
+     "tn": 15,
+     "precision": null,
+     "recall": 0.0,
+     "f1": null,
+     "threshold_z": 2.05,
+     "pool_pairs_asserted": 362
+    },
+    {
+     "n": 44,
+     "tp": 0,
+     "fp": 0,
+     "fn": 29,
+     "tn": 15,
+     "precision": null,
+     "recall": 0.0,
+     "f1": null,
+     "threshold_z": 2.1,
+     "pool_pairs_asserted": 215
+    },
+    {
+     "n": 44,
+     "tp": 0,
+     "fp": 0,
+     "fn": 29,
+     "tn": 15,
+     "precision": null,
+     "recall": 0.0,
+     "f1": null,
+     "threshold_z": 2.15,
+     "pool_pairs_asserted": 101
+    },
+    {
+     "n": 44,
+     "tp": 0,
+     "fp": 0,
+     "fn": 29,
+     "tn": 15,
+     "precision": null,
+     "recall": 0.0,
+     "f1": null,
+     "threshold_z": 2.2,
+     "pool_pairs_asserted": 54
+    },
+    {
+     "n": 44,
+     "tp": 0,
+     "fp": 0,
+     "fn": 29,
+     "tn": 15,
+     "precision": null,
+     "recall": 0.0,
+     "f1": null,
+     "threshold_z": 2.25,
+     "pool_pairs_asserted": 27
+    },
+    {
+     "n": 44,
+     "tp": 0,
+     "fp": 0,
+     "fn": 29,
+     "tn": 15,
+     "precision": null,
+     "recall": 0.0,
+     "f1": null,
+     "threshold_z": 2.3,
+     "pool_pairs_asserted": 12
+    },
+    {
+     "n": 44,
+     "tp": 0,
+     "fp": 0,
+     "fn": 29,
+     "tn": 15,
+     "precision": null,
+     "recall": 0.0,
+     "f1": null,
+     "threshold_z": 2.35,
+     "pool_pairs_asserted": 6
+    },
+    {
+     "n": 44,
+     "tp": 0,
+     "fp": 0,
+     "fn": 29,
+     "tn": 15,
+     "precision": null,
+     "recall": 0.0,
+     "f1": null,
+     "threshold_z": 2.4,
+     "pool_pairs_asserted": 5
+    },
+    {
+     "n": 44,
+     "tp": 0,
+     "fp": 0,
+     "fn": 29,
+     "tn": 15,
+     "precision": null,
+     "recall": 0.0,
+     "f1": null,
+     "threshold_z": 2.45,
+     "pool_pairs_asserted": 1
+    },
+    {
+     "n": 44,
+     "tp": 0,
+     "fp": 0,
+     "fn": 29,
+     "tn": 15,
+     "precision": null,
+     "recall": 0.0,
+     "f1": null,
+     "threshold_z": 2.5,
+     "pool_pairs_asserted": 0
+    },
+    {
+     "n": 44,
+     "tp": 0,
+     "fp": 0,
+     "fn": 29,
+     "tn": 15,
+     "precision": null,
+     "recall": 0.0,
+     "f1": null,
+     "threshold_z": 2.55,
+     "pool_pairs_asserted": 0
+    },
+    {
+     "n": 44,
+     "tp": 0,
+     "fp": 0,
+     "fn": 29,
+     "tn": 15,
+     "precision": null,
+     "recall": 0.0,
+     "f1": null,
+     "threshold_z": 2.6,
+     "pool_pairs_asserted": 0
+    },
+    {
+     "n": 44,
+     "tp": 0,
+     "fp": 0,
+     "fn": 29,
+     "tn": 15,
+     "precision": null,
+     "recall": 0.0,
+     "f1": null,
+     "threshold_z": 2.65,
+     "pool_pairs_asserted": 0
+    },
+    {
+     "n": 44,
+     "tp": 0,
+     "fp": 0,
+     "fn": 29,
+     "tn": 15,
+     "precision": null,
+     "recall": 0.0,
+     "f1": null,
+     "threshold_z": 2.7,
+     "pool_pairs_asserted": 0
+    },
+    {
+     "n": 44,
+     "tp": 0,
+     "fp": 0,
+     "fn": 29,
+     "tn": 15,
+     "precision": null,
+     "recall": 0.0,
+     "f1": null,
+     "threshold_z": 2.75,
+     "pool_pairs_asserted": 0
+    },
+    {
+     "n": 44,
+     "tp": 0,
+     "fp": 0,
+     "fn": 29,
+     "tn": 15,
+     "precision": null,
+     "recall": 0.0,
+     "f1": null,
+     "threshold_z": 2.8,
+     "pool_pairs_asserted": 0
+    },
+    {
+     "n": 44,
+     "tp": 0,
+     "fp": 0,
+     "fn": 29,
+     "tn": 15,
+     "precision": null,
+     "recall": 0.0,
+     "f1": null,
+     "threshold_z": 2.85,
+     "pool_pairs_asserted": 0
+    },
+    {
+     "n": 44,
+     "tp": 0,
+     "fp": 0,
+     "fn": 29,
+     "tn": 15,
+     "precision": null,
+     "recall": 0.0,
+     "f1": null,
+     "threshold_z": 2.9,
+     "pool_pairs_asserted": 0
+    },
+    {
+     "n": 44,
+     "tp": 0,
+     "fp": 0,
+     "fn": 29,
+     "tn": 15,
+     "precision": null,
+     "recall": 0.0,
+     "f1": null,
+     "threshold_z": 2.95,
+     "pool_pairs_asserted": 0
+    },
+    {
+     "n": 44,
+     "tp": 0,
+     "fp": 0,
+     "fn": 29,
+     "tn": 15,
+     "precision": null,
+     "recall": 0.0,
+     "f1": null,
+     "threshold_z": 3.0,
+     "pool_pairs_asserted": 0
+    }
+   ]
+  },
+  "G4_per_mantra_cap": {
+   "assertion": "monotone reduction, and no edge created that the threshold did not already accept",
+   "cap": 5,
+   "pairs_before": 336418,
+   "pairs_after": 43006,
+   "monotone": true,
+   "all_survivors_were_above_threshold": true,
+   "mantras_touched": 19088,
+   "degree_distribution": {
+    "5": 15017,
+    "2": 986,
+    "3": 1132,
+    "4": 1202,
+    "1": 751
+   }
+  },
+  "G2_traps_with_the_guard": {
+   "assertion": "the guard removes every other-sense trap pair BY CONSTRUCTION, because the trap's ground truth is the same dedication layer the guard reads. This is not evidence for the guard.",
+   "triples": 52,
+   "score_only_ordering_correct": 38,
+   "score_only_accuracy": 0.7308,
+   "other_sense_pairs_emitted_by_the_full_rule": 0,
+   "same_sense_pairs_emitted_by_the_full_rule": 33,
+   "guard_state_on_the_other_sense_pairs": {
+    "VIOLATED": 52
+   },
+   "assertion_held": true
+  },
+  "adversarial_classes_under_the_full_rule": {
+   "formulaic_boilerplate": {
+    "cases": 40,
+    "expected": "REJECT -- formula reuse is USES_FORMULA, a different predicate",
+    "emitted_by_the_full_rule": 0,
+    "disposition": {
+     "REJECTED_BY_REFERENT_GUARD": 6,
+     "REJECTED_BY_SCORE": 10,
+     "REJECTED_BY_NOVELTY_FILTER:IN_AGENT_12_STAGED_RELATIONS": 2,
+     "REJECTED_BY_NOVELTY_FILTER:SHARED_FORMULA": 18,
+     "REJECTED_BY_NOVELTY_FILTER:EXISTING_TEXTUAL_PARALLEL": 4
+    },
+    "max_z": 2.2489
+   },
+   "common_high_frequency_only": {
+    "cases": 40,
+    "expected": "REJECT -- the only shared vocabulary is the corpus's twelve commonest concepts",
+    "emitted_by_the_full_rule": 9,
+    "disposition": {
+     "REJECTED_BY_SCORE": 25,
+     "EMITTED": 9,
+     "REJECTED_BY_REFERENT_GUARD": 6
+    },
+    "max_z": 0.6305
+   },
+   "accent_or_surface_identical": {
+    "cases": 40,
+    "expected": "REJECT -- identical surface is the textual-parallel axis, not a semantic claim",
+    "emitted_by_the_full_rule": 0,
+    "disposition": {
+     "REJECTED_BY_NOVELTY_FILTER:IN_AGENT_12_STAGED_RELATIONS": 22,
+     "REJECTED_BY_NOVELTY_FILTER:EXISTING_TEXTUAL_PARALLEL": 15,
+     "REJECTED_BY_REFERENT_GUARD": 3
+    },
+    "max_z": 2.9497
+   }
+  }
+ },
+ "guard_vocabulary_defect_and_fix": {
+  "B1_B2_guard_state_change": {
+   "pool_pairs": 1133311,
+   "old_states": {
+    "UPHELD": 243785,
+    "VIOLATED": 522590,
+    "NOT_APPLICABLE_DEDICATION_UNKNOWN": 366936
+   },
+   "new_states": {
+    "UPHELD": 243785,
+    "VIOLATED": 384536,
+    "NOT_APPLICABLE_DEDICATION_UNKNOWN": 366936,
+    "NOT_APPLICABLE_VOCABULARY_NOT_COMPARABLE": 138054
+   },
+   "changed": 138054,
+   "transitions": {
+    "VIOLATED -> NOT_APPLICABLE_VOCABULARY_NOT_COMPARABLE": 138054
+   },
+   "B1_every_change_was_from_VIOLATED": true,
+   "B2_upheld_count_unchanged": true,
+   "changed_pairs_by_veda_pair": {
+    "AV-RV": 138054
+   }
+  },
+  "B3_emitted": {
+   "before_the_cap": 378964,
+   "edges_before_fix": 43006,
+   "edges_after_fix": 44511,
+   "added": 6402,
+   "removed": 4897,
+   "B3_count_only_rose": true,
+   "added_all_tier_b": false,
+   "removed_explanation": "the per-mantra cap is a global competition: an added TIER_B edge can displace a lower-scoring edge on the same mantra",
+   "removed_tiers": {
+    "TIER_A_DEDICATION_AGREES": 3740,
+    "TIER_C_NO_REFERENT_EVIDENCE_EXISTS": 1157
+   },
+   "by_tier": {
+    "TIER_A_DEDICATION_AGREES": 24083,
+    "TIER_B_REFERENT_EVIDENCE_NOT_COMPARABLE": 4738,
+    "TIER_C_NO_REFERENT_EVIDENCE_EXISTS": 15690
+   },
+   "by_veda_pair": {
+    "AV": 6989,
+    "AV-RV": 6708,
+    "AV-SV": 1601,
+    "AV-YV": 1841,
+    "RV": 18795,
+    "RV-SV": 2522,
+    "RV-YV": 2122,
+    "SV": 1283,
+    "SV-YV": 950,
+    "YV": 1700
+   },
+   "by_tier_and_veda_pair": {
+    "TIER_A_DEDICATION_AGREES|AV": 5288,
+    "TIER_A_DEDICATION_AGREES|RV": 18795,
+    "TIER_B_REFERENT_EVIDENCE_NOT_COMPARABLE|AV-RV": 4738,
+    "TIER_C_NO_REFERENT_EVIDENCE_EXISTS|AV": 1701,
+    "TIER_C_NO_REFERENT_EVIDENCE_EXISTS|AV-RV": 1970,
+    "TIER_C_NO_REFERENT_EVIDENCE_EXISTS|AV-SV": 1601,
+    "TIER_C_NO_REFERENT_EVIDENCE_EXISTS|AV-YV": 1841,
+    "TIER_C_NO_REFERENT_EVIDENCE_EXISTS|RV-SV": 2522,
+    "TIER_C_NO_REFERENT_EVIDENCE_EXISTS|RV-YV": 2122,
+    "TIER_C_NO_REFERENT_EVIDENCE_EXISTS|SV": 1283,
+    "TIER_C_NO_REFERENT_EVIDENCE_EXISTS|SV-YV": 950,
+    "TIER_C_NO_REFERENT_EVIDENCE_EXISTS|YV": 1700
+   },
+   "degree_distribution": {
+    "5": 16083,
+    "2": 680,
+    "3": 917,
+    "4": 988,
+    "1": 544
+   },
+   "mantras_touched": 19212
+  },
+  "B4_referent_traps_after_the_fix": {
+   "triples": 52,
+   "score_only_ordering_correct": 38,
+   "score_only_accuracy": 0.7308,
+   "other_sense_pairs_emitted": 10,
+   "same_sense_pairs_emitted": 35,
+   "guard_state_on_the_other_sense_pairs": {
+    "VIOLATED": 32,
+    "NOT_APPLICABLE_VOCABULARY_NOT_COMPARABLE": 20
+   },
+   "other_sense_pairs_that_cross_a_veda_boundary": 20,
+   "B4_no_regression": false
+  },
+  "adversarial_classes_after_the_fix": {
+   "formulaic_boilerplate": {
+    "cases": 40,
+    "expected": "REJECT -- formula reuse is USES_FORMULA, a different predicate",
+    "emitted": 0,
+    "disposition": {
+     "REJECTED_BY_REFERENT_GUARD": 4,
+     "REJECTED_BY_SCORE": 10,
+     "REJECTED_BY_NOVELTY_FILTER:IN_AGENT_12_STAGED_RELATIONS": 2,
+     "REJECTED_BY_NOVELTY_FILTER:SHARED_FORMULA": 20,
+     "REJECTED_BY_NOVELTY_FILTER:EXISTING_TEXTUAL_PARALLEL": 4
+    },
+    "max_z": 2.2489
+   },
+   "common_high_frequency_only": {
+    "cases": 40,
+    "expected": "REJECT -- the only shared vocabulary is the corpus's twelve commonest concepts",
+    "emitted": 11,
+    "disposition": {
+     "REJECTED_BY_SCORE": 25,
+     "EMITTED": 11,
+     "REJECTED_BY_REFERENT_GUARD": 4
+    },
+    "max_z": 0.6305
+   },
+   "accent_or_surface_identical": {
+    "cases": 40,
+    "expected": "REJECT -- identical surface is the textual-parallel axis, not a semantic claim",
+    "emitted": 0,
+    "disposition": {
+     "REJECTED_BY_NOVELTY_FILTER:IN_AGENT_12_STAGED_RELATIONS": 22,
+     "REJECTED_BY_NOVELTY_FILTER:EXISTING_TEXTUAL_PARALLEL": 17,
+     "REJECTED_BY_REFERENT_GUARD": 1
+    },
+    "max_z": 2.9497
+   }
+  },
+  "precision_by_tier_after_the_fix": {
+   "TIER_A_DEDICATION_AGREES|dev": {
+    "emitted_in_gold": 18,
+    "of_which_positive": 17,
+    "precision": 0.9444,
+    "labels": {
+     "SAME_TOPIC_DIFFERENT_CLAIM": 16,
+     "UNRELATED": 1,
+     "SAME_CONTENT": 1
+    }
+   },
+   "TIER_A_DEDICATION_AGREES|test": {
+    "emitted_in_gold": 22,
+    "of_which_positive": 21,
+    "precision": 0.9545,
+    "labels": {
+     "SAME_TOPIC_DIFFERENT_CLAIM": 18,
+     "UNRELATED": 1,
+     "SAME_CONTENT": 3
+    }
+   },
+   "TIER_A_DEDICATION_AGREES|all": {
+    "emitted_in_gold": 40,
+    "of_which_positive": 38,
+    "precision": 0.95,
+    "labels": {
+     "SAME_TOPIC_DIFFERENT_CLAIM": 34,
+     "UNRELATED": 2,
+     "SAME_CONTENT": 4
+    }
+   },
+   "TIER_B_REFERENT_EVIDENCE_NOT_COMPARABLE|dev": {
+    "emitted_in_gold": 7,
+    "of_which_positive": 4,
+    "precision": 0.5714,
+    "labels": {
+     "UNRELATED": 3,
+     "SAME_CONTENT": 1,
+     "SAME_TOPIC_DIFFERENT_CLAIM": 3
+    }
+   },
+   "TIER_B_REFERENT_EVIDENCE_NOT_COMPARABLE|test": {
+    "emitted_in_gold": 9,
+    "of_which_positive": 4,
+    "precision": 0.4444,
+    "labels": {
+     "UNRELATED": 5,
+     "SAME_TOPIC_DIFFERENT_CLAIM": 4
+    }
+   },
+   "TIER_B_REFERENT_EVIDENCE_NOT_COMPARABLE|all": {
+    "emitted_in_gold": 16,
+    "of_which_positive": 8,
+    "precision": 0.5,
+    "labels": {
+     "UNRELATED": 8,
+     "SAME_CONTENT": 1,
+     "SAME_TOPIC_DIFFERENT_CLAIM": 7
+    }
+   },
+   "TIER_C_NO_REFERENT_EVIDENCE_EXISTS|dev": {
+    "emitted_in_gold": 10,
+    "of_which_positive": 7,
+    "precision": 0.7,
+    "labels": {
+     "SAME_TOPIC_DIFFERENT_CLAIM": 6,
+     "UNRELATED": 3,
+     "SAME_CONTENT": 1
+    }
+   },
+   "TIER_C_NO_REFERENT_EVIDENCE_EXISTS|test": {
+    "emitted_in_gold": 13,
+    "of_which_positive": 8,
+    "precision": 0.6154,
+    "labels": {
+     "UNRELATED": 4,
+     "SHARED_PHRASING_ONLY": 1,
+     "SAME_TOPIC_DIFFERENT_CLAIM": 8
+    }
+   },
+   "TIER_C_NO_REFERENT_EVIDENCE_EXISTS|all": {
+    "emitted_in_gold": 23,
+    "of_which_positive": 15,
+    "precision": 0.6522,
+    "labels": {
+     "SAME_TOPIC_DIFFERENT_CLAIM": 14,
+     "UNRELATED": 7,
+     "SAME_CONTENT": 1,
+     "SHARED_PHRASING_ONLY": 1
+    }
+   }
+  },
+  "precision_all_tiers_after_the_fix": {
+   "dev": {
+    "emitted_in_gold": 35,
+    "of_which_positive": 28,
+    "precision": 0.8,
+    "labels": {
+     "UNRELATED": 7,
+     "SAME_TOPIC_DIFFERENT_CLAIM": 25,
+     "SAME_CONTENT": 3
+    }
+   },
+   "test": {
+    "emitted_in_gold": 44,
+    "of_which_positive": 33,
+    "precision": 0.75,
+    "labels": {
+     "UNRELATED": 10,
+     "SAME_TOPIC_DIFFERENT_CLAIM": 30,
+     "SHARED_PHRASING_ONLY": 1,
+     "SAME_CONTENT": 3
+    }
+   },
+   "all": {
+    "emitted_in_gold": 79,
+    "of_which_positive": 61,
+    "precision": 0.7722,
+    "labels": {
+     "UNRELATED": 17,
+     "SAME_TOPIC_DIFFERENT_CLAIM": 55,
+     "SAME_CONTENT": 6,
+     "SHARED_PHRASING_ONLY": 1
+    }
+   }
+  }
+ },
+ "note": "assertion G1 failed (predicted under half the pool, measured 67.6%) and assertion B4 failed (predicted no trap regression, measured 10 of 52). Both failures are reported here and both changed the design."
+}

@@ -1,0 +1,479 @@
+{
+  "domain": "audio_rv",
+  "agent": 4,
+  "schema_version": "1.0",
+  "algorithm_version": "rv-audio-vedaweb-kirchheiner-1.0",
+  "created_at": "2026-09-15T08:00:09Z",
+  "code_commit": "e854eff0d7ef9258bbae509f164c7c7e44be1028",
+  "config_hash": "a078c456047db85836d4486a43e9c911b166ab87dfbdcd692b3355484a5ab0fc",
+  "config": {
+    "accepted_source": "VEDAWEB.RV.SAK.KIRCHHEINER.2026-09-15",
+    "audio_resource": "68b177c068287f35c35d7705",
+    "text_resource_for_verification": "66880c0fb35d816453bc14e6",
+    "primary_text_version": "GRETIL.RV.AUFRECHT",
+    "match_threshold": 0.9,
+    "discrimination_scope": "all 10,552 Rigvedic stanzas",
+    "qa_seeds": {
+      "text_discrimination_sample": 4242,
+      "media_sample": 777
+    }
+  },
+  "source_snapshot_ids": [
+    "VEDAWEB.RV.SAK.KIRCHHEINER.2026-09-15",
+    "VEDSEARCH.RV.SAK.RECITATION.2026-09-12",
+    "LOAR.KB.DK.VEDA.RECITATIONER.2026-09-15",
+    "IA.RGVEDA.SHAKALA.AURO1.2026-09-15",
+    "IA.RIGVEDA.PARAYANA.202009.2026-09-15",
+    "IA.RIGVEDA.CHANTING.VPS.2026-09-15"
+  ],
+  "files": [
+    {
+      "path": "proofs/gap-audio-004-root-cause-corrected.md",
+      "sha256": "ccbc86b4f1d2a53bc31a01652218eeffad24128c2b70c8e4ed43b136b6e59cd4",
+      "rows": 90,
+      "bytes": 4571
+    },
+    {
+      "path": "proofs/listening-review-not-performed.md",
+      "sha256": "56d86110ff05b0a1ebef7871fd88a4535cdbfa5b557da372f53d1e61cec46859",
+      "rows": 74,
+      "bytes": 3984
+    },
+    {
+      "path": "proofs/valakhilya-permutation-not-applicable.md",
+      "sha256": "0275487080b073b3373e93fe00143d4d80b79006ac15cc9c80b879a4ca5fe81f",
+      "rows": 116,
+      "bytes": 6268
+    },
+    {
+      "path": "proofs/vedsearch-rv-150-negative.md",
+      "sha256": "d145b92a813a55fc6334c447b94e362241083b5e55245cd3c44b4313bd2ef384",
+      "rows": 102,
+      "bytes": 6155
+    },
+    {
+      "path": "rejected.jsonl",
+      "sha256": "cfcce3e074b1b3dfcd261460eab026279578f0eb00d712487006a6a2b20926ae",
+      "rows": 750,
+      "bytes": 1129478
+    },
+    {
+      "path": "rows.jsonl",
+      "sha256": "c85bec80f74edfcb515c04534e657adaf1f1e2d0c240295594fe61419b489f67",
+      "rows": 150,
+      "bytes": 1107889
+    },
+    {
+      "path": "sources.jsonl",
+      "sha256": "4851b3592f8a7f04aaf4b3a922ae848b7e990ff22cd7be2d139127634ba3ed8b",
+      "rows": 6,
+      "bytes": 10403
+    }
+  ],
+  "counts": {
+    "candidates_considered": 900,
+    "accepted": 150,
+    "rejected": 750,
+    "verified_zero": 0,
+    "not_applicable": 0,
+    "unresolved": 0
+  },
+  "candidate_unit": "one (canonical_key, candidate recording source) pair. Each of the 150 missing stanzas was evaluated against all six sources, so candidates_considered = 150 x 6 = 900 and rejected = 150 x 5 = 750. In *verse* terms the artifact is 150 of 150 gap keys accepted, 0 unresolved, 0 needing a proof of absence.",
+  "keys": {
+    "gap_keys": 150,
+    "keys_accepted": 150,
+    "keys_unresolved": 0,
+    "accepted_at_EXACT": 150,
+    "accepted_at_VERIFIED_SEGMENT": 0,
+    "valakhilya_keys": 80,
+    "no_audio_at_incumbent_keys": 70
+  },
+  "assessed_set": {
+    "population_definition": "every Rigvedic mantra in the canonical graph carrying no record in data/product/audio_catalog.jsonl",
+    "method": "10,552 RV Mantra canonical_keys read from Neo4j by read-only MATCH/RETURN and differenced against the 10,402 distinct RV scope_keys in the shipped catalogue",
+    "rv_mantras_in_graph": 10552,
+    "rv_keys_already_catalogued": 10402,
+    "assessed": 150,
+    "assessed_coverage": 1.0,
+    "note": "100% of the gap population was assessed. The wider Rigvedic population was assessed too, for the accepted source's fill rate: all 10,552 stanzas, of which 10552 carry an audio segment."
+  },
+  "measurements": {
+    "vedaweb_kirchheiner_fill_rate": {
+      "covered": 10552,
+      "total": 10552,
+      "fraction": 1.0,
+      "ranges": [
+        [
+          "1.1.1",
+          "10.191.4"
+        ]
+      ]
+    },
+    "media_fetched_and_decoded": 150,
+    "duration_seconds": {
+      "min": 6.64102,
+      "max": 14.003991,
+      "median": 10.142
+    },
+    "text_discrimination_ties": [
+      {
+        "key": "VG:RV:SAK:M02:S023:V019",
+        "label": "2.23.19",
+        "twin": "VG:RV:SAK:M02:S024:V016",
+        "score": 0.9953
+      },
+      {
+        "key": "VG:RV:SAK:M07:S067:V010",
+        "label": "7.67.10",
+        "twin": "VG:RV:SAK:M07:S069:V008",
+        "score": 0.9905
+      }
+    ]
+  },
+  "closes_gaps": [
+    "GAP-AUDIO-004"
+  ],
+  "partially_addresses_gaps": [
+    "GAP-AUDIO-005"
+  ],
+  "qa": {
+    "sampled": 581,
+    "sample_method": "both -- census plus adversarial. The accepted population is small enough to audit whole, so it was: all 150 rows had their media fetched and decoded and their text scored against all 10,552 Rigvedic stanzas. On top of that, a seeded random sample of 296 stanzas from OUTSIDE the gap (seed 4242) tested the source's alignment where a rival recording already exists, a seeded 120-file media sample (seed 777) gave the duration baseline, and all 20 files of hymn 8.60 were fetched as the adversarial control for the Valakhilya permutation.",
+    "defects_found": 0,
+    "human_reviewed": 0,
+    "detail": {
+      "sampled_definition": "distinct Rigvedic stanzas examined by at least one instrument: the 150 accepted rows, the 296-stanza out-of-gap text sample, the 120-file media sample and the 20 control files of hymn 8.60, de-duplicated",
+      "accepted_rows_audited": 150,
+      "accepted_rows_audited_fraction": 1.0,
+      "media_files_fetched_and_decoded": 287,
+      "media_fetch_failures": 0,
+      "out_of_gap_random_sample": 120,
+      "out_of_gap_text_discrimination_sample": 296,
+      "out_of_gap_sample_unique_best_correct": 293,
+      "out_of_gap_sample_ties_on_identical_refrains": 3,
+      "valakhilya_control_files": 20,
+      "checks": {
+        "accepted.media_fetched_and_decoded": {
+          "evaluated": 150,
+          "eligible": 150,
+          "coverage": 1.0,
+          "failures": 0,
+          "detail": "Each accepted row's media URL was fetched byte-for-byte and decoded by ffprobe; codec, sample rate, duration, size and sha256 recorded on the row."
+        },
+        "accepted.checksum_and_duration_are_the_measured_ones": {
+          "evaluated": 150,
+          "eligible": 150,
+          "coverage": 1.0,
+          "failures": 0,
+          "detail": "Re-hashed every fetched file and re-read its duration from the measurement record."
+        },
+        "accepted.coordinate_agrees_on_location_caption_and_filename": {
+          "evaluated": 150,
+          "eligible": 150,
+          "coverage": 1.0,
+          "failures": 0,
+          "detail": "The location's alias set, the file's caption and the file's own name must each encode the same coordinate as the canonical key. Three surfaces, any one of which could have drifted."
+        },
+        "accepted.text_is_unique_best_match_across_10552_stanzas": {
+          "evaluated": 150,
+          "eligible": 150,
+          "coverage": 1.0,
+          "failures": 0,
+          "detail": "Every accepted row's source text was scored against all 10,552 Rigvedic stanzas of this corpus. 150 of 150 returned this row's own key as the single best match; 148 also beat the runner-up by the project's 0.05 margin; 2 tie with a named letter-identical refrain at another coordinate and are declared on the row."
+        },
+        "accepted.one_url_one_passage_and_no_catalogue_collision": {
+          "evaluated": 150,
+          "eligible": 150,
+          "coverage": 1.0,
+          "failures": 0,
+          "detail": "150 distinct URLs over 150 distinct keys, and none of either already present in the 16,834-record shipped catalogue."
+        },
+        "adversarial.valakhilya_is_not_the_griffith_permutation": {
+          "evaluated": 80,
+          "eligible": 80,
+          "coverage": 1.0,
+          "failures": 0,
+          "detail": "The registry's named trap. Three instruments, none of which is an expectation. STRUCTURE: VedaWeb's Mandala 8 per-hymn stanza counts agree with the Aufrecht inline order on 103 of 103 hymns and with the Griffith appended order on 51 of 103; hymn 8.049 carries exactly 10 stanzas where the Griffith order would require 20. SOURCE STATEMENT: the source's own fourth alias for 8.49.1 is '1018,1', i.e. it labels this stanza appendix hymn 1 - so it is the source, not this agent, that identifies the Valakhilya. TEXT: all 80 Valakhilya rows return their own key as the unique best text match across the whole Rigveda. ACOUSTIC: file duration against our own syllable counts correlates 0.8709 as mapped, against 0.6552 for an off-by-one-stanza control and 0.088 for the Griffith +11-hymn control."
+        },
+        "rejected.every_key_against_every_declined_source": {
+          "evaluated": 750,
+          "eligible": 750,
+          "coverage": 1.0,
+          "failures": 0,
+          "detail": "150 keys x 5 declined sources = 750 rejected rows, each with a closed reason_code. A key silently skipped for one source is how a wrong-verse candidate escapes the declined set."
+        },
+        "rejected.reasons_reprobed": {
+          "evaluated": 150,
+          "eligible": 150,
+          "coverage": 1.0,
+          "failures": 0,
+          "detail": "Every rejected row carries a reason and a locator. The incumbent's two reasons were re-derived, not copied: the 70 no-audio rows were re-read out of the 10,472-row harvest by the source's own coordinate fields, and the 80 absent rows were confirmed live - chapter 8 sukta 93 returns total_shloks '0' while sukta 92 returns rows. The three Internet Archive items were each enumerated file by file through archive.org/metadata rather than judged from their titles."
+        },
+        "accepted.no_unsupported_assertion": {
+          "evaluated": 150,
+          "eligible": 150,
+          "coverage": 1.0,
+          "failures": 0,
+          "detail": "No start/end offset (every mapping is a whole file), no patha_type and no licence (the source states neither), and local_copy_permitted false everywhere (republishing needs a written agreement with the Royal Danish Library)."
+        },
+        "accepted.payload_constructs_the_product_audio_record": {
+          "evaluated": 150,
+          "eligible": 150,
+          "coverage": 1.0,
+          "failures": 0,
+          "detail": "Each payload was fed to vedagraph.product.audio.models.AudioRecord, which is frozen with extra=forbid and carries the catalogue's own cross-field validators - so an unknown key, a wrong recension for the Veda, an EXACT mapping without text_verified or a playback mode without its URL would raise here rather than at import time."
+        },
+        "graph.every_key_is_an_rv_mantra": {
+          "evaluated": 150,
+          "eligible": 150,
+          "coverage": 1.0,
+          "failures": 0,
+          "detail": "Read-only MATCH/RETURN against the canonical store. No mutation was issued in this domain."
+        }
+      },
+      "defects": [],
+      "acoustic": {
+        "all_measured": {
+          "n": 287,
+          "duration_min": 5.51,
+          "duration_max": 14.0,
+          "duration_median": 10.26,
+          "syllables_median": 36,
+          "pearson_duration_vs_syllables": 0.9076,
+          "seconds_per_syllable_median": 0.2837,
+          "seconds_per_syllable_min": 0.2132,
+          "seconds_per_syllable_max": 0.382
+        },
+        "the_150_targets": {
+          "n": 150,
+          "duration_min": 6.64,
+          "duration_max": 14.0,
+          "duration_median": 10.14,
+          "syllables_median": 35.0,
+          "pearson_duration_vs_syllables": 0.9002,
+          "seconds_per_syllable_median": 0.2832,
+          "seconds_per_syllable_min": 0.2434,
+          "seconds_per_syllable_max": 0.3685
+        },
+        "valakhilya_80": {
+          "n": 80,
+          "duration_min": 6.64,
+          "duration_max": 14.0,
+          "duration_median": 10.27,
+          "syllables_median": 36.5,
+          "pearson_duration_vs_syllables": 0.8709,
+          "seconds_per_syllable_median": 0.2828,
+          "seconds_per_syllable_min": 0.2522,
+          "seconds_per_syllable_max": 0.3685
+        },
+        "the_70_no_audio_at_vedsearch": {
+          "n": 70,
+          "duration_min": 6.93,
+          "duration_max": 13.96,
+          "duration_median": 9.46,
+          "syllables_median": 31.0,
+          "pearson_duration_vs_syllables": 0.9171,
+          "seconds_per_syllable_median": 0.2832,
+          "seconds_per_syllable_min": 0.2434,
+          "seconds_per_syllable_max": 0.3619
+        },
+        "random_sample_120": {
+          "n": 120,
+          "duration_min": 5.51,
+          "duration_max": 13.86,
+          "duration_median": 10.47,
+          "syllables_median": 40.0,
+          "pearson_duration_vs_syllables": 0.9235,
+          "seconds_per_syllable_median": 0.281,
+          "seconds_per_syllable_min": 0.2132,
+          "seconds_per_syllable_max": 0.382
+        },
+        "control_hymn_8_60": {
+          "n": 20,
+          "duration_min": 9.23,
+          "duration_max": 12.0,
+          "duration_median": 10.88,
+          "syllables_median": 35.5,
+          "pearson_duration_vs_syllables": 0.6232,
+          "seconds_per_syllable_median": 0.3004,
+          "seconds_per_syllable_min": 0.2589,
+          "seconds_per_syllable_max": 0.3391
+        },
+        "valakhilya_discrimination": {
+          "as_mapped_aufrecht_inline": [
+            80,
+            0.8709
+          ],
+          "control_off_by_one_stanza": [
+            69,
+            0.6552
+          ],
+          "control_griffith_order_shift_plus_11_hymns": [
+            80,
+            0.088
+          ]
+        },
+        "rv_8_49_vs_8_60_head_to_head": [
+          {
+            "stanza": 1,
+            "file_08.049": {
+              "duration": 9.13,
+              "our_syllables": 35
+            },
+            "file_08.060": {
+              "duration": 9.52,
+              "our_syllables": 34
+            }
+          },
+          {
+            "stanza": 2,
+            "file_08.049": {
+              "duration": 10.12,
+              "our_syllables": 38
+            },
+            "file_08.060": {
+              "duration": 11.29,
+              "our_syllables": 36
+            }
+          },
+          {
+            "stanza": 3,
+            "file_08.049": {
+              "duration": 10.6,
+              "our_syllables": 33
+            },
+            "file_08.060": {
+              "duration": 10.0,
+              "our_syllables": 33
+            }
+          },
+          {
+            "stanza": 4,
+            "file_08.049": {
+              "duration": 10.28,
+              "our_syllables": 38
+            },
+            "file_08.060": {
+              "duration": 10.1,
+              "our_syllables": 39
+            }
+          },
+          {
+            "stanza": 5,
+            "file_08.049": {
+              "duration": 9.94,
+              "our_syllables": 36
+            },
+            "file_08.060": {
+              "duration": 9.93,
+              "our_syllables": 32
+            }
+          },
+          {
+            "stanza": 6,
+            "file_08.049": {
+              "duration": 10.67,
+              "our_syllables": 39
+            },
+            "file_08.060": {
+              "duration": 11.69,
+              "our_syllables": 39
+            }
+          },
+          {
+            "stanza": 7,
+            "file_08.049": {
+              "duration": 9.06,
+              "our_syllables": 34
+            },
+            "file_08.060": {
+              "duration": 10.03,
+              "our_syllables": 35
+            }
+          },
+          {
+            "stanza": 8,
+            "file_08.049": {
+              "duration": 10.13,
+              "our_syllables": 38
+            },
+            "file_08.060": {
+              "duration": 11.26,
+              "our_syllables": 39
+            }
+          },
+          {
+            "stanza": 9,
+            "file_08.049": {
+              "duration": 10.28,
+              "our_syllables": 35
+            },
+            "file_08.060": {
+              "duration": 10.85,
+              "our_syllables": 32
+            }
+          },
+          {
+            "stanza": 10,
+            "file_08.049": {
+              "duration": 10.61,
+              "our_syllables": 38
+            },
+            "file_08.060": {
+              "duration": 11.12,
+              "our_syllables": 36
+            }
+          }
+        ]
+      },
+      "human_listening_review": {
+        "rows_heard": 0,
+        "statement": "NO row in this artifact was reviewed by listening. No listening sheet is claimed, and none of the figures above should be read as one. What stands in its place is stated exactly: the source asserts the coordinate on three surfaces, the text at that coordinate is this corpus's own text and its unique best match across the whole Rigveda, the two corpora's stanza structures are a bijection, and every file was fetched and decoded so its length is measured rather than assumed. That establishes that the file the source attaches to this stanza is the file this row points at, and that the source's coordinate system is ours. It does NOT establish by ear that the audio recites the stanza; only a listener can do that. The registry's closure test for GAP-AUDIO-004 asks for a human listening check on RV 8.49.1, and that check remains OPEN.",
+        "what_a_reviewer_should_be_given": "the 80 Valakhilya rows first, with the Sanskrit text of the row's own key beside the text of RV 8.60.x, and no indication of which is expected. This project has already been caught by a listening sheet whose decisive row quoted what a broken mapping would play, so the sheet must carry both candidates and not one."
+      }
+    }
+  },
+  "findings": [
+    {
+      "id": "F1",
+      "title": "The Rigveda gap has no recoverable mapping defect in it",
+      "detail": "The Atharvavedic finding does not transfer. data/product/audio_discovery_report.json records, for the Rigveda: mapped 10,402, source_has_no_audio 70, no_source_verse 80, and NO text_mismatch key at all. 70 + 80 = 150 exactly. So 0 of the 150 were found and rejected on text, and 150 of 150 were absent at the incumbent - 70 because VedSearch's own metadata says no Sanskrit recitation exists, 80 because VedSearch's Rigveda does not contain the stanza."
+    },
+    {
+      "id": "F2",
+      "title": "GAP-AUDIO-004's recorded root cause is wrong, in both halves",
+      "detail": "The registry says the Valakhilya is missing because 'the Griffith permutation needed to map the Valakhilya insertion was never applied', and that source_dependency is 'NONE for the Valakhilya set - the recordings exist at the source under a different numbering'. Both are disproven. The permutation IS applied: vedsearch_coordinates routes every Rigvedic sukta through vedagraph.editions.griffith_page, and the shipped catalogue's own mapping_method says so on all 10,402 rows. And the recordings do NOT exist at the source: VedSearch's Mandala 8 runs to hymn 92 and its Rigveda holds 10,472 verses against our 10,552, a difference of exactly 80. A live probe on 2026-09-15 returns total_shloks '0' for chapter 8 sukta 93. VedSearch publishes the 1,017-hymn presentation, which omits the Valakhilya rather than appending it, so griffith_page has no target to map to. The gap was a source dependency all along."
+    },
+    {
+      "id": "F3",
+      "title": "The VedaWeb Kirchheiner resource is complete, and its fill rate is 100%",
+      "detail": "Measured, not estimated: GET /api/resources/68b177c068287f35c35d7705/coverage returns covered 10,552 of total 10,552 over one contiguous range 1.1.1 to 10.191.4, and the resource record's own coverage field independently reads [10552, 10552]. Every one of the 150 missing stanzas is covered. One discrete Ogg Vorbis file per stanza, so no segmentation is required and no timestamp is asserted anywhere in this artifact."
+    },
+    {
+      "id": "F4",
+      "title": "Its stanza keys are Aufrecht-inline, and the source says so itself",
+      "detail": "The reconnaissance asked whether the resource's stanza keys are Aufrecht-inline for the Valakhilya. They are, on three independent instruments. The label sets are a bijection with our Sakala spine - 10,552 stanzas, 1,028 hymns, zero unmatched labels in either direction, zero per-hymn stanza-count disagreements. Mandala 8's counts fit the Aufrecht order on 103 of 103 hymns and the Griffith order on 51 of 103. And VedaWeb publishes the appendix running number as a fourth alias on every stanza, so 8.49.1 carries alias '1018,1' - the source's own statement that its 8.49 is appendix hymn 1."
+    },
+    {
+      "id": "F5",
+      "title": "The 70 no-audio verses are a shared lacuna of the parayana tradition",
+      "detail": "An independent Internet Archive parayana recording, rig-veda_recitation_202009, marks its own tracks incomplete at M1_S145, M6_S75, M7_S67, M8_S13 and M9_S97, and skips M9_S98 entirely. That is 66 of the 70 verses VedSearch flags as having no Sanskrit audio, from a different uploader and a different master. The 70 are therefore not a harvesting failure at VedSearch; the same stanzas are missing from at least two circulating recordings. All 70 are nonetheless present in the Kirchheiner collection, which is the point of using an institutional deposit rather than a circulating copy."
+    },
+    {
+      "id": "F6",
+      "title": "Rights: usable by reference, not by mirroring",
+      "detail": "The Royal Danish Library states 'Copyright protected, but you can use it for non-commercial purposes', requires a written agreement to republish, and requires crediting the author. The VedaWeb resource record's license and licenseUrl are both null. So every accepted row carries licence null, local_copy_permitted false, the library's statement verbatim in rights_statement, and playback_mode DIRECT_MEDIA_URL pointing at the source's own host. This is a NEW playback mode for this product, whose 16,834 existing records are all PROXIED_STREAM; the lead will need to decide whether the player references the host directly or proxies without caching. Caching is not permitted without that written agreement."
+    },
+    {
+      "id": "F7",
+      "title": "Cross-cutting, outside this write surface: the same deposit holds the other three Vedas",
+      "detail": "The LOAR item is 224 cassettes covering all four Vedas in six oral traditions, with named reciters including M. Ittiravi and T. Narayanan Nambudiri for the Samaveda - and the Samavedic audio gap was closed in Wave 0 as 'no usable public source for per-verse Kauthuma arcika recitation, and every candidate has an unnamed reciter'. This deposit has named reciters and an institutional consent chain. Whether it carries arcika samhita-patha rather than gana is not established here and is not this agent's to establish. Flagged for the lead and for agents 5 and 6."
+    },
+    {
+      "id": "F8",
+      "title": "Partial credit against GAP-AUDIO-005, for 150 rows only",
+      "detail": "GAP-AUDIO-005 records that checksum, duration_seconds, performer and licence are null on all 16,834 catalogue rows. These 150 rows carry a real sha256, a decoded duration, a named performer, a named collector, a named holding institution and a verbatim rights statement. That is 150 of 16,984 - it does not close the gap, and the other 16,834 rows are untouched by this artifact."
+    }
+  ],
+  "proofs_note": "No verse in this domain needed a proof of genuine absence: all 150 closed at EXACT. proofs/ therefore carries the negative and adversarial results the domain does need - the disproof of GAP-AUDIO-004's recorded root cause, the test of the Valakhilya permutation trap, the incumbent's two negatives with the avenues searched, and an explicit statement that no row was heard."
+}

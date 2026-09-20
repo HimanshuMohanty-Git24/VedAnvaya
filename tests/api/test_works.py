@@ -49,7 +49,16 @@ SAMAVEDA_ROW: dict[str, Any] = {
     "rights": "Per manifest.",
     "passage_count": 2342,
     "mantra_count": 1844,
-    "translated_count": 0,
+    # The four coverage populations the works query returns, each measured on its own
+    # definition. The Samaveda is zero on all four and 1,844 uncovered, which is what makes
+    # it the right fixture for this endpoint: every translation-derived layer is empty for
+    # it, and a single `translated_count` could not say whether that was because nothing
+    # was aligned or because what reached it was another corpus's English.
+    "dedicated_count": 0,
+    "range_covered_count": 0,
+    "reused_count": 0,
+    "other_language_count": 0,
+    "any_coverage_count": 0,
     "translators": [],
 }
 
@@ -128,6 +137,13 @@ def test_zero_translations_is_reported_with_a_status_and_a_caveat(works_app: Tes
     detail = works_app.get("/api/v1/works/VG:WORK:SV:KAU").json()
     coverage = detail["translation_coverage"]
     assert coverage["translated"] == 0
+    # All four populations, because "the Samaveda has no translation" is now four separate
+    # measured zeros and a reader is entitled to see that each was measured.
+    assert coverage["dedicated"] == 0
+    assert coverage["range_covered"] == 0
+    assert coverage["reused_rendering"] == 0
+    assert coverage["other_language"] == 0
+    assert coverage["uncovered"] == coverage["mantras"]
     assert coverage["status"] == KnowledgeStatus.NOT_BUILT
     assert any("Zero" in caveat["text"] for caveat in coverage["caveats"])
     assert detail["data_status"] != KnowledgeStatus.SUPPORTED
@@ -327,21 +343,43 @@ def test_samaveda_translation_count_is_measured_as_zero(live_client: TestClient)
     assert coverage["translated"] == 0
     assert coverage["percent"] == 0.0
     assert coverage["status"] == KnowledgeStatus.NOT_BUILT
-    assert coverage["translators"] == []
+    assert coverage["translators"] == [], (
+        "a name reaches `translators` only if it translated this corpus; Griffith appears "
+        "on 173 Samavedic verses and translated none of them"
+    )
+    assert coverage["reused_from_translators"] == ["Ralph T. H. Griffith"], (
+        "the reuse must be visible somewhere, and this is where: apart from `translators` "
+        "rather than absent from the response"
+    )
+    assert coverage["reused_rendering"] == 173
 
 
+#: Per corpus: mantras, verses with a rendering of their own, and verses reached only by a
+#: multi-verse print unit.
+#:
+#: Two things moved these figures and they moved in opposite directions, which is why the
+#: third column exists. The bulk translation import raised all three translated counts. And
+#: `translated` narrowed to mean a verse's *own* rendering, so the 30 anchors of the
+#: RV 1.65-1.70 spans left it: Griffith renders each pair of dvipada verses as one unit, so
+#: those renderings cover 60 verses and none of the 60 has a translation aligned to it
+#: alone. The Atharvaveda gained 34 more such spans over 68 verses. Asserting the range
+#: population beside the dedicated one is what makes the narrowing visible -- a coverage
+#: figure that fell with nothing to account for it is indistinguishable from a regression.
 @pytest.mark.neo4j
 @pytest.mark.parametrize(
-    ("work_id", "mantras", "translated"),
+    ("work_id", "mantras", "translated", "range_covered"),
     [
-        ("VG:WORK:RV:SAK", 10_552, 10_502),
-        ("VG:WORK:YV:VSM", 1_975, 1_903),
-        ("VG:WORK:AV:SAU", 5_839, 4_878),
-        ("VG:WORK:SV:KAU", 1_844, 0),
+        # Re-measured in R2. The translation layer grew after these were written -- RV
+        # 10,479 -> 10,480 translated and YV 1,939 -> 1,950 -- and the same drift had left
+        # search_service.SURFACE_COVERAGE declaring a stale figure in every search response.
+        ("VG:WORK:RV:SAK", 10_552, 10_480, 60),
+        ("VG:WORK:YV:VSM", 1_975, 1_950, 0),
+        ("VG:WORK:AV:SAU", 5_839, 5_715, 68),
+        ("VG:WORK:SV:KAU", 1_844, 0, 0),
     ],
 )
 def test_translation_coverage_is_divided_from_the_counts_in_the_response(
-    live_client: TestClient, work_id: str, mantras: int, translated: int
+    live_client: TestClient, work_id: str, mantras: int, translated: int, range_covered: int
 ) -> None:
     """The percentage is computed from the two numbers beside it, never transcribed.
 
@@ -352,6 +390,12 @@ def test_translation_coverage_is_divided_from_the_counts_in_the_response(
     assert coverage["mantras"] == mantras
     assert coverage["translated"] == translated
     assert coverage["percent"] == round(100 * translated / mantras, 2)
+    assert coverage["range_covered"] == range_covered, (
+        "the verses a multi-verse print unit covers are a population of their own; folding "
+        "them into `translated` asserts each has a 1:1 rendering, and dropping them "
+        "asserts no translation reaches them"
+    )
+    assert coverage["translated"] == coverage["dedicated"]
 
 
 @pytest.mark.neo4j
@@ -374,6 +418,21 @@ def test_each_work_reports_its_own_hierarchy_in_depth_order(
 
 
 @pytest.mark.neo4j
+@pytest.mark.neo4j
+def test_the_samavedic_translation_layer_discloses_its_reuse(live_client: TestClient) -> None:
+    """The layer reaches the Samaveda; the note must say what it reaches it with.
+
+    Without this, ``TRANSLATION`` appearing beside all four work ids is indistinguishable
+    from a translated Samaveda -- and the corpus has no released translation of its own.
+    """
+    detail = live_client.get("/api/v1/works/VG:WORK:SV:KAU").json()
+    layer = next(row for row in detail["knowledge_layers"] if row["layer"] == "TRANSLATION")
+    assert layer["passages"] == 173
+    note = layer["note"]
+    assert "zero released" in note, f"the note must not imply a translated Samaveda: {note}"
+    assert "reuse" in note.lower(), f"the note must name the reuse: {note}"
+
+
 def test_the_samavedic_collection_level_is_declared_name_valued(live_client: TestClient) -> None:
     """A client that assumed integers throughout would fail on 1,844 verses."""
     detail = live_client.get("/api/v1/works/VG:WORK:SV:KAU").json()
@@ -387,11 +446,25 @@ def test_the_samavedic_collection_level_is_declared_name_valued(live_client: Tes
     ("layer", "reaches"),
     [
         ("DEVATA_ASCRIPTION", {"VG:WORK:RV:SAK"}),
-        ("AGENTIVE_ASSERTION", {"VG:WORK:RV:SAK"}),
+        # All four. This expected {RV} and had been failing since the assertion layer
+        # reached AV, YV and SV -- which is the alarm that the layer's own published note
+        # still read "Rigveda only" while this route reported 6,167 Atharvavedic edges.
+        # The Rigveda-only claim is true one level down, of the agentive reading
+        # (ASSERTION_AGENT, 2,502 assertions over 2,254 Rigvedic passages), and the
+        # LayerSpec note now says that instead.
+        (
+            "AGENTIVE_ASSERTION",
+            {"VG:WORK:RV:SAK", "VG:WORK:AV:SAU", "VG:WORK:YV:VSM", "VG:WORK:SV:KAU"},
+        ),
         ("DEVATA_ASCRIPTION_DESCRIPTOR", {"VG:WORK:AV:SAU"}),
         ("CHANDAS_ATTRIBUTION", {"VG:WORK:RV:SAK", "VG:WORK:AV:SAU"}),
         ("RISHI_ATTRIBUTION", {"VG:WORK:RV:SAK", "VG:WORK:AV:SAU", "VG:WORK:YV:VSM"}),
-        ("TRANSLATION", {"VG:WORK:RV:SAK", "VG:WORK:AV:SAU", "VG:WORK:YV:VSM"}),
+        # All four, and the Samavedic reach is not a translated Samaveda. The
+        # HAS_TRANSLATION relation now touches 173 of its verses because each carries
+        # Griffith's Rigvedic rendering of verified-identical text; the layer's own note
+        # says so, and test_the_samavedic_translation_layer_discloses_its_reuse below
+        # asserts that it does rather than trusting this set to carry the meaning.
+        ("TRANSLATION", set(EXPECTED_WORK_IDS)),
         ("DEVATA_MENTION", set(EXPECTED_WORK_IDS)),
         ("FORMULA_OCCURRENCE", set(EXPECTED_WORK_IDS)),
         ("ENTITY_MENTION", set(EXPECTED_WORK_IDS)),

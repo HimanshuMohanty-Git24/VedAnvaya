@@ -592,3 +592,100 @@ sources:
   - public_domain_scan_acquisition
   - atharvaveda_shaunaka_clean_route
   - edition_comparison
+- authority_tier: HISTORICAL_TRANSLATION
+  bulk_ingestion_status: COMMIT_PINNED_ARTIFACTS_ONLY
+  formats:
+  - HTML
+  known_languages:
+  - en
+  - la
+  name: The Hymns of the Atharvaveda, Griffith translation
+  notes: Ralph T. H. Griffith, 1895-96, E. J. Lazarus and Co., Benares. Read through the Wayback
+    Machine because sacred-texts.com itself returned HTTP 403 behind a Cloudflare managed challenge
+    on 2026-09-15 - a bot challenge rather than a withdrawal, so the capture is the same publisher's
+    bytes at a fixed timestamp. 144 kanda-20 pages plus 3 stray hymn pages, every one HTTP 200,
+    with a per-page sha256 recorded in data/staging/translation/proofs/source_pages.json. Griffith
+    renders the passages he judged too explicit into Latin rather than English, so this source
+    supplies both languages and known_languages records both - 18 of its verses are Latin and are
+    counted in no English coverage figure.
+  organization: Internet Archive Wayback Machine capture of sacred-texts.com/hin/av/
+  rights:
+    notes: PUBLIC_DOMAIN rests on the underlying work and never on the archive host. Ralph T. H.
+      Griffith lived 1826-1906 and this translation was published 1895-96, so it is public domain
+      by age. Transcribed from the acquisition record in data/staging/translation/sources.jsonl.
+    status: PUBLIC_DOMAIN
+    verified_at: 2026-09-15
+  source_id: IA_WAYBACK_GRIFFITH_AV_1895
+  url: https://web.archive.org/web/20230325113203/https://www.sacred-texts.com/hin/av/
+  verification_roles:
+  - english_translation
+- authority_tier: HISTORICAL_TRANSLATION
+  bulk_ingestion_status: COMMIT_PINNED_ARTIFACTS_ONLY
+  formats:
+  - HTML
+  known_languages:
+  - en
+  - la
+  name: The Hymns of the Rigveda, Griffith translation, second edition
+  notes: The same translation WIKISOURCE_GRIFFITH_RV carries, read from a second host to reach the
+    50 Rigvedic verses the Wikisource transcription leaves untranslated. 16 hymn pages. Six of its
+    verses are Griffith's Latin rather than English - RV 1.179.3-4 and 10.61.5-8 - which is why
+    known_languages records two languages for a source whose role is english_translation.
+  organization: Internet Archive Wayback Machine captures of sacred-texts.com/hin/rigveda/
+  rights:
+    notes: Author died 1906, second edition 1896, so public domain by age. The determination is on
+      the work and not on archive.org item metadata.
+    status: PUBLIC_DOMAIN
+    verified_at: 2026-09-15
+  source_id: IA_WAYBACK_GRIFFITH_RV_1896
+  url: https://web.archive.org/web/2023/https://www.sacred-texts.com/hin/rigveda/
+  verification_roles:
+  - english_translation
+  - alternate_citation
+- authority_tier: HISTORICAL_TRANSLATION
+  bulk_ingestion_status: COMMIT_PINNED_ARTIFACTS_ONLY
+  formats:
+  - HTML
+  known_languages:
+  - en
+  name: The Texts of the White Yajurveda, Griffith translation, pinned snapshot
+  notes: Ralph T. H. Griffith, 1899, Benares. These are the bytes already on disk from the
+    2026-09-07 acquisition and not a fresh fetch - sacred-texts.com returned HTTP 403 behind a
+    Cloudflare managed challenge on 2026-09-15. Distinct from GRIFFITH_WHITE_YAJURVEDA, which is
+    the archive.org scan of the same edition; this entry is the HTML transcription, and it is the
+    one whose printed verse labels the 36 forced-address recoveries were verified against.
+  organization: sacred-texts.com, pinned on disk at data/raw/sacred_texts/2026-09-07/wyv
+  rights:
+    notes: Author died 1906 and the work was published 1899, so public domain by age, on the work
+      rather than on host metadata.
+    status: PUBLIC_DOMAIN
+    verified_at: 2026-09-07
+  source_id: SACRED_TEXTS_WYV_SNAPSHOT_2026_09_07
+  url: https://www.sacred-texts.com/hin/wyv/
+  verification_roles:
+  - english_translation
+- authority_tier: HISTORICAL_TRANSLATION
+  bulk_ingestion_status: COMMIT_PINNED_ARTIFACTS_ONLY
+  formats:
+  - NEO4J_INTERNAL_READ
+  known_languages:
+  - en
+  name: Griffith's Rigveda translation as already held in this graph
+  notes: Not an external acquisition. This source_id records that a translation is one of the
+    10,502 Rigvedic renderings this graph already held, re-used for a Samavedic or Atharvavedic
+    verse whose canonical Sanskrit is verified character-identical. Every translation citing it
+    carries reuse_kind=REUSED_RENDERING, names the Rigvedic passage and the identity of the
+    translation being shown, and is counted in no corpus's independent English coverage. It is
+    registered because 1,132 shipped translations cite a source_id and a reader is entitled to
+    resolve every one of them; it is not evidence independent of the Rigveda.
+  organization: the VedaGraph Neo4j store, source_id WIKISOURCE_GRIFFITH_RV
+  rights:
+    notes: Inherited from WIKISOURCE_GRIFFITH_RV, whose PD-old determination is recorded on that
+      entry. No new rights question arises - the same bytes are shown beside a second passage.
+    status: PUBLIC_DOMAIN
+    verified_at: 2026-09-15
+  source_id: VEDAGRAPH_CANONICAL_RV_GRIFFITH
+  url: https://en.wikisource.org/wiki/The_Hymns_of_the_Rigveda
+  verification_roles:
+  - english_translation
+  - alternate_citation

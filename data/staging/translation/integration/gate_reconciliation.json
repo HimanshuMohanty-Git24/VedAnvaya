@@ -1,0 +1,454 @@
+{
+ "phase": "A",
+ "total_staged_rows": 2254,
+ "the_two_reported_figures": {
+  "C_PASS": {
+   "value": 922,
+   "population": "the 1,187 rows whose Gate B category is B_PASS",
+   "artifact": "gate_c_summary.json :: by_category_assessed.C_PASS",
+   "reproduced": true
+  },
+  "C_PASS_over_all_staged_rows": {
+   "value": 966,
+   "population": "all 2,254 staged rows",
+   "note": "Gate C ran its deterministic checks over every staged row, so the row-level C_PASS population is larger than the figure the summary reported. This number appears in no headline and is stated here so the two are never confused again."
+  },
+  "evidence_safe": {
+   "value": 1144,
+   "population": "every row the decision matrix placed in a SAFE_IMPORT_* class",
+   "artifact": "translation_decision_matrix.json :: safe_total",
+   "reproduced": true
+  }
+ },
+ "difference": {
+  "arithmetic": "1144 - 922 = 222",
+  "value": 222,
+  "rows_explained": 222,
+  "fully_explained": true,
+  "groups": [
+   {
+    "group": "SAFE_AND_C_PASS_BUT_GATE_B_PARKED_IT",
+    "rows": 28,
+    "why_it_is_outside_the_922": "922 was computed over the 1,187 rows whose Gate B category is B_PASS. These rows carry B_NEEDS_INDEPENDENT_CONTENT_CONTROL: Gate B declined to pass a forced address until a content control existed, Gate C then found the independent control in the printed source and returned C_PASS. They are C_PASS rows that the 922 tally could not see.",
+    "owner_policy_dependency": "OWNER_DECISION_C_FORCED_ADDRESSES",
+    "by_veda": {
+     "YV": 28
+    },
+    "gate_b_verdicts": {
+     "B_NEEDS_INDEPENDENT_CONTENT_CONTROL": 28
+    },
+    "gate_c_verdicts": {
+     "C_PASS": 28
+    },
+    "row_ids": [
+     "TR02203",
+     "TR02204",
+     "TR02205",
+     "TR02206",
+     "TR02208",
+     "TR02209",
+     "TR02210",
+     "TR02223",
+     "TR02224",
+     "TR02225",
+     "TR02226",
+     "TR02227",
+     "TR02229",
+     "TR02231",
+     "TR02232",
+     "TR02234",
+     "TR02235",
+     "TR02236",
+     "TR02237",
+     "TR02238",
+     "TR02239",
+     "TR02241",
+     "TR02242",
+     "TR02243",
+     "TR02247",
+     "TR02250",
+     "TR02251",
+     "TR02252"
+    ]
+   },
+   {
+    "group": "SAFE_BUT_GATE_C_WITHHELD_PENDING_AN_OWNER_POLICY",
+    "rows": 194,
+    "why_it_is_outside_the_922": "Gate C withheld these deliberately and only because the reused-rendering policy had not been decided. The evidence is complete -- the target's Sanskrit is verified character-identical to a Rigvedic verse Griffith translated -- so the matrix counted them safe, while C_PASS could not.",
+    "owner_policy_dependency": "OWNER_DECISION_D_REUSED_RENDERING_POLICY",
+    "by_veda": {
+     "AV": 21,
+     "SV": 173
+    },
+    "gate_b_verdicts": {
+     "B_PASS": 194
+    },
+    "gate_c_verdicts": {
+     "C_WITHHOLD_REUSED_RENDERING_POLICY": 194
+    },
+    "row_ids": [
+     "TR00031",
+     "TR00178",
+     "TR00290",
+     "TR00291",
+     "TR00292",
+     "TR00293",
+     "TR00352",
+     "TR00353",
+     "TR00375",
+     "TR00376",
+     "TR00377",
+     "TR00412",
+     "TR00413",
+     "TR00414",
+     "TR00432",
+     "TR00433",
+     "TR00458",
+     "TR00459",
+     "TR00460",
+     "TR00659",
+     "TR00660",
+     "TR00961",
+     "TR00962",
+     "TR00963",
+     "TR00964",
+     "TR00965",
+     "TR00966",
+     "TR00967",
+     "TR00968",
+     "TR00969",
+     "TR00970",
+     "TR00971",
+     "TR00972",
+     "TR00973",
+     "TR00976",
+     "TR00978",
+     "TR00979",
+     "TR00995",
+     "TR00996",
+     "TR01030",
+     "TR01037",
+     "TR01038",
+     "TR01041",
+     "TR01043",
+     "TR01045",
+     "TR01055",
+     "TR01056",
+     "TR01059",
+     "TR01069",
+     "TR01071",
+     "TR01072",
+     "TR01073",
+     "TR01074",
+     "TR01076",
+     "TR01077",
+     "TR01079",
+     "TR01082",
+     "TR01084",
+     "TR01085",
+     "TR01088",
+     "TR01096",
+     "TR01097",
+     "TR01117",
+     "TR01118",
+     "TR01119",
+     "TR01120",
+     "TR01122",
+     "TR01123",
+     "TR01125",
+     "TR01126",
+     "TR01131",
+     "TR01133",
+     "TR01157",
+     "TR01180",
+     "TR01181",
+     "TR01182",
+     "TR01199",
+     "TR01204",
+     "TR01211",
+     "TR01212",
+     "TR01225",
+     "TR01230",
+     "TR01232",
+     "TR01243",
+     "TR01245",
+     "TR01246",
+     "TR01247",
+     "TR01248",
+     "TR01249",
+     "TR01250",
+     "TR01251",
+     "TR01253",
+     "TR01255",
+     "TR01257",
+     "TR01259",
+     "TR01261",
+     "TR01265",
+     "TR01269",
+     "TR01270",
+     "TR01278",
+     "TR01283",
+     "TR01286",
+     "TR01291",
+     "TR01295",
+     "TR01307",
+     "TR01310",
+     "TR01321",
+     "TR01323",
+     "TR01326",
+     "TR01329",
+     "TR01336",
+     "TR01340",
+     "TR01348",
+     "TR01351",
+     "TR01356",
+     "TR01357",
+     "TR01359",
+     "TR01368",
+     "TR01375",
+     "TR01380",
+     "TR01383",
+     "TR01390",
+     "TR01403",
+     "TR01404",
+     "TR01410",
+     "TR01417",
+     "TR01420",
+     "TR01441",
+     "TR01457",
+     "TR01459",
+     "TR01466",
+     "TR01470",
+     "TR01496",
+     "TR01497",
+     "TR01498",
+     "TR01500",
+     "TR01502",
+     "TR01504",
+     "TR01516",
+     "TR01562",
+     "TR01575",
+     "TR01580",
+     "TR01583",
+     "TR01614",
+     "TR01624",
+     "TR01627",
+     "TR01630",
+     "TR01638",
+     "TR01643",
+     "TR01673",
+     "TR01696",
+     "TR01708",
+     "TR01713",
+     "TR01719",
+     "TR01725",
+     "TR01737",
+     "TR01746",
+     "TR01795",
+     "TR01798",
+     "TR01800",
+     "TR01815",
+     "TR01819",
+     "TR01820",
+     "TR01837",
+     "TR01839",
+     "TR01843",
+     "TR01860",
+     "TR01907",
+     "TR01944",
+     "TR01961",
+     "TR01967",
+     "TR01975",
+     "TR01984",
+     "TR01988",
+     "TR01989",
+     "TR01990",
+     "TR01999",
+     "TR02010",
+     "TR02024",
+     "TR02029",
+     "TR02032",
+     "TR02038",
+     "TR02046",
+     "TR02049",
+     "TR02052",
+     "TR02057",
+     "TR02066",
+     "TR02080",
+     "TR02081",
+     "TR02095",
+     "TR02106",
+     "TR02136",
+     "TR02138",
+     "TR02142"
+    ]
+   }
+  ]
+ },
+ "the_opposite_direction": {
+  "rows": 16,
+  "what_it_is": "rows Gate C passed adversarially whose Gate B verdict is a hard failure. Gate C assesses every staged row so the packet can report on withheld populations too, so a C_PASS here means 'the adversarial checks found nothing against it', not 'it may be imported'.",
+  "gate_b_verdicts": {
+   "B_FAIL_POLICY": 5,
+   "B_FAIL_PROVENANCE": 11
+  },
+  "terminal_classes_now": {
+   "WITHHOLD_POLICY_PROBABLE": 5,
+   "WITHHOLD_PROVENANCE": 11
+  },
+  "row_ids": [
+   "TR00952",
+   "TR00953",
+   "TR00954",
+   "TR00960",
+   "TR02211",
+   "TR02212",
+   "TR02213",
+   "TR02214",
+   "TR02215",
+   "TR02216",
+   "TR02217",
+   "TR02218",
+   "TR02219",
+   "TR02220",
+   "TR02221",
+   "TR02222"
+  ]
+ },
+ "identity_check": {
+  "c_pass_all_rows": 966,
+  "equals_c_pass_in_b_pass_plus_the_forced_group_plus_the_counter_direction": true
+ },
+ "rows_missing_from_gate_c_adjudication": 0,
+ "unexplained_rows": 0,
+ "unexplained_row_ids": [],
+ "verdict": "RECONCILED",
+ "phase_b": {
+  "phase": "B",
+  "classes_declared": [
+   "IMPORT_SOURCE_EXPLICIT",
+   "IMPORT_MANTRA_RANGE",
+   "IMPORT_REUSED_RENDERING",
+   "IMPORT_VERIFIED_FORCED_ADDRESS",
+   "IMPORT_NON_ENGLISH_TRANSLATION",
+   "WITHHOLD_POLICY_PROBABLE",
+   "WITHHOLD_POLICY_UNVERIFIED",
+   "WITHHOLD_SOURCE_COORDINATE",
+   "WITHHOLD_PROVENANCE",
+   "WITHHOLD_FORCED_ADDRESS",
+   "REJECT_NOT_TRANSLATION",
+   "REJECT_WRONG_TARGET",
+   "CONFLICT_EXISTING_TRANSLATION"
+  ],
+  "mutually_exclusive": true,
+  "final_class_counts": {
+   "IMPORT_SOURCE_EXPLICIT": 844,
+   "IMPORT_MANTRA_RANGE": 68,
+   "IMPORT_REUSED_RENDERING": 194,
+   "IMPORT_VERIFIED_FORCED_ADDRESS": 36,
+   "IMPORT_NON_ENGLISH_TRANSLATION": 24,
+   "WITHHOLD_POLICY_PROBABLE": 740,
+   "WITHHOLD_POLICY_UNVERIFIED": 0,
+   "WITHHOLD_SOURCE_COORDINATE": 285,
+   "WITHHOLD_PROVENANCE": 60,
+   "WITHHOLD_FORCED_ADDRESS": 2,
+   "REJECT_NOT_TRANSLATION": 1,
+   "REJECT_WRONG_TARGET": 0,
+   "CONFLICT_EXISTING_TRANSLATION": 0
+  },
+  "sum_of_final_class_counts": 2254,
+  "distinct_row_ids": 2254,
+  "assertions": {
+   "sum_equals_2254": true,
+   "distinct_row_ids_equals_2254": true
+  },
+  "by_class_and_veda": {
+   "IMPORT_SOURCE_EXPLICIT": {
+    "AV": 837,
+    "RV": 7
+   },
+   "IMPORT_REUSED_RENDERING": {
+    "AV": 21,
+    "SV": 173
+   },
+   "IMPORT_NON_ENGLISH_TRANSLATION": {
+    "AV": 18,
+    "RV": 6
+   },
+   "IMPORT_MANTRA_RANGE": {
+    "AV": 68
+   },
+   "WITHHOLD_POLICY_PROBABLE": {
+    "RV": 4,
+    "SV": 735,
+    "YV": 1
+   },
+   "WITHHOLD_PROVENANCE": {
+    "SV": 49,
+    "YV": 11
+   },
+   "WITHHOLD_SOURCE_COORDINATE": {
+    "SV": 285
+   },
+   "IMPORT_VERIFIED_FORCED_ADDRESS": {
+    "YV": 36
+   },
+   "WITHHOLD_FORCED_ADDRESS": {
+    "YV": 2
+   },
+   "REJECT_NOT_TRANSLATION": {
+    "YV": 1
+   }
+  },
+  "importable_rows": 1166,
+  "withheld_or_rejected_rows": 1088,
+  "importable_by_veda": {
+   "AV": 944,
+   "RV": 13,
+   "SV": 173,
+   "YV": 36
+  },
+  "importable_by_source": {
+   "IA_WAYBACK_GRIFFITH_AV_1895": 923,
+   "IA_WAYBACK_GRIFFITH_RV_1896": 13,
+   "SACRED_TEXTS_WYV_SNAPSHOT_2026_09_07": 36,
+   "VEDAGRAPH_CANONICAL_RV_GRIFFITH": 194
+  },
+  "importable_by_language": {
+   "en": 1142,
+   "la": 24
+  },
+  "independent_english_rows": 948,
+  "owner_policy_dependencies": {
+   "OWNER_DECISION_C_FORCED_ADDRESSES": 39,
+   "OWNER_DECISION_D_REUSED_RENDERING_POLICY": 194,
+   "OWNER_DECISION_LATIN_SUBSTITUTION": 24,
+   "none": 1997
+  },
+  "product_semantics_dependencies": {
+   "LANGUAGE_MUST_BE_REPRESENTED_DISTINCTLY": 24,
+   "RANGE_COVERAGE_MUST_BE_REPRESENTED": 68,
+   "REUSE_MUST_BE_DISCLOSED": 194,
+   "none": 1968
+  },
+  "movement_from_the_prior_matrix": {
+   "transitions": {
+    "REJECT_NON_TRANSLATION_LITERAL -> REJECT_NOT_TRANSLATION": 1,
+    "SAFE_IMPORT_DETERMINISTIC_VERIFIED_ALIGNMENT -> IMPORT_VERIFIED_FORCED_ADDRESS": 36,
+    "SAFE_IMPORT_MULTI_VERSE_RANGE -> IMPORT_MANTRA_RANGE": 68,
+    "SAFE_IMPORT_REUSED_RENDERING_WITH_DISCLOSURE -> IMPORT_REUSED_RENDERING": 194,
+    "SAFE_IMPORT_SOURCE_EXPLICIT -> IMPORT_NON_ENGLISH_TRANSLATION": 2,
+    "SAFE_IMPORT_SOURCE_EXPLICIT -> IMPORT_SOURCE_EXPLICIT": 844,
+    "WITHHOLD_AMBIGUOUS_ALIGNMENT -> IMPORT_NON_ENGLISH_TRANSLATION": 22,
+    "WITHHOLD_AMBIGUOUS_ALIGNMENT -> WITHHOLD_SOURCE_COORDINATE": 285,
+    "WITHHOLD_FORCED_ADDRESS_UNVERIFIED -> WITHHOLD_FORCED_ADDRESS": 2,
+    "WITHHOLD_PROVENANCE -> WITHHOLD_POLICY_PROBABLE": 740,
+    "WITHHOLD_PROVENANCE -> WITHHOLD_PROVENANCE": 60
+   },
+   "rows_whose_importability_changed": 22,
+   "importability_transitions": {
+    "WITHHOLD_AMBIGUOUS_ALIGNMENT -> IMPORT_NON_ENGLISH_TRANSLATION": 22
+   }
+  }
+ }
+}

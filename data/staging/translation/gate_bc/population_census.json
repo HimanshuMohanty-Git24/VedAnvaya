@@ -1,0 +1,114 @@
+{
+ "phase": 0,
+ "measured_staged_rows": 2254,
+ "manifest_claimed_accepted": 2254,
+ "agrees_with_manifest": true,
+ "measured_rejected_rows": 673,
+ "manifest_claimed_rejected": 673,
+ "by_veda": {
+  "SV": 1242,
+  "AV": 944,
+  "YV": 51,
+  "RV": 17
+ },
+ "by_source_id": {
+  "IA_WAYBACK_GRIFFITH_SV_1893": 1069,
+  "IA_WAYBACK_GRIFFITH_AV_1895": 923,
+  "VEDAGRAPH_CANONICAL_RV_GRIFFITH": 194,
+  "SACRED_TEXTS_WYV_SNAPSHOT_2026_09_07": 51,
+  "IA_WAYBACK_GRIFFITH_RV_1896": 17
+ },
+ "by_veda_and_source": {
+  "SV|IA_WAYBACK_GRIFFITH_SV_1893": 1069,
+  "AV|IA_WAYBACK_GRIFFITH_AV_1895": 923,
+  "SV|VEDAGRAPH_CANONICAL_RV_GRIFFITH": 173,
+  "YV|SACRED_TEXTS_WYV_SNAPSHOT_2026_09_07": 51,
+  "AV|VEDAGRAPH_CANONICAL_RV_GRIFFITH": 21,
+  "RV|IA_WAYBACK_GRIFFITH_RV_1896": 17
+ },
+ "by_evidence_layer": {
+  "SOURCE_EXPLICIT": 2254
+ },
+ "by_mapping_confidence": {
+  "EXACT": 1252,
+  "PROBABLE": 740,
+  "VERIFIED_SEGMENT": 262
+ },
+ "by_quality_class": {
+  "SCHOLARLY_EDITION": 2254
+ },
+ "by_alignment": {
+  "EXACT_MANTRA_ALIGNMENT": 2186,
+  "RANGE_ALIGNMENT": 68
+ },
+ "by_resolution_tier": {
+  "1": 991,
+  "3": 735,
+  "2": 528
+ },
+ "by_recension_verified": {
+  "True": 1519,
+  "False": 735
+ },
+ "by_translator": {
+  "Ralph T. H. Griffith": 2254
+ },
+ "by_work_edition": {
+  "Ralph T. H. Griffith, Hymns of the Samaveda, E. J. Lazarus, Benares, 1893": 1069,
+  "Ralph T. H. Griffith, The Hymns of the Atharvaveda, E. J. Lazarus, Benares, 1895-96": 923,
+  "Ralph T. H. Griffith, The Hymns of the Rigveda, 2nd ed.": 194,
+  "Ralph T. H. Griffith, The Texts of the White Yajurveda, E. J. Lazarus, Benares, 1899": 51,
+  "Ralph T. H. Griffith, The Hymns of the Rigveda, 2nd ed., E. J. Lazarus, Benares, 1896": 17
+ },
+ "by_relation_asserted": {
+  "<none>": 991,
+  "REUSES_TEXT_FROM": 785,
+  "VARIANT_OF": 382,
+  "EXACT_PARALLEL_OF": 96
+ },
+ "central_policy_split": {
+  "not_importable_by_confidence": 740,
+  "policy_eligible": 1514
+ },
+ "payload_field_presence": {
+  "address_forced_without_content_control": 39,
+  "alignment": 2254,
+  "control_rv_key": 1069,
+  "cross_corpus_source_key": 194,
+  "english_control_similarity": 1069,
+  "griffith_unit_index": 1069,
+  "label_recovered": 940,
+  "language": 2254,
+  "printed_span": 923,
+  "relation_asserted": 1263,
+  "resolution_tier": 2254,
+  "sanskrit_similarity": 1263,
+  "snapshot_sha256": 979,
+  "source_label_defect": 39,
+  "source_printed_label": 12,
+  "stage_gap_defect": 39,
+  "text": 2254,
+  "tier_basis": 2254,
+  "translator": 2254,
+  "veda": 2254,
+  "verification": 51,
+  "work_edition": 2254,
+  "year": 2254
+ },
+ "forced_address_rows": {
+  "flag_present": 39,
+  "flag_true": 31,
+  "flag_false": 8,
+  "flag_true_by_veda": {
+   "YV": 31
+  }
+ },
+ "rejected_reason_codes": {
+  "NO_PER_VERSE_EVIDENCE_FOR_ANY_TIER": 602,
+  "SOURCE_EDITION_VERSE_DIVISION_DIFFERS": 25,
+  "SOURCE_VERSE_NOT_PRINTED": 24,
+  "SOURCE_PRINTED_OMISSION": 12,
+  "SOURCE_SPINE_DIVERGENCE_UNRESOLVED": 9,
+  "SOURCE_HYMN_NUMBERING_UNRESOLVED": 1
+ }
+}

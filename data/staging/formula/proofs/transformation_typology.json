@@ -1,0 +1,149 @@
+{
+ "question": "how does each related pair differ, and is the vocabulary closed?",
+ "vocabulary_declared_before_extraction": [
+  "NONE_AT_COMPARISON_CEILING",
+  "UNICODE_NORMALIZATION",
+  "EDITORIAL_APPARATUS",
+  "ACCENT_PLACEMENT",
+  "ORTHOGRAPHIC_VARIATION",
+  "WORD_DIVISION",
+  "SUBSTITUTION",
+  "INSERTION",
+  "DELETION",
+  "REORDERING",
+  "MIXED"
+ ],
+ "the_design_point": "a transformation type that ignores the comparison ceiling misdescribes the corpus. An RV/SV pair identical at SCRIPT_FOLDED is not orthographically varied -- it is as identical as two differently-scripted editions can be shown to be. So the ceiling is computed first, from script and from the MEASURED accent-notation class, and the type names the distance from it.",
+ "ceiling_rule": {
+  "different_script": "SCRIPT_FOLDED",
+  "same_script_different_notation_class": "ACCENT_INSENSITIVE",
+  "same_script_same_notation_class": "SOURCE_EXACT"
+ },
+ "ceiling_distribution": {
+  "cross|ACCENT_INSENSITIVE": 1564,
+  "cross|SCRIPT_FOLDED": 3023,
+  "within|SOURCE_EXACT": 1542
+ },
+ "typed_rows": 6129,
+ "untyped_rows": 0,
+ "by_claim_scope_type": {
+  "IDENTITY|cross|NONE_AT_COMPARISON_CEILING": 279,
+  "IDENTITY|cross|ORTHOGRAPHIC_VARIATION": 471,
+  "IDENTITY|cross|WORD_DIVISION": 788,
+  "IDENTITY|within|ACCENT_PLACEMENT": 23,
+  "IDENTITY|within|EDITORIAL_APPARATUS": 158,
+  "IDENTITY|within|NONE_AT_COMPARISON_CEILING": 451,
+  "IDENTITY|within|ORTHOGRAPHIC_VARIATION": 4,
+  "IDENTITY|within|WORD_DIVISION": 31,
+  "NEAR|cross|DELETION": 96,
+  "NEAR|cross|INSERTION": 279,
+  "NEAR|cross|MIXED": 882,
+  "NEAR|cross|REORDERING": 14,
+  "NEAR|cross|SUBSTITUTION": 1778,
+  "NEAR|within|DELETION": 27,
+  "NEAR|within|INSERTION": 36,
+  "NEAR|within|MIXED": 441,
+  "NEAR|within|REORDERING": 4,
+  "NEAR|within|SUBSTITUTION": 367
+ },
+ "unused_vocabulary": {
+  "members": [
+   "UNICODE_NORMALIZATION"
+  ],
+  "why": "UNICODE_NORMALIZATION is a verified zero: no pair in the corpus differs only in NFC, which is consistent with FOUR_VEDA_NORMALIZATION_POLICY section 3 measuring 0 non-NFC-stable records in 21,936."
+ },
+ "orthographic_variation_named_at_the_codepoint": {
+  "rows": 475,
+  "by_veda_pair": {
+   "AV-RV": 470,
+   "SV-SV": 1,
+   "SV-YV": 1,
+   "YV-YV": 3
+  },
+  "differing_codepoints": [
+   {
+    "count": 763,
+    "left": "̣",
+    "right": "̇",
+    "left_names": "COMBINING DOT BELOW",
+    "right_names": "COMBINING DOT ABOVE"
+   },
+   {
+    "count": 493,
+    "left": "̥",
+    "right": "̣",
+    "left_names": "COMBINING RING BELOW",
+    "right_names": "COMBINING DOT BELOW"
+   },
+   {
+    "count": 27,
+    "left": "",
+    "right": "c",
+    "left_names": "",
+    "right_names": "LATIN SMALL LETTER C"
+   },
+   {
+    "count": 6,
+    "left": "̣",
+    "right": "̐",
+    "left_names": "COMBINING DOT BELOW",
+    "right_names": "COMBINING CANDRABINDU"
+   },
+   {
+    "count": 2,
+    "left": "ृ",
+    "right": "्ऋ",
+    "left_names": "DEVANAGARI VOWEL SIGN VOCALIC R",
+    "right_names": "DEVANAGARI SIGN VIRAMADEVANAGARI LETTER VOCALIC R"
+   },
+   {
+    "count": 2,
+    "left": "ऽ",
+    "right": "",
+    "left_names": "DEVANAGARI SIGN AVAGRAHA",
+    "right_names": ""
+   },
+   {
+    "count": 1,
+    "left": "̥",
+    "right": "̣c",
+    "left_names": "COMBINING RING BELOW",
+    "right_names": "COMBINING DOT BELOWLATIN SMALL LETTER C"
+   },
+   {
+    "count": 1,
+    "left": "्ऋ",
+    "right": "ृ",
+    "left_names": "DEVANAGARI SIGN VIRAMADEVANAGARI LETTER VOCALIC R",
+    "right_names": "DEVANAGARI VOWEL SIGN VOCALIC R"
+   },
+   {
+    "count": 1,
+    "left": "ऽऽ",
+    "right": " ",
+    "left_names": "DEVANAGARI SIGN AVAGRAHADEVANAGARI SIGN AVAGRAHA",
+    "right_names": "SPACE"
+   }
+  ],
+  "samples": [
+   {
+    "a": "AVS 1.4.1",
+    "b": "RV 1.23.16",
+    "accentless_a": "ambayo yanty adhvabhir jāmayo adhvarīyatām pr̥ñcatīr madhunā payaḥ",
+    "accentless_b": "ambayo yanty adhvabhir jāmayo adhvarīyatām pṛñcatīr madhunā payaḥ"
+   },
+   {
+    "a": "AVS 1.4.3",
+    "b": "RV 1.23.18",
+    "accentless_a": "apo devīr upa hvaye yatra gāvaḥ pibanti naḥ sindhubhyaḥ kartvaṃ haviḥ",
+    "accentless_b": "apo devīr upa hvaye yatra gāvaḥ pibanti naḥ sindhubhyaḥ kartvaṁ haviḥ"
+   },
+   {
+    "a": "AVS 1.5.3",
+    "b": "RV 10.9.3",
+    "accentless_a": "tasmā araṃ gamāma vo yasya kṣayāya jinvatha āpo janayathā ca naḥ",
+    "accentless_b": "tasmā araṁ gamāma vo yasya kṣayāya jinvatha āpo janayathā ca naḥ"
+   }
+  ]
+ }
+}

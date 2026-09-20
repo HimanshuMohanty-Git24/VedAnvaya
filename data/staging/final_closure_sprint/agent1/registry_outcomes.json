@@ -1,0 +1,156 @@
+{
+  "agent": 1,
+  "artifact": "AGENT_1_REGISTRY_OUTCOMES",
+  "artifacts": [
+    "CLOSURE_CONDITIONS.md",
+    "deferred_formula_layer_refresh.json",
+    "formula_1103_vs_1064_accounting.json",
+    "formula_display_form_basis_partition.json",
+    "formula_display_form_repair.json",
+    "formula_nesting_audit.json",
+    "manifest.json",
+    "pada_parallel_groups.jsonl",
+    "pada_parallel_report.json",
+    "proposed_mutations.json",
+    "registry_outcomes.json",
+    "reuse_direction_edges.jsonl",
+    "reuse_direction_pairs.jsonl"
+  ],
+  "generated_at": "2026-09-16T17:37:48.245483+00:00",
+  "integration_gates": [
+    {
+      "agent_1_offenders": [
+        "parallel_granularity",
+        "cross_veda_direction_status",
+        "cross_veda_direction_note"
+      ],
+      "not_agent_1_offenders": [
+        "betweenness",
+        "bridge_score",
+        "embedding",
+        "expected_count",
+        "ritual_context",
+        "vector"
+      ],
+      "not_agent_1_source": "src/vedagraph/api/services/capability_probes.py, an untracked file another agent of this sprint added. The test was already red before agent 1 touched anything.",
+      "state": "RED, and correctly so",
+      "test": "tests/api/test_cypher_property_hygiene.py::test_every_referenced_property_exists_in_the_graph",
+      "why": "The cross-Veda surface now reads three properties that proposed_mutations.json writes and the canonical graph does not yet carry. The test is right that a property read before it exists renders blank forever; it is the integration gate for this agent's delta and goes green when the delta lands. No exemption was added to the test, because excusing a property read is exactly the defect the test exists to catch."
+    },
+    {
+      "cleared_by": "A1_FORMULA_DISPLAY_FORM_REPAIR",
+      "offenders": 23,
+      "state": "RED, and correctly so",
+      "test": "tests/enrich/test_formula_display_surface.py::test_no_live_formula_display_form_carries_an_unreadable_codepoint",
+      "why": "23 live :Formula nodes publish a raw U+1CEA inside an IAST label. The defect is in canonical data, so only a canonical write clears it. The repair's sufficiency is asserted offline by test_applying_the_staged_repair_to_the_live_population_leaves_no_offender, which needs no write."
+    },
+    {
+      "cleared_by": [
+        "A1_FORMULA_DISPLAY_FORM_REPAIR",
+        "A1_FORMULA_DISPLAY_FORM_BASIS_BACKFILL"
+      ],
+      "state": "RED, and correctly so",
+      "test": "tests/enrich/test_formula_display_surface.py::test_every_live_formula_carries_a_display_form_basis",
+      "unlabelled_now": 4825,
+      "why": "display_form_basis must be a total partition over all 4,825 Formula nodes. Labelling only the 23 repaired would make the property's absence mean ATTESTED_SPAN, which is a claim read out of a missing row. The staged partition is total; the graph's is not until both groups land."
+    }
+  ],
+  "mutation_groups": [
+    "A1_FORMULA_DISPLAY_FORM_REPAIR",
+    "A1_FORMULA_DISPLAY_FORM_BASIS_BACKFILL",
+    "A1_FORMULA_PRE_FOLD_FIX_FLAG",
+    "A1_REUSE_DIRECTION_PER_EDGE_EVIDENCE",
+    "A1_REUSE_DIRECTION_TYPED_REFUSALS",
+    "A1_PARALLEL_GRANULARITY_TYPING",
+    "A1_PADA_PARALLEL_LAYER"
+  ],
+  "outcomes": [
+    {
+      "closure_basis": "Clause one was already true in the canonical graph and is now verified rather than trusted: the containment relation was recomputed from the stored strings and disagrees with the stored type on 0 of 4,825 nodes, with 0 self-containments and 0 duplicate identities. Clause two was false and is now true: every formula frequency ranking quotes vedagraph.domain.layer_figures.formula_nesting_policy(), built from a drift-checked census rather than typed. Measured, 26 of the 30 rows the cross-Veda formula ranking returns are nested wordings, which is why the clause exists.",
+      "closure_test": "Every formula either has no strict-substring relation to another or carries an explicit nesting type, and formula frequency rankings state which policy they apply.",
+      "display_form_basis_backfill": {
+        "attestation_basis": "measured directly on the live rows: display_form is a member of the node's own source_forms in 4,802 of 4,802, and is source_forms[0] in every case, with 0 empty source_forms",
+        "correction_to_the_instruction": "The lead's stated basis was that the audit's 23 offenders prove the other 4,802 'took the attested branch'. It does not: the live display_form values were written by the code that took forms[0] unconditionally, not by the picker that checks legibility, so readability licenses nothing about attestation. Attestation was therefore measured rather than inferred.",
+        "display_form_written": 0,
+        "finding": "All 23 repaired nodes are attested spans too. They were never un-attested, only illegible, because every attestation of each is in the edition that writes U+1CEA. The repair trades an attested spelling for a legible rendering.",
+        "group": "A1_FORMULA_DISPLAY_FORM_BASIS_BACKFILL",
+        "nodes_created": 0,
+        "nodes_deleted": 0,
+        "readability_basis": "formula_nesting_audit.json, which ran the predicate over all 4,825 and found exactly 23 unreadable",
+        "relationships_touched": 0,
+        "rows": 4802,
+        "unlabelled": 0
+      },
+      "display_form_repair": {
+        "corroborated_by_an_independent_rebuild": 21,
+        "corroborated_on_the_collapsed_identity_only": 1,
+        "group": "A1_FORMULA_DISPLAY_FORM_REPAIR",
+        "identity_fields_written": 0,
+        "nodes_created": 0,
+        "nodes_deleted": 0,
+        "offenders_with_a_readable_attested_span": 0,
+        "relationships_touched": 0,
+        "rows": 23,
+        "uncorroborated_named": [
+          "VG:ENRICH:FORMULA:49a4fdcfc5631e8e7d7935adb00b14e7"
+        ],
+        "unrepairable": 0
+      },
+      "gap_id": "GAP-FORMULA-003",
+      "measured": {
+        "carrying_formula_nesting_type": 4825,
+        "formula_frequency_rankings_in_the_catalogue": 2,
+        "formulas": 4825,
+        "insight_endpoints_ranking_formulas_stating_the_policy": 1,
+        "rankings_stating_the_nesting_policy": 2,
+        "stored_containment_list_disagreeing_with_a_recomputation": 0,
+        "stored_type_disagreeing_with_a_recomputation": 0,
+        "strict_substrings_on_the_collapsed_identity_surface": 1103
+      },
+      "requires_canonical_mutation": false,
+      "residual": "Two things remain, and they are different sizes. (1) display_form on 23 nodes was wrong public data and is now repaired in group A1_FORMULA_DISPLAY_FORM_REPAIR -- no identity moves, because formula_id is stable_id('formula', collapsed) at src/vedagraph/enrich/formulas.py:810. (2) collapsed and normalized on the same 23 are still pre-fold-fix, and correcting those DOES move formula_id, which is the owner stop sized in deferred_formula_layer_refresh.json.",
+      "status_after_integration": "CLOSED_DERIVED",
+      "status_now": "CLOSED_DERIVED"
+    },
+    {
+      "closure_test": "/api/v1/insights/cross-veda reports measured REUSES_TEXT_FROM counts for more than one pair, and each directed edge carries per-edge directional evidence rather than a pipeline constant.",
+      "gap_id": "GAP-CROSS_VEDA-001",
+      "measured": {
+        "closure_measure_after_integration": 2,
+        "closure_measure_now": 1,
+        "directed_pairs_after_integration": [
+          "AV-RV",
+          "RV-SV"
+        ],
+        "distinct_direction_basis_values_before": 1,
+        "distinct_per_edge_evidence_digests_after": 1696,
+        "existing_directed_edges_given_per_edge_evidence": 1684,
+        "new_directed_edges": 311,
+        "pairs_refused_with_a_measured_reason": 4
+      },
+      "requires_canonical_mutation": true,
+      "status_after_integration": "CLOSED_DERIVED",
+      "status_now": "STILL_IMPLEMENTATION_FIXABLE",
+      "why_not_closed_now": "The second directed pair and the per-edge evidence exist as staged data only. This agent is forbidden to write to canonical Neo4j, so MATCH (a)-[:REUSES_TEXT_FROM]->(b) RETURN count(DISTINCT a.veda+'-'+b.veda) still measures 1. Closure is one import away and not a further implementation."
+    },
+    {
+      "closure_test": "Pada-level parallel edges exist with their granularity typed distinctly from verse-level parallels, and their RV-only reach is stated on the surface that reports them.",
+      "gap_id": "GAP-CROSS_VEDA-004",
+      "measured": {
+        "corpora_reached": [
+          "RV"
+        ],
+        "implied_verse_pairs_the_group_form_avoids": 11631,
+        "pada_edges_in_canonical_graph_now": 0,
+        "pada_membership_edges": 4079,
+        "pada_parallel_groups": 1434,
+        "verse_parallel_edges_to_be_typed_VERSE": 6596
+      },
+      "requires_canonical_mutation": true,
+      "status_after_integration": "CLOSED_DERIVED",
+      "status_now": "STILL_IMPLEMENTATION_FIXABLE",
+      "why_not_closed_now": "The pada layer is built, tested and staged; 0 of its 4,079 membership edges are in canonical Neo4j because this agent may not write there. The surface already states the layer's reach and states its absence honestly until the import lands."
+    }
+  ],
+  "rule": "status_now is measured against the live graph at this moment. status_after_integration is what the same closure test measures once proposed_mutations.json is applied. The registry must not be moved to the second before the first is true."
+}

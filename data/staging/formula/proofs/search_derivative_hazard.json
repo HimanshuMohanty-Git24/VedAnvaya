@@ -1,0 +1,42 @@
+{
+ "question": "did this run read the corrupted AV SEARCH_DERIVATIVE layer?",
+ "answer": "no, and here is what it would have cost",
+ "claim": "the AV SEARCH_DERIVATIVE layer deletes base letters, not only accents",
+ "av_mantras_with_a_derivative_layer": 5839,
+ "av_mantras_losing_at_least_one_base_letter_in_the_derivative": 5134,
+ "most_frequently_deleted_base_letters": {
+  "m": 11582,
+  "r": 5139,
+  "c": 44,
+  "l": 11,
+  "R": 2,
+  "P": 2,
+  "C": 1,
+  "O": 1
+ },
+ "probe": {
+  "VG:AV:SAU:K01:S002:V002": {
+   "primary": "jyā̀ke pári ṇo namā́śmānaṃ tanvàṃ kr̥dhi |\nvīḍúr várīyó 'rātīr ápa dvéṣāṃsy ā́ kr̥dhi ||2|",
+   "search_derivative": "jyāke pari ṇo namāśmāna tanva kdhi vīḍur varīyo rātīr apa dveṣāsy ā kdhi",
+   "corpus_surface_source": "jyā̀ke pári ṇo namā́śmānaṃ tanvàṃ kr̥dhi |\nvīḍúr várīyó 'rātīr ápa dvéṣāṃsy ā́ kr̥dhi ||2|"
+  },
+  "VG:AV:SAU:K01:S002:V003": {
+   "primary": "vr̥kṣáṃ yád gā́vaḥ pariṣasvajānā́ anusphuráṃ śaráṃ árcanty r̥bhúm |\nśárum asmád yāvaya did",
+   "search_derivative": "vkṣa yad gāvaḥ pariṣasvajānā anusphura śara arcanty bhum śarum asmad yāvaya didyum in",
+   "corpus_surface_source": "vr̥kṣáṃ yád gā́vaḥ pariṣasvajānā́ anusphuráṃ śaráṃ árcanty r̥bhúm |\nśárum asmád yāvaya did"
+  }
+ },
+ "layer_this_run_reads": {
+  "RV": "PRIMARY_TEXT",
+  "SV": "PRIMARY_TEXT",
+  "YV": "EXTRACTED_FROM_CONTAINER",
+  "AV": "PRIMARY_TEXT"
+ },
+ "verdict": "confirmed corrupt; this run never reads it",
+ "how_it_is_guaranteed": "vedagraph.enrich.corpus.PRIMARY_TEXT_ROLE selects PRIMARY_TEXT for RV/SV/AV and EXTRACTED_FROM_CONTAINER for YV, and load_corpus raises if any Veda yields no text. SEARCH_DERIVATIVE is not in that map and appears in no code path this run touched. The corpus_surface_source field above is the string this run actually compared, shown beside the derivative for the two mantras CORPUS_D01 names.",
+ "role_and_script_census": {
+  "note": "every text layer in the four canonical corpora, enumerated rather than grepped",
+  "layers": "RV PRIMARY_TEXT+PARALLEL_TEXT Latin; SV PRIMARY_TEXT Devanagari; YV EXTRACTED_FROM_CONTAINER+PARALLEL_TEXT Devanagari; AV PRIMARY_TEXT+PARALLEL_TEXT+SEARCH_DERIVATIVE Latin",
+  "search_derivative_exists_only_for": "AV, 5,839 of 5,839"
+ }
+}

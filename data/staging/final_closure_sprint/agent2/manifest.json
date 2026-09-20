@@ -1,0 +1,54 @@
+{
+  "artifact": "AGENT2_STAGING_MANIFEST",
+  "at": "2026-09-16T19:05:45.000124+00:00",
+  "files": {
+    "ascription_resolutions.jsonl": {
+      "bytes": 227330,
+      "sha256": "4983d1815809fc0aab3a91333f04c26b7bed8b0035b39c0f8c01cf74f3d085cf"
+    },
+    "av_derived_dedications.jsonl": {
+      "bytes": 638695,
+      "sha256": "69b661ecbf90579865ccbada736d677fcdc9cdc5d23b2c31822dabde9b893a42"
+    },
+    "composite_decomposition_packet.jsonl": {
+      "bytes": 31777,
+      "sha256": "4697ddd33b863cd7e0270beeeb6738e373ac290b52d643b7272616122edaea45"
+    },
+    "deity_community_labels.jsonl": {
+      "bytes": 7376,
+      "sha256": "94b4e985e9aa394078ed9e33c859851fbc0651a3e2415d8d0c6073eef9617358"
+    },
+    "deity_eligibility_rows.jsonl": {
+      "bytes": 104875,
+      "sha256": "347fb5b7f66f1bcd35e7869365b32a981664d13535c5be5cbe6f63eb2f19ca34"
+    },
+    "devata_profile_metrics.jsonl": {
+      "bytes": 535817,
+      "sha256": "a9fa1be0522f5238cda4138237f22247ada2c84bd22f483a5a04b04cf327320f"
+    },
+    "devata_profiles.jsonl": {
+      "bytes": 119409,
+      "sha256": "7c935dda0addff13122f8c1d765de040c29e2c14f7eefbd217db685a8013b9ac"
+    },
+    "findings.json": {
+      "bytes": 18586,
+      "sha256": "e9dbbbd21b623230ac927801ae7c0a8a8132bafa32fd826e80477dc434df0940"
+    },
+    "occurrence_contract_rows.jsonl": {
+      "bytes": 665323,
+      "sha256": "e020d6ae15a1fcd222f2ada89f56440259153ac1d969d6e1e30963bd8a1f9d26"
+    },
+    "proposed_mutations.json": {
+      "bytes": 14361,
+      "sha256": "e56399403c91201630feebdaf59991408c616492487fc323508be60cacef3d2d"
+    },
+    "registry_outcomes.json": {
+      "bytes": 34087,
+      "sha256": "fd5f65dee0b4e21611a8ee993623c0a6b13d2f9f7cecbd90b3ad12d3a6585f65"
+    },
+    "sv_derived_dedications.jsonl": {
+      "bytes": 2802859,
+      "sha256": "ed36a61e9589889c5cc1f896ac6ef52396e2d0bd80b0cc25d996c135cd21d27e"
+    }
+  }
+}

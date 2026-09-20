@@ -1,0 +1,421 @@
+{
+  "GAP-SEMANTICS-003": {
+    "closure_measure": "MATCH (a:SemanticAssertion)-[:ASSERTION_TARGET]->(x) WHERE NOT x:Devata RETURN count(*)",
+    "before": 0,
+    "after": 103,
+    "clause_all_three_slots_before": 0,
+    "clause_all_three_slots_after": 10,
+    "target_labels": [
+      {
+        "kind": "Devata",
+        "c": 815
+      },
+      {
+        "kind": "DomainEntity",
+        "c": 103
+      }
+    ],
+    "tier_not_blended": [
+      {
+        "derivation": null,
+        "tier": "TIER_B",
+        "c": 3301
+      },
+      {
+        "derivation": "TREEBANK_DEPREL_ROLE_PROJECTION",
+        "tier": "TIER_B",
+        "c": 277
+      }
+    ]
+  },
+  "GAP-ENTITY_COVERAGE-004": {
+    "expected_source_null": 223,
+    "expectation_origin_null": 0,
+    "origin_distribution": [
+      {
+        "origin": "EXPLICITLY_EXPECTED_BY_A_SOURCE",
+        "c": 161
+      },
+      {
+        "origin": "DERIVED_FROM_AN_INTERNAL_CURATED_REGISTRY",
+        "c": 127
+      },
+      {
+        "origin": "DERIVED_FROM_CORPUS_INVENTORY",
+        "c": 79
+      },
+      {
+        "origin": "PRODUCT_EXPECTATION",
+        "c": 17
+      }
+    ],
+    "unsupported_expected_source_assertions": 0,
+    "externally_expected_without_a_source": 0
+  },
+  "GAP-ENTITY_COVERAGE-006": {
+    "ayas_yv_cell": 0,
+    "ayas_must_stay": 0,
+    "recall_applicability_null": 0,
+    "applicability_distribution": [
+      {
+        "cls": "LEXICAL_RECOVERY_APPLICABLE",
+        "c": 163
+      },
+      {
+        "cls": "NOT_APPLICABLE",
+        "c": 155
+      },
+      {
+        "cls": "INSUFFICIENT_EVIDENCE",
+        "c": 65
+      },
+      {
+        "cls": "SOURCE_ATTESTED_NONLEXICAL",
+        "c": 1
+      }
+    ],
+    "entities_with_a_measured_figure_and_a_sample_size": 164
+  },
+  "GAP-ENTITY_COVERAGE-007": {
+    "personification_status_null": 0,
+    "personification_match_basis_null": 0,
+    "match_basis_distribution": [
+      {
+        "basis": "UNAVAILABLE",
+        "c": 7
+      },
+      {
+        "basis": "DETERMINISTIC",
+        "c": 6
+      }
+    ],
+    "phrase_mentions": [
+      {
+        "entity": "VG:CONCEPT:TRTIYA-SAVANA-THIRD-PRESSING",
+        "c": 6,
+        "sample": [
+          "VG:RV:SAK:M04:S034:V004",
+          "VG:RV:SAK:M08:S057:V001",
+          "VG:AV:SAU:K06:S047:V003",
+          "VG:AV:SAU:K09:S001:V013",
+          "VG:RV:SAK:M03:S028:V005",
+          "VG:RV:SAK:M04:S035:V009"
+        ]
+      }
+    ],
+    "multiword_entities_now_reached": [
+      {
+        "k": "VG:CONCEPT:TRTIYA-SAVANA-THIRD-PRESSING",
+        "mentions": 7,
+        "phrases": [
+          "tṛtīye savane",
+          "tṛtīye savana",
+          "tṛtīyaṃ savanaṃ",
+          "tṛtīyaṃ savanam"
+        ]
+      },
+      {
+        "k": "VG:CONCEPT:MADHYANDINA-SAVANA-MIDDAY-PRESSING",
+        "mentions": 7,
+        "phrases": [
+          "mādhyaṃdine savane",
+          "mādhyandine savana"
+        ]
+      }
+    ]
+  },
+  "GAP-RITUAL-003": {
+    "uses_object": 24,
+    "yupa": [
+      {
+        "vedas_with_matches": 3,
+        "list": [
+          "AV",
+          "RV",
+          "YV"
+        ],
+        "passages": 12,
+        "aliases": 11
+      }
+    ],
+    "yupa_vsm_matched": [
+      {
+        "k": "VG:YV:VSM:A19:V017",
+        "matched": true
+      },
+      {
+        "k": "VG:YV:VSM:A25:V029",
+        "matched": true
+      }
+    ],
+    "named_objects": [
+      {
+        "k": "VG:CONCEPT:MANI-AMULET",
+        "status": "ASSERTED_SOURCE_STATES_USE",
+        "refusal": null,
+        "wired": 1
+      },
+      {
+        "k": "VG:CONCEPT:DUNDUBHI-DRUM",
+        "status": "REFUSED_SOURCE_DOES_NOT_STATE_A_RITE_USES_IT",
+        "refusal": "REJECT_RITE_WORD_INSIDE_A_QUOTED_MANTRA",
+        "wired": 0
+      },
+      {
+        "k": "VG:CONCEPT:AUDUMBARA-AMULET",
+        "status": "REFUSED_SOURCE_DOES_NOT_STATE_A_RITE_USES_IT",
+        "refusal": "REJECT_WRONG_ENTITY_UDUMBARA_WOOD_IS_NOT_THE_UDUMBARA_AMULET",
+        "wired": 0
+      }
+    ],
+    "objects_with_an_untyped_use_status": 0
+  },
+  "GAP-RITUAL-005": {
+    "receives_offering": 4,
+    "rites_total": 103,
+    "offering_status_null": 0,
+    "offering_status_distribution": [
+      {
+        "status": "OFFERING_CANDIDATE_REFUSED_AS_CO_OCCURRENCE",
+        "c": 51
+      },
+      {
+        "status": "OFFERING_NOT_ATTESTED_IN_THE_HELD_APPARATUS",
+        "c": 47
+      },
+      {
+        "status": "OFFERING_ASSERTED_FROM_SOURCE_EXPLICIT_EVIDENCE",
+        "c": 5
+      }
+    ],
+    "probable_rows_imported": 0
+  },
+  "GAP-RITUAL-006": {
+    "ritual_context_not_null": 20210,
+    "method_null": 0,
+    "precision_null": 0,
+    "precision_values": [
+      {
+        "reproducible_rows": 0.95,
+        "all_reviewed": 0.7917,
+        "review_level": "AGENT_ADJUDICATED_SINGLE_READER_NO_HUMAN_REVIEW",
+        "human_reviewed": 0,
+        "mantras": 20210
+      }
+    ],
+    "metric_nodes": [
+      {
+        "metric_id": "VG:METRIC:RITUAL_CONTEXT_PRECISION:VG:LAYER:RITUAL_CONTEXT",
+        "values_json": "{\"precision_over_every_reviewed_row\": 0.7917, \"precision_over_reproducible_rows\": 0.95, \"reviewed_sample_size\": 24, \"population_size\": 769, \"true_positives\": 19, \"false_positives\": 1, \"withheld_span_not_reproducible\": 4, \"population_span_not_reproducible\": 25, \"human_reviewed\": 0}",
+        "is_human_gold": false,
+        "reference_set_class": "INDEPENDENT_SOURCE_ADJUDICATED_REFERENCE_SET"
+      },
+      {
+        "metric_id": "VG:METRIC:MATERIAL_CULTURE_BY_RITUAL_CONTEXT:VG:LAYER:MATERIAL_CULTURE",
+        "values_json": "{\"mentions_assessed\": 1777, \"NO_RITUAL_CITATION_FOUND\": 936, \"EMPLOYED_IN_RITE_PROBABLE\": 93, \"UNRESOLVED_SHARED_OPENING\": 711, \"EMPLOYED_IN_RITE\": 21, \"RITE_NAMED_IN_THIS_MANTRA\": 16}",
+        "is_human_gold": null,
+        "reference_set_class": null
+      }
+    ]
+  },
+  "GAP-SAMAVEDA_MUSIC-003": {
+    "sv_running_number_null": 0,
+    "range": [
+      {
+        "lo": 1,
+        "hi": 1875,
+        "distinct": 1844
+      }
+    ],
+    "musicalized_as": 0,
+    "gana_nodes": 0
+  },
+  "GAP-QUALITY-003": {
+    "predicates_with_a_constant_confidence": [
+      {
+        "t": "INVOLVES_SUBSTANCE",
+        "value": 0.85,
+        "c": 3
+      },
+      {
+        "t": "REFERS_TO_PLACE",
+        "value": 0.75,
+        "c": 1
+      }
+    ],
+    "edges_still_carrying_confidence": 25474,
+    "tier_marker_edges": [
+      {
+        "t": "HAS_RISHI",
+        "c": 17889
+      },
+      {
+        "t": "HAS_CHANDAS",
+        "c": 16298
+      },
+      {
+        "t": "HAS_DEVATA",
+        "c": 10558
+      },
+      {
+        "t": "HAS_DEVATA_ASCRIPTION",
+        "c": 5385
+      },
+      {
+        "t": "HAS_DEVATA_DERIVED",
+        "c": 882
+      },
+      {
+        "t": "BELONGS_TO_FAMILY",
+        "c": 305
+      },
+      {
+        "t": "ASCRIBES_TO_DEVATA",
+        "c": 47
+      }
+    ],
+    "human_gold_claims_in_the_graph": []
+  },
+  "GAP-TRANSLATION-004": {
+    "old_metric_rv_no_edge": 36,
+    "coverage_state_null": 0,
+    "new_metric_rv_uncovered": 6,
+    "distribution": [
+      {
+        "veda": "AV",
+        "state": "DEDICATED_TRANSLATION",
+        "c": 5715
+      },
+      {
+        "veda": "AV",
+        "state": "RANGE_COVERED",
+        "c": 52
+      },
+      {
+        "veda": "AV",
+        "state": "RANGE_TRANSLATION_ANCHOR",
+        "c": 34
+      },
+      {
+        "veda": "AV",
+        "state": "REUSED_RENDERING",
+        "c": 21
+      },
+      {
+        "veda": "AV",
+        "state": "UNCOVERED_NO_RENDERING_REACHES_IT",
+        "c": 11
+      },
+      {
+        "veda": "AV",
+        "state": "UNCOVERED_REUSABLE_PARALLEL_AVAILABLE",
+        "c": 6
+      },
+      {
+        "veda": "RV",
+        "state": "DEDICATED_TRANSLATION",
+        "c": 10322
+      },
+      {
+        "veda": "RV",
+        "state": "CONTAINER_TRANSLATION",
+        "c": 158
+      },
+      {
+        "veda": "RV",
+        "state": "RANGE_COVERED",
+        "c": 36
+      },
+      {
+        "veda": "RV",
+        "state": "RANGE_TRANSLATION_ANCHOR",
+        "c": 30
+      },
+      {
+        "veda": "RV",
+        "state": "UNCOVERED_NO_RENDERING_REACHES_IT",
+        "c": 6
+      },
+      {
+        "veda": "SV",
+        "state": "UNCOVERED_REUSABLE_PARALLEL_AVAILABLE",
+        "c": 1488
+      },
+      {
+        "veda": "SV",
+        "state": "UNCOVERED_NO_RENDERING_REACHES_IT",
+        "c": 183
+      },
+      {
+        "veda": "SV",
+        "state": "REUSED_RENDERING",
+        "c": 173
+      },
+      {
+        "veda": "YV",
+        "state": "DEDICATED_TRANSLATION",
+        "c": 1950
+      },
+      {
+        "veda": "YV",
+        "state": "UNCOVERED_NO_RENDERING_REACHES_IT",
+        "c": 25
+      }
+    ],
+    "samaveda_independent_english": 0
+  },
+  "GAP-PRODUCT_SURFACE-005": {
+    "apparatus_still_in_the_graph": [
+      {
+        "key": "VG:SV:KAU:ARANYA:D01:V04",
+        "role": "PRIMARY_TEXT",
+        "head": "उदुत्तमं वरुण पाशमस्मदवाधमं वि मध्यमं श्रथ",
+        "sha": "aced94b37144c070c87e3061170abb78aba6e57183019fe7c73cb3bff51ed287"
+      },
+      {
+        "key": "VG:SV:KAU:ARANYA:D01:V04",
+        "role": "SEARCH_DERIVATIVE",
+        "head": "uduttama varuṇa pāśamasmadavādhama vi ma",
+        "sha": "354c1a4778d438ad1188e44b0f2d6cf3455618fbb7c8496f2fb6d74861bd2417"
+      },
+      {
+        "key": "VG:SV:KAU:CHANDA:P01:D08:V04",
+        "role": "PRIMARY_TEXT",
+        "head": "इडामग्ने पुरुदंसं सनिं गोः शश्वत्तमं हवमान",
+        "sha": "f9459f7dfdd606d011f6134189edd6eb2fc679dd3dd566d21dba441181b49d4e"
+      },
+      {
+        "key": "VG:SV:KAU:CHANDA:P01:D08:V04",
+        "role": "SEARCH_DERIVATIVE",
+        "head": "iḍāmagne purudasa sani goḥ śaśvattama ",
+        "sha": "72a27adaff9068b55dfa3185167f345afc91e455eed6bb8a425d210d6e82ea7b"
+      },
+      {
+        "key": "VG:SV:KAU:CHANDA:P02:D07:V07",
+        "role": "PRIMARY_TEXT",
+        "head": "अभि त्वा वृषभा सुते सुतं सृजामि पीतये । तृ",
+        "sha": "b30f7f409718efb2db27a3b9136d421a5230b940a1de0591ba56f39fced49e93"
+      },
+      {
+        "key": "VG:SV:KAU:CHANDA:P02:D07:V07",
+        "role": "SEARCH_DERIVATIVE",
+        "head": "abhi tvā vṣabhā sute suta sjāmi pītaye ",
+        "sha": "21fd7ecee8ca281ea5e7a3e4430702ce9520eb7106f05cbdd89da25cb2f6a072"
+      },
+      {
+        "key": "VG:SV:KAU:CHANDA:P04:D05:V06",
+        "role": "PRIMARY_TEXT",
+        "head": "यं वृत्रेषु क्षितय स्पर्धमाना यं युक्तेषु ",
+        "sha": "8363fd84fed182056da27a1c523a4141f4fd75a10e327268fc872b6337c11003"
+      },
+      {
+        "key": "VG:SV:KAU:CHANDA:P04:D05:V06",
+        "role": "SEARCH_DERIVATIVE",
+        "head": "ya vtreṣu kṣitaya spardhamānā ya yukteṣ",
+        "sha": "2c27e5559eb9b9c1f17bd9decf5328f28b00611167fba42413ba338f3b6a77fb"
+      }
+    ],
+    "edges_with_a_recomputed_metric": 13,
+    "edges_with_a_stale_transformation_marker": 13
+  }
+}

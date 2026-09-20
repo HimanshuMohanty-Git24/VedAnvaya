@@ -222,6 +222,47 @@ def _readable(folded: str) -> str:
     return folded.translate(_SENTINEL_TABLE)
 
 
+#: Devanagari, Vedic Extensions, Devanagari Extended and the private-use area. A span taken
+#: from the accent-stripped IAST surface can still carry one of these: U+1CEA VEDIC SIGN
+#: ANUSVARA BAHIRGOMUKHA is Unicode category Lo -- a letter, not a mark -- so
+#: ``strip_vedic_accents`` leaves it standing and the Vajasaneyi edition writes it where
+#: other editions write an anusvara.
+_UNREADABLE_IN_IAST: Final[tuple[tuple[int, int], ...]] = (
+    (0x0900, 0x097F),
+    (0x1CD0, 0x1CFF),
+    (0xA8E0, 0xA8FF),
+    (0xE000, 0xF8FF),
+)
+
+
+def _is_readable_iast(form: str) -> bool:
+    """True if every character of ``form`` can be read as IAST by a person."""
+    return not any(
+        low <= ord(char) <= high for char in form for low, high in _UNREADABLE_IN_IAST
+    )
+
+
+def _pick_display_form(forms: tuple[str, ...], fallback: str) -> str:
+    """The first attested spelling a reader can actually read, else the rendered form.
+
+    ``display_form``'s contract is *a real attested span*, and that was applied without
+    checking that the span was readable. Measured on the rebuilt artifact, 26 formulas had
+    a display form carrying a raw U+1CEA -- a Devanagari sign published in the middle of an
+    IAST label, from the one edition that spells the anusvara that way. The comparison fold
+    was corrected for this at commit 3f2b0d8; the *display* surface was not, which is the
+    same defect one layer over.
+
+    Preferring a readable attested spelling keeps the contract wherever the corpus allows
+    it. Where no attested spelling is readable, the rendered comparison form is printed
+    instead: lossy in the documented way, and readable, which a raw Devanagari sign in a
+    Latin string is not.
+    """
+    for form in forms:
+        if _is_readable_iast(form):
+            return form
+    return fallback
+
+
 @dataclass(frozen=True)
 class _View:
     """One mantra, pre-chopped into everything the two passes need.
@@ -616,7 +657,7 @@ def _assemble(
             _Formula(
                 collapsed=collapsed,
                 normalized=_readable(" ".join(best_split)),
-                display_form=forms[0],
+                display_form=_pick_display_form(forms, _readable(" ".join(best_split))),
                 source_forms=forms,
                 word_count=len(best_split),
                 mantra_indices=unique,

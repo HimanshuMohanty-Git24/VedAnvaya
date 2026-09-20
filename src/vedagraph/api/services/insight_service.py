@@ -47,6 +47,7 @@ from vedagraph.api.models.common import (
     AttributionPrecision,
     CaveatView,
     CountedByVeda,
+    CoverageDimension,
     CoverageView,
     EvidenceSurface,
     EvidenceView,
@@ -61,10 +62,12 @@ from vedagraph.api.models.insight import (
     VEDA_ORDER,
     VEDA_PAIRS,
     AtharvavedaConcernsResponse,
+    BookCountRow,
     CapabilitiesResponse,
     CapabilityLimit,
     CapabilityMeasurement,
     CapabilityVerdict,
+    CellStatus,
     CivilizationDataRow,
     CivilizationResponse,
     CivilizationSection,
@@ -78,9 +81,14 @@ from vedagraph.api.models.insight import (
     CrossVedaPairRow,
     CrossVedaRelationshipStat,
     DeclaredLexicalGap,
+    DedicationRouteRow,
     DeityPopulationStat,
     DerivedMetricRow,
+    DevataByBookResponse,
+    DevataByMetreResponse,
+    DevataDispersionResponse,
     DevataInsightResponse,
+    DispersionSeries,
     FormulaDiffusionResponse,
     FormulaFamilyRow,
     FormulaSpanRow,
@@ -92,6 +100,7 @@ from vedagraph.api.models.insight import (
     MetalsInsightResponse,
     MetalVedaCell,
     MethodCensusRow,
+    MetreCountRow,
     ReuseWitnessRow,
     RitualCoverageView,
     RitualObjectRow,
@@ -108,8 +117,14 @@ from vedagraph.api.repositories.neo4j_repository import (
     Neo4jRepository,
     named_query_caveat,
 )
+from vedagraph.api.services.capability_probes import (
+    BENCHMARK_NOT_ANSWERABLE,
+    PROBED_LIMIT_SPECS,
+    ProbedLimitSpec,
+)
 from vedagraph.api.services.deity_population import is_deity
 from vedagraph.domain import layer_figures as figures
+from vedagraph.domain import profiles
 
 # The layer-scope caveats are module-private in the query catalogue and are imported anyway,
 # deliberately. They are the sentences the 100-question grading was run against; a second
@@ -147,8 +162,22 @@ CALL () { MATCH (w:Work) RETURN count(w) AS works }
 CALL () { MATCH (p:Passage) RETURN count(p) AS passages }
 CALL () { MATCH (m:Mantra) RETURN m.veda AS mv, count(*) AS mc }
 CALL () { MATCH (:Passage)-[t:HAS_TRANSLATION]->() RETURN count(t) AS translations }
-CALL () { MATCH (p:Passage)-[:HAS_TRANSLATION]->() RETURN p.veda AS tv, count(*) AS tc }
+// Two per-Veda tallies rather than one. A bare HAS_TRANSLATION count reports the Samaveda
+// at 173, and every one of those 173 is Griffith's Rigvedic rendering attached to a verse
+// whose Sanskrit is verified identical -- so the single figure reads as "the Samaveda is
+// partly translated", which is the one thing it must not say.
+CALL () {
+    MATCH (p:Passage)-[:HAS_TRANSLATION]->(t:Translation)
+    WHERE t.reuse_kind IS NULL AND t.language = 'en'
+    RETURN p.veda AS tv, count(*) AS tc
+}
+CALL () {
+    MATCH (p:Passage)-[:HAS_TRANSLATION]->(t:Translation)
+    WHERE t.reuse_kind IS NOT NULL
+    RETURN p.veda AS reuse_veda, count(*) AS reuse_count
+}
 CALL () { MATCH (d:Devata) RETURN d.structure AS ds, count(*) AS dc }
+CALL () { MATCH (d:Devata) RETURN d.is_deity AS ruled, count(*) AS rdc }
 CALL () { MATCH (r:Rishi) RETURN r.is_seer AS seer, r.non_seer_kind AS kind, count(*) AS rc }
 CALL () { MATCH (f:RishiFamily) RETURN count(f) AS rishi_families }
 CALL () { MATCH (c:Chandas) RETURN count(c) AS chandas }
@@ -164,7 +193,9 @@ RETURN works, passages, translations, rishi_families, chandas, concepts,
        interpretive_claims,
        collect(DISTINCT [mv, mc]) AS mantras_by_veda,
        collect(DISTINCT [tv, tc]) AS translations_by_veda,
+       collect(DISTINCT [reuse_veda, reuse_count]) AS reused_renderings_by_veda,
        collect(DISTINCT [ds, dc]) AS devata_structures,
+       collect(DISTINCT [ruled, rdc]) AS devata_rulings,
        collect(DISTINCT [seer, kind, rc]) AS rishi_kinds
 """
 
@@ -215,15 +246,63 @@ RETURN 'PARALLEL_TO' AS relationship_class, r.veda_pair AS veda_pair,
        count(CASE WHEN r.subject_veda IS NOT NULL THEN 1 END) AS directed_edges
 """
 
-#: The semantic-assertion layer's corpus reach, split by the two derivations that must never
-#: be summed. Read for the cross-Veda matrix, whose assertion row is NOT_BUILT for every
-#: pair, and this is the measurement that establishes it rather than asserts it.
+#: The semantic-assertion layer's corpus reach, split by the derivations that must never be
+#: summed -- five of them, not two. Read for the cross-Veda matrix, whose assertion row this
+#: measurement establishes rather than asserts. It does NOT read NOT_BUILT: the row is typed
+#: CLASS_NOT_CROSS_VEDA, because an assertion is a statement about one passage and cannot
+#: enter a corpus PAIR at all. "NOT_BUILT for every pair" was the pre-R2 reading, taken from
+#: a 4,865 figure that was itself 30,266 short, and it is the sentence R2 F1 was opened for.
 _ASSERTION_REACH_QUERY: Final = """
 MATCH (p:Passage)-[:HAS_SEMANTIC_ASSERTION]->(s:SemanticAssertion)
 RETURN p.veda AS veda, s.derivation AS derivation,
-       count(DISTINCT s) AS assertions, count(DISTINCT p) AS passages
+       count(DISTINCT s) AS assertions, count(DISTINCT p) AS passages,
+       count(DISTINCT CASE WHEN s.review_state = 'HUMAN_REVIEWED' THEN s END)
+         AS human_reviewed
 ORDER BY assertions DESC
 """
+
+#: The parallel layer's granularity census, and the corpora each granularity reaches.
+#:
+#: The layer was whole-verse only for its whole life, which meant a verse sharing one of its
+#: four quarters with another verse was reported as a near parallel with no indication of
+#: which quarter, or missed entirely. A quarter-verse layer exists now, and it reaches ONE
+#: corpus, because the pada tags it rests on come from the Rigvedic token annotation and no
+#: other corpus in this graph carries a quarter-verse division at all.
+#:
+#: Published as a measured census rather than as prose so that the pada layer's reach is a
+#: figure a reader can check, and so that a pada row appearing for a second corpus would
+#: show up here rather than in a sentence nobody re-measures.
+_PARALLEL_GRANULARITY_QUERY: Final = """
+MATCH (a:Passage)-[r]->(b)
+WHERE type(r) IN ['EXACT_PARALLEL_OF', 'NEAR_PARALLEL_OF', 'VARIANT_OF',
+                  'REUSES_TEXT_FROM', 'PARALLEL_TO', 'HAS_PARALLEL_PADA']
+RETURN coalesce(r.parallel_granularity, 'UNTYPED') AS granularity,
+       count(*) AS edges,
+       collect(DISTINCT a.veda) AS vedas
+"""
+
+#: A pair that carries no directed reuse says why, in its own words, from its own edges.
+#:
+#: The matrix used to report five of the six pairs as NOT_ESTABLISHED_FOR_PAIR, which reads
+#: as "nobody got round to it" whether the truth is that or a measured refusal. Direction is
+#: now measured per pair and the outcome -- directed, or refused with the measurement that
+#: refused it -- is written on the pair's own parallel edges, so the cell can quote it
+#: instead of guessing.
+_DIRECTION_STATUS_QUERY: Final = """
+MATCH (a:Passage)-[r]->(b:Passage)
+WHERE r.cross_veda_direction_status IS NOT NULL AND r.veda_pair IS NOT NULL
+RETURN r.veda_pair AS pair, r.cross_veda_direction_status AS status,
+       collect(DISTINCT r.cross_veda_direction_note)[0] AS note, count(*) AS edges
+"""
+
+#: Why the pada layer covers one corpus. Stated wherever its count is.
+PADA_GRANULARITY_SCOPE: Final = (
+    "The quarter-verse (PADA) layer reaches the Rigveda only. Pada tags come from the "
+    "Rigvedic token annotation and no other corpus in this graph carries a quarter-verse "
+    "division, so its single-corpus reach is a property of the annotation and not a "
+    "finding about the other three Samhitas. It is typed PADA and the verse layer is "
+    "typed VERSE, so the two are never summed by accident."
+)
 
 #: Product ids for a set of display labels, so an aggregate row can be followed to a
 #: detail view.
@@ -282,12 +361,28 @@ LIMIT 1
 RETURN p.canonical_citation AS citation, metals_named, metals
 """
 
-#: The ritual layer's bounding figures. Three step edges over eight rites is the number that
-#: makes the layer PARTIAL, and it is measured here rather than described.
+#: The ritual layer's bounding figures, measured here rather than described.
+#:
+#: Both step layers are counted. Counting only ``HAS_STEP`` made this insight state that one
+#: rite of 103 "carries any procedure at all" and that "no rite has a recoverable sequence",
+#: while 3,121 located sutra steps over 103 rites sat in the graph. The layers stay separate
+#: rather than summed: a libation a hymn numbers and a sutra a work prints are different
+#: claims, and one total would describe coverage neither layer has.
 _RITUAL_COVERAGE_QUERY: Final = """
 CALL () { MATCH (r:Ritual) RETURN count(r) AS rituals_modelled }
 CALL () { MATCH (r:Ritual) WHERE (r)-[:HAS_STEP]->() RETURN count(r) AS rituals_with_steps }
 CALL () { MATCH (:Ritual)-[s:HAS_STEP]->() RETURN count(s) AS step_edges }
+CALL () {
+    MATCH (r:Ritual) WHERE (r)-[:HAS_RITUAL_STEP]->()
+    RETURN count(r) AS rituals_with_procedure
+}
+CALL () {
+    MATCH (:Ritual)-[s:HAS_RITUAL_STEP]->()
+    RETURN count(s) AS procedure_step_edges,
+           sum(CASE WHEN s.order_completeness = 'PARTIAL_STATED_POSITIONS' THEN 1 ELSE 0 END)
+               AS procedure_partial_steps,
+           count(DISTINCT s.work_key) AS procedure_source_works
+}
 CALL () { MATCH (:Ritual)-[:USES_OBJECT]->(o) RETURN count(DISTINCT o) AS implements_curated }
 CALL () {
     MATCH (:Ritual)-[:USES_OBJECT]->(o)
@@ -295,8 +390,45 @@ CALL () {
     RETURN count(DISTINCT o) AS implements_reached
 }
 CALL () { MATCH (o:Object) RETURN count(o) AS objects_in_registry }
-RETURN rituals_modelled, rituals_with_steps, step_edges, implements_curated,
-       implements_reached, objects_in_registry
+RETURN rituals_modelled, rituals_with_steps, step_edges, rituals_with_procedure,
+       procedure_step_edges, procedure_partial_steps, procedure_source_works,
+       implements_curated, implements_reached, objects_in_registry
+"""
+
+#: The Samavedic notation layer, and the SHAPE of its incompleteness.
+#:
+#: Every figure Q82 publishes is read here rather than typed into the prose, because a number
+#: in a sentence is the one number nothing can catch. The withheld count is returned beside
+#: the notated one for the reason this project keeps restating: a query that returns only the
+#: positive rows lets a reader infer a zero the data never stated.
+_SAMAVEDIC_NOTATION_QUERY: Final = """
+CALL () { MATCH (m:Mantra {veda:'SV'}) RETURN count(m) AS sv_verses }
+CALL () {
+    MATCH (m:Mantra {veda:'SV', samavedic_notation_state:'SOURCE_EXPLICIT_PRESENT'})
+    RETURN count(m) AS notated_verses
+}
+CALL () {
+    MATCH (m:Mantra {veda:'SV', samavedic_notation_state:'WITHHELD'})
+    RETURN count(m) AS withheld_verses,
+           count(DISTINCT m.samavedic_notation_withheld_class) AS withheld_classes
+}
+CALL () {
+    MATCH (m:Mantra {veda:'SV'}) WHERE m.samavedic_notation_state IS NULL
+    RETURN count(m) AS verses_with_no_state
+}
+CALL () {
+    MATCH (:Mantra {veda:'SV'})-[:HAS_TEXT_VERSION]->(t:TextVersion)
+    WHERE t.accented = true AND t.notation_system IS NOT NULL
+    RETURN count(t) AS notation_witnesses,
+           sum(t.notation_tone_mark_count) AS tone_marks,
+           count(DISTINCT t.notation_system) AS notation_systems,
+           sum(CASE WHEN t.notation_is_interpreted_into_pitch THEN 1 ELSE 0 END)
+               AS interpreted_into_pitch
+}
+CALL () { MATCH ()-[r:MUSICALIZED_AS]->() RETURN count(r) AS musicalized_as_edges }
+RETURN sv_verses, notated_verses, withheld_verses, withheld_classes, verses_with_no_state,
+       notation_witnesses, tone_marks, notation_systems, interpreted_into_pitch,
+       musicalized_as_edges
 """
 
 #: Each modelled rite with its curated inventory sizes. Separate from ``ritual_profile``,
@@ -384,10 +516,40 @@ CALL (d) {
 }
 WITH d, named_by_veda, collect([certainty, edges]) AS certainty_split,
      collect(surfaces) AS surface_groups, collect(precisions) AS precision_groups
+// Both resolved-dedication predicates, in ONE pattern, so `ascribed` and
+// `ascribed_vedas` cannot disagree about which routes they cover. GAP-ATTRIBUTION-002
+// clause 2: HAS_DEVATA alone made this field Rigveda-only and published the Atharvaveda
+// as an uncovered corpus while 851 AV passages carried a resolved dedication.
+// HAS_DEVATA_ASCRIPTION is deliberately NOT here -- an unresolved descriptor is not an
+// attribution to a named god, and `profiles.ATTRIBUTION_PREDICATES` says so.
 CALL (d) {
-    MATCH (p:Passage)-[:HAS_DEVATA]->(d)
+    MATCH (p:Passage)-[r:HAS_DEVATA|HAS_DEVATA_DERIVED]->(d)
     RETURN count(DISTINCT p) AS ascribed, collect(DISTINCT p.veda) AS ascribed_vedas
 }
+CALL (d) {
+    OPTIONAL MATCH (p:Passage)-[r:HAS_DEVATA|HAS_DEVATA_DERIVED]->(d)
+    RETURN p.veda AS a_veda, count(DISTINCT p) AS a_count
+}
+// The per-route decomposition, kept apart from the total it sums to. HAS_DEVATA is the
+// source stating the dedication; HAS_DEVATA_DERIVED is this project resolving the
+// source's descriptor by morphology. One figure over both would have to pick a method
+// and would be wrong about the other, so the method traces this edge set.
+// Collected INSIDE the subquery so this CALL returns exactly ONE row. A multi-row CALL
+// here forms a cartesian product with the multi-row `ascribed_by_veda` CALL above it, and
+// `_pairs_to_counts` sums repeated keys -- which silently DOUBLED every per-Veda ascription
+// figure the coverage block publishes (Indra RV 2,869 -> 5,738) while `ascribed_total`,
+// computed in its own single-row subquery, stayed right. Caught by
+// test_the_deity_insight_reports_coverage_per_dimension asserting the per-Veda figures sum
+// to the total, which is exactly the check that makes two numbers about one quantity
+// unable to disagree quietly.
+CALL (d) {
+    OPTIONAL MATCH (p:Passage)-[r:HAS_DEVATA|HAS_DEVATA_DERIVED]->(d)
+    WITH type(r) AS route, p.veda AS r_veda, count(DISTINCT p) AS r_count
+    RETURN collect([route, r_veda, r_count]) AS ascribed_by_route
+}
+WITH d, named_by_veda, certainty_split, surface_groups, precision_groups,
+     ascribed, ascribed_vedas, collect([a_veda, a_count]) AS ascribed_by_veda,
+     ascribed_by_route
 CALL (d) {
     MATCH (m:DerivedMetric {subject_key: d.entity_key})
     RETURN collect(m {.metric_name, .metric_id, .display_label, .metric_family,
@@ -397,7 +559,130 @@ CALL (d) {
 }
 RETURN d.entity_key AS entity_key, d.display_label AS display_label,
        d.structure AS structure, named_by_veda, certainty_split, ascribed,
-       ascribed_vedas, metrics, surface_groups, precision_groups
+       ascribed_vedas, ascribed_by_veda, ascribed_by_route, metrics, surface_groups,
+       precision_groups
+"""
+
+# ---------------------------------------------------------------------------
+# The three visualization blockers (GAP-PRODUCT_SURFACE-003)
+# ---------------------------------------------------------------------------
+
+#: A corpus's books, and each book's own mantra total. "Book" is the Work's direct child:
+#: ten mandalas, twenty kandas, forty adhyayas, four arcikas. The denominator travels with
+#: the row because Mandala 9 is four times the size of Mandala 2 and a heatmap read on raw
+#: counts puts every deity in the Soma book.
+_BOOK_DENOMINATORS_QUERY: Final = """
+MATCH (w:Work)-[:CONTAINS]->(b:Passage)
+OPTIONAL MATCH (b)-[:CONTAINS*0..5]->(m:Mantra)
+RETURN b.canonical_key AS book_key, b.display_label AS book_label, b.veda AS veda,
+       count(DISTINCT m) AS denominator
+ORDER BY b.veda, b.canonical_key
+"""
+
+#: One deity's naming count per book. Books with no mention produce no row here and are
+#: filled in as a measured zero against the denominator query, so a book the deity is
+#: absent from is present in the table.
+_DEVATA_BY_BOOK_QUERY: Final = """
+MATCH (b:Passage)-[:CONTAINS*0..5]->(m:Mantra)-[r:MENTIONS_DEVATA]->(:Devata {entity_key: $key})
+WHERE r.referent_certainty IN $tiers AND (b)<-[:CONTAINS]-(:Work)
+RETURN b.canonical_key AS book_key, count(DISTINCT m) AS count
+"""
+
+#: The metre layer's own reach, measured rather than assumed. It covered RV and AV when
+#: this was written; if it grows, the hatched rows shrink without anyone editing a list.
+_METRE_LAYER_SCOPE_QUERY: Final = """
+MATCH (m:Mantra)-[:HAS_CHANDAS]->(:Chandas)
+RETURN m.veda AS veda, count(DISTINCT m) AS mantras
+"""
+
+#: One deity x metre aggregate. Joined on the mention layer, which spans four corpora, so
+#: the empty Samavedic and Yajurvedic rows are the metre layer's absence and not the
+#: deity's.
+_DEVATA_BY_METRE_QUERY: Final = """
+MATCH (m:Mantra)-[r:MENTIONS_DEVATA]->(:Devata {entity_key: $key})
+WHERE r.referent_certainty IN $tiers
+MATCH (m)-[:HAS_CHANDAS]->(c:Chandas)
+RETURN c.entity_key AS metre_key, c.display_label AS metre_label, m.veda AS veda,
+       count(DISTINCT m) AS count
+ORDER BY veda, count DESC
+"""
+
+#: Dispersion: ordinal positions only, no passage payloads. The position is the mantra's
+#: rank in its corpus's canonical key order, which is that corpus's reading order. Computed
+#: per request rather than stored, because storing it would be a canonical write.
+#:
+#: Three cheap round trips rather than one clever query. Ranking inside Cypher without APOC
+#: means either a list scan per hit (2,305 hits against 10,552 keys for Indra) or a
+#: correlated count subquery of the same size; both are quadratic and this endpoint exists
+#: precisely because the previous route was too expensive to use.
+_CORPUS_SIZES_QUERY: Final = """
+MATCH (m:Mantra) RETURN m.veda AS veda, count(m) AS mantras
+"""
+
+_DEVATA_HIT_KEYS_QUERY: Final = """
+MATCH (m:Mantra)-[r:MENTIONS_DEVATA]->(:Devata {entity_key: $entity_key})
+WHERE r.referent_certainty IN $tiers
+RETURN m.veda AS veda, collect(DISTINCT m.canonical_key) AS keys
+"""
+
+_CORPUS_ORDER_QUERY: Final = """
+MATCH (m:Mantra {veda: $veda})
+RETURN collect(m.canonical_key) AS ordered
+"""
+
+#: How many community partitions are stored, measured outside the frozen capability query.
+#: The named query was written when none existed and counts memberships on ``Devata``; the
+#: partition that has since been computed lives in its own artifact nodes, so the query
+#: that established "no community structure exists anywhere" is structurally unable to see
+#: the thing that falsifies it.
+_STORED_COMMUNITY_PARTITIONS_QUERY: Final = """
+CALL () { MATCH (c:DeityCommunity) RETURN count(c) AS stored_community_partitions }
+CALL () { MATCH (d:Devata) WHERE d.community_id IS NOT NULL
+          RETURN count(d) AS deities_with_a_community_assignment }
+RETURN stored_community_partitions, deities_with_a_community_assignment
+"""
+
+#: Vedas the resolved-dedication layer reaches, as a property of the LAYER and not of any
+#: one deity. A deity with no Rigvedic ascription must still see ``RV`` in scope here: its
+#: zero is an absent dedication inside a layer that covers the corpus, which is a different
+#: fact from the Samavedic zero, where the layer is absent outright.
+#:
+#: **Measured, never a constant.** This read ``profiles.ATTRIBUTION_VEDAS``, which is
+#: ``("RV",)`` and is correct *about ``HAS_DEVATA``* -- and that is exactly the failure
+#: :func:`profiles.measure_attribution_scope` was written to stop. With ``HAS_DEVATA_DERIVED``
+#: carrying 882 Atharvavedic dedications over 851 passages, a scope of ``["RV"]`` published
+#: ``AV`` in ``vedas_not_covered``: a false absence on the one field whose entire job is to
+#: tell a missing layer apart from a real zero. ``profiles.py`` says so in the constant's own
+#: docstring -- *"Nothing in this module should read a corpus list out of a constant at all
+#: any more"* -- and this was the last reader that did. GAP-ATTRIBUTION-002 clause 2.
+_RESOLVED_DEDICATION_PREDICATES: Final[tuple[str, ...]] = (
+    "HAS_DEVATA",
+    "HAS_DEVATA_DERIVED",
+)
+
+#: What each resolved-dedication route asserts, and by what method. Read into the response
+#: so the per-Veda figures can never be summed without their methods travelling with them.
+_DEDICATION_ROUTE_METHODS: Final[dict[str, tuple[str, str]]] = {
+    "HAS_DEVATA": (
+        "SOURCE_STATED_ANUKRAMANI_DEDICATION",
+        "The Anukramani names this deity in the hymn's dedication slot and the registry "
+        "already holds that name, so no resolution step of ours stands between the source "
+        "and the edge.",
+    ),
+    "HAS_DEVATA_DERIVED": (
+        "TADDHITA_SASYA_DEVATA_DERIVATION",
+        "The Anukramani names a Sanskrit ADJECTIVE (agneyam, varunam) rather than a deity, "
+        "and the dedication is recovered from that adjective's own morphology under Panini "
+        "4.2.24 sasya devata. The dedication is the source's; the resolution is this "
+        "project's, and it is refused outright where the derivation is ambiguous, names a "
+        "plurality, or is the source's own deferral marker lingokta.",
+    ),
+}
+
+#: Vedas the resolved-dedication layer reaches, measured. Both routes in one pattern.
+_DEDICATION_LAYER_SCOPE_QUERY: Final = """
+MATCH (p:Passage)-[r:HAS_DEVATA|HAS_DEVATA_DERIVED]->(:Devata)
+RETURN collect(DISTINCT p.veda) AS vedas
 """
 
 # ---------------------------------------------------------------------------
@@ -416,13 +701,26 @@ _CROSS_VEDA_CLASSES: Final[tuple[tuple[str, str], ...]] = (
     ("PARALLEL_TO", "LITERAL_TEXTUAL_REUSE"),
 )
 
-#: Two rows of the matrix that carry no edges by construction and appear anyway. Omitting
-#: them would leave a reader with a table of five built classes and no way to know that the
-#: two questions people most want answered across corpora were never built.
-_UNBUILT_CROSS_VEDA_ROWS: Final[tuple[tuple[str, str, str], ...]] = (
+#: Two rows of the matrix that carry no edges for a corpus *pair* and appear anyway.
+#: Omitting them would leave a reader with a table of five built classes and no way to know
+#: that the two questions people most want answered across corpora are not in it.
+#:
+#: Each row carries its own status, and the two differ, because the reasons differ and the
+#: distinction is the entire purpose of this matrix. ``SEMANTIC_RESEMBLANCE`` is genuinely
+#: ``NOT_BUILT`` -- no embedding, no vector, no asserted resemblance exists anywhere.
+#: ``SEMANTIC_ASSERTION`` is ``CLASS_NOT_CROSS_VEDA``, which is a different claim and the
+#: true one: 35,131 assertions exist across all four corpora, and every one of them hangs
+#: off passages of a single Veda, so the class cannot enter a pair. It was published as
+#: NOT_BUILT with a note reading "every one of its assertions is Rigvedic" -- false since
+#: the layer reached AV, YV and SV -- beside a measured total that contradicted it in the
+#: same cell. A reader was told the layer does not exist anywhere in this graph.
+_NON_PAIRING_CROSS_VEDA_ROWS: Final[
+    tuple[tuple[str, str, CrossVedaCellStatus, str], ...]
+] = (
     (
         "SEMANTIC_RESEMBLANCE",
         "SEMANTIC_RESEMBLANCE",
+        CrossVedaCellStatus.NOT_BUILT,
         "No non-lexical resemblance measure exists anywhere in this graph: no embedding, no "
         "vector index, no asserted resemblance. This row is NOT_BUILT rather than zero, "
         "because a zero beside the built classes would read as a finding that Vedic "
@@ -431,8 +729,11 @@ _UNBUILT_CROSS_VEDA_ROWS: Final[tuple[tuple[str, str, str], ...]] = (
     (
         "SEMANTIC_ASSERTION",
         "SEMANTIC_PREDICATION",
-        "The semantic-assertion layer cannot contribute to any corpus pair: every one of "
-        "its assertions is Rigvedic, so it has no non-Rigvedic endpoint to pair with.",
+        CrossVedaCellStatus.CLASS_NOT_CROSS_VEDA,
+        "The semantic-assertion layer exists and reaches all four corpora. It cannot enter "
+        "a corpus pair because an assertion is a predication about one passage rather than "
+        "a relation between two, so it has no second endpoint to pair with -- which is a "
+        "fact about the shape of the class and not about how much of it was built.",
     ),
 )
 
@@ -531,6 +832,61 @@ def _pairs_to_counts(value: Any) -> dict[str, int]:
         if isinstance(key, str) and key and count is not None:
             counts[key] = counts.get(key, 0) + count
     return counts
+
+
+def _dedication_routes(value: Any) -> list[DedicationRouteRow]:
+    """Fold ``collect([predicate, veda, count])`` into one row per dedication route.
+
+    Every route in :data:`_DEDICATION_ROUTE_METHODS` is emitted even when it reaches
+    nothing, because an absent row and a zero row say different things: a route with no
+    edges for this deity is a real zero inside a layer that covers the corpus, and a route
+    the response omitted is indistinguishable from a route nobody built. That is the same
+    distinction :func:`profiles.measure_attribution_scope` exists to preserve.
+    """
+    per_route: dict[str, dict[str, int]] = {name: {} for name in _RESOLVED_DEDICATION_PREDICATES}
+    if isinstance(value, (list, tuple)):
+        for item in value:
+            if not isinstance(item, (list, tuple)) or len(item) < 3:
+                continue
+            route, veda, count = item[0], item[1], _as_int(item[2])
+            if not isinstance(route, str) or route not in per_route:
+                continue
+            if isinstance(veda, str) and veda and count:
+                per_route[route][veda] = per_route[route].get(veda, 0) + count
+    rows: list[DedicationRouteRow] = []
+    for route in _RESOLVED_DEDICATION_PREDICATES:
+        method, means = _DEDICATION_ROUTE_METHODS[route]
+        measured = {veda: per_route[route][veda] for veda in VEDA_ORDER if veda in per_route[route]}
+        rows.append(
+            DedicationRouteRow(
+                predicate=route,
+                method=method,
+                means=means,
+                vedas_reached=[veda for veda in VEDA_ORDER if veda in measured],
+                measured=measured,
+                passages=sum(measured.values()),
+            )
+        )
+    return rows
+
+
+def _ruled_deity_count(value: Any) -> int:
+    """Fold ``collect([is_deity, count])`` into the count of nodes ruled a deity.
+
+    Not :func:`_pairs_to_counts`, which requires a string key and would drop a boolean one
+    silently -- returning 0 resolved deities and reporting the whole pantheon excluded.
+    Counts ``True`` only, so a null or missing ruling fails closed.
+    """
+    total = 0
+    if not isinstance(value, (list, tuple)):
+        return total
+    for item in value:
+        if not isinstance(item, (list, tuple)) or len(item) < 2:
+            continue
+        count = _as_int(item[1])
+        if item[0] is True and count is not None:
+            total += count
+    return total
 
 
 def _parse_values_json(value: Any) -> dict[str, Any] | None:
@@ -696,7 +1052,9 @@ class InsightService:
 
         mantras = _pairs_to_counts(row.get("mantras_by_veda"))
         translations = _pairs_to_counts(row.get("translations_by_veda"))
+        reused = _pairs_to_counts(row.get("reused_renderings_by_veda"))
         structures = _pairs_to_counts(row.get("devata_structures"))
+        ruled_deities = _ruled_deity_count(row.get("devata_rulings"))
         seer_rows = row.get("rishi_kinds")
 
         corpus: list[CorpusFigure] = [
@@ -727,10 +1085,24 @@ class InsightService:
                 total=_as_int(row.get("translations")),
                 by_veda=self._translation_counts(translations),
                 denominator=dict(figures.CORPUS_MANTRAS),
-                note="A corpus with 0 here has no released translation at all, which is a "
-                "measured fact about the product's holdings. What it implies downstream is "
-                "the part that misleads: every translation-derived layer is absent for that "
-                "corpus rather than empty in it.",
+                note="Counts a corpus's own English renderings and nothing else. A corpus "
+                "with 0 here has no released translation of its own, which is a measured fact "
+                "about the product's holdings. What it implies downstream is the part that "
+                "misleads: every translation-derived layer is absent for that corpus rather "
+                "than empty in it. Renderings reused from another corpus are counted under "
+                "'reused_renderings' and never here, and Griffith's Latin substitutions are "
+                "in neither.",
+            ),
+            CorpusFigure(
+                name="reused_renderings",
+                total=sum(reused.values()),
+                by_veda=self._translation_counts(reused),
+                denominator=dict(figures.CORPUS_MANTRAS),
+                note="Another corpus's published English shown against a verse whose "
+                "Sanskrit is verified character-identical. Reported apart from "
+                "'translations' because it is translation assistance and not evidence about "
+                "the corpus it appears in: every one of the Samaveda's is Rigvedic, so "
+                "adding the two figures would report a translated Samaveda.",
             ),
         ]
 
@@ -835,7 +1207,7 @@ class InsightService:
             ],
             corpus=corpus,
             entity_populations=entity_populations,
-            deities=self._deity_population_stat(structures),
+            deities=self._deity_population_stat(structures, ruled_deities),
             seers=self._seer_population_stat(seer_rows, _as_int(row.get("rishi_families")) or 0),
             cross_veda_relationships=cross_veda,
         )
@@ -887,7 +1259,8 @@ class InsightService:
         note = (
             "Translations released per corpus."
             if not untranslated
-            else f"{', '.join(untranslated)} has no released translation in this build, and "
+            else f"{', '.join(untranslated)} has no released translation of its own in this "
+            "build, and "
             "this 0 is a measured fact about what the product holds. It does not mean the "
             "corpus is untranslatable, and it does mean that every translation-derived "
             "figure elsewhere in this API excludes that corpus: a zero from such a layer is "
@@ -895,15 +1268,24 @@ class InsightService:
         )
         return _counted_by_veda(counts, status=status, note=note)
 
-    def _deity_population_stat(self, structures: Mapping[str, int]) -> DeityPopulationStat:
-        """Both deity counts, with the resolved population computed from the structures.
+    def _deity_population_stat(
+        self, structures: Mapping[str, int], ruled_deities: int = 0
+    ) -> DeityPopulationStat:
+        """Both deity counts, with the resolved population read from the recorded ruling.
 
-        Routed through :func:`~vedagraph.api.services.deity_population.is_deity` rather than
-        re-listing the structures, so the resolved population here is the same answer every
-        deity surface in this API uses. A structure the contract does not recognise counts
-        as a non-deity, which fails closed.
+        It was computed from the structure histogram, which made this the last surface in
+        the API still deriving eligibility from ``structure``: it published 184 resolved
+        deities while every deity route served 157, and the two disagreed about the 28
+        abstractions ruled ABSTRACTION_NOT_AN_ADDRESSEE and about the dog. The ruling is
+        counted here instead, on the positive predicate, so an unruled node fails closed.
+
+        ``by_structure`` keeps the structure histogram, because the structure is still a
+        real fact about each row and this response is the one place a reader can see the
+        Anukramani's slot broken down. What it is not is the eligibility rule.
         """
-        resolved = sum(count for name, count in structures.items() if is_deity(name))
+        # Counted on the positive ruling, from the same query that produced the structure
+        # histogram, so this needs no second read and an unruled node fails closed.
+        resolved = ruled_deities
         total = sum(structures.values())
         return DeityPopulationStat(
             resolved_deities=resolved,
@@ -913,9 +1295,12 @@ class InsightService:
             note=(
                 "Two figures, and they answer different questions. resolved_deities is the "
                 "population every deity surface here uses. anukramani_ascriptions is the "
-                "tradition's devata slot as it stands, which also holds human patrons, "
-                "labels naming a gift rather than a recipient, and one dog. Neither is the "
-                "corrected version of the other."
+                "tradition's devata slot as it stands, which also holds 22 human patrons, "
+                "7 labels naming a gift rather than a recipient, and 28 abstractions ruled "
+                "not to name an addressee -- 57, the figure above. It does NOT hold the dog "
+                "apart: the dog is a deified animal and sits inside resolved_deities beside "
+                "thirteen other animals. Neither figure is the corrected version of the "
+                "other."
             ),
         )
 
@@ -1012,9 +1397,47 @@ class InsightService:
         table concludes that only the Samaveda reuses Rigvedic text.
         """
         views, cells, unreconciled = self._cross_veda_class_views()
+        direction_status = {
+            _as_str(row.get("pair")) or "": (
+                _as_str(row.get("status")) or "",
+                _as_str(row.get("note")) or "",
+            )
+            for row in self._repository.run(_DIRECTION_STATUS_QUERY)
+        }
         assertion_rows = self._repository.run(_ASSERTION_REACH_QUERY)
         assertion_vedas = sorted({_as_str(row.get("veda")) or "" for row in assertion_rows} - {""})
         assertion_total = sum(_as_int(row.get("assertions")) or 0 for row in assertion_rows)
+        # Counted on the positive predicate. "not UNREVIEWED" would silently promote any
+        # review state added later into human review, which is the direction that lies.
+        assertion_reviewed = sum(
+            _as_int(row.get("human_reviewed")) or 0 for row in assertion_rows
+        )
+        # GAP-SEMANTICS-001 clause 3: no surface reports a blended assertion total. The cell
+        # published one figure summed across five derivations that are not the same kind of
+        # claim -- a morphological rule over a manual annotation and a model extraction read
+        # the same to anyone counting. The total still appears, because a reader needs the
+        # size of the layer, but it never appears alone: it is broken out by derivation, the
+        # model-assisted share is named as such, and the review state is carried with it.
+        by_derivation: dict[str, int] = {}
+        for row in assertion_rows:
+            key = _as_str(row.get("derivation")) or "UNDECLARED"
+            by_derivation[key] = by_derivation.get(key, 0) + (_as_int(row.get("assertions")) or 0)
+        model_assisted = sum(
+            count for name, count in by_derivation.items() if "MODEL" in name.upper()
+        )
+        derivation_text = ", ".join(
+            f"{name} {count:,}" for name, count in sorted(by_derivation.items())
+        )
+        assertion_note = (
+            f"Measured: {assertion_total:,} assertions over "
+            f"{', '.join(assertion_vedas) or 'no corpus'}, by derivation {derivation_text}. "
+            f"{model_assisted:,} of them are model-assisted, the Samavedic rows are projected "
+            "from letter-identical Rigvedic verses rather than annotated in their own corpus, "
+            "and the rest are derived by rule from source annotation; "
+            f"{assertion_reviewed:,} have been reviewed by a human. Coverage is incomplete "
+            "and uneven across the four corpora, so the layer is usable for a single passage "
+            "and not as a corpus-level comparison."
+        )
 
         by_class = {view.relationship_class: view for view in views}
         pair_totals = {
@@ -1034,21 +1457,21 @@ class InsightService:
                     view=by_class[name],
                     other_edges=pair_totals[pair] - cells.get((name, pair), 0),
                     unreconciled=unreconciled.get(name, 0),
+                    direction_refusal=(
+                        direction_status.get(pair) if name == "REUSES_TEXT_FROM" else None
+                    ),
                 )
                 status_counts[cell.status] = status_counts.get(cell.status, 0) + 1
                 row_cells.append(cell)
-            for name, _kind, why in _UNBUILT_CROSS_VEDA_ROWS:
+            for name, _kind, row_status, why in _NON_PAIRING_CROSS_VEDA_ROWS:
                 note = why
                 if name == "SEMANTIC_ASSERTION":
-                    note = (
-                        f"{why} Measured: {assertion_total:,} assertions over "
-                        f"{', '.join(assertion_vedas) or 'no corpus'}."
-                    )
+                    note = f"{why} {assertion_note}"
                 cell = CrossVedaCell(
                     relationship_class=name,
                     pair=pair,
                     edges=None,
-                    status=CrossVedaCellStatus.NOT_BUILT,
+                    status=row_status,
                     related_edges_on_pair=pair_totals[pair],
                     note=note,
                 )
@@ -1093,14 +1516,20 @@ class InsightService:
                 relationship_class=name,
                 resemblance_kind=kind,
                 cross_veda_edges=None,
+                # Zero, and it is the right zero. This field counts intra-corpus edges *of a
+                # relatedness class* -- the 325 same-corpus parallels the caveat discloses --
+                # and a semantic assertion is not an edge of that kind at all. Publishing the
+                # layer's 35,131 here read as a relatedness population and broke the
+                # disclosure's own arithmetic. The layer's size belongs in the cell note,
+                # which states it; ``population_status`` is what carries the correction.
                 within_one_veda_edges=0,
                 pairs_reached=[],
                 directed=None,
-                population_status="NOT_BUILT",
+                population_status=str(status.value),
             )
-            for name, kind, _why in _UNBUILT_CROSS_VEDA_ROWS
+            for name, kind, status, _why in _NON_PAIRING_CROSS_VEDA_ROWS
         ]
-        total_classes = len(_CROSS_VEDA_CLASSES) + len(_UNBUILT_CROSS_VEDA_ROWS)
+        total_classes = len(_CROSS_VEDA_CLASSES) + len(_NON_PAIRING_CROSS_VEDA_ROWS)
 
         pairwise_totals_text = ", ".join(f"{pair} {pair_totals[pair]:,}" for pair in VEDA_PAIRS)
         # Same-corpus parallels carry no veda_pair at all, so a matrix that filtered on that
@@ -1135,6 +1564,7 @@ class InsightService:
             ),
             _frozen_caveat("entity_vocabulary_overlap_candidates"),
             CaveatView(text=_ASSERTION_LAYER_CAVEAT, source="assertion_layer_scope"),
+            _measured_caveat(self._parallel_granularity_statement()),
             _measured_caveat(
                 "This matrix is the cross-corpus population only, and it is not the whole "
                 f"parallel layer: {intra_corpus_total:,} parallel edges join two passages "
@@ -1184,6 +1614,41 @@ class InsightService:
             ),
         )
 
+    def _parallel_granularity_statement(self) -> str:
+        """The measured granularity census of the parallel layer, with the pada scope.
+
+        Measured rather than declared: a pada layer that had not been imported yet would
+        otherwise be described by a sentence asserting edges that are not there.
+        """
+        rows = self._repository.run(_PARALLEL_GRANULARITY_QUERY)
+        counts = {
+            _as_str(row.get("granularity")) or "UNTYPED": (
+                _as_int(row.get("edges")) or 0,
+                # Fixed corpus order, never sorted: two statements built from different
+                # layers have to be readable against each other.
+                [
+                    veda
+                    for veda in VEDA_ORDER
+                    if veda in {str(item) for item in (row.get("vedas") or []) if item}
+                ],
+            )
+            for row in rows
+        }
+        pada_edges, _pada_vedas = counts.get("PADA", (0, []))
+        rendered = ", ".join(
+            f"{name} {edges:,} edges over {'/'.join(vedas) or 'no corpus'}"
+            for name, (edges, vedas) in sorted(counts.items())
+        )
+        if not pada_edges:
+            return (
+                f"PARALLEL GRANULARITY: {rendered or 'no parallel edges'}. No quarter-verse "
+                "(PADA) edge is present in this graph, so every parallel here is a "
+                "whole-verse claim and a verse sharing one quarter with another is either "
+                f"reported without saying which quarter or not reported at all. "
+                f"{PADA_GRANULARITY_SCOPE}"
+            )
+        return f"PARALLEL GRANULARITY: {rendered}. {PADA_GRANULARITY_SCOPE}"
+
     def _cross_veda_cell(
         self,
         *,
@@ -1193,8 +1658,9 @@ class InsightService:
         view: CrossVedaClassView,
         other_edges: int,
         unreconciled: int,
+        direction_refusal: tuple[str, str] | None = None,
     ) -> CrossVedaCell:
-        """Type one cell. Four ways to be empty, and the row says which."""
+        """Type one cell. Five ways to be empty, and the row says which."""
         if unreconciled:
             return CrossVedaCell(
                 relationship_class=name,
@@ -1215,6 +1681,20 @@ class InsightService:
                 edges=edges,
                 status=CrossVedaCellStatus.MEASURED,
                 note=f"{edges:,} edges of this class join this corpus pair.",
+            )
+        if direction_refusal and direction_refusal[0]:
+            status, why = direction_refusal
+            return CrossVedaCell(
+                relationship_class=name,
+                pair=pair,
+                edges=0,
+                status=CrossVedaCellStatus.MEASURED_ZERO,
+                related_edges_on_pair=other_edges,
+                note=(
+                    f"{status}. This zero is a measured refusal and not an unbuilt cell: "
+                    f"{why} The pair's {other_edges:,} undirected parallel edges are "
+                    "unaffected and remain the statement that the two corpora share text."
+                ),
             )
         if view.population_status == "NOT_BUILT":
             return CrossVedaCell(
@@ -1705,6 +2185,10 @@ class InsightService:
         modelled = _as_int(coverage_row.get("rituals_modelled")) or 0
         with_steps = _as_int(coverage_row.get("rituals_with_steps")) or 0
         step_edges = _as_int(coverage_row.get("step_edges")) or 0
+        with_procedure = _as_int(coverage_row.get("rituals_with_procedure")) or 0
+        procedure_edges = _as_int(coverage_row.get("procedure_step_edges")) or 0
+        procedure_partial = _as_int(coverage_row.get("procedure_partial_steps")) or 0
+        procedure_works = _as_int(coverage_row.get("procedure_source_works")) or 0
         curated = _as_int(coverage_row.get("implements_curated"))
         reached = _as_int(coverage_row.get("implements_reached"))
         registry = _as_int(coverage_row.get("objects_in_registry"))
@@ -1752,11 +2236,15 @@ class InsightService:
             _frozen_caveat("ritual_objects_recurring"),
             _frozen_caveat("ritual_profile"),
             _measured_caveat(
-                f"PARTIAL, and here is the bound: {modelled} rites are modelled, "
-                f"{with_steps} of them {'carries' if with_steps == 1 else 'carry'} any "
-                f"procedure at all, and there are {step_edges} step edges in the whole "
-                f"graph. A ranking here is a ranking within {modelled} curated rites and "
-                "is not a statement about Vedic ritual."
+                f"PARTIAL, and here is the bound: {modelled} rites are modelled. "
+                f"{with_steps} of them {'carries' if with_steps == 1 else 'carry'} a step "
+                f"the Samhita text numbers in its own words ({step_edges} such edges in the "
+                f"whole graph), and {with_procedure} carry sutra-attested procedure "
+                f"({procedure_edges:,} steps from {procedure_works} works, of which "
+                f"{procedure_partial:,} state a position without printing the run it falls "
+                "in). The two are not one figure and neither is a complete procedure. A "
+                f"ranking here is a ranking within {modelled} curated rites and is not a "
+                "statement about Vedic ritual."
             ),
         ]
         caveats.extend(
@@ -1787,11 +2275,21 @@ class InsightService:
                 rituals_modelled=modelled,
                 rituals_with_steps=with_steps,
                 step_edges=step_edges,
+                rituals_with_procedure=with_procedure,
+                procedure_step_edges=procedure_edges,
+                procedure_partial_steps=procedure_partial,
+                procedure_source_works=procedure_works,
                 implements_curated=curated,
                 implements_reached_by_mentions=reached,
                 statement=(
-                    f"{modelled} modelled rites and {step_edges} step edges across all of "
-                    f"them, so no rite has a recoverable sequence. "
+                    f"{modelled} modelled rites, and no rite has a recoverable sequence on "
+                    f"either layer. {step_edges} step edges state an order in the Samhita's "
+                    f"own words. A second and much larger layer is sutra-attested -- "
+                    f"{procedure_edges:,} steps over {with_procedure} rites from "
+                    f"{procedure_works} works -- but it does not close the gap: each work "
+                    f"numbers its own sequence, so the works do not compose into one "
+                    f"procedure, and {procedure_partial:,} of those steps state a position "
+                    f"without printing the run it falls in. Located steps, not procedures. "
                     f"{curated if curated is not None else 'Some'} of "
                     f"{registry if registry is not None else 'the'} curated objects are "
                     "linked to a rite and so eligible for the implement ranking, and "
@@ -1817,9 +2315,11 @@ class InsightService:
                 "to a rite, so genuine ritual objects are missing here for want of a link "
                 "rather than for want of attestation -- the amulet and the drum among them. "
                 "Their absence is not an absence from the corpus.",
-                "Procedure is essentially absent: with "
-                f"{step_edges} step edges over {modelled} rites, no rite in this graph has a "
-                "recoverable full sequence.",
+                "No rite has a full recoverable sequence. The Samhita layer holds "
+                f"{step_edges} step edges over {modelled} rites, and the sutra layer's "
+                f"{procedure_edges:,} steps are located points in {procedure_works} "
+                "independently numbered works rather than one procedure; "
+                f"{procedure_partial:,} of them do not print the run they fall in.",
                 "The Brahmana and Srautasutra prose that actually describes the srauta "
                 "apparatus is not held by this product at all, so the apparatus is visible "
                 "only where a Samhita verse happens to name it.",
@@ -1839,6 +2339,9 @@ class InsightService:
         concern_rows = self._repository.run_named("human_concerns_by_veda")
         affliction_rows = self._repository.run_named("conditions_treated")
         rite_rows = self._repository.run_named("social_rites")
+        # GAP-ENTITY_COVERAGE-003: the remedy side, which this endpoint used to
+        # declare unreachable on a premise that was false.
+        remedy_rows = self._repository.run_named("stated_remedy_by_veda")
         # One resolution for all three collections, so every row a client sees can be
         # followed to its entity rather than ending at a display label.
         keys = self._resolve_entity_keys(
@@ -1872,6 +2375,16 @@ class InsightService:
             keys=keys,
         )
         rites.sort(key=lambda row: (-(row.total_mantras or 0), row.label))
+        stated_remedy = self._fold_veda_rows(
+            remedy_rows,
+            label_column="remedy",
+            count_column="mantras",
+            kind="STATED_REMEDY",
+            keys=self._resolve_entity_keys(
+                [_as_str(row.get("remedy")) or "" for row in remedy_rows]
+            ),
+        )
+        stated_remedy.sort(key=lambda row: (-(row.total_mantras or 0), row.label))
 
         evidence_rows: list[ConcernEvidenceRow] = []
         for row in self._repository.run_named("concerns_addressed_versus_protected_from"):
@@ -1902,11 +2415,13 @@ class InsightService:
         affliction_page, affliction_bounds = _paginate_rows(afflictions, limit=limit, offset=offset)
         rite_page, rite_bounds = _paginate_rows(rites, limit=limit, offset=offset)
         evidence_page, evidence_bounds = _paginate_rows(evidence_rows, limit=limit, offset=offset)
+        remedy_page, remedy_bounds = _paginate_rows(stated_remedy, limit=limit, offset=offset)
         bounds = {
             "concerns": concern_bounds,
             "afflictions": affliction_bounds,
             "protection_and_treatment": evidence_bounds,
             "social_rites": rite_bounds,
+            "stated_remedy": remedy_bounds,
         }
         overruns = [
             caveat
@@ -1918,7 +2433,7 @@ class InsightService:
             question="What human concerns does the corpus address, and on what evidence?",
             data_status=KnowledgeStatus.PARTIAL,
             cost_class=CostClass.AGGREGATE,
-            cost_note="Four grouped mention scans plus the three-predicate concern join and "
+            cost_note="Five grouped mention scans plus the three-predicate concern join and "
             "one label resolution. Labelled an aggregate.",
             vedas_reported=list(VEDA_ORDER),
             scope_statements=self._scope_statements(VEDA_ORDER),
@@ -1928,6 +2443,7 @@ class InsightService:
                     "concerns": len(concerns),
                     "afflictions": len(afflictions),
                     "social_rites": len(rites),
+                    "stated_remedy": len(stated_remedy),
                 },
                 denominator=dict(figures.CORPUS_MANTRAS),
             ),
@@ -1942,10 +2458,18 @@ class InsightService:
                     "worms as diseases; the apotropaic material is still reachable, under "
                     "its own kind."
                 ),
+                _frozen_caveat("stated_remedy_by_veda"),
                 _measured_caveat(
-                    "The registry has no healing entity -- bhesaja was never curated -- so "
-                    "'what does the corpus do about illness' is reachable only through the "
-                    "afflictions and plants a verse names, never through a stated remedy."
+                    "A stated remedy IS reachable, and the caveat that stood here for two "
+                    "rounds saying otherwise -- 'the registry has no healing entity, "
+                    "bhesaja was never curated' -- was false. Measured: "
+                    "VG:CONCEPT:BHESAJA-HEALING carries 7 registered Sanskrit aliases and "
+                    "108 MENTIONS_ENTITY edges with a verbatim locator and quote on every "
+                    "one, over AV 47, YV 31, RV 28 and SV 2 mantras. What is true is "
+                    "narrower and is a curation choice rather than an absence: bheṣaja is "
+                    "typed a :Concept in the CORPOREAL and RITUAL domains and not a "
+                    ":HumanConcern, so it does not appear in the concerns collection above "
+                    "and travels in stated_remedy instead."
                 ),
                 *overruns[:1],
             ],
@@ -1953,8 +2477,9 @@ class InsightService:
             afflictions=affliction_page,
             protection_and_treatment=evidence_page,
             social_rites=rite_page,
-            # Four collections, four blocks. One shared block would have described three of
-            # them wrongly, and a client reading it would read three real lists as empty.
+            stated_remedy=remedy_page,
+            # Five collections, five blocks. One shared block would have described four of
+            # them wrongly, and a client reading it would read four real lists as empty.
             collections=bounds,
         )
 
@@ -2043,10 +2568,12 @@ class InsightService:
                     "string match, so its span measures diction and not a demonstrated line "
                     "of transmission."
                 ),
+                _measured_caveat(figures.formula_nesting_policy()),
                 _measured_caveat(
-                    "The Samavedic reuse witnesses are directed RV-to-SV and exist for that "
-                    "pair only. No other corpus pair carries a directed reuse edge, which is "
-                    "a property of what was built rather than of what the texts share; see "
+                    "Directed reuse is measured per pair, not assumed. It reaches the "
+                    "corpus pairs where a compilation-asymmetry measurement clears both a "
+                    "power and a consistency floor, and every pair it does not reach "
+                    "carries its measured refusal reason rather than silence; see "
                     "/api/v1/insights/cross-veda for the pairwise matrix that types it."
                 ),
                 *overruns[:1],
@@ -2294,6 +2821,14 @@ class InsightService:
         graph the way a hand-written limitations page would.
         """
         all_limits = self._capability_limits()
+        # Derived from the cards rather than declared: a completeness figure typed into a
+        # payload beside the list it describes is the one figure nothing can catch.
+        published_not_answerable = {
+            limit.question_number
+            for limit in all_limits
+            if limit.question_number is not None
+            and limit.benchmark_verdict is CapabilityVerdict.NOT_ANSWERABLE
+        }
         limits = all_limits
         if question is not None:
             limits = [limit for limit in all_limits if limit.question_number == question]
@@ -2319,18 +2854,40 @@ class InsightService:
                     "cannot establish this' is the honest outcome rather than a shortfall."
                 ),
                 _measured_caveat(
-                    "This catalogue is not exhaustive. It records the limits the "
-                    "100-question benchmark graded and probed; a question absent from it is "
-                    "not thereby answerable."
+                    f"This catalogue covers every one of the {len(BENCHMARK_NOT_ANSWERABLE)} "
+                    "questions the 100-question benchmark graded NOT_ANSWERABLE, each with a "
+                    "probe that runs on this request. It is still not a complete account of "
+                    "what this product cannot do: a question the benchmark never asked is "
+                    "not thereby answerable, and the benchmark is 100 questions rather than "
+                    "every question."
+                ),
+                _measured_caveat(
+                    "Each card carries the frozen benchmark's grade beside the live one. "
+                    "Where they differ, the graph has moved since the benchmark was frozen "
+                    "and the live verdict is the one to read: a limitation copied forward "
+                    "from a stale grade would tell you this product cannot do something it "
+                    "can."
                 ),
             ],
             limits=limits,
             total_available=len(all_limits),
             requested_question=question,
+            benchmark_not_answerable_total=len(BENCHMARK_NOT_ANSWERABLE),
+            benchmark_not_answerable_published=len(published_not_answerable),
+            unpublished_not_answerable=sorted(
+                set(BENCHMARK_NOT_ANSWERABLE) - published_not_answerable
+            ),
         )
 
     def _capability_limits(self) -> list[CapabilityLimit]:
-        return [
+        """Every published limit, ordered by benchmark question number.
+
+        The seven hand-written cards came first and each carries a bespoke probe. The
+        fifteen in :mod:`vedagraph.api.services.capability_probes` came with
+        GAP-PRODUCT_SURFACE-002 and share one builder. Sorted rather than concatenated, so
+        the catalogue reads as a catalogue and not as two generations of it.
+        """
+        limits = [
             self._q23_deity_communities(),
             self._q25_ritual_objects(),
             self._q22_conceptual_similarity(),
@@ -2338,7 +2895,70 @@ class InsightService:
             self._q52_assertions_outside_the_rigveda(),
             self._q77_calibrated_confidence(),
             self._q82_samavedic_melody(),
+            *self._probed_limits(),
         ]
+        return sorted(limits, key=lambda limit: limit.question_number or 0)
+
+    # -- The rest of the NOT_ANSWERABLE population ------------------------
+    #
+    # GAP-PRODUCT_SURFACE-002. The catalogue published 7 cards against the 21 questions the
+    # frozen benchmark grades NOT_ANSWERABLE, and said so rather than implying
+    # completeness. The remaining fifteen are built here on the same contract the first
+    # seven use: a live Cypher probe, measurements that say what they mean, a safe
+    # alternative, and a statement of what would change the answer.
+
+    def _probed_limits(self) -> list[CapabilityLimit]:
+        return [self._probed_limit(spec) for spec in PROBED_LIMIT_SPECS]
+
+    def _probed_limit(self, spec: ProbedLimitSpec) -> CapabilityLimit:
+        """Run one capability probe and grade it from what came back.
+
+        **The verdict is measured, not copied.** The benchmark is frozen at V3.3 and the
+        graph is not; three of these dimensions have moved since. Pasting a frozen grade
+        forward would publish a limitation that no longer holds, which is the same class of
+        defect as publishing a false finding, so both grades travel on the card and the
+        difference is itself disclosed.
+
+        A probe that returns no row falls back to the benchmark's verdict rather than
+        manufacturing zeros: a zero here is a finding about the graph, and an unreachable
+        query is not evidence that a dimension appeared.
+        """
+        row = self._repository.run_one(spec.cypher) or {}
+        values = {name: _as_int(row.get(name)) for name, _ in spec.measurements}
+        verdict = spec.grade(values) if row else spec.benchmark_verdict
+        moved = verdict is not spec.benchmark_verdict
+        return CapabilityLimit(
+            limit_id=spec.limit_id,
+            question_number=spec.question_number,
+            question=spec.question,
+            verdict=verdict,
+            benchmark_verdict=spec.benchmark_verdict,
+            data_status=(
+                KnowledgeStatus.NOT_BUILT
+                if verdict is CapabilityVerdict.NOT_ANSWERABLE
+                else KnowledgeStatus.PARTIAL
+            ),
+            why=spec.why(values),
+            what_this_is_not=spec.what_this_is_not,
+            measurements=[
+                CapabilityMeasurement(name=name, value=values.get(name), means=means)
+                for name, means in spec.measurements
+            ],
+            safe_alternative=spec.safe_alternative,
+            what_would_change_it=spec.what_would_change_it,
+            endpoint=spec.endpoint,
+            caveats=[
+                _measured_caveat(
+                    "Every figure on this card was measured on this request. The live "
+                    f"verdict is {verdict.value} and the frozen V3.3 benchmark graded this "
+                    f"{spec.benchmark_verdict.value}: the graph has moved since the "
+                    "benchmark was frozen, and the live verdict is the one to read."
+                    if moved
+                    else "Every figure on this card was measured on this request, and the "
+                    "live verdict still agrees with the frozen V3.3 benchmark's."
+                )
+            ],
+        )
 
     def _q23_deity_communities(self) -> CapabilityLimit:
         """Q23. The refusal the benchmark grades NOT_ANSWERABLE, with its measurements.
@@ -2355,39 +2975,84 @@ class InsightService:
         eligible = _as_int(row.get("eligible_deities")) if row else None
         pairwise = _as_int(row.get("pairwise_edges")) if row else None
         scope = _as_str(row.get("evidence_scope")) if row else None
+        unruled = _as_int(row.get("devatas_without_an_eligibility_ruling")) if row else None
+        # Measured separately from the frozen named query, which predates the partition and
+        # therefore cannot see it. Counting the artifact nodes is what turned "no community
+        # structure exists anywhere in this graph" from a true sentence into a false one.
+        #
+        # This probe also re-measures the membership, and is the source of record for it.
+        # The frozen query filters on a deity-population property, so when that property is
+        # rebuilt under another name the query matches nothing and returns *no row at all* --
+        # at which point ``assigned`` is ``None`` and the card publishes a missing figure
+        # where its decisive zero belongs. A refusal whose decisive measurement is blank is
+        # not a refusal, so the figure falls back to a query that cannot be emptied that way.
+        partitions = self._repository.run_one(_STORED_COMMUNITY_PARTITIONS_QUERY) or {}
+        stored_partitions = _as_int(partitions.get("stored_community_partitions"))
+        if assigned is None:
+            assigned = _as_int(partitions.get("deities_with_a_community_assignment"))
         return CapabilityLimit(
             limit_id="deity_communities",
             question_number=23,
             question="What deity communities emerge from the corpus?",
             verdict=CapabilityVerdict.NOT_ANSWERABLE,
+            benchmark_verdict=CapabilityVerdict.NOT_ANSWERABLE,
             data_status=KnowledgeStatus.NOT_BUILT,
+            # Rewritten against a live measurement in the final closure sprint. This card
+            # used to open "No community structure exists anywhere in this graph ... no
+            # partition is stored", which was true when it was written and is no longer:
+            # a partition has since been computed and its artifact nodes are stored. What
+            # is still missing is the membership -- communities with no members -- and that
+            # is a different sentence. A limitation that has been overtaken is as wrong as
+            # a finding that has been overtaken.
             why=(
-                "No community structure exists anywhere in this graph. No node carries a "
-                "community, louvain or partition assignment, no modularity was computed and "
-                "no partition is stored, so there is nothing to return and nothing to "
-                "compute it from. Pairwise co-occurrence exists and is a different object: "
+                f"A community partition has been computed and {stored_partitions or 0} "
+                "partition artifacts are stored, and not one of them has a member: "
+                f"{assigned if assigned is not None else 'no'} subjects carry a community "
+                "assignment. So there is a partition and there is nothing in it, which "
+                "cannot be returned as a community table without inventing the membership. "
+                "Pairwise co-occurrence exists and is a different object: "
                 f"{scope or 'pairwise co-occurrence is not a community partition'}."
             ),
             what_this_is_not=(
                 "This is NOT a finding that Vedic deities form no communities, and it is NOT "
-                "an empty result. The dimension was never built. Substituting the deity-pair "
-                "table for it is how this question was graded MISLEADING: that table's "
-                "top-ranked members were human patrons carried in the deity registry, "
-                "presented in a deity column with nothing saying so."
+                "an empty result. The membership was never built. Substituting the "
+                "deity-pair table for it is how this question was graded MISLEADING: that "
+                "table's top-ranked members were human patrons carried in the deity "
+                "registry, presented in a deity column with nothing saying so."
             ),
             measurements=[
                 CapabilityMeasurement(
+                    name="stored_community_partitions",
+                    value=stored_partitions,
+                    means="Community artifact nodes in the graph. Non-zero, and this is the "
+                    "figure that makes the older wording of this card false: a partition "
+                    "was computed. It carries no membership.",
+                ),
+                CapabilityMeasurement(
                     name="deities_with_a_community_assignment",
                     value=assigned,
-                    means="Nodes carrying any community, louvain or partition property. This "
-                    "zero is the finding: it is about the graph, not the pantheon.",
+                    means="Subjects carrying a community, louvain or partition membership. "
+                    "This zero is the finding: it is about the graph, not the pantheon.",
                 ),
                 CapabilityMeasurement(
                     name="eligible_deities",
                     value=eligible,
-                    means="A denominator, not a census. It is the devata registry minus the "
-                    "entries typed as human, and it still carries gift-praise labels and one "
-                    "non-divine subject.",
+                    means="A denominator, not a census. The one documented eligibility "
+                    "predicate, which excludes 22 human patrons, 7 danastuti gift-praise "
+                    "labels and the 28 ABSTRACT labels ruled NOT_DEITY per label, and keeps "
+                    "the 5 ruled UNDECIDED. This figure read 192 while the query excluded "
+                    "structure='HUMAN' alone. Read it together with "
+                    "devatas_without_an_eligibility_ruling below.",
+                ),
+                CapabilityMeasurement(
+                    name="devatas_without_an_eligibility_ruling",
+                    value=unruled,
+                    means="Devata nodes carrying no is_deity ruling. While this is non-zero "
+                    "the eligibility layer has not landed and eligible_deities falls back to "
+                    "curated structure, which drops the 29 curated non-members but keeps the "
+                    "28 abstractions. The transitional state is a row rather than a caveat "
+                    "because a reader who takes a count from a row is the reader who did not "
+                    "read the caveat.",
                 ),
                 CapabilityMeasurement(
                     name="pairwise_co_occurrence_edges",
@@ -2419,16 +3084,26 @@ class InsightService:
         curated = _as_int(row.get("implements_curated"))
         reached = _as_int(row.get("implements_reached"))
         registry = _as_int(row.get("objects_in_registry"))
+        procedure_edges = _as_int(row.get("procedure_step_edges"))
+        procedure_works = _as_int(row.get("procedure_source_works"))
         reached_text = "some" if reached is None else f"{reached}"
         curated_text = "the" if curated is None else f"{curated}"
         steps_text = "a handful of" if step_edges is None else f"{step_edges}"
         rites_text = "the" if modelled is None else f"{modelled}"
         registry_text = "the object registry" if registry is None else f"{registry} objects"
+        procedure_text = (
+            "a sutra-attested layer exists but was not measured"
+            if procedure_edges is None
+            else f"a second layer holds {procedure_edges:,} sutra-attested steps from "
+            f"{procedure_works or 'several'} works, which are located points in "
+            "independently numbered sources rather than one procedure"
+        )
         return CapabilityLimit(
             limit_id="recurring_ritual_objects",
             question_number=25,
             question="Which ritual objects recur most?",
             verdict=CapabilityVerdict.PARTIALLY_ANSWERABLE,
+            benchmark_verdict=CapabilityVerdict.PARTIALLY_ANSWERABLE,
             data_status=KnowledgeStatus.PARTIAL,
             why=(
                 "There is a real ranking and it covers part of the question. Ritual implement "
@@ -2438,8 +3113,9 @@ class InsightService:
                 "layer at all. What is partial is per-implement recall rather than class "
                 "membership: every count is a lexical minimum over registered whole-word "
                 "aliases, and the caveat sourced 'ritual_objects_recurring' measures the "
-                "shortfall for the sacrificial post and the altar. Procedure is thinner "
-                f"still, at {steps_text} step edges across {rites_text} rites."
+                "shortfall for the sacrificial post and the altar. Procedure in the "
+                f"Samhita's own words is thinner still, at {steps_text} step edges across "
+                f"{rites_text} rites; {procedure_text}."
             ),
             what_this_is_not=(
                 "The ranking is NOT a census of Vedic ritual apparatus and a low count is NOT "
@@ -2459,8 +3135,16 @@ class InsightService:
                 CapabilityMeasurement(
                     name="step_edges",
                     value=step_edges,
-                    means="Procedure edges in the entire graph. No rite has a recoverable "
-                    "full sequence.",
+                    means="Steps a Samhita text numbers in its own words, whole graph. On "
+                    "this evidence no rite has a recoverable full sequence.",
+                ),
+                CapabilityMeasurement(
+                    name="procedure_step_edges",
+                    value=procedure_edges,
+                    means="Steps a Srautasutra or Grhyasutra prints -- a different claim "
+                    "about a different source, so a separate measurement and never summed "
+                    "with step_edges. Each work numbers its own sequence, so these are "
+                    "located points and still not a recoverable procedure.",
                 ),
                 CapabilityMeasurement(
                     name="curated_implements",
@@ -2514,6 +3198,7 @@ class InsightService:
             question_number=22,
             question="Which passages are lexically different but conceptually similar?",
             verdict=CapabilityVerdict.NOT_ANSWERABLE,
+            benchmark_verdict=CapabilityVerdict.NOT_ANSWERABLE,
             data_status=KnowledgeStatus.NOT_BUILT,
             why=(
                 "No non-lexical similarity measure exists in this graph: no embedding, no "
@@ -2568,6 +3253,7 @@ class InsightService:
             question_number=28,
             question="Where does the graph record scholarly disagreement about the Vedas?",
             verdict=CapabilityVerdict.NOT_ANSWERABLE,
+            benchmark_verdict=CapabilityVerdict.NOT_ANSWERABLE,
             data_status=KnowledgeStatus.INSUFFICIENT_EVIDENCE,
             why=(
                 "The graph records no pair of rival scholarly readings of the Vedic text. It "
@@ -2605,38 +3291,80 @@ class InsightService:
         rows = self._repository.run(_ASSERTION_REACH_QUERY)
         vedas = sorted({_as_str(row.get("veda")) or "" for row in rows} - {""})
         total = sum(_as_int(row.get("assertions")) or 0 for row in rows)
+        # Per corpus, and per corpus BY DERIVATION, because that is what makes the
+        # comparison unanswerable. This card used to interpolate the live total into a
+        # frozen sentence reading "all N of its assertions sit in one corpus, because it
+        # derives from a manual morphological annotation that exists for that corpus alone",
+        # which rendered as "reaches AV, RV, SV, YV and nothing else: all 35,131 ... sit in
+        # one corpus". A measurement inside frozen grammar reads as measured and is not.
+        by_veda: dict[str, int] = {}
+        instruments: dict[str, set[str]] = {}
+        for row in rows:
+            veda = _as_str(row.get("veda")) or ""
+            if not veda:
+                continue
+            by_veda[veda] = by_veda.get(veda, 0) + (_as_int(row.get("assertions")) or 0)
+            instruments.setdefault(veda, set()).add(_as_str(row.get("derivation")) or "UNDECLARED")
+        reach_text = ", ".join(f"{veda} {by_veda[veda]:,}" for veda in sorted(by_veda))
+        instrument_text = "; ".join(
+            f"{veda} {', '.join(sorted(instruments[veda]))}" for veda in sorted(instruments)
+        )
+        agent_row = self._repository.run_one(
+            "MATCH (p:Passage)-[:HAS_SEMANTIC_ASSERTION]->(s:SemanticAssertion)"
+            "-[:ASSERTION_AGENT]->() RETURN count(DISTINCT s) AS agentive, "
+            "count(DISTINCT p.veda) AS vedas"
+        )
+        agentive = _as_int((agent_row or {}).get("agentive")) or 0
+        agentive_vedas = _as_int((agent_row or {}).get("vedas")) or 0
         return CapabilityLimit(
             limit_id="semantic_roles_outside_the_rigveda",
             question_number=52,
             question="What semantic roles does each corpus assign, and how do they differ?",
             verdict=CapabilityVerdict.NOT_ANSWERABLE,
+            benchmark_verdict=CapabilityVerdict.NOT_ANSWERABLE,
             data_status=KnowledgeStatus.NOT_BUILT,
             why=(
-                f"The semantic-assertion layer reaches {', '.join(vedas) or 'no corpus'} and "
-                f"nothing else: all {total:,} of its assertions sit in one corpus, because it "
-                "derives from a manual morphological annotation that exists for that corpus "
-                "alone. There is no non-Rigvedic row to compare, and no divergence statistic "
-                "anywhere in the graph."
+                f"The layer reaches all four corpora -- {reach_text} -- and the question is "
+                "still not answerable, for a different reason than a missing corpus. Each "
+                f"corpus is annotated by a different instrument ({instrument_text}), so a "
+                "measured difference between two corpora here would be a difference between "
+                "annotation projects rather than between the texts. The role reading the "
+                f"question asks for is narrower again: {agentive:,} assertions carry an "
+                f"explicit agent and they span {agentive_vedas} corpus, so there is no "
+                "second corpus of roles to compare. No divergence statistic exists anywhere "
+                "in the graph."
             ),
             what_this_is_not=(
-                "A zero for the other three corpora is an absent annotation layer and not an "
-                "absence of semantic structure in those texts. The layer must also never be "
-                "aggregated across its two derivations, which differ in strength and in reach."
+                "This is NOT a finding that the layer is absent outside the Rigveda -- it "
+                "reaches all four corpora. Nor is a smaller figure for a corpus an absence "
+                "of semantic structure in that text: it is a thinner annotation. The layer "
+                "must never be aggregated across its derivations, which differ in strength, "
+                "in reach and in what they were derived from."
             ),
             measurements=[
                 CapabilityMeasurement(
                     name="assertions",
                     value=total,
-                    means=f"All of them in {', '.join(vedas) or 'no corpus'}. The predicates "
-                    "derived from this layer inherit its scope, so they are single-corpus too.",
+                    means=f"The whole layer, across four corpora ({reach_text}). Not one "
+                    "figure to be compared against another: the derivations differ per "
+                    "corpus, so this total is a size and not a measurement of anything.",
+                ),
+                CapabilityMeasurement(
+                    name="assertions_carrying_an_explicit_agent",
+                    value=agentive,
+                    means="The subset that states who acts, which is the reading the question "
+                    "asks for. Rigvedic only, because it comes from a morphological "
+                    "annotation covering the Rigveda alone.",
                 ),
             ],
             safe_alternative=(
                 "The deity mention layer, which reaches all four corpora, though by two "
-                "different instruments that must not be averaged."
+                "different instruments that must not be averaged. For the assertion layer, "
+                "read one corpus at a time and read the derivation with it."
             ),
             what_would_change_it=(
-                "A morphological annotation for the other three corpora, plus a divergence "
+                "One annotation instrument applied to all four corpora, so that a difference "
+                "between corpora is not a difference between projects, plus a divergence "
                 "measure with a stated significance test."
             ),
             endpoint="/api/v1/insights/cross-veda",
@@ -2657,6 +3385,7 @@ class InsightService:
             question_number=77,
             question="How reliable are the graph's assertions, measured against a gold set?",
             verdict=CapabilityVerdict.NOT_ANSWERABLE,
+            benchmark_verdict=CapabilityVerdict.NOT_ANSWERABLE,
             data_status=KnowledgeStatus.NOT_BUILT,
             why=(
                 "There is no human-annotated evaluation set, so there is no reliability curve "
@@ -2691,29 +3420,111 @@ class InsightService:
         )
 
     def _q82_samavedic_melody(self) -> CapabilityLimit:
+        """Q82. Half an answer, and the half that is missing is the important one.
+
+        This card read ``NOT_ANSWERABLE`` / ``NOT_BUILT`` on the sentence "No melodic layer
+        of any kind exists in this graph", and that sentence stopped being true when
+        GAP-SAMAVEDA_MUSIC-002 landed the notation. The frozen benchmark verdict is kept
+        beside the live one rather than rewritten: the divergence IS the finding, and
+        copying the frozen grade forward would publish a limitation that no longer holds.
+
+        What moved is NOTATION. What did not move is the SONG, and the distinction is the
+        whole content of the card. The marks are recorded as the codepoints the source
+        printed and are never interpreted into pitch -- the Kauthuma decipherment authority
+        (van der Hoogt 1929) is not held, and Howard 1988 is Jaiminiya. So a reader can now
+        see how a verse was MARKED and still cannot learn how it was SUNG.
+        """
         scopes = self.work_scopes()
         sv = scopes.get("SV")
         excluded = sv.excluded_corpora if sv else []
+        row = self._repository.run_one(_SAMAVEDIC_NOTATION_QUERY) or {}
+        verses = _as_int(row.get("sv_verses"))
+        notated = _as_int(row.get("notated_verses"))
+        withheld = _as_int(row.get("withheld_verses"))
+        classes = _as_int(row.get("withheld_classes"))
+        untyped = _as_int(row.get("verses_with_no_state"))
+        marks = _as_int(row.get("tone_marks"))
+        interpreted = _as_int(row.get("interpreted_into_pitch"))
+        edges = _as_int(row.get("musicalized_as_edges"))
+
+        answerable = bool(notated)
+        notated_text = "no" if not notated else f"{notated:,}"
+        verses_text = "the" if verses is None else f"{verses:,}"
+        withheld_text = "an unmeasured number of" if withheld is None else f"{withheld:,}"
+        marks_text = "" if marks is None else f"{marks:,} "
+        classes_text = "a" if classes is None else f"{classes}"
+
         return CapabilityLimit(
             limit_id="samavedic_melodic_layer",
             question_number=82,
             question="What does the Samaveda's musical dimension contain?",
-            verdict=CapabilityVerdict.NOT_ANSWERABLE,
-            data_status=KnowledgeStatus.NOT_BUILT,
+            verdict=(
+                CapabilityVerdict.PARTIALLY_ANSWERABLE
+                if answerable
+                else CapabilityVerdict.NOT_ANSWERABLE
+            ),
+            benchmark_verdict=CapabilityVerdict.NOT_ANSWERABLE,
+            data_status=(
+                KnowledgeStatus.PARTIAL if answerable else KnowledgeStatus.NOT_BUILT
+            ),
             why=(
-                "The Samavedic corpus held here is the Kauthuma arcika verse text and nothing "
-                "else. The gana collections -- the sung realisation that is the reason the "
-                "Samaveda is a distinct Veda rather than a Rigvedic excerpt -- are excluded by "
-                f"the work's own declaration ({', '.join(excluded) or 'no exclusions recorded'}) "
-                "and require their own work identifier. No melodic layer of any kind exists in "
-                "this graph."
+                "It contains NOTATION and not song, and those are different answers. "
+                f"{notated_text} of {verses_text} Kauthuma arcika verses now carry the "
+                f"Kauthuma numeric svara marks their source printed on them -- {marks_text}"
+                "combining Devanagari Extended cantillation codepoints, read off one pinned "
+                "revision of a community transcription and aligned to this corpus's own "
+                f"coordinates. {withheld_text} verses carry no notation and say why in "
+                f"{classes_text}-valued typed reason on the verse itself, so the absence is "
+                "readable rather than inferred; coverage is NOT uniform across the four "
+                "collections. What is still entirely absent is the sung realisation: the "
+                "gana collections are excluded by the work's own declaration "
+                f"({', '.join(excluded) or 'no exclusions recorded'}) and require their own "
+                f"work identifier, and there are {edges if edges is not None else 'no'} "
+                "verse-to-saman edges because there is no canonical saman to point at."
             ),
             what_this_is_not=(
-                "This is NOT a statement that the Samaveda lacks a musical dimension, and no "
-                "Samavedic figure anywhere in this API may be read as covering the Samaveda. "
-                "The work node's own scope sentence begins by saying so in capitals."
+                "The marks are NOT a melody and this API does not decipher them. They are "
+                "recorded as the codepoints the source printed; no pitch, interval or svara "
+                "name is derived anywhere, because the Kauthuma decipherment authority is "
+                "not held and the one that is published is for a different school. A reader "
+                "can see how a verse was MARKED and still cannot learn how it was SUNG. Nor "
+                "is the notated count a coverage claim about the Samaveda: no Samavedic "
+                "figure anywhere in this API may be read as covering the Samaveda, and the "
+                "work node's own scope sentence begins by saying so in capitals."
             ),
             measurements=[
+                CapabilityMeasurement(
+                    name="verses_with_source_supplied_notation",
+                    value=notated,
+                    means="Verses carrying tone marks the source printed. Validated by the "
+                    "structural, semantic and adversarial gates before release.",
+                ),
+                CapabilityMeasurement(
+                    name="verses_with_notation_withheld",
+                    value=withheld,
+                    means="Verses the witness does not settle. Published beside the "
+                    "positive count on purpose: without it the notated figure reads as the "
+                    "whole corpus.",
+                ),
+                CapabilityMeasurement(
+                    name="verses_with_no_notation_disposition_at_all",
+                    value=untyped,
+                    means="Verses neither notated nor typed as withheld. This must be 0: an "
+                    "untyped verse is one a reader cannot tell apart from a verified zero.",
+                ),
+                CapabilityMeasurement(
+                    name="notation_rows_interpreted_into_pitch",
+                    value=interpreted,
+                    means="Rows converting a mark into a pitch. 0, and it is a refusal "
+                    "rather than a gap: no decipherment authority for this school is held.",
+                ),
+                CapabilityMeasurement(
+                    name="verse_to_saman_edges",
+                    value=edges,
+                    means="Edges from a verse to the saman that realises it. 0, because the "
+                    "object side is outside the bounded corpus and minting one to fill a "
+                    "denominator is forbidden.",
+                ),
                 CapabilityMeasurement(
                     name="excluded_samavedic_corpora",
                     value=len(excluded),
@@ -2722,20 +3533,304 @@ class InsightService:
                 ),
             ],
             safe_alternative=(
-                "The arcika verse text itself, and the measured Rigvedic reuse within it, "
-                "both of which are real and both of which are about the verse and not the song."
+                "The notated verse text itself, served as a parallel witness beside the "
+                "primary text, and the measured Rigvedic reuse within the arcika. All three "
+                "are real, and all three are about the verse rather than the song."
             ),
             what_would_change_it=(
-                "Ingesting a gana corpus under its own work identifier, with the melodic "
-                "assignment linked to the verses it realises."
+                "For the song: a gana corpus under its own work identifier, with the melodic "
+                "assignment linked to the verses it realises. For the notation's remaining "
+                "verses: philological adjudication of where this witness and this corpus "
+                "disagree, which needs a reader rather than another source."
             ),
             endpoint="/api/v1/insights/formula-diffusion",
             caveats=[
                 _measured_caveat(
                     "Samavedic scope, in the graph's own words: "
                     + (sv.scope if sv and sv.scope else "not recorded")
-                )
+                ),
+                _measured_caveat(
+                    "The notation's witness is a community transcription pinned to one "
+                    "revision, not a critical edition and not a school certification. It is "
+                    "offered as a witness beside the primary text, never as the text."
+                ),
             ],
+        )
+
+    # -- The three visualization blockers ---------------------------------
+    #
+    # GAP-PRODUCT_SURFACE-003. Three named blockers in a live design spec, all three of
+    # them API omissions over data the graph already holds. VIZ_BLOCKER_01 is the page cap:
+    # /devatas/{id}/passages is capped at 200 rows, so an Invocation Landscape for Indra
+    # needed eighteen round trips and got a truncated answer if anyone stopped early.
+    # VIZ_BLOCKER_02 is the per-book aggregate, whose own warning is the load-bearing one:
+    # do NOT build it client-side from paged rows, because the cap truncates silently and a
+    # truncated heatmap is indistinguishable from a sparse one. VIZ_BLOCKER_03 is deity x
+    # metre, which the spec deferred because "the matrix would be two-thirds hatched --
+    # honest, but thin". Thin and honest is served here, with the two corpora the metre
+    # layer does not reach present and typed NOT_BUILT rather than omitted.
+
+    def _book_rows(self) -> list[Mapping[str, Any]]:
+        return [
+            row for row in self._repository.run(_BOOK_DENOMINATORS_QUERY) if isinstance(row, dict)
+        ]
+
+    def _resolved_devata(
+        self, devata_id: str, population: DeityPopulation
+    ) -> tuple[str, str, list[CaveatView]]:
+        """Run THE deity gate and return the label with its disclosure.
+
+        Imported locally for the same reason :meth:`devata_insight` does it: the two
+        services are peers, and a top-level import between them makes either one
+        unimportable if the other grows an import-time failure. There is exactly one gate
+        and this is not a second implementation of it.
+        """
+        from vedagraph.api.services.entity_service import EntityService, subject_disclosure
+
+        subject = EntityService(self._repository)._resolve_devata(devata_id, population)
+        structure = subject.structure
+        _is_deity, disclosure = subject_disclosure(subject)
+        row = self._repository.run_one(
+            "MATCH (d:Devata {entity_key: $key}) RETURN d.display_label AS label", key=devata_id
+        )
+        label = _as_str((row or {}).get("label")) or devata_id
+        return devata_id, label, list(disclosure)
+
+    def devata_by_book(
+        self, *, devata_id: str, tiers: Sequence[str], population: DeityPopulation
+    ) -> DevataByBookResponse:
+        """VIZ_BLOCKER_02. One deity's naming count per book, every book present."""
+        key, label, disclosure = self._resolved_devata(devata_id, population)
+        counts = {
+            _as_str(row.get("book_key")): _as_int(row.get("count")) or 0
+            for row in self._repository.run(_DEVATA_BY_BOOK_QUERY, key=key, tiers=list(tiers))
+            if isinstance(row, dict)
+        }
+        books: list[BookCountRow] = []
+        total = 0
+        for row in self._book_rows():
+            book_key = _as_str(row.get("book_key")) or ""
+            denominator = _as_int(row.get("denominator")) or 0
+            count = counts.get(book_key, 0)
+            total += count
+            books.append(
+                BookCountRow(
+                    book_key=book_key,
+                    book_label=_as_str(row.get("book_label")) or book_key,
+                    veda=_as_str(row.get("veda")) or "",
+                    count=count,
+                    denominator=denominator,
+                    per_1000=(round(count * 1000 / denominator, 2) if denominator else None),
+                    status=CellStatus.MEASURED if count else CellStatus.MEASURED_ZERO,
+                    note=(
+                        None
+                        if count
+                        else "A measured zero: the mention layer reaches this book and "
+                        "found no verse naming this deity in it."
+                    ),
+                )
+            )
+        measured: dict[str, int] = {}
+        for book in books:
+            measured[book.veda] = measured.get(book.veda, 0) + (book.count or 0)
+        return DevataByBookResponse(
+            insight="devata_by_book",
+            question="How is this deity distributed across the books of each corpus?",
+            data_status=KnowledgeStatus.SUPPORTED,
+            cost_class=CostClass.AGGREGATE,
+            cost_note="Walks the containment tree for one deity's mention edges and joins "
+            "every book's own mantra total. Labelled an aggregate.",
+            vedas_reported=list(VEDA_ORDER),
+            scope_statements=self._scope_statements(VEDA_ORDER),
+            coverage=CoverageView(
+                vedas_in_scope=list(VEDA_ORDER),
+                measured=measured,
+                denominator=dict(figures.CORPUS_MANTRAS),
+            ),
+            caveats=[
+                *disclosure,
+                CaveatView(text=_MENTION_LAYER_CAVEAT, source="mention_layer_scope"),
+                _measured_caveat(
+                    "Books differ in size by more than an order of magnitude, so the raw "
+                    "count and the per-1,000 figure rank them differently and the second is "
+                    "the one a cross-book comparison should be read on."
+                ),
+                _measured_caveat(
+                    "This is the naming layer and not the traditional ascription. The two "
+                    "reach different corpora and are never summed."
+                ),
+            ],
+            devata_id=key,
+            display_label=label,
+            basis="naming",
+            books=books,
+            total=total,
+        )
+
+    def devata_by_metre(
+        self, *, devata_id: str, tiers: Sequence[str], population: DeityPopulation
+    ) -> DevataByMetreResponse:
+        """VIZ_BLOCKER_03. Deity x metre, with the corpora the metre layer misses typed."""
+        key, label, disclosure = self._resolved_devata(devata_id, population)
+        scope = {
+            _as_str(row.get("veda")): _as_int(row.get("mantras")) or 0
+            for row in self._repository.run(_METRE_LAYER_SCOPE_QUERY)
+            if isinstance(row, dict)
+        }
+        covered = [veda for veda in VEDA_ORDER if scope.get(veda)]
+        cells: list[MetreCountRow] = []
+        total = 0
+        for row in self._repository.run(_DEVATA_BY_METRE_QUERY, key=key, tiers=list(tiers)):
+            if not isinstance(row, dict):
+                continue
+            count = _as_int(row.get("count")) or 0
+            total += count
+            cells.append(
+                MetreCountRow(
+                    metre_key=_as_str(row.get("metre_key")) or "",
+                    metre_label=_as_str(row.get("metre_label")) or "",
+                    veda=_as_str(row.get("veda")) or "",
+                    count=count,
+                    status=CellStatus.MEASURED,
+                )
+            )
+        # The two thirds the spec called hatched. Present, typed, and carrying a note --
+        # a matrix with two corpora silently missing is read as a matrix of two corpora.
+        for veda in VEDA_ORDER:
+            if veda in covered:
+                continue
+            cells.append(
+                MetreCountRow(
+                    metre_key="",
+                    metre_label="",
+                    veda=veda,
+                    count=None,
+                    status=CellStatus.NOT_BUILT,
+                    note=f"The metre layer does not reach the {veda}. This row is unbuilt "
+                    "rather than zero: no verse of this corpus carries a metre in this "
+                    "graph, which is a statement about the annotation and not about the "
+                    "corpus, whose verses are metrical.",
+                )
+            )
+        return DevataByMetreResponse(
+            insight="devata_by_metre",
+            question="Which metres carry this deity, and where is that question unanswerable?",
+            data_status=KnowledgeStatus.PARTIAL,
+            cost_class=CostClass.AGGREGATE,
+            cost_note="Joins one deity's mention edges to the metre layer and measures that "
+            "layer's own reach. Labelled an aggregate.",
+            vedas_reported=list(VEDA_ORDER),
+            scope_statements=self._scope_statements(VEDA_ORDER),
+            coverage=CoverageView(
+                vedas_in_scope=covered,
+                vedas_not_covered=[veda for veda in VEDA_ORDER if veda not in covered],
+                measured={
+                    veda: sum(cell.count or 0 for cell in cells if cell.veda == veda)
+                    for veda in covered
+                },
+                denominator={veda: figures.CORPUS_MANTRAS[veda] for veda in covered},
+            ),
+            caveats=[
+                *disclosure,
+                _measured_caveat(
+                    "The metre layer reaches "
+                    + (", ".join(covered) or "no corpus")
+                    + " and covers "
+                    + ", ".join(f"{scope.get(veda, 0):,} {veda} verses" for veda in covered)
+                    + ". The rest of this matrix is therefore unbuilt rather than empty, and "
+                    "the unbuilt rows are returned so that nothing infers a metreless "
+                    "Samaveda from a table that simply stops."
+                ),
+                CaveatView(text=_MENTION_LAYER_CAVEAT, source="mention_layer_scope"),
+            ],
+            devata_id=key,
+            display_label=label,
+            cells=cells,
+            vedas_with_a_metre_layer=covered,
+            total=total,
+        )
+
+    def devata_dispersion(
+        self, *, devata_id: str, tiers: Sequence[str], population: DeityPopulation
+    ) -> DevataDispersionResponse:
+        """VIZ_BLOCKER_01. Every attesting position, for a deity of any size.
+
+        Integer positions only. Indra is named in 2,305 Rigvedic verses; returning them as
+        passages would be eighteen pages at the 200-row cap, and the cap is what made the
+        landscape unfetchable rather than merely slow.
+        """
+        key, label, disclosure = self._resolved_devata(devata_id, population)
+        sizes = {
+            _as_str(row.get("veda")): _as_int(row.get("mantras")) or 0
+            for row in self._repository.run(_CORPUS_SIZES_QUERY)
+            if isinstance(row, dict)
+        }
+        hits = {
+            _as_str(row.get("veda")): set(_as_str_list(row.get("keys")))
+            for row in self._repository.run(
+                _DEVATA_HIT_KEYS_QUERY, entity_key=key, tiers=list(tiers)
+            )
+            if isinstance(row, dict)
+        }
+        by_veda: dict[str, DispersionSeries] = {}
+        total = 0
+        for veda in VEDA_ORDER:
+            corpus_hits = hits.get(veda) or set()
+            positions: list[int] = []
+            if corpus_hits:
+                # The ordering is fetched only for a corpus that has hits. A deity absent
+                # from a corpus costs nothing here, which is most deities and most corpora.
+                order_row = self._repository.run_one(_CORPUS_ORDER_QUERY, veda=veda) or {}
+                ordered = _as_str_list(order_row.get("ordered"))
+                ordered.sort()
+                positions = [
+                    index + 1
+                    for index, canonical_key in enumerate(ordered)
+                    if canonical_key in corpus_hits
+                ]
+            denominator = sizes.get(veda) or figures.CORPUS_MANTRAS[veda]
+            total += len(positions)
+            by_veda[veda] = DispersionSeries(
+                veda=veda,
+                positions=positions,
+                denominator=denominator,
+                status=CellStatus.MEASURED if positions else CellStatus.MEASURED_ZERO,
+                note=(
+                    None
+                    if positions
+                    else "A measured zero. The mention layer reaches this corpus and found "
+                    "no verse naming this deity in it."
+                ),
+            )
+        return DevataDispersionResponse(
+            insight="devata_dispersion",
+            question="Where in each corpus is this deity attested?",
+            data_status=KnowledgeStatus.SUPPORTED,
+            cost_class=CostClass.AGGREGATE,
+            cost_note="Orders each corpus once and projects one deity's mention edges onto "
+            "it. Returns integers, never passages, so the response stays small whatever the "
+            "deity's size. Labelled an aggregate.",
+            vedas_reported=list(VEDA_ORDER),
+            scope_statements=self._scope_statements(VEDA_ORDER),
+            coverage=CoverageView(
+                vedas_in_scope=list(VEDA_ORDER),
+                measured={veda: len(series.positions) for veda, series in by_veda.items()},
+                denominator=dict(figures.CORPUS_MANTRAS),
+            ),
+            caveats=[
+                *disclosure,
+                CaveatView(text=_MENTION_LAYER_CAVEAT, source="mention_layer_scope"),
+                _measured_caveat(
+                    "A position is a rank in the corpus's canonical order, not a citation "
+                    "and not a date. Adjacency on this axis is adjacency in the received "
+                    "arrangement of the collection, which is not the order of composition."
+                ),
+            ],
+            devata_id=key,
+            display_label=label,
+            basis="naming",
+            by_veda=by_veda,
+            total_positions=total,
         )
 
     # -- /insights/devatas/{id} -------------------------------------------
@@ -2767,8 +3862,9 @@ class InsightService:
         # ever grew an import-time failure.
         from vedagraph.api.services.entity_service import EntityService, subject_disclosure
 
-        structure = EntityService(self._repository)._resolve_devata(devata_id, population)
-        is_resolved_deity, disclosure = subject_disclosure(structure)
+        subject = EntityService(self._repository)._resolve_devata(devata_id, population)
+        structure = subject.structure
+        is_resolved_deity, disclosure = subject_disclosure(subject)
 
         row = self._repository.run_one(_DEVATA_INSIGHT_QUERY, key=devata_id, tiers=list(tiers))
         if row is None:  # pragma: no cover - the gate above already resolved the node
@@ -2782,7 +3878,17 @@ class InsightService:
         precisions = sorted(set(_as_str_list(row.get("precision_groups"))))
         ascribed = _as_int(row.get("ascribed"))
         ascribed_vedas = _as_str_list(row.get("ascribed_vedas"))
+        ascribed_by_veda = _pairs_to_counts(row.get("ascribed_by_veda"))
         named_total = sum(named.values()) or None
+        # The layer's reach, measured now over both resolved-dedication predicates. Not a
+        # constant: see _RESOLVED_DEDICATION_PREDICATES.
+        scope_row = self._repository.run_one(_DEDICATION_LAYER_SCOPE_QUERY)
+        dedication_layer_scope = [
+            veda
+            for veda in VEDA_ORDER
+            if veda in set(_as_str_list((scope_row or {}).get("vedas")))
+        ]
+        ascription_routes = _dedication_routes(row.get("ascribed_by_route"))
 
         certainty = ReferentCertaintyCounts(
             certain_count=certainty_split.get("DEITY_CERTAIN", 0),
@@ -2815,11 +3921,56 @@ class InsightService:
             cost_note="Indexed lookups on one deity plus its stored statistics.",
             vedas_reported=list(VEDA_ORDER),
             scope_statements=self._scope_statements(VEDA_ORDER),
+            # Two dimensions, two scopes, and never one merged block again. The top-level
+            # fields describe the dimension ``measured`` belongs to -- naming, which spans
+            # four corpora -- and the ascription scope lives in its own dimension instead
+            # of being written into the same ``vedas_not_covered``. Merged, this endpoint
+            # published AV 635 / YV 221 / SV 405 and told a machine consumer in the same
+            # breath that AV, YV and SV were not covered, so a client filtering on that
+            # field discarded three quarters of the answer.
             coverage=CoverageView(
                 vedas_in_scope=list(VEDA_ORDER),
-                vedas_not_covered=[veda for veda in VEDA_ORDER if veda not in ascribed_vedas],
+                vedas_not_covered=[],
                 measured=named,
                 denominator=dict(figures.CORPUS_MANTRAS),
+                dimensions=[
+                    CoverageDimension(
+                        dimension="naming",
+                        vedas_in_scope=list(VEDA_ORDER),
+                        vedas_not_covered=[],
+                        measured=named,
+                        denominator=dict(figures.CORPUS_MANTRAS),
+                        means="Passages whose text names this deity, at the requested "
+                        "certainty tiers. The mention layer reaches all four corpora, so a "
+                        "corpus missing from measured had no mention edge at those tiers "
+                        "rather than an absent layer.",
+                    ),
+                    CoverageDimension(
+                        dimension="ascription",
+                        vedas_in_scope=list(dedication_layer_scope),
+                        vedas_not_covered=[
+                            veda for veda in VEDA_ORDER if veda not in dedication_layer_scope
+                        ],
+                        measured={
+                            veda: ascribed_by_veda.get(veda, 0)
+                            for veda in dedication_layer_scope
+                        },
+                        denominator={
+                            veda: figures.CORPUS_MANTRAS[veda] for veda in dedication_layer_scope
+                        },
+                        means="Passages the traditional apparatus dedicates to this deity, "
+                        "over both resolved-dedication routes -- HAS_DEVATA where the "
+                        "Anukramani names a registry deity, HAS_DEVATA_DERIVED where the "
+                        "dedication is recovered from its descriptor's morphology. "
+                        "`ascription_routes` splits the figure by route and states each "
+                        "method. The scope here is the LAYER's, not this deity's: a deity "
+                        "with no Rigvedic dedication still has RV in scope, because its "
+                        "zero is an absent dedication inside a covered corpus. The "
+                        "Samavedic and Yajurvedic zeros are the layer being absent "
+                        "outright, which is GAP-ATTRIBUTION-001 and a source block. Never "
+                        "summed with naming.",
+                    ),
+                ],
             ),
             # The disclosure goes first. A client that renders one caveat renders the one
             # saying this subject is not a god.
@@ -2863,12 +4014,23 @@ class InsightService:
             certainty=certainty,
             ascribed_total=ascribed,
             ascribed_scope=ascribed_vedas,
+            ascription_routes=ascription_routes,
             ascription_note=(
-                "Ascription is the traditional apparatus dedicating a hymn, and it exists for "
-                f"{', '.join(ascribed_vedas) or 'no corpus in this graph'}. A zero elsewhere "
-                "is a missing apparatus rather than an absent deity, and most ascriptions are "
-                "a hymn label projected onto each verse inside it rather than a per-verse "
-                "statement."
+                "Ascription is the traditional apparatus dedicating a hymn. For this deity it "
+                f"reaches {', '.join(ascribed_vedas) or 'no corpus in this graph'}, and the "
+                "layer as a whole reaches "
+                f"{', '.join(dedication_layer_scope) or 'no corpus in this graph'}. The total "
+                "spans two routes with two methods and `ascription_routes` separates them: "
+                "the Rigvedic dedication is the Anukramani naming a deity the registry holds, "
+                "the Atharvavedic one is that dedication recovered from a Sanskrit adjective "
+                "under Panini 4.2.24 sasya devata, and 277 of the 324 Atharvavedic descriptors "
+                "are refused a deity rather than resolved -- each carrying its own recorded "
+                "reason. The Atharvavedic dedications counted here were derived from 39 of "
+                "the 47 that resolve, because the derived layer has not been rebuilt from "
+                "the 8 the R4 matcher gained (R4-RESIDUAL-ATTRIBUTION-002). A zero in a corpus the layer reaches is an absent dedication; a zero "
+                "in the Samaveda or Yajurveda is a missing apparatus rather than an absent "
+                "deity. Most ascriptions are a hymn label projected onto each verse inside it "
+                "rather than a per-verse statement."
             ),
             mention_surplus=(
                 (named_total or 0) - ascribed if ascribed is not None and named_total else None

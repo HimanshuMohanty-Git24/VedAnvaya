@@ -1,0 +1,328 @@
+{
+  "agent": "AGENT_2_ENTITY_DEVATA_IDENTITY",
+  "artifact": "AGENT2_REGISTRY_OUTCOMES",
+  "disagreements_with_the_registry_as_written": [
+    {
+      "gap_id": "GAP-ENTITY_COVERAGE-002",
+      "measured": "25 is right for DerivedMetric subjects; 30 :Devata carry profile properties, so the declared closure_measure reads 184 null, not 189",
+      "registry_says": "materialised for only 25 of 214; 189 deity pages report null"
+    },
+    {
+      "gap_id": "GAP-CROSS-VEDA-DEVATA-IDENTITY-BRIDGE-001",
+      "measured": "the declared closure_measure MATCH (a:DevataAscription) WHERE (a)-->(:Devata) reads 0 in the live graph, not 8. The 8 was the probe's in-memory figure; no bridge edge was ever written.",
+      "registry_says": "current_count 8"
+    },
+    {
+      "gap_id": "GAP-ENTITY_COVERAGE-007",
+      "measured": "107 of 375 :DomainEntity carry the resolution edge, over 160 edges; the 9 is the NaturalPhenomenon slice",
+      "registry_says": "materialised for 9 NaturalPhenomenon nodes only"
+    },
+    {
+      "gap_id": "GAP-ENTITY_COVERAGE-008",
+      "measured": "reproduced exactly as 29 non-deity :Devata + 113 non-seer :Rishi + 17 fused :Chandas. The Chandas third is already closed: 28 nodes carry retired_reason RETIRED_IDENTITY_NOT_A_METRE_NAME, the :Internal label and zero edges.",
+      "registry_says": "current_count 159"
+    }
+  ],
+  "lead_items": {
+    "HAS_COMPONENT_stamped_HUMAN_REVIEWED": {
+      "a_finding_the_lead_should_have": "There are TWO decomposition predicates and the live one is not the one carrying the defect. The 14 decompositions in the graph are :Devata-[:COMPOSED_OF]->:Devata, which carries evidence_basis/quality_tier and NO provenance_class. The HAS_COMPONENT layer in src/vedagraph/lexical/components.py has never landed a single edge. So the contradiction holds by emptiness on a predicate that is not even the one in use, and whoever lands HAS_COMPONENT must also decide whether it supersedes COMPOSED_OF or duplicates it.",
+      "answer": "My component work emits NO relationship of any kind, so it carries no provenance_class at all and cannot trip the HUMAN_REVIEWED_EDGES = 0 guard.",
+      "enum_not_renamed_and_why": "LexicalProvenanceClass has exactly two members, DETERMINISTIC_DERIVED and HUMAN_REVIEWED, and ComponentAssertion both defaults to and validates HUMAN_REVIEWED (src/vedagraph/models/lexical.py:301,311). Adding CURATED_REGISTRY is the right fix and it is recorded here as the named prerequisite for the PAIR half. I did not make it: I land no edge through that path, so renaming a live enum I do not exercise would be an untested change to another agent's finding, and the substantive question -- whether a registry row with no named reviewer may be called reviewed at all -- is a curation decision rather than a naming one.",
+      "measured_live": {
+        "COMPOSED_OF_edges": 28,
+        "HAS_COMPONENT_edges": 0,
+        "edges_carrying_provenance_class_HUMAN_REVIEWED": 0,
+        "properties_on_COMPOSED_OF": [
+          "attribution_precision",
+          "evidence_basis",
+          "grade_basis",
+          "knowledge_layer",
+          "quality_tier"
+        ]
+      },
+      "reviewer_identity": "None recorded, anywhere. data/registry/devata_components.yaml names no reviewer, and that is precisely why the PAIR half of GAP-COMMUNITIES-002 stays open rather than being closed by an agent asserting a review that did not happen.",
+      "what_my_mutation_is": "GAP-COMMUNITIES-002 is a PROPERTY_UPDATE only: decomposition_state and decomposition_reason on the 57 composites that carry no components. census_delta is {nodes: 0, relationships: 0}."
+    },
+    "attribution_vedas_widening": {
+      "decision": "DO NOT WIDEN. I agree with Agent 6 and I am not making the change I earlier named as a follow-on.",
+      "the_honest_way_to_surface_AV_later": "A separate declared scope for HAS_DEVATA_DERIVED, reported beside the HAS_DEVATA one with its own method and its own CONTAINER_INHERITED precision -- never summed into it. If insight_service:468-477 ever widens to HAS_DEVATA|HAS_DEVATA_DERIVED then COUNTED_ATTRIBUTION_PREDICATES must widen in the SAME edit, as Agent 6 says, or `values` grows while `method` and `scope_note` describe the narrower set. I am not making that change: GAP-ATTRIBUTION-002's API clause stays unmet and visible rather than met by a widening that overstates the layer.",
+      "why_i_withdraw_my_own_proposal": "ATTRIBUTION_VEDAS is the declared scope of the HAS_DEVATA layer, and HAS_DEVATA has zero AV edges. Widening it to ('RV','AV') would make every scope_note in profiles.py read as though HAS_DEVATA reaches the Atharvaveda, which is false -- the AV dedication lives on a DIFFERENT predicate precisely so the per-Veda method stays recoverable. Widening the constant would destroy the distinction the separate predicate exists to preserve."
+    },
+    "deity_community_display_label_is_an_integer": {
+      "canonical_mutation": "12 rows, property-only, in deity_community_labels.jsonl; community_id, identity and config_hash untouched.",
+      "generators_fixed": [
+        "data/staging/communities/build_communities_staging.py",
+        "scripts/wave3_import_plan.py"
+      ],
+      "measured": "12 :Internal :DeityCommunity nodes carry display_label as INTEGER 0-11. valueType() confirms INTEGER NOT NULL on all 12.",
+      "residual": "wave3_proposed_display_label carries the same INTEGER type on the same 12 nodes. It is a Wave 3 audit-trail property rather than a product surface, so it is reported and not rewritten -- but a probe that lowercases property VALUES rather than display_label alone still raises on it.",
+      "root_cause": "data/staging/communities/build_communities_staging.py emitted community_id as a Python int and scripts/wave3_import_plan.py:909 set display_label_field='community_id'. The graph's community_id property is itself a STRING ('0'), so the importer coerced the match property and not the display label, which is why nothing noticed.",
+      "staging_regenerated": "data/staging/communities/ rebuilt. Diff against the pre-run copy: communities.jsonl differs only on the new display_label and on code_commit; sources.jsonl only on retrieved_at/snapshot; all 1,185 rows.jsonl rows differ only in payload.run (code_commit) and in the census embedded in source_locator, which moved 108,779/265,295 -> 117,970/282,389 because the graph has grown since the original run. Membership, sizes and every figure are identical.",
+      "test": "tests/domain/test_deity_community_labels.py, 4 tests, with the BAD case asserted directly: toLower(0) raises and toLower('DEITY_COMMUNITY_0') does not.",
+      "value_chosen": "DEITY_COMMUNITY_<id>, a renderable identifier and deliberately not a name: the node's own interpretation_warning says naming it would convert a co-occurrence statistic into a theological claim."
+    },
+    "evidence_vocabulary_on_the_921_live_edges": {
+      "1_mapping_for_attribution_precision": {
+        "SOURCE_EXPLICIT_ASCRIPTION_RESOLVED": "NOT MAPPED -- WITHDRAWN. The value is deleted, not given a home. It becomes CONTAINER_INHERITED, which is already a member of AttributionPrecision and already maps to EvidenceBasis.CONTAINER_INHERITED through _BASIS_BY_PRECISION. No enum widens.",
+        "sukta_level_vs_verse_level": {
+          "sukta_level": 882,
+          "verse_level": 0
+        }
+      },
+      "2_mapping_for_both_evidence_basis_values": {
+        "DERIVED_FROM_ANUKRAMANI_ASCRIPTION_MORPHOLOGY": "NOT MAPPED -- WITHDRAWN. Becomes SOURCE_METADATA, read off the parent ascription edge rather than chosen: a derived dedication cannot rest on a better surface than the ascription it came from, and that surface is the Anukramani apparatus, not the Samhita text. The parent edges already carry exactly this value.",
+        "DERIVED_FROM_TADDHITA_MORPHOLOGY": "NOT MAPPED -- WITHDRAWN. Becomes SOURCE_METADATA for the same reason. Its content was never a surface; it was a method, and it now lives on ascription_resolution_method.",
+        "net_effect_on_the_enums": "Zero new members in EvidenceSurface or AttributionPrecision. Three invented values removed. Agent 6's two guards go green without either enum being widened, which is the outcome its refusal was protecting."
+      },
+      "3_do_the_two_axes_stay_separate": {
+        "answer": "Yes, and not by convention -- by namespace.",
+        "resolution_axis": "ascription_resolution_method = TADDHITA_SASYA_DEVATA_DERIVATION, ascription_resolution_path = VRDDHI_TADDHITA | DEITY_ADJECTIVE_SUFFIX, ascription_resolution_comparison_tier = EXACT (31) | LENGTH_INSENSITIVE (8). Namespaced so they cannot be mistaken for the product vocabulary and cannot be cast into it.",
+        "scope_axis": "attribution_precision = CONTAINER_INHERITED, scope_origin = SUKTA_WIDE, scope_container_key = the sukta. The product's slots, the product's vocabulary.",
+        "why_it_matters": "A reader now sees 'the scope is hymn-wide' and 'the resolution was an exact stem match' as two facts. Blending them is how a container-wide claim starts reading as a per-verse one, and the exactness of the resolution was precisely the thing tempting me to overstate the scope."
+      },
+      "4_the_code_change_and_its_guard": {
+        "generator": "vedagraph.domain.ascription_bridge now owns the property contract: edge_properties(), dedication_properties(), and check_property_vocabulary(), which RAISES UnmappedPropertyValue on any value outside the closed enums. The API degrades an unknown value to UNKNOWN so one odd property cannot fail a request -- right for a read, wrong for a write. A generator emitting an unmapped value has created the odd property and must stop rather than ship it.",
+        "note_on_agent_6s_guards": "They stay exactly as they are. They are what turned a silent UNKNOWN into a red test, and they should keep working.",
+        "second_guard": "build_agent2_staging.py additionally asserts that every derived dedication's attribution_precision EQUALS its parent ascription's, and exits non-zero otherwise. A derived edge may not be stronger than the edge it derives from -- which is the general form of this defect.",
+        "tests": "tests/domain/test_ascription_bridge.py gains 5 tests. test_the_emitted_vocabulary_is_the_products_own feeds it the exact three values that shipped and requires a raise. test_the_local_vocabularies_match_the_product_enums asserts the domain-layer copies equal EvidenceSurface and AttributionPrecision member-for-member, so the copy cannot drift. test_an_exact_resolution_does_not_upgrade_a_container_wide_scope pins the answer to your question."
+      },
+      "a_finding_you_did_not_ask_for": {
+        "HAS_DEVATA_DERIVED_is_genuinely_new": "Declared now at ontology.py with signature ({Passage, Mantra}) -> ({Devata}), in DOMAIN_RELATIONSHIP_TYPES, and RELATIONSHIP_SIGNATURES is asserted equal to it so an undeclared predicate cannot be added again.",
+        "RESOLVES_TO_DEVATA_should_never_have_existed": "The ontology ALREADY declares REL_ASCRIBES_TO_DEVATA at ontology.py:852, signature (:DevataAscription)->(:Devata), with a docstring that describes this exact work: 'The deity a descriptor is derived from, where the derivation is a morphological fact -- aagneyam is the vrddhi derivative of agni. Absent where it would be a reading.' It sat at 0 edges waiting for this bridge and I invented a synonym because I never looked for a declared-but-empty predicate. That is how a declared predicate gets duplicated: nothing is looking for one. The 39 live edges are RETYPED to ASCRIBES_TO_DEVATA, not duplicated -- census delta 0."
+      },
+      "answer": "CONTAINER_INHERITED. 882 of 882. Zero verse-level. Your reading was right and my value was wrong.",
+      "measured_three_independent_ways": {
+        "1_the_parent_edge_says_so": "Every one of the 882 derives from a HAS_DEVATA_ASCRIPTION edge carrying attribution_precision=CONTAINER_INHERITED and scope_origin=SUKTA_WIDE. So do all 5,385 AV ascription edges: there is no verse-level Atharvavedic devata ascription anywhere in the graph to inherit a stronger precision from.",
+        "2_the_container_key_says_so": "scope_container_key equals the mantra's parent_key (the sukta) on 882 of 882, and the verse's own canonical_key on 0 of 882.",
+        "3_the_corpus_says_so": "All 505 Atharvavedic suktas that carry an ascription carry the IDENTICAL ascription set on every one of their verses. No AV verse in the corpus is ascribed differently from its sukta."
+      },
+      "the_question": "Is a HAS_DEVATA_DERIVED edge a per-passage statement or a container-inherited one?",
+      "the_root_error_was_not_a_missing_mapping": "It was writing a DERIVATION into a SURFACE slot and a RESOLUTION QUALITY into a SCOPE slot. EvidenceSurface answers 'off which textual surface was this read?'; attribution_precision answers 'does the source state this of THIS passage or of a container above it?'. I answered the second question with the first's answer. That is the same shape as the defect EvidenceBasis documents in its own warning, where casting the graph property into the enum reported all 44,778 attribution edges as UNKNOWN. Agent 6 was right to refuse to map it: mapping SOURCE_EXPLICIT_ASCRIPTION_RESOLVED to anything would have made a blended grade permanent."
+    },
+    "relationship_type_declarations": {
+      "ASCRIBES_TO_DEVATA": {
+        "edges_after": 39,
+        "from": ":DevataAscription",
+        "status": "was already declared in the ontology; RESOLVES_TO_DEVATA retyped into it",
+        "to": ":Devata"
+      },
+      "HAS_DEVATA_DERIVED": {
+        "edges_after": 882,
+        "from": ":Passage|:Mantra",
+        "status": "newly declared",
+        "to": ":Devata"
+      },
+      "also_registered": "Both added to graph_service PREDICATE_SEMANTICS with their phrase/asserts/limit, and to PIPELINE_CONSTANT_PREDICATES at 1.0 alongside the other Anukramani predicates, so /api/v1/graph can see them and states their limit. HAS_DEVATA_DERIVED's limit says in as many words that the scope is SUKTA_WIDE and that an exact resolution does not make it per-verse."
+    },
+    "the_185_versus_192_denominator": {
+      "answer": "Deliberate, and mine. GAP-ENTITY_COVERAGE-008.",
+      "measured_basis": "192 was `coalesce(d.structure,'UNSPECIFIED') <> 'HUMAN'`, which removes the 22 human patrons and keeps the 7 danastuti gift-praise labels and the 28 ABSTRACT labels ruled NOT_DEITY. The ruled population is 157. 185 is the transitional figure the convergent predicate reads while is_deity has not yet landed on any node: it excludes the 29 curated non-members the closure test names and cannot yet apply the 28 per-label rulings.",
+      "tests_updated": "tests/api/test_insights.py now derives the expected figure from the row's own devatas_without_an_eligibility_ruling (185 while it is non-zero, 157 when it is 0) and asserts the value is never 192, so it stays true across the mutation instead of needing another edit the day the data lands. tests/domain/test_v3_3_final_closure.py no longer pins the old predicate.",
+      "why_a_shim_rather_than_the_bare_predicate": "The first version of this change used `d.is_deity = true` directly and broke /api/v1/insights/capabilities?question=23: Neo4j does not error on a missing property, it returns null, the WHERE dropped every row and the card published a null pairwise_co_occurrence_edges where its decisive figure belongs. Found by tests/api/test_insights.py and fixed. The query now always returns exactly one row and types the transitional state IN the row as devatas_without_an_eligibility_ruling."
+    }
+  },
+  "outcomes": {
+    "GAP-ATTRIBUTION-001": {
+      "closure_test": "HAS_DEVATA (or an equivalently typed dedication predicate) reaches SV, YV and AV, and /api/v1/insights/devatas/{id} returns an ascribed_scope of more than one Veda with the per-Veda method stated.",
+      "measured": {
+        "AV": "882 derived dedication edges over 851 mantras and 35 Devatas, STAGED",
+        "SV": "1,685 derivable edges over 1,662 of 1,844 mantras. STAGED AND WITHHELD IN FULL BY LEAD RULING -- see sv_withheld_ruling below. Not pending: decided.",
+        "YV": "0, and not for want of trying",
+        "mantras_with_no_dedication_record": {
+          "AV": 1679,
+          "SV": 1844,
+          "YV": 1975,
+          "total": 5498
+        }
+      },
+      "precise_reason": "The Yajurvedic third cannot be derived from anything held. data/staging/attribution/proofs/yv_katyayana_measurement.json measures the Madhyandina Sarvanukramani at NOT_EXTRACTABLE_AT_SOURCE_EXPLICIT: zero numeric mantra coordinates in 49,708 characters, 102 lingokta deferrals where the sutra declines to name the deity, and no field delimiters separating the rsi, devata and chandas slots. The one lead is an UNCHECKED printed edition (Weber 1852, or Uvata+Mahidhara) that may head each mantra with rsih/devata/chandah -- a page-image inspection, not a fetch. Until that source is acquired, YV devata dedication is unavailable at any evidence grade this graph accepts, so the three-Veda closure test cannot pass. The AV third is implementation-complete and lands. The SV third is implementation-complete and WITHHELD BY RULING, because a text-reuse edge is not a Samavedic ascription. So the gap is blocked on sources at both ends it could not reach, and is not unfinished implementation at either.",
+      "proposed_status": "BLOCKED_EXTERNAL_SOURCE_UNAVAILABLE",
+      "sv_withheld_ruling": {
+        "authority": "FINAL_CLOSURE_SPRINT_LEAD",
+        "reasons_in_order_of_weight": [
+          "1. It is not a source attribution at all. DERIVED_FROM_A_COMPARISON_GRADE_EDGE is the field's own admission: the evidence is that an RV mantra's text recurs, not that any Samavedic authority ascribes a deity. The Samaveda is a liturgical rearrangement with its own ascriptive tradition, and projecting the Rigvedic dedication onto 1,662 of its 1,844 mantras would put attributions in the graph that no source states.",
+          "2. Owner decision 11 is directly on point: a fold may establish NORMALIZED_SURFACE_MATCH and may not be read as SAME_CANONICAL_PASSAGE. 504 of the 1,685 rest on the looser tiers -- SANDHI_INSENSITIVE 415, SCRIPT_FOLDED 89 -- and projecting a dedication across them is nearer a same-passage claim than a surface-match one.",
+          "3. Consistency across the sprint: 8 assertions were withheld from Agent 3 for resting on NEAR_PARALLEL_OF rather than exact, and Agent 7 refused a translation row whose 1.0 identity held on only 2 of 6 pairings -- 'a best-of-six identity is not identity'. What was refused over 8 assertions and 1 verse is not accepted over 1,662 verses."
+        ],
+        "recorded_here_because": "A decision that lives only in a transcript is a decision the next reader re-makes. It travels with the rows it governs, in sv_derived_dedications.jsonl and in proposed_mutations.json.",
+        "reopen_condition": "A Samavedic ascriptive source: the tradition's own, not the Rigveda's read across a text-reuse edge.",
+        "rows": 1685,
+        "ruling": "WITHHELD",
+        "the_artifact_is_kept": "sv_derived_dedications.jsonl stays as a typed withheld queue -- a bounded evidenced queue, not a weaker grade of fact. Every row keeps its source mantra, reuse tier, match_level and lcs_ratio, so a future Samavedic ascriptive source is checked AGAINST it rather than having to rebuild it.",
+        "the_two_sets_side_by_side": {
+          "AV_882_LANDS": {
+            "attribution_precision": "SOURCE_EXPLICIT_ASCRIPTION_RESOLVED",
+            "evidence_basis": "DERIVED_FROM_ANUKRAMANI_ASCRIPTION_MORPHOLOGY",
+            "why": "the Atharvaveda's OWN Anukramani, resolved by grammar. The source made the attribution; the bridge recovered it."
+          },
+          "SV_1685_WITHHELD": {
+            "attribution_precision": "DERIVED_FROM_A_COMPARISON_GRADE_EDGE",
+            "evidence_basis": "DERIVED_FROM_ATTESTED_TEXT_REUSE_OF_AN_RV_MANTRA",
+            "why": "an attribution the Samavedic source never made."
+          }
+        }
+      }
+    },
+    "GAP-ATTRIBUTION-002": {
+      "closure_test": "MATCH (a:DevataAscription) WHERE size([(a)-[]->(:Devata)|1])>0 RETURN count(a) is greater than 0 for every resolvable descriptor, /api/v1/insights/devatas/{id} returns AV in ascribed_scope with its method stated, and the unresolvable descriptors carry an explicit reason.",
+      "measured": {
+        "clause_1_resolvable_descriptors_resolved": "39, up from 0",
+        "clause_2_api_returns_AV_in_ascribed_scope": "NOT MET",
+        "clause_3_unresolvable_carry_an_explicit_reason": "324 of 324, closed enum of 6 statuses plus prose"
+      },
+      "precise_reason": "The API clause cannot pass until the 882 AV dedication edges are described by the product, and I have now WITHDRAWN the ATTRIBUTION_VEDAS widening I earlier named as the way to do it -- see lead_items.attribution_vedas_widening. Widening that constant would make every scope_note read as though HAS_DEVATA reaches the Atharvaveda, which is false: the AV dedication lives on HAS_DEVATA_DERIVED precisely so the per-Veda method stays recoverable. The honest route is a separate declared scope for the derived predicate, reported beside the HAS_DEVATA one and never summed into it, and that is a product-surface change rather than an entity-layer one. Unfinished implementation, not a scope decision, and deliberately left visible rather than met by a widening that overstates the layer.",
+      "proposed_status": "STILL_IMPLEMENTATION_FIXABLE"
+    },
+    "GAP-COMMUNITIES-002": {
+      "closure_test": "Every PAIR deity carries components, and every GROUP deity either carries components or a typed reason why its membership is not enumerable.",
+      "measured": {
+        "component_registry_rows": 20,
+        "components_present": 14,
+        "composites": 71,
+        "group_typed_as_not_enumerable": 33,
+        "pair_awaiting_reviewed_curation": 24
+      },
+      "precise_reason": "The GROUP half is closable now: all 33 carry a typed reason and it is staged. The PAIR half is not, and deliberately not, for two independent reasons. First, data/registry/devata_components.yaml states its own policy -- HAS_COMPONENT is human-reviewed enrichment and is NEVER inferred, not from a dual ending, not from a hyphen, not from a substring that looks like another entity's name -- so 24 dvandva decompositions inferred by an agent from a dual ending would violate that policy in exactly its own words. Second, the layer that would carry them stamps provenance_class = HUMAN_REVIEWED by default AND by validator (src/vedagraph/models/lexical.py:301,311) while no reviewer identity is recorded anywhere, and the shipped API tells every client that no edge in the graph is human-reviewed. Landing the PAIR half through that layer would create the first edges in the graph asserting a review nobody performed and make the API caveat false on the same day. The 24 rows are staged as an input to review, not as a substitute for it.",
+      "prerequisite_before_the_pair_half_can_land": "LexicalProvenanceClass needs a value that describes what this actually is -- CURATED_REGISTRY -- or ComponentAssertion needs to require a recorded reviewer identity, and data/registry/devata_components.yaml needs to carry one. Not done here: this agent emits no relationship through that path, so making the change would be an untested edit to a live enum it does not exercise.",
+      "proposed_status": "STILL_IMPLEMENTATION_FIXABLE",
+      "what_my_mutation_carries": "decomposition_state and decomposition_reason on 57 :Devata nodes. Zero relationships, zero provenance_class, zero HUMAN_REVIEWED."
+    },
+    "GAP-CROSS-VEDA-DEVATA-IDENTITY-BRIDGE-001": {
+      "closure_test": "A cross-Veda deity query returns RV and AV dedications for one canonical Devata without joining on any display label, every unresolved ascription is still addressable in its ascription form, and the resolved share is read back out of the database rather than out of the resolver.",
+      "conditional_on": "the 39 RESOLVES_TO_DEVATA edges landing; the resolved share is then read back from the graph by the declared closure_measure rather than from the resolver",
+      "measured": {
+        "after": 39,
+        "basis": "taddhita morphology (Panini 4.2.24 sasya devata), not a display-label join: vrddhi of the first syllable reversed, secondary suffix stripped, stem final restored, then an exact folded check against canonical surfaces",
+        "before": 0,
+        "declared_closure_measure": "MATCH (a:DevataAscription) WHERE (a)-->(:Devata) RETURN count(a)",
+        "distinct_devatas_reached": 35,
+        "occurrences_resolved": "184 of 569 (32.3%), against the prior probe's 9 of 569 (1.6%)",
+        "registry_current_count": 8,
+        "unresolved_typed": {
+          "COMPOUND_TWO_ASCRIPTIONS": 67,
+          "NAMES_A_PLURALITY": 3,
+          "SOURCE_DEFERS_TO_THE_MANTRA": 1,
+          "STEM_MATCHES_NO_CANONICAL_DEVATA": 210,
+          "SUBJECT_DESCRIPTOR_NOT_A_DEITY": 4
+        }
+      },
+      "proposed_status": "CLOSED_DERIVED"
+    },
+    "GAP-ENTITY_COVERAGE-001": {
+      "closure_test": "Epithets carry passage edges, the inventory reaches well beyond 4 deities, and per-epithet recall is measured rather than assumed.",
+      "measured": {
+        "declared_closure_measure": "MATCH (e:Epithet)-[r]-(:Passage) RETURN count(r)",
+        "deities_reached": 4,
+        "epithet_nodes": 13,
+        "epithet_properties": [
+          "display_label",
+          "display_type",
+          "domain_model_version",
+          "epithet_key",
+          "label_en",
+          "label_iast"
+        ],
+        "value": 0
+      },
+      "precise_reason": "NOT REACHED by this agent. The 13 nodes carry a label and nothing else -- no alias set, no attested surface, no locus -- so there is no key to link a passage by and no denominator to measure recall against. Closing it needs a curated epithet inventory in the shape of the theonym registry, which is a curation build rather than a query fix. Diagnosed and measured only.",
+      "proposed_status": "STILL_IMPLEMENTATION_FIXABLE"
+    },
+    "GAP-ENTITY_COVERAGE-002": {
+      "closure_test": "MATCH (m:DerivedMetric) WHERE m.subject_key STARTS WITH 'VG:DEVATA:' RETURN count(DISTINCT m.subject_key) reaches the resolved-deity population, and /api/v1/devatas/VG:DEVATA:SARASVATI returns per-corpus figures rather than nulls.",
+      "measured": {
+        "closure_measure_after": 0,
+        "closure_measure_before": 184,
+        "declared_closure_measure": "MATCH (d:Devata) WHERE d.profile_attributed_total IS NULL RETURN count(d)",
+        "derived_metric_rows_before": 75,
+        "derived_metric_rows_staged": 642,
+        "derived_metric_subjects_before": 25,
+        "derived_metric_subjects_staged": 214,
+        "devata_nodes_with_a_profile_before": 30,
+        "root_cause": "scripts/build_knowledge_model_v3.py:219 TOP_DEVATA_PROFILES = 20, a close-out gate's top-N never widened after the gate closed; the union of two top-20 rankings landed 30 profile property sets and 25 metric subjects"
+      },
+      "precise_reason": "All 214 profiles and 642 metrics are computed and staged with their sha256, and the closure measure goes to 0 when they land. It is not closed because the metrics and the MEASURES edges are canonical writes this agent may not make, and the second clause of the test is an API readback that cannot be performed until they do.",
+      "proposed_status": "STILL_IMPLEMENTATION_FIXABLE"
+    },
+    "GAP-ENTITY_COVERAGE-003": {
+      "closure_test": "A remedy entity class exists with registered aliases, a stated-remedy relation carries verse evidence, and the concerns endpoint no longer needs to caveat the absence of a healing entity.",
+      "measured": {
+        "declared_closure_measure": "MATCH (n) WHERE n:Remedy OR n:Bhesaja RETURN count(n)",
+        "value": 0
+      },
+      "precise_reason": "NOT REACHED by this agent. Neither label exists; the closure needs a new entity class, a curated bhesaja alias inventory and a new predicate, which is an ontology addition and a curation build, not a defect fix. Verified zero, not closed.",
+      "proposed_status": "STILL_IMPLEMENTATION_FIXABLE"
+    },
+    "GAP-ENTITY_COVERAGE-004": {
+      "closure_test": "Entity nodes carry an expected_source, and a coverage report names entities the expectation lists but the registry lacks - the query that would have found trapu without a human reading the text.",
+      "measured": {
+        "domain_entities": 375,
+        "entities_carrying_expected_source": 0
+      },
+      "precise_reason": "NOT REACHED by this agent. No property named expected_source exists on any node. The manifest it asks for is a source acquisition -- a published index of what the corpus attests -- rather than something derivable from the graph, which is the point of the gap.",
+      "proposed_status": "STILL_IMPLEMENTATION_FIXABLE"
+    },
+    "GAP-ENTITY_COVERAGE-006": {
+      "closure_test": "Every entity carries a measured recall figure with its sample size, the ayas YV cell matches VSM 18.13, and no cell is known-false without being typed.",
+      "measured": {
+        "ayas_yv_cell": "still 0 at VG:YV:VSM:A18:V013",
+        "domain_entities": 375,
+        "entities_with_a_measured_recall_figure": 2,
+        "measured_root_cause": "TWO causes stack and each alone is sufficient. (1) VG:CONCEPT:AYAS-METAL's alias set holds only oblique and secondary forms -- ayasi, ayaso, ayasa, ayasam, ayasah, ayasi -- and no plain nominative ayah/ayas at all. (2) The stored Sanskrit at VSM 18.13 reads 'hiranyam ca me 'yas ca me', with the initial a- of ayah elided by avagraha after the preceding e, so the surface is 'yas and no whole-word alias could match it however complete the list. Five metals in the SAME verse -- hiranya, syama, loha, sisa, trapu -- all match, which is exactly why a per-row precision sample over this layer reads clean while this one cell is 100 percent wrong."
+      },
+      "precise_reason": "NOT CLOSED. The root cause is now measured rather than hypothesised, which the registry entry did not have, but the closure test asks for a measured recall figure with a sample size on EVERY entity -- a recall harness over 375 entities with a gold locus set per entity. That is a build, not a patch, and this agent did not do it.",
+      "proposed_status": "STILL_IMPLEMENTATION_FIXABLE"
+    },
+    "GAP-ENTITY_COVERAGE-007": {
+      "closure_test": "Phrase matching reaches multi-word entities, and every entity that could be personified carries a resolution status distinguishing refusal from absence.",
+      "measured": {
+        "devata_associated_with_edges": 160,
+        "domain_entities_total": 375,
+        "domain_entities_with_a_resolution": 107,
+        "natural_phenomenon_nodes": 13,
+        "natural_phenomenon_with_a_resolution": 9,
+        "registry_disagreement": "The entry says the layer is materialised 'for 9 NaturalPhenomenon nodes only'. The 9 is right for :NaturalPhenomenon and wrong for the layer: 107 of 375 :DomainEntity carry a DEVATA_ASSOCIATED_WITH edge over 160 edges. What is missing is the resolution STATUS on the other 268 -- the thing that distinguishes a refusal from a gap -- and phrase matching for multi-word entities."
+      },
+      "precise_reason": "NOT REACHED by this agent beyond re-measurement. Also recorded: the edge is stored (:Devata)-[:DEVATA_ASSOCIATED_WITH]->(:DomainEntity), so a probe written in the other direction returns 0 and would report the whole layer as absent.",
+      "proposed_status": "STILL_IMPLEMENTATION_FIXABLE"
+    },
+    "GAP-ENTITY_COVERAGE-008": {
+      "closure_test": "The eligible deity population is derivable by one documented predicate; counts over it exclude the 29 non-deities; and the ABSTRACT decision is recorded with its reasoning rather than applied implicitly.",
+      "conditional_on": "the staged property update landing; the predicate is already in the shipped queries and the four generator defects are fixed",
+      "measured": {
+        "abstract_decision_recorded": "42 labels, 9 DEITY / 28 NOT_DEITY / 5 UNDECIDED-kept, each with its own prose reason, landed on the node as deity_eligibility_ruling + deity_eligibility_reason",
+        "curated_non_members_excluded": 29,
+        "eligible_deities": 157,
+        "excluded_by_kind": {
+          "ABSTRACTION_NOT_AN_ADDRESSEE": 28,
+          "DANASTUTI_GIFT_PRAISE": 7,
+          "HUMAN_PATRON": 22
+        },
+        "one_documented_predicate": "d.is_deity = true (vedagraph.domain.deity_eligibility.ELIGIBLE_DEITY_PREDICATE, VG:DEITY_ELIGIBILITY:V1)",
+        "public_surface_after": 157,
+        "public_surface_before": 192
+      },
+      "proposed_status": "CLOSED_DERIVED"
+    },
+    "GAP-QUALITY-006": {
+      "closure_test": "Every :Rishi, :Devata and :Chandas node carries occurrence_count; the value for each equals its edge count under one declared scope; a Rigvedic seer's figure matches its HAS_RISHI degree; and the scope is recorded on the node so a reader can tell mantra-scope from container-scope.",
+      "conditional_on": "the staged property update landing",
+      "measured": {
+        "after": 0,
+        "before": 367,
+        "declared_closure_measure": "MATCH (r:Rishi) WHERE r.occurrence_count = 0 RETURN count(r)",
+        "nodes_covered": 1518,
+        "rigvedic_seer_check": "RV_WSC2023_ANUKRAMANI 367 seers, contract sum 10,565 = their HAS_RISHI degree; stored sum was 0",
+        "rows_changed": 1290,
+        "scope": "PASSAGE_DEGREE_ALL_GRAINS, with occurrence_count_mantra_scope + occurrence_count_container_scope landed beside it"
+      },
+      "proposed_status": "CLOSED_DERIVED"
+    }
+  },
+  "rule": "A gap closes only when its OWN declared closure_test passes as written. Everything staged, nothing written to canonical Neo4j.",
+  "vocabulary_used": [
+    "CLOSED_DERIVED",
+    "CLOSED_VERIFIED_ZERO",
+    "BLOCKED_EXTERNAL_SOURCE_UNAVAILABLE",
+    "STILL_IMPLEMENTATION_FIXABLE"
+  ]
+}

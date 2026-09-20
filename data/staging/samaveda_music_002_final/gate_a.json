@@ -1,0 +1,151 @@
+{
+  "ok": true,
+  "stats": {
+    "domain": "samaveda_music",
+    "agent": 5,
+    "rows": 1471,
+    "sources": 4,
+    "rejected": 724,
+    "evidence_layers": {
+      "SOURCE_EXPLICIT": 1471
+    },
+    "mapping_confidence": {
+      "EXACT": 1471
+    },
+    "not_importable": 0,
+    "graph_checked": true,
+    "passage_grained_rows": 1471,
+    "entity_grained_rows": 0
+  },
+  "fatal": [],
+  "checks": [
+    {
+      "name": "manifest.counts_balance",
+      "evaluated": 1,
+      "eligible": 1,
+      "coverage": 1.0,
+      "complete": true,
+      "failures": []
+    },
+    {
+      "name": "manifest.file_checksums",
+      "evaluated": 12,
+      "eligible": 12,
+      "coverage": 1.0,
+      "complete": true,
+      "failures": []
+    },
+    {
+      "name": "row.required_fields",
+      "evaluated": 1471,
+      "eligible": 1471,
+      "coverage": 1.0,
+      "complete": true,
+      "failures": []
+    },
+    {
+      "name": "row.evidence_layer_closed",
+      "evaluated": 1471,
+      "eligible": 1471,
+      "coverage": 1.0,
+      "complete": true,
+      "failures": []
+    },
+    {
+      "name": "row.quality_class_closed",
+      "evaluated": 1471,
+      "eligible": 1471,
+      "coverage": 1.0,
+      "complete": true,
+      "failures": []
+    },
+    {
+      "name": "row.mapping_confidence_closed",
+      "evaluated": 1471,
+      "eligible": 1471,
+      "coverage": 1.0,
+      "complete": true,
+      "failures": []
+    },
+    {
+      "name": "row.source_id_resolves",
+      "evaluated": 1471,
+      "eligible": 1471,
+      "coverage": 1.0,
+      "complete": true,
+      "failures": []
+    },
+    {
+      "name": "row.source_locator_substantive",
+      "evaluated": 1471,
+      "eligible": 1471,
+      "coverage": 1.0,
+      "complete": true,
+      "failures": []
+    },
+    {
+      "name": "row.recension_verified_present",
+      "evaluated": 1471,
+      "eligible": 1471,
+      "coverage": 1.0,
+      "complete": true,
+      "failures": []
+    },
+    {
+      "name": "row.no_zero_for_unknown",
+      "evaluated": 1471,
+      "eligible": 1471,
+      "coverage": 1.0,
+      "complete": true,
+      "failures": []
+    },
+    {
+      "name": "row.declared_language_matches_the_literal",
+      "evaluated": 0,
+      "eligible": 0,
+      "coverage": 1.0,
+      "complete": true,
+      "failures": []
+    },
+    {
+      "name": "row.no_duplicate_key_source",
+      "evaluated": 1,
+      "eligible": 1,
+      "coverage": 1.0,
+      "complete": true,
+      "failures": []
+    },
+    {
+      "name": "manifest.accepted_matches_rows",
+      "evaluated": 1,
+      "eligible": 1,
+      "coverage": 1.0,
+      "complete": true,
+      "failures": []
+    },
+    {
+      "name": "rejected.has_reason",
+      "evaluated": 724,
+      "eligible": 724,
+      "coverage": 1.0,
+      "complete": true,
+      "failures": []
+    },
+    {
+      "name": "graph.canonical_key_resolves",
+      "evaluated": 1471,
+      "eligible": 1471,
+      "coverage": 1.0,
+      "complete": true,
+      "failures": []
+    },
+    {
+      "name": "graph.veda_agrees",
+      "evaluated": 1219,
+      "eligible": 1219,
+      "coverage": 1.0,
+      "complete": true,
+      "failures": []
+    }
+  ]
+}

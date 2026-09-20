@@ -1,0 +1,187 @@
+{
+  "communities": 12,
+  "communities_inside_the_main_component": 7,
+  "communities_that_are_a_whole_connected_component": 5,
+  "deities_in_single_hymn_communities": 29,
+  "deities_placed": 123,
+  "per_community": {
+    "0": {
+      "densest_hymn": "VG:RV:SAK:M08:S101",
+      "densest_hymn_share_of_internal_support": 0.2074,
+      "hymns_supplying_internal_edges": 38,
+      "is_a_single_hymn_cast_list": false,
+      "is_a_whole_connected_component": false,
+      "largest_members": [
+        "the All-Gods",
+        "the Asvins",
+        "Mitra and Varuna",
+        "Usas",
+        "the Adityas",
+        "the Rbhus"
+      ],
+      "size": 31
+    },
+    "1": {
+      "densest_hymn": "VG:RV:SAK:M01:S142",
+      "densest_hymn_share_of_internal_support": 0.1,
+      "hymns_supplying_internal_edges": 15,
+      "is_a_single_hymn_cast_list": false,
+      "is_a_whole_connected_component": false,
+      "largest_members": [
+        "Agni",
+        "Tvastr",
+        "the divine doors",
+        "Dawn and Night",
+        "Vanaspati",
+        "the sacred grass"
+      ],
+      "size": 14
+    },
+    "10": {
+      "densest_hymn": "VG:RV:SAK:M09:S066",
+      "densest_hymn_share_of_internal_support": 0.5,
+      "hymns_supplying_internal_edges": 2,
+      "is_a_single_hymn_cast_list": false,
+      "is_a_whole_connected_component": true,
+      "largest_members": [
+        "Soma Pavamana",
+        "Agni Pavamana"
+      ],
+      "size": 2
+    },
+    "11": {
+      "densest_hymn": "VG:RV:SAK:M10:S014",
+      "densest_hymn_share_of_internal_support": 0.75,
+      "hymns_supplying_internal_edges": 2,
+      "is_a_single_hymn_cast_list": false,
+      "is_a_whole_connected_component": true,
+      "largest_members": [
+        "Yama",
+        "the Fathers",
+        "Yami",
+        "the two dogs of Sarama"
+      ],
+      "size": 4
+    },
+    "2": {
+      "densest_hymn": "VG:RV:SAK:M01:S022",
+      "densest_hymn_share_of_internal_support": 0.4688,
+      "hymns_supplying_internal_edges": 12,
+      "is_a_single_hymn_cast_list": false,
+      "is_a_whole_connected_component": false,
+      "largest_members": [
+        "Varuna",
+        "Savitr",
+        "Indra and Varuna",
+        "Heaven and Earth",
+        "Visnu",
+        "the self"
+      ],
+      "size": 18
+    },
+    "3": {
+      "densest_hymn": "VG:RV:SAK:M07:S104",
+      "densest_hymn_share_of_internal_support": 0.2561,
+      "hymns_supplying_internal_edges": 29,
+      "is_a_single_hymn_cast_list": false,
+      "is_a_whole_connected_component": false,
+      "largest_members": [
+        "Indra",
+        "the Maruts",
+        "Indra and Agni",
+        "Soma",
+        "Brhaspati",
+        "Rudra"
+      ],
+      "size": 25
+    },
+    "4": {
+      "densest_hymn": "VG:RV:SAK:M07:S034",
+      "densest_hymn_share_of_internal_support": 1.0,
+      "hymns_supplying_internal_edges": 1,
+      "is_a_single_hymn_cast_list": true,
+      "is_a_whole_connected_component": false,
+      "largest_members": [
+        "the serpent",
+        "Ahi Budhnya"
+      ],
+      "size": 2
+    },
+    "5": {
+      "densest_hymn": "VG:RV:SAK:M06:S075",
+      "densest_hymn_share_of_internal_support": 1.0,
+      "hymns_supplying_internal_edges": 1,
+      "is_a_single_hymn_cast_list": true,
+      "is_a_whole_connected_component": false,
+      "largest_members": [
+        "Brahmanaspati",
+        "the arrows",
+        "the chariot",
+        "the two bow-tips",
+        "the horses",
+        "the sacred formulation"
+      ],
+      "size": 16
+    },
+    "6": {
+      "densest_hymn": "VG:RV:SAK:M08:S031",
+      "densest_hymn_share_of_internal_support": 1.0,
+      "hymns_supplying_internal_edges": 1,
+      "is_a_single_hymn_cast_list": true,
+      "is_a_whole_connected_component": true,
+      "largest_members": [
+        "the married pair",
+        "the sacrifice and the sacrificer"
+      ],
+      "size": 2
+    },
+    "7": {
+      "densest_hymn": "VG:RV:SAK:M03:S053",
+      "densest_hymn_share_of_internal_support": 1.0,
+      "hymns_supplying_internal_edges": 1,
+      "is_a_single_hymn_cast_list": true,
+      "is_a_whole_connected_component": false,
+      "largest_members": [
+        "the parts of the chariot",
+        "Sasarpari, the Voice",
+        "Indra and Parvata"
+      ],
+      "size": 3
+    },
+    "8": {
+      "densest_hymn": "VG:RV:SAK:M04:S057",
+      "densest_hymn_share_of_internal_support": 1.0,
+      "hymns_supplying_internal_edges": 1,
+      "is_a_single_hymn_cast_list": true,
+      "is_a_whole_connected_component": true,
+      "largest_members": [
+        "Ksetrapati",
+        "Sita, the Furrow",
+        "Suna and Sira",
+        "the dog"
+      ],
+      "size": 4
+    },
+    "9": {
+      "densest_hymn": "VG:RV:SAK:M10:S108",
+      "densest_hymn_share_of_internal_support": 1.0,
+      "hymns_supplying_internal_edges": 1,
+      "is_a_single_hymn_cast_list": true,
+      "is_a_whole_connected_component": true,
+      "largest_members": [
+        "the Panis",
+        "Sarama"
+      ],
+      "size": 2
+    }
+  },
+  "single_hymn_communities": 6,
+  "what_this_measures": "For each community, how many DISTINCT Rigvedic suktas supply its internal edges. A community whose internal edges all come from one sukta is that hymn's list of dedicatees wearing a community's name. The reason this happens is structural and measurable: 875 of the 1,028 suktas that carry dedication are dedicated to a single deity, so the co-dedication signal lives almost entirely in a small number of multi-dedicatee hymns, several of which are one-off liturgical inventories.",
+  "why_that_second_number_matters": "A community that is an entire connected component required no community detection to find: nothing joins it to the rest of the graph, so any method at any resolution with any seed returns it. Counting those among 'the communities the algorithm found' overstates what the algorithm did, and the count of genuinely detected structure inside the main component is the figure worth quoting.",
+  "worked_examples": {
+    "the_apri_sequence": "The community holding Agni, Tvastr, the divine doors, Dawn-and-Night, Vanaspati, the sacred grass, the two divine Hotrs and the goddess triad is the apri sequence of the animal offering -- the same nine entities DEVATA_TAXONOMY_V1 minted VG:DEITYGROUP:APRIDEVATAH for. It is a fixed liturgical RUNNING ORDER, and the algorithm recovers it because the ten apri hymns recite it in order. That is a real and checkable result, and it is not a theology.",
+    "the_field_hymn": "Ksetrapati, Sita the Furrow, Suna-and-Sira and the dog is RV 4.57.",
+    "the_funeral_hymns": "Yama, the Fathers, Yami and Sarama's two dogs is RV 10.10 and 10.14 -- two hymns, and the one small community that is arguably thematic as well as liturgical.",
+    "the_weapons_hymn": "The 16-member community around Brahmanaspati, the bow, the bowstring, the arrows, the quiver, the hand-guard, the bow-tips, the chariot, the goad, the charioteer and the reins and the war drum is RV 6.75, one hymn. Its internal support is 120 against 7 external, which makes it the most modular community in the graph and also the least meaningful as a grouping of deities."
+  }
+}

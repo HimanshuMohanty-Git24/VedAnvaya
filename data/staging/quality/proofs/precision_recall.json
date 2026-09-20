@@ -1,0 +1,153 @@
+{
+ "precision": {
+  "mentions_devata": {
+   "edges_on_annotated_verses": 2725,
+   "verdicts": {
+    "CONFIRMED": 2398,
+    "UNDECIDED_PARTIAL_ANNOTATION": 300,
+    "UNDECIDED_REFERENCE_CANNOT_SEE_THIS_FORM": 12,
+    "REFUTED": 15
+   },
+   "false_positive_classes": {
+    "MATCHED_INSIDE_A_WORD_NOT_A_WORD": 7,
+    "AMBIGUOUS_SURFACE_WRONG_WORD": 8
+   }
+  },
+  "mentions_entity": {
+   "edges_on_annotated_verses": 4561,
+   "verdicts": {
+    "CONFIRMED": 3187,
+    "CONFIRMED_VIA_UNSOUND_ALIAS": 666,
+    "UNDECIDED_PARTIAL_ANNOTATION": 585,
+    "REFUTED": 64,
+    "UNDECIDED_REFERENCE_CANNOT_SEE_THIS_FORM": 59
+   },
+   "false_positive_classes": {
+    "REGISTRY_ALIAS_NOT_THE_ENTITY_LEMMA": 666,
+    "MATCHED_INSIDE_A_WORD_NOT_A_WORD": 30,
+    "AMBIGUOUS_SURFACE_WRONG_WORD": 34
+   }
+  },
+  "about_concept": {
+   "edges_on_annotated_verses": 4024,
+   "verdicts": {
+    "CONFIRMED": 2797,
+    "CONFIRMED_VIA_UNSOUND_ALIAS": 617,
+    "UNDECIDED_PARTIAL_ANNOTATION": 506,
+    "REFUTED": 64,
+    "UNDECIDED_REFERENCE_CANNOT_SEE_THIS_FORM": 40
+   },
+   "false_positive_classes": {
+    "REGISTRY_ALIAS_NOT_THE_ENTITY_LEMMA": 617,
+    "MATCHED_INSIDE_A_WORD_NOT_A_WORD": 31,
+    "AMBIGUOUS_SURFACE_WRONG_WORD": 33
+   }
+  }
+ },
+ "recall": {
+  "mentions_devata": {
+   "covered_verses": 1074,
+   "entities_bridged": 71,
+   "human_attested_pairs": 1395,
+   "asserted_by_graph": 707,
+   "missed_by_graph": 688,
+   "recall": 0.5068,
+   "fn_classes": {
+    "INFLECTION_ABSENT_FROM_ALIAS_LIST": 480,
+    "ALIAS_LISTED_BUT_NOT_MATCHED": 208
+   },
+   "by_veda": {
+    "AV": {
+     "found": 300,
+     "missed": 383,
+     "recall": 0.4392
+    },
+    "RV": {
+     "found": 393,
+     "missed": 283,
+     "recall": 0.5814
+    },
+    "YV": {
+     "found": 14,
+     "missed": 22,
+     "recall": 0.3889
+    }
+   }
+  },
+  "about_concept": {
+   "covered_verses": 1074,
+   "entities_bridged": 203,
+   "human_attested_pairs": 2176,
+   "asserted_by_graph": 963,
+   "missed_by_graph": 1213,
+   "recall": 0.4426,
+   "fn_classes": {
+    "INFLECTION_ABSENT_FROM_ALIAS_LIST": 661,
+    "ALIAS_LISTED_BUT_NOT_MATCHED": 552
+   },
+   "by_veda": {
+    "AV": {
+     "found": 508,
+     "missed": 709,
+     "recall": 0.4174
+    },
+    "RV": {
+     "found": 438,
+     "missed": 482,
+     "recall": 0.4761
+    },
+    "YV": {
+     "found": 17,
+     "missed": 22,
+     "recall": 0.4359
+    }
+   }
+  },
+  "mentions_entity": {
+   "covered_verses": 1074,
+   "entities_bridged": 203,
+   "human_attested_pairs": 2176,
+   "asserted_by_graph": 1181,
+   "missed_by_graph": 995,
+   "recall": 0.5427,
+   "fn_classes": {
+    "INFLECTION_ABSENT_FROM_ALIAS_LIST": 637,
+    "ALIAS_LISTED_BUT_NOT_MATCHED": 358
+   },
+   "by_veda": {
+    "AV": {
+     "found": 677,
+     "missed": 540,
+     "recall": 0.5563
+    },
+    "RV": {
+     "found": 485,
+     "missed": 435,
+     "recall": 0.5272
+    },
+    "YV": {
+     "found": 19,
+     "missed": 20,
+     "recall": 0.4872
+    }
+   }
+  }
+ },
+ "false_negative_classes_explained": {
+  "INFLECTION_ABSENT_FROM_ALIAS_LIST": "the human annotation shows the word is in the verse under an inflected form the registry's closed alias list does not carry. The pipeline cannot match it, and the entity is genuinely present. This is the dominant class and the actionable one: the alias lists are partial inflection tables, not paradigms.",
+  "ALIAS_LISTED_BUT_NOT_MATCHED": "the form IS in the alias list, the human annotation shows it in the verse, and no edge exists. A genuine pipeline miss. Note one alternative cause that this measurement cannot exclude: the alias may have been claimed by a competing entity in the merged alias namespace, in which case the edge exists and points elsewhere."
+ },
+ "morphology_rule_layer": {
+  "assertions_scored": 485,
+  "verdicts": {
+   "DISAGREES": 66,
+   "AGREES": 298,
+   "VERB_TOKEN_NOT_IN_HUMAN_ANNOTATION": 121
+  },
+  "root_agrees": 299,
+  "root_disagrees": 65,
+  "person_agrees": 363,
+  "human_says_not_a_verb": 0
+ },
+ "llm_layer": {}
+}

@@ -1,0 +1,31 @@
+{
+  "artifact": "VEDANVAYA_FINAL_STABILIZATION_IMMUTABLE_MUTATION_PLAN",
+  "version": 1,
+  "scope": "Release-closure repairs only; no new enrichment or speculative dimensions.",
+  "mutation_groups": [
+    {
+      "id": "FS-01",
+      "name": "source-derived semantic assertion readability and provenance",
+      "preconditions": ["fresh Neo4j dump", "core corpus invariant", "pre-mutation census"],
+      "allowed_writes": ["SemanticAssertion.display_label derived from its recorded assertion fields", "four staged semantic relation classes.quality_tier derived from recorded trust/evidence fields"],
+      "forbidden_writes": ["canonical identity", "URN", "UUID", "source literals", "quality tier inferred from confidence"],
+      "readback": ["ungraded edges", "nodes without display_label", "tier distribution by relationship type", "identity census"]
+    },
+    {
+      "id": "FS-02",
+      "name": "non-semantic staged relation provenance",
+      "preconditions": ["FS-01 readback matches plan"],
+      "allowed_writes": ["quality_tier on staged relation classes only when the relation already records source/evidence/provenance"],
+      "forbidden_writes": ["blanket tier assignment", "confidence-to-tier conversion"],
+      "readback": ["zero ungraded edges", "all values in declared QualityTier vocabulary"]
+    },
+    {
+      "id": "FS-03",
+      "name": "derived consumers and registry re-derivation",
+      "preconditions": ["graph integrity gates green"],
+      "allowed_writes": ["derived output artifacts", "dependency ledger receipts", "registry audit evidence and status"],
+      "forbidden_writes": ["canonical graph identity mutation", "unsupported registry status relabelling"],
+      "readback": ["STALE_INPUT=0", "registry closure rules re-run"]
+    }
+  ]
+}

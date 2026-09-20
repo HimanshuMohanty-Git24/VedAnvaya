@@ -1,0 +1,508 @@
+{
+  "GAP-ATTRIBUTION-001": {
+    "attribution_state_devata": [
+      {
+        "n": 4160,
+        "state": "DERIVED_PRESENT",
+        "veda": "AV"
+      },
+      {
+        "n": 958,
+        "state": "NEVER_ASSESSED",
+        "veda": "AV"
+      },
+      {
+        "n": 688,
+        "state": "ASSESSED_SOURCE_ABSENT",
+        "veda": "AV"
+      },
+      {
+        "n": 33,
+        "state": "SOURCE_ASSERTS_UNRESOLVED_OBJECT",
+        "veda": "AV"
+      },
+      {
+        "n": 8329,
+        "state": "DERIVED_PRESENT",
+        "veda": "RV"
+      },
+      {
+        "n": 2223,
+        "state": "SOURCE_EXPLICIT_PRESENT",
+        "veda": "RV"
+      },
+      {
+        "n": 1844,
+        "state": "NEVER_ASSESSED",
+        "veda": "SV"
+      },
+      {
+        "n": 1975,
+        "state": "NEVER_ASSESSED",
+        "veda": "YV"
+      }
+    ],
+    "av_derived": {
+      "devatas": 35,
+      "edges": 882,
+      "mantras": 851
+    },
+    "mantras_without_any_dedication_record": [
+      {
+        "n": 1679,
+        "veda": "AV"
+      },
+      {
+        "n": 1844,
+        "veda": "SV"
+      },
+      {
+        "n": 1975,
+        "veda": "YV"
+      }
+    ],
+    "sv_derivable": {
+      "devatas": 42,
+      "edges": 1685,
+      "mantras": 1662,
+      "match_level_split": {
+        "EXACT_OR_UNSTATED": 1181,
+        "SANDHI_INSENSITIVE": 415,
+        "SCRIPT_FOLDED": 89
+      },
+      "ruling": "WITHHELD",
+      "ruling_authority": "FINAL_CLOSURE_SPRINT_LEAD",
+      "ruling_reason": "WITHHELD in full by the final closure sprint lead. (1) It is not a source attribution at all: attribution_precision = DERIVED_FROM_A_COMPARISON_GRADE_EDGE is the field's own admission that the evidence is the recurrence of an RV mantra's text, not a Samavedic authority ascribing a deity. The Samaveda is a liturgical rearrangement with its own ascriptive tradition, and projecting the Rigvedic dedication onto 1,662 of its 1,844 mantras would put attributions in the graph that no source states. (2) Owner decision 11 is directly on point: a fold may establish NORMALIZED_SURFACE_MATCH and may not be read as SAME_CANONICAL_PASSAGE, and 504 of these 1,685 rest on the looser tiers (SANDHI_INSENSITIVE 415, SCRIPT_FOLDED 89). (3) Consistency: 8 assertions were withheld from Agent 3 for resting on NEAR_PARALLEL_OF rather than exact, and Agent 7 refused a translation row whose 1.0 identity held on 2 of 6 pairings -- 'a best-of-six identity is not identity'. What was refused over 8 assertions and 1 verse is not accepted over 1,662. The AV 882 land because they ARE the Atharvaveda's own Anukramani, recovered by grammar; these are not the Samaveda's.",
+      "what_the_artifact_is_now": "A bounded, evidenced, typed withheld queue -- not a weaker grade of fact. Every row keeps its source mantra, its reuse tier, its match_level and its lcs_ratio, so a future Samavedic ascriptive source can be checked AGAINST it rather than having to rebuild it.",
+      "why_it_was_staged_separately": "REUSES_TEXT_FROM is a TIER_B comparison-grade layer whose match_level includes SANDHI_INSENSITIVE (415) and SCRIPT_FOLDED (89). Owner decision 11 allows such a fold to establish NORMALIZED_SURFACE_MATCH and forbids reading it as SAME_CANONICAL_PASSAGE. Projecting a dedication across it is a defensible DERIVED claim but it is an attribution the source never made, over 1,662 of 1,844 SV mantras, and that is a lead decision rather than an agent's."
+    },
+    "yv_source_verdict": {
+      "artifact_id": "WIKISOURCE_SA.YV.VSM.SARVANUKRAMANI",
+      "the_one_lead": "reconnaissance names an UNCHECKED lead: printed Indian editions commonly head each mantra with rsih / devata / chandah / svarah. Weber 1852 (in.ernet.dli.2015.345056) and the Uvata+Mahidhara printings are the candidates. If one prints the apparatus per mantra it is the fastest route to YV devata and chandas -- with the caveat that a printed edition's headings are an EDITORIAL apparatus and not the Sarvanukramani itself, the two can disagree, and whichever is used must be recorded as the attributing authority. This agent did not check it: it is a page-image inspection, not a fetch, and it is out of this agent's reach.",
+      "verdict": "NOT_EXTRACTABLE_AT_SOURCE_EXPLICIT",
+      "why_not_extractable": [
+        "ZERO numeric mantra coordinates in 49,708 characters. The Yajurvedic rsi layer that DID parse -- 2,240 assertions over 1,960 of 1,975 mantras -- parsed because the Wikisource rsisuci prints explicit numeric ranges ('atrih 8.15-22, 24-30'). Katyayana prints none. It addresses mantras by pratika (incipit) only, so the join to our 1,975 keys would require sandhi-splitting a continuous stream and matching incipits, which is an interpretive act and not a parse.",
+        "102 lingokta deferrals. In 102 places the sutra does not name the deity; it says the deity is 'stated by the characteristic mark' in the mantra. Resolving those means reading the mantra and judging, which is SEMANTIC_MODEL_EXTRACTION at best and INTERPRETIVE_CLAIM in practice. No LLM was used on this source and none may be.",
+        "No field delimiters and no headings. The rsi, devata and chandas run together in sandhi-fused prose with no markers, so even a correctly segmented sutra does not say which slot a token belongs to."
+      ]
+    }
+  },
+  "GAP-COMMUNITIES-002": {
+    "by_state": {
+      "AWAITING_REVIEWED_CURATION": 24,
+      "COMPONENTS_PRESENT": 14,
+      "MEMBERSHIP_NOT_ENUMERATED_BY_THE_SOURCE": 33
+    },
+    "by_structure": {
+      "GROUP": 33,
+      "PAIR": 38
+    },
+    "component_registry_rows": 20,
+    "composites": 71
+  },
+  "GAP-CROSS-VEDA-DEVATA-IDENTITY-BRIDGE-001": {
+    "gate": {
+      "every_status_in_vocabulary": true,
+      "every_unresolved_has_a_reason": true,
+      "no_display_label_join": true,
+      "passes": true,
+      "resolutions_without_a_derivation_path": [],
+      "rows_without_a_reason": [],
+      "soma_and_pavamana_not_merged": true,
+      "statuses_outside_vocabulary": []
+    },
+    "length_tier_collisions": {
+      "aśva": [
+        "VG:DEVATA:ASHVAAH",
+        "VG:DEVATA:ASHVAH"
+      ],
+      "dadhikra": [
+        "VG:DEVATA:DADHIKRA",
+        "VG:DEVATA:DADHIKRAH"
+      ],
+      "go": [
+        "VG:DEVATA:GAUH",
+        "VG:DEVATA:GAVAH"
+      ],
+      "pavamana": [
+        "VG:DEVATA:PAVAMANAH",
+        "VG:DEVATA:PAVAMANAH-SOMAH"
+      ],
+      "viśve deva": [
+        "VG:DEVATA:VISVE-DEVAH",
+        "VG:DEVATA:VISVEDEVAH"
+      ]
+    },
+    "prior_probe": {
+      "occurrences_resolved": 9,
+      "resolved": 8,
+      "script": "scripts/wave3_devata_identity_bridge_probe.py"
+    },
+    "summary": {
+      "ascriptions": 324,
+      "by_comparison_tier": {
+        "EXACT": 31,
+        "LENGTH_INSENSITIVE": 8
+      },
+      "by_derivation_path": {
+        "DEITY_ADJECTIVE_SUFFIX": 12,
+        "VRDDHI_TADDHITA": 27
+      },
+      "by_status": {
+        "RESOLVED_TO_CANONICAL_DEVATA": 39,
+        "UNRESOLVED_COMPOUND_TWO_ASCRIPTIONS": 67,
+        "UNRESOLVED_NAMES_A_PLURALITY": 3,
+        "UNRESOLVED_SOURCE_DEFERS_TO_THE_MANTRA": 1,
+        "UNRESOLVED_STEM_MATCHES_NO_CANONICAL_DEVATA": 210,
+        "UNRESOLVED_SUBJECT_DESCRIPTOR_NOT_A_DEITY": 4
+      },
+      "distinct_devatas_reached": 35,
+      "occurrence_share_resolved": 0.3234,
+      "occurrences_by_status": {
+        "RESOLVED_TO_CANONICAL_DEVATA": 184,
+        "UNRESOLVED_COMPOUND_TWO_ASCRIPTIONS": 80,
+        "UNRESOLVED_NAMES_A_PLURALITY": 13,
+        "UNRESOLVED_SOURCE_DEFERS_TO_THE_MANTRA": 2,
+        "UNRESOLVED_STEM_MATCHES_NO_CANONICAL_DEVATA": 284,
+        "UNRESOLVED_SUBJECT_DESCRIPTOR_NOT_A_DEITY": 6
+      },
+      "occurrences_resolved": 184,
+      "occurrences_total": 569,
+      "resolved": 39,
+      "resolved_share": 0.1204
+    }
+  },
+  "GAP-ENTITY_COVERAGE-002": {
+    "derived_metric_rows_before": 75,
+    "derived_metric_subjects_after": 214,
+    "derived_metric_subjects_before": 25,
+    "devata_nodes": 214,
+    "metrics_computed": 642,
+    "null_profile_before": 184,
+    "profiled_before": 30,
+    "profiles_computed": 214,
+    "root_cause": "scripts/build_knowledge_model_v3.py TOP_DEVATA_PROFILES = 20, taken as the union of two top-20 rankings, so 30 nodes carry profile properties and only 25 carry DerivedMetric rows. The selection is a close-out gate's top-N, never widened after the gate closed."
+  },
+  "GAP-ENTITY_COVERAGE-008": {
+    "chandas_non_members": [
+      {
+        "gap": "GAP-AV-CHANDOMETRE-SEGMENTATION-001",
+        "n": 28,
+        "reason": "RETIRED_IDENTITY_NOT_A_METRE_NAME"
+      }
+    ],
+    "gate": {
+      "curated_non_members_excluded": 29,
+      "devata_nodes": 214,
+      "eligible_deities": 157,
+      "every_node_typed": true,
+      "excluded": 57,
+      "excluded_by_kind": {
+        "ABSTRACTION_NOT_AN_ADDRESSEE": 28,
+        "DANASTUTI_GIFT_PRAISE": 7,
+        "HUMAN_PATRON": 22
+      },
+      "excludes_the_29": true,
+      "passes": true,
+      "reasons_recorded": true,
+      "ritual_implements_present": 8,
+      "ritual_implements_retained": true,
+      "ritual_implements_wrongly_excluded": [],
+      "rows_without_a_reason": [],
+      "undecided_kept": [
+        "VG:DEVATA:ANNAM",
+        "VG:DEVATA:ATMA",
+        "VG:DEVATA:BRAHMA",
+        "VG:DEVATA:RATIH",
+        "VG:DEVATA:SACI"
+      ]
+    },
+    "published_after": {
+      "predicate": "d.is_deity = true",
+      "value": 157
+    },
+    "published_before": {
+      "generator": "src/vedagraph/domain/queries.py deity_community_capability",
+      "predicate": "coalesce(d.structure,'UNSPECIFIED') <> 'HUMAN'",
+      "surface": "/api/v1/insights/capabilities -> eligible_deities",
+      "value": 192
+    },
+    "rishi_prior_art": [
+      {
+        "is_seer": true,
+        "kind": null,
+        "n": 616
+      },
+      {
+        "is_seer": false,
+        "kind": "DEITY",
+        "n": 58
+      },
+      {
+        "is_seer": false,
+        "kind": "ABSTRACTION",
+        "n": 21
+      },
+      {
+        "is_seer": false,
+        "kind": "MYTHIC_BEING",
+        "n": 13
+      },
+      {
+        "is_seer": false,
+        "kind": "DEITY_GROUP",
+        "n": 11
+      },
+      {
+        "is_seer": false,
+        "kind": "PLANT_OR_ANIMAL",
+        "n": 5
+      },
+      {
+        "is_seer": false,
+        "kind": "COLLECTIVE",
+        "n": 3
+      },
+      {
+        "is_seer": false,
+        "kind": "OBJECT",
+        "n": 2
+      }
+    ]
+  },
+  "GAP-QUALITY-006": {
+    "per_label": {
+      "Chandas": {
+        "contract_sum": 16298,
+        "gate": {
+          "every_node_covered": true,
+          "null_keys": [],
+          "passes": true,
+          "rows": 575,
+          "scope_recorded": true,
+          "split_mismatch_keys": [],
+          "split_sums": true,
+          "unscoped_keys": []
+        },
+        "nodes": 575,
+        "rows_changed": 0,
+        "stored_null": 0,
+        "stored_sum": 16298,
+        "stored_zero": 28
+      },
+      "Devata": {
+        "contract_sum": 10558,
+        "gate": {
+          "every_node_covered": true,
+          "null_keys": [],
+          "passes": true,
+          "rows": 214,
+          "scope_recorded": true,
+          "split_mismatch_keys": [],
+          "split_sums": true,
+          "unscoped_keys": []
+        },
+        "nodes": 214,
+        "rows_changed": 0,
+        "stored_null": 0,
+        "stored_sum": 10558,
+        "stored_zero": 0
+      },
+      "Rishi": {
+        "contract_sum": 17889,
+        "gate": {
+          "every_node_covered": true,
+          "null_keys": [],
+          "passes": true,
+          "rows": 729,
+          "scope_recorded": true,
+          "split_mismatch_keys": [],
+          "split_sums": true,
+          "unscoped_keys": []
+        },
+        "nodes": 729,
+        "rows_changed": 0,
+        "stored_null": 0,
+        "stored_sum": 17889,
+        "stored_zero": 0
+      }
+    },
+    "per_registry_namespace": {
+      "Chandas::AV_WHITNEY_ANUKRAMANI": {
+        "container": 521,
+        "contract_sum": 5775,
+        "mantra": 5254,
+        "nodes": 541,
+        "stored_sum": 5775
+      },
+      "Chandas::RV_WSC2023_ANUKRAMANI": {
+        "container": 0,
+        "contract_sum": 10523,
+        "mantra": 10523,
+        "nodes": 34,
+        "stored_sum": 10523
+      },
+      "Devata::None": {
+        "container": 0,
+        "contract_sum": 10558,
+        "mantra": 10558,
+        "nodes": 214,
+        "stored_sum": 10558
+      },
+      "Rishi::AV_WHITNEY_ANUKRAMANI": {
+        "container": 542,
+        "contract_sum": 5084,
+        "mantra": 4542,
+        "nodes": 134,
+        "stored_sum": 5084
+      },
+      "Rishi::RV_WSC2023_ANUKRAMANI": {
+        "container": 0,
+        "contract_sum": 10565,
+        "mantra": 10565,
+        "nodes": 367,
+        "stored_sum": 10565
+      },
+      "Rishi::YV_VSM_RSISUCI": {
+        "container": 0,
+        "contract_sum": 2240,
+        "mantra": 2240,
+        "nodes": 228,
+        "stored_sum": 2240
+      }
+    }
+  },
+  "LEAD_ITEM_DEITY_COMMUNITY_LABEL_TYPE": {
+    "display_label_types": {
+      "STRING NOT NULL": 12
+    },
+    "generators_fixed": [
+      "data/staging/communities/build_communities_staging.py -- emits a string display_label beside the integer id",
+      "scripts/wave3_import_plan.py -- COMMUNITIES_ARTIFACT_NODES reads it"
+    ],
+    "nodes": 12,
+    "residual": "wave3_proposed_display_label carries the SAME integer type on the same 12 nodes. It is a Wave 3 audit-trail property rather than a product surface, so it is reported and not rewritten; a graph-wide toLower() over property VALUES rather than over display_label alone would still raise on it.",
+    "root_cause": "data/staging/communities/build_communities_staging.py emitted community_id as a Python int, and scripts/wave3_import_plan.py:909 set display_label_field='community_id', so the integer landed straight into the product's one universal text slot. The graph's community_id property is itself a STRING ('0'), so the importer coerced the match property and not the display label -- which is why nothing noticed.",
+    "second_property_with_the_same_hazard": {
+      "INTEGER NOT NULL": 12
+    }
+  },
+  "diagnosed_not_closed": {
+    "GAP-ENTITY_COVERAGE-001": {
+      "deities_reached": 4,
+      "epithet_nodes": 13,
+      "epithet_passage_edges": 0,
+      "epithet_properties": [
+        "display_label",
+        "display_type",
+        "domain_model_version",
+        "epithet_key",
+        "label_en",
+        "label_iast"
+      ],
+      "why_not_closable_here": "The 13 nodes carry epithet_key, label_iast, label_en and no alias set and no attestation, so there is nothing to link a passage BY. Closing this needs a curated epithet inventory with aliases -- the same shape as the theonym registry -- which is a source acquisition, not a query."
+    },
+    "GAP-ENTITY_COVERAGE-003": {
+      "labels_present": [
+        "Action",
+        "ActionPredicate",
+        "Animal",
+        "Chandas",
+        "Concept",
+        "Condition",
+        "CosmicEntity",
+        "Crop",
+        "DeityAxis",
+        "DeityCommunity",
+        "DeityGroup",
+        "DerivedMetric",
+        "Devata",
+        "DevataAscription",
+        "DomainEntity",
+        "Epithet",
+        "Formula",
+        "FormulaFamily",
+        "HumanConcern",
+        "Internal",
+        "InterpretiveClaim",
+        "Lemma",
+        "Mantra",
+        "Metal",
+        "NaturalPhenomenon",
+        "Object",
+        "Offering",
+        "PadaParallelGroup",
+        "Passage",
+        "PhilosophicalConcept",
+        "Place",
+        "Plant",
+        "QAIssue",
+        "Quality",
+        "QualityVerdict",
+        "Rishi",
+        "RishiFamily",
+        "Ritual",
+        "RitualRole",
+        "RitualStep",
+        "River",
+        "RoleFiller",
+        "Scholar",
+        "ScholarlyDisagreement",
+        "ScholarlyWork",
+        "SemanticAssertion",
+        "SocialRite",
+        "Source",
+        "SourceArtifact",
+        "State",
+        "Substance",
+        "TextVersion",
+        "Translation",
+        "Tribe",
+        "Weapon",
+        "Work"
+      ],
+      "remedy_nodes": 0
+    },
+    "GAP-ENTITY_COVERAGE-006": {
+      "ayas_yv_cell": {
+        "entities_matched_at_that_locus": [
+          "VG:CONCEPT:HIRANYA-GOLD",
+          "VG:CONCEPT:LOHA-COPPER",
+          "VG:CONCEPT:SISA-LEAD",
+          "VG:CONCEPT:SYAMA-DARK-METAL",
+          "VG:CONCEPT:TRAPU-TIN",
+          "VG:CONCEPT:YAJNA-SACRIFICE"
+        ],
+        "entity": [
+          {
+            "aliases": [
+              "ayasi",
+              "ayaso",
+              "ayasā",
+              "āyasam",
+              "āyasaḥ",
+              "āyasī"
+            ]
+          }
+        ],
+        "locus": "VG:YV:VSM:A18:V013",
+        "measured_root_cause": "Two causes stack, and each alone is sufficient. (1) The alias set for ayas holds only oblique and secondary forms -- ayasi, ayaso, ayasa, ayasam, ayasah, ayasi -- and no plain nominative/accusative ayah / ayas at all. (2) The surface at VSM 18.13 is not ayah but the avagraha-elided sandhi form: the text reads 'me 'yas ca me', with the initial a- of ayah elided after hiranyam ca me. So even a complete alias list matching whole words would miss it. Five neighbouring metals in the SAME verse -- hiranya, syama, loha, sisa, trapu -- all match, which is why a per-row precision sample over this layer reads clean while this one cell is 100% wrong. Audit per alias, not per row.",
+        "stored_sanskrit": [
+          {
+            "text": "अश्मा च मे मृत्तिका च मे गिरयश् च मे पर्वताश् च मे सिकताश् च मे वनस्पतयश् च मे हिरण्यं च मे ऽयश् च मे श्यामं च मे लोहं च मे सीसं च मे त्रपु च मे यज्ञेन कल्पन्ताम् ॥"
+          }
+        ]
+      },
+      "domain_entities": 375,
+      "entities_with_measured_recall": 2
+    },
+    "GAP-ENTITY_COVERAGE-007": {
+      "devata_associated_with_edges": 160,
+      "domain_entities_total": 375,
+      "domain_entities_with_a_resolution": 107,
+      "natural_phenomenon_nodes": 13,
+      "natural_phenomenon_with_a_resolution": 9,
+      "registry_disagreement": "The registry entry says personification resolution is materialised 'for 9 NaturalPhenomenon nodes only'. The 9 is right for :NaturalPhenomenon and wrong for the layer: 107 of 375 :DomainEntity carry a DEVATA_ASSOCIATED_WITH edge, over 160 edges. What is actually missing is the resolution STATUS on the other 268, which is what distinguishes a refusal from a gap."
+    }
+  }
+}

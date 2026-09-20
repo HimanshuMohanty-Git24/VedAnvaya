@@ -1,0 +1,12 @@
+{
+  "sample_rows_no_longer_present": "2 of the 24 sampled rows were removed by guards added after the sample was drawn, which is itself evidence the guards did something.",
+  "the_model_reason_verbatim": "Quote reports a variant between commentary and main text, not a scholarly dispute; both readings can coexist in different witnesses.",
+  "what_happened": "The QA model returned NOT_A_DISAGREEMENT on 6 short-quote TEXTUAL_READING rows and on 1 METRICAL_IDENTIFICATION row, out of 12 it managed to adjudicate. Two of the four batches came back as chain-of-thought rather than JSON and could not be parsed, so 12 of the 24 sampled rows carry no verdict.",
+  "what_the_dissent_did_change": "The metrical objection was fair. \"Whitney reports the Anukramani's view; no second position opposes it\" is a reasonable reading of the \"as if\" rows, where Whitney asserts the contrary by implication rather than printing a rival scansion. Those rows now carry relation_caveat on position_b saying so, and the report names METRICAL_IDENTIFICATION as the weakest evidential shape in the artifact.",
+  "why_the_dissent_is_not_taken_as_a_defect": [
+    "It is internally inconsistent. The same model called AVS 6.117.2 (dadhmas against dadmas), AVS 11.2.19 (martyam against matyam) and AVS 11.3.37 (satsyanti against catsyanti) REAL_DISAGREEMENT while calling AVS 11.8.33 (ni for vi) and five others of the identical shape NOT_A_DISAGREEMENT, with the same boilerplate sentence six times. All six refusals came from one batch. That is an unstable classifier, not a reasoned objection.",
+    "The brief names \"a reading\" as a qualifying axis, alongside a referent, a grammatical analysis, an identification and a date.",
+    "The commentary is an attributed witness whose readings the reporting source treats as the commentator's own: \"In books i.-iv. Whitney counts over three hundred peculiarities of the commentator's text\" (HOS vol. 7, printed p. lxviii). Whitney reports them as the commentator's, not as a manuscript's.",
+    "The artifact already applies the model's own principle where it holds. 1,745 Paippalada variants and 222 bare manuscript variations were refused precisely because no named party holds them. The line drawn is: a variant with a named holder is a position, a variant without one is evidence."
+  ]
+}

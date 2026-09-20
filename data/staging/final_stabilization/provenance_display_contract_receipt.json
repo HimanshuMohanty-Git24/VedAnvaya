@@ -1,0 +1,38 @@
+{
+  "artifact": "FINAL_STABILIZATION_PROVENANCE_AND_DISPLAY_CONTRACT",
+  "at": "2026-09-16T23:00:03.432562+00:00",
+  "contracts": {
+    "semantic_spine": "evidence_layer=DETERMINISTIC_DERIVED -> L2/TIER_B/STRUCTURAL",
+    "assertion_role": "assertion deterministic evidence plus relation provenance -> L2/TIER_B/SANSKRIT",
+    "text_derivative": "TextVersion provenance=deterministic -> L2/TIER_B/STRUCTURAL",
+    "domain_mention": "exact Sanskrit-token method -> L2/TIER_B/SANSKRIT",
+    "ritual": "SOURCE_EXPLICIT plus stored citation -> L1/TIER_A/SOURCE_METADATA",
+    "display_label": "SemanticAssertion predicate + exact verb_surface; no identity field changes"
+  },
+  "before": {
+    "ungraded_edges": 77121,
+    "nodes_without_label": 30266
+  },
+  "outcome": {
+    "applied": true,
+    "writes": {
+      "semantic_spine": 60532,
+      "assertion_role": 2052,
+      "text_derivative": 14510,
+      "domain_sanskrit_mention": 6,
+      "ritual_source_explicit": 21,
+      "semantic_display_labels": 30266
+    },
+    "blockers": {
+      "semantic_spine_without_deterministic_evidence": 0,
+      "assertion_role_without_deterministic_evidence": 0,
+      "text_edges_without_recorded_deterministic_transform": 0,
+      "entity_mentions_without_sanskrit_token_method": 0,
+      "ritual_edges_without_source_explicit_citation": 0
+    }
+  },
+  "after": {
+    "ungraded_edges": 0,
+    "nodes_without_label": 0
+  }
+}

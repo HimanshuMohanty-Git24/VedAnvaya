@@ -1,0 +1,3412 @@
+{
+  "artifact": "R4_ENTITY_006_RECALL_AND_AYAS_STAGING",
+  "at": "2026-09-18T08:28:22.209238+00:00",
+  "gap_id": "GAP-ENTITY_COVERAGE-006",
+  "contract": "VG:ENTITY_LEXICAL_RECALL:V1",
+  "clause_1_recall": {
+    "entities": 384,
+    "measured": 164,
+    "measurement_coverage": 0.4271,
+    "status_distribution": {
+      "UNMEASURED_NO_REGISTERED_SANSKRIT_ALIAS": 155,
+      "UNMEASURED_NO_ANNOTATION_ANCHOR": 65,
+      "MEASURED_AGAINST_RV_ANNOTATION": 164
+    },
+    "recall_quartiles": {
+      "min": 0.0,
+      "median": 0.75,
+      "max": 1.0,
+      "entities_at_zero_recall": 4,
+      "entities_at_full_recall": 32
+    },
+    "scope": "Rigveda only. The annotation covers the RV's 10,552 mantras and none of the other 9,658, so an entity's recall figure here is Rigvedic and every row says so in recall_scope.",
+    "rows": [
+      {
+        "entity_key": "VG:CONCEPT:ABHICARA",
+        "recall_status": "UNMEASURED_NO_REGISTERED_SANSKRIT_ALIAS",
+        "recall_reason": "The entity registers no Sanskrit alias, so there is nothing for the lexical layer to match and nothing to measure recall of."
+      },
+      {
+        "entity_key": "VG:CONCEPT:ABHICARA-SORCEROUS-ATTACK",
+        "recall_status": "UNMEASURED_NO_ANNOTATION_ANCHOR",
+        "recall_reason": "No registered alias folds onto an annotated lemma or surface form, so the Rigvedic annotation offers no ground truth for this entity. Recall is unknown, not zero.",
+        "registered_aliases": 2
+      },
+      {
+        "entity_key": "VG:CONCEPT:ABHIPLAVA",
+        "recall_status": "UNMEASURED_NO_REGISTERED_SANSKRIT_ALIAS",
+        "recall_reason": "The entity registers no Sanskrit alias, so there is nothing for the lexical layer to match and nothing to measure recall of."
+      },
+      {
+        "entity_key": "VG:CONCEPT:ABHISASTI-CALUMNY",
+        "recall_status": "MEASURED_AGAINST_RV_ANNOTATION",
+        "recall_sample_size": 5,
+        "recall_matched": 3,
+        "recall": 0.6,
+        "matcher_found_beyond_the_sample": 6,
+        "anchor_kinds": [
+          "LEMMA",
+          "SURFACE_FORM"
+        ],
+        "registered_aliases": 5,
+        "recall_scope": "RV_ONLY_ANNOTATION_COVERS_NO_OTHER_CORPUS"
+      },
+      {
+        "entity_key": "VG:CONCEPT:ACCHAVAKA-PRIEST",
+        "recall_status": "UNMEASURED_NO_REGISTERED_SANSKRIT_ALIAS",
+        "recall_reason": "The entity registers no Sanskrit alias, so there is nothing for the lexical layer to match and nothing to measure recall of."
+      },
+      {
+        "entity_key": "VG:CONCEPT:ADHISRAYANA-PUTTING-ON-FIRE",
+        "recall_status": "UNMEASURED_NO_REGISTERED_SANSKRIT_ALIAS",
+        "recall_reason": "The entity registers no Sanskrit alias, so there is nothing for the lexical layer to match and nothing to measure recall of."
+      },
+      {
+        "entity_key": "VG:CONCEPT:ADHVAN-PATH",
+        "recall_status": "MEASURED_AGAINST_RV_ANNOTATION",
+        "recall_sample_size": 211,
+        "recall_matched": 119,
+        "recall": 0.564,
+        "matcher_found_beyond_the_sample": 1,
+        "anchor_kinds": [
+          "LEMMA",
+          "SURFACE_FORM"
+        ],
+        "registered_aliases": 10,
+        "recall_scope": "RV_ONLY_ANNOTATION_COVERS_NO_OTHER_CORPUS"
+      },
+      {
+        "entity_key": "VG:CONCEPT:ADHVARYU-PRIEST",
+        "recall_status": "MEASURED_AGAINST_RV_ANNOTATION",
+        "recall_sample_size": 52,
+        "recall_matched": 30,
+        "recall": 0.5769,
+        "matcher_found_beyond_the_sample": 0,
+        "anchor_kinds": [
+          "SURFACE_FORM"
+        ],
+        "registered_aliases": 5,
+        "recall_scope": "RV_ONLY_ANNOTATION_COVERS_NO_OTHER_CORPUS"
+      },
+      {
+        "entity_key": "VG:CONCEPT:AGNI-CITI-FIRE-PILING",
+        "recall_status": "UNMEASURED_NO_ANNOTATION_ANCHOR",
+        "recall_reason": "No registered alias folds onto an annotated lemma or surface form, so the Rigvedic annotation offers no ground truth for this entity. Recall is unknown, not zero.",
+        "registered_aliases": 1
+      },
+      {
+        "entity_key": "VG:CONCEPT:AGNI-FIRE",
+        "recall_status": "MEASURED_AGAINST_RV_ANNOTATION",
+        "recall_sample_size": 793,
+        "recall_matched": 629,
+        "recall": 0.7932,
+        "matcher_found_beyond_the_sample": 2,
+        "anchor_kinds": [
+          "LEMMA",
+          "SURFACE_FORM"
+        ],
+        "registered_aliases": 17,
+        "recall_scope": "RV_ONLY_ANNOTATION_COVERS_NO_OTHER_CORPUS"
+      },
+      {
+        "entity_key": "VG:CONCEPT:AGNIDH-FIRE-KINDLER",
+        "recall_status": "UNMEASURED_NO_ANNOTATION_ANCHOR",
+        "recall_reason": "No registered alias folds onto an annotated lemma or surface form, so the Rigvedic annotation offers no ground truth for this entity. Recall is unknown, not zero.",
+        "registered_aliases": 2
+      },
+      {
+        "entity_key": "VG:CONCEPT:AGNIHOTRA",
+        "recall_status": "UNMEASURED_NO_ANNOTATION_ANCHOR",
+        "recall_reason": "No registered alias folds onto an annotated lemma or surface form, so the Rigvedic annotation offers no ground truth for this entity. Recall is unknown, not zero.",
+        "registered_aliases": 1
+      },
+      {
+        "entity_key": "VG:CONCEPT:AGNISOMIYA-PASU",
+        "recall_status": "UNMEASURED_NO_REGISTERED_SANSKRIT_ALIAS",
+        "recall_reason": "The entity registers no Sanskrit alias, so there is nothing for the lexical layer to match and nothing to measure recall of."
+      },
+      {
+        "entity_key": "VG:CONCEPT:AGNISTOMA",
+        "recall_status": "UNMEASURED_NO_REGISTERED_SANSKRIT_ALIAS",
+        "recall_reason": "The entity registers no Sanskrit alias, so there is nothing for the lexical layer to match and nothing to measure recall of."
+      },
+      {
+        "entity_key": "VG:CONCEPT:AGNISTUT",
+        "recall_status": "UNMEASURED_NO_REGISTERED_SANSKRIT_ALIAS",
+        "recall_reason": "The entity registers no Sanskrit alias, so there is nothing for the lexical layer to match and nothing to measure recall of."
+      },
+      {
+        "entity_key": "VG:CONCEPT:AGNYADHEYA",
+        "recall_status": "UNMEASURED_NO_REGISTERED_SANSKRIT_ALIAS",
+        "recall_reason": "The entity registers no Sanskrit alias, so there is nothing for the lexical layer to match and nothing to measure recall of."
+      },
+      {
+        "entity_key": "VG:CONCEPT:AGRAHAYANI",
+        "recall_status": "UNMEASURED_NO_REGISTERED_SANSKRIT_ALIAS",
+        "recall_reason": "The entity registers no Sanskrit alias, so there is nothing for the lexical layer to match and nothing to measure recall of."
+      },
+      {
+        "entity_key": "VG:CONCEPT:AGRAYANA",
+        "recall_status": "UNMEASURED_NO_REGISTERED_SANSKRIT_ALIAS",
+        "recall_reason": "The entity registers no Sanskrit alias, so there is nothing for the lexical layer to match and nothing to measure recall of."
+      },
+      {
+        "entity_key": "VG:CONCEPT:AHAN-DAY",
+        "recall_status": "MEASURED_AGAINST_RV_ANNOTATION",
+        "recall_sample_size": 135,
+        "recall_matched": 68,
+        "recall": 0.5037,
+        "matcher_found_beyond_the_sample": 19,
+        "anchor_kinds": [
+          "LEMMA",
+          "SURFACE_FORM"
+        ],
+        "registered_aliases": 8,
+        "recall_scope": "RV_ONLY_ANNOTATION_COVERS_NO_OTHER_CORPUS"
+      },
+      {
+        "entity_key": "VG:CONCEPT:AHI-SERPENT",
+        "recall_status": "MEASURED_AGAINST_RV_ANNOTATION",
+        "recall_sample_size": 67,
+        "recall_matched": 46,
+        "recall": 0.6866,
+        "matcher_found_beyond_the_sample": 0,
+        "anchor_kinds": [
+          "SURFACE_FORM"
+        ],
+        "registered_aliases": 6,
+        "recall_scope": "RV_ONLY_ANNOTATION_COVERS_NO_OTHER_CORPUS"
+      },
+      {
+        "entity_key": "VG:CONCEPT:AHINA",
+        "recall_status": "UNMEASURED_NO_REGISTERED_SANSKRIT_ALIAS",
+        "recall_reason": "The entity registers no Sanskrit alias, so there is nothing for the lexical layer to match and nothing to measure recall of."
+      },
+      {
+        "entity_key": "VG:CONCEPT:AINDRAGNA",
+        "recall_status": "UNMEASURED_NO_REGISTERED_SANSKRIT_ALIAS",
+        "recall_reason": "The entity registers no Sanskrit alias, so there is nothing for the lexical layer to match and nothing to measure recall of."
+      },
+      {
+        "entity_key": "VG:CONCEPT:AJA-GOAT",
+        "recall_status": "MEASURED_AGAINST_RV_ANNOTATION",
+        "recall_sample_size": 15,
+        "recall_matched": 3,
+        "recall": 0.2,
+        "matcher_found_beyond_the_sample": 0,
+        "anchor_kinds": [
+          "SURFACE_FORM"
+        ],
+        "registered_aliases": 4,
+        "recall_scope": "RV_ONLY_ANNOTATION_COVERS_NO_OTHER_CORPUS"
+      },
+      {
+        "entity_key": "VG:CONCEPT:AJASRNGI-PLANT",
+        "recall_status": "UNMEASURED_NO_ANNOTATION_ANCHOR",
+        "recall_reason": "No registered alias folds onto an annotated lemma or surface form, so the Rigvedic annotation offers no ground truth for this entity. Recall is unknown, not zero.",
+        "registered_aliases": 1
+      },
+      {
+        "entity_key": "VG:CONCEPT:AJINA-SKIN",
+        "recall_status": "UNMEASURED_NO_REGISTERED_SANSKRIT_ALIAS",
+        "recall_reason": "The entity registers no Sanskrit alias, so there is nothing for the lexical layer to match and nothing to measure recall of."
+      },
+      {
+        "entity_key": "VG:CONCEPT:AJYA-MELTED-BUTTER",
+        "recall_status": "UNMEASURED_NO_REGISTERED_SANSKRIT_ALIAS",
+        "recall_reason": "The entity registers no Sanskrit alias, so there is nothing for the lexical layer to match and nothing to measure recall of."
+      },
+      {
+        "entity_key": "VG:CONCEPT:AMIKSA-CURDLED-MILK",
+        "recall_status": "UNMEASURED_NO_REGISTERED_SANSKRIT_ALIAS",
+        "recall_reason": "The entity registers no Sanskrit alias, so there is nothing for the lexical layer to match and nothing to measure recall of."
+      },
+      {
+        "entity_key": "VG:CONCEPT:AMIVA-AFFLICTION",
+        "recall_status": "MEASURED_AGAINST_RV_ANNOTATION",
+        "recall_sample_size": 28,
+        "recall_matched": 18,
+        "recall": 0.6429,
+        "matcher_found_beyond_the_sample": 0,
+        "anchor_kinds": [
+          "LEMMA",
+          "SURFACE_FORM"
+        ],
+        "registered_aliases": 9,
+        "recall_scope": "RV_ONLY_ANNOTATION_COVERS_NO_OTHER_CORPUS"
+      },
+      {
+        "entity_key": "VG:CONCEPT:AMRTA-IMMORTALITY",
+        "recall_status": "MEASURED_AGAINST_RV_ANNOTATION",
+        "recall_sample_size": 175,
+        "recall_matched": 155,
+        "recall": 0.8857,
+        "matcher_found_beyond_the_sample": 0,
+        "anchor_kinds": [
+          "SURFACE_FORM"
+        ],
+        "registered_aliases": 11,
+        "recall_scope": "RV_ONLY_ANNOTATION_COVERS_NO_OTHER_CORPUS"
+      },
+      {
+        "entity_key": "VG:CONCEPT:ANGABHEDA-LIMB-SPLITTING",
+        "recall_status": "UNMEASURED_NO_ANNOTATION_ANCHOR",
+        "recall_reason": "No registered alias folds onto an annotated lemma or surface form, so the Rigvedic annotation offers no ground truth for this entity. Recall is unknown, not zero.",
+        "registered_aliases": 2
+      },
+      {
+        "entity_key": "VG:CONCEPT:ANJANA-OINTMENT",
+        "recall_status": "MEASURED_AGAINST_RV_ANNOTATION",
+        "recall_sample_size": 1,
+        "recall_matched": 1,
+        "recall": 1.0,
+        "matcher_found_beyond_the_sample": 0,
+        "anchor_kinds": [
+          "LEMMA",
+          "SURFACE_FORM"
+        ],
+        "registered_aliases": 8,
+        "recall_scope": "RV_ONLY_ANNOTATION_COVERS_NO_OTHER_CORPUS"
+      },
+      {
+        "entity_key": "VG:CONCEPT:ANJANA-OINTMENT-BOX",
+        "recall_status": "UNMEASURED_NO_REGISTERED_SANSKRIT_ALIAS",
+        "recall_reason": "The entity registers no Sanskrit alias, so there is nothing for the lexical layer to match and nothing to measure recall of."
+      },
+      {
+        "entity_key": "VG:CONCEPT:ANNA-FOOD",
+        "recall_status": "MEASURED_AGAINST_RV_ANNOTATION",
+        "recall_sample_size": 300,
+        "recall_matched": 160,
+        "recall": 0.5333,
+        "matcher_found_beyond_the_sample": 1,
+        "anchor_kinds": [
+          "SURFACE_FORM"
+        ],
+        "registered_aliases": 13,
+        "recall_scope": "RV_ONLY_ANNOTATION_COVERS_NO_OTHER_CORPUS"
+      },
+      {
+        "entity_key": "VG:CONCEPT:ANNAPRASANA",
+        "recall_status": "UNMEASURED_NO_REGISTERED_SANSKRIT_ALIAS",
+        "recall_reason": "The entity registers no Sanskrit alias, so there is nothing for the lexical layer to match and nothing to measure recall of."
+      },
+      {
+        "entity_key": "VG:CONCEPT:ANTARIKSA-MIDSPACE",
+        "recall_status": "MEASURED_AGAINST_RV_ANNOTATION",
+        "recall_sample_size": 89,
+        "recall_matched": 66,
+        "recall": 0.7416,
+        "matcher_found_beyond_the_sample": 0,
+        "anchor_kinds": [
+          "SURFACE_FORM"
+        ],
+        "registered_aliases": 6,
+        "recall_scope": "RV_ONLY_ANNOTATION_COVERS_NO_OTHER_CORPUS"
+      },
+      {
+        "entity_key": "VG:CONCEPT:ANUYAJA-AFTER-OFFERINGS",
+        "recall_status": "UNMEASURED_NO_REGISTERED_SANSKRIT_ALIAS",
+        "recall_reason": "The entity registers no Sanskrit alias, so there is nothing for the lexical layer to match and nothing to measure recall of."
+      },
+      {
+        "entity_key": "VG:CONCEPT:AP-WATERS",
+        "recall_status": "MEASURED_AGAINST_RV_ANNOTATION",
+        "recall_sample_size": 471,
+        "recall_matched": 296,
+        "recall": 0.6285,
+        "matcher_found_beyond_the_sample": 72,
+        "anchor_kinds": [
+          "LEMMA",
+          "SURFACE_FORM"
+        ],
+        "registered_aliases": 12,
+        "recall_scope": "RV_ONLY_ANNOTATION_COVERS_NO_OTHER_CORPUS"
+      },
+      {
+        "entity_key": "VG:CONCEPT:APACIT-SWELLINGS",
+        "recall_status": "UNMEASURED_NO_ANNOTATION_ANCHOR",
+        "recall_reason": "No registered alias folds onto an annotated lemma or surface form, so the Rigvedic annotation offers no ground truth for this entity. Recall is unknown, not zero.",
+        "registered_aliases": 5
+      },
+      {
+        "entity_key": "VG:CONCEPT:APAMARGA-PLANT",
+        "recall_status": "UNMEASURED_NO_ANNOTATION_ANCHOR",
+        "recall_reason": "No registered alias folds onto an annotated lemma or surface form, so the Rigvedic annotation offers no ground truth for this entity. Recall is unknown, not zero.",
+        "registered_aliases": 2
+      },
+      {
+        "entity_key": "VG:CONCEPT:APTORYAMA",
+        "recall_status": "UNMEASURED_NO_REGISTERED_SANSKRIT_ALIAS",
+        "recall_reason": "The entity registers no Sanskrit alias, so there is nothing for the lexical layer to match and nothing to measure recall of."
+      },
+      {
+        "entity_key": "VG:CONCEPT:APYAYANA",
+        "recall_status": "UNMEASURED_NO_REGISTERED_SANSKRIT_ALIAS",
+        "recall_reason": "The entity registers no Sanskrit alias, so there is nothing for the lexical layer to match and nothing to measure recall of."
+      },
+      {
+        "entity_key": "VG:CONCEPT:ARAYA-MALIGNANT-SPRITE",
+        "recall_status": "UNMEASURED_NO_ANNOTATION_ANCHOR",
+        "recall_reason": "No registered alias folds onto an annotated lemma or surface form, so the Rigvedic annotation offers no ground truth for this entity. Recall is unknown, not zero.",
+        "registered_aliases": 6
+      },
+      {
+        "entity_key": "VG:CONCEPT:ARUNDHATI-PLANT",
+        "recall_status": "UNMEASURED_NO_ANNOTATION_ANCHOR",
+        "recall_reason": "No registered alias folds onto an annotated lemma or surface form, so the Rigvedic annotation offers no ground truth for this entity. Recall is unknown, not zero.",
+        "registered_aliases": 4
+      },
+      {
+        "entity_key": "VG:CONCEPT:ASAT-NONEXISTENCE",
+        "recall_status": "MEASURED_AGAINST_RV_ANNOTATION",
+        "recall_sample_size": 8,
+        "recall_matched": 3,
+        "recall": 0.375,
+        "matcher_found_beyond_the_sample": 2,
+        "anchor_kinds": [
+          "SURFACE_FORM"
+        ],
+        "registered_aliases": 3,
+        "recall_scope": "RV_ONLY_ANNOTATION_COVERS_NO_OTHER_CORPUS"
+      },
+      {
+        "entity_key": "VG:CONCEPT:ASMAN-PRESSING-STONE",
+        "recall_status": "MEASURED_AGAINST_RV_ANNOTATION",
+        "recall_sample_size": 181,
+        "recall_matched": 113,
+        "recall": 0.6243,
+        "matcher_found_beyond_the_sample": 0,
+        "anchor_kinds": [
+          "SURFACE_FORM"
+        ],
+        "registered_aliases": 10,
+        "recall_scope": "RV_ONLY_ANNOTATION_COVERS_NO_OTHER_CORPUS"
+      },
+      {
+        "entity_key": "VG:CONCEPT:ASRAVA-FLUX",
+        "recall_status": "UNMEASURED_NO_ANNOTATION_ANCHOR",
+        "recall_reason": "No registered alias folds onto an annotated lemma or surface form, so the Rigvedic annotation offers no ground truth for this entity. Recall is unknown, not zero.",
+        "registered_aliases": 2
+      },
+      {
+        "entity_key": "VG:CONCEPT:ASTAKA",
+        "recall_status": "UNMEASURED_NO_REGISTERED_SANSKRIT_ALIAS",
+        "recall_reason": "The entity registers no Sanskrit alias, so there is nothing for the lexical layer to match and nothing to measure recall of."
+      },
+      {
+        "entity_key": "VG:CONCEPT:ASVA-HORSE",
+        "recall_status": "MEASURED_AGAINST_RV_ANNOTATION",
+        "recall_sample_size": 266,
+        "recall_matched": 130,
+        "recall": 0.4887,
+        "matcher_found_beyond_the_sample": 32,
+        "anchor_kinds": [
+          "LEMMA",
+          "SURFACE_FORM"
+        ],
+        "registered_aliases": 16,
+        "recall_scope": "RV_ONLY_ANNOTATION_COVERS_NO_OTHER_CORPUS"
+      },
+      {
+        "entity_key": "VG:CONCEPT:ASVAMEDHA-HORSE-SACRIFICE",
+        "recall_status": "UNMEASURED_NO_ANNOTATION_ANCHOR",
+        "recall_reason": "No registered alias folds onto an annotated lemma or surface form, so the Rigvedic annotation offers no ground truth for this entity. Recall is unknown, not zero.",
+        "registered_aliases": 1
+      },
+      {
+        "entity_key": "VG:CONCEPT:ASVATTHA-TREE",
+        "recall_status": "MEASURED_AGAINST_RV_ANNOTATION",
+        "recall_sample_size": 2,
+        "recall_matched": 2,
+        "recall": 1.0,
+        "matcher_found_beyond_the_sample": 0,
+        "anchor_kinds": [
+          "LEMMA",
+          "SURFACE_FORM"
+        ],
+        "registered_aliases": 5,
+        "recall_scope": "RV_ONLY_ANNOTATION_COVERS_NO_OTHER_CORPUS"
+      },
+      {
+        "entity_key": "VG:CONCEPT:ASVATTHA-WOOD",
+        "recall_status": "UNMEASURED_NO_REGISTERED_SANSKRIT_ALIAS",
+        "recall_reason": "The entity registers no Sanskrit alias, so there is nothing for the lexical layer to match and nothing to measure recall of."
+      },
+      {
+        "entity_key": "VG:CONCEPT:ASVAYUJI",
+        "recall_status": "UNMEASURED_NO_REGISTERED_SANSKRIT_ALIAS",
+        "recall_reason": "The entity registers no Sanskrit alias, so there is nothing for the lexical layer to match and nothing to measure recall of."
+      },
+      {
+        "entity_key": "VG:CONCEPT:ATIRATRA",
+        "recall_status": "UNMEASURED_NO_REGISTERED_SANSKRIT_ALIAS",
+        "recall_reason": "The entity registers no Sanskrit alias, so there is nothing for the lexical layer to match and nothing to measure recall of."
+      },
+      {
+        "entity_key": "VG:CONCEPT:ATITHYESTI",
+        "recall_status": "UNMEASURED_NO_REGISTERED_SANSKRIT_ALIAS",
+        "recall_reason": "The entity registers no Sanskrit alias, so there is nothing for the lexical layer to match and nothing to measure recall of."
+      },
+      {
+        "entity_key": "VG:CONCEPT:ATMAN-SELF",
+        "recall_status": "MEASURED_AGAINST_RV_ANNOTATION",
+        "recall_sample_size": 22,
+        "recall_matched": 12,
+        "recall": 0.5455,
+        "matcher_found_beyond_the_sample": 0,
+        "anchor_kinds": [
+          "LEMMA",
+          "SURFACE_FORM"
+        ],
+        "registered_aliases": 6,
+        "recall_scope": "RV_ONLY_ANNOTATION_COVERS_NO_OTHER_CORPUS"
+      },
+      {
+        "entity_key": "VG:CONCEPT:ATYAGNISTOMA",
+        "recall_status": "UNMEASURED_NO_REGISTERED_SANSKRIT_ALIAS",
+        "recall_reason": "The entity registers no Sanskrit alias, so there is nothing for the lexical layer to match and nothing to measure recall of."
+      },
+      {
+        "entity_key": "VG:CONCEPT:AUDUMBARA-AMULET",
+        "recall_status": "UNMEASURED_NO_ANNOTATION_ANCHOR",
+        "recall_reason": "No registered alias folds onto an annotated lemma or surface form, so the Rigvedic annotation offers no ground truth for this entity. Recall is unknown, not zero.",
+        "registered_aliases": 5
+      },
+      {
+        "entity_key": "VG:CONCEPT:AVABHRTHA",
+        "recall_status": "UNMEASURED_NO_REGISTERED_SANSKRIT_ALIAS",
+        "recall_reason": "The entity registers no Sanskrit alias, so there is nothing for the lexical layer to match and nothing to measure recall of."
+      },
+      {
+        "entity_key": "VG:CONCEPT:AVABHRTHA-CONCLUDING-BATH",
+        "recall_status": "MEASURED_AGAINST_RV_ANNOTATION",
+        "recall_sample_size": 1,
+        "recall_matched": 0,
+        "recall": 0.0,
+        "matcher_found_beyond_the_sample": 0,
+        "anchor_kinds": [
+          "LEMMA"
+        ],
+        "registered_aliases": 1,
+        "recall_scope": "RV_ONLY_ANNOTATION_COVERS_NO_OTHER_CORPUS"
+      },
+      {
+        "entity_key": "VG:CONCEPT:AVADANA-CUTTING-PORTIONS",
+        "recall_status": "UNMEASURED_NO_REGISTERED_SANSKRIT_ALIAS",
+        "recall_reason": "The entity registers no Sanskrit alias, so there is nothing for the lexical layer to match and nothing to measure recall of."
+      },
+      {
+        "entity_key": "VG:CONCEPT:AVAHANANA-HUSKING",
+        "recall_status": "UNMEASURED_NO_REGISTERED_SANSKRIT_ALIAS",
+        "recall_reason": "The entity registers no Sanskrit alias, so there is nothing for the lexical layer to match and nothing to measure recall of."
+      },
+      {
+        "entity_key": "VG:CONCEPT:AVAS-HELP",
+        "recall_status": "MEASURED_AGAINST_RV_ANNOTATION",
+        "recall_sample_size": 455,
+        "recall_matched": 288,
+        "recall": 0.633,
+        "matcher_found_beyond_the_sample": 32,
+        "anchor_kinds": [
+          "LEMMA",
+          "SURFACE_FORM"
+        ],
+        "registered_aliases": 7,
+        "recall_scope": "RV_ONLY_ANNOTATION_COVERS_NO_OTHER_CORPUS"
+      },
+      {
+        "entity_key": "VG:CONCEPT:AVI-SHEEP",
+        "recall_status": "MEASURED_AGAINST_RV_ANNOTATION",
+        "recall_sample_size": 41,
+        "recall_matched": 29,
+        "recall": 0.7073,
+        "matcher_found_beyond_the_sample": 0,
+        "anchor_kinds": [
+          "LEMMA",
+          "SURFACE_FORM"
+        ],
+        "registered_aliases": 10,
+        "recall_scope": "RV_ONLY_ANNOTATION_COVERS_NO_OTHER_CORPUS"
+      },
+      {
+        "entity_key": "VG:CONCEPT:AYAS-METAL",
+        "recall_status": "MEASURED_AGAINST_RV_ANNOTATION",
+        "recall_sample_size": 13,
+        "recall_matched": 7,
+        "recall": 0.5385,
+        "matcher_found_beyond_the_sample": 1,
+        "anchor_kinds": [
+          "SURFACE_FORM"
+        ],
+        "registered_aliases": 6,
+        "recall_scope": "RV_ONLY_ANNOTATION_COVERS_NO_OTHER_CORPUS"
+      },
+      {
+        "entity_key": "VG:CONCEPT:AYUDHA-WEAPON",
+        "recall_status": "MEASURED_AGAINST_RV_ANNOTATION",
+        "recall_sample_size": 52,
+        "recall_matched": 33,
+        "recall": 0.6346,
+        "matcher_found_beyond_the_sample": 0,
+        "anchor_kinds": [
+          "LEMMA",
+          "SURFACE_FORM"
+        ],
+        "registered_aliases": 11,
+        "recall_scope": "RV_ONLY_ANNOTATION_COVERS_NO_OTHER_CORPUS"
+      },
+      {
+        "entity_key": "VG:CONCEPT:AYUS-LIFE",
+        "recall_status": "MEASURED_AGAINST_RV_ANNOTATION",
+        "recall_sample_size": 145,
+        "recall_matched": 130,
+        "recall": 0.8966,
+        "matcher_found_beyond_the_sample": 0,
+        "anchor_kinds": [
+          "SURFACE_FORM"
+        ],
+        "registered_aliases": 11,
+        "recall_scope": "RV_ONLY_ANNOTATION_COVERS_NO_OTHER_CORPUS"
+      },
+      {
+        "entity_key": "VG:CONCEPT:BAHISPAVAMANA",
+        "recall_status": "UNMEASURED_NO_REGISTERED_SANSKRIT_ALIAS",
+        "recall_reason": "The entity registers no Sanskrit alias, so there is nothing for the lexical layer to match and nothing to measure recall of."
+      },
+      {
+        "entity_key": "VG:CONCEPT:BALASA-DISEASE",
+        "recall_status": "UNMEASURED_NO_ANNOTATION_ANCHOR",
+        "recall_reason": "No registered alias folds onto an annotated lemma or surface form, so the Rigvedic annotation offers no ground truth for this entity. Recall is unknown, not zero.",
+        "registered_aliases": 9
+      },
+      {
+        "entity_key": "VG:CONCEPT:BALIHARANA",
+        "recall_status": "UNMEASURED_NO_REGISTERED_SANSKRIT_ALIAS",
+        "recall_reason": "The entity registers no Sanskrit alias, so there is nothing for the lexical layer to match and nothing to measure recall of."
+      },
+      {
+        "entity_key": "VG:CONCEPT:BARHIS-SACRED-GRASS",
+        "recall_status": "MEASURED_AGAINST_RV_ANNOTATION",
+        "recall_sample_size": 142,
+        "recall_matched": 127,
+        "recall": 0.8944,
+        "matcher_found_beyond_the_sample": 0,
+        "anchor_kinds": [
+          "SURFACE_FORM"
+        ],
+        "registered_aliases": 6,
+        "recall_scope": "RV_ONLY_ANNOTATION_COVERS_NO_OTHER_CORPUS"
+      },
+      {
+        "entity_key": "VG:CONCEPT:BHANGA-HEMP",
+        "recall_status": "UNMEASURED_NO_ANNOTATION_ANCHOR",
+        "recall_reason": "No registered alias folds onto an annotated lemma or surface form, so the Rigvedic annotation offers no ground truth for this entity. Recall is unknown, not zero.",
+        "registered_aliases": 1
+      },
+      {
+        "entity_key": "VG:CONCEPT:BHARATA-TRIBE",
+        "recall_status": "MEASURED_AGAINST_RV_ANNOTATION",
+        "recall_sample_size": 7,
+        "recall_matched": 5,
+        "recall": 0.7143,
+        "matcher_found_beyond_the_sample": 0,
+        "anchor_kinds": [
+          "SURFACE_FORM"
+        ],
+        "registered_aliases": 3,
+        "recall_scope": "RV_ONLY_ANNOTATION_COVERS_NO_OTHER_CORPUS"
+      },
+      {
+        "entity_key": "VG:CONCEPT:BHASMA-ASH",
+        "recall_status": "UNMEASURED_NO_REGISTERED_SANSKRIT_ALIAS",
+        "recall_reason": "The entity registers no Sanskrit alias, so there is nothing for the lexical layer to match and nothing to measure recall of."
+      },
+      {
+        "entity_key": "VG:CONCEPT:BHESAJA-HEALING",
+        "recall_status": "MEASURED_AGAINST_RV_ANNOTATION",
+        "recall_sample_size": 31,
+        "recall_matched": 28,
+        "recall": 0.9032,
+        "matcher_found_beyond_the_sample": 0,
+        "anchor_kinds": [
+          "SURFACE_FORM"
+        ],
+        "registered_aliases": 7,
+        "recall_scope": "RV_ONLY_ANNOTATION_COVERS_NO_OTHER_CORPUS"
+      },
+      {
+        "entity_key": "VG:CONCEPT:BRAHMACARIN-STUDENT",
+        "recall_status": "MEASURED_AGAINST_RV_ANNOTATION",
+        "recall_sample_size": 1,
+        "recall_matched": 1,
+        "recall": 1.0,
+        "matcher_found_beyond_the_sample": 0,
+        "anchor_kinds": [
+          "SURFACE_FORM"
+        ],
+        "registered_aliases": 2,
+        "recall_scope": "RV_ONLY_ANNOTATION_COVERS_NO_OTHER_CORPUS"
+      },
+      {
+        "entity_key": "VG:CONCEPT:BRAHMAN-FORMULATION",
+        "recall_status": "MEASURED_AGAINST_RV_ANNOTATION",
+        "recall_sample_size": 243,
+        "recall_matched": 209,
+        "recall": 0.8601,
+        "matcher_found_beyond_the_sample": 1,
+        "anchor_kinds": [
+          "SURFACE_FORM"
+        ],
+        "registered_aliases": 7,
+        "recall_scope": "RV_ONLY_ANNOTATION_COVERS_NO_OTHER_CORPUS"
+      },
+      {
+        "entity_key": "VG:CONCEPT:BRAHMAN-PRIEST",
+        "recall_status": "MEASURED_AGAINST_RV_ANNOTATION",
+        "recall_sample_size": 29,
+        "recall_matched": 21,
+        "recall": 0.7241,
+        "matcher_found_beyond_the_sample": 6,
+        "anchor_kinds": [
+          "SURFACE_FORM"
+        ],
+        "registered_aliases": 4,
+        "recall_scope": "RV_ONLY_ANNOTATION_COVERS_NO_OTHER_CORPUS"
+      },
+      {
+        "entity_key": "VG:CONCEPT:BRAHMANACCHAMSIN-PRIEST",
+        "recall_status": "UNMEASURED_NO_REGISTERED_SANSKRIT_ALIAS",
+        "recall_reason": "The entity registers no Sanskrit alias, so there is nothing for the lexical layer to match and nothing to measure recall of."
+      },
+      {
+        "entity_key": "VG:CONCEPT:BRHASPATISAVA",
+        "recall_status": "UNMEASURED_NO_REGISTERED_SANSKRIT_ALIAS",
+        "recall_reason": "The entity registers no Sanskrit alias, so there is nothing for the lexical layer to match and nothing to measure recall of."
+      },
+      {
+        "entity_key": "VG:CONCEPT:CAITRI",
+        "recall_status": "UNMEASURED_NO_REGISTERED_SANSKRIT_ALIAS",
+        "recall_reason": "The entity registers no Sanskrit alias, so there is nothing for the lexical layer to match and nothing to measure recall of."
+      },
+      {
+        "entity_key": "VG:CONCEPT:CAMASA-CUP",
+        "recall_status": "MEASURED_AGAINST_RV_ANNOTATION",
+        "recall_sample_size": 15,
+        "recall_matched": 4,
+        "recall": 0.2667,
+        "matcher_found_beyond_the_sample": 1,
+        "anchor_kinds": [
+          "SURFACE_FORM"
+        ],
+        "registered_aliases": 4,
+        "recall_scope": "RV_ONLY_ANNOTATION_COVERS_NO_OTHER_CORPUS"
+      },
+      {
+        "entity_key": "VG:CONCEPT:CANDRAMAS-MOON",
+        "recall_status": "MEASURED_AGAINST_RV_ANNOTATION",
+        "recall_sample_size": 5,
+        "recall_matched": 4,
+        "recall": 0.8,
+        "matcher_found_beyond_the_sample": 0,
+        "anchor_kinds": [
+          "SURFACE_FORM"
+        ],
+        "registered_aliases": 3,
+        "recall_scope": "RV_ONLY_ANNOTATION_COVERS_NO_OTHER_CORPUS"
+      },
+      {
+        "entity_key": "VG:CONCEPT:CARU-GRUEL",
+        "recall_status": "UNMEASURED_NO_REGISTERED_SANSKRIT_ALIAS",
+        "recall_reason": "The entity registers no Sanskrit alias, so there is nothing for the lexical layer to match and nothing to measure recall of."
+      },
+      {
+        "entity_key": "VG:CONCEPT:CATURMASYA",
+        "recall_status": "UNMEASURED_NO_REGISTERED_SANSKRIT_ALIAS",
+        "recall_reason": "The entity registers no Sanskrit alias, so there is nothing for the lexical layer to match and nothing to measure recall of."
+      },
+      {
+        "entity_key": "VG:CONCEPT:CUDAKARANA",
+        "recall_status": "UNMEASURED_NO_REGISTERED_SANSKRIT_ALIAS",
+        "recall_reason": "The entity registers no Sanskrit alias, so there is nothing for the lexical layer to match and nothing to measure recall of."
+      },
+      {
+        "entity_key": "VG:CONCEPT:DADHI-SOUR-MILK",
+        "recall_status": "UNMEASURED_NO_REGISTERED_SANSKRIT_ALIAS",
+        "recall_reason": "The entity registers no Sanskrit alias, so there is nothing for the lexical layer to match and nothing to measure recall of."
+      },
+      {
+        "entity_key": "VG:CONCEPT:DAKSAYANA",
+        "recall_status": "UNMEASURED_NO_REGISTERED_SANSKRIT_ALIAS",
+        "recall_reason": "The entity registers no Sanskrit alias, so there is nothing for the lexical layer to match and nothing to measure recall of."
+      },
+      {
+        "entity_key": "VG:CONCEPT:DAKSINA-PRIESTLY-GIFT",
+        "recall_status": "MEASURED_AGAINST_RV_ANNOTATION",
+        "recall_sample_size": 12,
+        "recall_matched": 10,
+        "recall": 0.8333,
+        "matcher_found_beyond_the_sample": 24,
+        "anchor_kinds": [
+          "LEMMA",
+          "SURFACE_FORM"
+        ],
+        "registered_aliases": 6,
+        "recall_scope": "RV_ONLY_ANNOTATION_COVERS_NO_OTHER_CORPUS"
+      },
+      {
+        "entity_key": "VG:CONCEPT:DANA-LIBERALITY",
+        "recall_status": "MEASURED_AGAINST_RV_ANNOTATION",
+        "recall_sample_size": 126,
+        "recall_matched": 85,
+        "recall": 0.6746,
+        "matcher_found_beyond_the_sample": 0,
+        "anchor_kinds": [
+          "SURFACE_FORM"
+        ],
+        "registered_aliases": 8,
+        "recall_scope": "RV_ONLY_ANNOTATION_COVERS_NO_OTHER_CORPUS"
+      },
+      {
+        "entity_key": "VG:CONCEPT:DANDA-STAFF",
+        "recall_status": "UNMEASURED_NO_REGISTERED_SANSKRIT_ALIAS",
+        "recall_reason": "The entity registers no Sanskrit alias, so there is nothing for the lexical layer to match and nothing to measure recall of."
+      },
+      {
+        "entity_key": "VG:CONCEPT:DARBHA-GRASS",
+        "recall_status": "UNMEASURED_NO_REGISTERED_SANSKRIT_ALIAS",
+        "recall_reason": "The entity registers no Sanskrit alias, so there is nothing for the lexical layer to match and nothing to measure recall of."
+      },
+      {
+        "entity_key": "VG:CONCEPT:DARBHA-PLANT",
+        "recall_status": "MEASURED_AGAINST_RV_ANNOTATION",
+        "recall_sample_size": 1,
+        "recall_matched": 1,
+        "recall": 1.0,
+        "matcher_found_beyond_the_sample": 0,
+        "anchor_kinds": [
+          "LEMMA",
+          "SURFACE_FORM"
+        ],
+        "registered_aliases": 9,
+        "recall_scope": "RV_ONLY_ANNOTATION_COVERS_NO_OTHER_CORPUS"
+      },
+      {
+        "entity_key": "VG:CONCEPT:DARSAPURNAMASA",
+        "recall_status": "UNMEASURED_NO_REGISTERED_SANSKRIT_ALIAS",
+        "recall_reason": "The entity registers no Sanskrit alias, so there is nothing for the lexical layer to match and nothing to measure recall of."
+      },
+      {
+        "entity_key": "VG:CONCEPT:DHANYA-GRAIN",
+        "recall_status": "MEASURED_AGAINST_RV_ANNOTATION",
+        "recall_sample_size": 13,
+        "recall_matched": 12,
+        "recall": 0.9231,
+        "matcher_found_beyond_the_sample": 0,
+        "anchor_kinds": [
+          "LEMMA",
+          "SURFACE_FORM"
+        ],
+        "registered_aliases": 5,
+        "recall_scope": "RV_ONLY_ANNOTATION_COVERS_NO_OTHER_CORPUS"
+      },
+      {
+        "entity_key": "VG:CONCEPT:DHI-INSIGHT",
+        "recall_status": "MEASURED_AGAINST_RV_ANNOTATION",
+        "recall_sample_size": 388,
+        "recall_matched": 296,
+        "recall": 0.7629,
+        "matcher_found_beyond_the_sample": 0,
+        "anchor_kinds": [
+          "LEMMA",
+          "SURFACE_FORM"
+        ],
+        "registered_aliases": 17,
+        "recall_scope": "RV_ONLY_ANNOTATION_COVERS_NO_OTHER_CORPUS"
+      },
+      {
+        "entity_key": "VG:CONCEPT:DHRUVA-SPOON",
+        "recall_status": "UNMEASURED_NO_REGISTERED_SANSKRIT_ALIAS",
+        "recall_reason": "The entity registers no Sanskrit alias, so there is nothing for the lexical layer to match and nothing to measure recall of."
+      },
+      {
+        "entity_key": "VG:CONCEPT:DIKSA-CONSECRATION",
+        "recall_status": "UNMEASURED_NO_ANNOTATION_ANCHOR",
+        "recall_reason": "No registered alias folds onto an annotated lemma or surface form, so the Rigvedic annotation offers no ground truth for this entity. Recall is unknown, not zero.",
+        "registered_aliases": 3
+      },
+      {
+        "entity_key": "VG:CONCEPT:DIRGHAYUTVA-LONG-LIFE",
+        "recall_status": "MEASURED_AGAINST_RV_ANNOTATION",
+        "recall_sample_size": 2,
+        "recall_matched": 2,
+        "recall": 1.0,
+        "matcher_found_beyond_the_sample": 2,
+        "anchor_kinds": [
+          "SURFACE_FORM"
+        ],
+        "registered_aliases": 3,
+        "recall_scope": "RV_ONLY_ANNOTATION_COVERS_NO_OTHER_CORPUS"
+      },
+      {
+        "entity_key": "VG:CONCEPT:DRONAKALASA-WOODEN-TUB",
+        "recall_status": "UNMEASURED_NO_ANNOTATION_ANCHOR",
+        "recall_reason": "No registered alias folds onto an annotated lemma or surface form, so the Rigvedic annotation offers no ground truth for this entity. Recall is unknown, not zero.",
+        "registered_aliases": 2
+      },
+      {
+        "entity_key": "VG:CONCEPT:DRSAD-GRINDING-STONE",
+        "recall_status": "UNMEASURED_NO_REGISTERED_SANSKRIT_ALIAS",
+        "recall_reason": "The entity registers no Sanskrit alias, so there is nothing for the lexical layer to match and nothing to measure recall of."
+      },
+      {
+        "entity_key": "VG:CONCEPT:DUNDUBHI-DRUM",
+        "recall_status": "MEASURED_AGAINST_RV_ANNOTATION",
+        "recall_sample_size": 4,
+        "recall_matched": 3,
+        "recall": 0.75,
+        "matcher_found_beyond_the_sample": 0,
+        "anchor_kinds": [
+          "SURFACE_FORM"
+        ],
+        "registered_aliases": 4,
+        "recall_scope": "RV_ONLY_ANNOTATION_COVERS_NO_OTHER_CORPUS"
+      },
+      {
+        "entity_key": "VG:CONCEPT:DURHARD-MALEVOLENT",
+        "recall_status": "UNMEASURED_NO_ANNOTATION_ANCHOR",
+        "recall_reason": "No registered alias folds onto an annotated lemma or surface form, so the Rigvedic annotation offers no ground truth for this entity. Recall is unknown, not zero.",
+        "registered_aliases": 4
+      },
+      {
+        "entity_key": "VG:CONCEPT:DURNAMAN-ILL-NAMED-BEINGS",
+        "recall_status": "MEASURED_AGAINST_RV_ANNOTATION",
+        "recall_sample_size": 2,
+        "recall_matched": 2,
+        "recall": 1.0,
+        "matcher_found_beyond_the_sample": 0,
+        "anchor_kinds": [
+          "SURFACE_FORM"
+        ],
+        "registered_aliases": 9,
+        "recall_scope": "RV_ONLY_ANNOTATION_COVERS_NO_OTHER_CORPUS"
+      },
+      {
+        "entity_key": "VG:CONCEPT:DUSVAPNYA-BAD-DREAM",
+        "recall_status": "MEASURED_AGAINST_RV_ANNOTATION",
+        "recall_sample_size": 8,
+        "recall_matched": 0,
+        "recall": 0.0,
+        "matcher_found_beyond_the_sample": 0,
+        "anchor_kinds": [
+          "SURFACE_FORM"
+        ],
+        "registered_aliases": 5,
+        "recall_scope": "RV_ONLY_ANNOTATION_COVERS_NO_OTHER_CORPUS"
+      },
+      {
+        "entity_key": "VG:CONCEPT:DVADASAHA",
+        "recall_status": "UNMEASURED_NO_REGISTERED_SANSKRIT_ALIAS",
+        "recall_reason": "The entity registers no Sanskrit alias, so there is nothing for the lexical layer to match and nothing to measure recall of."
+      },
+      {
+        "entity_key": "VG:CONCEPT:DYAUS-HEAVEN",
+        "recall_status": "MEASURED_AGAINST_RV_ANNOTATION",
+        "recall_sample_size": 845,
+        "recall_matched": 719,
+        "recall": 0.8509,
+        "matcher_found_beyond_the_sample": 55,
+        "anchor_kinds": [
+          "SURFACE_FORM"
+        ],
+        "registered_aliases": 13,
+        "recall_scope": "RV_ONLY_ANNOTATION_COVERS_NO_OTHER_CORPUS"
+      },
+      {
+        "entity_key": "VG:CONCEPT:EKAHA",
+        "recall_status": "UNMEASURED_NO_REGISTERED_SANSKRIT_ALIAS",
+        "recall_reason": "The entity registers no Sanskrit alias, so there is nothing for the lexical layer to match and nothing to measure recall of."
+      },
+      {
+        "entity_key": "VG:CONCEPT:ENAS-SIN",
+        "recall_status": "MEASURED_AGAINST_RV_ANNOTATION",
+        "recall_sample_size": 83,
+        "recall_matched": 44,
+        "recall": 0.5301,
+        "matcher_found_beyond_the_sample": 0,
+        "anchor_kinds": [
+          "LEMMA",
+          "SURFACE_FORM"
+        ],
+        "registered_aliases": 9,
+        "recall_scope": "RV_ONLY_ANNOTATION_COVERS_NO_OTHER_CORPUS"
+      },
+      {
+        "entity_key": "VG:CONCEPT:GANGA-RIVER",
+        "recall_status": "MEASURED_AGAINST_RV_ANNOTATION",
+        "recall_sample_size": 1,
+        "recall_matched": 1,
+        "recall": 1.0,
+        "matcher_found_beyond_the_sample": 0,
+        "anchor_kinds": [
+          "SURFACE_FORM"
+        ],
+        "registered_aliases": 1,
+        "recall_scope": "RV_ONLY_ANNOTATION_COVERS_NO_OTHER_CORPUS"
+      },
+      {
+        "entity_key": "VG:CONCEPT:GARBHA-EMBRYO",
+        "recall_status": "MEASURED_AGAINST_RV_ANNOTATION",
+        "recall_sample_size": 93,
+        "recall_matched": 91,
+        "recall": 0.9785,
+        "matcher_found_beyond_the_sample": 0,
+        "anchor_kinds": [
+          "LEMMA",
+          "SURFACE_FORM"
+        ],
+        "registered_aliases": 13,
+        "recall_scope": "RV_ONLY_ANNOTATION_COVERS_NO_OTHER_CORPUS"
+      },
+      {
+        "entity_key": "VG:CONCEPT:GARBHALAMBHANA",
+        "recall_status": "UNMEASURED_NO_REGISTERED_SANSKRIT_ALIAS",
+        "recall_reason": "The entity registers no Sanskrit alias, so there is nothing for the lexical layer to match and nothing to measure recall of."
+      },
+      {
+        "entity_key": "VG:CONCEPT:GAVAMAYANA",
+        "recall_status": "UNMEASURED_NO_REGISTERED_SANSKRIT_ALIAS",
+        "recall_reason": "The entity registers no Sanskrit alias, so there is nothing for the lexical layer to match and nothing to measure recall of."
+      },
+      {
+        "entity_key": "VG:CONCEPT:GHRTA-CLARIFIED-BUTTER",
+        "recall_status": "MEASURED_AGAINST_RV_ANNOTATION",
+        "recall_sample_size": 139,
+        "recall_matched": 109,
+        "recall": 0.7842,
+        "matcher_found_beyond_the_sample": 0,
+        "anchor_kinds": [
+          "LEMMA",
+          "SURFACE_FORM"
+        ],
+        "registered_aliases": 11,
+        "recall_scope": "RV_ONLY_ANNOTATION_COVERS_NO_OTHER_CORPUS"
+      },
+      {
+        "entity_key": "VG:CONCEPT:GO-CATTLE",
+        "recall_status": "MEASURED_AGAINST_RV_ANNOTATION",
+        "recall_sample_size": 620,
+        "recall_matched": 437,
+        "recall": 0.7048,
+        "matcher_found_beyond_the_sample": 21,
+        "anchor_kinds": [
+          "LEMMA",
+          "SURFACE_FORM"
+        ],
+        "registered_aliases": 21,
+        "recall_scope": "RV_ONLY_ANNOTATION_COVERS_NO_OTHER_CORPUS"
+      },
+      {
+        "entity_key": "VG:CONCEPT:GODANA",
+        "recall_status": "UNMEASURED_NO_REGISTERED_SANSKRIT_ALIAS",
+        "recall_reason": "The entity registers no Sanskrit alias, so there is nothing for the lexical layer to match and nothing to measure recall of."
+      },
+      {
+        "entity_key": "VG:CONCEPT:GOMAYA-COWDUNG",
+        "recall_status": "UNMEASURED_NO_REGISTERED_SANSKRIT_ALIAS",
+        "recall_reason": "The entity registers no Sanskrit alias, so there is nothing for the lexical layer to match and nothing to measure recall of."
+      },
+      {
+        "entity_key": "VG:CONCEPT:GOSAVA",
+        "recall_status": "UNMEASURED_NO_REGISTERED_SANSKRIT_ALIAS",
+        "recall_reason": "The entity registers no Sanskrit alias, so there is nothing for the lexical layer to match and nothing to measure recall of."
+      },
+      {
+        "entity_key": "VG:CONCEPT:GRAHA-SOMA-DRAWING",
+        "recall_status": "MEASURED_AGAINST_RV_ANNOTATION",
+        "recall_sample_size": 1,
+        "recall_matched": 1,
+        "recall": 1.0,
+        "matcher_found_beyond_the_sample": 0,
+        "anchor_kinds": [
+          "SURFACE_FORM"
+        ],
+        "registered_aliases": 4,
+        "recall_scope": "RV_ONLY_ANNOTATION_COVERS_NO_OTHER_CORPUS"
+      },
+      {
+        "entity_key": "VG:CONCEPT:GRAHANA-RITUAL-TAKING-UP",
+        "recall_status": "UNMEASURED_NO_ANNOTATION_ANCHOR",
+        "recall_reason": "No registered alias folds onto an annotated lemma or surface form, so the Rigvedic annotation offers no ground truth for this entity. Recall is unknown, not zero.",
+        "registered_aliases": 1
+      },
+      {
+        "entity_key": "VG:CONCEPT:GRAHI-SEIZURE",
+        "recall_status": "UNMEASURED_NO_ANNOTATION_ANCHOR",
+        "recall_reason": "No registered alias folds onto an annotated lemma or surface form, so the Rigvedic annotation offers no ground truth for this entity. Recall is unknown, not zero.",
+        "registered_aliases": 5
+      },
+      {
+        "entity_key": "VG:CONCEPT:GRAVASTUT-PRIEST",
+        "recall_status": "UNMEASURED_NO_REGISTERED_SANSKRIT_ALIAS",
+        "recall_reason": "The entity registers no Sanskrit alias, so there is nothing for the lexical layer to match and nothing to measure recall of."
+      },
+      {
+        "entity_key": "VG:CONCEPT:GRHA-HOUSE",
+        "recall_status": "MEASURED_AGAINST_RV_ANNOTATION",
+        "recall_sample_size": 156,
+        "recall_matched": 115,
+        "recall": 0.7372,
+        "matcher_found_beyond_the_sample": 13,
+        "anchor_kinds": [
+          "SURFACE_FORM"
+        ],
+        "registered_aliases": 11,
+        "recall_scope": "RV_ONLY_ANNOTATION_COVERS_NO_OTHER_CORPUS"
+      },
+      {
+        "entity_key": "VG:CONCEPT:GULGULU-PLANT",
+        "recall_status": "UNMEASURED_NO_ANNOTATION_ANCHOR",
+        "recall_reason": "No registered alias folds onto an annotated lemma or surface form, so the Rigvedic annotation offers no ground truth for this entity. Recall is unknown, not zero.",
+        "registered_aliases": 4
+      },
+      {
+        "entity_key": "VG:CONCEPT:HARIMAN-JAUNDICE",
+        "recall_status": "UNMEASURED_NO_ANNOTATION_ANCHOR",
+        "recall_reason": "No registered alias folds onto an annotated lemma or surface form, so the Rigvedic annotation offers no ground truth for this entity. Recall is unknown, not zero.",
+        "registered_aliases": 2
+      },
+      {
+        "entity_key": "VG:CONCEPT:HARIYOJANA",
+        "recall_status": "UNMEASURED_NO_REGISTERED_SANSKRIT_ALIAS",
+        "recall_reason": "The entity registers no Sanskrit alias, so there is nothing for the lexical layer to match and nothing to measure recall of."
+      },
+      {
+        "entity_key": "VG:CONCEPT:HAVIS-OBLATION",
+        "recall_status": "MEASURED_AGAINST_RV_ANNOTATION",
+        "recall_sample_size": 259,
+        "recall_matched": 217,
+        "recall": 0.8378,
+        "matcher_found_beyond_the_sample": 1,
+        "anchor_kinds": [
+          "SURFACE_FORM"
+        ],
+        "registered_aliases": 9,
+        "recall_scope": "RV_ONLY_ANNOTATION_COVERS_NO_OTHER_CORPUS"
+      },
+      {
+        "entity_key": "VG:CONCEPT:HIRANYA-GOLD",
+        "recall_status": "MEASURED_AGAINST_RV_ANNOTATION",
+        "recall_sample_size": 49,
+        "recall_matched": 38,
+        "recall": 0.7755,
+        "matcher_found_beyond_the_sample": 0,
+        "anchor_kinds": [
+          "SURFACE_FORM"
+        ],
+        "registered_aliases": 9,
+        "recall_scope": "RV_ONLY_ANNOTATION_COVERS_NO_OTHER_CORPUS"
+      },
+      {
+        "entity_key": "VG:CONCEPT:HOMA-POURING-INTO-FIRE",
+        "recall_status": "MEASURED_AGAINST_RV_ANNOTATION",
+        "recall_sample_size": 16,
+        "recall_matched": 14,
+        "recall": 0.875,
+        "matcher_found_beyond_the_sample": 0,
+        "anchor_kinds": [
+          "SURFACE_FORM"
+        ],
+        "registered_aliases": 2,
+        "recall_scope": "RV_ONLY_ANNOTATION_COVERS_NO_OTHER_CORPUS"
+      },
+      {
+        "entity_key": "VG:CONCEPT:HOTR-PRIEST",
+        "recall_status": "MEASURED_AGAINST_RV_ANNOTATION",
+        "recall_sample_size": 225,
+        "recall_matched": 192,
+        "recall": 0.8533,
+        "matcher_found_beyond_the_sample": 3,
+        "anchor_kinds": [
+          "SURFACE_FORM"
+        ],
+        "registered_aliases": 6,
+        "recall_scope": "RV_ONLY_ANNOTATION_COVERS_NO_OTHER_CORPUS"
+      },
+      {
+        "entity_key": "VG:CONCEPT:HRD-HEART",
+        "recall_status": "MEASURED_AGAINST_RV_ANNOTATION",
+        "recall_sample_size": 51,
+        "recall_matched": 37,
+        "recall": 0.7255,
+        "matcher_found_beyond_the_sample": 0,
+        "anchor_kinds": [
+          "SURFACE_FORM"
+        ],
+        "registered_aliases": 8,
+        "recall_scope": "RV_ONLY_ANNOTATION_COVERS_NO_OTHER_CORPUS"
+      },
+      {
+        "entity_key": "VG:CONCEPT:HRDDYOTA-HEART-BURN",
+        "recall_status": "UNMEASURED_NO_ANNOTATION_ANCHOR",
+        "recall_reason": "No registered alias folds onto an annotated lemma or surface form, so the Rigvedic annotation offers no ground truth for this entity. Recall is unknown, not zero.",
+        "registered_aliases": 2
+      },
+      {
+        "entity_key": "VG:CONCEPT:IDA-THE-IDA-PORTION",
+        "recall_status": "UNMEASURED_NO_REGISTERED_SANSKRIT_ALIAS",
+        "recall_reason": "The entity registers no Sanskrit alias, so there is nothing for the lexical layer to match and nothing to measure recall of."
+      },
+      {
+        "entity_key": "VG:CONCEPT:IDHMA-FIREWOOD",
+        "recall_status": "UNMEASURED_NO_REGISTERED_SANSKRIT_ALIAS",
+        "recall_reason": "The entity registers no Sanskrit alias, so there is nothing for the lexical layer to match and nothing to measure recall of."
+      },
+      {
+        "entity_key": "VG:CONCEPT:ISTAKA-BRICK",
+        "recall_status": "UNMEASURED_NO_ANNOTATION_ANCHOR",
+        "recall_reason": "No registered alias folds onto an annotated lemma or surface form, so the Rigvedic annotation offers no ground truth for this entity. Recall is unknown, not zero.",
+        "registered_aliases": 1
+      },
+      {
+        "entity_key": "VG:CONCEPT:ISTI",
+        "recall_status": "UNMEASURED_NO_REGISTERED_SANSKRIT_ALIAS",
+        "recall_reason": "The entity registers no Sanskrit alias, so there is nothing for the lexical layer to match and nothing to measure recall of."
+      },
+      {
+        "entity_key": "VG:CONCEPT:JANA-PEOPLE",
+        "recall_status": "MEASURED_AGAINST_RV_ANNOTATION",
+        "recall_sample_size": 431,
+        "recall_matched": 313,
+        "recall": 0.7262,
+        "matcher_found_beyond_the_sample": 9,
+        "anchor_kinds": [
+          "SURFACE_FORM"
+        ],
+        "registered_aliases": 19,
+        "recall_scope": "RV_ONLY_ANNOTATION_COVERS_NO_OTHER_CORPUS"
+      },
+      {
+        "entity_key": "VG:CONCEPT:JANGIDA-PLANT",
+        "recall_status": "UNMEASURED_NO_ANNOTATION_ANCHOR",
+        "recall_reason": "No registered alias folds onto an annotated lemma or surface form, so the Rigvedic annotation offers no ground truth for this entity. Recall is unknown, not zero.",
+        "registered_aliases": 8
+      },
+      {
+        "entity_key": "VG:CONCEPT:JANMAN-BIRTH",
+        "recall_status": "MEASURED_AGAINST_RV_ANNOTATION",
+        "recall_sample_size": 187,
+        "recall_matched": 155,
+        "recall": 0.8289,
+        "matcher_found_beyond_the_sample": 20,
+        "anchor_kinds": [
+          "SURFACE_FORM"
+        ],
+        "registered_aliases": 14,
+        "recall_scope": "RV_ONLY_ANNOTATION_COVERS_NO_OTHER_CORPUS"
+      },
+      {
+        "entity_key": "VG:CONCEPT:JAYANYA-DISEASE",
+        "recall_status": "UNMEASURED_NO_ANNOTATION_ANCHOR",
+        "recall_reason": "No registered alias folds onto an annotated lemma or surface form, so the Rigvedic annotation offers no ground truth for this entity. Recall is unknown, not zero.",
+        "registered_aliases": 4
+      },
+      {
+        "entity_key": "VG:CONCEPT:JUHU-SPOON",
+        "recall_status": "UNMEASURED_NO_REGISTERED_SANSKRIT_ALIAS",
+        "recall_reason": "The entity registers no Sanskrit alias, so there is nothing for the lexical layer to match and nothing to measure recall of."
+      },
+      {
+        "entity_key": "VG:CONCEPT:JYA-BOWSTRING",
+        "recall_status": "MEASURED_AGAINST_RV_ANNOTATION",
+        "recall_sample_size": 13,
+        "recall_matched": 1,
+        "recall": 0.0769,
+        "matcher_found_beyond_the_sample": 0,
+        "anchor_kinds": [
+          "LEMMA",
+          "SURFACE_FORM"
+        ],
+        "registered_aliases": 2,
+        "recall_scope": "RV_ONLY_ANNOTATION_COVERS_NO_OTHER_CORPUS"
+      },
+      {
+        "entity_key": "VG:CONCEPT:JYOTIS-LIGHT",
+        "recall_status": "MEASURED_AGAINST_RV_ANNOTATION",
+        "recall_sample_size": 225,
+        "recall_matched": 186,
+        "recall": 0.8267,
+        "matcher_found_beyond_the_sample": 0,
+        "anchor_kinds": [
+          "SURFACE_FORM"
+        ],
+        "registered_aliases": 12,
+        "recall_scope": "RV_ONLY_ANNOTATION_COVERS_NO_OTHER_CORPUS"
+      },
+      {
+        "entity_key": "VG:CONCEPT:JYOTISTOMA",
+        "recall_status": "UNMEASURED_NO_REGISTERED_SANSKRIT_ALIAS",
+        "recall_reason": "The entity registers no Sanskrit alias, so there is nothing for the lexical layer to match and nothing to measure recall of."
+      },
+      {
+        "entity_key": "VG:CONCEPT:KALASA-JAR",
+        "recall_status": "MEASURED_AGAINST_RV_ANNOTATION",
+        "recall_sample_size": 38,
+        "recall_matched": 27,
+        "recall": 0.7105,
+        "matcher_found_beyond_the_sample": 1,
+        "anchor_kinds": [
+          "SURFACE_FORM"
+        ],
+        "registered_aliases": 6,
+        "recall_scope": "RV_ONLY_ANNOTATION_COVERS_NO_OTHER_CORPUS"
+      },
+      {
+        "entity_key": "VG:CONCEPT:KAMA-DESIRE",
+        "recall_status": "MEASURED_AGAINST_RV_ANNOTATION",
+        "recall_sample_size": 70,
+        "recall_matched": 52,
+        "recall": 0.7429,
+        "matcher_found_beyond_the_sample": 0,
+        "anchor_kinds": [
+          "SURFACE_FORM"
+        ],
+        "registered_aliases": 9,
+        "recall_scope": "RV_ONLY_ANNOTATION_COVERS_NO_OTHER_CORPUS"
+      },
+      {
+        "entity_key": "VG:CONCEPT:KAPALA-POTSHERD",
+        "recall_status": "UNMEASURED_NO_REGISTERED_SANSKRIT_ALIAS",
+        "recall_reason": "The entity registers no Sanskrit alias, so there is nothing for the lexical layer to match and nothing to measure recall of."
+      },
+      {
+        "entity_key": "VG:CONCEPT:KARIRI",
+        "recall_status": "UNMEASURED_NO_REGISTERED_SANSKRIT_ALIAS",
+        "recall_reason": "The entity registers no Sanskrit alias, so there is nothing for the lexical layer to match and nothing to measure recall of."
+      },
+      {
+        "entity_key": "VG:CONCEPT:KARNASULA-EARACHE",
+        "recall_status": "UNMEASURED_NO_ANNOTATION_ANCHOR",
+        "recall_reason": "No registered alias folds onto an annotated lemma or surface form, so the Rigvedic annotation offers no ground truth for this entity. Recall is unknown, not zero.",
+        "registered_aliases": 1
+      },
+      {
+        "entity_key": "VG:CONCEPT:KARNAVEDHA",
+        "recall_status": "UNMEASURED_NO_REGISTERED_SANSKRIT_ALIAS",
+        "recall_reason": "The entity registers no Sanskrit alias, so there is nothing for the lexical layer to match and nothing to measure recall of."
+      },
+      {
+        "entity_key": "VG:CONCEPT:KASA-COUGH",
+        "recall_status": "UNMEASURED_NO_ANNOTATION_ANCHOR",
+        "recall_reason": "No registered alias folds onto an annotated lemma or surface form, so the Rigvedic annotation offers no ground truth for this entity. Recall is unknown, not zero.",
+        "registered_aliases": 5
+      },
+      {
+        "entity_key": "VG:CONCEPT:KESANTA",
+        "recall_status": "UNMEASURED_NO_REGISTERED_SANSKRIT_ALIAS",
+        "recall_reason": "The entity registers no Sanskrit alias, so there is nothing for the lexical layer to match and nothing to measure recall of."
+      },
+      {
+        "entity_key": "VG:CONCEPT:KHADIRA-TREE",
+        "recall_status": "MEASURED_AGAINST_RV_ANNOTATION",
+        "recall_sample_size": 1,
+        "recall_matched": 1,
+        "recall": 1.0,
+        "matcher_found_beyond_the_sample": 0,
+        "anchor_kinds": [
+          "SURFACE_FORM"
+        ],
+        "registered_aliases": 4,
+        "recall_scope": "RV_ONLY_ANNOTATION_COVERS_NO_OTHER_CORPUS"
+      },
+      {
+        "entity_key": "VG:CONCEPT:KHADIRA-WOOD",
+        "recall_status": "UNMEASURED_NO_REGISTERED_SANSKRIT_ALIAS",
+        "recall_reason": "The entity registers no Sanskrit alias, so there is nothing for the lexical layer to match and nothing to measure recall of."
+      },
+      {
+        "entity_key": "VG:CONCEPT:KILASA-LEUCODERMA",
+        "recall_status": "UNMEASURED_NO_ANNOTATION_ANCHOR",
+        "recall_reason": "No registered alias folds onto an annotated lemma or surface form, so the Rigvedic annotation offers no ground truth for this entity. Recall is unknown, not zero.",
+        "registered_aliases": 4
+      },
+      {
+        "entity_key": "VG:CONCEPT:KRATU-RESOLVE",
+        "recall_status": "MEASURED_AGAINST_RV_ANNOTATION",
+        "recall_sample_size": 168,
+        "recall_matched": 144,
+        "recall": 0.8571,
+        "matcher_found_beyond_the_sample": 0,
+        "anchor_kinds": [
+          "SURFACE_FORM"
+        ],
+        "registered_aliases": 8,
+        "recall_scope": "RV_ONLY_ANNOTATION_COVERS_NO_OTHER_CORPUS"
+      },
+      {
+        "entity_key": "VG:CONCEPT:KRIMI-WORMS",
+        "recall_status": "UNMEASURED_NO_ANNOTATION_ANCHOR",
+        "recall_reason": "No registered alias folds onto an annotated lemma or surface form, so the Rigvedic annotation offers no ground truth for this entity. Recall is unknown, not zero.",
+        "registered_aliases": 11
+      },
+      {
+        "entity_key": "VG:CONCEPT:KRSNAJINA-BLACK-ANTELOPE-SKIN",
+        "recall_status": "UNMEASURED_NO_REGISTERED_SANSKRIT_ALIAS",
+        "recall_reason": "The entity registers no Sanskrit alias, so there is nothing for the lexical layer to match and nothing to measure recall of."
+      },
+      {
+        "entity_key": "VG:CONCEPT:KRTYA-SORCERY",
+        "recall_status": "MEASURED_AGAINST_RV_ANNOTATION",
+        "recall_sample_size": 2,
+        "recall_matched": 0,
+        "recall": 0.0,
+        "matcher_found_beyond_the_sample": 0,
+        "anchor_kinds": [
+          "LEMMA"
+        ],
+        "registered_aliases": 17,
+        "recall_scope": "RV_ONLY_ANNOTATION_COVERS_NO_OTHER_CORPUS"
+      },
+      {
+        "entity_key": "VG:CONCEPT:KSETRA-FIELD",
+        "recall_status": "MEASURED_AGAINST_RV_ANNOTATION",
+        "recall_sample_size": 28,
+        "recall_matched": 17,
+        "recall": 0.6071,
+        "matcher_found_beyond_the_sample": 0,
+        "anchor_kinds": [
+          "LEMMA",
+          "SURFACE_FORM"
+        ],
+        "registered_aliases": 9,
+        "recall_scope": "RV_ONLY_ANNOTATION_COVERS_NO_OTHER_CORPUS"
+      },
+      {
+        "entity_key": "VG:CONCEPT:KSETRIYA-HEREDITARY-DISEASE",
+        "recall_status": "UNMEASURED_NO_ANNOTATION_ANCHOR",
+        "recall_reason": "No registered alias folds onto an annotated lemma or surface form, so the Rigvedic annotation offers no ground truth for this entity. Recall is unknown, not zero.",
+        "registered_aliases": 7
+      },
+      {
+        "entity_key": "VG:CONCEPT:KSIPTA-BRUISE",
+        "recall_status": "UNMEASURED_NO_ANNOTATION_ANCHOR",
+        "recall_reason": "No registered alias folds onto an annotated lemma or surface form, so the Rigvedic annotation offers no ground truth for this entity. Recall is unknown, not zero.",
+        "registered_aliases": 2
+      },
+      {
+        "entity_key": "VG:CONCEPT:KUSTHA-PLANT",
+        "recall_status": "UNMEASURED_NO_ANNOTATION_ANCHOR",
+        "recall_reason": "No registered alias folds onto an annotated lemma or surface form, so the Rigvedic annotation offers no ground truth for this entity. Recall is unknown, not zero.",
+        "registered_aliases": 8
+      },
+      {
+        "entity_key": "VG:CONCEPT:LAKSA-PLANT",
+        "recall_status": "UNMEASURED_NO_ANNOTATION_ANCHOR",
+        "recall_reason": "No registered alias folds onto an annotated lemma or surface form, so the Rigvedic annotation offers no ground truth for this entity. Recall is unknown, not zero.",
+        "registered_aliases": 2
+      },
+      {
+        "entity_key": "VG:CONCEPT:LOHA-COPPER",
+        "recall_status": "UNMEASURED_NO_ANNOTATION_ANCHOR",
+        "recall_reason": "No registered alias folds onto an annotated lemma or surface form, so the Rigvedic annotation offers no ground truth for this entity. Recall is unknown, not zero.",
+        "registered_aliases": 1
+      },
+      {
+        "entity_key": "VG:CONCEPT:LOKA-WORLD",
+        "recall_status": "MEASURED_AGAINST_RV_ANNOTATION",
+        "recall_sample_size": 8,
+        "recall_matched": 6,
+        "recall": 0.75,
+        "matcher_found_beyond_the_sample": 21,
+        "anchor_kinds": [
+          "SURFACE_FORM"
+        ],
+        "registered_aliases": 7,
+        "recall_scope": "RV_ONLY_ANNOTATION_COVERS_NO_OTHER_CORPUS"
+      },
+      {
+        "entity_key": "VG:CONCEPT:MADHU-HONEY",
+        "recall_status": "MEASURED_AGAINST_RV_ANNOTATION",
+        "recall_sample_size": 169,
+        "recall_matched": 81,
+        "recall": 0.4793,
+        "matcher_found_beyond_the_sample": 0,
+        "anchor_kinds": [
+          "SURFACE_FORM"
+        ],
+        "registered_aliases": 6,
+        "recall_scope": "RV_ONLY_ANNOTATION_COVERS_NO_OTHER_CORPUS"
+      },
+      {
+        "entity_key": "VG:CONCEPT:MADHUPARKA",
+        "recall_status": "UNMEASURED_NO_REGISTERED_SANSKRIT_ALIAS",
+        "recall_reason": "The entity registers no Sanskrit alias, so there is nothing for the lexical layer to match and nothing to measure recall of."
+      },
+      {
+        "entity_key": "VG:CONCEPT:MADHYANDINA-SAVANA-MIDDAY-PRESSING",
+        "recall_status": "MEASURED_AGAINST_RV_ANNOTATION",
+        "recall_sample_size": 4,
+        "recall_matched": 4,
+        "recall": 1.0,
+        "matcher_found_beyond_the_sample": 0,
+        "anchor_kinds": [
+          "SURFACE_FORM"
+        ],
+        "registered_aliases": 3,
+        "recall_scope": "RV_ONLY_ANNOTATION_COVERS_NO_OTHER_CORPUS"
+      },
+      {
+        "entity_key": "VG:CONCEPT:MADUGHA-PLANT",
+        "recall_status": "UNMEASURED_NO_ANNOTATION_ANCHOR",
+        "recall_reason": "No registered alias folds onto an annotated lemma or surface form, so the Rigvedic annotation offers no ground truth for this entity. Recall is unknown, not zero.",
+        "registered_aliases": 2
+      },
+      {
+        "entity_key": "VG:CONCEPT:MAHISA-BUFFALO",
+        "recall_status": "MEASURED_AGAINST_RV_ANNOTATION",
+        "recall_sample_size": 30,
+        "recall_matched": 14,
+        "recall": 0.4667,
+        "matcher_found_beyond_the_sample": 8,
+        "anchor_kinds": [
+          "SURFACE_FORM"
+        ],
+        "registered_aliases": 5,
+        "recall_scope": "RV_ONLY_ANNOTATION_COVERS_NO_OTHER_CORPUS"
+      },
+      {
+        "entity_key": "VG:CONCEPT:MAITRAVARUNA-PRIEST",
+        "recall_status": "UNMEASURED_NO_REGISTERED_SANSKRIT_ALIAS",
+        "recall_reason": "The entity registers no Sanskrit alias, so there is nothing for the lexical layer to match and nothing to measure recall of."
+      },
+      {
+        "entity_key": "VG:CONCEPT:MANAS-MIND",
+        "recall_status": "MEASURED_AGAINST_RV_ANNOTATION",
+        "recall_sample_size": 239,
+        "recall_matched": 166,
+        "recall": 0.6946,
+        "matcher_found_beyond_the_sample": 0,
+        "anchor_kinds": [
+          "LEMMA",
+          "SURFACE_FORM"
+        ],
+        "registered_aliases": 9,
+        "recall_scope": "RV_ONLY_ANNOTATION_COVERS_NO_OTHER_CORPUS"
+      },
+      {
+        "entity_key": "VG:CONCEPT:MANDUKA-FROG",
+        "recall_status": "MEASURED_AGAINST_RV_ANNOTATION",
+        "recall_sample_size": 4,
+        "recall_matched": 4,
+        "recall": 1.0,
+        "matcher_found_beyond_the_sample": 0,
+        "anchor_kinds": [
+          "SURFACE_FORM"
+        ],
+        "registered_aliases": 3,
+        "recall_scope": "RV_ONLY_ANNOTATION_COVERS_NO_OTHER_CORPUS"
+      },
+      {
+        "entity_key": "VG:CONCEPT:MANI-AMULET",
+        "recall_status": "MEASURED_AGAINST_RV_ANNOTATION",
+        "recall_sample_size": 1,
+        "recall_matched": 1,
+        "recall": 1.0,
+        "matcher_found_beyond_the_sample": 0,
+        "anchor_kinds": [
+          "SURFACE_FORM"
+        ],
+        "registered_aliases": 7,
+        "recall_scope": "RV_ONLY_ANNOTATION_COVERS_NO_OTHER_CORPUS"
+      },
+      {
+        "entity_key": "VG:CONCEPT:MASA-BEAN",
+        "recall_status": "UNMEASURED_NO_ANNOTATION_ANCHOR",
+        "recall_reason": "No registered alias folds onto an annotated lemma or surface form, so the Rigvedic annotation offers no ground truth for this entity. Recall is unknown, not zero.",
+        "registered_aliases": 2
+      },
+      {
+        "entity_key": "VG:CONCEPT:MAYA-WILE",
+        "recall_status": "MEASURED_AGAINST_RV_ANNOTATION",
+        "recall_sample_size": 82,
+        "recall_matched": 55,
+        "recall": 0.6707,
+        "matcher_found_beyond_the_sample": 0,
+        "anchor_kinds": [
+          "LEMMA",
+          "SURFACE_FORM"
+        ],
+        "registered_aliases": 8,
+        "recall_scope": "RV_ONLY_ANNOTATION_COVERS_NO_OTHER_CORPUS"
+      },
+      {
+        "entity_key": "VG:CONCEPT:MEKHALA-GIRDLE",
+        "recall_status": "UNMEASURED_NO_REGISTERED_SANSKRIT_ALIAS",
+        "recall_reason": "The entity registers no Sanskrit alias, so there is nothing for the lexical layer to match and nothing to measure recall of."
+      },
+      {
+        "entity_key": "VG:CONCEPT:MRGA-WILD-BEAST",
+        "recall_status": "MEASURED_AGAINST_RV_ANNOTATION",
+        "recall_sample_size": 35,
+        "recall_matched": 22,
+        "recall": 0.6286,
+        "matcher_found_beyond_the_sample": 0,
+        "anchor_kinds": [
+          "SURFACE_FORM"
+        ],
+        "registered_aliases": 7,
+        "recall_scope": "RV_ONLY_ANNOTATION_COVERS_NO_OTHER_CORPUS"
+      },
+      {
+        "entity_key": "VG:CONCEPT:MRTTIKA-CLAY",
+        "recall_status": "UNMEASURED_NO_REGISTERED_SANSKRIT_ALIAS",
+        "recall_reason": "The entity registers no Sanskrit alias, so there is nothing for the lexical layer to match and nothing to measure recall of."
+      },
+      {
+        "entity_key": "VG:CONCEPT:MRTYU-DEATH",
+        "recall_status": "MEASURED_AGAINST_RV_ANNOTATION",
+        "recall_sample_size": 17,
+        "recall_matched": 14,
+        "recall": 0.8235,
+        "matcher_found_beyond_the_sample": 2,
+        "anchor_kinds": [
+          "SURFACE_FORM"
+        ],
+        "registered_aliases": 10,
+        "recall_scope": "RV_ONLY_ANNOTATION_COVERS_NO_OTHER_CORPUS"
+      },
+      {
+        "entity_key": "VG:CONCEPT:MUSALA-PESTLE",
+        "recall_status": "UNMEASURED_NO_REGISTERED_SANSKRIT_ALIAS",
+        "recall_reason": "The entity registers no Sanskrit alias, so there is nothing for the lexical layer to match and nothing to measure recall of."
+      },
+      {
+        "entity_key": "VG:CONCEPT:NAMADHEYA",
+        "recall_status": "UNMEASURED_NO_REGISTERED_SANSKRIT_ALIAS",
+        "recall_reason": "The entity registers no Sanskrit alias, so there is nothing for the lexical layer to match and nothing to measure recall of."
+      },
+      {
+        "entity_key": "VG:CONCEPT:NAMAS-HOMAGE",
+        "recall_status": "MEASURED_AGAINST_RV_ANNOTATION",
+        "recall_sample_size": 177,
+        "recall_matched": 100,
+        "recall": 0.565,
+        "matcher_found_beyond_the_sample": 2,
+        "anchor_kinds": [
+          "LEMMA",
+          "SURFACE_FORM"
+        ],
+        "registered_aliases": 6,
+        "recall_scope": "RV_ONLY_ANNOTATION_COVERS_NO_OTHER_CORPUS"
+      },
+      {
+        "entity_key": "VG:CONCEPT:NESTR-LEADER",
+        "recall_status": "MEASURED_AGAINST_RV_ANNOTATION",
+        "recall_sample_size": 3,
+        "recall_matched": 3,
+        "recall": 1.0,
+        "matcher_found_beyond_the_sample": 2,
+        "anchor_kinds": [
+          "SURFACE_FORM"
+        ],
+        "registered_aliases": 3,
+        "recall_scope": "RV_ONLY_ANNOTATION_COVERS_NO_OTHER_CORPUS"
+      },
+      {
+        "entity_key": "VG:CONCEPT:NISKRAMANA",
+        "recall_status": "UNMEASURED_NO_REGISTERED_SANSKRIT_ALIAS",
+        "recall_reason": "The entity registers no Sanskrit alias, so there is nothing for the lexical layer to match and nothing to measure recall of."
+      },
+      {
+        "entity_key": "VG:CONCEPT:NIVARA-WILD-RICE",
+        "recall_status": "UNMEASURED_NO_REGISTERED_SANSKRIT_ALIAS",
+        "recall_reason": "The entity registers no Sanskrit alias, so there is nothing for the lexical layer to match and nothing to measure recall of."
+      },
+      {
+        "entity_key": "VG:CONCEPT:NYAGRODHA-WOOD",
+        "recall_status": "UNMEASURED_NO_REGISTERED_SANSKRIT_ALIAS",
+        "recall_reason": "The entity registers no Sanskrit alias, so there is nothing for the lexical layer to match and nothing to measure recall of."
+      },
+      {
+        "entity_key": "VG:CONCEPT:OJAS-MIGHT",
+        "recall_status": "MEASURED_AGAINST_RV_ANNOTATION",
+        "recall_sample_size": 483,
+        "recall_matched": 316,
+        "recall": 0.6542,
+        "matcher_found_beyond_the_sample": 0,
+        "anchor_kinds": [
+          "LEMMA",
+          "SURFACE_FORM"
+        ],
+        "registered_aliases": 18,
+        "recall_scope": "RV_ONLY_ANNOTATION_COVERS_NO_OTHER_CORPUS"
+      },
+      {
+        "entity_key": "VG:CONCEPT:OSADHI-PLANTS",
+        "recall_status": "MEASURED_AGAINST_RV_ANNOTATION",
+        "recall_sample_size": 99,
+        "recall_matched": 71,
+        "recall": 0.7172,
+        "matcher_found_beyond_the_sample": 0,
+        "anchor_kinds": [
+          "SURFACE_FORM"
+        ],
+        "registered_aliases": 10,
+        "recall_scope": "RV_ONLY_ANNOTATION_COVERS_NO_OTHER_CORPUS"
+      },
+      {
+        "entity_key": "VG:CONCEPT:PALITA-GREYING",
+        "recall_status": "UNMEASURED_NO_ANNOTATION_ANCHOR",
+        "recall_reason": "No registered alias folds onto an annotated lemma or surface form, so the Rigvedic annotation offers no ground truth for this entity. Recall is unknown, not zero.",
+        "registered_aliases": 1
+      },
+      {
+        "entity_key": "VG:CONCEPT:PANCAYAJNA",
+        "recall_status": "UNMEASURED_NO_REGISTERED_SANSKRIT_ALIAS",
+        "recall_reason": "The entity registers no Sanskrit alias, so there is nothing for the lexical layer to match and nothing to measure recall of."
+      },
+      {
+        "entity_key": "VG:CONCEPT:PARIPANA-DEFENCE",
+        "recall_status": "UNMEASURED_NO_ANNOTATION_ANCHOR",
+        "recall_reason": "No registered alias folds onto an annotated lemma or surface form, so the Rigvedic annotation offers no ground truth for this entity. Recall is unknown, not zero.",
+        "registered_aliases": 6
+      },
+      {
+        "entity_key": "VG:CONCEPT:PARISRUT-FERMENTED-DRAUGHT",
+        "recall_status": "UNMEASURED_NO_ANNOTATION_ANCHOR",
+        "recall_reason": "No registered alias folds onto an annotated lemma or surface form, so the Rigvedic annotation offers no ground truth for this entity. Recall is unknown, not zero.",
+        "registered_aliases": 1
+      },
+      {
+        "entity_key": "VG:CONCEPT:PARUSNI-RIVER",
+        "recall_status": "MEASURED_AGAINST_RV_ANNOTATION",
+        "recall_sample_size": 1,
+        "recall_matched": 1,
+        "recall": 1.0,
+        "matcher_found_beyond_the_sample": 0,
+        "anchor_kinds": [
+          "SURFACE_FORM"
+        ],
+        "registered_aliases": 2,
+        "recall_scope": "RV_ONLY_ANNOTATION_COVERS_NO_OTHER_CORPUS"
+      },
+      {
+        "entity_key": "VG:CONCEPT:PARVATA-MOUNTAIN",
+        "recall_status": "MEASURED_AGAINST_RV_ANNOTATION",
+        "recall_sample_size": 88,
+        "recall_matched": 47,
+        "recall": 0.5341,
+        "matcher_found_beyond_the_sample": 0,
+        "anchor_kinds": [
+          "SURFACE_FORM"
+        ],
+        "registered_aliases": 12,
+        "recall_scope": "RV_ONLY_ANNOTATION_COVERS_NO_OTHER_CORPUS"
+      },
+      {
+        "entity_key": "VG:CONCEPT:PASA-NOOSE",
+        "recall_status": "MEASURED_AGAINST_RV_ANNOTATION",
+        "recall_sample_size": 12,
+        "recall_matched": 6,
+        "recall": 0.5,
+        "matcher_found_beyond_the_sample": 0,
+        "anchor_kinds": [
+          "SURFACE_FORM"
+        ],
+        "registered_aliases": 7,
+        "recall_scope": "RV_ONLY_ANNOTATION_COVERS_NO_OTHER_CORPUS"
+      },
+      {
+        "entity_key": "VG:CONCEPT:PASU-LIVESTOCK",
+        "recall_status": "MEASURED_AGAINST_RV_ANNOTATION",
+        "recall_sample_size": 34,
+        "recall_matched": 17,
+        "recall": 0.5,
+        "matcher_found_beyond_the_sample": 0,
+        "anchor_kinds": [
+          "SURFACE_FORM"
+        ],
+        "registered_aliases": 7,
+        "recall_scope": "RV_ONLY_ANNOTATION_COVERS_NO_OTHER_CORPUS"
+      },
+      {
+        "entity_key": "VG:CONCEPT:PASUBANDHA",
+        "recall_status": "UNMEASURED_NO_REGISTERED_SANSKRIT_ALIAS",
+        "recall_reason": "The entity registers no Sanskrit alias, so there is nothing for the lexical layer to match and nothing to measure recall of."
+      },
+      {
+        "entity_key": "VG:CONCEPT:PATNISAMYAJA-WIVES-OFFERINGS",
+        "recall_status": "UNMEASURED_NO_REGISTERED_SANSKRIT_ALIAS",
+        "recall_reason": "The entity registers no Sanskrit alias, so there is nothing for the lexical layer to match and nothing to measure recall of."
+      },
+      {
+        "entity_key": "VG:CONCEPT:PAVITRA-STRAINER",
+        "recall_status": "MEASURED_AGAINST_RV_ANNOTATION",
+        "recall_sample_size": 92,
+        "recall_matched": 57,
+        "recall": 0.6196,
+        "matcher_found_beyond_the_sample": 0,
+        "anchor_kinds": [
+          "SURFACE_FORM"
+        ],
+        "registered_aliases": 4,
+        "recall_scope": "RV_ONLY_ANNOTATION_COVERS_NO_OTHER_CORPUS"
+      },
+      {
+        "entity_key": "VG:CONCEPT:PAYAS-MILK",
+        "recall_status": "MEASURED_AGAINST_RV_ANNOTATION",
+        "recall_sample_size": 110,
+        "recall_matched": 54,
+        "recall": 0.4909,
+        "matcher_found_beyond_the_sample": 0,
+        "anchor_kinds": [
+          "LEMMA",
+          "SURFACE_FORM"
+        ],
+        "registered_aliases": 7,
+        "recall_scope": "RV_ONLY_ANNOTATION_COVERS_NO_OTHER_CORPUS"
+      },
+      {
+        "entity_key": "VG:CONCEPT:PINDAPITRYAJNA",
+        "recall_status": "UNMEASURED_NO_REGISTERED_SANSKRIT_ALIAS",
+        "recall_reason": "The entity registers no Sanskrit alias, so there is nothing for the lexical layer to match and nothing to measure recall of."
+      },
+      {
+        "entity_key": "VG:CONCEPT:PIPPALI-PLANT",
+        "recall_status": "UNMEASURED_NO_ANNOTATION_ANCHOR",
+        "recall_reason": "No registered alias folds onto an annotated lemma or surface form, so the Rigvedic annotation offers no ground truth for this entity. Recall is unknown, not zero.",
+        "registered_aliases": 2
+      },
+      {
+        "entity_key": "VG:CONCEPT:PITARAH-ANCESTORS",
+        "recall_status": "MEASURED_AGAINST_RV_ANNOTATION",
+        "recall_sample_size": 82,
+        "recall_matched": 62,
+        "recall": 0.7561,
+        "matcher_found_beyond_the_sample": 0,
+        "anchor_kinds": [
+          "SURFACE_FORM"
+        ],
+        "registered_aliases": 7,
+        "recall_scope": "RV_ONLY_ANNOTATION_COVERS_NO_OTHER_CORPUS"
+      },
+      {
+        "entity_key": "VG:CONCEPT:PITRYANA-FUNERARY-RITE",
+        "recall_status": "MEASURED_AGAINST_RV_ANNOTATION",
+        "recall_sample_size": 1,
+        "recall_matched": 1,
+        "recall": 1.0,
+        "matcher_found_beyond_the_sample": 0,
+        "anchor_kinds": [
+          "SURFACE_FORM"
+        ],
+        "registered_aliases": 5,
+        "recall_scope": "RV_ONLY_ANNOTATION_COVERS_NO_OTHER_CORPUS"
+      },
+      {
+        "entity_key": "VG:CONCEPT:POTR-PURIFIER",
+        "recall_status": "MEASURED_AGAINST_RV_ANNOTATION",
+        "recall_sample_size": 13,
+        "recall_matched": 13,
+        "recall": 1.0,
+        "matcher_found_beyond_the_sample": 0,
+        "anchor_kinds": [
+          "SURFACE_FORM"
+        ],
+        "registered_aliases": 5,
+        "recall_scope": "RV_ONLY_ANNOTATION_COVERS_NO_OTHER_CORPUS"
+      },
+      {
+        "entity_key": "VG:CONCEPT:PRAJA-OFFSPRING",
+        "recall_status": "MEASURED_AGAINST_RV_ANNOTATION",
+        "recall_sample_size": 176,
+        "recall_matched": 122,
+        "recall": 0.6932,
+        "matcher_found_beyond_the_sample": 0,
+        "anchor_kinds": [
+          "LEMMA",
+          "SURFACE_FORM"
+        ],
+        "registered_aliases": 18,
+        "recall_scope": "RV_ONLY_ANNOTATION_COVERS_NO_OTHER_CORPUS"
+      },
+      {
+        "entity_key": "VG:CONCEPT:PRAJAPATI-PURODASA",
+        "recall_status": "UNMEASURED_NO_REGISTERED_SANSKRIT_ALIAS",
+        "recall_reason": "The entity registers no Sanskrit alias, so there is nothing for the lexical layer to match and nothing to measure recall of."
+      },
+      {
+        "entity_key": "VG:CONCEPT:PRANA-BREATH",
+        "recall_status": "MEASURED_AGAINST_RV_ANNOTATION",
+        "recall_sample_size": 3,
+        "recall_matched": 3,
+        "recall": 1.0,
+        "matcher_found_beyond_the_sample": 0,
+        "anchor_kinds": [
+          "SURFACE_FORM"
+        ],
+        "registered_aliases": 10,
+        "recall_scope": "RV_ONLY_ANNOTATION_COVERS_NO_OTHER_CORPUS"
+      },
+      {
+        "entity_key": "VG:CONCEPT:PRANAYANA-CARRYING-FORWARD",
+        "recall_status": "UNMEASURED_NO_REGISTERED_SANSKRIT_ALIAS",
+        "recall_reason": "The entity registers no Sanskrit alias, so there is nothing for the lexical layer to match and nothing to measure recall of."
+      },
+      {
+        "entity_key": "VG:CONCEPT:PRANITA-WATER",
+        "recall_status": "UNMEASURED_NO_REGISTERED_SANSKRIT_ALIAS",
+        "recall_reason": "The entity registers no Sanskrit alias, so there is nothing for the lexical layer to match and nothing to measure recall of."
+      },
+      {
+        "entity_key": "VG:CONCEPT:PRASASTR-DIRECTOR",
+        "recall_status": "MEASURED_AGAINST_RV_ANNOTATION",
+        "recall_sample_size": 2,
+        "recall_matched": 2,
+        "recall": 1.0,
+        "matcher_found_beyond_the_sample": 2,
+        "anchor_kinds": [
+          "SURFACE_FORM"
+        ],
+        "registered_aliases": 2,
+        "recall_scope": "RV_ONLY_ANNOTATION_COVERS_NO_OTHER_CORPUS"
+      },
+      {
+        "entity_key": "VG:CONCEPT:PRASTOTR-PRIEST",
+        "recall_status": "UNMEASURED_NO_REGISTERED_SANSKRIT_ALIAS",
+        "recall_reason": "The entity registers no Sanskrit alias, so there is nothing for the lexical layer to match and nothing to measure recall of."
+      },
+      {
+        "entity_key": "VG:CONCEPT:PRASUTI-CHILDBIRTH",
+        "recall_status": "MEASURED_AGAINST_RV_ANNOTATION",
+        "recall_sample_size": 2,
+        "recall_matched": 1,
+        "recall": 0.5,
+        "matcher_found_beyond_the_sample": 0,
+        "anchor_kinds": [
+          "LEMMA",
+          "SURFACE_FORM"
+        ],
+        "registered_aliases": 8,
+        "recall_scope": "RV_ONLY_ANNOTATION_COVERS_NO_OTHER_CORPUS"
+      },
+      {
+        "entity_key": "VG:CONCEPT:PRATAHSAVANA-MORNING-PRESSING",
+        "recall_status": "MEASURED_AGAINST_RV_ANNOTATION",
+        "recall_sample_size": 2,
+        "recall_matched": 2,
+        "recall": 1.0,
+        "matcher_found_beyond_the_sample": 1,
+        "anchor_kinds": [
+          "SURFACE_FORM"
+        ],
+        "registered_aliases": 3,
+        "recall_scope": "RV_ONLY_ANNOTATION_COVERS_NO_OTHER_CORPUS"
+      },
+      {
+        "entity_key": "VG:CONCEPT:PRATIHARTR-PRIEST",
+        "recall_status": "UNMEASURED_NO_REGISTERED_SANSKRIT_ALIAS",
+        "recall_reason": "The entity registers no Sanskrit alias, so there is nothing for the lexical layer to match and nothing to measure recall of."
+      },
+      {
+        "entity_key": "VG:CONCEPT:PRATIPRASTHATR-PRIEST",
+        "recall_status": "UNMEASURED_NO_REGISTERED_SANSKRIT_ALIAS",
+        "recall_reason": "The entity registers no Sanskrit alias, so there is nothing for the lexical layer to match and nothing to measure recall of."
+      },
+      {
+        "entity_key": "VG:CONCEPT:PRAVARGYA",
+        "recall_status": "UNMEASURED_NO_REGISTERED_SANSKRIT_ALIAS",
+        "recall_reason": "The entity registers no Sanskrit alias, so there is nothing for the lexical layer to match and nothing to measure recall of."
+      },
+      {
+        "entity_key": "VG:CONCEPT:PRAYAJA-FORE-OFFERINGS",
+        "recall_status": "UNMEASURED_NO_REGISTERED_SANSKRIT_ALIAS",
+        "recall_reason": "The entity registers no Sanskrit alias, so there is nothing for the lexical layer to match and nothing to measure recall of."
+      },
+      {
+        "entity_key": "VG:CONCEPT:PRAYANIYA",
+        "recall_status": "UNMEASURED_NO_REGISTERED_SANSKRIT_ALIAS",
+        "recall_reason": "The entity registers no Sanskrit alias, so there is nothing for the lexical layer to match and nothing to measure recall of."
+      },
+      {
+        "entity_key": "VG:CONCEPT:PRAYASCITTA-GRHYA",
+        "recall_status": "UNMEASURED_NO_REGISTERED_SANSKRIT_ALIAS",
+        "recall_reason": "The entity registers no Sanskrit alias, so there is nothing for the lexical layer to match and nothing to measure recall of."
+      },
+      {
+        "entity_key": "VG:CONCEPT:PRAYASCITTI",
+        "recall_status": "UNMEASURED_NO_REGISTERED_SANSKRIT_ALIAS",
+        "recall_reason": "The entity registers no Sanskrit alias, so there is nothing for the lexical layer to match and nothing to measure recall of."
+      },
+      {
+        "entity_key": "VG:CONCEPT:PRDAKU-ADDER",
+        "recall_status": "UNMEASURED_NO_ANNOTATION_ANCHOR",
+        "recall_reason": "No registered alias folds onto an annotated lemma or surface form, so the Rigvedic annotation offers no ground truth for this entity. Recall is unknown, not zero.",
+        "registered_aliases": 6
+      },
+      {
+        "entity_key": "VG:CONCEPT:PROKSANA-SPRINKLING",
+        "recall_status": "UNMEASURED_NO_REGISTERED_SANSKRIT_ALIAS",
+        "recall_reason": "The entity registers no Sanskrit alias, so there is nothing for the lexical layer to match and nothing to measure recall of."
+      },
+      {
+        "entity_key": "VG:CONCEPT:PRSNIPARNI-PLANT",
+        "recall_status": "UNMEASURED_NO_ANNOTATION_ANCHOR",
+        "recall_reason": "No registered alias folds onto an annotated lemma or surface form, so the Rigvedic annotation offers no ground truth for this entity. Recall is unknown, not zero.",
+        "registered_aliases": 2
+      },
+      {
+        "entity_key": "VG:CONCEPT:PRSTHYA",
+        "recall_status": "UNMEASURED_NO_REGISTERED_SANSKRIT_ALIAS",
+        "recall_reason": "The entity registers no Sanskrit alias, so there is nothing for the lexical layer to match and nothing to measure recall of."
+      },
+      {
+        "entity_key": "VG:CONCEPT:PRTHIVI-EARTH",
+        "recall_status": "MEASURED_AGAINST_RV_ANNOTATION",
+        "recall_sample_size": 359,
+        "recall_matched": 313,
+        "recall": 0.8719,
+        "matcher_found_beyond_the_sample": 0,
+        "anchor_kinds": [
+          "LEMMA",
+          "SURFACE_FORM"
+        ],
+        "registered_aliases": 13,
+        "recall_scope": "RV_ONLY_ANNOTATION_COVERS_NO_OTHER_CORPUS"
+      },
+      {
+        "entity_key": "VG:CONCEPT:PUMSAVANA",
+        "recall_status": "UNMEASURED_NO_REGISTERED_SANSKRIT_ALIAS",
+        "recall_reason": "The entity registers no Sanskrit alias, so there is nothing for the lexical layer to match and nothing to measure recall of."
+      },
+      {
+        "entity_key": "VG:CONCEPT:PUNARADHEYA",
+        "recall_status": "UNMEASURED_NO_REGISTERED_SANSKRIT_ALIAS",
+        "recall_reason": "The entity registers no Sanskrit alias, so there is nothing for the lexical layer to match and nothing to measure recall of."
+      },
+      {
+        "entity_key": "VG:CONCEPT:PURODASA-ASTAKAPALA",
+        "recall_status": "UNMEASURED_NO_REGISTERED_SANSKRIT_ALIAS",
+        "recall_reason": "The entity registers no Sanskrit alias, so there is nothing for the lexical layer to match and nothing to measure recall of."
+      },
+      {
+        "entity_key": "VG:CONCEPT:PURODASA-CAKE",
+        "recall_status": "UNMEASURED_NO_REGISTERED_SANSKRIT_ALIAS",
+        "recall_reason": "The entity registers no Sanskrit alias, so there is nothing for the lexical layer to match and nothing to measure recall of."
+      },
+      {
+        "entity_key": "VG:CONCEPT:PUROHITA-CHAPLAIN",
+        "recall_status": "MEASURED_AGAINST_RV_ANNOTATION",
+        "recall_sample_size": 24,
+        "recall_matched": 9,
+        "recall": 0.375,
+        "matcher_found_beyond_the_sample": 0,
+        "anchor_kinds": [
+          "LEMMA",
+          "SURFACE_FORM"
+        ],
+        "registered_aliases": 3,
+        "recall_scope": "RV_ONLY_ANNOTATION_COVERS_NO_OTHER_CORPUS"
+      },
+      {
+        "entity_key": "VG:CONCEPT:PURU-TRIBE",
+        "recall_status": "MEASURED_AGAINST_RV_ANNOTATION",
+        "recall_sample_size": 10,
+        "recall_matched": 9,
+        "recall": 0.9,
+        "matcher_found_beyond_the_sample": 0,
+        "anchor_kinds": [
+          "SURFACE_FORM"
+        ],
+        "registered_aliases": 2,
+        "recall_scope": "RV_ONLY_ANNOTATION_COVERS_NO_OTHER_CORPUS"
+      },
+      {
+        "entity_key": "VG:CONCEPT:PURUSAMEDHA",
+        "recall_status": "UNMEASURED_NO_REGISTERED_SANSKRIT_ALIAS",
+        "recall_reason": "The entity registers no Sanskrit alias, so there is nothing for the lexical layer to match and nothing to measure recall of."
+      },
+      {
+        "entity_key": "VG:CONCEPT:PUSTI-THRIVING",
+        "recall_status": "MEASURED_AGAINST_RV_ANNOTATION",
+        "recall_sample_size": 33,
+        "recall_matched": 32,
+        "recall": 0.9697,
+        "matcher_found_beyond_the_sample": 1,
+        "anchor_kinds": [
+          "SURFACE_FORM"
+        ],
+        "registered_aliases": 19,
+        "recall_scope": "RV_ONLY_ANNOTATION_COVERS_NO_OTHER_CORPUS"
+      },
+      {
+        "entity_key": "VG:CONCEPT:PUSTIKARMAN",
+        "recall_status": "UNMEASURED_NO_REGISTERED_SANSKRIT_ALIAS",
+        "recall_reason": "The entity registers no Sanskrit alias, so there is nothing for the lexical layer to match and nothing to measure recall of."
+      },
+      {
+        "entity_key": "VG:CONCEPT:RAJAN-KINGSHIP",
+        "recall_status": "MEASURED_AGAINST_RV_ANNOTATION",
+        "recall_sample_size": 296,
+        "recall_matched": 186,
+        "recall": 0.6284,
+        "matcher_found_beyond_the_sample": 0,
+        "anchor_kinds": [
+          "LEMMA",
+          "SURFACE_FORM"
+        ],
+        "registered_aliases": 15,
+        "recall_scope": "RV_ONLY_ANNOTATION_COVERS_NO_OTHER_CORPUS"
+      },
+      {
+        "entity_key": "VG:CONCEPT:RAJASUYA",
+        "recall_status": "UNMEASURED_NO_REGISTERED_SANSKRIT_ALIAS",
+        "recall_reason": "The entity registers no Sanskrit alias, so there is nothing for the lexical layer to match and nothing to measure recall of."
+      },
+      {
+        "entity_key": "VG:CONCEPT:RAJATA-SILVER",
+        "recall_status": "UNMEASURED_NO_ANNOTATION_ANCHOR",
+        "recall_reason": "No registered alias folds onto an annotated lemma or surface form, so the Rigvedic annotation offers no ground truth for this entity. Recall is unknown, not zero.",
+        "registered_aliases": 2
+      },
+      {
+        "entity_key": "VG:CONCEPT:RAKSAS-DEMON",
+        "recall_status": "MEASURED_AGAINST_RV_ANNOTATION",
+        "recall_sample_size": 68,
+        "recall_matched": 57,
+        "recall": 0.8382,
+        "matcher_found_beyond_the_sample": 11,
+        "anchor_kinds": [
+          "SURFACE_FORM"
+        ],
+        "registered_aliases": 12,
+        "recall_scope": "RV_ONLY_ANNOTATION_COVERS_NO_OTHER_CORPUS"
+      },
+      {
+        "entity_key": "VG:CONCEPT:RAPAS-BODILY-HURT",
+        "recall_status": "MEASURED_AGAINST_RV_ANNOTATION",
+        "recall_sample_size": 19,
+        "recall_matched": 12,
+        "recall": 0.6316,
+        "matcher_found_beyond_the_sample": 0,
+        "anchor_kinds": [
+          "LEMMA",
+          "SURFACE_FORM"
+        ],
+        "registered_aliases": 4,
+        "recall_scope": "RV_ONLY_ANNOTATION_COVERS_NO_OTHER_CORPUS"
+      },
+      {
+        "entity_key": "VG:CONCEPT:RATHA-CHARIOT",
+        "recall_status": "MEASURED_AGAINST_RV_ANNOTATION",
+        "recall_sample_size": 422,
+        "recall_matched": 368,
+        "recall": 0.872,
+        "matcher_found_beyond_the_sample": 1,
+        "anchor_kinds": [
+          "SURFACE_FORM"
+        ],
+        "registered_aliases": 10,
+        "recall_scope": "RV_ONLY_ANNOTATION_COVERS_NO_OTHER_CORPUS"
+      },
+      {
+        "entity_key": "VG:CONCEPT:RATRI-NIGHT",
+        "recall_status": "MEASURED_AGAINST_RV_ANNOTATION",
+        "recall_sample_size": 62,
+        "recall_matched": 34,
+        "recall": 0.5484,
+        "matcher_found_beyond_the_sample": 1,
+        "anchor_kinds": [
+          "LEMMA",
+          "SURFACE_FORM"
+        ],
+        "registered_aliases": 10,
+        "recall_scope": "RV_ONLY_ANNOTATION_COVERS_NO_OTHER_CORPUS"
+      },
+      {
+        "entity_key": "VG:CONCEPT:RNA-DEBT-FREEDOM",
+        "recall_status": "MEASURED_AGAINST_RV_ANNOTATION",
+        "recall_sample_size": 9,
+        "recall_matched": 8,
+        "recall": 0.8889,
+        "matcher_found_beyond_the_sample": 0,
+        "anchor_kinds": [
+          "SURFACE_FORM"
+        ],
+        "registered_aliases": 8,
+        "recall_scope": "RV_ONLY_ANNOTATION_COVERS_NO_OTHER_CORPUS"
+      },
+      {
+        "entity_key": "VG:CONCEPT:RTA-ORDER",
+        "recall_status": "MEASURED_AGAINST_RV_ANNOTATION",
+        "recall_sample_size": 346,
+        "recall_matched": 324,
+        "recall": 0.9364,
+        "matcher_found_beyond_the_sample": 0,
+        "anchor_kinds": [
+          "SURFACE_FORM"
+        ],
+        "registered_aliases": 8,
+        "recall_scope": "RV_ONLY_ANNOTATION_COVERS_NO_OTHER_CORPUS"
+      },
+      {
+        "entity_key": "VG:CONCEPT:SABHA-ASSEMBLY",
+        "recall_status": "MEASURED_AGAINST_RV_ANNOTATION",
+        "recall_sample_size": 6,
+        "recall_matched": 2,
+        "recall": 0.3333,
+        "matcher_found_beyond_the_sample": 0,
+        "anchor_kinds": [
+          "LEMMA",
+          "SURFACE_FORM"
+        ],
+        "registered_aliases": 6,
+        "recall_scope": "RV_ONLY_ANNOTATION_COVERS_NO_OTHER_CORPUS"
+      },
+      {
+        "entity_key": "VG:CONCEPT:SADAHA",
+        "recall_status": "UNMEASURED_NO_REGISTERED_SANSKRIT_ALIAS",
+        "recall_reason": "The entity registers no Sanskrit alias, so there is nothing for the lexical layer to match and nothing to measure recall of."
+      },
+      {
+        "entity_key": "VG:CONCEPT:SAKAMEDHA",
+        "recall_status": "UNMEASURED_NO_REGISTERED_SANSKRIT_ALIAS",
+        "recall_reason": "The entity registers no Sanskrit alias, so there is nothing for the lexical layer to match and nothing to measure recall of."
+      },
+      {
+        "entity_key": "VG:CONCEPT:SAKATA-CART",
+        "recall_status": "UNMEASURED_NO_REGISTERED_SANSKRIT_ALIAS",
+        "recall_reason": "The entity registers no Sanskrit alias, so there is nothing for the lexical layer to match and nothing to measure recall of."
+      },
+      {
+        "entity_key": "VG:CONCEPT:SAKHYA-FRIENDSHIP",
+        "recall_status": "MEASURED_AGAINST_RV_ANNOTATION",
+        "recall_sample_size": 327,
+        "recall_matched": 292,
+        "recall": 0.893,
+        "matcher_found_beyond_the_sample": 0,
+        "anchor_kinds": [
+          "SURFACE_FORM"
+        ],
+        "registered_aliases": 12,
+        "recall_scope": "RV_ONLY_ANNOTATION_COVERS_NO_OTHER_CORPUS"
+      },
+      {
+        "entity_key": "VG:CONCEPT:SALA-HOUSE-BUILDING",
+        "recall_status": "MEASURED_AGAINST_RV_ANNOTATION",
+        "recall_sample_size": 9,
+        "recall_matched": 0,
+        "recall": 0.0,
+        "matcher_found_beyond_the_sample": 0,
+        "anchor_kinds": [
+          "LEMMA"
+        ],
+        "registered_aliases": 10,
+        "recall_scope": "RV_ONLY_ANNOTATION_COVERS_NO_OTHER_CORPUS"
+      },
+      {
+        "entity_key": "VG:CONCEPT:SAMAN-CHANT",
+        "recall_status": "MEASURED_AGAINST_RV_ANNOTATION",
+        "recall_sample_size": 128,
+        "recall_matched": 71,
+        "recall": 0.5547,
+        "matcher_found_beyond_the_sample": 0,
+        "anchor_kinds": [
+          "LEMMA",
+          "SURFACE_FORM"
+        ],
+        "registered_aliases": 11,
+        "recall_scope": "RV_ONLY_ANNOTATION_COVERS_NO_OTHER_CORPUS"
+      },
+      {
+        "entity_key": "VG:CONCEPT:SAMAVARTANA",
+        "recall_status": "UNMEASURED_NO_REGISTERED_SANSKRIT_ALIAS",
+        "recall_reason": "The entity registers no Sanskrit alias, so there is nothing for the lexical layer to match and nothing to measure recall of."
+      },
+      {
+        "entity_key": "VG:CONCEPT:SAMI-WOOD",
+        "recall_status": "UNMEASURED_NO_REGISTERED_SANSKRIT_ALIAS",
+        "recall_reason": "The entity registers no Sanskrit alias, so there is nothing for the lexical layer to match and nothing to measure recall of."
+      },
+      {
+        "entity_key": "VG:CONCEPT:SAMIDH-FUEL",
+        "recall_status": "MEASURED_AGAINST_RV_ANNOTATION",
+        "recall_sample_size": 68,
+        "recall_matched": 50,
+        "recall": 0.7353,
+        "matcher_found_beyond_the_sample": 0,
+        "anchor_kinds": [
+          "SURFACE_FORM"
+        ],
+        "registered_aliases": 6,
+        "recall_scope": "RV_ONLY_ANNOTATION_COVERS_NO_OTHER_CORPUS"
+      },
+      {
+        "entity_key": "VG:CONCEPT:SAMJNANA-CONCORD",
+        "recall_status": "MEASURED_AGAINST_RV_ANNOTATION",
+        "recall_sample_size": 1,
+        "recall_matched": 1,
+        "recall": 1.0,
+        "matcher_found_beyond_the_sample": 0,
+        "anchor_kinds": [
+          "SURFACE_FORM"
+        ],
+        "registered_aliases": 3,
+        "recall_scope": "RV_ONLY_ANNOTATION_COVERS_NO_OTHER_CORPUS"
+      },
+      {
+        "entity_key": "VG:CONCEPT:SAMNAYANA-MIXING",
+        "recall_status": "UNMEASURED_NO_REGISTERED_SANSKRIT_ALIAS",
+        "recall_reason": "The entity registers no Sanskrit alias, so there is nothing for the lexical layer to match and nothing to measure recall of."
+      },
+      {
+        "entity_key": "VG:CONCEPT:SAMNAYYA",
+        "recall_status": "UNMEASURED_NO_REGISTERED_SANSKRIT_ALIAS",
+        "recall_reason": "The entity registers no Sanskrit alias, so there is nothing for the lexical layer to match and nothing to measure recall of."
+      },
+      {
+        "entity_key": "VG:CONCEPT:SAMUDRA-OCEAN",
+        "recall_status": "MEASURED_AGAINST_RV_ANNOTATION",
+        "recall_sample_size": 143,
+        "recall_matched": 106,
+        "recall": 0.7413,
+        "matcher_found_beyond_the_sample": 0,
+        "anchor_kinds": [
+          "SURFACE_FORM"
+        ],
+        "registered_aliases": 9,
+        "recall_scope": "RV_ONLY_ANNOTATION_COVERS_NO_OTHER_CORPUS"
+      },
+      {
+        "entity_key": "VG:CONCEPT:SAMYA-YOKE-PIN",
+        "recall_status": "UNMEASURED_NO_REGISTERED_SANSKRIT_ALIAS",
+        "recall_reason": "The entity registers no Sanskrit alias, so there is nothing for the lexical layer to match and nothing to measure recall of."
+      },
+      {
+        "entity_key": "VG:CONCEPT:SANTIKARMAN",
+        "recall_status": "UNMEASURED_NO_REGISTERED_SANSKRIT_ALIAS",
+        "recall_reason": "The entity registers no Sanskrit alias, so there is nothing for the lexical layer to match and nothing to measure recall of."
+      },
+      {
+        "entity_key": "VG:CONCEPT:SAPATHA-IMPRECATION",
+        "recall_status": "UNMEASURED_NO_ANNOTATION_ANCHOR",
+        "recall_reason": "No registered alias folds onto an annotated lemma or surface form, so the Rigvedic annotation offers no ground truth for this entity. Recall is unknown, not zero.",
+        "registered_aliases": 4
+      },
+      {
+        "entity_key": "VG:CONCEPT:SAPATNA-RIVAL-OVERCOMING",
+        "recall_status": "MEASURED_AGAINST_RV_ANNOTATION",
+        "recall_sample_size": 5,
+        "recall_matched": 4,
+        "recall": 0.8,
+        "matcher_found_beyond_the_sample": 2,
+        "anchor_kinds": [
+          "SURFACE_FORM"
+        ],
+        "registered_aliases": 16,
+        "recall_scope": "RV_ONLY_ANNOTATION_COVERS_NO_OTHER_CORPUS"
+      },
+      {
+        "entity_key": "VG:CONCEPT:SARASVATI-RIVER",
+        "recall_status": "MEASURED_AGAINST_RV_ANNOTATION",
+        "recall_sample_size": 1,
+        "recall_matched": 1,
+        "recall": 1.0,
+        "matcher_found_beyond_the_sample": 0,
+        "anchor_kinds": [
+          "SURFACE_FORM"
+        ],
+        "registered_aliases": 2,
+        "recall_scope": "RV_ONLY_ANNOTATION_COVERS_NO_OTHER_CORPUS"
+      },
+      {
+        "entity_key": "VG:CONCEPT:SARAYU-RIVER",
+        "recall_status": "MEASURED_AGAINST_RV_ANNOTATION",
+        "recall_sample_size": 2,
+        "recall_matched": 2,
+        "recall": 1.0,
+        "matcher_found_beyond_the_sample": 0,
+        "anchor_kinds": [
+          "SURFACE_FORM"
+        ],
+        "registered_aliases": 1,
+        "recall_scope": "RV_ONLY_ANNOTATION_COVERS_NO_OTHER_CORPUS"
+      },
+      {
+        "entity_key": "VG:CONCEPT:SARMAN-PROTECTION",
+        "recall_status": "MEASURED_AGAINST_RV_ANNOTATION",
+        "recall_sample_size": 188,
+        "recall_matched": 165,
+        "recall": 0.8777,
+        "matcher_found_beyond_the_sample": 0,
+        "anchor_kinds": [
+          "LEMMA",
+          "SURFACE_FORM"
+        ],
+        "registered_aliases": 12,
+        "recall_scope": "RV_ONLY_ANNOTATION_COVERS_NO_OTHER_CORPUS"
+      },
+      {
+        "entity_key": "VG:CONCEPT:SARVAMEDHA",
+        "recall_status": "UNMEASURED_NO_REGISTERED_SANSKRIT_ALIAS",
+        "recall_reason": "The entity registers no Sanskrit alias, so there is nothing for the lexical layer to match and nothing to measure recall of."
+      },
+      {
+        "entity_key": "VG:CONCEPT:SARVASVARA",
+        "recall_status": "UNMEASURED_NO_REGISTERED_SANSKRIT_ALIAS",
+        "recall_reason": "The entity registers no Sanskrit alias, so there is nothing for the lexical layer to match and nothing to measure recall of."
+      },
+      {
+        "entity_key": "VG:CONCEPT:SAT-EXISTENCE",
+        "recall_status": "MEASURED_AGAINST_RV_ANNOTATION",
+        "recall_sample_size": 488,
+        "recall_matched": 1,
+        "recall": 0.002,
+        "matcher_found_beyond_the_sample": 9,
+        "anchor_kinds": [
+          "LEMMA"
+        ],
+        "registered_aliases": 2,
+        "recall_scope": "RV_ONLY_ANNOTATION_COVERS_NO_OTHER_CORPUS"
+      },
+      {
+        "entity_key": "VG:CONCEPT:SATARUDRIYA",
+        "recall_status": "UNMEASURED_NO_REGISTERED_SANSKRIT_ALIAS",
+        "recall_reason": "The entity registers no Sanskrit alias, so there is nothing for the lexical layer to match and nothing to measure recall of."
+      },
+      {
+        "entity_key": "VG:CONCEPT:SATRU-ENEMY",
+        "recall_status": "MEASURED_AGAINST_RV_ANNOTATION",
+        "recall_sample_size": 223,
+        "recall_matched": 146,
+        "recall": 0.6547,
+        "matcher_found_beyond_the_sample": 1,
+        "anchor_kinds": [
+          "SURFACE_FORM"
+        ],
+        "registered_aliases": 19,
+        "recall_scope": "RV_ONLY_ANNOTATION_COVERS_NO_OTHER_CORPUS"
+      },
+      {
+        "entity_key": "VG:CONCEPT:SATTRA",
+        "recall_status": "UNMEASURED_NO_REGISTERED_SANSKRIT_ALIAS",
+        "recall_reason": "The entity registers no Sanskrit alias, so there is nothing for the lexical layer to match and nothing to measure recall of."
+      },
+      {
+        "entity_key": "VG:CONCEPT:SATYA-TRUTH",
+        "recall_status": "MEASURED_AGAINST_RV_ANNOTATION",
+        "recall_sample_size": 105,
+        "recall_matched": 94,
+        "recall": 0.8952,
+        "matcher_found_beyond_the_sample": 5,
+        "anchor_kinds": [
+          "SURFACE_FORM"
+        ],
+        "registered_aliases": 8,
+        "recall_scope": "RV_ONLY_ANNOTATION_COVERS_NO_OTHER_CORPUS"
+      },
+      {
+        "entity_key": "VG:CONCEPT:SAUTRAMANI",
+        "recall_status": "UNMEASURED_NO_ANNOTATION_ANCHOR",
+        "recall_reason": "No registered alias folds onto an annotated lemma or surface form, so the Rigvedic annotation offers no ground truth for this entity. Recall is unknown, not zero.",
+        "registered_aliases": 2
+      },
+      {
+        "entity_key": "VG:CONCEPT:SEDI-DEBILITY",
+        "recall_status": "UNMEASURED_NO_ANNOTATION_ANCHOR",
+        "recall_reason": "No registered alias folds onto an annotated lemma or surface form, so the Rigvedic annotation offers no ground truth for this entity. Recall is unknown, not zero.",
+        "registered_aliases": 3
+      },
+      {
+        "entity_key": "VG:CONCEPT:SIMANTONNAYANA",
+        "recall_status": "UNMEASURED_NO_REGISTERED_SANSKRIT_ALIAS",
+        "recall_reason": "The entity registers no Sanskrit alias, so there is nothing for the lexical layer to match and nothing to measure recall of."
+      },
+      {
+        "entity_key": "VG:CONCEPT:SINDHU-RIVER",
+        "recall_status": "MEASURED_AGAINST_RV_ANNOTATION",
+        "recall_sample_size": 236,
+        "recall_matched": 181,
+        "recall": 0.7669,
+        "matcher_found_beyond_the_sample": 0,
+        "anchor_kinds": [
+          "LEMMA",
+          "SURFACE_FORM"
+        ],
+        "registered_aliases": 13,
+        "recall_scope": "RV_ONLY_ANNOTATION_COVERS_NO_OTHER_CORPUS"
+      },
+      {
+        "entity_key": "VG:CONCEPT:SIRSAKTI-HEADACHE",
+        "recall_status": "UNMEASURED_NO_ANNOTATION_ANCHOR",
+        "recall_reason": "No registered alias folds onto an annotated lemma or surface form, so the Rigvedic annotation offers no ground truth for this entity. Recall is unknown, not zero.",
+        "registered_aliases": 5
+      },
+      {
+        "entity_key": "VG:CONCEPT:SISA-LEAD",
+        "recall_status": "UNMEASURED_NO_ANNOTATION_ANCHOR",
+        "recall_reason": "No registered alias folds onto an annotated lemma or surface form, so the Rigvedic annotation offers no ground truth for this entity. Recall is unknown, not zero.",
+        "registered_aliases": 2
+      },
+      {
+        "entity_key": "VG:CONCEPT:SNANA",
+        "recall_status": "UNMEASURED_NO_REGISTERED_SANSKRIT_ALIAS",
+        "recall_reason": "The entity registers no Sanskrit alias, so there is nothing for the lexical layer to match and nothing to measure recall of."
+      },
+      {
+        "entity_key": "VG:CONCEPT:SODASIN",
+        "recall_status": "UNMEASURED_NO_REGISTERED_SANSKRIT_ALIAS",
+        "recall_reason": "The entity registers no Sanskrit alias, so there is nothing for the lexical layer to match and nothing to measure recall of."
+      },
+      {
+        "entity_key": "VG:CONCEPT:SOMA-DRINK",
+        "recall_status": "MEASURED_AGAINST_RV_ANNOTATION",
+        "recall_sample_size": 921,
+        "recall_matched": 754,
+        "recall": 0.8187,
+        "matcher_found_beyond_the_sample": 1,
+        "anchor_kinds": [
+          "SURFACE_FORM"
+        ],
+        "registered_aliases": 21,
+        "recall_scope": "RV_ONLY_ANNOTATION_COVERS_NO_OTHER_CORPUS"
+      },
+      {
+        "entity_key": "VG:CONCEPT:SOMA-PRESSING",
+        "recall_status": "MEASURED_AGAINST_RV_ANNOTATION",
+        "recall_sample_size": 476,
+        "recall_matched": 326,
+        "recall": 0.6849,
+        "matcher_found_beyond_the_sample": 20,
+        "anchor_kinds": [
+          "SURFACE_FORM"
+        ],
+        "registered_aliases": 17,
+        "recall_scope": "RV_ONLY_ANNOTATION_COVERS_NO_OTHER_CORPUS"
+      },
+      {
+        "entity_key": "VG:CONCEPT:SRADDHA",
+        "recall_status": "UNMEASURED_NO_REGISTERED_SANSKRIT_ALIAS",
+        "recall_reason": "The entity registers no Sanskrit alias, so there is nothing for the lexical layer to match and nothing to measure recall of."
+      },
+      {
+        "entity_key": "VG:CONCEPT:SRADDHA-FAITH",
+        "recall_status": "MEASURED_AGAINST_RV_ANNOTATION",
+        "recall_sample_size": 11,
+        "recall_matched": 8,
+        "recall": 0.7273,
+        "matcher_found_beyond_the_sample": 0,
+        "anchor_kinds": [
+          "LEMMA",
+          "SURFACE_FORM"
+        ],
+        "registered_aliases": 4,
+        "recall_scope": "RV_ONLY_ANNOTATION_COVERS_NO_OTHER_CORPUS"
+      },
+      {
+        "entity_key": "VG:CONCEPT:SRAVANA",
+        "recall_status": "UNMEASURED_NO_REGISTERED_SANSKRIT_ALIAS",
+        "recall_reason": "The entity registers no Sanskrit alias, so there is nothing for the lexical layer to match and nothing to measure recall of."
+      },
+      {
+        "entity_key": "VG:CONCEPT:SRAVAS-FAME",
+        "recall_status": "MEASURED_AGAINST_RV_ANNOTATION",
+        "recall_sample_size": 211,
+        "recall_matched": 88,
+        "recall": 0.4171,
+        "matcher_found_beyond_the_sample": 6,
+        "anchor_kinds": [
+          "LEMMA",
+          "SURFACE_FORM"
+        ],
+        "registered_aliases": 11,
+        "recall_scope": "RV_ONLY_ANNOTATION_COVERS_NO_OTHER_CORPUS"
+      },
+      {
+        "entity_key": "VG:CONCEPT:SRUC-LADLE",
+        "recall_status": "MEASURED_AGAINST_RV_ANNOTATION",
+        "recall_sample_size": 13,
+        "recall_matched": 8,
+        "recall": 0.6154,
+        "matcher_found_beyond_the_sample": 0,
+        "anchor_kinds": [
+          "SURFACE_FORM"
+        ],
+        "registered_aliases": 3,
+        "recall_scope": "RV_ONLY_ANNOTATION_COVERS_NO_OTHER_CORPUS"
+      },
+      {
+        "entity_key": "VG:CONCEPT:STHALIPAKA",
+        "recall_status": "UNMEASURED_NO_REGISTERED_SANSKRIT_ALIAS",
+        "recall_reason": "The entity registers no Sanskrit alias, so there is nothing for the lexical layer to match and nothing to measure recall of."
+      },
+      {
+        "entity_key": "VG:CONCEPT:STOMA-PRAISE",
+        "recall_status": "MEASURED_AGAINST_RV_ANNOTATION",
+        "recall_sample_size": 440,
+        "recall_matched": 300,
+        "recall": 0.6818,
+        "matcher_found_beyond_the_sample": 1,
+        "anchor_kinds": [
+          "LEMMA",
+          "SURFACE_FORM"
+        ],
+        "registered_aliases": 21,
+        "recall_scope": "RV_ONLY_ANNOTATION_COVERS_NO_OTHER_CORPUS"
+      },
+      {
+        "entity_key": "VG:CONCEPT:SUBRAHMANYA-PRIEST",
+        "recall_status": "UNMEASURED_NO_REGISTERED_SANSKRIT_ALIAS",
+        "recall_reason": "The entity registers no Sanskrit alias, so there is nothing for the lexical layer to match and nothing to measure recall of."
+      },
+      {
+        "entity_key": "VG:CONCEPT:SULAGAVA",
+        "recall_status": "UNMEASURED_NO_REGISTERED_SANSKRIT_ALIAS",
+        "recall_reason": "The entity registers no Sanskrit alias, so there is nothing for the lexical layer to match and nothing to measure recall of."
+      },
+      {
+        "entity_key": "VG:CONCEPT:SUNASIRIYA",
+        "recall_status": "UNMEASURED_NO_REGISTERED_SANSKRIT_ALIAS",
+        "recall_reason": "The entity registers no Sanskrit alias, so there is nothing for the lexical layer to match and nothing to measure recall of."
+      },
+      {
+        "entity_key": "VG:CONCEPT:SURA-SPIRITUOUS-LIQUOR",
+        "recall_status": "UNMEASURED_NO_ANNOTATION_ANCHOR",
+        "recall_reason": "No registered alias folds onto an annotated lemma or surface form, so the Rigvedic annotation offers no ground truth for this entity. Recall is unknown, not zero.",
+        "registered_aliases": 2
+      },
+      {
+        "entity_key": "VG:CONCEPT:SURPA-WINNOWING-BASKET",
+        "recall_status": "UNMEASURED_NO_REGISTERED_SANSKRIT_ALIAS",
+        "recall_reason": "The entity registers no Sanskrit alias, so there is nothing for the lexical layer to match and nothing to measure recall of."
+      },
+      {
+        "entity_key": "VG:CONCEPT:SURYA-SUN",
+        "recall_status": "MEASURED_AGAINST_RV_ANNOTATION",
+        "recall_sample_size": 351,
+        "recall_matched": 312,
+        "recall": 0.8889,
+        "matcher_found_beyond_the_sample": 0,
+        "anchor_kinds": [
+          "SURFACE_FORM"
+        ],
+        "registered_aliases": 9,
+        "recall_scope": "RV_ONLY_ANNOTATION_COVERS_NO_OTHER_CORPUS"
+      },
+      {
+        "entity_key": "VG:CONCEPT:SUTUDRI-RIVER",
+        "recall_status": "MEASURED_AGAINST_RV_ANNOTATION",
+        "recall_sample_size": 1,
+        "recall_matched": 1,
+        "recall": 1.0,
+        "matcher_found_beyond_the_sample": 0,
+        "anchor_kinds": [
+          "SURFACE_FORM"
+        ],
+        "registered_aliases": 1,
+        "recall_scope": "RV_ONLY_ANNOTATION_COVERS_NO_OTHER_CORPUS"
+      },
+      {
+        "entity_key": "VG:CONCEPT:SVADHITI-AXE",
+        "recall_status": "MEASURED_AGAINST_RV_ANNOTATION",
+        "recall_sample_size": 12,
+        "recall_matched": 3,
+        "recall": 0.25,
+        "matcher_found_beyond_the_sample": 0,
+        "anchor_kinds": [
+          "SURFACE_FORM"
+        ],
+        "registered_aliases": 3,
+        "recall_scope": "RV_ONLY_ANNOTATION_COVERS_NO_OTHER_CORPUS"
+      },
+      {
+        "entity_key": "VG:CONCEPT:SVAHAKARA-OFFERING-CALL",
+        "recall_status": "MEASURED_AGAINST_RV_ANNOTATION",
+        "recall_sample_size": 17,
+        "recall_matched": 14,
+        "recall": 0.8235,
+        "matcher_found_beyond_the_sample": 1,
+        "anchor_kinds": [
+          "LEMMA"
+        ],
+        "registered_aliases": 2,
+        "recall_scope": "RV_ONLY_ANNOTATION_COVERS_NO_OTHER_CORPUS"
+      },
+      {
+        "entity_key": "VG:CONCEPT:SVAJA-CONSTRICTOR",
+        "recall_status": "UNMEASURED_NO_ANNOTATION_ANCHOR",
+        "recall_reason": "No registered alias folds onto an annotated lemma or surface form, so the Rigvedic annotation offers no ground truth for this entity. Recall is unknown, not zero.",
+        "registered_aliases": 2
+      },
+      {
+        "entity_key": "VG:CONCEPT:SVAN-DOG",
+        "recall_status": "MEASURED_AGAINST_RV_ANNOTATION",
+        "recall_sample_size": 4,
+        "recall_matched": 1,
+        "recall": 0.25,
+        "matcher_found_beyond_the_sample": 0,
+        "anchor_kinds": [
+          "SURFACE_FORM"
+        ],
+        "registered_aliases": 3,
+        "recall_scope": "RV_ONLY_ANNOTATION_COVERS_NO_OTHER_CORPUS"
+      },
+      {
+        "entity_key": "VG:CONCEPT:SVASTI-WELLBEING",
+        "recall_status": "MEASURED_AGAINST_RV_ANNOTATION",
+        "recall_sample_size": 205,
+        "recall_matched": 170,
+        "recall": 0.8293,
+        "matcher_found_beyond_the_sample": 2,
+        "anchor_kinds": [
+          "LEMMA",
+          "SURFACE_FORM"
+        ],
+        "registered_aliases": 8,
+        "recall_scope": "RV_ONLY_ANNOTATION_COVERS_NO_OTHER_CORPUS"
+      },
+      {
+        "entity_key": "VG:CONCEPT:SVASTYAYANA",
+        "recall_status": "UNMEASURED_NO_REGISTERED_SANSKRIT_ALIAS",
+        "recall_reason": "The entity registers no Sanskrit alias, so there is nothing for the lexical layer to match and nothing to measure recall of."
+      },
+      {
+        "entity_key": "VG:CONCEPT:SVISTAKRT-OFFERING",
+        "recall_status": "UNMEASURED_NO_REGISTERED_SANSKRIT_ALIAS",
+        "recall_reason": "The entity registers no Sanskrit alias, so there is nothing for the lexical layer to match and nothing to measure recall of."
+      },
+      {
+        "entity_key": "VG:CONCEPT:SYAMA-DARK-METAL",
+        "recall_status": "UNMEASURED_NO_ANNOTATION_ANCHOR",
+        "recall_reason": "No registered alias folds onto an annotated lemma or surface form, so the Rigvedic annotation offers no ground truth for this entity. Recall is unknown, not zero.",
+        "registered_aliases": 2
+      },
+      {
+        "entity_key": "VG:CONCEPT:SYAMAKA-MILLET",
+        "recall_status": "UNMEASURED_NO_REGISTERED_SANSKRIT_ALIAS",
+        "recall_reason": "The entity registers no Sanskrit alias, so there is nothing for the lexical layer to match and nothing to measure recall of."
+      },
+      {
+        "entity_key": "VG:CONCEPT:TAKMAN-FEVER",
+        "recall_status": "UNMEASURED_NO_ANNOTATION_ANCHOR",
+        "recall_reason": "No registered alias folds onto an annotated lemma or surface form, so the Rigvedic annotation offers no ground truth for this entity. Recall is unknown, not zero.",
+        "registered_aliases": 10
+      },
+      {
+        "entity_key": "VG:CONCEPT:TAMAS-DARKNESS",
+        "recall_status": "MEASURED_AGAINST_RV_ANNOTATION",
+        "recall_sample_size": 112,
+        "recall_matched": 72,
+        "recall": 0.6429,
+        "matcher_found_beyond_the_sample": 0,
+        "anchor_kinds": [
+          "LEMMA",
+          "SURFACE_FORM"
+        ],
+        "registered_aliases": 7,
+        "recall_scope": "RV_ONLY_ANNOTATION_COVERS_NO_OTHER_CORPUS"
+      },
+      {
+        "entity_key": "VG:CONCEPT:TANDULA-HUSKED-GRAIN",
+        "recall_status": "UNMEASURED_NO_REGISTERED_SANSKRIT_ALIAS",
+        "recall_reason": "The entity registers no Sanskrit alias, so there is nothing for the lexical layer to match and nothing to measure recall of."
+      },
+      {
+        "entity_key": "VG:CONCEPT:TANU-BODY",
+        "recall_status": "MEASURED_AGAINST_RV_ANNOTATION",
+        "recall_sample_size": 160,
+        "recall_matched": 146,
+        "recall": 0.9125,
+        "matcher_found_beyond_the_sample": 0,
+        "anchor_kinds": [
+          "SURFACE_FORM"
+        ],
+        "registered_aliases": 11,
+        "recall_scope": "RV_ONLY_ANNOTATION_COVERS_NO_OTHER_CORPUS"
+      },
+      {
+        "entity_key": "VG:CONCEPT:TANUNAPTRA",
+        "recall_status": "UNMEASURED_NO_REGISTERED_SANSKRIT_ALIAS",
+        "recall_reason": "The entity registers no Sanskrit alias, so there is nothing for the lexical layer to match and nothing to measure recall of."
+      },
+      {
+        "entity_key": "VG:CONCEPT:TAPAS-FERVOUR",
+        "recall_status": "MEASURED_AGAINST_RV_ANNOTATION",
+        "recall_sample_size": 18,
+        "recall_matched": 11,
+        "recall": 0.6111,
+        "matcher_found_beyond_the_sample": 0,
+        "anchor_kinds": [
+          "LEMMA",
+          "SURFACE_FORM"
+        ],
+        "registered_aliases": 6,
+        "recall_scope": "RV_ONLY_ANNOTATION_COVERS_NO_OTHER_CORPUS"
+      },
+      {
+        "entity_key": "VG:CONCEPT:TILA-SESAME",
+        "recall_status": "UNMEASURED_NO_ANNOTATION_ANCHOR",
+        "recall_reason": "No registered alias folds onto an annotated lemma or surface form, so the Rigvedic annotation offers no ground truth for this entity. Recall is unknown, not zero.",
+        "registered_aliases": 4
+      },
+      {
+        "entity_key": "VG:CONCEPT:TRAIDHATAVI",
+        "recall_status": "UNMEASURED_NO_REGISTERED_SANSKRIT_ALIAS",
+        "recall_reason": "The entity registers no Sanskrit alias, so there is nothing for the lexical layer to match and nothing to measure recall of."
+      },
+      {
+        "entity_key": "VG:CONCEPT:TRAPU-TIN",
+        "recall_status": "UNMEASURED_NO_ANNOTATION_ANCHOR",
+        "recall_reason": "No registered alias folds onto an annotated lemma or surface form, so the Rigvedic annotation offers no ground truth for this entity. Recall is unknown, not zero.",
+        "registered_aliases": 1
+      },
+      {
+        "entity_key": "VG:CONCEPT:TRIRATRA",
+        "recall_status": "UNMEASURED_NO_REGISTERED_SANSKRIT_ALIAS",
+        "recall_reason": "The entity registers no Sanskrit alias, so there is nothing for the lexical layer to match and nothing to measure recall of."
+      },
+      {
+        "entity_key": "VG:CONCEPT:TRTIYA-SAVANA-THIRD-PRESSING",
+        "recall_status": "UNMEASURED_NO_ANNOTATION_ANCHOR",
+        "recall_reason": "No registered alias folds onto an annotated lemma or surface form, so the Rigvedic annotation offers no ground truth for this entity. Recall is unknown, not zero.",
+        "registered_aliases": 1
+      },
+      {
+        "entity_key": "VG:CONCEPT:TRTSU-TRIBE",
+        "recall_status": "MEASURED_AGAINST_RV_ANNOTATION",
+        "recall_sample_size": 6,
+        "recall_matched": 3,
+        "recall": 0.5,
+        "matcher_found_beyond_the_sample": 0,
+        "anchor_kinds": [
+          "SURFACE_FORM"
+        ],
+        "registered_aliases": 3,
+        "recall_scope": "RV_ONLY_ANNOTATION_COVERS_NO_OTHER_CORPUS"
+      },
+      {
+        "entity_key": "VG:CONCEPT:TURVASA-TRIBE",
+        "recall_status": "MEASURED_AGAINST_RV_ANNOTATION",
+        "recall_sample_size": 11,
+        "recall_matched": 11,
+        "recall": 1.0,
+        "matcher_found_beyond_the_sample": 0,
+        "anchor_kinds": [
+          "SURFACE_FORM"
+        ],
+        "registered_aliases": 2,
+        "recall_scope": "RV_ONLY_ANNOTATION_COVERS_NO_OTHER_CORPUS"
+      },
+      {
+        "entity_key": "VG:CONCEPT:UDAYANIYA",
+        "recall_status": "UNMEASURED_NO_REGISTERED_SANSKRIT_ALIAS",
+        "recall_reason": "The entity registers no Sanskrit alias, so there is nothing for the lexical layer to match and nothing to measure recall of."
+      },
+      {
+        "entity_key": "VG:CONCEPT:UDGATR-CHANTER",
+        "recall_status": "UNMEASURED_NO_ANNOTATION_ANCHOR",
+        "recall_reason": "No registered alias folds onto an annotated lemma or surface form, so the Rigvedic annotation offers no ground truth for this entity. Recall is unknown, not zero.",
+        "registered_aliases": 1
+      },
+      {
+        "entity_key": "VG:CONCEPT:UDUMBARA-WOOD",
+        "recall_status": "UNMEASURED_NO_REGISTERED_SANSKRIT_ALIAS",
+        "recall_reason": "The entity registers no Sanskrit alias, so there is nothing for the lexical layer to match and nothing to measure recall of."
+      },
+      {
+        "entity_key": "VG:CONCEPT:UKTHYA",
+        "recall_status": "UNMEASURED_NO_REGISTERED_SANSKRIT_ALIAS",
+        "recall_reason": "The entity registers no Sanskrit alias, so there is nothing for the lexical layer to match and nothing to measure recall of."
+      },
+      {
+        "entity_key": "VG:CONCEPT:ULUKHALA-MORTAR",
+        "recall_status": "MEASURED_AGAINST_RV_ANNOTATION",
+        "recall_sample_size": 4,
+        "recall_matched": 4,
+        "recall": 1.0,
+        "matcher_found_beyond_the_sample": 0,
+        "anchor_kinds": [
+          "SURFACE_FORM"
+        ],
+        "registered_aliases": 4,
+        "recall_scope": "RV_ONLY_ANNOTATION_COVERS_NO_OTHER_CORPUS"
+      },
+      {
+        "entity_key": "VG:CONCEPT:UNMADA-MADNESS",
+        "recall_status": "UNMEASURED_NO_ANNOTATION_ANCHOR",
+        "recall_reason": "No registered alias folds onto an annotated lemma or surface form, so the Rigvedic annotation offers no ground truth for this entity. Recall is unknown, not zero.",
+        "registered_aliases": 2
+      },
+      {
+        "entity_key": "VG:CONCEPT:UNNETR-PRIEST",
+        "recall_status": "UNMEASURED_NO_REGISTERED_SANSKRIT_ALIAS",
+        "recall_reason": "The entity registers no Sanskrit alias, so there is nothing for the lexical layer to match and nothing to measure recall of."
+      },
+      {
+        "entity_key": "VG:CONCEPT:UPAHAVYA",
+        "recall_status": "UNMEASURED_NO_REGISTERED_SANSKRIT_ALIAS",
+        "recall_reason": "The entity registers no Sanskrit alias, so there is nothing for the lexical layer to match and nothing to measure recall of."
+      },
+      {
+        "entity_key": "VG:CONCEPT:UPAKARMA",
+        "recall_status": "UNMEASURED_NO_REGISTERED_SANSKRIT_ALIAS",
+        "recall_reason": "The entity registers no Sanskrit alias, so there is nothing for the lexical layer to match and nothing to measure recall of."
+      },
+      {
+        "entity_key": "VG:CONCEPT:UPALA-UPPER-STONE",
+        "recall_status": "UNMEASURED_NO_REGISTERED_SANSKRIT_ALIAS",
+        "recall_reason": "The entity registers no Sanskrit alias, so there is nothing for the lexical layer to match and nothing to measure recall of."
+      },
+      {
+        "entity_key": "VG:CONCEPT:UPAMSUYAJA-INAUDIBLE-OFFERING",
+        "recall_status": "UNMEASURED_NO_REGISTERED_SANSKRIT_ALIAS",
+        "recall_reason": "The entity registers no Sanskrit alias, so there is nothing for the lexical layer to match and nothing to measure recall of."
+      },
+      {
+        "entity_key": "VG:CONCEPT:UPANAYANA",
+        "recall_status": "UNMEASURED_NO_REGISTERED_SANSKRIT_ALIAS",
+        "recall_reason": "The entity registers no Sanskrit alias, so there is nothing for the lexical layer to match and nothing to measure recall of."
+      },
+      {
+        "entity_key": "VG:CONCEPT:UPASAD",
+        "recall_status": "UNMEASURED_NO_REGISTERED_SANSKRIT_ALIAS",
+        "recall_reason": "The entity registers no Sanskrit alias, so there is nothing for the lexical layer to match and nothing to measure recall of."
+      },
+      {
+        "entity_key": "VG:CONCEPT:UPASTARANA-UNDERLAYING",
+        "recall_status": "UNMEASURED_NO_REGISTERED_SANSKRIT_ALIAS",
+        "recall_reason": "The entity registers no Sanskrit alias, so there is nothing for the lexical layer to match and nothing to measure recall of."
+      },
+      {
+        "entity_key": "VG:CONCEPT:URNA-WOOL",
+        "recall_status": "UNMEASURED_NO_REGISTERED_SANSKRIT_ALIAS",
+        "recall_reason": "The entity registers no Sanskrit alias, so there is nothing for the lexical layer to match and nothing to measure recall of."
+      },
+      {
+        "entity_key": "VG:CONCEPT:USAS-DAWN",
+        "recall_status": "MEASURED_AGAINST_RV_ANNOTATION",
+        "recall_sample_size": 355,
+        "recall_matched": 190,
+        "recall": 0.5352,
+        "matcher_found_beyond_the_sample": 0,
+        "anchor_kinds": [
+          "LEMMA",
+          "SURFACE_FORM"
+        ],
+        "registered_aliases": 10,
+        "recall_scope": "RV_ONLY_ANNOTATION_COVERS_NO_OTHER_CORPUS"
+      },
+      {
+        "entity_key": "VG:CONCEPT:UTSARJANA",
+        "recall_status": "UNMEASURED_NO_REGISTERED_SANSKRIT_ALIAS",
+        "recall_reason": "The entity registers no Sanskrit alias, so there is nothing for the lexical layer to match and nothing to measure recall of."
+      },
+      {
+        "entity_key": "VG:CONCEPT:VAC-SPEECH",
+        "recall_status": "MEASURED_AGAINST_RV_ANNOTATION",
+        "recall_sample_size": 422,
+        "recall_matched": 392,
+        "recall": 0.9289,
+        "matcher_found_beyond_the_sample": 4,
+        "anchor_kinds": [
+          "SURFACE_FORM"
+        ],
+        "registered_aliases": 14,
+        "recall_scope": "RV_ONLY_ANNOTATION_COVERS_NO_OTHER_CORPUS"
+      },
+      {
+        "entity_key": "VG:CONCEPT:VAISVADEVA-PARVAN",
+        "recall_status": "UNMEASURED_NO_REGISTERED_SANSKRIT_ALIAS",
+        "recall_reason": "The entity registers no Sanskrit alias, so there is nothing for the lexical layer to match and nothing to measure recall of."
+      },
+      {
+        "entity_key": "VG:CONCEPT:VAISVAKARMANA",
+        "recall_status": "UNMEASURED_NO_REGISTERED_SANSKRIT_ALIAS",
+        "recall_reason": "The entity registers no Sanskrit alias, so there is nothing for the lexical layer to match and nothing to measure recall of."
+      },
+      {
+        "entity_key": "VG:CONCEPT:VAISVANARA-ISTI",
+        "recall_status": "UNMEASURED_NO_REGISTERED_SANSKRIT_ALIAS",
+        "recall_reason": "The entity registers no Sanskrit alias, so there is nothing for the lexical layer to match and nothing to measure recall of."
+      },
+      {
+        "entity_key": "VG:CONCEPT:VAJA-PRIZE",
+        "recall_status": "MEASURED_AGAINST_RV_ANNOTATION",
+        "recall_sample_size": 356,
+        "recall_matched": 303,
+        "recall": 0.8511,
+        "matcher_found_beyond_the_sample": 0,
+        "anchor_kinds": [
+          "SURFACE_FORM"
+        ],
+        "registered_aliases": 10,
+        "recall_scope": "RV_ONLY_ANNOTATION_COVERS_NO_OTHER_CORPUS"
+      },
+      {
+        "entity_key": "VG:CONCEPT:VAJAPEYA",
+        "recall_status": "UNMEASURED_NO_REGISTERED_SANSKRIT_ALIAS",
+        "recall_reason": "The entity registers no Sanskrit alias, so there is nothing for the lexical layer to match and nothing to measure recall of."
+      },
+      {
+        "entity_key": "VG:CONCEPT:VAJRA-THUNDERBOLT",
+        "recall_status": "MEASURED_AGAINST_RV_ANNOTATION",
+        "recall_sample_size": 240,
+        "recall_matched": 181,
+        "recall": 0.7542,
+        "matcher_found_beyond_the_sample": 1,
+        "anchor_kinds": [
+          "LEMMA",
+          "SURFACE_FORM"
+        ],
+        "registered_aliases": 10,
+        "recall_scope": "RV_ONLY_ANNOTATION_COVERS_NO_OTHER_CORPUS"
+      },
+      {
+        "entity_key": "VG:CONCEPT:VANASPATI-TREE",
+        "recall_status": "MEASURED_AGAINST_RV_ANNOTATION",
+        "recall_sample_size": 106,
+        "recall_matched": 73,
+        "recall": 0.6887,
+        "matcher_found_beyond_the_sample": 1,
+        "anchor_kinds": [
+          "SURFACE_FORM"
+        ],
+        "registered_aliases": 12,
+        "recall_scope": "RV_ONLY_ANNOTATION_COVERS_NO_OTHER_CORPUS"
+      },
+      {
+        "entity_key": "VG:CONCEPT:VAPA-OMENTUM",
+        "recall_status": "UNMEASURED_NO_REGISTERED_SANSKRIT_ALIAS",
+        "recall_reason": "The entity registers no Sanskrit alias, so there is nothing for the lexical layer to match and nothing to measure recall of."
+      },
+      {
+        "entity_key": "VG:CONCEPT:VARCAS-SPLENDOUR",
+        "recall_status": "MEASURED_AGAINST_RV_ANNOTATION",
+        "recall_sample_size": 7,
+        "recall_matched": 7,
+        "recall": 1.0,
+        "matcher_found_beyond_the_sample": 0,
+        "anchor_kinds": [
+          "SURFACE_FORM"
+        ],
+        "registered_aliases": 2,
+        "recall_scope": "RV_ONLY_ANNOTATION_COVERS_NO_OTHER_CORPUS"
+      },
+      {
+        "entity_key": "VG:CONCEPT:VARMAN-ARMOUR",
+        "recall_status": "MEASURED_AGAINST_RV_ANNOTATION",
+        "recall_sample_size": 13,
+        "recall_matched": 9,
+        "recall": 0.6923,
+        "matcher_found_beyond_the_sample": 1,
+        "anchor_kinds": [
+          "SURFACE_FORM"
+        ],
+        "registered_aliases": 6,
+        "recall_scope": "RV_ONLY_ANNOTATION_COVERS_NO_OTHER_CORPUS"
+      },
+      {
+        "entity_key": "VG:CONCEPT:VARUNAPRAGHASA",
+        "recall_status": "UNMEASURED_NO_REGISTERED_SANSKRIT_ALIAS",
+        "recall_reason": "The entity registers no Sanskrit alias, so there is nothing for the lexical layer to match and nothing to measure recall of."
+      },
+      {
+        "entity_key": "VG:CONCEPT:VASATIVARI",
+        "recall_status": "UNMEASURED_NO_REGISTERED_SANSKRIT_ALIAS",
+        "recall_reason": "The entity registers no Sanskrit alias, so there is nothing for the lexical layer to match and nothing to measure recall of."
+      },
+      {
+        "entity_key": "VG:CONCEPT:VASATKARA-VASAT-CALL",
+        "recall_status": "UNMEASURED_NO_REGISTERED_SANSKRIT_ALIAS",
+        "recall_reason": "The entity registers no Sanskrit alias, so there is nothing for the lexical layer to match and nothing to measure recall of."
+      },
+      {
+        "entity_key": "VG:CONCEPT:VASU-WEALTH",
+        "recall_status": "MEASURED_AGAINST_RV_ANNOTATION",
+        "recall_sample_size": 898,
+        "recall_matched": 578,
+        "recall": 0.6437,
+        "matcher_found_beyond_the_sample": 3,
+        "anchor_kinds": [
+          "LEMMA",
+          "SURFACE_FORM"
+        ],
+        "registered_aliases": 20,
+        "recall_scope": "RV_ONLY_ANNOTATION_COVERS_NO_OTHER_CORPUS"
+      },
+      {
+        "entity_key": "VG:CONCEPT:VATA-WIND",
+        "recall_status": "MEASURED_AGAINST_RV_ANNOTATION",
+        "recall_sample_size": 188,
+        "recall_matched": 144,
+        "recall": 0.766,
+        "matcher_found_beyond_the_sample": 0,
+        "anchor_kinds": [
+          "SURFACE_FORM"
+        ],
+        "registered_aliases": 16,
+        "recall_scope": "RV_ONLY_ANNOTATION_COVERS_NO_OTHER_CORPUS"
+      },
+      {
+        "entity_key": "VG:CONCEPT:VATIKRTA-WIND-AILMENT",
+        "recall_status": "UNMEASURED_NO_ANNOTATION_ANCHOR",
+        "recall_reason": "No registered alias folds onto an annotated lemma or surface form, so the Rigvedic annotation offers no ground truth for this entity. Recall is unknown, not zero.",
+        "registered_aliases": 2
+      },
+      {
+        "entity_key": "VG:CONCEPT:VAYAVYA-VAYU-CUP",
+        "recall_status": "UNMEASURED_NO_ANNOTATION_ANCHOR",
+        "recall_reason": "No registered alias folds onto an annotated lemma or surface form, so the Rigvedic annotation offers no ground truth for this entity. Recall is unknown, not zero.",
+        "registered_aliases": 1
+      },
+      {
+        "entity_key": "VG:CONCEPT:VEDA-GRASS-BUNDLE",
+        "recall_status": "UNMEASURED_NO_REGISTERED_SANSKRIT_ALIAS",
+        "recall_reason": "The entity registers no Sanskrit alias, so there is nothing for the lexical layer to match and nothing to measure recall of."
+      },
+      {
+        "entity_key": "VG:CONCEPT:VEDI-ALTAR",
+        "recall_status": "MEASURED_AGAINST_RV_ANNOTATION",
+        "recall_sample_size": 7,
+        "recall_matched": 7,
+        "recall": 1.0,
+        "matcher_found_beyond_the_sample": 0,
+        "anchor_kinds": [
+          "SURFACE_FORM"
+        ],
+        "registered_aliases": 4,
+        "recall_scope": "RV_ONLY_ANNOTATION_COVERS_NO_OTHER_CORPUS"
+      },
+      {
+        "entity_key": "VG:CONCEPT:VI-BIRD",
+        "recall_status": "MEASURED_AGAINST_RV_ANNOTATION",
+        "recall_sample_size": 72,
+        "recall_matched": 51,
+        "recall": 0.7083,
+        "matcher_found_beyond_the_sample": 0,
+        "anchor_kinds": [
+          "SURFACE_FORM"
+        ],
+        "registered_aliases": 10,
+        "recall_scope": "RV_ONLY_ANNOTATION_COVERS_NO_OTHER_CORPUS"
+      },
+      {
+        "entity_key": "VG:CONCEPT:VIDRADHA-ABSCESS",
+        "recall_status": "UNMEASURED_NO_ANNOTATION_ANCHOR",
+        "recall_reason": "No registered alias folds onto an annotated lemma or surface form, so the Rigvedic annotation offers no ground truth for this entity. Recall is unknown, not zero.",
+        "registered_aliases": 2
+      },
+      {
+        "entity_key": "VG:CONCEPT:VIDYUT-LIGHTNING",
+        "recall_status": "MEASURED_AGAINST_RV_ANNOTATION",
+        "recall_sample_size": 42,
+        "recall_matched": 20,
+        "recall": 0.4762,
+        "matcher_found_beyond_the_sample": 0,
+        "anchor_kinds": [
+          "LEMMA",
+          "SURFACE_FORM"
+        ],
+        "registered_aliases": 7,
+        "recall_scope": "RV_ONLY_ANNOTATION_COVERS_NO_OTHER_CORPUS"
+      },
+      {
+        "entity_key": "VG:CONCEPT:VIKANKATA-WOOD",
+        "recall_status": "UNMEASURED_NO_REGISTERED_SANSKRIT_ALIAS",
+        "recall_reason": "The entity registers no Sanskrit alias, so there is nothing for the lexical layer to match and nothing to measure recall of."
+      },
+      {
+        "entity_key": "VG:CONCEPT:VIPAS-RIVER",
+        "recall_status": "MEASURED_AGAINST_RV_ANNOTATION",
+        "recall_sample_size": 2,
+        "recall_matched": 2,
+        "recall": 1.0,
+        "matcher_found_beyond_the_sample": 0,
+        "anchor_kinds": [
+          "SURFACE_FORM"
+        ],
+        "registered_aliases": 2,
+        "recall_scope": "RV_ONLY_ANNOTATION_COVERS_NO_OTHER_CORPUS"
+      },
+      {
+        "entity_key": "VG:CONCEPT:VIRA-HERO",
+        "recall_status": "MEASURED_AGAINST_RV_ANNOTATION",
+        "recall_sample_size": 154,
+        "recall_matched": 95,
+        "recall": 0.6169,
+        "matcher_found_beyond_the_sample": 0,
+        "anchor_kinds": [
+          "SURFACE_FORM"
+        ],
+        "registered_aliases": 11,
+        "recall_scope": "RV_ONLY_ANNOTATION_COVERS_NO_OTHER_CORPUS"
+      },
+      {
+        "entity_key": "VG:CONCEPT:VISA-POISON",
+        "recall_status": "MEASURED_AGAINST_RV_ANNOTATION",
+        "recall_sample_size": 12,
+        "recall_matched": 12,
+        "recall": 1.0,
+        "matcher_found_beyond_the_sample": 2,
+        "anchor_kinds": [
+          "SURFACE_FORM"
+        ],
+        "registered_aliases": 5,
+        "recall_scope": "RV_ONLY_ANNOTATION_COVERS_NO_OTHER_CORPUS"
+      },
+      {
+        "entity_key": "VG:CONCEPT:VISALPAKA-AILMENT",
+        "recall_status": "UNMEASURED_NO_ANNOTATION_ANCHOR",
+        "recall_reason": "No registered alias folds onto an annotated lemma or surface form, so the Rigvedic annotation offers no ground truth for this entity. Recall is unknown, not zero.",
+        "registered_aliases": 4
+      },
+      {
+        "entity_key": "VG:CONCEPT:VISANAKA-PLANT",
+        "recall_status": "UNMEASURED_NO_ANNOTATION_ANCHOR",
+        "recall_reason": "No registered alias folds onto an annotated lemma or surface form, so the Rigvedic annotation offers no ground truth for this entity. Recall is unknown, not zero.",
+        "registered_aliases": 1
+      },
+      {
+        "entity_key": "VG:CONCEPT:VISKANDHA-AFFLICTION",
+        "recall_status": "UNMEASURED_NO_ANNOTATION_ANCHOR",
+        "recall_reason": "No registered alias folds onto an annotated lemma or surface form, so the Rigvedic annotation offers no ground truth for this entity. Recall is unknown, not zero.",
+        "registered_aliases": 6
+      },
+      {
+        "entity_key": "VG:CONCEPT:VISVAJIT",
+        "recall_status": "UNMEASURED_NO_REGISTERED_SANSKRIT_ALIAS",
+        "recall_reason": "The entity registers no Sanskrit alias, so there is nothing for the lexical layer to match and nothing to measure recall of."
+      },
+      {
+        "entity_key": "VG:CONCEPT:VIVAHA-MARRIAGE",
+        "recall_status": "MEASURED_AGAINST_RV_ANNOTATION",
+        "recall_sample_size": 12,
+        "recall_matched": 12,
+        "recall": 1.0,
+        "matcher_found_beyond_the_sample": 4,
+        "anchor_kinds": [
+          "SURFACE_FORM"
+        ],
+        "registered_aliases": 11,
+        "recall_scope": "RV_ONLY_ANNOTATION_COVERS_NO_OTHER_CORPUS"
+      },
+      {
+        "entity_key": "VG:CONCEPT:VRATA-ORDINANCE",
+        "recall_status": "MEASURED_AGAINST_RV_ANNOTATION",
+        "recall_sample_size": 123,
+        "recall_matched": 108,
+        "recall": 0.878,
+        "matcher_found_beyond_the_sample": 0,
+        "anchor_kinds": [
+          "SURFACE_FORM"
+        ],
+        "registered_aliases": 9,
+        "recall_scope": "RV_ONLY_ANNOTATION_COVERS_NO_OTHER_CORPUS"
+      },
+      {
+        "entity_key": "VG:CONCEPT:VRATYASTOMA",
+        "recall_status": "UNMEASURED_NO_REGISTERED_SANSKRIT_ALIAS",
+        "recall_reason": "The entity registers no Sanskrit alias, so there is nothing for the lexical layer to match and nothing to measure recall of."
+      },
+      {
+        "entity_key": "VG:CONCEPT:VRIHI-RICE",
+        "recall_status": "UNMEASURED_NO_ANNOTATION_ANCHOR",
+        "recall_reason": "No registered alias folds onto an annotated lemma or surface form, so the Rigvedic annotation offers no ground truth for this entity. Recall is unknown, not zero.",
+        "registered_aliases": 3
+      },
+      {
+        "entity_key": "VG:CONCEPT:VRSABHA-BULL",
+        "recall_status": "MEASURED_AGAINST_RV_ANNOTATION",
+        "recall_sample_size": 147,
+        "recall_matched": 131,
+        "recall": 0.8912,
+        "matcher_found_beyond_the_sample": 0,
+        "anchor_kinds": [
+          "SURFACE_FORM"
+        ],
+        "registered_aliases": 10,
+        "recall_scope": "RV_ONLY_ANNOTATION_COVERS_NO_OTHER_CORPUS"
+      },
+      {
+        "entity_key": "VG:CONCEPT:VRSCIKA-SCORPION",
+        "recall_status": "MEASURED_AGAINST_RV_ANNOTATION",
+        "recall_sample_size": 1,
+        "recall_matched": 1,
+        "recall": 1.0,
+        "matcher_found_beyond_the_sample": 0,
+        "anchor_kinds": [
+          "LEMMA",
+          "SURFACE_FORM"
+        ],
+        "registered_aliases": 4,
+        "recall_scope": "RV_ONLY_ANNOTATION_COVERS_NO_OTHER_CORPUS"
+      },
+      {
+        "entity_key": "VG:CONCEPT:VRSOTSARGA",
+        "recall_status": "UNMEASURED_NO_REGISTERED_SANSKRIT_ALIAS",
+        "recall_reason": "The entity registers no Sanskrit alias, so there is nothing for the lexical layer to match and nothing to measure recall of."
+      },
+      {
+        "entity_key": "VG:CONCEPT:VRSTI-RAIN",
+        "recall_status": "MEASURED_AGAINST_RV_ANNOTATION",
+        "recall_sample_size": 46,
+        "recall_matched": 32,
+        "recall": 0.6957,
+        "matcher_found_beyond_the_sample": 0,
+        "anchor_kinds": [
+          "SURFACE_FORM"
+        ],
+        "registered_aliases": 8,
+        "recall_scope": "RV_ONLY_ANNOTATION_COVERS_NO_OTHER_CORPUS"
+      },
+      {
+        "entity_key": "VG:CONCEPT:YADU-TRIBE",
+        "recall_status": "MEASURED_AGAINST_RV_ANNOTATION",
+        "recall_sample_size": 10,
+        "recall_matched": 6,
+        "recall": 0.6,
+        "matcher_found_beyond_the_sample": 0,
+        "anchor_kinds": [
+          "SURFACE_FORM"
+        ],
+        "registered_aliases": 2,
+        "recall_scope": "RV_ONLY_ANNOTATION_COVERS_NO_OTHER_CORPUS"
+      },
+      {
+        "entity_key": "VG:CONCEPT:YAJAMANA-SACRIFICER",
+        "recall_status": "MEASURED_AGAINST_RV_ANNOTATION",
+        "recall_sample_size": 51,
+        "recall_matched": 40,
+        "recall": 0.7843,
+        "matcher_found_beyond_the_sample": 0,
+        "anchor_kinds": [
+          "SURFACE_FORM"
+        ],
+        "registered_aliases": 4,
+        "recall_scope": "RV_ONLY_ANNOTATION_COVERS_NO_OTHER_CORPUS"
+      },
+      {
+        "entity_key": "VG:CONCEPT:YAJNA-SACRIFICE",
+        "recall_status": "MEASURED_AGAINST_RV_ANNOTATION",
+        "recall_sample_size": 575,
+        "recall_matched": 473,
+        "recall": 0.8226,
+        "matcher_found_beyond_the_sample": 0,
+        "anchor_kinds": [
+          "LEMMA",
+          "SURFACE_FORM"
+        ],
+        "registered_aliases": 14,
+        "recall_scope": "RV_ONLY_ANNOTATION_COVERS_NO_OTHER_CORPUS"
+      },
+      {
+        "entity_key": "VG:CONCEPT:YAKSMA-DISEASE",
+        "recall_status": "MEASURED_AGAINST_RV_ANNOTATION",
+        "recall_sample_size": 13,
+        "recall_matched": 13,
+        "recall": 1.0,
+        "matcher_found_beyond_the_sample": 0,
+        "anchor_kinds": [
+          "LEMMA",
+          "SURFACE_FORM"
+        ],
+        "registered_aliases": 18,
+        "recall_scope": "RV_ONLY_ANNOTATION_COVERS_NO_OTHER_CORPUS"
+      },
+      {
+        "entity_key": "VG:CONCEPT:YAMUNA-RIVER",
+        "recall_status": "MEASURED_AGAINST_RV_ANNOTATION",
+        "recall_sample_size": 3,
+        "recall_matched": 2,
+        "recall": 0.6667,
+        "matcher_found_beyond_the_sample": 0,
+        "anchor_kinds": [
+          "LEMMA",
+          "SURFACE_FORM"
+        ],
+        "registered_aliases": 2,
+        "recall_scope": "RV_ONLY_ANNOTATION_COVERS_NO_OTHER_CORPUS"
+      },
+      {
+        "entity_key": "VG:CONCEPT:YAVA-BARLEY",
+        "recall_status": "MEASURED_AGAINST_RV_ANNOTATION",
+        "recall_sample_size": 19,
+        "recall_matched": 18,
+        "recall": 0.9474,
+        "matcher_found_beyond_the_sample": 1,
+        "anchor_kinds": [
+          "SURFACE_FORM"
+        ],
+        "registered_aliases": 5,
+        "recall_scope": "RV_ONLY_ANNOTATION_COVERS_NO_OTHER_CORPUS"
+      },
+      {
+        "entity_key": "VG:CONCEPT:YOKTRA-GIRDLE",
+        "recall_status": "UNMEASURED_NO_REGISTERED_SANSKRIT_ALIAS",
+        "recall_reason": "The entity registers no Sanskrit alias, so there is nothing for the lexical layer to match and nothing to measure recall of."
+      },
+      {
+        "entity_key": "VG:CONCEPT:YUDH-BATTLE",
+        "recall_status": "MEASURED_AGAINST_RV_ANNOTATION",
+        "recall_sample_size": 121,
+        "recall_matched": 92,
+        "recall": 0.7603,
+        "matcher_found_beyond_the_sample": 0,
+        "anchor_kinds": [
+          "SURFACE_FORM"
+        ],
+        "registered_aliases": 9,
+        "recall_scope": "RV_ONLY_ANNOTATION_COVERS_NO_OTHER_CORPUS"
+      },
+      {
+        "entity_key": "VG:CONCEPT:YUPA-SACRIFICIAL-POST",
+        "recall_status": "MEASURED_AGAINST_RV_ANNOTATION",
+        "recall_sample_size": 5,
+        "recall_matched": 2,
+        "recall": 0.4,
+        "matcher_found_beyond_the_sample": 3,
+        "anchor_kinds": [
+          "SURFACE_FORM"
+        ],
+        "registered_aliases": 4,
+        "recall_scope": "RV_ONLY_ANNOTATION_COVERS_NO_OTHER_CORPUS"
+      }
+    ]
+  },
+  "clause_2_ayas": {
+    "witness": "VG:YV:VSM:A18:V013",
+    "witness_exists_in_graph": true,
+    "yv_lexical_matches_now": 0,
+    "yv_lexical_matches_must_stay": 0,
+    "existing_attested_in": [
+      "VG:AV:SAU:K05:S028:V001",
+      "VG:AV:SAU:K05:S028:V005",
+      "VG:RV:SAK:M08:S002:V040"
+    ],
+    "yv_attestation_present_before": false,
+    "staged_edge": {
+      "subject": "VG:CONCEPT:AYAS-METAL",
+      "predicate": "ATTESTED_IN",
+      "object": "VG:YV:VSM:A18:V013",
+      "properties": {
+        "knowledge_layer": "SOURCE_EXPLICIT",
+        "samhita_attested": true,
+        "bucket": "YV",
+        "attestation_basis": "source_enumeration_read_verbatim",
+        "existence_evidence_type": "SAMHITA",
+        "quality_tier": "TIER_A",
+        "source_attested": true,
+        "lexical_match": "NOT_SAFELY_RECOVERABLE",
+        "lexical_nonrecovery_reason": "The Devanagari writes the metal sandhi-elided after 'me' as avagraha plus yas. The search fold drops the avagraha, leaving the bare token 'yasca', which is the relative pronoun in 11 of its 12 corpus occurrences and also sits inside the -ayas ca plurals in this same line (girayasca, parvatasca, vanaspatayasca). Registering an alias would manufacture false positives inside the witness verse itself, which RIGVEDA_LEXICAL_MENTION_POLICY.md forbids.",
+        "evidence_quote": "hiraṇyaṃ ca me 'yaś ca me śyāmaṃ ca me lohaṃ ca me sīsaṃ ca me trapu ca me",
+        "witness_locator": "VG:YV:VSM:A18:V013",
+        "r4_created_by": "scripts/r4_stage_entity_recall_and_ayas.py"
+      }
+    },
+    "not_staged": "No MENTIONS_ENTITY edge. That predicate means a lexical match and there is not one; fabricating it is what the entry forbids and it would also flip the closure measure away from its correct 0."
+  },
+  "promised": {
+    "attested_in_edges_created": 1,
+    "entity_nodes_updated": 384
+  }
+}

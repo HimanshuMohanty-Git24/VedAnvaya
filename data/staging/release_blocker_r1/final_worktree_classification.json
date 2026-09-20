@@ -1,0 +1,2180 @@
+{
+  "artifact": "RELEASE_BLOCKER_R1_FINAL_WORKTREE_CLASSIFICATION",
+  "total": 359,
+  "counts": {
+    "INTENDED_STABILIZATION_CHANGE": 120,
+    "GENERATED_ARTIFACT": 168,
+    "UNKNOWN": 53,
+    "R1_RECEIPT": 10,
+    "TEMPORARY": 1,
+    "R1_IMPLEMENTATION": 7
+  },
+  "policy": {
+    "commit": [
+      "R1_IMPLEMENTATION",
+      "R1_RECEIPT",
+      "INTENDED_STABILIZATION_CHANGE",
+      "GENERATED_ARTIFACT"
+    ],
+    "never_commit": [
+      "TEMPORARY"
+    ],
+    "unknown": "preserved on disk, not deleted, not staged; reported for owner disposition"
+  },
+  "paths": [
+    {
+      "status": " M",
+      "path": ".gitignore",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "pre-existing dirty-tree path"
+    },
+    {
+      "status": " M",
+      "path": "data/domain/vedagraph_domain_v2/veda_coverage_v3.json",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "pre-existing dirty-tree path"
+    },
+    {
+      "status": " M",
+      "path": "data/enrichment/vedagraph_enrichment_v1/manifest.json",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "pre-existing dirty-tree path"
+    },
+    {
+      "status": " M",
+      "path": "data/gap_registry.json",
+      "classification": "UNKNOWN",
+      "reason": "pre-existing dirty-tree path"
+    },
+    {
+      "status": " M",
+      "path": "data/source_registry/four_veda_backlog.jsonl",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "pre-existing dirty-tree path"
+    },
+    {
+      "status": " M",
+      "path": "data/staging/attribution/rows.jsonl",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "pre-existing dirty-tree path"
+    },
+    {
+      "status": " M",
+      "path": "data/staging/audio_review_queue.jsonl",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "pre-existing dirty-tree path"
+    },
+    {
+      "status": " M",
+      "path": "data/staging/communities/build_communities_staging.py",
+      "classification": "UNKNOWN",
+      "reason": "pre-existing dirty-tree path"
+    },
+    {
+      "status": " M",
+      "path": "data/staging/communities/communities.jsonl",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "pre-existing dirty-tree path"
+    },
+    {
+      "status": " M",
+      "path": "data/staging/communities/manifest.json",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "pre-existing dirty-tree path"
+    },
+    {
+      "status": " M",
+      "path": "data/staging/communities/proofs/adversarial_preflight.json",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "pre-existing dirty-tree path"
+    },
+    {
+      "status": " M",
+      "path": "data/staging/communities/proofs/diagnostic_pairs.json",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "pre-existing dirty-tree path"
+    },
+    {
+      "status": " M",
+      "path": "data/staging/communities/proofs/gds_cross_check.json",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "pre-existing dirty-tree path"
+    },
+    {
+      "status": " M",
+      "path": "data/staging/communities/rows.jsonl",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "pre-existing dirty-tree path"
+    },
+    {
+      "status": " M",
+      "path": "data/staging/communities/sources.jsonl",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "pre-existing dirty-tree path"
+    },
+    {
+      "status": " M",
+      "path": "data/staging/integration/dependency_ledger.json",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "pre-existing dirty-tree path"
+    },
+    {
+      "status": " M",
+      "path": "data/staging/integration/dependency_status.json",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "pre-existing dirty-tree path"
+    },
+    {
+      "status": " M",
+      "path": "data/staging/wave4/registry_closure_audit.json",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "pre-existing dirty-tree path"
+    },
+    {
+      "status": " M",
+      "path": "docs/architecture/RIGVEDA_LEXICAL_MENTION_POLICY.md",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "pre-existing dirty-tree path"
+    },
+    {
+      "status": " M",
+      "path": "docs/design/research/04-visualization-research.md",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "pre-existing dirty-tree path"
+    },
+    {
+      "status": " M",
+      "path": "docs/reports/GRAPH_QUALITY_V2_SCORECARD.md",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "pre-existing dirty-tree path"
+    },
+    {
+      "status": " M",
+      "path": "frontend/public/world/world.bin",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "pre-existing dirty-tree path"
+    },
+    {
+      "status": " M",
+      "path": "frontend/public/world/world.json",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "pre-existing dirty-tree path"
+    },
+    {
+      "status": " M",
+      "path": "frontend/public/world/world.labels.json",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "pre-existing dirty-tree path"
+    },
+    {
+      "status": " M",
+      "path": "frontend/public/world/world.predicates.json",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "pre-existing dirty-tree path"
+    },
+    {
+      "status": " M",
+      "path": "frontend/scripts/build-constellations.mjs",
+      "classification": "UNKNOWN",
+      "reason": "pre-existing dirty-tree path"
+    },
+    {
+      "status": " M",
+      "path": "frontend/scripts/build-world.mjs",
+      "classification": "UNKNOWN",
+      "reason": "pre-existing dirty-tree path"
+    },
+    {
+      "status": " M",
+      "path": "frontend/src/app/about/page.tsx",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "pre-existing dirty-tree path"
+    },
+    {
+      "status": " M",
+      "path": "frontend/src/app/explore/page.tsx",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "pre-existing dirty-tree path"
+    },
+    {
+      "status": " M",
+      "path": "frontend/src/app/limits/page.tsx",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "pre-existing dirty-tree path"
+    },
+    {
+      "status": " M",
+      "path": "frontend/src/app/sources/page.tsx",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "pre-existing dirty-tree path"
+    },
+    {
+      "status": " M",
+      "path": "frontend/src/app/vedas/[veda]/page.tsx",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "pre-existing dirty-tree path"
+    },
+    {
+      "status": " M",
+      "path": "frontend/src/app/vedas/page.tsx",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "pre-existing dirty-tree path"
+    },
+    {
+      "status": " M",
+      "path": "frontend/src/components/home/world-preview-panel.tsx",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "pre-existing dirty-tree path"
+    },
+    {
+      "status": " M",
+      "path": "frontend/src/components/world/relationship-inspector.tsx",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "pre-existing dirty-tree path"
+    },
+    {
+      "status": " M",
+      "path": "frontend/src/lib/api-schema.ts",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "pre-existing dirty-tree path"
+    },
+    {
+      "status": " M",
+      "path": "frontend/src/lib/lab.ts",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "pre-existing dirty-tree path"
+    },
+    {
+      "status": " M",
+      "path": "frontend/src/lib/world/focus.ts",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "pre-existing dirty-tree path"
+    },
+    {
+      "status": " M",
+      "path": "frontend/tests/unit/focus-curation.test.ts",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "pre-existing dirty-tree path"
+    },
+    {
+      "status": " M",
+      "path": "scripts/attribution_import.py",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "pre-existing dirty-tree path"
+    },
+    {
+      "status": " M",
+      "path": "scripts/audio/audit_mappings.py",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "pre-existing dirty-tree path"
+    },
+    {
+      "status": " M",
+      "path": "scripts/audio/cache_audio.py",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "pre-existing dirty-tree path"
+    },
+    {
+      "status": " M",
+      "path": "scripts/audio/discover_vedsearch.py",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "pre-existing dirty-tree path"
+    },
+    {
+      "status": " M",
+      "path": "scripts/audio/harvest_vedsearch.py",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "pre-existing dirty-tree path"
+    },
+    {
+      "status": " M",
+      "path": "scripts/audio/validate_catalog.py",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "pre-existing dirty-tree path"
+    },
+    {
+      "status": " M",
+      "path": "scripts/build_anukramani_knowledge_layer.py",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "pre-existing dirty-tree path"
+    },
+    {
+      "status": " M",
+      "path": "scripts/build_atharvaveda_anukramani.py",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "pre-existing dirty-tree path"
+    },
+    {
+      "status": " M",
+      "path": "scripts/build_audio_review_queue.py",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "pre-existing dirty-tree path"
+    },
+    {
+      "status": " M",
+      "path": "scripts/build_domain_v2.py",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "pre-existing dirty-tree path"
+    },
+    {
+      "status": " M",
+      "path": "scripts/build_knowledge_model_v3.py",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "pre-existing dirty-tree path"
+    },
+    {
+      "status": " M",
+      "path": "scripts/build_rishi_families.py",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "pre-existing dirty-tree path"
+    },
+    {
+      "status": " M",
+      "path": "scripts/build_theonym_dossier.py",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "pre-existing dirty-tree path"
+    },
+    {
+      "status": " M",
+      "path": "scripts/build_veda_coverage_and_metrics.py",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "pre-existing dirty-tree path"
+    },
+    {
+      "status": " M",
+      "path": "scripts/build_yajurveda_anukramani.py",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "pre-existing dirty-tree path"
+    },
+    {
+      "status": " M",
+      "path": "scripts/check_live_invariants.py",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "pre-existing dirty-tree path"
+    },
+    {
+      "status": " M",
+      "path": "scripts/dependency_state.py",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "pre-existing dirty-tree path"
+    },
+    {
+      "status": " M",
+      "path": "scripts/discover_theonym_forms.py",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "pre-existing dirty-tree path"
+    },
+    {
+      "status": " M",
+      "path": "scripts/export_graph_world.py",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "pre-existing dirty-tree path"
+    },
+    {
+      "status": " M",
+      "path": "scripts/generate_ontology_reference.py",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "pre-existing dirty-tree path"
+    },
+    {
+      "status": " M",
+      "path": "scripts/graph_quality_scorecard.py",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "pre-existing dirty-tree path"
+    },
+    {
+      "status": " M",
+      "path": "scripts/merge_theonym_forms.py",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "pre-existing dirty-tree path"
+    },
+    {
+      "status": " M",
+      "path": "scripts/report_knowledge_model_v3.py",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "pre-existing dirty-tree path"
+    },
+    {
+      "status": " M",
+      "path": "scripts/run_domain_demos.py",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "pre-existing dirty-tree path"
+    },
+    {
+      "status": " M",
+      "path": "scripts/show_passage.py",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "pre-existing dirty-tree path"
+    },
+    {
+      "status": " M",
+      "path": "scripts/verify_v3_demonstrations.py",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "pre-existing dirty-tree path"
+    },
+    {
+      "status": " M",
+      "path": "scripts/wave3_dependency_invalidation.py",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "pre-existing dirty-tree path"
+    },
+    {
+      "status": " M",
+      "path": "scripts/wave3_import_plan.py",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "pre-existing dirty-tree path"
+    },
+    {
+      "status": " M",
+      "path": "scripts/wave4_registry_closure_audit.py",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "pre-existing dirty-tree path"
+    },
+    {
+      "status": " M",
+      "path": "src/vedagraph/api/app.py",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "pre-existing dirty-tree path"
+    },
+    {
+      "status": " M",
+      "path": "src/vedagraph/api/ask/evidence.py",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "pre-existing dirty-tree path"
+    },
+    {
+      "status": " M",
+      "path": "src/vedagraph/api/ask/planner.py",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "pre-existing dirty-tree path"
+    },
+    {
+      "status": " M",
+      "path": "src/vedagraph/api/ask/retriever.py",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "pre-existing dirty-tree path"
+    },
+    {
+      "status": " M",
+      "path": "src/vedagraph/api/models/common.py",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "pre-existing dirty-tree path"
+    },
+    {
+      "status": " M",
+      "path": "src/vedagraph/api/models/entity.py",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "pre-existing dirty-tree path"
+    },
+    {
+      "status": " M",
+      "path": "src/vedagraph/api/models/insight.py",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "pre-existing dirty-tree path"
+    },
+    {
+      "status": " M",
+      "path": "src/vedagraph/api/models/passage.py",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "pre-existing dirty-tree path"
+    },
+    {
+      "status": " M",
+      "path": "src/vedagraph/api/routes/graph.py",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "pre-existing dirty-tree path"
+    },
+    {
+      "status": " M",
+      "path": "src/vedagraph/api/routes/insights.py",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "pre-existing dirty-tree path"
+    },
+    {
+      "status": " M",
+      "path": "src/vedagraph/api/services/graph_service.py",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "pre-existing dirty-tree path"
+    },
+    {
+      "status": " M",
+      "path": "src/vedagraph/api/services/insight_service.py",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "pre-existing dirty-tree path"
+    },
+    {
+      "status": " M",
+      "path": "src/vedagraph/api/services/search_service.py",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "pre-existing dirty-tree path"
+    },
+    {
+      "status": " M",
+      "path": "src/vedagraph/domain/layer_figures.py",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "pre-existing dirty-tree path"
+    },
+    {
+      "status": " M",
+      "path": "src/vedagraph/domain/ontology.py",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "pre-existing dirty-tree path"
+    },
+    {
+      "status": " M",
+      "path": "src/vedagraph/domain/profiles.py",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "pre-existing dirty-tree path"
+    },
+    {
+      "status": " M",
+      "path": "src/vedagraph/domain/queries.py",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "pre-existing dirty-tree path"
+    },
+    {
+      "status": " M",
+      "path": "src/vedagraph/domain/tiers.py",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "pre-existing dirty-tree path"
+    },
+    {
+      "status": " M",
+      "path": "src/vedagraph/enrich/formula_families.py",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "pre-existing dirty-tree path"
+    },
+    {
+      "status": " M",
+      "path": "src/vedagraph/enrich/formulas.py",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "pre-existing dirty-tree path"
+    },
+    {
+      "status": " M",
+      "path": "src/vedagraph/graph/insight_queries.py",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "pre-existing dirty-tree path"
+    },
+    {
+      "status": " M",
+      "path": "tests/api/test_cypher_property_hygiene.py",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "pre-existing dirty-tree path"
+    },
+    {
+      "status": " M",
+      "path": "tests/api/test_insights.py",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "pre-existing dirty-tree path"
+    },
+    {
+      "status": " M",
+      "path": "tests/domain/test_deity_population_counting.py",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "pre-existing dirty-tree path"
+    },
+    {
+      "status": " M",
+      "path": "tests/domain/test_v3_3_final_closure.py",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "pre-existing dirty-tree path"
+    },
+    {
+      "status": " M",
+      "path": "tests/enrich/test_formula_families.py",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "pre-existing dirty-tree path"
+    },
+    {
+      "status": " M",
+      "path": "tests/unit/test_audio_review_harness.py",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "pre-existing dirty-tree path"
+    },
+    {
+      "status": " M",
+      "path": "tests/unit/test_dependency_state.py",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "pre-existing dirty-tree path"
+    },
+    {
+      "status": " M",
+      "path": "tests/unit/test_registry_closure.py",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "pre-existing dirty-tree path"
+    },
+    {
+      "status": "??",
+      "path": "data/canonical/atharvaveda_pilot_v1/manifest.json",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "release build manifest, newly tracked by this tree's .gitignore change"
+    },
+    {
+      "status": "??",
+      "path": "data/canonical/atharvaveda_saunaka_1856_provisional/manifest.json",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "release build manifest, newly tracked by this tree's .gitignore change"
+    },
+    {
+      "status": "??",
+      "path": "data/canonical/atharvaveda_saunaka_1856_v1/manifest.json",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "release build manifest, newly tracked by this tree's .gitignore change"
+    },
+    {
+      "status": "??",
+      "path": "data/canonical/atharvaveda_saunaka_digital_working_v1/manifest.json",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "release build manifest, newly tracked by this tree's .gitignore change"
+    },
+    {
+      "status": "??",
+      "path": "data/canonical/rigveda_full_v1/manifest.json",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "release build manifest, newly tracked by this tree's .gitignore change"
+    },
+    {
+      "status": "??",
+      "path": "data/canonical/rv_1_1_pilot/manifest.json",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "release build manifest, newly tracked by this tree's .gitignore change"
+    },
+    {
+      "status": "??",
+      "path": "data/canonical/rv_mandala_10_full_v1/manifest.json",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "release build manifest, newly tracked by this tree's .gitignore change"
+    },
+    {
+      "status": "??",
+      "path": "data/canonical/rv_mandala_1_full_v1/manifest.json",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "release build manifest, newly tracked by this tree's .gitignore change"
+    },
+    {
+      "status": "??",
+      "path": "data/canonical/rv_mandala_1_sample_v2/manifest.json",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "release build manifest, newly tracked by this tree's .gitignore change"
+    },
+    {
+      "status": "??",
+      "path": "data/canonical/rv_mandala_2_full_v1/manifest.json",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "release build manifest, newly tracked by this tree's .gitignore change"
+    },
+    {
+      "status": "??",
+      "path": "data/canonical/rv_mandala_3_full_v1/manifest.json",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "release build manifest, newly tracked by this tree's .gitignore change"
+    },
+    {
+      "status": "??",
+      "path": "data/canonical/rv_mandala_4_full_v1/manifest.json",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "release build manifest, newly tracked by this tree's .gitignore change"
+    },
+    {
+      "status": "??",
+      "path": "data/canonical/rv_mandala_5_full_v1/manifest.json",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "release build manifest, newly tracked by this tree's .gitignore change"
+    },
+    {
+      "status": "??",
+      "path": "data/canonical/rv_mandala_6_full_v1/manifest.json",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "release build manifest, newly tracked by this tree's .gitignore change"
+    },
+    {
+      "status": "??",
+      "path": "data/canonical/rv_mandala_7_full_v1/manifest.json",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "release build manifest, newly tracked by this tree's .gitignore change"
+    },
+    {
+      "status": "??",
+      "path": "data/canonical/rv_mandala_8_full_v1/manifest.json",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "release build manifest, newly tracked by this tree's .gitignore change"
+    },
+    {
+      "status": "??",
+      "path": "data/canonical/rv_mandala_9_full_v1/manifest.json",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "release build manifest, newly tracked by this tree's .gitignore change"
+    },
+    {
+      "status": "??",
+      "path": "data/canonical/samaveda_arcika_v1/manifest.json",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "release build manifest, newly tracked by this tree's .gitignore change"
+    },
+    {
+      "status": "??",
+      "path": "data/canonical/yajurveda_pilot_v1/manifest.json",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "release build manifest, newly tracked by this tree's .gitignore change"
+    },
+    {
+      "status": "??",
+      "path": "data/canonical/yajurveda_vsm_v1/manifest.json",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "release build manifest, newly tracked by this tree's .gitignore change"
+    },
+    {
+      "status": "??",
+      "path": "data/staging/final_closure_sprint/agent1/CLOSURE_CONDITIONS.md",
+      "classification": "UNKNOWN",
+      "reason": "pre-existing sprint working file, preserved as-is"
+    },
+    {
+      "status": "??",
+      "path": "data/staging/final_closure_sprint/agent1/deferred_formula_layer_refresh.json",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "pre-existing sprint working file, preserved as-is"
+    },
+    {
+      "status": "??",
+      "path": "data/staging/final_closure_sprint/agent1/formula_1103_vs_1064_accounting.json",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "pre-existing sprint working file, preserved as-is"
+    },
+    {
+      "status": "??",
+      "path": "data/staging/final_closure_sprint/agent1/formula_display_form_basis_partition.json",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "pre-existing sprint working file, preserved as-is"
+    },
+    {
+      "status": "??",
+      "path": "data/staging/final_closure_sprint/agent1/formula_display_form_repair.json",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "pre-existing sprint working file, preserved as-is"
+    },
+    {
+      "status": "??",
+      "path": "data/staging/final_closure_sprint/agent1/formula_nesting_audit.json",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "pre-existing sprint working file, preserved as-is"
+    },
+    {
+      "status": "??",
+      "path": "data/staging/final_closure_sprint/agent1/manifest.json",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "pre-existing sprint working file, preserved as-is"
+    },
+    {
+      "status": "??",
+      "path": "data/staging/final_closure_sprint/agent1/pada_parallel_groups.jsonl",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "pre-existing sprint working file, preserved as-is"
+    },
+    {
+      "status": "??",
+      "path": "data/staging/final_closure_sprint/agent1/pada_parallel_report.json",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "pre-existing sprint working file, preserved as-is"
+    },
+    {
+      "status": "??",
+      "path": "data/staging/final_closure_sprint/agent1/proposed_mutations.json",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "pre-existing sprint working file, preserved as-is"
+    },
+    {
+      "status": "??",
+      "path": "data/staging/final_closure_sprint/agent1/registry_outcomes.json",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "pre-existing sprint working file, preserved as-is"
+    },
+    {
+      "status": "??",
+      "path": "data/staging/final_closure_sprint/agent1/reuse_direction_edges.jsonl",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "pre-existing sprint working file, preserved as-is"
+    },
+    {
+      "status": "??",
+      "path": "data/staging/final_closure_sprint/agent1/reuse_direction_pairs.jsonl",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "pre-existing sprint working file, preserved as-is"
+    },
+    {
+      "status": "??",
+      "path": "data/staging/final_closure_sprint/agent2/_q.py",
+      "classification": "UNKNOWN",
+      "reason": "pre-existing sprint working file, preserved as-is"
+    },
+    {
+      "status": "??",
+      "path": "data/staging/final_closure_sprint/agent2/ascription_resolutions.jsonl",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "pre-existing sprint working file, preserved as-is"
+    },
+    {
+      "status": "??",
+      "path": "data/staging/final_closure_sprint/agent2/av_derived_dedications.jsonl",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "pre-existing sprint working file, preserved as-is"
+    },
+    {
+      "status": "??",
+      "path": "data/staging/final_closure_sprint/agent2/build_agent2_staging.py",
+      "classification": "UNKNOWN",
+      "reason": "pre-existing sprint working file, preserved as-is"
+    },
+    {
+      "status": "??",
+      "path": "data/staging/final_closure_sprint/agent2/composite_decomposition_packet.jsonl",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "pre-existing sprint working file, preserved as-is"
+    },
+    {
+      "status": "??",
+      "path": "data/staging/final_closure_sprint/agent2/deity_community_labels.jsonl",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "pre-existing sprint working file, preserved as-is"
+    },
+    {
+      "status": "??",
+      "path": "data/staging/final_closure_sprint/agent2/deity_eligibility_rows.jsonl",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "pre-existing sprint working file, preserved as-is"
+    },
+    {
+      "status": "??",
+      "path": "data/staging/final_closure_sprint/agent2/devata_profile_metrics.jsonl",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "pre-existing sprint working file, preserved as-is"
+    },
+    {
+      "status": "??",
+      "path": "data/staging/final_closure_sprint/agent2/devata_profiles.jsonl",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "pre-existing sprint working file, preserved as-is"
+    },
+    {
+      "status": "??",
+      "path": "data/staging/final_closure_sprint/agent2/findings.json",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "pre-existing sprint working file, preserved as-is"
+    },
+    {
+      "status": "??",
+      "path": "data/staging/final_closure_sprint/agent2/manifest.json",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "pre-existing sprint working file, preserved as-is"
+    },
+    {
+      "status": "??",
+      "path": "data/staging/final_closure_sprint/agent2/occurrence_contract_rows.jsonl",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "pre-existing sprint working file, preserved as-is"
+    },
+    {
+      "status": "??",
+      "path": "data/staging/final_closure_sprint/agent2/proposed_mutations.json",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "pre-existing sprint working file, preserved as-is"
+    },
+    {
+      "status": "??",
+      "path": "data/staging/final_closure_sprint/agent2/registry_outcomes.json",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "pre-existing sprint working file, preserved as-is"
+    },
+    {
+      "status": "??",
+      "path": "data/staging/final_closure_sprint/agent2/sv_derived_dedications.jsonl",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "pre-existing sprint working file, preserved as-is"
+    },
+    {
+      "status": "??",
+      "path": "data/staging/final_closure_sprint/agent3/assertion_role_edges.jsonl",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "pre-existing sprint working file, preserved as-is"
+    },
+    {
+      "status": "??",
+      "path": "data/staging/final_closure_sprint/agent3/closure_conditions.json",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "pre-existing sprint working file, preserved as-is"
+    },
+    {
+      "status": "??",
+      "path": "data/staging/final_closure_sprint/agent3/closure_report.json",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "pre-existing sprint working file, preserved as-is"
+    },
+    {
+      "status": "??",
+      "path": "data/staging/final_closure_sprint/agent3/domain_entity_domains.jsonl",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "pre-existing sprint working file, preserved as-is"
+    },
+    {
+      "status": "??",
+      "path": "data/staging/final_closure_sprint/agent3/domain_entity_domains_manifest.json",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "pre-existing sprint working file, preserved as-is"
+    },
+    {
+      "status": "??",
+      "path": "data/staging/final_closure_sprint/agent3/lexical_nonresolution_manifest.json",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "pre-existing sprint working file, preserved as-is"
+    },
+    {
+      "status": "??",
+      "path": "data/staging/final_closure_sprint/agent3/lexical_nonresolution_typed.jsonl",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "pre-existing sprint working file, preserved as-is"
+    },
+    {
+      "status": "??",
+      "path": "data/staging/final_closure_sprint/agent3/mentions_lemma_manifest.json",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "pre-existing sprint working file, preserved as-is"
+    },
+    {
+      "status": "??",
+      "path": "data/staging/final_closure_sprint/agent3/mentions_lemma_projection.jsonl",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "pre-existing sprint working file, preserved as-is"
+    },
+    {
+      "status": "??",
+      "path": "data/staging/final_closure_sprint/agent3/proposed_mutations.json",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "pre-existing sprint working file, preserved as-is"
+    },
+    {
+      "status": "??",
+      "path": "data/staging/final_closure_sprint/agent3/semantic_assertion_delta_manifest.json",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "pre-existing sprint working file, preserved as-is"
+    },
+    {
+      "status": "??",
+      "path": "data/staging/final_closure_sprint/agent3/semantic_assertions.jsonl",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "pre-existing sprint working file, preserved as-is"
+    },
+    {
+      "status": "??",
+      "path": "data/staging/final_closure_sprint/agent3/semantic_assertions_withheld.jsonl",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "pre-existing sprint working file, preserved as-is"
+    },
+    {
+      "status": "??",
+      "path": "data/staging/final_closure_sprint/agent3/semantic_review_frame.jsonl",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "pre-existing sprint working file, preserved as-is"
+    },
+    {
+      "status": "??",
+      "path": "data/staging/final_closure_sprint/agent3/semantic_review_frame_manifest.json",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "pre-existing sprint working file, preserved as-is"
+    },
+    {
+      "status": "??",
+      "path": "data/staging/final_closure_sprint/agent3/text_versions_manifest.json",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "pre-existing sprint working file, preserved as-is"
+    },
+    {
+      "status": "??",
+      "path": "data/staging/final_closure_sprint/agent3/text_versions_search_derivative.jsonl",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "pre-existing sprint working file, preserved as-is"
+    },
+    {
+      "status": "??",
+      "path": "data/staging/final_closure_sprint/agent3/text_versions_yv_unaccented_derived.jsonl",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "pre-existing sprint working file, preserved as-is"
+    },
+    {
+      "status": "??",
+      "path": "data/staging/final_closure_sprint/agent4/agent4_build_body.py",
+      "classification": "UNKNOWN",
+      "reason": "pre-existing sprint working file, preserved as-is"
+    },
+    {
+      "status": "??",
+      "path": "data/staging/final_closure_sprint/agent4/agent4_overlay.py",
+      "classification": "UNKNOWN",
+      "reason": "pre-existing sprint working file, preserved as-is"
+    },
+    {
+      "status": "??",
+      "path": "data/staging/final_closure_sprint/agent4/agent4_verdicts.py",
+      "classification": "UNKNOWN",
+      "reason": "pre-existing sprint working file, preserved as-is"
+    },
+    {
+      "status": "??",
+      "path": "data/staging/final_closure_sprint/agent4/audumbara_sense_audit.json",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "pre-existing sprint working file, preserved as-is"
+    },
+    {
+      "status": "??",
+      "path": "data/staging/final_closure_sprint/agent4/build_agent4_ritual_closure.py",
+      "classification": "UNKNOWN",
+      "reason": "pre-existing sprint working file, preserved as-is"
+    },
+    {
+      "status": "??",
+      "path": "data/staging/final_closure_sprint/agent4/closure_report.json",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "pre-existing sprint working file, preserved as-is"
+    },
+    {
+      "status": "??",
+      "path": "data/staging/final_closure_sprint/agent4/manifest.json",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "pre-existing sprint working file, preserved as-is"
+    },
+    {
+      "status": "??",
+      "path": "data/staging/final_closure_sprint/agent4/material_culture_by_ritual_context.json",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "pre-existing sprint working file, preserved as-is"
+    },
+    {
+      "status": "??",
+      "path": "data/staging/final_closure_sprint/agent4/measurements.json",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "pre-existing sprint working file, preserved as-is"
+    },
+    {
+      "status": "??",
+      "path": "data/staging/final_closure_sprint/agent4/performed_by.jsonl",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "pre-existing sprint working file, preserved as-is"
+    },
+    {
+      "status": "??",
+      "path": "data/staging/final_closure_sprint/agent4/proposed_mutations.json",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "pre-existing sprint working file, preserved as-is"
+    },
+    {
+      "status": "??",
+      "path": "data/staging/final_closure_sprint/agent4/receives_offering.jsonl",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "pre-existing sprint working file, preserved as-is"
+    },
+    {
+      "status": "??",
+      "path": "data/staging/final_closure_sprint/agent4/receives_offering_rejected.jsonl",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "pre-existing sprint working file, preserved as-is"
+    },
+    {
+      "status": "??",
+      "path": "data/staging/final_closure_sprint/agent4/ritual_context.jsonl",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "pre-existing sprint working file, preserved as-is"
+    },
+    {
+      "status": "??",
+      "path": "data/staging/final_closure_sprint/agent4/ritual_context_precision.json",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "pre-existing sprint working file, preserved as-is"
+    },
+    {
+      "status": "??",
+      "path": "data/staging/final_closure_sprint/agent4/ritual_context_vocabulary.json",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "pre-existing sprint working file, preserved as-is"
+    },
+    {
+      "status": "??",
+      "path": "data/staging/final_closure_sprint/agent4/ritual_registry_overlay.json",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "pre-existing sprint working file, preserved as-is"
+    },
+    {
+      "status": "??",
+      "path": "data/staging/final_closure_sprint/agent4/ritual_roles.jsonl",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "pre-existing sprint working file, preserved as-is"
+    },
+    {
+      "status": "??",
+      "path": "data/staging/final_closure_sprint/agent4/uses_object_adjudication.jsonl",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "pre-existing sprint working file, preserved as-is"
+    },
+    {
+      "status": "??",
+      "path": "data/staging/final_closure_sprint/agent4/yupa_alias_fix.json",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "pre-existing sprint working file, preserved as-is"
+    },
+    {
+      "status": "??",
+      "path": "data/staging/final_closure_sprint/agent5/apply_whitney_absence.py",
+      "classification": "UNKNOWN",
+      "reason": "pre-existing sprint working file, preserved as-is"
+    },
+    {
+      "status": "??",
+      "path": "data/staging/final_closure_sprint/agent5/benchmark_reprobe.json",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "pre-existing sprint working file, preserved as-is"
+    },
+    {
+      "status": "??",
+      "path": "data/staging/final_closure_sprint/agent5/benchmark_reprobe.py",
+      "classification": "UNKNOWN",
+      "reason": "pre-existing sprint working file, preserved as-is"
+    },
+    {
+      "status": "??",
+      "path": "data/staging/final_closure_sprint/agent5/build_artifact.py",
+      "classification": "UNKNOWN",
+      "reason": "pre-existing sprint working file, preserved as-is"
+    },
+    {
+      "status": "??",
+      "path": "data/staging/final_closure_sprint/agent5/build_census_row_patch.py",
+      "classification": "UNKNOWN",
+      "reason": "pre-existing sprint working file, preserved as-is"
+    },
+    {
+      "status": "??",
+      "path": "data/staging/final_closure_sprint/agent5/build_whitney_absence_rows.py",
+      "classification": "UNKNOWN",
+      "reason": "pre-existing sprint working file, preserved as-is"
+    },
+    {
+      "status": "??",
+      "path": "data/staging/final_closure_sprint/agent5/findings.body.json",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "pre-existing sprint working file, preserved as-is"
+    },
+    {
+      "status": "??",
+      "path": "data/staging/final_closure_sprint/agent5/findings.json",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "pre-existing sprint working file, preserved as-is"
+    },
+    {
+      "status": "??",
+      "path": "data/staging/final_closure_sprint/agent5/findings.json.sha256",
+      "classification": "UNKNOWN",
+      "reason": "pre-existing sprint working file, preserved as-is"
+    },
+    {
+      "status": "??",
+      "path": "data/staging/final_closure_sprint/agent5/m_attrprops.py",
+      "classification": "UNKNOWN",
+      "reason": "pre-existing sprint working file, preserved as-is"
+    },
+    {
+      "status": "??",
+      "path": "data/staging/final_closure_sprint/agent5/m_disclosure.py",
+      "classification": "UNKNOWN",
+      "reason": "pre-existing sprint working file, preserved as-is"
+    },
+    {
+      "status": "??",
+      "path": "data/staging/final_closure_sprint/agent5/m_label.py",
+      "classification": "UNKNOWN",
+      "reason": "pre-existing sprint working file, preserved as-is"
+    },
+    {
+      "status": "??",
+      "path": "data/staging/final_closure_sprint/agent5/m_ma.py",
+      "classification": "UNKNOWN",
+      "reason": "pre-existing sprint working file, preserved as-is"
+    },
+    {
+      "status": "??",
+      "path": "data/staging/final_closure_sprint/agent5/m_seers.py",
+      "classification": "UNKNOWN",
+      "reason": "pre-existing sprint working file, preserved as-is"
+    },
+    {
+      "status": "??",
+      "path": "data/staging/final_closure_sprint/agent5/m_tierc.py",
+      "classification": "UNKNOWN",
+      "reason": "pre-existing sprint working file, preserved as-is"
+    },
+    {
+      "status": "??",
+      "path": "data/staging/final_closure_sprint/agent5/m_tierc11.py",
+      "classification": "UNKNOWN",
+      "reason": "pre-existing sprint working file, preserved as-is"
+    },
+    {
+      "status": "??",
+      "path": "data/staging/final_closure_sprint/agent5/m_whitney.py",
+      "classification": "UNKNOWN",
+      "reason": "pre-existing sprint working file, preserved as-is"
+    },
+    {
+      "status": "??",
+      "path": "data/staging/final_closure_sprint/agent5/m_whitney_absence.py",
+      "classification": "UNKNOWN",
+      "reason": "pre-existing sprint working file, preserved as-is"
+    },
+    {
+      "status": "??",
+      "path": "data/staging/final_closure_sprint/agent5/m_whitney_keys.py",
+      "classification": "UNKNOWN",
+      "reason": "pre-existing sprint working file, preserved as-is"
+    },
+    {
+      "status": "??",
+      "path": "data/staging/final_closure_sprint/agent5/measure_01.json",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "pre-existing sprint working file, preserved as-is"
+    },
+    {
+      "status": "??",
+      "path": "data/staging/final_closure_sprint/agent5/measure_01.py",
+      "classification": "UNKNOWN",
+      "reason": "pre-existing sprint working file, preserved as-is"
+    },
+    {
+      "status": "??",
+      "path": "data/staging/final_closure_sprint/agent5/measure_02.py",
+      "classification": "UNKNOWN",
+      "reason": "pre-existing sprint working file, preserved as-is"
+    },
+    {
+      "status": "??",
+      "path": "data/staging/final_closure_sprint/agent5/measure_03.py",
+      "classification": "UNKNOWN",
+      "reason": "pre-existing sprint working file, preserved as-is"
+    },
+    {
+      "status": "??",
+      "path": "data/staging/final_closure_sprint/agent5/measure_confidence.json",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "pre-existing sprint working file, preserved as-is"
+    },
+    {
+      "status": "??",
+      "path": "data/staging/final_closure_sprint/agent5/measure_confidence.py",
+      "classification": "UNKNOWN",
+      "reason": "pre-existing sprint working file, preserved as-is"
+    },
+    {
+      "status": "??",
+      "path": "data/staging/final_closure_sprint/agent5/measure_disclosure.json",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "pre-existing sprint working file, preserved as-is"
+    },
+    {
+      "status": "??",
+      "path": "data/staging/final_closure_sprint/agent5/measure_gold.py",
+      "classification": "UNKNOWN",
+      "reason": "pre-existing sprint working file, preserved as-is"
+    },
+    {
+      "status": "??",
+      "path": "data/staging/final_closure_sprint/agent5/measure_humanclaims.py",
+      "classification": "UNKNOWN",
+      "reason": "pre-existing sprint working file, preserved as-is"
+    },
+    {
+      "status": "??",
+      "path": "data/staging/final_closure_sprint/agent5/proposed_mutations.json",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "pre-existing sprint working file, preserved as-is"
+    },
+    {
+      "status": "??",
+      "path": "data/staging/final_closure_sprint/agent5/whitney_absence_conflict.json",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "pre-existing sprint working file, preserved as-is"
+    },
+    {
+      "status": "??",
+      "path": "data/staging/final_closure_sprint/agent5/whitney_absence_parameters.json",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "pre-existing sprint working file, preserved as-is"
+    },
+    {
+      "status": "??",
+      "path": "data/staging/final_closure_sprint/agent5/whitney_absence_rows.jsonl",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "pre-existing sprint working file, preserved as-is"
+    },
+    {
+      "status": "??",
+      "path": "data/staging/final_closure_sprint/agent5/whitney_census_row_patch.jsonl",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "pre-existing sprint working file, preserved as-is"
+    },
+    {
+      "status": "??",
+      "path": "data/staging/final_closure_sprint/agent5/whitney_keys.json",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "pre-existing sprint working file, preserved as-is"
+    },
+    {
+      "status": "??",
+      "path": "data/staging/final_closure_sprint/agent6/REBUILD_ORDER.json",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "pre-existing sprint working file, preserved as-is"
+    },
+    {
+      "status": "??",
+      "path": "data/staging/final_closure_sprint/agent6/SHA256SUMS.txt",
+      "classification": "UNKNOWN",
+      "reason": "pre-existing sprint working file, preserved as-is"
+    },
+    {
+      "status": "??",
+      "path": "data/staging/final_closure_sprint/agent6/gap001_coverage_dimensions.json",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "pre-existing sprint working file, preserved as-is"
+    },
+    {
+      "status": "??",
+      "path": "data/staging/final_closure_sprint/agent6/gap002_capability_catalogue.json",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "pre-existing sprint working file, preserved as-is"
+    },
+    {
+      "status": "??",
+      "path": "data/staging/final_closure_sprint/agent6/gap003_visualization_aggregates.json",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "pre-existing sprint working file, preserved as-is"
+    },
+    {
+      "status": "??",
+      "path": "data/staging/final_closure_sprint/agent6/gap004_retrieval_before_after.json",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "pre-existing sprint working file, preserved as-is"
+    },
+    {
+      "status": "??",
+      "path": "data/staging/final_closure_sprint/agent6/gap005_canonical_release_manifest.json",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "pre-existing sprint working file, preserved as-is"
+    },
+    {
+      "status": "??",
+      "path": "data/staging/final_closure_sprint/agent6/gap005_sv_apparatus_corrections.json",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "pre-existing sprint working file, preserved as-is"
+    },
+    {
+      "status": "??",
+      "path": "data/staging/final_closure_sprint/agent6/proposed_mutations.json",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "pre-existing sprint working file, preserved as-is"
+    },
+    {
+      "status": "??",
+      "path": "data/staging/final_closure_sprint/agent6/public_truth_audit.json",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "pre-existing sprint working file, preserved as-is"
+    },
+    {
+      "status": "??",
+      "path": "data/staging/final_closure_sprint/agent6/search_normalized_fold.json",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "pre-existing sprint working file, preserved as-is"
+    },
+    {
+      "status": "??",
+      "path": "data/staging/final_closure_sprint/agent7/alignment_confidence.json",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "pre-existing sprint working file, preserved as-is"
+    },
+    {
+      "status": "??",
+      "path": "data/staging/final_closure_sprint/agent7/alignment_confidence.py",
+      "classification": "UNKNOWN",
+      "reason": "pre-existing sprint working file, preserved as-is"
+    },
+    {
+      "status": "??",
+      "path": "data/staging/final_closure_sprint/agent7/alignment_confidence_rows.jsonl",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "pre-existing sprint working file, preserved as-is"
+    },
+    {
+      "status": "??",
+      "path": "data/staging/final_closure_sprint/agent7/av_residual_full.py",
+      "classification": "UNKNOWN",
+      "reason": "pre-existing sprint working file, preserved as-is"
+    },
+    {
+      "status": "??",
+      "path": "data/staging/final_closure_sprint/agent7/av_residual_scan.json",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "pre-existing sprint working file, preserved as-is"
+    },
+    {
+      "status": "??",
+      "path": "data/staging/final_closure_sprint/agent7/build_closure_report.py",
+      "classification": "UNKNOWN",
+      "reason": "pre-existing sprint working file, preserved as-is"
+    },
+    {
+      "status": "??",
+      "path": "data/staging/final_closure_sprint/agent7/build_manifest.py",
+      "classification": "UNKNOWN",
+      "reason": "pre-existing sprint working file, preserved as-is"
+    },
+    {
+      "status": "??",
+      "path": "data/staging/final_closure_sprint/agent7/build_proposed_mutations.py",
+      "classification": "UNKNOWN",
+      "reason": "pre-existing sprint working file, preserved as-is"
+    },
+    {
+      "status": "??",
+      "path": "data/staging/final_closure_sprint/agent7/build_residual_disposition.py",
+      "classification": "UNKNOWN",
+      "reason": "pre-existing sprint working file, preserved as-is"
+    },
+    {
+      "status": "??",
+      "path": "data/staging/final_closure_sprint/agent7/build_rows.py",
+      "classification": "UNKNOWN",
+      "reason": "pre-existing sprint working file, preserved as-is"
+    },
+    {
+      "status": "??",
+      "path": "data/staging/final_closure_sprint/agent7/closure_report.json",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "pre-existing sprint working file, preserved as-is"
+    },
+    {
+      "status": "??",
+      "path": "data/staging/final_closure_sprint/agent7/defects_found.json",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "pre-existing sprint working file, preserved as-is"
+    },
+    {
+      "status": "??",
+      "path": "data/staging/final_closure_sprint/agent7/embedded_label_sweep.json",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "pre-existing sprint working file, preserved as-is"
+    },
+    {
+      "status": "??",
+      "path": "data/staging/final_closure_sprint/agent7/embedded_label_sweep.py",
+      "classification": "UNKNOWN",
+      "reason": "pre-existing sprint working file, preserved as-is"
+    },
+    {
+      "status": "??",
+      "path": "data/staging/final_closure_sprint/agent7/gate_regression.json",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "pre-existing sprint working file, preserved as-is"
+    },
+    {
+      "status": "??",
+      "path": "data/staging/final_closure_sprint/agent7/gate_regression.py",
+      "classification": "UNKNOWN",
+      "reason": "pre-existing sprint working file, preserved as-is"
+    },
+    {
+      "status": "??",
+      "path": "data/staging/final_closure_sprint/agent7/gate_run_control/gate_b_failures.jsonl",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "pre-existing sprint working file, preserved as-is"
+    },
+    {
+      "status": "??",
+      "path": "data/staging/final_closure_sprint/agent7/gate_run_control/gate_b_rows.jsonl",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "pre-existing sprint working file, preserved as-is"
+    },
+    {
+      "status": "??",
+      "path": "data/staging/final_closure_sprint/agent7/gate_run_control/gate_b_summary.json",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "pre-existing sprint working file, preserved as-is"
+    },
+    {
+      "status": "??",
+      "path": "data/staging/final_closure_sprint/agent7/gate_run_control/gate_c_findings.jsonl",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "pre-existing sprint working file, preserved as-is"
+    },
+    {
+      "status": "??",
+      "path": "data/staging/final_closure_sprint/agent7/gate_run_control/gate_c_rows.jsonl",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "pre-existing sprint working file, preserved as-is"
+    },
+    {
+      "status": "??",
+      "path": "data/staging/final_closure_sprint/agent7/gate_run_control/gate_c_summary.json",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "pre-existing sprint working file, preserved as-is"
+    },
+    {
+      "status": "??",
+      "path": "data/staging/final_closure_sprint/agent7/gate_run_treatment/gate_b_failures.jsonl",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "pre-existing sprint working file, preserved as-is"
+    },
+    {
+      "status": "??",
+      "path": "data/staging/final_closure_sprint/agent7/gate_run_treatment/gate_b_rows.jsonl",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "pre-existing sprint working file, preserved as-is"
+    },
+    {
+      "status": "??",
+      "path": "data/staging/final_closure_sprint/agent7/gate_run_treatment/gate_b_summary.json",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "pre-existing sprint working file, preserved as-is"
+    },
+    {
+      "status": "??",
+      "path": "data/staging/final_closure_sprint/agent7/gate_run_treatment/gate_c_findings.jsonl",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "pre-existing sprint working file, preserved as-is"
+    },
+    {
+      "status": "??",
+      "path": "data/staging/final_closure_sprint/agent7/gate_run_treatment/gate_c_rows.jsonl",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "pre-existing sprint working file, preserved as-is"
+    },
+    {
+      "status": "??",
+      "path": "data/staging/final_closure_sprint/agent7/gate_run_treatment/gate_c_summary.json",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "pre-existing sprint working file, preserved as-is"
+    },
+    {
+      "status": "??",
+      "path": "data/staging/final_closure_sprint/agent7/graph_facts.json",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "pre-existing sprint working file, preserved as-is"
+    },
+    {
+      "status": "??",
+      "path": "data/staging/final_closure_sprint/agent7/manifest.json",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "pre-existing sprint working file, preserved as-is"
+    },
+    {
+      "status": "??",
+      "path": "data/staging/final_closure_sprint/agent7/proposed_mutations.json",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "pre-existing sprint working file, preserved as-is"
+    },
+    {
+      "status": "??",
+      "path": "data/staging/final_closure_sprint/agent7/rejected.jsonl",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "pre-existing sprint working file, preserved as-is"
+    },
+    {
+      "status": "??",
+      "path": "data/staging/final_closure_sprint/agent7/residual_disposition.json",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "pre-existing sprint working file, preserved as-is"
+    },
+    {
+      "status": "??",
+      "path": "data/staging/final_closure_sprint/agent7/rows.jsonl",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "pre-existing sprint working file, preserved as-is"
+    },
+    {
+      "status": "??",
+      "path": "data/staging/final_closure_sprint/agent7/rv_addressing_probe.json",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "pre-existing sprint working file, preserved as-is"
+    },
+    {
+      "status": "??",
+      "path": "data/staging/final_closure_sprint/agent7/rv_addressing_probe.py",
+      "classification": "UNKNOWN",
+      "reason": "pre-existing sprint working file, preserved as-is"
+    },
+    {
+      "status": "??",
+      "path": "data/staging/final_closure_sprint/agent7/sv_running_number_derivation.json",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "pre-existing sprint working file, preserved as-is"
+    },
+    {
+      "status": "??",
+      "path": "data/staging/final_closure_sprint/agent7/sv_running_number_derivation.py",
+      "classification": "UNKNOWN",
+      "reason": "pre-existing sprint working file, preserved as-is"
+    },
+    {
+      "status": "??",
+      "path": "data/staging/final_closure_sprint/agent7/sv_running_number_probe.json",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "pre-existing sprint working file, preserved as-is"
+    },
+    {
+      "status": "??",
+      "path": "data/staging/final_closure_sprint/agent7/sv_running_number_probe.py",
+      "classification": "UNKNOWN",
+      "reason": "pre-existing sprint working file, preserved as-is"
+    },
+    {
+      "status": "??",
+      "path": "data/staging/final_closure_sprint/agent7/uncovered_sets.json",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "pre-existing sprint working file, preserved as-is"
+    },
+    {
+      "status": "??",
+      "path": "data/staging/final_closure_sprint/agent7/yv_provenance_rederivation.json",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "pre-existing sprint working file, preserved as-is"
+    },
+    {
+      "status": "??",
+      "path": "data/staging/final_closure_sprint/agent7/yv_provenance_rederivation.py",
+      "classification": "UNKNOWN",
+      "reason": "pre-existing sprint working file, preserved as-is"
+    },
+    {
+      "status": "??",
+      "path": "data/staging/final_closure_sprint/agent8/audit_findings.json",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "pre-existing sprint working file, preserved as-is"
+    },
+    {
+      "status": "??",
+      "path": "data/staging/final_closure_sprint/agent8/fold_probe.txt",
+      "classification": "UNKNOWN",
+      "reason": "pre-existing sprint working file, preserved as-is"
+    },
+    {
+      "status": "??",
+      "path": "data/staging/final_closure_sprint/agent8/m_untranslated.py",
+      "classification": "UNKNOWN",
+      "reason": "pre-existing sprint working file, preserved as-is"
+    },
+    {
+      "status": "??",
+      "path": "data/staging/final_closure_sprint/agent8/m_world_exact.py",
+      "classification": "UNKNOWN",
+      "reason": "pre-existing sprint working file, preserved as-is"
+    },
+    {
+      "status": "??",
+      "path": "data/staging/final_closure_sprint/agent8/m_world_inputs.py",
+      "classification": "UNKNOWN",
+      "reason": "pre-existing sprint working file, preserved as-is"
+    },
+    {
+      "status": "??",
+      "path": "data/staging/final_closure_sprint/agent8/probe_agent3_fold.py",
+      "classification": "UNKNOWN",
+      "reason": "pre-existing sprint working file, preserved as-is"
+    },
+    {
+      "status": "??",
+      "path": "data/staging/final_closure_sprint/agent8/probe_scorecard.py",
+      "classification": "UNKNOWN",
+      "reason": "pre-existing sprint working file, preserved as-is"
+    },
+    {
+      "status": "??",
+      "path": "data/staging/final_closure_sprint/agent8/registry_closure_audit.BEFORE_AGENT8.json",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "pre-existing sprint working file, preserved as-is"
+    },
+    {
+      "status": "??",
+      "path": "data/staging/final_closure_sprint/agent8/scorecard_probe.json",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "pre-existing sprint working file, preserved as-is"
+    },
+    {
+      "status": "??",
+      "path": "data/staging/final_closure_sprint/agent8/world_input_coverage.json",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "pre-existing sprint working file, preserved as-is"
+    },
+    {
+      "status": "??",
+      "path": "data/staging/final_closure_sprint/backup_manifest.json",
+      "classification": "R1_RECEIPT",
+      "reason": "RECLASSIFIED from TEMPORARY: a durable provenance receipt (sha256, byte count, method) for a 122 MB backup held OUTSIDE the repo at D:/vedanvaya-backups/. The receipt is small and belongs in git; the dump it names is not in the repo."
+    },
+    {
+      "status": "??",
+      "path": "data/staging/final_closure_sprint/baseline.json",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "pre-existing sprint working file, preserved as-is"
+    },
+    {
+      "status": "??",
+      "path": "data/staging/final_closure_sprint/gap_assignment.json",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "pre-existing sprint working file, preserved as-is"
+    },
+    {
+      "status": "??",
+      "path": "data/staging/final_closure_sprint/graph_fingerprint_before.json",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "pre-existing sprint working file, preserved as-is"
+    },
+    {
+      "status": "??",
+      "path": "data/staging/final_closure_sprint/lead/audio_engineering.json",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "pre-existing sprint working file, preserved as-is"
+    },
+    {
+      "status": "??",
+      "path": "data/staging/final_closure_sprint/lead/dependency_declaration_fix.json",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "pre-existing sprint working file, preserved as-is"
+    },
+    {
+      "status": "??",
+      "path": "data/staging/final_closure_sprint/lead/final_state.json",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "pre-existing sprint working file, preserved as-is"
+    },
+    {
+      "status": "??",
+      "path": "data/staging/final_closure_sprint/lead/integration_plan.json",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "pre-existing sprint working file, preserved as-is"
+    },
+    {
+      "status": "??",
+      "path": "data/staging/final_closure_sprint/lead/integration_receipt.json",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "pre-existing sprint working file, preserved as-is"
+    },
+    {
+      "status": "??",
+      "path": "data/staging/final_closure_sprint/lead/rulings.json",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "pre-existing sprint working file, preserved as-is"
+    },
+    {
+      "status": "??",
+      "path": "data/staging/final_closure_sprint/lead/test_harness_fix.json",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "pre-existing sprint working file, preserved as-is"
+    },
+    {
+      "status": "??",
+      "path": "data/staging/final_closure_sprint/registry_before.json",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "pre-existing sprint working file, preserved as-is"
+    },
+    {
+      "status": "??",
+      "path": "data/staging/final_stabilization/formula_identity_impact.json",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "pre-existing sprint working file, preserved as-is"
+    },
+    {
+      "status": "??",
+      "path": "data/staging/final_stabilization/immutable_mutation_plan.json",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "pre-existing sprint working file, preserved as-is"
+    },
+    {
+      "status": "??",
+      "path": "data/staging/final_stabilization/neo4j_backup_20260917/neo4j.dump",
+      "classification": "TEMPORARY",
+      "reason": "162 MB local Neo4j dump, NOT gitignored - preserved on disk, never staged"
+    },
+    {
+      "status": "??",
+      "path": "data/staging/final_stabilization/provenance_display_contract_receipt.json",
+      "classification": "GENERATED_ARTIFACT",
+      "reason": "pre-existing sprint working file, preserved as-is"
+    },
+    {
+      "status": "??",
+      "path": "data/staging/release_blocker_r1/agent_a_closure_receipt.json",
+      "classification": "R1_RECEIPT",
+      "reason": "durable evidence receipt for this pass"
+    },
+    {
+      "status": "??",
+      "path": "data/staging/release_blocker_r1/final_worktree_classification.json",
+      "classification": "R1_RECEIPT",
+      "reason": "durable evidence receipt for this pass"
+    },
+    {
+      "status": "??",
+      "path": "data/staging/release_blocker_r1/formula_identity_verification_receipt.json",
+      "classification": "R1_RECEIPT",
+      "reason": "durable evidence receipt for this pass"
+    },
+    {
+      "status": "??",
+      "path": "data/staging/release_blocker_r1/frontend_consumer_receipt.json",
+      "classification": "R1_RECEIPT",
+      "reason": "durable evidence receipt for this pass"
+    },
+    {
+      "status": "??",
+      "path": "data/staging/release_blocker_r1/graph_consumer_rebuild_receipt.json",
+      "classification": "R1_RECEIPT",
+      "reason": "durable evidence receipt for this pass"
+    },
+    {
+      "status": "??",
+      "path": "data/staging/release_blocker_r1/public_identity_contract_receipt.json",
+      "classification": "R1_RECEIPT",
+      "reason": "durable evidence receipt for this pass"
+    },
+    {
+      "status": "??",
+      "path": "data/staging/release_blocker_r1/registry_adjudication_receipt.json",
+      "classification": "R1_RECEIPT",
+      "reason": "durable evidence receipt for this pass"
+    },
+    {
+      "status": "??",
+      "path": "data/staging/release_blocker_r1/registry_live_baseline.json",
+      "classification": "R1_RECEIPT",
+      "reason": "durable evidence receipt for this pass"
+    },
+    {
+      "status": "??",
+      "path": "data/staging/release_blocker_r1/starting_worktree_receipt.json",
+      "classification": "R1_RECEIPT",
+      "reason": "durable evidence receipt for this pass"
+    },
+    {
+      "status": "??",
+      "path": "frontend/scripts/public-identity-contract.mjs",
+      "classification": "R1_IMPLEMENTATION",
+      "reason": "new release-blocker implementation or its focused test"
+    },
+    {
+      "status": "??",
+      "path": "frontend/tests/unit/public-identity.test.ts",
+      "classification": "R1_IMPLEMENTATION",
+      "reason": "new release-blocker implementation or its focused test"
+    },
+    {
+      "status": "??",
+      "path": "frontend/tests/unit/world-figures.test.ts",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "pre-existing dirty-tree path"
+    },
+    {
+      "status": "??",
+      "path": "scripts/agent1_final_closure.py",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "pre-existing dirty-tree path"
+    },
+    {
+      "status": "??",
+      "path": "scripts/audit_public_identity.py",
+      "classification": "R1_IMPLEMENTATION",
+      "reason": "new release-blocker implementation or its focused test"
+    },
+    {
+      "status": "??",
+      "path": "scripts/build_agent3_closure_report.py",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "pre-existing dirty-tree path"
+    },
+    {
+      "status": "??",
+      "path": "scripts/build_agent3_proposed_mutations.py",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "pre-existing dirty-tree path"
+    },
+    {
+      "status": "??",
+      "path": "scripts/build_domain_entity_domains.py",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "pre-existing dirty-tree path"
+    },
+    {
+      "status": "??",
+      "path": "scripts/build_lemma_mention_projection.py",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "pre-existing dirty-tree path"
+    },
+    {
+      "status": "??",
+      "path": "scripts/build_lexical_nonresolution_reasons.py",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "pre-existing dirty-tree path"
+    },
+    {
+      "status": "??",
+      "path": "scripts/build_semantic_assertion_delta.py",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "pre-existing dirty-tree path"
+    },
+    {
+      "status": "??",
+      "path": "scripts/build_semantic_review_frame.py",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "pre-existing dirty-tree path"
+    },
+    {
+      "status": "??",
+      "path": "scripts/build_text_version_derivatives.py",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "pre-existing dirty-tree path"
+    },
+    {
+      "status": "??",
+      "path": "scripts/final_stabilization_contracts.py",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "pre-existing dirty-tree path"
+    },
+    {
+      "status": "??",
+      "path": "scripts/formula_identity_impact.py",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "pre-existing dirty-tree path"
+    },
+    {
+      "status": "??",
+      "path": "scripts/rebuild_release_consumers.py",
+      "classification": "R1_IMPLEMENTATION",
+      "reason": "new release-blocker implementation or its focused test"
+    },
+    {
+      "status": "??",
+      "path": "scripts/snapshot_canonical_release.py",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "pre-existing dirty-tree path"
+    },
+    {
+      "status": "??",
+      "path": "scripts/verify_agent3_cypher.py",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "pre-existing dirty-tree path"
+    },
+    {
+      "status": "??",
+      "path": "src/vedagraph/api/services/capability_probes.py",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "pre-existing dirty-tree path"
+    },
+    {
+      "status": "??",
+      "path": "src/vedagraph/domain/ascription_bridge.py",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "pre-existing dirty-tree path"
+    },
+    {
+      "status": "??",
+      "path": "src/vedagraph/domain/deity_eligibility.py",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "pre-existing dirty-tree path"
+    },
+    {
+      "status": "??",
+      "path": "src/vedagraph/domain/occurrence_contract.py",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "pre-existing dirty-tree path"
+    },
+    {
+      "status": "??",
+      "path": "src/vedagraph/enrich/pada_parallels.py",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "pre-existing dirty-tree path"
+    },
+    {
+      "status": "??",
+      "path": "src/vedagraph/enrich/reuse_direction.py",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "pre-existing dirty-tree path"
+    },
+    {
+      "status": "??",
+      "path": "src/vedagraph/enrich/text_derivatives.py",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "pre-existing dirty-tree path"
+    },
+    {
+      "status": "??",
+      "path": "src/vedagraph/graph/public_identity.py",
+      "classification": "R1_IMPLEMENTATION",
+      "reason": "new release-blocker implementation or its focused test"
+    },
+    {
+      "status": "??",
+      "path": "src/vedagraph/ingest/ocr_labels.py",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "pre-existing dirty-tree path"
+    },
+    {
+      "status": "??",
+      "path": "tests/api/ask/test_product_surface_closure.py",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "pre-existing dirty-tree path"
+    },
+    {
+      "status": "??",
+      "path": "tests/api/test_capability_catalogue.py",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "pre-existing dirty-tree path"
+    },
+    {
+      "status": "??",
+      "path": "tests/api/test_coverage_dimensions.py",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "pre-existing dirty-tree path"
+    },
+    {
+      "status": "??",
+      "path": "tests/api/test_cross_veda_granularity_and_direction.py",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "pre-existing dirty-tree path"
+    },
+    {
+      "status": "??",
+      "path": "tests/api/test_search_normalized_fold.py",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "pre-existing dirty-tree path"
+    },
+    {
+      "status": "??",
+      "path": "tests/api/test_visualization_aggregates.py",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "pre-existing dirty-tree path"
+    },
+    {
+      "status": "??",
+      "path": "tests/domain/test_agent3_closure.py",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "pre-existing dirty-tree path"
+    },
+    {
+      "status": "??",
+      "path": "tests/domain/test_agent4_ritual_closure.py",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "pre-existing dirty-tree path"
+    },
+    {
+      "status": "??",
+      "path": "tests/domain/test_ascription_bridge.py",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "pre-existing dirty-tree path"
+    },
+    {
+      "status": "??",
+      "path": "tests/domain/test_attribution_scope_note.py",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "pre-existing dirty-tree path"
+    },
+    {
+      "status": "??",
+      "path": "tests/domain/test_deity_community_labels.py",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "pre-existing dirty-tree path"
+    },
+    {
+      "status": "??",
+      "path": "tests/domain/test_deity_eligibility.py",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "pre-existing dirty-tree path"
+    },
+    {
+      "status": "??",
+      "path": "tests/domain/test_evidence_quality_disclosure.py",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "pre-existing dirty-tree path"
+    },
+    {
+      "status": "??",
+      "path": "tests/domain/test_formula_nesting_policy.py",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "pre-existing dirty-tree path"
+    },
+    {
+      "status": "??",
+      "path": "tests/domain/test_occurrence_contract.py",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "pre-existing dirty-tree path"
+    },
+    {
+      "status": "??",
+      "path": "tests/enrich/test_formula_display_surface.py",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "pre-existing dirty-tree path"
+    },
+    {
+      "status": "??",
+      "path": "tests/enrich/test_pada_parallels.py",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "pre-existing dirty-tree path"
+    },
+    {
+      "status": "??",
+      "path": "tests/enrich/test_reuse_direction.py",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "pre-existing dirty-tree path"
+    },
+    {
+      "status": "??",
+      "path": "tests/enrich/test_text_derivatives.py",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "pre-existing dirty-tree path"
+    },
+    {
+      "status": "??",
+      "path": "tests/product/test_canonical_release_snapshot.py",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "pre-existing dirty-tree path"
+    },
+    {
+      "status": "??",
+      "path": "tests/unit/test_attribution_states.py",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "pre-existing dirty-tree path"
+    },
+    {
+      "status": "??",
+      "path": "tests/unit/test_coverage_read_only_output.py",
+      "classification": "R1_IMPLEMENTATION",
+      "reason": "new release-blocker implementation or its focused test"
+    },
+    {
+      "status": "??",
+      "path": "tests/unit/test_ocr_labels.py",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "pre-existing dirty-tree path"
+    },
+    {
+      "status": "??",
+      "path": "tests/unit/test_public_identity.py",
+      "classification": "R1_IMPLEMENTATION",
+      "reason": "new release-blocker implementation or its focused test"
+    },
+    {
+      "status": "??",
+      "path": "tests/unit/test_stdout_capture_safety.py",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "RECLASSIFIED from TEMPORARY in the starting receipt: it is a genuine regression test (2 passed) pinning the sys.stdout-ownership defect that made the combined pytest command report green over 10.8% of the suite. Committable."
+    },
+    {
+      "status": "??",
+      "path": "tests/unit/test_translation_alignment_confidence.py",
+      "classification": "INTENDED_STABILIZATION_CHANGE",
+      "reason": "pre-existing dirty-tree path"
+    }
+  ]
+}

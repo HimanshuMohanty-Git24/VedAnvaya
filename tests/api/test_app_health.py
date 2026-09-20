@@ -169,13 +169,95 @@ def test_live_readiness_passes_against_the_frozen_graph(live_client: TestClient)
     assert all(check["ok"] for check in body["checks"])
 
 
+#: The graph this API is written against. Raised from Product-V1's 108,779 / 265,295 by the
+#: Wave 3 canonical import, and re-derived rather than bumped: the figures are the ones
+#: ``data/staging/integration/wave3_readback.json`` read back out of Neo4j and matched
+#: against the dry-run's promise, not numbers edited until a test went green.
+#:
+#: Raised again after the round-three coverage rebuild, which DETACH DELETEs :DerivedMetric
+#: and recomputes it: the attribution census gave it 13 more metrics to compute, so the node
+#: count moved 116,825 -> 116,838 while the relationship count and the four corpora did not.
+#:
+#: LOWERED once, by M9: 33 HAS_CHANDAS assertions were withdrawn because their object was
+#: an unsegmented fragment of Whitney's printed bracket carrying a deity, a metre and a
+#: per-verse exception in one string, not a metre name. 281,290 -> 281,257. The node count
+#: did not move, because the :Chandas entities stay in the graph holding the literal.
+#:
+#: Raised again by the translation bulk integration, which created 1,132 :Translation nodes
+#: and 1,132 HAS_TRANSLATION edges: 116,838 -> 117,970 and 281,257 -> 282,389. The pair moves
+#: by the same 1,132 because every node this round created carries exactly one edge, and the
+#: migration refused to commit unless that held -- a node count that grew by more than the
+#: edge count would mean something other than a translation was created. The figures are the
+#: ones data/staging/translation/integration/translation_bulk_readback.json read back out of
+#: Neo4j and matched against the plan's promise.
+#:
+#: Raising this pair is a deliberate act, and the docstring below says what it costs.
+#:
+#: Raised in R2 from 117,970 / 282,389, which the graph passed several waves ago: the census
+#: had reached 164,201 / 508,042 and this assertion had been failing continuously, which is
+#: the failure mode a census guard is supposed to prevent and the one it causes when it is
+#: left stale -- a test that always fails is a test nobody reads. R2's own graph writes moved
+#: neither figure: the display_type normalisation and the ritual_context method landing are
+#: property writes on existing nodes, promised and read back at 0 nodes and 0 relationships
+#: created or deleted. The pair below is the closed-set guard and it has not moved.
+#: R4 moved the census by one receipted migration:
+#: data/staging/release_blocker_r4/migration_receipt.json. +396 nodes (399 DerivedMetric
+#: created for the widened deity-profile population, 3 deleted with the danastuti label's
+#: deity metrics) and +1,444 relationships (1,035 MENTIONS_EPITHET, 399 MEASURES, 8
+#: ASCRIBES_TO_DEVATA, 4 COMPOSED_OF, 1 ATTESTED_IN, less the 3 MEASURES that went with
+#: the deleted metrics). The delta reconciles exactly against the 164,201/508,042
+#: baseline, and tests/api/test_adversarial.py imports both constants from here so the
+#: pin has one home.
+#:
+#: R5 moved it again, by TWO steps rather than one, and both are receipted:
+#:
+#: *   the R5 migration, data/staging/release_blocker_r5/migration_receipt.json, with
+#:     actual == promised on every counter: +2 nodes (the RITUAL_CONTEXT_PRECISION and
+#:     MATERIAL_CULTURE_BY_RITUAL_CONTEXT DerivedMetric rows GAP-RITUAL-006 needed) and
+#:     +283 relationships -- 158 ASSERTION_AGENT and 119 ASSERTION_TARGET projected from
+#:     the RoleFiller resolution for GAP-SEMANTICS-003, plus 6 MENTIONS_ENTITY from the
+#:     phrase pass for GAP-ENTITY_COVERAGE-007. Nothing was deleted.
+#: *   the entity-coverage consumer rebuild that the dependency report required afterwards,
+#:     which recomputed its metric families and added 2 more DerivedMetric rows.
+#:
+#: 164,597 + 2 + 2 = 164,601 and 509,486 + 283 = 509,769. The four corpora did not move,
+#: which is the guard that actually matters and is asserted separately below.
+#:
+#: GAP-SAMAVEDA_MUSIC-002 moved it once more, at 360d9c5, by a single receipted import:
+#: data/staging/samaveda_music_002_final/import_receipt.json records +1,136 TextVersion
+#: nodes and +1,136 HAS_TEXT_VERSION relationships -- one per aligned ARCIKA_NOTATION row,
+#: 1,136 of them against 708 that stay withheld -- with census_promised_after equal to
+#: census_actual_after on every counter, and MUSICALIZED_AS still 0 because
+#: OWNER_DECISION_G rules that predicate out of Product V1. 164,601 + 1,136 = 165,737 and
+#: 509,769 + 1,136 = 510,905. The four corpora did not move: SV is 1,844 before and after,
+#: because the notation attached a text version to existing mantras rather than minting
+#: any. That import landed without moving this pin or the identical one in
+#: scripts/audit_public_identity.py, so both had been failing -- this one red, that one by
+#: aborting the audit before its first finding. New nodes have to join the graph-wide
+#: contracts, not just their own layer's gate.
+FROZEN_NODES = 165_737
+FROZEN_RELATIONSHIPS = 510_905
+
+#: The figures that must NEVER move, whatever an import does. The whole-graph census grows
+#: with every wave; the four corpora are closed sets, and a drift here is corruption rather
+#: than growth. Asserted alongside the census so that raising one cannot quietly excuse the
+#: other.
+CORPUS_MANTRAS = {"RV": 10_552, "SV": 1_844, "YV": 1_975, "AV": 5_839}
+
+
 @pytest.mark.neo4j
 def test_live_graph_matches_the_frozen_census(live_repository: object) -> None:
     """The graph this API was written against, asserted by size rather than assumed.
 
-    108,779 nodes and 265,295 relationships is the frozen Product-V1 figure. If a later
-    session reloads the corpus and this drifts, every measured caveat in the API is
-    describing a graph that no longer exists, and that is worth failing a test over.
+    If a later session reloads the corpus and this drifts, every measured caveat in the API
+    is describing a graph that no longer exists, and that is worth failing a test over. It
+    did drift, exactly as intended: Wave 3 added 8,046 nodes and 15,995 relationships, this
+    test failed, and the failure is what sent the ritual endpoints back to be re-derived
+    against the layer the import had actually added.
+
+    So raising the pair is only legitimate together with that work. A bumped constant on its
+    own would have left `/api/v1/rituals` reporting 92 rites as having no procedure while
+    3,121 sutra-attested steps sat in the graph.
     """
     from vedagraph.api.repositories.neo4j_repository import Neo4jRepository
 
@@ -183,8 +265,19 @@ def test_live_graph_matches_the_frozen_census(live_repository: object) -> None:
     nodes = live_repository.run_one("MATCH (n) RETURN count(n) AS c")
     rels = live_repository.run_one("MATCH ()-[r]->() RETURN count(r) AS c")
     assert nodes is not None and rels is not None
-    assert int(nodes["c"]) == 108_779
-    assert int(rels["c"]) == 265_295
+    assert int(nodes["c"]) == FROZEN_NODES
+    assert int(rels["c"]) == FROZEN_RELATIONSHIPS
+
+    corpus = {
+        str(row["veda"]): int(row["n"])
+        for row in live_repository.run(
+            "MATCH (m:Mantra) RETURN m.veda AS veda, count(*) AS n ORDER BY veda"
+        )
+    }
+    assert corpus == CORPUS_MANTRAS, (
+        "the four corpora are closed sets. The census above may grow with an import; these "
+        "may not, and a drift here is corruption rather than growth."
+    )
 
 
 # ---------------------------------------------------------------------------

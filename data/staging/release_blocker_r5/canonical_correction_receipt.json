@@ -1,0 +1,122 @@
+{
+  "artifact": "R5_CANONICAL_CORRECTION",
+  "at": "2026-09-18T13:04:01.621344+00:00",
+  "preflight": {
+    "per_file_digests_all_match": true,
+    "files_checked": 13,
+    "mismatches": [],
+    "aggregate_digest_reproduces_with_the_builders_recipe": true
+  },
+  "text_versions": {
+    "records_before": 1844,
+    "records_after": 1844,
+    "record_count_unchanged": true,
+    "records_changed": 4,
+    "changed": [
+      {
+        "canonical_key": "VG:SV:KAU:CHANDA:P04:D05:V06",
+        "text_id": "a6749316-5598-5393-b769-aa510c75422b",
+        "codepoints_removed": 14,
+        "sha256_before": "506e5940ec5792020292b0c2e2c4f0cff22fbf028b7dc8c0a5f2dc7977a98827",
+        "sha256_after": "8363fd84fed182056da27a1c523a4141f4fd75a10e327268fc872b6337c11003",
+        "only_a_leading_substring_changed": true
+      },
+      {
+        "canonical_key": "VG:SV:KAU:CHANDA:P02:D07:V07",
+        "text_id": "99cd5caf-88e6-59d1-a34d-cdb821296835",
+        "codepoints_removed": 11,
+        "sha256_before": "7aac8a3e6079dbfe8f133b2750f8f3d689e60845ccaa97fa186317dcc85e2f0a",
+        "sha256_after": "b30f7f409718efb2db27a3b9136d421a5230b940a1de0591ba56f39fced49e93",
+        "only_a_leading_substring_changed": true
+      },
+      {
+        "canonical_key": "VG:SV:KAU:CHANDA:P01:D08:V04",
+        "text_id": "8b9854cb-55eb-5947-96ec-0fa1b0584a6d",
+        "codepoints_removed": 5,
+        "sha256_before": "fa4f67688ead62938d12d7d65a916e0fd86963c91735738a28ae4d1594697dde",
+        "sha256_after": "f9459f7dfdd606d011f6134189edd6eb2fc679dd3dd566d21dba441181b49d4e",
+        "only_a_leading_substring_changed": true
+      },
+      {
+        "canonical_key": "VG:SV:KAU:ARANYA:D01:V04",
+        "text_id": "11871cc7-720a-55da-9750-666de346a457",
+        "codepoints_removed": 44,
+        "sha256_before": "85ce20a26dfbff0039220cff4ddb1c2c29733b3f4925fe9619df8172bd7fcfef",
+        "sha256_after": "aced94b37144c070c87e3061170abb78aba6e57183019fe7c73cb3bff51ed287",
+        "only_a_leading_substring_changed": true
+      }
+    ],
+    "every_change_is_a_leading_deletion_only": true,
+    "crlf_after_write": 0
+  },
+  "referent_bindings": {
+    "records_before": 1844,
+    "records_after": 1844,
+    "record_count_unchanged": true,
+    "records_rekeyed": 4,
+    "rekeyed": [
+      {
+        "canonical_key": "VG:SV:KAU:ARANYA:D01:V04",
+        "fields": [
+          "text_sha256"
+        ]
+      },
+      {
+        "canonical_key": "VG:SV:KAU:CHANDA:P01:D08:V04",
+        "fields": [
+          "text_sha256"
+        ]
+      },
+      {
+        "canonical_key": "VG:SV:KAU:CHANDA:P02:D07:V07",
+        "fields": [
+          "text_sha256"
+        ]
+      },
+      {
+        "canonical_key": "VG:SV:KAU:CHANDA:P04:D05:V06",
+        "fields": [
+          "text_sha256"
+        ]
+      }
+    ],
+    "canonical_keys_untouched": true,
+    "crlf_after_write": 0
+  },
+  "manifest": {
+    "per_file_digests_updated": [
+      {
+        "path": "referent_bindings.jsonl",
+        "sha256_before": "53df3ea417db66b8f2a5f66d6ae5f2ca6be16a87c0ebce8b4e9d81ce1e29d995",
+        "sha256_after": "a3db269f75af09feb2aa9387fa61d56bf7ec70477a78869af53f012d78ae7b9d",
+        "record_count_before": 1844,
+        "record_count_after": 1844
+      },
+      {
+        "path": "text_versions.jsonl",
+        "sha256_before": "cc4c69223c559a05c3d6db9029e0618fe81dff4c280d3b55cf57007c6f4cedc5",
+        "sha256_after": "5663a440184dc8b0b2f3b6a6dc3ac72f3945a6ae0706984d66bb17042a7b01b7",
+        "record_count_before": 1844,
+        "record_count_after": 1844
+      }
+    ],
+    "aggregate_digest_before": "57076778eec001860faacd476e58fa3a0ed77f0dba6590edc8e9c3d837fd013f",
+    "aggregate_digest_after": "ef01c9fc843d50ef7763a0d966dc309361fcf6855afd915f99dcdaa6a24860bc",
+    "aggregate_recipe": "vedagraph.release._content_digest, key = file stem",
+    "corrections_applied_block_deliberately_not_added": "It is not in the CanonicalRelease model, so write_release would drop it, and a corrections_applied block that drifts from the rows is a defect this registry has already recorded 8 times out of 9.",
+    "crlf_after_write": 0
+  },
+  "postflight": {
+    "per_file_digests_all_match": true,
+    "record_counts_all_match": true,
+    "aggregate_digest_verifies": true,
+    "mismatches": []
+  },
+  "backlog": {
+    "path": "data/source_registry/four_veda_backlog.jsonl",
+    "records_before": 2,
+    "records_after": 2,
+    "rows_closed": 1,
+    "crlf_after_write": 0
+  }
+}

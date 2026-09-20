@@ -1,0 +1,61 @@
+--- a/src/vedagraph/normalize/unicode.py
++++ b/src/vedagraph/normalize/unicode.py
+@@ TRANSCRIPTION_EQUIVALENCES, after the existing Devanagari anusvara rules @@
+     (CEA + ANUSVARA_SIGN + CED, _ANUSVARA),
+     (CEA + ANUSVARA_SIGN, _ANUSVARA),
+     (CEA, _ANUSVARA),
+     (A8F3, _ANUSVARA),
+     (ANUSVARA_SIGN, _ANUSVARA),
++    # The five rules above are DEAD on the script_folded surface, which is the only
++    # surface a cross-script pair can be compared on. enrich/surfaces.build_surfaces
++    # transliterates before it folds, so no Devanagari survives for them to match.
++    # Proof: fold_transcription(CEA + ANUSVARA_SIGN + CED) is one sentinel, and
++    # fold_transcription(to_iast(same)) is two. The rules below are the same nasals in
++    # the forms they actually ARRIVE in, longest first.
++    #
++    # indic-transliteration passes U+1CEA through unchanged and renders U+0902 as
++    # m-with-dot-below, so the Vajasaneyi cluster arrived as U+1CEA + m-dot-below and
++    # folded to TWO sentinels across 780 of 1,975 Yajurvedic verses. Together with the
++    # candrabindu rule below this mistyped 396 of 6,271 cross-Veda transformation types
++    # -- 38.4% of the RV-YV pair, 34.7% of SV-YV, 25.2% of AV-YV and 0.18% of RV-SV --
++    # and left 197 stored relationship types contradicted by their own text.
++    (CEA + "\u1e43", _ANUSVARA),
++    (CEA + "\u1e41", _ANUSVARA),
++    # U+0901 candrabindu renders as an ASCII TILDE, which no rule reached at all, so a
++    # nasalisation sign survived into the comparison surface as punctuation: 138
++    # Yajurvedic and 3 Samavedic verses, and 49.8x enriched inside changed spans.
++    ("~", _ANUSVARA),
+ )
++
++#: Two adjacent anusvara markers denote one nasal in every source held here, so a run of
++#: the sentinel collapses to one. Kept separate from the replacement table because it is a
++#: post-condition on the folded string rather than a spelling equivalence.
++_ANUSVARA_RUN: Final = re.compile(_ANUSVARA + "{2,}")
+
+@@ def fold_transcription @@
+ def fold_transcription(text: str) -> str:
+     """Fold IAST and ISO 15919 spelling variants onto shared comparison sentinels."""
+     folded = unicodedata.normalize("NFC", text)
+     for variant, sentinel in TRANSCRIPTION_EQUIVALENCES:
+         folded = folded.replace(unicodedata.normalize("NFC", variant), sentinel)
+-    return folded
++    return _ANUSVARA_RUN.sub(_ANUSVARA, folded)
+
+NOTE: `import re` is needed at the top of the module if it is not already imported.
+
+WHAT NOT TO CHANGE, each measured rather than assumed:
+  * the lateral series. U+1E3B folds to the lateral sentinel and Devanagari DDA to
+    d-with-dot. They are different letters and equating them is a scholarly position on the
+    Rigvedic intervocalic alternation, not a normalisation.
+  * the homorganic nasals. The anusvara folds to a sentinel while n-dot-above and n-tilde
+    stay distinct letters. An edition that writes the homorganic nasal where another writes
+    anusvara genuinely differs, and folding them together would erase a variant this layer
+    exists to report.
+  * numerals. DELETED_MARKS already covers ASCII and Devanagari digits and 0 survive past
+    punctuation_normalized on any of the 20,210 verses, so agent 12's inline-verse-number
+    defect does not reach this classifier.
+
+REGRESSION GUARD to add with the patch:
+    assert fold_transcription(to_iast(CEA + ANUSVARA_SIGN + CED, "Devanagari")) == _ANUSVARA
+    assert fold_transcription(to_iast("\u0901", "Devanagari")) == _ANUSVARA
+    assert fold_transcription(to_iast("\u0933", "Devanagari")) != fold_transcription("\u1e0da")

@@ -1,0 +1,17 @@
+{"attribution_status": "ASCRIPTION_DISPUTED_BY_THE_REPORTING_SOURCE", "name": "The Atharvaveda bhasyakara (\"Sayana\" of the Atharvaveda)", "proposed_labels": ["Scholar", "Commentator"], "scholar_id": "VG:SCHOLAR:AVS-BHASYAKARA", "scholar_type": "COMMENTATOR"}
+{"attribution_status": "COLLECTIVE", "name": "The manuscript and oral authorities for the vulgate", "proposed_labels": ["Scholar"], "scholar_id": "VG:SCHOLAR:AVS-TRANSMISSIONAL-AUTHORITIES", "scholar_type": "TRANSMISSIONAL_WITNESS"}
+{"attribution_status": "PRINTED_ASCRIPTION", "name": "The Bombay edition, in ascribing its commentary to Sayana", "proposed_labels": ["Scholar"], "scholar_id": "VG:SCHOLAR:BOMBAY-EDITION-ASCRIPTION", "scholar_type": "EDITORIAL_ASCRIPTION"}
+{"attribution_status": "ANONYMOUS", "name": "The author of the Brhatsarvanukramani", "proposed_labels": ["Scholar"], "scholar_id": "VG:SCHOLAR:BRHATSARVANUKRAMANI-AUTHOR", "scholar_type": "TRADITIONAL_INDEXER"}
+{"attribution_status": "NAMED_IN_THE_REPORTING_SOURCE", "name": "Hermann Grassmann", "proposed_labels": ["Scholar"], "scholar_id": "VG:SCHOLAR:GRASSMANN-HERMANN", "scholar_type": "PHILOLOGIST"}
+{"attribution_status": "NAMED_ON_TITLE_PAGE", "name": "Charles Rockwell Lanman", "proposed_labels": ["Scholar"], "scholar_id": "VG:SCHOLAR:LANMAN-C-R", "scholar_type": "PHILOLOGIST"}
+{"attribution_status": "NAMED_IN_THE_REPORTING_SOURCE", "name": "Alfred Ludwig", "proposed_labels": ["Scholar"], "scholar_id": "VG:SCHOLAR:LUDWIG-ALFRED", "scholar_type": "PHILOLOGIST"}
+{"attribution_status": "NAMED_ON_TITLE_PAGE", "name": "Friedrich Max Muller", "proposed_labels": ["Scholar"], "scholar_id": "VG:SCHOLAR:MULLER-F-MAX", "scholar_type": "PHILOLOGIST"}
+{"attribution_status": "NAMED_ON_TITLE_PAGE", "name": "Hermann Oldenberg", "proposed_labels": ["Scholar"], "scholar_id": "VG:SCHOLAR:OLDENBERG-HERMANN", "scholar_type": "PHILOLOGIST"}
+{"attribution_status": "NAMED_ON_TITLE_PAGE", "name": "Shankar Pandurang Pandit", "proposed_labels": ["Scholar"], "scholar_id": "VG:SCHOLAR:PANDIT-SHANKAR-PANDURANG", "scholar_type": "EDITOR"}
+{"attribution_status": "NAMED_IN_THE_REPORTING_SOURCE", "name": "Rudolf von Roth", "proposed_labels": ["Scholar"], "scholar_id": "VG:SCHOLAR:ROTH-RUDOLF", "scholar_type": "PHILOLOGIST"}
+{"attribution_status": "NAMED_ON_TITLE_PAGE", "name": "R. Roth and W. D. Whitney, as editors of the Berlin text", "proposed_labels": ["Scholar"], "scholar_id": "VG:SCHOLAR:ROTH-WHITNEY-EDITORS", "scholar_type": "EDITOR"}
+{"attribution_status": "NAMED_IN_THE_REPORTING_SOURCE", "name": "Arthur W. Ryder", "proposed_labels": ["Scholar"], "scholar_id": "VG:SCHOLAR:RYDER-ARTHUR-W", "scholar_type": "PHILOLOGIST"}
+{"attribution_status": "TRADITIONALLY_ATTRIBUTED", "name": "Sayana of the Rigveda", "proposed_labels": ["Scholar", "Commentator"], "scholar_id": "VG:SCHOLAR:SAYANA-OF-THE-RIGVEDA", "scholar_type": "COMMENTATOR"}
+{"attribution_status": "NAMED_IN_THE_REPORTING_SOURCE", "name": "Albrecht Weber", "proposed_labels": ["Scholar"], "scholar_id": "VG:SCHOLAR:WEBER-ALBRECHT", "scholar_type": "PHILOLOGIST"}
+{"attribution_status": "NAMED_ON_TITLE_PAGE", "name": "William Dwight Whitney", "proposed_labels": ["Scholar"], "scholar_id": "VG:SCHOLAR:WHITNEY-W-D", "scholar_type": "PHILOLOGIST"}
+{"attribution_status": "NAMED_IN_THE_REPORTING_SOURCE", "name": "Horace Hayman Wilson", "proposed_labels": ["Scholar"], "scholar_id": "VG:SCHOLAR:WILSON-H-H", "scholar_type": "PHILOLOGIST"}

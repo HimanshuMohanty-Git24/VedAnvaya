@@ -1,0 +1,189 @@
+{
+  "artifact": "RELEASE_BLOCKER_R3_LEAD_RECEIPT",
+  "at": "2026-09-18T07:26:26.448020+00:00",
+  "head_at_start": "47a6dcc6c8d589995eef92aa87c5dee6647bbbb8",
+  "branch": "phase-data-completeness-v2",
+  "registry": {
+    "implementation_fixable_before": 18,
+    "implementation_fixable_after": 17,
+    "closed_in_r3": [
+      "GAP-ENTITY_COVERAGE-008"
+    ],
+    "still_implementation_fixable": [
+      "GAP-ATTRIBUTION-002",
+      "GAP-COMMUNITIES-002",
+      "GAP-ENTITY_COVERAGE-001",
+      "GAP-ENTITY_COVERAGE-002",
+      "GAP-ENTITY_COVERAGE-003",
+      "GAP-ENTITY_COVERAGE-004",
+      "GAP-ENTITY_COVERAGE-006",
+      "GAP-ENTITY_COVERAGE-007",
+      "GAP-PRODUCT_SURFACE-005",
+      "GAP-QUALITY-003",
+      "GAP-RITUAL-003",
+      "GAP-RITUAL-004",
+      "GAP-RITUAL-005",
+      "GAP-RITUAL-006",
+      "GAP-SAMAVEDA_MUSIC-003",
+      "GAP-SEMANTICS-003",
+      "GAP-TRANSLATION-004"
+    ],
+    "status_breakdown": {
+      "ASK_FORMAL_REGRADE_BLOCKED_EXTERNAL_QUOTA": 1,
+      "BLOCKED_EXTERNAL_SOURCE_UNAVAILABLE": 7,
+      "BLOCKED_OWNER_DECISION_REQUIRED": 1,
+      "CLOSED_DERIVED": 36,
+      "CLOSED_NOT_APPLICABLE": 2,
+      "CLOSED_SCOPE_DECISION": 13,
+      "CLOSED_VERIFIED_ZERO": 5,
+      "NEEDS_AUDIBLE_REVIEW": 3,
+      "STILL_IMPLEMENTATION_FIXABLE": 17
+    },
+    "measurement_disagreements": 0,
+    "status_disagreements": 0,
+    "scope_citations_only_self_cited": [],
+    "scope_citations_naming_no_file": []
+  },
+  "graph": {
+    "census_before": {
+      "nodes": 164201,
+      "relationships": 508042,
+      "core_corpus": {
+        "RV": 10552,
+        "SV": 1844,
+        "YV": 1975,
+        "AV": 5839
+      },
+      "derived_metric": 1085,
+      "core_corpus_total": 20210
+    },
+    "census_after": {
+      "nodes": 164201,
+      "relationships": 508042,
+      "core_corpus": {
+        "RV": 10552,
+        "SV": 1844,
+        "YV": 1975,
+        "AV": 5839
+      },
+      "derived_metric": 1085,
+      "core_corpus_total": 20210
+    },
+    "census_unchanged": true,
+    "mutations": [
+      {
+        "mutation": "attribution_002",
+        "promised_equals_actual": true,
+        "promised": {
+          "nodes_written": 324,
+          "status_writes": 324,
+          "unresolved_reason_writes": 285,
+          "derivation_path_writes": 39,
+          "nodes_delta": 0,
+          "relationships_delta": 0
+        },
+        "actual": {
+          "nodes_written": 324,
+          "status_writes": 324,
+          "unresolved_reason_writes": 285,
+          "nodes_delta": 0,
+          "relationships_delta": 0
+        }
+      },
+      {
+        "mutation": "assertion_predicate_derivation",
+        "promised_equals_actual": true,
+        "promised": {
+          "edges_written": 30266,
+          "by_derivation": {
+            "CROSS_VEDA_TEXT_IDENTITY": 364,
+            "MORPHOLOGY_RULE_PREDICATE_ONLY": 28370,
+            "TREEBANK_DEPREL": 1532
+          },
+          "edges_ungraded_after": 0,
+          "nodes_delta": 0,
+          "relationships_delta": 0,
+          "tiers_touched": 0
+        },
+        "actual": {
+          "edges_written": 30266,
+          "edges_ungraded_after": 0,
+          "nodes_delta": 0,
+          "relationships_delta": 0
+        }
+      },
+      {
+        "mutation": "assertion_node_grades",
+        "promised_equals_actual": true,
+        "promised": {
+          "nodes_written": 30266,
+          "by_derivation": {
+            "MORPHOLOGY_RULE_PREDICATE_ONLY": 28370,
+            "TREEBANK_DEPREL": 1532,
+            "CROSS_VEDA_TEXT_IDENTITY": 364
+          },
+          "ungraded_after": 0,
+          "nodes_delta": 0,
+          "relationships_delta": 0
+        },
+        "actual": {
+          "nodes_written": 30266,
+          "ungraded_after": 0,
+          "nodes_delta": 0,
+          "relationships_delta": 0
+        }
+      },
+      {
+        "mutation": "attribution_scope",
+        "promised_equals_actual": true,
+        "promised": {
+          "nodes_written": 214,
+          "scope_distribution": {
+            "RV": 179,
+            "RV|AV": 35
+          },
+          "nodes_gaining_AV": 35,
+          "distinct_notes_after": 1,
+          "nodes_delta": 0,
+          "relationships_delta": 0
+        },
+        "actual": {
+          "nodes_written": 214,
+          "scope_distribution": {
+            "RV": 179,
+            "RV|AV": 35
+          },
+          "distinct_notes_after": 1,
+          "nodes_delta": 0,
+          "relationships_delta": 0
+        }
+      }
+    ],
+    "all_promised_equals_actual": true
+  },
+  "scorecard": {
+    "gates_passing": 11,
+    "gates_failing": 0,
+    "verdict": "11/11",
+    "captured_from": "scripts/graph_quality_scorecard.py, re-run after every R3 mutation"
+  },
+  "dependencies": {
+    "counts": {
+      "CURRENT": 5,
+      "STALE_INPUT": 0,
+      "BLOCKED": 3,
+      "NOT_APPLICABLE": 1
+    },
+    "unexplained_stale": [],
+    "declaration_gaps_closed_in_r3": [
+      "frontend/scripts/world-groups.json -> Visualization Lab aggregates",
+      "src/vedagraph/api/services/graph_service.py -> Knowledge World public projection",
+      "frontend/scripts/build-home-world.mjs -> Knowledge World public projection (builder AND output; found by frontend/tests/unit/public-identity.test.ts, not by this report)"
+    ]
+  },
+  "regenerated_after_agent_b_r3_round": "This receipt was first written at 06:14Z, BEFORE the dependency declaration gaps were closed and rebuilt, so it recorded STALE_INPUT=2 while the live artifact read 0 -- a closure receipt stating the pre-fix value of the claim it was offered as evidence for (Agent B B-R3-M4). Regenerated from the live artifacts.",
+  "owner_decisions_recorded": [
+    "OWNER_DECISION_SEMANTICS_004_STRATUM_MAP (docs/reports/data-completeness/OWNER_DECISIONS.md section 34)",
+    "OWNER_DECISION_ENTITY_008_DEITY_MEMBERSHIP (docs/reports/data-completeness/OWNER_DECISIONS.md section 35)"
+  ]
+}

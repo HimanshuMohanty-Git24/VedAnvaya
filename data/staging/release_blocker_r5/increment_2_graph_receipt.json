@@ -1,0 +1,20 @@
+{
+  "artifact": "R5_INCREMENT_2_GRAPH",
+  "at": "2026-09-18T13:01:45.848141+00:00",
+  "quality_003": {
+    "before": {
+      "edges_with_confidence": 25474,
+      "constant_confidence_predicates": 2
+    },
+    "after": {
+      "edges_with_confidence": 25470,
+      "constant_confidence_predicates": 0,
+      "edges_with_a_calibration_status": 25470,
+      "edges_still_carrying_confidence_without_a_calibration_status": 0
+    },
+    "constants_renamed": 4,
+    "edges_given_a_calibration_status": 25470,
+    "clause_2_no_predicate_carries_a_constant_confidence": true,
+    "clause_1_absence_of_calibration_is_represented": true
+  }
+}

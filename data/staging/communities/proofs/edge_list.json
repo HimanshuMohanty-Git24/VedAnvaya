@@ -1,0 +1,6411 @@
+{
+  "edge_records": [
+    {
+      "a": "VG:DEVATA:ADITIH",
+      "a_containers": 1,
+      "b": "VG:DEVATA:ADITYAH",
+      "b_containers": 11,
+      "cosine": 0.301511,
+      "example_containers": [
+        "VG:RV:SAK:M08:S018"
+      ],
+      "jaccard": 0.090909,
+      "support": 1,
+      "union_containers": 11
+    },
+    {
+      "a": "VG:DEVATA:ADITIH",
+      "a_containers": 1,
+      "b": "VG:DEVATA:AGNISURYANILAH",
+      "b_containers": 1,
+      "cosine": 1.0,
+      "example_containers": [
+        "VG:RV:SAK:M08:S018"
+      ],
+      "jaccard": 1.0,
+      "support": 1,
+      "union_containers": 1
+    },
+    {
+      "a": "VG:DEVATA:ADITIH",
+      "a_containers": 1,
+      "b": "VG:DEVATA:ASVINAU",
+      "b_containers": 68,
+      "cosine": 0.121268,
+      "example_containers": [
+        "VG:RV:SAK:M08:S018"
+      ],
+      "jaccard": 0.014706,
+      "support": 1,
+      "union_containers": 68
+    },
+    {
+      "a": "VG:DEVATA:ADITYAH",
+      "a_containers": 11,
+      "b": "VG:DEVATA:ADITYOSASAH",
+      "b_containers": 1,
+      "cosine": 0.301511,
+      "example_containers": [
+        "VG:RV:SAK:M08:S047"
+      ],
+      "jaccard": 0.090909,
+      "support": 1,
+      "union_containers": 11
+    },
+    {
+      "a": "VG:DEVATA:ADITYAH",
+      "a_containers": 11,
+      "b": "VG:DEVATA:AGNIH",
+      "b_containers": 223,
+      "cosine": 0.020191,
+      "example_containers": [
+        "VG:RV:SAK:M08:S019"
+      ],
+      "jaccard": 0.004292,
+      "support": 1,
+      "union_containers": 233
+    },
+    {
+      "a": "VG:DEVATA:ADITYAH",
+      "a_containers": 11,
+      "b": "VG:DEVATA:AGNISURYANILAH",
+      "b_containers": 1,
+      "cosine": 0.301511,
+      "example_containers": [
+        "VG:RV:SAK:M08:S018"
+      ],
+      "jaccard": 0.090909,
+      "support": 1,
+      "union_containers": 11
+    },
+    {
+      "a": "VG:DEVATA:ADITYAH",
+      "a_containers": 11,
+      "b": "VG:DEVATA:ASVINAU",
+      "b_containers": 68,
+      "cosine": 0.073127,
+      "example_containers": [
+        "VG:RV:SAK:M08:S018",
+        "VG:RV:SAK:M08:S101"
+      ],
+      "jaccard": 0.025974,
+      "support": 2,
+      "union_containers": 77
+    },
+    {
+      "a": "VG:DEVATA:ADITYAH",
+      "a_containers": 11,
+      "b": "VG:DEVATA:GAUH",
+      "b_containers": 1,
+      "cosine": 0.301511,
+      "example_containers": [
+        "VG:RV:SAK:M08:S101"
+      ],
+      "jaccard": 0.090909,
+      "support": 1,
+      "union_containers": 11
+    },
+    {
+      "a": "VG:DEVATA:ADITYAH",
+      "a_containers": 11,
+      "b": "VG:DEVATA:MITRAVARUNAU",
+      "b_containers": 35,
+      "cosine": 0.101929,
+      "example_containers": [
+        "VG:RV:SAK:M07:S066",
+        "VG:RV:SAK:M08:S101"
+      ],
+      "jaccard": 0.045455,
+      "support": 2,
+      "union_containers": 44
+    },
+    {
+      "a": "VG:DEVATA:ADITYAH",
+      "a_containers": 11,
+      "b": "VG:DEVATA:PAVAMANAH",
+      "b_containers": 1,
+      "cosine": 0.301511,
+      "example_containers": [
+        "VG:RV:SAK:M08:S101"
+      ],
+      "jaccard": 0.090909,
+      "support": 1,
+      "union_containers": 11
+    },
+    {
+      "a": "VG:DEVATA:ADITYAH",
+      "a_containers": 11,
+      "b": "VG:DEVATA:SURYAH",
+      "b_containers": 14,
+      "cosine": 0.161165,
+      "example_containers": [
+        "VG:RV:SAK:M07:S066",
+        "VG:RV:SAK:M08:S101"
+      ],
+      "jaccard": 0.086957,
+      "support": 2,
+      "union_containers": 23
+    },
+    {
+      "a": "VG:DEVATA:ADITYAH",
+      "a_containers": 11,
+      "b": "VG:DEVATA:USAH",
+      "b_containers": 23,
+      "cosine": 0.062869,
+      "example_containers": [
+        "VG:RV:SAK:M08:S101"
+      ],
+      "jaccard": 0.030303,
+      "support": 1,
+      "union_containers": 33
+    },
+    {
+      "a": "VG:DEVATA:ADITYAH",
+      "a_containers": 11,
+      "b": "VG:DEVATA:VAYUH",
+      "b_containers": 17,
+      "cosine": 0.073127,
+      "example_containers": [
+        "VG:RV:SAK:M08:S101"
+      ],
+      "jaccard": 0.037037,
+      "support": 1,
+      "union_containers": 27
+    },
+    {
+      "a": "VG:DEVATA:AGNAMARUTAH",
+      "a_containers": 1,
+      "b": "VG:DEVATA:AGNIH",
+      "b_containers": 223,
+      "cosine": 0.066965,
+      "example_containers": [
+        "VG:RV:SAK:M08:S103"
+      ],
+      "jaccard": 0.004484,
+      "support": 1,
+      "union_containers": 223
+    },
+    {
+      "a": "VG:DEVATA:AGNIH",
+      "a_containers": 223,
+      "b": "VG:DEVATA:APAH",
+      "b_containers": 6,
+      "cosine": 0.027338,
+      "example_containers": [
+        "VG:RV:SAK:M01:S023"
+      ],
+      "jaccard": 0.004386,
+      "support": 1,
+      "union_containers": 228
+    },
+    {
+      "a": "VG:DEVATA:AGNIH",
+      "a_containers": 223,
+      "b": "VG:DEVATA:ASVINAU",
+      "b_containers": 68,
+      "cosine": 0.040603,
+      "example_containers": [
+        "VG:RV:SAK:M01:S015",
+        "VG:RV:SAK:M01:S022",
+        "VG:RV:SAK:M01:S139",
+        "VG:RV:SAK:M02:S037",
+        "VG:RV:SAK:M04:S015"
+      ],
+      "jaccard": 0.017483,
+      "support": 5,
+      "union_containers": 286
+    },
+    {
+      "a": "VG:DEVATA:AGNIH",
+      "a_containers": 223,
+      "b": "VG:DEVATA:BARHIH",
+      "b_containers": 9,
+      "cosine": 0.200895,
+      "example_containers": [
+        "VG:RV:SAK:M01:S142",
+        "VG:RV:SAK:M01:S188",
+        "VG:RV:SAK:M02:S003",
+        "VG:RV:SAK:M03:S004",
+        "VG:RV:SAK:M05:S005"
+      ],
+      "jaccard": 0.040359,
+      "support": 9,
+      "union_containers": 223
+    },
+    {
+      "a": "VG:DEVATA:AGNIH",
+      "a_containers": 223,
+      "b": "VG:DEVATA:BRHASPATIH",
+      "b_containers": 13,
+      "cosine": 0.018573,
+      "example_containers": [
+        "VG:RV:SAK:M01:S139"
+      ],
+      "jaccard": 0.004255,
+      "support": 1,
+      "union_containers": 235
+    },
+    {
+      "a": "VG:DEVATA:AGNIH",
+      "a_containers": 223,
+      "b": "VG:DEVATA:DAIVYAU-HOTARAU",
+      "b_containers": 9,
+      "cosine": 0.200895,
+      "example_containers": [
+        "VG:RV:SAK:M01:S013",
+        "VG:RV:SAK:M01:S142",
+        "VG:RV:SAK:M01:S188",
+        "VG:RV:SAK:M02:S003",
+        "VG:RV:SAK:M05:S005"
+      ],
+      "jaccard": 0.040359,
+      "support": 9,
+      "union_containers": 223
+    },
+    {
+      "a": "VG:DEVATA:AGNIH",
+      "a_containers": 223,
+      "b": "VG:DEVATA:DEVAH",
+      "b_containers": 7,
+      "cosine": 0.101241,
+      "example_containers": [
+        "VG:RV:SAK:M01:S027",
+        "VG:RV:SAK:M07:S104",
+        "VG:RV:SAK:M10:S051",
+        "VG:RV:SAK:M10:S053"
+      ],
+      "jaccard": 0.017699,
+      "support": 4,
+      "union_containers": 226
+    },
+    {
+      "a": "VG:DEVATA:AGNIH",
+      "a_containers": 223,
+      "b": "VG:DEVATA:DEVIRDVARAH",
+      "b_containers": 10,
+      "cosine": 0.211762,
+      "example_containers": [
+        "VG:RV:SAK:M01:S013",
+        "VG:RV:SAK:M01:S142",
+        "VG:RV:SAK:M01:S188",
+        "VG:RV:SAK:M02:S003",
+        "VG:RV:SAK:M03:S004"
+      ],
+      "jaccard": 0.044843,
+      "support": 10,
+      "union_containers": 223
+    },
+    {
+      "a": "VG:DEVATA:AGNIH",
+      "a_containers": 223,
+      "b": "VG:DEVATA:DEVYAH",
+      "b_containers": 1,
+      "cosine": 0.066965,
+      "example_containers": [
+        "VG:RV:SAK:M01:S022"
+      ],
+      "jaccard": 0.004484,
+      "support": 1,
+      "union_containers": 223
+    },
+    {
+      "a": "VG:DEVATA:AGNIH",
+      "a_containers": 223,
+      "b": "VG:DEVATA:DEVYAU-HOTARAU",
+      "b_containers": 1,
+      "cosine": 0.066965,
+      "example_containers": [
+        "VG:RV:SAK:M03:S004"
+      ],
+      "jaccard": 0.004484,
+      "support": 1,
+      "union_containers": 223
+    },
+    {
+      "a": "VG:DEVATA:AGNIH",
+      "a_containers": 223,
+      "b": "VG:DEVATA:DRAVINODAH",
+      "b_containers": 1,
+      "cosine": 0.066965,
+      "example_containers": [
+        "VG:RV:SAK:M02:S037"
+      ],
+      "jaccard": 0.004484,
+      "support": 1,
+      "union_containers": 223
+    },
+    {
+      "a": "VG:DEVATA:AGNIH",
+      "a_containers": 223,
+      "b": "VG:DEVATA:DYAVABHUMI",
+      "b_containers": 1,
+      "cosine": 0.066965,
+      "example_containers": [
+        "VG:RV:SAK:M06:S048"
+      ],
+      "jaccard": 0.004484,
+      "support": 1,
+      "union_containers": 223
+    },
+    {
+      "a": "VG:DEVATA:AGNIH",
+      "a_containers": 223,
+      "b": "VG:DEVATA:DYAVAPRTHIVYAU",
+      "b_containers": 11,
+      "cosine": 0.020191,
+      "example_containers": [
+        "VG:RV:SAK:M01:S022"
+      ],
+      "jaccard": 0.004292,
+      "support": 1,
+      "union_containers": 233
+    },
+    {
+      "a": "VG:DEVATA:AGNIH",
+      "a_containers": 223,
+      "b": "VG:DEVATA:GRAVANAH",
+      "b_containers": 4,
+      "cosine": 0.033482,
+      "example_containers": [
+        "VG:RV:SAK:M07:S104"
+      ],
+      "jaccard": 0.004425,
+      "support": 1,
+      "union_containers": 226
+    },
+    {
+      "a": "VG:DEVATA:AGNIH",
+      "a_containers": 223,
+      "b": "VG:DEVATA:ILA-SARASVATI-MAHI",
+      "b_containers": 1,
+      "cosine": 0.066965,
+      "example_containers": [
+        "VG:RV:SAK:M01:S013"
+      ],
+      "jaccard": 0.004484,
+      "support": 1,
+      "union_containers": 223
+    },
+    {
+      "a": "VG:DEVATA:AGNIH",
+      "a_containers": 223,
+      "b": "VG:DEVATA:INDRAGNI",
+      "b_containers": 15,
+      "cosine": 0.051871,
+      "example_containers": [
+        "VG:RV:SAK:M01:S139",
+        "VG:RV:SAK:M03:S025",
+        "VG:RV:SAK:M05:S027"
+      ],
+      "jaccard": 0.012766,
+      "support": 3,
+      "union_containers": 235
+    },
+    {
+      "a": "VG:DEVATA:AGNIH",
+      "a_containers": 223,
+      "b": "VG:DEVATA:INDRAH",
+      "b_containers": 273,
+      "cosine": 0.02837,
+      "example_containers": [
+        "VG:RV:SAK:M01:S015",
+        "VG:RV:SAK:M01:S139",
+        "VG:RV:SAK:M01:S142",
+        "VG:RV:SAK:M02:S036",
+        "VG:RV:SAK:M07:S104"
+      ],
+      "jaccard": 0.014315,
+      "support": 7,
+      "union_containers": 489
+    },
+    {
+      "a": "VG:DEVATA:AGNIH",
+      "a_containers": 223,
+      "b": "VG:DEVATA:INDRAH-MARUTAH",
+      "b_containers": 1,
+      "cosine": 0.066965,
+      "example_containers": [
+        "VG:RV:SAK:M01:S023"
+      ],
+      "jaccard": 0.004484,
+      "support": 1,
+      "union_containers": 223
+    },
+    {
+      "a": "VG:DEVATA:AGNIH",
+      "a_containers": 223,
+      "b": "VG:DEVATA:INDRANI-VARUNANI-AGNAYI",
+      "b_containers": 1,
+      "cosine": 0.066965,
+      "example_containers": [
+        "VG:RV:SAK:M01:S022"
+      ],
+      "jaccard": 0.004484,
+      "support": 1,
+      "union_containers": 223
+    },
+    {
+      "a": "VG:DEVATA:AGNIH",
+      "a_containers": 223,
+      "b": "VG:DEVATA:INDRASOMAU",
+      "b_containers": 4,
+      "cosine": 0.033482,
+      "example_containers": [
+        "VG:RV:SAK:M07:S104"
+      ],
+      "jaccard": 0.004425,
+      "support": 1,
+      "union_containers": 226
+    },
+    {
+      "a": "VG:DEVATA:AGNIH",
+      "a_containers": 223,
+      "b": "VG:DEVATA:INDRAVAYU",
+      "b_containers": 10,
+      "cosine": 0.021176,
+      "example_containers": [
+        "VG:RV:SAK:M01:S023"
+      ],
+      "jaccard": 0.00431,
+      "support": 1,
+      "union_containers": 232
+    },
+    {
+      "a": "VG:DEVATA:AGNIH",
+      "a_containers": 223,
+      "b": "VG:DEVATA:KAH",
+      "b_containers": 2,
+      "cosine": 0.047351,
+      "example_containers": [
+        "VG:RV:SAK:M01:S024"
+      ],
+      "jaccard": 0.004464,
+      "support": 1,
+      "union_containers": 224
+    },
+    {
+      "a": "VG:DEVATA:AGNIH",
+      "a_containers": 223,
+      "b": "VG:DEVATA:MARUDRUDRAVISNAVAH",
+      "b_containers": 1,
+      "cosine": 0.066965,
+      "example_containers": [
+        "VG:RV:SAK:M05:S003"
+      ],
+      "jaccard": 0.004484,
+      "support": 1,
+      "union_containers": 223
+    },
+    {
+      "a": "VG:DEVATA:AGNIH",
+      "a_containers": 223,
+      "b": "VG:DEVATA:MARUTAH",
+      "b_containers": 42,
+      "cosine": 0.051665,
+      "example_containers": [
+        "VG:RV:SAK:M01:S015",
+        "VG:RV:SAK:M01:S139",
+        "VG:RV:SAK:M02:S036",
+        "VG:RV:SAK:M06:S048",
+        "VG:RV:SAK:M07:S104"
+      ],
+      "jaccard": 0.019231,
+      "support": 5,
+      "union_containers": 260
+    },
+    {
+      "a": "VG:DEVATA:AGNIH",
+      "a_containers": 223,
+      "b": "VG:DEVATA:MITRAVARUNAU",
+      "b_containers": 35,
+      "cosine": 0.056596,
+      "example_containers": [
+        "VG:RV:SAK:M01:S015",
+        "VG:RV:SAK:M01:S023",
+        "VG:RV:SAK:M01:S139",
+        "VG:RV:SAK:M02:S036",
+        "VG:RV:SAK:M07:S050"
+      ],
+      "jaccard": 0.019763,
+      "support": 5,
+      "union_containers": 253
+    },
+    {
+      "a": "VG:DEVATA:AGNIH",
+      "a_containers": 223,
+      "b": "VG:DEVATA:NADYAH",
+      "b_containers": 3,
+      "cosine": 0.038662,
+      "example_containers": [
+        "VG:RV:SAK:M07:S050"
+      ],
+      "jaccard": 0.004444,
+      "support": 1,
+      "union_containers": 225
+    },
+    {
+      "a": "VG:DEVATA:AGNIH",
+      "a_containers": 223,
+      "b": "VG:DEVATA:PRTHIVI",
+      "b_containers": 2,
+      "cosine": 0.047351,
+      "example_containers": [
+        "VG:RV:SAK:M01:S022"
+      ],
+      "jaccard": 0.004464,
+      "support": 1,
+      "union_containers": 224
+    },
+    {
+      "a": "VG:DEVATA:AGNIH",
+      "a_containers": 223,
+      "b": "VG:DEVATA:PRTHIVYANTARIKSE",
+      "b_containers": 1,
+      "cosine": 0.066965,
+      "example_containers": [
+        "VG:RV:SAK:M07:S104"
+      ],
+      "jaccard": 0.004484,
+      "support": 1,
+      "union_containers": 223
+    },
+    {
+      "a": "VG:DEVATA:AGNIH",
+      "a_containers": 223,
+      "b": "VG:DEVATA:PUSA",
+      "b_containers": 13,
+      "cosine": 0.037145,
+      "example_containers": [
+        "VG:RV:SAK:M01:S023",
+        "VG:RV:SAK:M06:S048"
+      ],
+      "jaccard": 0.008547,
+      "support": 2,
+      "union_containers": 234
+    },
+    {
+      "a": "VG:DEVATA:AGNIH",
+      "a_containers": 223,
+      "b": "VG:DEVATA:RBHAVAH",
+      "b_containers": 13,
+      "cosine": 0.018573,
+      "example_containers": [
+        "VG:RV:SAK:M10:S176"
+      ],
+      "jaccard": 0.004255,
+      "support": 1,
+      "union_containers": 235
+    },
+    {
+      "a": "VG:DEVATA:AGNIH",
+      "a_containers": 223,
+      "b": "VG:DEVATA:SARASVATI-ILA-BHARATI",
+      "b_containers": 9,
+      "cosine": 0.200895,
+      "example_containers": [
+        "VG:RV:SAK:M01:S142",
+        "VG:RV:SAK:M01:S188",
+        "VG:RV:SAK:M02:S003",
+        "VG:RV:SAK:M03:S004",
+        "VG:RV:SAK:M05:S005"
+      ],
+      "jaccard": 0.040359,
+      "support": 9,
+      "union_containers": 223
+    },
+    {
+      "a": "VG:DEVATA:AGNIH",
+      "a_containers": 223,
+      "b": "VG:DEVATA:SAVITA",
+      "b_containers": 14,
+      "cosine": 0.035794,
+      "example_containers": [
+        "VG:RV:SAK:M01:S022",
+        "VG:RV:SAK:M01:S024"
+      ],
+      "jaccard": 0.008511,
+      "support": 2,
+      "union_containers": 235
+    },
+    {
+      "a": "VG:DEVATA:AGNIH",
+      "a_containers": 223,
+      "b": "VG:DEVATA:SOMAH",
+      "b_containers": 12,
+      "cosine": 0.038662,
+      "example_containers": [
+        "VG:RV:SAK:M07:S104",
+        "VG:RV:SAK:M10:S124"
+      ],
+      "jaccard": 0.008584,
+      "support": 2,
+      "union_containers": 233
+    },
+    {
+      "a": "VG:DEVATA:AGNIH",
+      "a_containers": 223,
+      "b": "VG:DEVATA:TVASTA",
+      "b_containers": 13,
+      "cosine": 0.222873,
+      "example_containers": [
+        "VG:RV:SAK:M01:S013",
+        "VG:RV:SAK:M01:S015",
+        "VG:RV:SAK:M01:S142",
+        "VG:RV:SAK:M01:S188",
+        "VG:RV:SAK:M02:S003"
+      ],
+      "jaccard": 0.053571,
+      "support": 12,
+      "union_containers": 224
+    },
+    {
+      "a": "VG:DEVATA:AGNIH",
+      "a_containers": 223,
+      "b": "VG:DEVATA:USASANAKTA",
+      "b_containers": 10,
+      "cosine": 0.211762,
+      "example_containers": [
+        "VG:RV:SAK:M01:S013",
+        "VG:RV:SAK:M01:S142",
+        "VG:RV:SAK:M01:S188",
+        "VG:RV:SAK:M02:S003",
+        "VG:RV:SAK:M03:S004"
+      ],
+      "jaccard": 0.044843,
+      "support": 10,
+      "union_containers": 223
+    },
+    {
+      "a": "VG:DEVATA:AGNIH",
+      "a_containers": 223,
+      "b": "VG:DEVATA:VANASPATIH",
+      "b_containers": 10,
+      "cosine": 0.211762,
+      "example_containers": [
+        "VG:RV:SAK:M01:S013",
+        "VG:RV:SAK:M01:S142",
+        "VG:RV:SAK:M01:S188",
+        "VG:RV:SAK:M02:S003",
+        "VG:RV:SAK:M03:S004"
+      ],
+      "jaccard": 0.044843,
+      "support": 10,
+      "union_containers": 223
+    },
+    {
+      "a": "VG:DEVATA:AGNIH",
+      "a_containers": 223,
+      "b": "VG:DEVATA:VARUNAH",
+      "b_containers": 13,
+      "cosine": 0.037145,
+      "example_containers": [
+        "VG:RV:SAK:M01:S024",
+        "VG:RV:SAK:M10:S124"
+      ],
+      "jaccard": 0.008547,
+      "support": 2,
+      "union_containers": 234
+    },
+    {
+      "a": "VG:DEVATA:AGNIH",
+      "a_containers": 223,
+      "b": "VG:DEVATA:VAYUH",
+      "b_containers": 17,
+      "cosine": 0.016241,
+      "example_containers": [
+        "VG:RV:SAK:M01:S023"
+      ],
+      "jaccard": 0.004184,
+      "support": 1,
+      "union_containers": 239
+    },
+    {
+      "a": "VG:DEVATA:AGNIH",
+      "a_containers": 223,
+      "b": "VG:DEVATA:VISNUH",
+      "b_containers": 6,
+      "cosine": 0.027338,
+      "example_containers": [
+        "VG:RV:SAK:M01:S022"
+      ],
+      "jaccard": 0.004386,
+      "support": 1,
+      "union_containers": 228
+    },
+    {
+      "a": "VG:DEVATA:AGNIH",
+      "a_containers": 223,
+      "b": "VG:DEVATA:VISVEDEVAH",
+      "b_containers": 86,
+      "cosine": 0.036105,
+      "example_containers": [
+        "VG:RV:SAK:M01:S023",
+        "VG:RV:SAK:M01:S139",
+        "VG:RV:SAK:M03:S020",
+        "VG:RV:SAK:M05:S026",
+        "VG:RV:SAK:M07:S050"
+      ],
+      "jaccard": 0.016447,
+      "support": 5,
+      "union_containers": 304
+    },
+    {
+      "a": "VG:DEVATA:AGNIH-MITRAVARUNAU-RATRIH-SAVITA",
+      "a_containers": 1,
+      "b": "VG:DEVATA:SAVITA",
+      "b_containers": 14,
+      "cosine": 0.267261,
+      "example_containers": [
+        "VG:RV:SAK:M01:S035"
+      ],
+      "jaccard": 0.071429,
+      "support": 1,
+      "union_containers": 14
+    },
+    {
+      "a": "VG:DEVATA:AGNINDRAU",
+      "a_containers": 1,
+      "b": "VG:DEVATA:INDRAH",
+      "b_containers": 273,
+      "cosine": 0.060523,
+      "example_containers": [
+        "VG:RV:SAK:M08:S045"
+      ],
+      "jaccard": 0.003663,
+      "support": 1,
+      "union_containers": 273
+    },
+    {
+      "a": "VG:DEVATA:AGNISURYANILAH",
+      "a_containers": 1,
+      "b": "VG:DEVATA:ASVINAU",
+      "b_containers": 68,
+      "cosine": 0.121268,
+      "example_containers": [
+        "VG:RV:SAK:M08:S018"
+      ],
+      "jaccard": 0.014706,
+      "support": 1,
+      "union_containers": 68
+    },
+    {
+      "a": "VG:DEVATA:AHIH",
+      "a_containers": 1,
+      "b": "VG:DEVATA:AHIRBUDHNYAH",
+      "b_containers": 1,
+      "cosine": 1.0,
+      "example_containers": [
+        "VG:RV:SAK:M07:S034"
+      ],
+      "jaccard": 1.0,
+      "support": 1,
+      "union_containers": 1
+    },
+    {
+      "a": "VG:DEVATA:AHIH",
+      "a_containers": 1,
+      "b": "VG:DEVATA:VISVEDEVAH",
+      "b_containers": 86,
+      "cosine": 0.107833,
+      "example_containers": [
+        "VG:RV:SAK:M07:S034"
+      ],
+      "jaccard": 0.011628,
+      "support": 1,
+      "union_containers": 86
+    },
+    {
+      "a": "VG:DEVATA:AHIRBUDHNYAH",
+      "a_containers": 1,
+      "b": "VG:DEVATA:VISVEDEVAH",
+      "b_containers": 86,
+      "cosine": 0.107833,
+      "example_containers": [
+        "VG:RV:SAK:M07:S034"
+      ],
+      "jaccard": 0.011628,
+      "support": 1,
+      "union_containers": 86
+    },
+    {
+      "a": "VG:DEVATA:APAH",
+      "a_containers": 6,
+      "b": "VG:DEVATA:INDRAH-MARUTAH",
+      "b_containers": 1,
+      "cosine": 0.408248,
+      "example_containers": [
+        "VG:RV:SAK:M01:S023"
+      ],
+      "jaccard": 0.166667,
+      "support": 1,
+      "union_containers": 6
+    },
+    {
+      "a": "VG:DEVATA:APAH",
+      "a_containers": 6,
+      "b": "VG:DEVATA:INDRAVAYU",
+      "b_containers": 10,
+      "cosine": 0.129099,
+      "example_containers": [
+        "VG:RV:SAK:M01:S023"
+      ],
+      "jaccard": 0.066667,
+      "support": 1,
+      "union_containers": 15
+    },
+    {
+      "a": "VG:DEVATA:APAH",
+      "a_containers": 6,
+      "b": "VG:DEVATA:MITRAVARUNAU",
+      "b_containers": 35,
+      "cosine": 0.069007,
+      "example_containers": [
+        "VG:RV:SAK:M01:S023"
+      ],
+      "jaccard": 0.025,
+      "support": 1,
+      "union_containers": 40
+    },
+    {
+      "a": "VG:DEVATA:APAH",
+      "a_containers": 6,
+      "b": "VG:DEVATA:PUSA",
+      "b_containers": 13,
+      "cosine": 0.226455,
+      "example_containers": [
+        "VG:RV:SAK:M01:S023",
+        "VG:RV:SAK:M10:S017"
+      ],
+      "jaccard": 0.117647,
+      "support": 2,
+      "union_containers": 17
+    },
+    {
+      "a": "VG:DEVATA:APAH",
+      "a_containers": 6,
+      "b": "VG:DEVATA:SARANYUH",
+      "b_containers": 1,
+      "cosine": 0.408248,
+      "example_containers": [
+        "VG:RV:SAK:M10:S017"
+      ],
+      "jaccard": 0.166667,
+      "support": 1,
+      "union_containers": 6
+    },
+    {
+      "a": "VG:DEVATA:APAH",
+      "a_containers": 6,
+      "b": "VG:DEVATA:SARASVATI",
+      "b_containers": 7,
+      "cosine": 0.154303,
+      "example_containers": [
+        "VG:RV:SAK:M10:S017"
+      ],
+      "jaccard": 0.083333,
+      "support": 1,
+      "union_containers": 12
+    },
+    {
+      "a": "VG:DEVATA:APAH",
+      "a_containers": 6,
+      "b": "VG:DEVATA:VAYUH",
+      "b_containers": 17,
+      "cosine": 0.099015,
+      "example_containers": [
+        "VG:RV:SAK:M01:S023"
+      ],
+      "jaccard": 0.045455,
+      "support": 1,
+      "union_containers": 22
+    },
+    {
+      "a": "VG:DEVATA:APAH",
+      "a_containers": 6,
+      "b": "VG:DEVATA:VISVEDEVAH",
+      "b_containers": 86,
+      "cosine": 0.044023,
+      "example_containers": [
+        "VG:RV:SAK:M01:S023"
+      ],
+      "jaccard": 0.010989,
+      "support": 1,
+      "union_containers": 91
+    },
+    {
+      "a": "VG:DEVATA:ARTNI",
+      "a_containers": 1,
+      "b": "VG:DEVATA:ASHVAAH",
+      "b_containers": 1,
+      "cosine": 1.0,
+      "example_containers": [
+        "VG:RV:SAK:M06:S075"
+      ],
+      "jaccard": 1.0,
+      "support": 1,
+      "union_containers": 1
+    },
+    {
+      "a": "VG:DEVATA:ARTNI",
+      "a_containers": 1,
+      "b": "VG:DEVATA:BRAHMA",
+      "b_containers": 1,
+      "cosine": 1.0,
+      "example_containers": [
+        "VG:RV:SAK:M06:S075"
+      ],
+      "jaccard": 1.0,
+      "support": 1,
+      "union_containers": 1
+    },
+    {
+      "a": "VG:DEVATA:ARTNI",
+      "a_containers": 1,
+      "b": "VG:DEVATA:BRAHMANAPITRSOMADYAVAPRTHIVIPUSANAH",
+      "b_containers": 1,
+      "cosine": 1.0,
+      "example_containers": [
+        "VG:RV:SAK:M06:S075"
+      ],
+      "jaccard": 1.0,
+      "support": 1,
+      "union_containers": 1
+    },
+    {
+      "a": "VG:DEVATA:ARTNI",
+      "a_containers": 1,
+      "b": "VG:DEVATA:BRAHMANASPATIH",
+      "b_containers": 8,
+      "cosine": 0.353553,
+      "example_containers": [
+        "VG:RV:SAK:M06:S075"
+      ],
+      "jaccard": 0.125,
+      "support": 1,
+      "union_containers": 8
+    },
+    {
+      "a": "VG:DEVATA:ARTNI",
+      "a_containers": 1,
+      "b": "VG:DEVATA:DHANUH",
+      "b_containers": 1,
+      "cosine": 1.0,
+      "example_containers": [
+        "VG:RV:SAK:M06:S075"
+      ],
+      "jaccard": 1.0,
+      "support": 1,
+      "union_containers": 1
+    },
+    {
+      "a": "VG:DEVATA:ARTNI",
+      "a_containers": 1,
+      "b": "VG:DEVATA:HASTAGHNAH",
+      "b_containers": 1,
+      "cosine": 1.0,
+      "example_containers": [
+        "VG:RV:SAK:M06:S075"
+      ],
+      "jaccard": 1.0,
+      "support": 1,
+      "union_containers": 1
+    },
+    {
+      "a": "VG:DEVATA:ARTNI",
+      "a_containers": 1,
+      "b": "VG:DEVATA:ISAVAH",
+      "b_containers": 1,
+      "cosine": 1.0,
+      "example_containers": [
+        "VG:RV:SAK:M06:S075"
+      ],
+      "jaccard": 1.0,
+      "support": 1,
+      "union_containers": 1
+    },
+    {
+      "a": "VG:DEVATA:ARTNI",
+      "a_containers": 1,
+      "b": "VG:DEVATA:ISUDHIH",
+      "b_containers": 1,
+      "cosine": 1.0,
+      "example_containers": [
+        "VG:RV:SAK:M06:S075"
+      ],
+      "jaccard": 1.0,
+      "support": 1,
+      "union_containers": 1
+    },
+    {
+      "a": "VG:DEVATA:ARTNI",
+      "a_containers": 1,
+      "b": "VG:DEVATA:JYA",
+      "b_containers": 1,
+      "cosine": 1.0,
+      "example_containers": [
+        "VG:RV:SAK:M06:S075"
+      ],
+      "jaccard": 1.0,
+      "support": 1,
+      "union_containers": 1
+    },
+    {
+      "a": "VG:DEVATA:ARTNI",
+      "a_containers": 1,
+      "b": "VG:DEVATA:PRATODAH",
+      "b_containers": 1,
+      "cosine": 1.0,
+      "example_containers": [
+        "VG:RV:SAK:M06:S075"
+      ],
+      "jaccard": 1.0,
+      "support": 1,
+      "union_containers": 1
+    },
+    {
+      "a": "VG:DEVATA:ARTNI",
+      "a_containers": 1,
+      "b": "VG:DEVATA:RATHAGOPAH",
+      "b_containers": 1,
+      "cosine": 1.0,
+      "example_containers": [
+        "VG:RV:SAK:M06:S075"
+      ],
+      "jaccard": 1.0,
+      "support": 1,
+      "union_containers": 1
+    },
+    {
+      "a": "VG:DEVATA:ARTNI",
+      "a_containers": 1,
+      "b": "VG:DEVATA:RATHAH",
+      "b_containers": 2,
+      "cosine": 0.707107,
+      "example_containers": [
+        "VG:RV:SAK:M06:S075"
+      ],
+      "jaccard": 0.5,
+      "support": 1,
+      "union_containers": 2
+    },
+    {
+      "a": "VG:DEVATA:ARTNI",
+      "a_containers": 1,
+      "b": "VG:DEVATA:SARATHIH-RASMAYAH",
+      "b_containers": 1,
+      "cosine": 1.0,
+      "example_containers": [
+        "VG:RV:SAK:M06:S075"
+      ],
+      "jaccard": 1.0,
+      "support": 1,
+      "union_containers": 1
+    },
+    {
+      "a": "VG:DEVATA:ARTNI",
+      "a_containers": 1,
+      "b": "VG:DEVATA:SOMAVARUNAU",
+      "b_containers": 1,
+      "cosine": 1.0,
+      "example_containers": [
+        "VG:RV:SAK:M06:S075"
+      ],
+      "jaccard": 1.0,
+      "support": 1,
+      "union_containers": 1
+    },
+    {
+      "a": "VG:DEVATA:ARTNI",
+      "a_containers": 1,
+      "b": "VG:DEVATA:VARMA",
+      "b_containers": 1,
+      "cosine": 1.0,
+      "example_containers": [
+        "VG:RV:SAK:M06:S075"
+      ],
+      "jaccard": 1.0,
+      "support": 1,
+      "union_containers": 1
+    },
+    {
+      "a": "VG:DEVATA:ASHVAAH",
+      "a_containers": 1,
+      "b": "VG:DEVATA:BRAHMA",
+      "b_containers": 1,
+      "cosine": 1.0,
+      "example_containers": [
+        "VG:RV:SAK:M06:S075"
+      ],
+      "jaccard": 1.0,
+      "support": 1,
+      "union_containers": 1
+    },
+    {
+      "a": "VG:DEVATA:ASHVAAH",
+      "a_containers": 1,
+      "b": "VG:DEVATA:BRAHMANAPITRSOMADYAVAPRTHIVIPUSANAH",
+      "b_containers": 1,
+      "cosine": 1.0,
+      "example_containers": [
+        "VG:RV:SAK:M06:S075"
+      ],
+      "jaccard": 1.0,
+      "support": 1,
+      "union_containers": 1
+    },
+    {
+      "a": "VG:DEVATA:ASHVAAH",
+      "a_containers": 1,
+      "b": "VG:DEVATA:BRAHMANASPATIH",
+      "b_containers": 8,
+      "cosine": 0.353553,
+      "example_containers": [
+        "VG:RV:SAK:M06:S075"
+      ],
+      "jaccard": 0.125,
+      "support": 1,
+      "union_containers": 8
+    },
+    {
+      "a": "VG:DEVATA:ASHVAAH",
+      "a_containers": 1,
+      "b": "VG:DEVATA:DHANUH",
+      "b_containers": 1,
+      "cosine": 1.0,
+      "example_containers": [
+        "VG:RV:SAK:M06:S075"
+      ],
+      "jaccard": 1.0,
+      "support": 1,
+      "union_containers": 1
+    },
+    {
+      "a": "VG:DEVATA:ASHVAAH",
+      "a_containers": 1,
+      "b": "VG:DEVATA:HASTAGHNAH",
+      "b_containers": 1,
+      "cosine": 1.0,
+      "example_containers": [
+        "VG:RV:SAK:M06:S075"
+      ],
+      "jaccard": 1.0,
+      "support": 1,
+      "union_containers": 1
+    },
+    {
+      "a": "VG:DEVATA:ASHVAAH",
+      "a_containers": 1,
+      "b": "VG:DEVATA:ISAVAH",
+      "b_containers": 1,
+      "cosine": 1.0,
+      "example_containers": [
+        "VG:RV:SAK:M06:S075"
+      ],
+      "jaccard": 1.0,
+      "support": 1,
+      "union_containers": 1
+    },
+    {
+      "a": "VG:DEVATA:ASHVAAH",
+      "a_containers": 1,
+      "b": "VG:DEVATA:ISUDHIH",
+      "b_containers": 1,
+      "cosine": 1.0,
+      "example_containers": [
+        "VG:RV:SAK:M06:S075"
+      ],
+      "jaccard": 1.0,
+      "support": 1,
+      "union_containers": 1
+    },
+    {
+      "a": "VG:DEVATA:ASHVAAH",
+      "a_containers": 1,
+      "b": "VG:DEVATA:JYA",
+      "b_containers": 1,
+      "cosine": 1.0,
+      "example_containers": [
+        "VG:RV:SAK:M06:S075"
+      ],
+      "jaccard": 1.0,
+      "support": 1,
+      "union_containers": 1
+    },
+    {
+      "a": "VG:DEVATA:ASHVAAH",
+      "a_containers": 1,
+      "b": "VG:DEVATA:PRATODAH",
+      "b_containers": 1,
+      "cosine": 1.0,
+      "example_containers": [
+        "VG:RV:SAK:M06:S075"
+      ],
+      "jaccard": 1.0,
+      "support": 1,
+      "union_containers": 1
+    },
+    {
+      "a": "VG:DEVATA:ASHVAAH",
+      "a_containers": 1,
+      "b": "VG:DEVATA:RATHAGOPAH",
+      "b_containers": 1,
+      "cosine": 1.0,
+      "example_containers": [
+        "VG:RV:SAK:M06:S075"
+      ],
+      "jaccard": 1.0,
+      "support": 1,
+      "union_containers": 1
+    },
+    {
+      "a": "VG:DEVATA:ASHVAAH",
+      "a_containers": 1,
+      "b": "VG:DEVATA:RATHAH",
+      "b_containers": 2,
+      "cosine": 0.707107,
+      "example_containers": [
+        "VG:RV:SAK:M06:S075"
+      ],
+      "jaccard": 0.5,
+      "support": 1,
+      "union_containers": 2
+    },
+    {
+      "a": "VG:DEVATA:ASHVAAH",
+      "a_containers": 1,
+      "b": "VG:DEVATA:SARATHIH-RASMAYAH",
+      "b_containers": 1,
+      "cosine": 1.0,
+      "example_containers": [
+        "VG:RV:SAK:M06:S075"
+      ],
+      "jaccard": 1.0,
+      "support": 1,
+      "union_containers": 1
+    },
+    {
+      "a": "VG:DEVATA:ASHVAAH",
+      "a_containers": 1,
+      "b": "VG:DEVATA:SOMAVARUNAU",
+      "b_containers": 1,
+      "cosine": 1.0,
+      "example_containers": [
+        "VG:RV:SAK:M06:S075"
+      ],
+      "jaccard": 1.0,
+      "support": 1,
+      "union_containers": 1
+    },
+    {
+      "a": "VG:DEVATA:ASHVAAH",
+      "a_containers": 1,
+      "b": "VG:DEVATA:VARMA",
+      "b_containers": 1,
+      "cosine": 1.0,
+      "example_containers": [
+        "VG:RV:SAK:M06:S075"
+      ],
+      "jaccard": 1.0,
+      "support": 1,
+      "union_containers": 1
+    },
+    {
+      "a": "VG:DEVATA:ASUNITIH",
+      "a_containers": 1,
+      "b": "VG:DEVATA:DYAVAPRTHIVYAU",
+      "b_containers": 11,
+      "cosine": 0.301511,
+      "example_containers": [
+        "VG:RV:SAK:M10:S059"
+      ],
+      "jaccard": 0.090909,
+      "support": 1,
+      "union_containers": 11
+    },
+    {
+      "a": "VG:DEVATA:ASUNITIH",
+      "a_containers": 1,
+      "b": "VG:DEVATA:NIRRTIH",
+      "b_containers": 1,
+      "cosine": 1.0,
+      "example_containers": [
+        "VG:RV:SAK:M10:S059"
+      ],
+      "jaccard": 1.0,
+      "support": 1,
+      "union_containers": 1
+    },
+    {
+      "a": "VG:DEVATA:ASVINAU",
+      "a_containers": 68,
+      "b": "VG:DEVATA:BRHASPATIH",
+      "b_containers": 13,
+      "cosine": 0.033634,
+      "example_containers": [
+        "VG:RV:SAK:M01:S139"
+      ],
+      "jaccard": 0.0125,
+      "support": 1,
+      "union_containers": 80
+    },
+    {
+      "a": "VG:DEVATA:ASVINAU",
+      "a_containers": 68,
+      "b": "VG:DEVATA:DEVYAH",
+      "b_containers": 1,
+      "cosine": 0.121268,
+      "example_containers": [
+        "VG:RV:SAK:M01:S022"
+      ],
+      "jaccard": 0.014706,
+      "support": 1,
+      "union_containers": 68
+    },
+    {
+      "a": "VG:DEVATA:ASVINAU",
+      "a_containers": 68,
+      "b": "VG:DEVATA:DRAVINODAH",
+      "b_containers": 1,
+      "cosine": 0.121268,
+      "example_containers": [
+        "VG:RV:SAK:M02:S037"
+      ],
+      "jaccard": 0.014706,
+      "support": 1,
+      "union_containers": 68
+    },
+    {
+      "a": "VG:DEVATA:ASVINAU",
+      "a_containers": 68,
+      "b": "VG:DEVATA:DYAVAPRTHIVYAU",
+      "b_containers": 11,
+      "cosine": 0.073127,
+      "example_containers": [
+        "VG:RV:SAK:M01:S022",
+        "VG:RV:SAK:M02:S041"
+      ],
+      "jaccard": 0.025974,
+      "support": 2,
+      "union_containers": 77
+    },
+    {
+      "a": "VG:DEVATA:ASVINAU",
+      "a_containers": 68,
+      "b": "VG:DEVATA:GAUH",
+      "b_containers": 1,
+      "cosine": 0.121268,
+      "example_containers": [
+        "VG:RV:SAK:M08:S101"
+      ],
+      "jaccard": 0.014706,
+      "support": 1,
+      "union_containers": 68
+    },
+    {
+      "a": "VG:DEVATA:ASVINAU",
+      "a_containers": 68,
+      "b": "VG:DEVATA:INDRAGNI",
+      "b_containers": 15,
+      "cosine": 0.031311,
+      "example_containers": [
+        "VG:RV:SAK:M01:S139"
+      ],
+      "jaccard": 0.012195,
+      "support": 1,
+      "union_containers": 82
+    },
+    {
+      "a": "VG:DEVATA:ASVINAU",
+      "a_containers": 68,
+      "b": "VG:DEVATA:INDRAH",
+      "b_containers": 273,
+      "cosine": 0.051376,
+      "example_containers": [
+        "VG:RV:SAK:M01:S003",
+        "VG:RV:SAK:M01:S015",
+        "VG:RV:SAK:M01:S030",
+        "VG:RV:SAK:M01:S139",
+        "VG:RV:SAK:M02:S041"
+      ],
+      "jaccard": 0.020958,
+      "support": 7,
+      "union_containers": 334
+    },
+    {
+      "a": "VG:DEVATA:ASVINAU",
+      "a_containers": 68,
+      "b": "VG:DEVATA:INDRANI-VARUNANI-AGNAYI",
+      "b_containers": 1,
+      "cosine": 0.121268,
+      "example_containers": [
+        "VG:RV:SAK:M01:S022"
+      ],
+      "jaccard": 0.014706,
+      "support": 1,
+      "union_containers": 68
+    },
+    {
+      "a": "VG:DEVATA:ASVINAU",
+      "a_containers": 68,
+      "b": "VG:DEVATA:INDRAVAYU",
+      "b_containers": 10,
+      "cosine": 0.038348,
+      "example_containers": [
+        "VG:RV:SAK:M02:S041"
+      ],
+      "jaccard": 0.012987,
+      "support": 1,
+      "union_containers": 77
+    },
+    {
+      "a": "VG:DEVATA:ASVINAU",
+      "a_containers": 68,
+      "b": "VG:DEVATA:MARUTAH",
+      "b_containers": 42,
+      "cosine": 0.037424,
+      "example_containers": [
+        "VG:RV:SAK:M01:S015",
+        "VG:RV:SAK:M01:S139"
+      ],
+      "jaccard": 0.018519,
+      "support": 2,
+      "union_containers": 108
+    },
+    {
+      "a": "VG:DEVATA:ASVINAU",
+      "a_containers": 68,
+      "b": "VG:DEVATA:MITRAVARUNAU",
+      "b_containers": 35,
+      "cosine": 0.081992,
+      "example_containers": [
+        "VG:RV:SAK:M01:S015",
+        "VG:RV:SAK:M01:S139",
+        "VG:RV:SAK:M02:S041",
+        "VG:RV:SAK:M08:S101"
+      ],
+      "jaccard": 0.040404,
+      "support": 4,
+      "union_containers": 99
+    },
+    {
+      "a": "VG:DEVATA:ASVINAU",
+      "a_containers": 68,
+      "b": "VG:DEVATA:PAVAMANAH",
+      "b_containers": 1,
+      "cosine": 0.121268,
+      "example_containers": [
+        "VG:RV:SAK:M08:S101"
+      ],
+      "jaccard": 0.014706,
+      "support": 1,
+      "union_containers": 68
+    },
+    {
+      "a": "VG:DEVATA:ASVINAU",
+      "a_containers": 68,
+      "b": "VG:DEVATA:PRTHIVI",
+      "b_containers": 2,
+      "cosine": 0.085749,
+      "example_containers": [
+        "VG:RV:SAK:M01:S022"
+      ],
+      "jaccard": 0.014493,
+      "support": 1,
+      "union_containers": 69
+    },
+    {
+      "a": "VG:DEVATA:ASVINAU",
+      "a_containers": 68,
+      "b": "VG:DEVATA:SARASVATI",
+      "b_containers": 7,
+      "cosine": 0.09167,
+      "example_containers": [
+        "VG:RV:SAK:M01:S003",
+        "VG:RV:SAK:M02:S041"
+      ],
+      "jaccard": 0.027397,
+      "support": 2,
+      "union_containers": 73
+    },
+    {
+      "a": "VG:DEVATA:ASVINAU",
+      "a_containers": 68,
+      "b": "VG:DEVATA:SAVITA",
+      "b_containers": 14,
+      "cosine": 0.03241,
+      "example_containers": [
+        "VG:RV:SAK:M01:S022"
+      ],
+      "jaccard": 0.012346,
+      "support": 1,
+      "union_containers": 81
+    },
+    {
+      "a": "VG:DEVATA:ASVINAU",
+      "a_containers": 68,
+      "b": "VG:DEVATA:SURYAH",
+      "b_containers": 14,
+      "cosine": 0.03241,
+      "example_containers": [
+        "VG:RV:SAK:M08:S101"
+      ],
+      "jaccard": 0.012346,
+      "support": 1,
+      "union_containers": 81
+    },
+    {
+      "a": "VG:DEVATA:ASVINAU",
+      "a_containers": 68,
+      "b": "VG:DEVATA:TVASTA",
+      "b_containers": 13,
+      "cosine": 0.033634,
+      "example_containers": [
+        "VG:RV:SAK:M01:S015"
+      ],
+      "jaccard": 0.0125,
+      "support": 1,
+      "union_containers": 80
+    },
+    {
+      "a": "VG:DEVATA:ASVINAU",
+      "a_containers": 68,
+      "b": "VG:DEVATA:USAH",
+      "b_containers": 23,
+      "cosine": 0.075858,
+      "example_containers": [
+        "VG:RV:SAK:M01:S030",
+        "VG:RV:SAK:M01:S092",
+        "VG:RV:SAK:M08:S101"
+      ],
+      "jaccard": 0.034091,
+      "support": 3,
+      "union_containers": 88
+    },
+    {
+      "a": "VG:DEVATA:ASVINAU",
+      "a_containers": 68,
+      "b": "VG:DEVATA:VARUNAH",
+      "b_containers": 13,
+      "cosine": 0.033634,
+      "example_containers": [
+        "VG:RV:SAK:M08:S042"
+      ],
+      "jaccard": 0.0125,
+      "support": 1,
+      "union_containers": 80
+    },
+    {
+      "a": "VG:DEVATA:ASVINAU",
+      "a_containers": 68,
+      "b": "VG:DEVATA:VAYUH",
+      "b_containers": 17,
+      "cosine": 0.088235,
+      "example_containers": [
+        "VG:RV:SAK:M02:S041",
+        "VG:RV:SAK:M08:S026",
+        "VG:RV:SAK:M08:S101"
+      ],
+      "jaccard": 0.036585,
+      "support": 3,
+      "union_containers": 82
+    },
+    {
+      "a": "VG:DEVATA:ASVINAU",
+      "a_containers": 68,
+      "b": "VG:DEVATA:VISNUH",
+      "b_containers": 6,
+      "cosine": 0.049507,
+      "example_containers": [
+        "VG:RV:SAK:M01:S022"
+      ],
+      "jaccard": 0.013699,
+      "support": 1,
+      "union_containers": 73
+    },
+    {
+      "a": "VG:DEVATA:ASVINAU",
+      "a_containers": 68,
+      "b": "VG:DEVATA:VISVEDEVAH",
+      "b_containers": 86,
+      "cosine": 0.03923,
+      "example_containers": [
+        "VG:RV:SAK:M01:S003",
+        "VG:RV:SAK:M01:S139",
+        "VG:RV:SAK:M02:S041"
+      ],
+      "jaccard": 0.019868,
+      "support": 3,
+      "union_containers": 151
+    },
+    {
+      "a": "VG:DEVATA:ATMA",
+      "a_containers": 4,
+      "b": "VG:DEVATA:INDRAVARUNAU",
+      "b_containers": 9,
+      "cosine": 0.166667,
+      "example_containers": [
+        "VG:RV:SAK:M04:S042"
+      ],
+      "jaccard": 0.083333,
+      "support": 1,
+      "union_containers": 12
+    },
+    {
+      "a": "VG:DEVATA:ATMA",
+      "a_containers": 4,
+      "b": "VG:DEVATA:SAVITA",
+      "b_containers": 14,
+      "cosine": 0.133631,
+      "example_containers": [
+        "VG:RV:SAK:M10:S139"
+      ],
+      "jaccard": 0.058824,
+      "support": 1,
+      "union_containers": 17
+    },
+    {
+      "a": "VG:DEVATA:BARHIH",
+      "a_containers": 9,
+      "b": "VG:DEVATA:DAIVYAU-HOTARAU",
+      "b_containers": 9,
+      "cosine": 0.888889,
+      "example_containers": [
+        "VG:RV:SAK:M01:S142",
+        "VG:RV:SAK:M01:S188",
+        "VG:RV:SAK:M02:S003",
+        "VG:RV:SAK:M05:S005",
+        "VG:RV:SAK:M07:S002"
+      ],
+      "jaccard": 0.8,
+      "support": 8,
+      "union_containers": 10
+    },
+    {
+      "a": "VG:DEVATA:BARHIH",
+      "a_containers": 9,
+      "b": "VG:DEVATA:DEVIRDVARAH",
+      "b_containers": 10,
+      "cosine": 0.948683,
+      "example_containers": [
+        "VG:RV:SAK:M01:S142",
+        "VG:RV:SAK:M01:S188",
+        "VG:RV:SAK:M02:S003",
+        "VG:RV:SAK:M03:S004",
+        "VG:RV:SAK:M05:S005"
+      ],
+      "jaccard": 0.9,
+      "support": 9,
+      "union_containers": 10
+    },
+    {
+      "a": "VG:DEVATA:BARHIH",
+      "a_containers": 9,
+      "b": "VG:DEVATA:DEVYAU-HOTARAU",
+      "b_containers": 1,
+      "cosine": 0.333333,
+      "example_containers": [
+        "VG:RV:SAK:M03:S004"
+      ],
+      "jaccard": 0.111111,
+      "support": 1,
+      "union_containers": 9
+    },
+    {
+      "a": "VG:DEVATA:BARHIH",
+      "a_containers": 9,
+      "b": "VG:DEVATA:INDRAH",
+      "b_containers": 273,
+      "cosine": 0.020174,
+      "example_containers": [
+        "VG:RV:SAK:M01:S142"
+      ],
+      "jaccard": 0.003559,
+      "support": 1,
+      "union_containers": 281
+    },
+    {
+      "a": "VG:DEVATA:BARHIH",
+      "a_containers": 9,
+      "b": "VG:DEVATA:SARASVATI-ILA-BHARATI",
+      "b_containers": 9,
+      "cosine": 1.0,
+      "example_containers": [
+        "VG:RV:SAK:M01:S142",
+        "VG:RV:SAK:M01:S188",
+        "VG:RV:SAK:M02:S003",
+        "VG:RV:SAK:M03:S004",
+        "VG:RV:SAK:M05:S005"
+      ],
+      "jaccard": 1.0,
+      "support": 9,
+      "union_containers": 9
+    },
+    {
+      "a": "VG:DEVATA:BARHIH",
+      "a_containers": 9,
+      "b": "VG:DEVATA:TVASTA",
+      "b_containers": 13,
+      "cosine": 0.83205,
+      "example_containers": [
+        "VG:RV:SAK:M01:S142",
+        "VG:RV:SAK:M01:S188",
+        "VG:RV:SAK:M02:S003",
+        "VG:RV:SAK:M03:S004",
+        "VG:RV:SAK:M05:S005"
+      ],
+      "jaccard": 0.692308,
+      "support": 9,
+      "union_containers": 13
+    },
+    {
+      "a": "VG:DEVATA:BARHIH",
+      "a_containers": 9,
+      "b": "VG:DEVATA:USASANAKTA",
+      "b_containers": 10,
+      "cosine": 0.948683,
+      "example_containers": [
+        "VG:RV:SAK:M01:S142",
+        "VG:RV:SAK:M01:S188",
+        "VG:RV:SAK:M02:S003",
+        "VG:RV:SAK:M03:S004",
+        "VG:RV:SAK:M05:S005"
+      ],
+      "jaccard": 0.9,
+      "support": 9,
+      "union_containers": 10
+    },
+    {
+      "a": "VG:DEVATA:BARHIH",
+      "a_containers": 9,
+      "b": "VG:DEVATA:VANASPATIH",
+      "b_containers": 10,
+      "cosine": 0.948683,
+      "example_containers": [
+        "VG:RV:SAK:M01:S142",
+        "VG:RV:SAK:M01:S188",
+        "VG:RV:SAK:M02:S003",
+        "VG:RV:SAK:M03:S004",
+        "VG:RV:SAK:M05:S005"
+      ],
+      "jaccard": 0.9,
+      "support": 9,
+      "union_containers": 10
+    },
+    {
+      "a": "VG:DEVATA:BRAHMA",
+      "a_containers": 1,
+      "b": "VG:DEVATA:BRAHMANAPITRSOMADYAVAPRTHIVIPUSANAH",
+      "b_containers": 1,
+      "cosine": 1.0,
+      "example_containers": [
+        "VG:RV:SAK:M06:S075"
+      ],
+      "jaccard": 1.0,
+      "support": 1,
+      "union_containers": 1
+    },
+    {
+      "a": "VG:DEVATA:BRAHMA",
+      "a_containers": 1,
+      "b": "VG:DEVATA:BRAHMANASPATIH",
+      "b_containers": 8,
+      "cosine": 0.353553,
+      "example_containers": [
+        "VG:RV:SAK:M06:S075"
+      ],
+      "jaccard": 0.125,
+      "support": 1,
+      "union_containers": 8
+    },
+    {
+      "a": "VG:DEVATA:BRAHMA",
+      "a_containers": 1,
+      "b": "VG:DEVATA:DHANUH",
+      "b_containers": 1,
+      "cosine": 1.0,
+      "example_containers": [
+        "VG:RV:SAK:M06:S075"
+      ],
+      "jaccard": 1.0,
+      "support": 1,
+      "union_containers": 1
+    },
+    {
+      "a": "VG:DEVATA:BRAHMA",
+      "a_containers": 1,
+      "b": "VG:DEVATA:HASTAGHNAH",
+      "b_containers": 1,
+      "cosine": 1.0,
+      "example_containers": [
+        "VG:RV:SAK:M06:S075"
+      ],
+      "jaccard": 1.0,
+      "support": 1,
+      "union_containers": 1
+    },
+    {
+      "a": "VG:DEVATA:BRAHMA",
+      "a_containers": 1,
+      "b": "VG:DEVATA:ISAVAH",
+      "b_containers": 1,
+      "cosine": 1.0,
+      "example_containers": [
+        "VG:RV:SAK:M06:S075"
+      ],
+      "jaccard": 1.0,
+      "support": 1,
+      "union_containers": 1
+    },
+    {
+      "a": "VG:DEVATA:BRAHMA",
+      "a_containers": 1,
+      "b": "VG:DEVATA:ISUDHIH",
+      "b_containers": 1,
+      "cosine": 1.0,
+      "example_containers": [
+        "VG:RV:SAK:M06:S075"
+      ],
+      "jaccard": 1.0,
+      "support": 1,
+      "union_containers": 1
+    },
+    {
+      "a": "VG:DEVATA:BRAHMA",
+      "a_containers": 1,
+      "b": "VG:DEVATA:JYA",
+      "b_containers": 1,
+      "cosine": 1.0,
+      "example_containers": [
+        "VG:RV:SAK:M06:S075"
+      ],
+      "jaccard": 1.0,
+      "support": 1,
+      "union_containers": 1
+    },
+    {
+      "a": "VG:DEVATA:BRAHMA",
+      "a_containers": 1,
+      "b": "VG:DEVATA:PRATODAH",
+      "b_containers": 1,
+      "cosine": 1.0,
+      "example_containers": [
+        "VG:RV:SAK:M06:S075"
+      ],
+      "jaccard": 1.0,
+      "support": 1,
+      "union_containers": 1
+    },
+    {
+      "a": "VG:DEVATA:BRAHMA",
+      "a_containers": 1,
+      "b": "VG:DEVATA:RATHAGOPAH",
+      "b_containers": 1,
+      "cosine": 1.0,
+      "example_containers": [
+        "VG:RV:SAK:M06:S075"
+      ],
+      "jaccard": 1.0,
+      "support": 1,
+      "union_containers": 1
+    },
+    {
+      "a": "VG:DEVATA:BRAHMA",
+      "a_containers": 1,
+      "b": "VG:DEVATA:RATHAH",
+      "b_containers": 2,
+      "cosine": 0.707107,
+      "example_containers": [
+        "VG:RV:SAK:M06:S075"
+      ],
+      "jaccard": 0.5,
+      "support": 1,
+      "union_containers": 2
+    },
+    {
+      "a": "VG:DEVATA:BRAHMA",
+      "a_containers": 1,
+      "b": "VG:DEVATA:SARATHIH-RASMAYAH",
+      "b_containers": 1,
+      "cosine": 1.0,
+      "example_containers": [
+        "VG:RV:SAK:M06:S075"
+      ],
+      "jaccard": 1.0,
+      "support": 1,
+      "union_containers": 1
+    },
+    {
+      "a": "VG:DEVATA:BRAHMA",
+      "a_containers": 1,
+      "b": "VG:DEVATA:SOMAVARUNAU",
+      "b_containers": 1,
+      "cosine": 1.0,
+      "example_containers": [
+        "VG:RV:SAK:M06:S075"
+      ],
+      "jaccard": 1.0,
+      "support": 1,
+      "union_containers": 1
+    },
+    {
+      "a": "VG:DEVATA:BRAHMA",
+      "a_containers": 1,
+      "b": "VG:DEVATA:VARMA",
+      "b_containers": 1,
+      "cosine": 1.0,
+      "example_containers": [
+        "VG:RV:SAK:M06:S075"
+      ],
+      "jaccard": 1.0,
+      "support": 1,
+      "union_containers": 1
+    },
+    {
+      "a": "VG:DEVATA:BRAHMANAPITRSOMADYAVAPRTHIVIPUSANAH",
+      "a_containers": 1,
+      "b": "VG:DEVATA:BRAHMANASPATIH",
+      "b_containers": 8,
+      "cosine": 0.353553,
+      "example_containers": [
+        "VG:RV:SAK:M06:S075"
+      ],
+      "jaccard": 0.125,
+      "support": 1,
+      "union_containers": 8
+    },
+    {
+      "a": "VG:DEVATA:BRAHMANAPITRSOMADYAVAPRTHIVIPUSANAH",
+      "a_containers": 1,
+      "b": "VG:DEVATA:DHANUH",
+      "b_containers": 1,
+      "cosine": 1.0,
+      "example_containers": [
+        "VG:RV:SAK:M06:S075"
+      ],
+      "jaccard": 1.0,
+      "support": 1,
+      "union_containers": 1
+    },
+    {
+      "a": "VG:DEVATA:BRAHMANAPITRSOMADYAVAPRTHIVIPUSANAH",
+      "a_containers": 1,
+      "b": "VG:DEVATA:HASTAGHNAH",
+      "b_containers": 1,
+      "cosine": 1.0,
+      "example_containers": [
+        "VG:RV:SAK:M06:S075"
+      ],
+      "jaccard": 1.0,
+      "support": 1,
+      "union_containers": 1
+    },
+    {
+      "a": "VG:DEVATA:BRAHMANAPITRSOMADYAVAPRTHIVIPUSANAH",
+      "a_containers": 1,
+      "b": "VG:DEVATA:ISAVAH",
+      "b_containers": 1,
+      "cosine": 1.0,
+      "example_containers": [
+        "VG:RV:SAK:M06:S075"
+      ],
+      "jaccard": 1.0,
+      "support": 1,
+      "union_containers": 1
+    },
+    {
+      "a": "VG:DEVATA:BRAHMANAPITRSOMADYAVAPRTHIVIPUSANAH",
+      "a_containers": 1,
+      "b": "VG:DEVATA:ISUDHIH",
+      "b_containers": 1,
+      "cosine": 1.0,
+      "example_containers": [
+        "VG:RV:SAK:M06:S075"
+      ],
+      "jaccard": 1.0,
+      "support": 1,
+      "union_containers": 1
+    },
+    {
+      "a": "VG:DEVATA:BRAHMANAPITRSOMADYAVAPRTHIVIPUSANAH",
+      "a_containers": 1,
+      "b": "VG:DEVATA:JYA",
+      "b_containers": 1,
+      "cosine": 1.0,
+      "example_containers": [
+        "VG:RV:SAK:M06:S075"
+      ],
+      "jaccard": 1.0,
+      "support": 1,
+      "union_containers": 1
+    },
+    {
+      "a": "VG:DEVATA:BRAHMANAPITRSOMADYAVAPRTHIVIPUSANAH",
+      "a_containers": 1,
+      "b": "VG:DEVATA:PRATODAH",
+      "b_containers": 1,
+      "cosine": 1.0,
+      "example_containers": [
+        "VG:RV:SAK:M06:S075"
+      ],
+      "jaccard": 1.0,
+      "support": 1,
+      "union_containers": 1
+    },
+    {
+      "a": "VG:DEVATA:BRAHMANAPITRSOMADYAVAPRTHIVIPUSANAH",
+      "a_containers": 1,
+      "b": "VG:DEVATA:RATHAGOPAH",
+      "b_containers": 1,
+      "cosine": 1.0,
+      "example_containers": [
+        "VG:RV:SAK:M06:S075"
+      ],
+      "jaccard": 1.0,
+      "support": 1,
+      "union_containers": 1
+    },
+    {
+      "a": "VG:DEVATA:BRAHMANAPITRSOMADYAVAPRTHIVIPUSANAH",
+      "a_containers": 1,
+      "b": "VG:DEVATA:RATHAH",
+      "b_containers": 2,
+      "cosine": 0.707107,
+      "example_containers": [
+        "VG:RV:SAK:M06:S075"
+      ],
+      "jaccard": 0.5,
+      "support": 1,
+      "union_containers": 2
+    },
+    {
+      "a": "VG:DEVATA:BRAHMANAPITRSOMADYAVAPRTHIVIPUSANAH",
+      "a_containers": 1,
+      "b": "VG:DEVATA:SARATHIH-RASMAYAH",
+      "b_containers": 1,
+      "cosine": 1.0,
+      "example_containers": [
+        "VG:RV:SAK:M06:S075"
+      ],
+      "jaccard": 1.0,
+      "support": 1,
+      "union_containers": 1
+    },
+    {
+      "a": "VG:DEVATA:BRAHMANAPITRSOMADYAVAPRTHIVIPUSANAH",
+      "a_containers": 1,
+      "b": "VG:DEVATA:SOMAVARUNAU",
+      "b_containers": 1,
+      "cosine": 1.0,
+      "example_containers": [
+        "VG:RV:SAK:M06:S075"
+      ],
+      "jaccard": 1.0,
+      "support": 1,
+      "union_containers": 1
+    },
+    {
+      "a": "VG:DEVATA:BRAHMANAPITRSOMADYAVAPRTHIVIPUSANAH",
+      "a_containers": 1,
+      "b": "VG:DEVATA:VARMA",
+      "b_containers": 1,
+      "cosine": 1.0,
+      "example_containers": [
+        "VG:RV:SAK:M06:S075"
+      ],
+      "jaccard": 1.0,
+      "support": 1,
+      "union_containers": 1
+    },
+    {
+      "a": "VG:DEVATA:BRAHMANASPATIH",
+      "a_containers": 8,
+      "b": "VG:DEVATA:BRHASPATIH",
+      "b_containers": 13,
+      "cosine": 0.196116,
+      "example_containers": [
+        "VG:RV:SAK:M02:S023",
+        "VG:RV:SAK:M02:S024"
+      ],
+      "jaccard": 0.105263,
+      "support": 2,
+      "union_containers": 19
+    },
+    {
+      "a": "VG:DEVATA:BRAHMANASPATIH",
+      "a_containers": 8,
+      "b": "VG:DEVATA:DHANUH",
+      "b_containers": 1,
+      "cosine": 0.353553,
+      "example_containers": [
+        "VG:RV:SAK:M06:S075"
+      ],
+      "jaccard": 0.125,
+      "support": 1,
+      "union_containers": 8
+    },
+    {
+      "a": "VG:DEVATA:BRAHMANASPATIH",
+      "a_containers": 8,
+      "b": "VG:DEVATA:HASTAGHNAH",
+      "b_containers": 1,
+      "cosine": 0.353553,
+      "example_containers": [
+        "VG:RV:SAK:M06:S075"
+      ],
+      "jaccard": 0.125,
+      "support": 1,
+      "union_containers": 8
+    },
+    {
+      "a": "VG:DEVATA:BRAHMANASPATIH",
+      "a_containers": 8,
+      "b": "VG:DEVATA:INDRABRAHMANASPATI",
+      "b_containers": 2,
+      "cosine": 0.25,
+      "example_containers": [
+        "VG:RV:SAK:M02:S024"
+      ],
+      "jaccard": 0.111111,
+      "support": 1,
+      "union_containers": 9
+    },
+    {
+      "a": "VG:DEVATA:BRAHMANASPATIH",
+      "a_containers": 8,
+      "b": "VG:DEVATA:ISAVAH",
+      "b_containers": 1,
+      "cosine": 0.353553,
+      "example_containers": [
+        "VG:RV:SAK:M06:S075"
+      ],
+      "jaccard": 0.125,
+      "support": 1,
+      "union_containers": 8
+    },
+    {
+      "a": "VG:DEVATA:BRAHMANASPATIH",
+      "a_containers": 8,
+      "b": "VG:DEVATA:ISUDHIH",
+      "b_containers": 1,
+      "cosine": 0.353553,
+      "example_containers": [
+        "VG:RV:SAK:M06:S075"
+      ],
+      "jaccard": 0.125,
+      "support": 1,
+      "union_containers": 8
+    },
+    {
+      "a": "VG:DEVATA:BRAHMANASPATIH",
+      "a_containers": 8,
+      "b": "VG:DEVATA:JYA",
+      "b_containers": 1,
+      "cosine": 0.353553,
+      "example_containers": [
+        "VG:RV:SAK:M06:S075"
+      ],
+      "jaccard": 0.125,
+      "support": 1,
+      "union_containers": 8
+    },
+    {
+      "a": "VG:DEVATA:BRAHMANASPATIH",
+      "a_containers": 8,
+      "b": "VG:DEVATA:PRATODAH",
+      "b_containers": 1,
+      "cosine": 0.353553,
+      "example_containers": [
+        "VG:RV:SAK:M06:S075"
+      ],
+      "jaccard": 0.125,
+      "support": 1,
+      "union_containers": 8
+    },
+    {
+      "a": "VG:DEVATA:BRAHMANASPATIH",
+      "a_containers": 8,
+      "b": "VG:DEVATA:RATHAGOPAH",
+      "b_containers": 1,
+      "cosine": 0.353553,
+      "example_containers": [
+        "VG:RV:SAK:M06:S075"
+      ],
+      "jaccard": 0.125,
+      "support": 1,
+      "union_containers": 8
+    },
+    {
+      "a": "VG:DEVATA:BRAHMANASPATIH",
+      "a_containers": 8,
+      "b": "VG:DEVATA:RATHAH",
+      "b_containers": 2,
+      "cosine": 0.25,
+      "example_containers": [
+        "VG:RV:SAK:M06:S075"
+      ],
+      "jaccard": 0.111111,
+      "support": 1,
+      "union_containers": 9
+    },
+    {
+      "a": "VG:DEVATA:BRAHMANASPATIH",
+      "a_containers": 8,
+      "b": "VG:DEVATA:SARATHIH-RASMAYAH",
+      "b_containers": 1,
+      "cosine": 0.353553,
+      "example_containers": [
+        "VG:RV:SAK:M06:S075"
+      ],
+      "jaccard": 0.125,
+      "support": 1,
+      "union_containers": 8
+    },
+    {
+      "a": "VG:DEVATA:BRAHMANASPATIH",
+      "a_containers": 8,
+      "b": "VG:DEVATA:SOMAVARUNAU",
+      "b_containers": 1,
+      "cosine": 0.353553,
+      "example_containers": [
+        "VG:RV:SAK:M06:S075"
+      ],
+      "jaccard": 0.125,
+      "support": 1,
+      "union_containers": 8
+    },
+    {
+      "a": "VG:DEVATA:BRAHMANASPATIH",
+      "a_containers": 8,
+      "b": "VG:DEVATA:VARMA",
+      "b_containers": 1,
+      "cosine": 0.353553,
+      "example_containers": [
+        "VG:RV:SAK:M06:S075"
+      ],
+      "jaccard": 0.125,
+      "support": 1,
+      "union_containers": 8
+    },
+    {
+      "a": "VG:DEVATA:BRAHMANASPATIH",
+      "a_containers": 8,
+      "b": "VG:DEVATA:VISVEDEVAH",
+      "b_containers": 86,
+      "cosine": 0.038125,
+      "example_containers": [
+        "VG:RV:SAK:M10:S155"
+      ],
+      "jaccard": 0.010753,
+      "support": 1,
+      "union_containers": 93
+    },
+    {
+      "a": "VG:DEVATA:BRHASPATIH",
+      "a_containers": 13,
+      "b": "VG:DEVATA:INDRABRAHMANASPATI",
+      "b_containers": 2,
+      "cosine": 0.392232,
+      "example_containers": [
+        "VG:RV:SAK:M02:S024",
+        "VG:RV:SAK:M07:S097"
+      ],
+      "jaccard": 0.153846,
+      "support": 2,
+      "union_containers": 13
+    },
+    {
+      "a": "VG:DEVATA:BRHASPATIH",
+      "a_containers": 13,
+      "b": "VG:DEVATA:INDRABRHASPATI",
+      "b_containers": 5,
+      "cosine": 0.248069,
+      "example_containers": [
+        "VG:RV:SAK:M04:S050",
+        "VG:RV:SAK:M07:S097"
+      ],
+      "jaccard": 0.125,
+      "support": 2,
+      "union_containers": 16
+    },
+    {
+      "a": "VG:DEVATA:BRHASPATIH",
+      "a_containers": 13,
+      "b": "VG:DEVATA:INDRAGNI",
+      "b_containers": 15,
+      "cosine": 0.071611,
+      "example_containers": [
+        "VG:RV:SAK:M01:S139"
+      ],
+      "jaccard": 0.037037,
+      "support": 1,
+      "union_containers": 27
+    },
+    {
+      "a": "VG:DEVATA:BRHASPATIH",
+      "a_containers": 13,
+      "b": "VG:DEVATA:INDRAH",
+      "b_containers": 273,
+      "cosine": 0.067144,
+      "example_containers": [
+        "VG:RV:SAK:M01:S139",
+        "VG:RV:SAK:M02:S030",
+        "VG:RV:SAK:M07:S097",
+        "VG:RV:SAK:M10:S103"
+      ],
+      "jaccard": 0.014184,
+      "support": 4,
+      "union_containers": 282
+    },
+    {
+      "a": "VG:DEVATA:BRHASPATIH",
+      "a_containers": 13,
+      "b": "VG:DEVATA:INDRASOMAU",
+      "b_containers": 4,
+      "cosine": 0.138675,
+      "example_containers": [
+        "VG:RV:SAK:M02:S030"
+      ],
+      "jaccard": 0.0625,
+      "support": 1,
+      "union_containers": 16
+    },
+    {
+      "a": "VG:DEVATA:BRHASPATIH",
+      "a_containers": 13,
+      "b": "VG:DEVATA:INDRAVARUNAU",
+      "b_containers": 9,
+      "cosine": 0.09245,
+      "example_containers": [
+        "VG:RV:SAK:M03:S062"
+      ],
+      "jaccard": 0.047619,
+      "support": 1,
+      "union_containers": 21
+    },
+    {
+      "a": "VG:DEVATA:BRHASPATIH",
+      "a_containers": 13,
+      "b": "VG:DEVATA:MARUTAH",
+      "b_containers": 42,
+      "cosine": 0.085592,
+      "example_containers": [
+        "VG:RV:SAK:M01:S139",
+        "VG:RV:SAK:M02:S030"
+      ],
+      "jaccard": 0.037736,
+      "support": 2,
+      "union_containers": 53
+    },
+    {
+      "a": "VG:DEVATA:BRHASPATIH",
+      "a_containers": 13,
+      "b": "VG:DEVATA:MITRAVARUNAU",
+      "b_containers": 35,
+      "cosine": 0.093761,
+      "example_containers": [
+        "VG:RV:SAK:M01:S139",
+        "VG:RV:SAK:M03:S062"
+      ],
+      "jaccard": 0.043478,
+      "support": 2,
+      "union_containers": 46
+    },
+    {
+      "a": "VG:DEVATA:BRHASPATIH",
+      "a_containers": 13,
+      "b": "VG:DEVATA:PUSA",
+      "b_containers": 13,
+      "cosine": 0.076923,
+      "example_containers": [
+        "VG:RV:SAK:M03:S062"
+      ],
+      "jaccard": 0.04,
+      "support": 1,
+      "union_containers": 25
+    },
+    {
+      "a": "VG:DEVATA:BRHASPATIH",
+      "a_containers": 13,
+      "b": "VG:DEVATA:SAVITA",
+      "b_containers": 14,
+      "cosine": 0.074125,
+      "example_containers": [
+        "VG:RV:SAK:M03:S062"
+      ],
+      "jaccard": 0.038462,
+      "support": 1,
+      "union_containers": 26
+    },
+    {
+      "a": "VG:DEVATA:BRHASPATIH",
+      "a_containers": 13,
+      "b": "VG:DEVATA:SOMAH",
+      "b_containers": 12,
+      "cosine": 0.080064,
+      "example_containers": [
+        "VG:RV:SAK:M03:S062"
+      ],
+      "jaccard": 0.041667,
+      "support": 1,
+      "union_containers": 24
+    },
+    {
+      "a": "VG:DEVATA:BRHASPATIH",
+      "a_containers": 13,
+      "b": "VG:DEVATA:VISVEDEVAH",
+      "b_containers": 86,
+      "cosine": 0.029907,
+      "example_containers": [
+        "VG:RV:SAK:M01:S139"
+      ],
+      "jaccard": 0.010204,
+      "support": 1,
+      "union_containers": 98
+    },
+    {
+      "a": "VG:DEVATA:CANDRAMAH",
+      "a_containers": 1,
+      "b": "VG:DEVATA:DEVAH",
+      "b_containers": 7,
+      "cosine": 0.377964,
+      "example_containers": [
+        "VG:RV:SAK:M10:S085"
+      ],
+      "jaccard": 0.142857,
+      "support": 1,
+      "union_containers": 7
+    },
+    {
+      "a": "VG:DEVATA:CANDRAMAH",
+      "a_containers": 1,
+      "b": "VG:DEVATA:SAVITRI-SURYA",
+      "b_containers": 1,
+      "cosine": 1.0,
+      "example_containers": [
+        "VG:RV:SAK:M10:S085"
+      ],
+      "jaccard": 1.0,
+      "support": 1,
+      "union_containers": 1
+    },
+    {
+      "a": "VG:DEVATA:CANDRAMAH",
+      "a_containers": 1,
+      "b": "VG:DEVATA:SOMAH",
+      "b_containers": 12,
+      "cosine": 0.288675,
+      "example_containers": [
+        "VG:RV:SAK:M10:S085"
+      ],
+      "jaccard": 0.083333,
+      "support": 1,
+      "union_containers": 12
+    },
+    {
+      "a": "VG:DEVATA:CANDRAMAH",
+      "a_containers": 1,
+      "b": "VG:DEVATA:SOMARKAU",
+      "b_containers": 1,
+      "cosine": 1.0,
+      "example_containers": [
+        "VG:RV:SAK:M10:S085"
+      ],
+      "jaccard": 1.0,
+      "support": 1,
+      "union_containers": 1
+    },
+    {
+      "a": "VG:DEVATA:DADHIKRA",
+      "a_containers": 1,
+      "b": "VG:DEVATA:VISVEDEVAH",
+      "b_containers": 86,
+      "cosine": 0.107833,
+      "example_containers": [
+        "VG:RV:SAK:M07:S044"
+      ],
+      "jaccard": 0.011628,
+      "support": 1,
+      "union_containers": 86
+    },
+    {
+      "a": "VG:DEVATA:DADHIKRAH",
+      "a_containers": 3,
+      "b": "VG:DEVATA:DYAVAPRTHIVYAU",
+      "b_containers": 11,
+      "cosine": 0.174078,
+      "example_containers": [
+        "VG:RV:SAK:M04:S038"
+      ],
+      "jaccard": 0.076923,
+      "support": 1,
+      "union_containers": 13
+    },
+    {
+      "a": "VG:DEVATA:DADHIKRAH",
+      "a_containers": 3,
+      "b": "VG:DEVATA:SURYAH",
+      "b_containers": 14,
+      "cosine": 0.154303,
+      "example_containers": [
+        "VG:RV:SAK:M04:S040"
+      ],
+      "jaccard": 0.0625,
+      "support": 1,
+      "union_containers": 16
+    },
+    {
+      "a": "VG:DEVATA:DAIVYAU-HOTARAU",
+      "a_containers": 9,
+      "b": "VG:DEVATA:DEVIRDVARAH",
+      "b_containers": 10,
+      "cosine": 0.948683,
+      "example_containers": [
+        "VG:RV:SAK:M01:S013",
+        "VG:RV:SAK:M01:S142",
+        "VG:RV:SAK:M01:S188",
+        "VG:RV:SAK:M02:S003",
+        "VG:RV:SAK:M05:S005"
+      ],
+      "jaccard": 0.9,
+      "support": 9,
+      "union_containers": 10
+    },
+    {
+      "a": "VG:DEVATA:DAIVYAU-HOTARAU",
+      "a_containers": 9,
+      "b": "VG:DEVATA:ILA-SARASVATI-MAHI",
+      "b_containers": 1,
+      "cosine": 0.333333,
+      "example_containers": [
+        "VG:RV:SAK:M01:S013"
+      ],
+      "jaccard": 0.111111,
+      "support": 1,
+      "union_containers": 9
+    },
+    {
+      "a": "VG:DEVATA:DAIVYAU-HOTARAU",
+      "a_containers": 9,
+      "b": "VG:DEVATA:INDRAH",
+      "b_containers": 273,
+      "cosine": 0.020174,
+      "example_containers": [
+        "VG:RV:SAK:M01:S142"
+      ],
+      "jaccard": 0.003559,
+      "support": 1,
+      "union_containers": 281
+    },
+    {
+      "a": "VG:DEVATA:DAIVYAU-HOTARAU",
+      "a_containers": 9,
+      "b": "VG:DEVATA:SARASVATI-ILA-BHARATI",
+      "b_containers": 9,
+      "cosine": 0.888889,
+      "example_containers": [
+        "VG:RV:SAK:M01:S142",
+        "VG:RV:SAK:M01:S188",
+        "VG:RV:SAK:M02:S003",
+        "VG:RV:SAK:M05:S005",
+        "VG:RV:SAK:M07:S002"
+      ],
+      "jaccard": 0.8,
+      "support": 8,
+      "union_containers": 10
+    },
+    {
+      "a": "VG:DEVATA:DAIVYAU-HOTARAU",
+      "a_containers": 9,
+      "b": "VG:DEVATA:TVASTA",
+      "b_containers": 13,
+      "cosine": 0.83205,
+      "example_containers": [
+        "VG:RV:SAK:M01:S013",
+        "VG:RV:SAK:M01:S142",
+        "VG:RV:SAK:M01:S188",
+        "VG:RV:SAK:M02:S003",
+        "VG:RV:SAK:M05:S005"
+      ],
+      "jaccard": 0.692308,
+      "support": 9,
+      "union_containers": 13
+    },
+    {
+      "a": "VG:DEVATA:DAIVYAU-HOTARAU",
+      "a_containers": 9,
+      "b": "VG:DEVATA:USASANAKTA",
+      "b_containers": 10,
+      "cosine": 0.948683,
+      "example_containers": [
+        "VG:RV:SAK:M01:S013",
+        "VG:RV:SAK:M01:S142",
+        "VG:RV:SAK:M01:S188",
+        "VG:RV:SAK:M02:S003",
+        "VG:RV:SAK:M05:S005"
+      ],
+      "jaccard": 0.9,
+      "support": 9,
+      "union_containers": 10
+    },
+    {
+      "a": "VG:DEVATA:DAIVYAU-HOTARAU",
+      "a_containers": 9,
+      "b": "VG:DEVATA:VANASPATIH",
+      "b_containers": 10,
+      "cosine": 0.948683,
+      "example_containers": [
+        "VG:RV:SAK:M01:S013",
+        "VG:RV:SAK:M01:S142",
+        "VG:RV:SAK:M01:S188",
+        "VG:RV:SAK:M02:S003",
+        "VG:RV:SAK:M05:S005"
+      ],
+      "jaccard": 0.9,
+      "support": 9,
+      "union_containers": 10
+    },
+    {
+      "a": "VG:DEVATA:DAMPATI",
+      "a_containers": 1,
+      "b": "VG:DEVATA:YAJNAYAJAMANAU",
+      "b_containers": 1,
+      "cosine": 1.0,
+      "example_containers": [
+        "VG:RV:SAK:M08:S031"
+      ],
+      "jaccard": 1.0,
+      "support": 1,
+      "union_containers": 1
+    },
+    {
+      "a": "VG:DEVATA:DEVAH",
+      "a_containers": 7,
+      "b": "VG:DEVATA:GRAVANAH",
+      "b_containers": 4,
+      "cosine": 0.188982,
+      "example_containers": [
+        "VG:RV:SAK:M07:S104"
+      ],
+      "jaccard": 0.1,
+      "support": 1,
+      "union_containers": 10
+    },
+    {
+      "a": "VG:DEVATA:DEVAH",
+      "a_containers": 7,
+      "b": "VG:DEVATA:INDRAH",
+      "b_containers": 273,
+      "cosine": 0.022875,
+      "example_containers": [
+        "VG:RV:SAK:M07:S104"
+      ],
+      "jaccard": 0.003584,
+      "support": 1,
+      "union_containers": 279
+    },
+    {
+      "a": "VG:DEVATA:DEVAH",
+      "a_containers": 7,
+      "b": "VG:DEVATA:INDRASOMAU",
+      "b_containers": 4,
+      "cosine": 0.188982,
+      "example_containers": [
+        "VG:RV:SAK:M07:S104"
+      ],
+      "jaccard": 0.1,
+      "support": 1,
+      "union_containers": 10
+    },
+    {
+      "a": "VG:DEVATA:DEVAH",
+      "a_containers": 7,
+      "b": "VG:DEVATA:MARUTAH",
+      "b_containers": 42,
+      "cosine": 0.058321,
+      "example_containers": [
+        "VG:RV:SAK:M07:S104"
+      ],
+      "jaccard": 0.020833,
+      "support": 1,
+      "union_containers": 48
+    },
+    {
+      "a": "VG:DEVATA:DEVAH",
+      "a_containers": 7,
+      "b": "VG:DEVATA:PRTHIVYANTARIKSE",
+      "b_containers": 1,
+      "cosine": 0.377964,
+      "example_containers": [
+        "VG:RV:SAK:M07:S104"
+      ],
+      "jaccard": 0.142857,
+      "support": 1,
+      "union_containers": 7
+    },
+    {
+      "a": "VG:DEVATA:DEVAH",
+      "a_containers": 7,
+      "b": "VG:DEVATA:SAVITRI-SURYA",
+      "b_containers": 1,
+      "cosine": 0.377964,
+      "example_containers": [
+        "VG:RV:SAK:M10:S085"
+      ],
+      "jaccard": 0.142857,
+      "support": 1,
+      "union_containers": 7
+    },
+    {
+      "a": "VG:DEVATA:DEVAH",
+      "a_containers": 7,
+      "b": "VG:DEVATA:SOMAH",
+      "b_containers": 12,
+      "cosine": 0.218218,
+      "example_containers": [
+        "VG:RV:SAK:M07:S104",
+        "VG:RV:SAK:M10:S085"
+      ],
+      "jaccard": 0.117647,
+      "support": 2,
+      "union_containers": 17
+    },
+    {
+      "a": "VG:DEVATA:DEVAH",
+      "a_containers": 7,
+      "b": "VG:DEVATA:SOMARKAU",
+      "b_containers": 1,
+      "cosine": 0.377964,
+      "example_containers": [
+        "VG:RV:SAK:M10:S085"
+      ],
+      "jaccard": 0.142857,
+      "support": 1,
+      "union_containers": 7
+    },
+    {
+      "a": "VG:DEVATA:DEVAPATNYAH",
+      "a_containers": 1,
+      "b": "VG:DEVATA:VISVEDEVAH",
+      "b_containers": 86,
+      "cosine": 0.107833,
+      "example_containers": [
+        "VG:RV:SAK:M05:S046"
+      ],
+      "jaccard": 0.011628,
+      "support": 1,
+      "union_containers": 86
+    },
+    {
+      "a": "VG:DEVATA:DEVIRDVARAH",
+      "a_containers": 10,
+      "b": "VG:DEVATA:DEVYAU-HOTARAU",
+      "b_containers": 1,
+      "cosine": 0.316228,
+      "example_containers": [
+        "VG:RV:SAK:M03:S004"
+      ],
+      "jaccard": 0.1,
+      "support": 1,
+      "union_containers": 10
+    },
+    {
+      "a": "VG:DEVATA:DEVIRDVARAH",
+      "a_containers": 10,
+      "b": "VG:DEVATA:ILA-SARASVATI-MAHI",
+      "b_containers": 1,
+      "cosine": 0.316228,
+      "example_containers": [
+        "VG:RV:SAK:M01:S013"
+      ],
+      "jaccard": 0.1,
+      "support": 1,
+      "union_containers": 10
+    },
+    {
+      "a": "VG:DEVATA:DEVIRDVARAH",
+      "a_containers": 10,
+      "b": "VG:DEVATA:INDRAH",
+      "b_containers": 273,
+      "cosine": 0.019139,
+      "example_containers": [
+        "VG:RV:SAK:M01:S142"
+      ],
+      "jaccard": 0.003546,
+      "support": 1,
+      "union_containers": 282
+    },
+    {
+      "a": "VG:DEVATA:DEVIRDVARAH",
+      "a_containers": 10,
+      "b": "VG:DEVATA:SARASVATI-ILA-BHARATI",
+      "b_containers": 9,
+      "cosine": 0.948683,
+      "example_containers": [
+        "VG:RV:SAK:M01:S142",
+        "VG:RV:SAK:M01:S188",
+        "VG:RV:SAK:M02:S003",
+        "VG:RV:SAK:M03:S004",
+        "VG:RV:SAK:M05:S005"
+      ],
+      "jaccard": 0.9,
+      "support": 9,
+      "union_containers": 10
+    },
+    {
+      "a": "VG:DEVATA:DEVIRDVARAH",
+      "a_containers": 10,
+      "b": "VG:DEVATA:TVASTA",
+      "b_containers": 13,
+      "cosine": 0.877058,
+      "example_containers": [
+        "VG:RV:SAK:M01:S013",
+        "VG:RV:SAK:M01:S142",
+        "VG:RV:SAK:M01:S188",
+        "VG:RV:SAK:M02:S003",
+        "VG:RV:SAK:M03:S004"
+      ],
+      "jaccard": 0.769231,
+      "support": 10,
+      "union_containers": 13
+    },
+    {
+      "a": "VG:DEVATA:DEVIRDVARAH",
+      "a_containers": 10,
+      "b": "VG:DEVATA:USASANAKTA",
+      "b_containers": 10,
+      "cosine": 1.0,
+      "example_containers": [
+        "VG:RV:SAK:M01:S013",
+        "VG:RV:SAK:M01:S142",
+        "VG:RV:SAK:M01:S188",
+        "VG:RV:SAK:M02:S003",
+        "VG:RV:SAK:M03:S004"
+      ],
+      "jaccard": 1.0,
+      "support": 10,
+      "union_containers": 10
+    },
+    {
+      "a": "VG:DEVATA:DEVIRDVARAH",
+      "a_containers": 10,
+      "b": "VG:DEVATA:VANASPATIH",
+      "b_containers": 10,
+      "cosine": 1.0,
+      "example_containers": [
+        "VG:RV:SAK:M01:S013",
+        "VG:RV:SAK:M01:S142",
+        "VG:RV:SAK:M01:S188",
+        "VG:RV:SAK:M02:S003",
+        "VG:RV:SAK:M03:S004"
+      ],
+      "jaccard": 1.0,
+      "support": 10,
+      "union_containers": 10
+    },
+    {
+      "a": "VG:DEVATA:DEVYAH",
+      "a_containers": 1,
+      "b": "VG:DEVATA:DYAVAPRTHIVYAU",
+      "b_containers": 11,
+      "cosine": 0.301511,
+      "example_containers": [
+        "VG:RV:SAK:M01:S022"
+      ],
+      "jaccard": 0.090909,
+      "support": 1,
+      "union_containers": 11
+    },
+    {
+      "a": "VG:DEVATA:DEVYAH",
+      "a_containers": 1,
+      "b": "VG:DEVATA:INDRANI-VARUNANI-AGNAYI",
+      "b_containers": 1,
+      "cosine": 1.0,
+      "example_containers": [
+        "VG:RV:SAK:M01:S022"
+      ],
+      "jaccard": 1.0,
+      "support": 1,
+      "union_containers": 1
+    },
+    {
+      "a": "VG:DEVATA:DEVYAH",
+      "a_containers": 1,
+      "b": "VG:DEVATA:PRTHIVI",
+      "b_containers": 2,
+      "cosine": 0.707107,
+      "example_containers": [
+        "VG:RV:SAK:M01:S022"
+      ],
+      "jaccard": 0.5,
+      "support": 1,
+      "union_containers": 2
+    },
+    {
+      "a": "VG:DEVATA:DEVYAH",
+      "a_containers": 1,
+      "b": "VG:DEVATA:SAVITA",
+      "b_containers": 14,
+      "cosine": 0.267261,
+      "example_containers": [
+        "VG:RV:SAK:M01:S022"
+      ],
+      "jaccard": 0.071429,
+      "support": 1,
+      "union_containers": 14
+    },
+    {
+      "a": "VG:DEVATA:DEVYAH",
+      "a_containers": 1,
+      "b": "VG:DEVATA:VISNUH",
+      "b_containers": 6,
+      "cosine": 0.408248,
+      "example_containers": [
+        "VG:RV:SAK:M01:S022"
+      ],
+      "jaccard": 0.166667,
+      "support": 1,
+      "union_containers": 6
+    },
+    {
+      "a": "VG:DEVATA:DEVYAU-HOTARAU",
+      "a_containers": 1,
+      "b": "VG:DEVATA:SARASVATI-ILA-BHARATI",
+      "b_containers": 9,
+      "cosine": 0.333333,
+      "example_containers": [
+        "VG:RV:SAK:M03:S004"
+      ],
+      "jaccard": 0.111111,
+      "support": 1,
+      "union_containers": 9
+    },
+    {
+      "a": "VG:DEVATA:DEVYAU-HOTARAU",
+      "a_containers": 1,
+      "b": "VG:DEVATA:TVASTA",
+      "b_containers": 13,
+      "cosine": 0.27735,
+      "example_containers": [
+        "VG:RV:SAK:M03:S004"
+      ],
+      "jaccard": 0.076923,
+      "support": 1,
+      "union_containers": 13
+    },
+    {
+      "a": "VG:DEVATA:DEVYAU-HOTARAU",
+      "a_containers": 1,
+      "b": "VG:DEVATA:USASANAKTA",
+      "b_containers": 10,
+      "cosine": 0.316228,
+      "example_containers": [
+        "VG:RV:SAK:M03:S004"
+      ],
+      "jaccard": 0.1,
+      "support": 1,
+      "union_containers": 10
+    },
+    {
+      "a": "VG:DEVATA:DEVYAU-HOTARAU",
+      "a_containers": 1,
+      "b": "VG:DEVATA:VANASPATIH",
+      "b_containers": 10,
+      "cosine": 0.316228,
+      "example_containers": [
+        "VG:RV:SAK:M03:S004"
+      ],
+      "jaccard": 0.1,
+      "support": 1,
+      "union_containers": 10
+    },
+    {
+      "a": "VG:DEVATA:DHANUH",
+      "a_containers": 1,
+      "b": "VG:DEVATA:HASTAGHNAH",
+      "b_containers": 1,
+      "cosine": 1.0,
+      "example_containers": [
+        "VG:RV:SAK:M06:S075"
+      ],
+      "jaccard": 1.0,
+      "support": 1,
+      "union_containers": 1
+    },
+    {
+      "a": "VG:DEVATA:DHANUH",
+      "a_containers": 1,
+      "b": "VG:DEVATA:ISAVAH",
+      "b_containers": 1,
+      "cosine": 1.0,
+      "example_containers": [
+        "VG:RV:SAK:M06:S075"
+      ],
+      "jaccard": 1.0,
+      "support": 1,
+      "union_containers": 1
+    },
+    {
+      "a": "VG:DEVATA:DHANUH",
+      "a_containers": 1,
+      "b": "VG:DEVATA:ISUDHIH",
+      "b_containers": 1,
+      "cosine": 1.0,
+      "example_containers": [
+        "VG:RV:SAK:M06:S075"
+      ],
+      "jaccard": 1.0,
+      "support": 1,
+      "union_containers": 1
+    },
+    {
+      "a": "VG:DEVATA:DHANUH",
+      "a_containers": 1,
+      "b": "VG:DEVATA:JYA",
+      "b_containers": 1,
+      "cosine": 1.0,
+      "example_containers": [
+        "VG:RV:SAK:M06:S075"
+      ],
+      "jaccard": 1.0,
+      "support": 1,
+      "union_containers": 1
+    },
+    {
+      "a": "VG:DEVATA:DHANUH",
+      "a_containers": 1,
+      "b": "VG:DEVATA:PRATODAH",
+      "b_containers": 1,
+      "cosine": 1.0,
+      "example_containers": [
+        "VG:RV:SAK:M06:S075"
+      ],
+      "jaccard": 1.0,
+      "support": 1,
+      "union_containers": 1
+    },
+    {
+      "a": "VG:DEVATA:DHANUH",
+      "a_containers": 1,
+      "b": "VG:DEVATA:RATHAGOPAH",
+      "b_containers": 1,
+      "cosine": 1.0,
+      "example_containers": [
+        "VG:RV:SAK:M06:S075"
+      ],
+      "jaccard": 1.0,
+      "support": 1,
+      "union_containers": 1
+    },
+    {
+      "a": "VG:DEVATA:DHANUH",
+      "a_containers": 1,
+      "b": "VG:DEVATA:RATHAH",
+      "b_containers": 2,
+      "cosine": 0.707107,
+      "example_containers": [
+        "VG:RV:SAK:M06:S075"
+      ],
+      "jaccard": 0.5,
+      "support": 1,
+      "union_containers": 2
+    },
+    {
+      "a": "VG:DEVATA:DHANUH",
+      "a_containers": 1,
+      "b": "VG:DEVATA:SARATHIH-RASMAYAH",
+      "b_containers": 1,
+      "cosine": 1.0,
+      "example_containers": [
+        "VG:RV:SAK:M06:S075"
+      ],
+      "jaccard": 1.0,
+      "support": 1,
+      "union_containers": 1
+    },
+    {
+      "a": "VG:DEVATA:DHANUH",
+      "a_containers": 1,
+      "b": "VG:DEVATA:SOMAVARUNAU",
+      "b_containers": 1,
+      "cosine": 1.0,
+      "example_containers": [
+        "VG:RV:SAK:M06:S075"
+      ],
+      "jaccard": 1.0,
+      "support": 1,
+      "union_containers": 1
+    },
+    {
+      "a": "VG:DEVATA:DHANUH",
+      "a_containers": 1,
+      "b": "VG:DEVATA:VARMA",
+      "b_containers": 1,
+      "cosine": 1.0,
+      "example_containers": [
+        "VG:RV:SAK:M06:S075"
+      ],
+      "jaccard": 1.0,
+      "support": 1,
+      "union_containers": 1
+    },
+    {
+      "a": "VG:DEVATA:DHATA",
+      "a_containers": 1,
+      "b": "VG:DEVATA:MRTYUH",
+      "b_containers": 1,
+      "cosine": 1.0,
+      "example_containers": [
+        "VG:RV:SAK:M10:S018"
+      ],
+      "jaccard": 1.0,
+      "support": 1,
+      "union_containers": 1
+    },
+    {
+      "a": "VG:DEVATA:DHATA",
+      "a_containers": 1,
+      "b": "VG:DEVATA:TVASTA",
+      "b_containers": 13,
+      "cosine": 0.27735,
+      "example_containers": [
+        "VG:RV:SAK:M10:S018"
+      ],
+      "jaccard": 0.076923,
+      "support": 1,
+      "union_containers": 13
+    },
+    {
+      "a": "VG:DEVATA:DUNDUBHIH",
+      "a_containers": 1,
+      "b": "VG:DEVATA:INDRAH",
+      "b_containers": 273,
+      "cosine": 0.060523,
+      "example_containers": [
+        "VG:RV:SAK:M06:S047"
+      ],
+      "jaccard": 0.003663,
+      "support": 1,
+      "union_containers": 273
+    },
+    {
+      "a": "VG:DEVATA:DUNDUBHIH",
+      "a_containers": 1,
+      "b": "VG:DEVATA:RATHAH",
+      "b_containers": 2,
+      "cosine": 0.707107,
+      "example_containers": [
+        "VG:RV:SAK:M06:S047"
+      ],
+      "jaccard": 0.5,
+      "support": 1,
+      "union_containers": 2
+    },
+    {
+      "a": "VG:DEVATA:DUNDUBHIH",
+      "a_containers": 1,
+      "b": "VG:DEVATA:SOMAH",
+      "b_containers": 12,
+      "cosine": 0.288675,
+      "example_containers": [
+        "VG:RV:SAK:M06:S047"
+      ],
+      "jaccard": 0.083333,
+      "support": 1,
+      "union_containers": 12
+    },
+    {
+      "a": "VG:DEVATA:DYAVABHUMI",
+      "a_containers": 1,
+      "b": "VG:DEVATA:MARUTAH",
+      "b_containers": 42,
+      "cosine": 0.154303,
+      "example_containers": [
+        "VG:RV:SAK:M06:S048"
+      ],
+      "jaccard": 0.02381,
+      "support": 1,
+      "union_containers": 42
+    },
+    {
+      "a": "VG:DEVATA:DYAVABHUMI",
+      "a_containers": 1,
+      "b": "VG:DEVATA:PUSA",
+      "b_containers": 13,
+      "cosine": 0.27735,
+      "example_containers": [
+        "VG:RV:SAK:M06:S048"
+      ],
+      "jaccard": 0.076923,
+      "support": 1,
+      "union_containers": 13
+    },
+    {
+      "a": "VG:DEVATA:DYAVAPRTHIVYAU",
+      "a_containers": 11,
+      "b": "VG:DEVATA:INDRAH",
+      "b_containers": 273,
+      "cosine": 0.036497,
+      "example_containers": [
+        "VG:RV:SAK:M02:S032",
+        "VG:RV:SAK:M02:S041"
+      ],
+      "jaccard": 0.007092,
+      "support": 2,
+      "union_containers": 282
+    },
+    {
+      "a": "VG:DEVATA:DYAVAPRTHIVYAU",
+      "a_containers": 11,
+      "b": "VG:DEVATA:INDRANI-VARUNANI-AGNAYI",
+      "b_containers": 1,
+      "cosine": 0.301511,
+      "example_containers": [
+        "VG:RV:SAK:M01:S022"
+      ],
+      "jaccard": 0.090909,
+      "support": 1,
+      "union_containers": 11
+    },
+    {
+      "a": "VG:DEVATA:DYAVAPRTHIVYAU",
+      "a_containers": 11,
+      "b": "VG:DEVATA:INDRAVAYU",
+      "b_containers": 10,
+      "cosine": 0.095346,
+      "example_containers": [
+        "VG:RV:SAK:M02:S041"
+      ],
+      "jaccard": 0.05,
+      "support": 1,
+      "union_containers": 20
+    },
+    {
+      "a": "VG:DEVATA:DYAVAPRTHIVYAU",
+      "a_containers": 11,
+      "b": "VG:DEVATA:MITRAVARUNAU",
+      "b_containers": 35,
+      "cosine": 0.050965,
+      "example_containers": [
+        "VG:RV:SAK:M02:S041"
+      ],
+      "jaccard": 0.022222,
+      "support": 1,
+      "union_containers": 45
+    },
+    {
+      "a": "VG:DEVATA:DYAVAPRTHIVYAU",
+      "a_containers": 11,
+      "b": "VG:DEVATA:NIRRTIH",
+      "b_containers": 1,
+      "cosine": 0.301511,
+      "example_containers": [
+        "VG:RV:SAK:M10:S059"
+      ],
+      "jaccard": 0.090909,
+      "support": 1,
+      "union_containers": 11
+    },
+    {
+      "a": "VG:DEVATA:DYAVAPRTHIVYAU",
+      "a_containers": 11,
+      "b": "VG:DEVATA:PRTHIVI",
+      "b_containers": 2,
+      "cosine": 0.213201,
+      "example_containers": [
+        "VG:RV:SAK:M01:S022"
+      ],
+      "jaccard": 0.083333,
+      "support": 1,
+      "union_containers": 12
+    },
+    {
+      "a": "VG:DEVATA:DYAVAPRTHIVYAU",
+      "a_containers": 11,
+      "b": "VG:DEVATA:RAKA",
+      "b_containers": 1,
+      "cosine": 0.301511,
+      "example_containers": [
+        "VG:RV:SAK:M02:S032"
+      ],
+      "jaccard": 0.090909,
+      "support": 1,
+      "union_containers": 11
+    },
+    {
+      "a": "VG:DEVATA:DYAVAPRTHIVYAU",
+      "a_containers": 11,
+      "b": "VG:DEVATA:SARASVATI",
+      "b_containers": 7,
+      "cosine": 0.113961,
+      "example_containers": [
+        "VG:RV:SAK:M02:S041"
+      ],
+      "jaccard": 0.058824,
+      "support": 1,
+      "union_containers": 17
+    },
+    {
+      "a": "VG:DEVATA:DYAVAPRTHIVYAU",
+      "a_containers": 11,
+      "b": "VG:DEVATA:SAVITA",
+      "b_containers": 14,
+      "cosine": 0.080582,
+      "example_containers": [
+        "VG:RV:SAK:M01:S022"
+      ],
+      "jaccard": 0.041667,
+      "support": 1,
+      "union_containers": 24
+    },
+    {
+      "a": "VG:DEVATA:DYAVAPRTHIVYAU",
+      "a_containers": 11,
+      "b": "VG:DEVATA:SINIVALI",
+      "b_containers": 1,
+      "cosine": 0.301511,
+      "example_containers": [
+        "VG:RV:SAK:M02:S032"
+      ],
+      "jaccard": 0.090909,
+      "support": 1,
+      "union_containers": 11
+    },
+    {
+      "a": "VG:DEVATA:DYAVAPRTHIVYAU",
+      "a_containers": 11,
+      "b": "VG:DEVATA:VAYUH",
+      "b_containers": 17,
+      "cosine": 0.073127,
+      "example_containers": [
+        "VG:RV:SAK:M02:S041"
+      ],
+      "jaccard": 0.037037,
+      "support": 1,
+      "union_containers": 27
+    },
+    {
+      "a": "VG:DEVATA:DYAVAPRTHIVYAU",
+      "a_containers": 11,
+      "b": "VG:DEVATA:VISNUH",
+      "b_containers": 6,
+      "cosine": 0.123091,
+      "example_containers": [
+        "VG:RV:SAK:M01:S022"
+      ],
+      "jaccard": 0.0625,
+      "support": 1,
+      "union_containers": 16
+    },
+    {
+      "a": "VG:DEVATA:DYAVAPRTHIVYAU",
+      "a_containers": 11,
+      "b": "VG:DEVATA:VISVEDEVAH",
+      "b_containers": 86,
+      "cosine": 0.032513,
+      "example_containers": [
+        "VG:RV:SAK:M02:S041"
+      ],
+      "jaccard": 0.010417,
+      "support": 1,
+      "union_containers": 96
+    },
+    {
+      "a": "VG:DEVATA:DYUBHUMYASVINAH",
+      "a_containers": 1,
+      "b": "VG:DEVATA:MITRAVARUNAU",
+      "b_containers": 35,
+      "cosine": 0.169031,
+      "example_containers": [
+        "VG:RV:SAK:M10:S132"
+      ],
+      "jaccard": 0.028571,
+      "support": 1,
+      "union_containers": 35
+    },
+    {
+      "a": "VG:DEVATA:GAUH",
+      "a_containers": 1,
+      "b": "VG:DEVATA:MITRAVARUNAU",
+      "b_containers": 35,
+      "cosine": 0.169031,
+      "example_containers": [
+        "VG:RV:SAK:M08:S101"
+      ],
+      "jaccard": 0.028571,
+      "support": 1,
+      "union_containers": 35
+    },
+    {
+      "a": "VG:DEVATA:GAUH",
+      "a_containers": 1,
+      "b": "VG:DEVATA:PAVAMANAH",
+      "b_containers": 1,
+      "cosine": 1.0,
+      "example_containers": [
+        "VG:RV:SAK:M08:S101"
+      ],
+      "jaccard": 1.0,
+      "support": 1,
+      "union_containers": 1
+    },
+    {
+      "a": "VG:DEVATA:GAUH",
+      "a_containers": 1,
+      "b": "VG:DEVATA:SURYAH",
+      "b_containers": 14,
+      "cosine": 0.267261,
+      "example_containers": [
+        "VG:RV:SAK:M08:S101"
+      ],
+      "jaccard": 0.071429,
+      "support": 1,
+      "union_containers": 14
+    },
+    {
+      "a": "VG:DEVATA:GAUH",
+      "a_containers": 1,
+      "b": "VG:DEVATA:USAH",
+      "b_containers": 23,
+      "cosine": 0.208514,
+      "example_containers": [
+        "VG:RV:SAK:M08:S101"
+      ],
+      "jaccard": 0.043478,
+      "support": 1,
+      "union_containers": 23
+    },
+    {
+      "a": "VG:DEVATA:GAUH",
+      "a_containers": 1,
+      "b": "VG:DEVATA:VAYUH",
+      "b_containers": 17,
+      "cosine": 0.242536,
+      "example_containers": [
+        "VG:RV:SAK:M08:S101"
+      ],
+      "jaccard": 0.058824,
+      "support": 1,
+      "union_containers": 17
+    },
+    {
+      "a": "VG:DEVATA:GRAVANAH",
+      "a_containers": 4,
+      "b": "VG:DEVATA:INDRAH",
+      "b_containers": 273,
+      "cosine": 0.030261,
+      "example_containers": [
+        "VG:RV:SAK:M07:S104"
+      ],
+      "jaccard": 0.003623,
+      "support": 1,
+      "union_containers": 276
+    },
+    {
+      "a": "VG:DEVATA:GRAVANAH",
+      "a_containers": 4,
+      "b": "VG:DEVATA:INDRASOMAU",
+      "b_containers": 4,
+      "cosine": 0.25,
+      "example_containers": [
+        "VG:RV:SAK:M07:S104"
+      ],
+      "jaccard": 0.142857,
+      "support": 1,
+      "union_containers": 7
+    },
+    {
+      "a": "VG:DEVATA:GRAVANAH",
+      "a_containers": 4,
+      "b": "VG:DEVATA:MARUTAH",
+      "b_containers": 42,
+      "cosine": 0.077152,
+      "example_containers": [
+        "VG:RV:SAK:M07:S104"
+      ],
+      "jaccard": 0.022222,
+      "support": 1,
+      "union_containers": 45
+    },
+    {
+      "a": "VG:DEVATA:GRAVANAH",
+      "a_containers": 4,
+      "b": "VG:DEVATA:PRTHIVYANTARIKSE",
+      "b_containers": 1,
+      "cosine": 0.5,
+      "example_containers": [
+        "VG:RV:SAK:M07:S104"
+      ],
+      "jaccard": 0.25,
+      "support": 1,
+      "union_containers": 4
+    },
+    {
+      "a": "VG:DEVATA:GRAVANAH",
+      "a_containers": 4,
+      "b": "VG:DEVATA:SOMAH",
+      "b_containers": 12,
+      "cosine": 0.144338,
+      "example_containers": [
+        "VG:RV:SAK:M07:S104"
+      ],
+      "jaccard": 0.066667,
+      "support": 1,
+      "union_containers": 15
+    },
+    {
+      "a": "VG:DEVATA:HASTAGHNAH",
+      "a_containers": 1,
+      "b": "VG:DEVATA:ISAVAH",
+      "b_containers": 1,
+      "cosine": 1.0,
+      "example_containers": [
+        "VG:RV:SAK:M06:S075"
+      ],
+      "jaccard": 1.0,
+      "support": 1,
+      "union_containers": 1
+    },
+    {
+      "a": "VG:DEVATA:HASTAGHNAH",
+      "a_containers": 1,
+      "b": "VG:DEVATA:ISUDHIH",
+      "b_containers": 1,
+      "cosine": 1.0,
+      "example_containers": [
+        "VG:RV:SAK:M06:S075"
+      ],
+      "jaccard": 1.0,
+      "support": 1,
+      "union_containers": 1
+    },
+    {
+      "a": "VG:DEVATA:HASTAGHNAH",
+      "a_containers": 1,
+      "b": "VG:DEVATA:JYA",
+      "b_containers": 1,
+      "cosine": 1.0,
+      "example_containers": [
+        "VG:RV:SAK:M06:S075"
+      ],
+      "jaccard": 1.0,
+      "support": 1,
+      "union_containers": 1
+    },
+    {
+      "a": "VG:DEVATA:HASTAGHNAH",
+      "a_containers": 1,
+      "b": "VG:DEVATA:PRATODAH",
+      "b_containers": 1,
+      "cosine": 1.0,
+      "example_containers": [
+        "VG:RV:SAK:M06:S075"
+      ],
+      "jaccard": 1.0,
+      "support": 1,
+      "union_containers": 1
+    },
+    {
+      "a": "VG:DEVATA:HASTAGHNAH",
+      "a_containers": 1,
+      "b": "VG:DEVATA:RATHAGOPAH",
+      "b_containers": 1,
+      "cosine": 1.0,
+      "example_containers": [
+        "VG:RV:SAK:M06:S075"
+      ],
+      "jaccard": 1.0,
+      "support": 1,
+      "union_containers": 1
+    },
+    {
+      "a": "VG:DEVATA:HASTAGHNAH",
+      "a_containers": 1,
+      "b": "VG:DEVATA:RATHAH",
+      "b_containers": 2,
+      "cosine": 0.707107,
+      "example_containers": [
+        "VG:RV:SAK:M06:S075"
+      ],
+      "jaccard": 0.5,
+      "support": 1,
+      "union_containers": 2
+    },
+    {
+      "a": "VG:DEVATA:HASTAGHNAH",
+      "a_containers": 1,
+      "b": "VG:DEVATA:SARATHIH-RASMAYAH",
+      "b_containers": 1,
+      "cosine": 1.0,
+      "example_containers": [
+        "VG:RV:SAK:M06:S075"
+      ],
+      "jaccard": 1.0,
+      "support": 1,
+      "union_containers": 1
+    },
+    {
+      "a": "VG:DEVATA:HASTAGHNAH",
+      "a_containers": 1,
+      "b": "VG:DEVATA:SOMAVARUNAU",
+      "b_containers": 1,
+      "cosine": 1.0,
+      "example_containers": [
+        "VG:RV:SAK:M06:S075"
+      ],
+      "jaccard": 1.0,
+      "support": 1,
+      "union_containers": 1
+    },
+    {
+      "a": "VG:DEVATA:HASTAGHNAH",
+      "a_containers": 1,
+      "b": "VG:DEVATA:VARMA",
+      "b_containers": 1,
+      "cosine": 1.0,
+      "example_containers": [
+        "VG:RV:SAK:M06:S075"
+      ],
+      "jaccard": 1.0,
+      "support": 1,
+      "union_containers": 1
+    },
+    {
+      "a": "VG:DEVATA:ILA-SARASVATI-MAHI",
+      "a_containers": 1,
+      "b": "VG:DEVATA:TVASTA",
+      "b_containers": 13,
+      "cosine": 0.27735,
+      "example_containers": [
+        "VG:RV:SAK:M01:S013"
+      ],
+      "jaccard": 0.076923,
+      "support": 1,
+      "union_containers": 13
+    },
+    {
+      "a": "VG:DEVATA:ILA-SARASVATI-MAHI",
+      "a_containers": 1,
+      "b": "VG:DEVATA:USASANAKTA",
+      "b_containers": 10,
+      "cosine": 0.316228,
+      "example_containers": [
+        "VG:RV:SAK:M01:S013"
+      ],
+      "jaccard": 0.1,
+      "support": 1,
+      "union_containers": 10
+    },
+    {
+      "a": "VG:DEVATA:ILA-SARASVATI-MAHI",
+      "a_containers": 1,
+      "b": "VG:DEVATA:VANASPATIH",
+      "b_containers": 10,
+      "cosine": 0.316228,
+      "example_containers": [
+        "VG:RV:SAK:M01:S013"
+      ],
+      "jaccard": 0.1,
+      "support": 1,
+      "union_containers": 10
+    },
+    {
+      "a": "VG:DEVATA:INDRABRAHMANASPATI",
+      "a_containers": 2,
+      "b": "VG:DEVATA:INDRABRHASPATI",
+      "b_containers": 5,
+      "cosine": 0.316228,
+      "example_containers": [
+        "VG:RV:SAK:M07:S097"
+      ],
+      "jaccard": 0.166667,
+      "support": 1,
+      "union_containers": 6
+    },
+    {
+      "a": "VG:DEVATA:INDRABRAHMANASPATI",
+      "a_containers": 2,
+      "b": "VG:DEVATA:INDRAH",
+      "b_containers": 273,
+      "cosine": 0.042796,
+      "example_containers": [
+        "VG:RV:SAK:M07:S097"
+      ],
+      "jaccard": 0.00365,
+      "support": 1,
+      "union_containers": 274
+    },
+    {
+      "a": "VG:DEVATA:INDRABRHASPATI",
+      "a_containers": 5,
+      "b": "VG:DEVATA:INDRAH",
+      "b_containers": 273,
+      "cosine": 0.0812,
+      "example_containers": [
+        "VG:RV:SAK:M07:S097",
+        "VG:RV:SAK:M07:S098",
+        "VG:RV:SAK:M08:S096"
+      ],
+      "jaccard": 0.010909,
+      "support": 3,
+      "union_containers": 275
+    },
+    {
+      "a": "VG:DEVATA:INDRABRHASPATI",
+      "a_containers": 5,
+      "b": "VG:DEVATA:MARUTAH",
+      "b_containers": 42,
+      "cosine": 0.069007,
+      "example_containers": [
+        "VG:RV:SAK:M08:S096"
+      ],
+      "jaccard": 0.021739,
+      "support": 1,
+      "union_containers": 46
+    },
+    {
+      "a": "VG:DEVATA:INDRAGNI",
+      "a_containers": 15,
+      "b": "VG:DEVATA:INDRAH",
+      "b_containers": 273,
+      "cosine": 0.015627,
+      "example_containers": [
+        "VG:RV:SAK:M01:S139"
+      ],
+      "jaccard": 0.003484,
+      "support": 1,
+      "union_containers": 287
+    },
+    {
+      "a": "VG:DEVATA:INDRAGNI",
+      "a_containers": 15,
+      "b": "VG:DEVATA:MARUTAH",
+      "b_containers": 42,
+      "cosine": 0.039841,
+      "example_containers": [
+        "VG:RV:SAK:M01:S139"
+      ],
+      "jaccard": 0.017857,
+      "support": 1,
+      "union_containers": 56
+    },
+    {
+      "a": "VG:DEVATA:INDRAGNI",
+      "a_containers": 15,
+      "b": "VG:DEVATA:MITRAVARUNAU",
+      "b_containers": 35,
+      "cosine": 0.043644,
+      "example_containers": [
+        "VG:RV:SAK:M01:S139"
+      ],
+      "jaccard": 0.020408,
+      "support": 1,
+      "union_containers": 49
+    },
+    {
+      "a": "VG:DEVATA:INDRAGNI",
+      "a_containers": 15,
+      "b": "VG:DEVATA:VISVEDEVAH",
+      "b_containers": 86,
+      "cosine": 0.027842,
+      "example_containers": [
+        "VG:RV:SAK:M01:S139"
+      ],
+      "jaccard": 0.01,
+      "support": 1,
+      "union_containers": 100
+    },
+    {
+      "a": "VG:DEVATA:INDRAH",
+      "a_containers": 273,
+      "b": "VG:DEVATA:INDRAPARVATAU",
+      "b_containers": 1,
+      "cosine": 0.060523,
+      "example_containers": [
+        "VG:RV:SAK:M03:S053"
+      ],
+      "jaccard": 0.003663,
+      "support": 1,
+      "union_containers": 273
+    },
+    {
+      "a": "VG:DEVATA:INDRAH",
+      "a_containers": 273,
+      "b": "VG:DEVATA:INDRASOMAU",
+      "b_containers": 4,
+      "cosine": 0.090784,
+      "example_containers": [
+        "VG:RV:SAK:M02:S030",
+        "VG:RV:SAK:M07:S104",
+        "VG:RV:SAK:M10:S089"
+      ],
+      "jaccard": 0.010949,
+      "support": 3,
+      "union_containers": 274
+    },
+    {
+      "a": "VG:DEVATA:INDRAH",
+      "a_containers": 273,
+      "b": "VG:DEVATA:INDRASYASVAU",
+      "b_containers": 1,
+      "cosine": 0.060523,
+      "example_containers": [
+        "VG:RV:SAK:M04:S032"
+      ],
+      "jaccard": 0.003663,
+      "support": 1,
+      "union_containers": 273
+    },
+    {
+      "a": "VG:DEVATA:INDRAH",
+      "a_containers": 273,
+      "b": "VG:DEVATA:INDRAVAYU",
+      "b_containers": 10,
+      "cosine": 0.019139,
+      "example_containers": [
+        "VG:RV:SAK:M02:S041"
+      ],
+      "jaccard": 0.003546,
+      "support": 1,
+      "union_containers": 282
+    },
+    {
+      "a": "VG:DEVATA:INDRAH",
+      "a_containers": 273,
+      "b": "VG:DEVATA:INDROSASAU",
+      "b_containers": 1,
+      "cosine": 0.060523,
+      "example_containers": [
+        "VG:RV:SAK:M04:S030"
+      ],
+      "jaccard": 0.003663,
+      "support": 1,
+      "union_containers": 273
+    },
+    {
+      "a": "VG:DEVATA:INDRAH",
+      "a_containers": 273,
+      "b": "VG:DEVATA:MARUTAH",
+      "b_containers": 42,
+      "cosine": 0.065372,
+      "example_containers": [
+        "VG:RV:SAK:M01:S015",
+        "VG:RV:SAK:M01:S139",
+        "VG:RV:SAK:M01:S167",
+        "VG:RV:SAK:M02:S030",
+        "VG:RV:SAK:M02:S036"
+      ],
+      "jaccard": 0.022727,
+      "support": 7,
+      "union_containers": 308
+    },
+    {
+      "a": "VG:DEVATA:INDRAH",
+      "a_containers": 273,
+      "b": "VG:DEVATA:MITRAVARUNAU",
+      "b_containers": 35,
+      "cosine": 0.040921,
+      "example_containers": [
+        "VG:RV:SAK:M01:S015",
+        "VG:RV:SAK:M01:S139",
+        "VG:RV:SAK:M02:S036",
+        "VG:RV:SAK:M02:S041"
+      ],
+      "jaccard": 0.013158,
+      "support": 4,
+      "union_containers": 304
+    },
+    {
+      "a": "VG:DEVATA:INDRAH",
+      "a_containers": 273,
+      "b": "VG:DEVATA:NADYAH",
+      "b_containers": 3,
+      "cosine": 0.034943,
+      "example_containers": [
+        "VG:RV:SAK:M03:S033"
+      ],
+      "jaccard": 0.003636,
+      "support": 1,
+      "union_containers": 275
+    },
+    {
+      "a": "VG:DEVATA:INDRAH",
+      "a_containers": 273,
+      "b": "VG:DEVATA:PRTHIVYANTARIKSE",
+      "b_containers": 1,
+      "cosine": 0.060523,
+      "example_containers": [
+        "VG:RV:SAK:M07:S104"
+      ],
+      "jaccard": 0.003663,
+      "support": 1,
+      "union_containers": 273
+    },
+    {
+      "a": "VG:DEVATA:INDRAH",
+      "a_containers": 273,
+      "b": "VG:DEVATA:PUSA",
+      "b_containers": 13,
+      "cosine": 0.016786,
+      "example_containers": [
+        "VG:RV:SAK:M08:S004"
+      ],
+      "jaccard": 0.003509,
+      "support": 1,
+      "union_containers": 285
+    },
+    {
+      "a": "VG:DEVATA:INDRAH",
+      "a_containers": 273,
+      "b": "VG:DEVATA:RAKA",
+      "b_containers": 1,
+      "cosine": 0.060523,
+      "example_containers": [
+        "VG:RV:SAK:M02:S032"
+      ],
+      "jaccard": 0.003663,
+      "support": 1,
+      "union_containers": 273
+    },
+    {
+      "a": "VG:DEVATA:INDRAH",
+      "a_containers": 273,
+      "b": "VG:DEVATA:RATHAH",
+      "b_containers": 2,
+      "cosine": 0.042796,
+      "example_containers": [
+        "VG:RV:SAK:M06:S047"
+      ],
+      "jaccard": 0.00365,
+      "support": 1,
+      "union_containers": 274
+    },
+    {
+      "a": "VG:DEVATA:INDRAH",
+      "a_containers": 273,
+      "b": "VG:DEVATA:RATHANGANI",
+      "b_containers": 1,
+      "cosine": 0.060523,
+      "example_containers": [
+        "VG:RV:SAK:M03:S053"
+      ],
+      "jaccard": 0.003663,
+      "support": 1,
+      "union_containers": 273
+    },
+    {
+      "a": "VG:DEVATA:INDRAH",
+      "a_containers": 273,
+      "b": "VG:DEVATA:RBHAVAH",
+      "b_containers": 13,
+      "cosine": 0.016786,
+      "example_containers": [
+        "VG:RV:SAK:M08:S093"
+      ],
+      "jaccard": 0.003509,
+      "support": 1,
+      "union_containers": 285
+    },
+    {
+      "a": "VG:DEVATA:INDRAH",
+      "a_containers": 273,
+      "b": "VG:DEVATA:RNANCAYENDRAU",
+      "b_containers": 1,
+      "cosine": 0.060523,
+      "example_containers": [
+        "VG:RV:SAK:M05:S030"
+      ],
+      "jaccard": 0.003663,
+      "support": 1,
+      "union_containers": 273
+    },
+    {
+      "a": "VG:DEVATA:INDRAH",
+      "a_containers": 273,
+      "b": "VG:DEVATA:SARASVATI",
+      "b_containers": 7,
+      "cosine": 0.045751,
+      "example_containers": [
+        "VG:RV:SAK:M01:S003",
+        "VG:RV:SAK:M02:S041"
+      ],
+      "jaccard": 0.007194,
+      "support": 2,
+      "union_containers": 278
+    },
+    {
+      "a": "VG:DEVATA:INDRAH",
+      "a_containers": 273,
+      "b": "VG:DEVATA:SARASVATI-ILA-BHARATI",
+      "b_containers": 9,
+      "cosine": 0.020174,
+      "example_containers": [
+        "VG:RV:SAK:M01:S142"
+      ],
+      "jaccard": 0.003559,
+      "support": 1,
+      "union_containers": 281
+    },
+    {
+      "a": "VG:DEVATA:INDRAH",
+      "a_containers": 273,
+      "b": "VG:DEVATA:SASARPARI-VAK",
+      "b_containers": 1,
+      "cosine": 0.060523,
+      "example_containers": [
+        "VG:RV:SAK:M03:S053"
+      ],
+      "jaccard": 0.003663,
+      "support": 1,
+      "union_containers": 273
+    },
+    {
+      "a": "VG:DEVATA:INDRAH",
+      "a_containers": 273,
+      "b": "VG:DEVATA:SINIVALI",
+      "b_containers": 1,
+      "cosine": 0.060523,
+      "example_containers": [
+        "VG:RV:SAK:M02:S032"
+      ],
+      "jaccard": 0.003663,
+      "support": 1,
+      "union_containers": 273
+    },
+    {
+      "a": "VG:DEVATA:INDRAH",
+      "a_containers": 273,
+      "b": "VG:DEVATA:SOMAH",
+      "b_containers": 12,
+      "cosine": 0.069886,
+      "example_containers": [
+        "VG:RV:SAK:M01:S028",
+        "VG:RV:SAK:M06:S047",
+        "VG:RV:SAK:M07:S104",
+        "VG:RV:SAK:M10:S124"
+      ],
+      "jaccard": 0.014235,
+      "support": 4,
+      "union_containers": 281
+    },
+    {
+      "a": "VG:DEVATA:INDRAH",
+      "a_containers": 273,
+      "b": "VG:DEVATA:SURYAH",
+      "b_containers": 14,
+      "cosine": 0.016175,
+      "example_containers": [
+        "VG:RV:SAK:M05:S040"
+      ],
+      "jaccard": 0.003497,
+      "support": 1,
+      "union_containers": 286
+    },
+    {
+      "a": "VG:DEVATA:INDRAH",
+      "a_containers": 273,
+      "b": "VG:DEVATA:SYENAH",
+      "b_containers": 2,
+      "cosine": 0.085592,
+      "example_containers": [
+        "VG:RV:SAK:M04:S026",
+        "VG:RV:SAK:M04:S027"
+      ],
+      "jaccard": 0.007326,
+      "support": 2,
+      "union_containers": 273
+    },
+    {
+      "a": "VG:DEVATA:INDRAH",
+      "a_containers": 273,
+      "b": "VG:DEVATA:TVASTA",
+      "b_containers": 13,
+      "cosine": 0.050358,
+      "example_containers": [
+        "VG:RV:SAK:M01:S015",
+        "VG:RV:SAK:M01:S142",
+        "VG:RV:SAK:M02:S036"
+      ],
+      "jaccard": 0.010601,
+      "support": 3,
+      "union_containers": 283
+    },
+    {
+      "a": "VG:DEVATA:INDRAH",
+      "a_containers": 273,
+      "b": "VG:DEVATA:ULUKHALAM",
+      "b_containers": 1,
+      "cosine": 0.060523,
+      "example_containers": [
+        "VG:RV:SAK:M01:S028"
+      ],
+      "jaccard": 0.003663,
+      "support": 1,
+      "union_containers": 273
+    },
+    {
+      "a": "VG:DEVATA:INDRAH",
+      "a_containers": 273,
+      "b": "VG:DEVATA:ULUKHALAMUSALE",
+      "b_containers": 1,
+      "cosine": 0.060523,
+      "example_containers": [
+        "VG:RV:SAK:M01:S028"
+      ],
+      "jaccard": 0.003663,
+      "support": 1,
+      "union_containers": 273
+    },
+    {
+      "a": "VG:DEVATA:INDRAH",
+      "a_containers": 273,
+      "b": "VG:DEVATA:USAH",
+      "b_containers": 23,
+      "cosine": 0.01262,
+      "example_containers": [
+        "VG:RV:SAK:M01:S030"
+      ],
+      "jaccard": 0.00339,
+      "support": 1,
+      "union_containers": 295
+    },
+    {
+      "a": "VG:DEVATA:INDRAH",
+      "a_containers": 273,
+      "b": "VG:DEVATA:USASANAKTA",
+      "b_containers": 10,
+      "cosine": 0.019139,
+      "example_containers": [
+        "VG:RV:SAK:M01:S142"
+      ],
+      "jaccard": 0.003546,
+      "support": 1,
+      "union_containers": 282
+    },
+    {
+      "a": "VG:DEVATA:INDRAH",
+      "a_containers": 273,
+      "b": "VG:DEVATA:VAK",
+      "b_containers": 2,
+      "cosine": 0.042796,
+      "example_containers": [
+        "VG:RV:SAK:M08:S100"
+      ],
+      "jaccard": 0.00365,
+      "support": 1,
+      "union_containers": 274
+    },
+    {
+      "a": "VG:DEVATA:INDRAH",
+      "a_containers": 273,
+      "b": "VG:DEVATA:VANASPATIH",
+      "b_containers": 10,
+      "cosine": 0.019139,
+      "example_containers": [
+        "VG:RV:SAK:M01:S142"
+      ],
+      "jaccard": 0.003546,
+      "support": 1,
+      "union_containers": 282
+    },
+    {
+      "a": "VG:DEVATA:INDRAH",
+      "a_containers": 273,
+      "b": "VG:DEVATA:VARUNAH",
+      "b_containers": 13,
+      "cosine": 0.033572,
+      "example_containers": [
+        "VG:RV:SAK:M08:S069",
+        "VG:RV:SAK:M10:S124"
+      ],
+      "jaccard": 0.007042,
+      "support": 2,
+      "union_containers": 284
+    },
+    {
+      "a": "VG:DEVATA:INDRAH",
+      "a_containers": 273,
+      "b": "VG:DEVATA:VASTOSPATIH",
+      "b_containers": 3,
+      "cosine": 0.069886,
+      "example_containers": [
+        "VG:RV:SAK:M07:S055",
+        "VG:RV:SAK:M08:S017"
+      ],
+      "jaccard": 0.007299,
+      "support": 2,
+      "union_containers": 274
+    },
+    {
+      "a": "VG:DEVATA:INDRAH",
+      "a_containers": 273,
+      "b": "VG:DEVATA:VAYUH",
+      "b_containers": 17,
+      "cosine": 0.029358,
+      "example_containers": [
+        "VG:RV:SAK:M02:S041",
+        "VG:RV:SAK:M08:S046"
+      ],
+      "jaccard": 0.006944,
+      "support": 2,
+      "union_containers": 288
+    },
+    {
+      "a": "VG:DEVATA:INDRAH",
+      "a_containers": 273,
+      "b": "VG:DEVATA:VISVEDEVAH",
+      "b_containers": 86,
+      "cosine": 0.052211,
+      "example_containers": [
+        "VG:RV:SAK:M01:S003",
+        "VG:RV:SAK:M01:S139",
+        "VG:RV:SAK:M02:S041",
+        "VG:RV:SAK:M06:S021",
+        "VG:RV:SAK:M08:S054"
+      ],
+      "jaccard": 0.022792,
+      "support": 8,
+      "union_containers": 351
+    },
+    {
+      "a": "VG:DEVATA:INDRAH-MARUTAH",
+      "a_containers": 1,
+      "b": "VG:DEVATA:INDRAVAYU",
+      "b_containers": 10,
+      "cosine": 0.316228,
+      "example_containers": [
+        "VG:RV:SAK:M01:S023"
+      ],
+      "jaccard": 0.1,
+      "support": 1,
+      "union_containers": 10
+    },
+    {
+      "a": "VG:DEVATA:INDRAH-MARUTAH",
+      "a_containers": 1,
+      "b": "VG:DEVATA:MITRAVARUNAU",
+      "b_containers": 35,
+      "cosine": 0.169031,
+      "example_containers": [
+        "VG:RV:SAK:M01:S023"
+      ],
+      "jaccard": 0.028571,
+      "support": 1,
+      "union_containers": 35
+    },
+    {
+      "a": "VG:DEVATA:INDRAH-MARUTAH",
+      "a_containers": 1,
+      "b": "VG:DEVATA:PUSA",
+      "b_containers": 13,
+      "cosine": 0.27735,
+      "example_containers": [
+        "VG:RV:SAK:M01:S023"
+      ],
+      "jaccard": 0.076923,
+      "support": 1,
+      "union_containers": 13
+    },
+    {
+      "a": "VG:DEVATA:INDRAH-MARUTAH",
+      "a_containers": 1,
+      "b": "VG:DEVATA:VAYUH",
+      "b_containers": 17,
+      "cosine": 0.242536,
+      "example_containers": [
+        "VG:RV:SAK:M01:S023"
+      ],
+      "jaccard": 0.058824,
+      "support": 1,
+      "union_containers": 17
+    },
+    {
+      "a": "VG:DEVATA:INDRAH-MARUTAH",
+      "a_containers": 1,
+      "b": "VG:DEVATA:VISVEDEVAH",
+      "b_containers": 86,
+      "cosine": 0.107833,
+      "example_containers": [
+        "VG:RV:SAK:M01:S023"
+      ],
+      "jaccard": 0.011628,
+      "support": 1,
+      "union_containers": 86
+    },
+    {
+      "a": "VG:DEVATA:INDRANI-VARUNANI-AGNAYI",
+      "a_containers": 1,
+      "b": "VG:DEVATA:PRTHIVI",
+      "b_containers": 2,
+      "cosine": 0.707107,
+      "example_containers": [
+        "VG:RV:SAK:M01:S022"
+      ],
+      "jaccard": 0.5,
+      "support": 1,
+      "union_containers": 2
+    },
+    {
+      "a": "VG:DEVATA:INDRANI-VARUNANI-AGNAYI",
+      "a_containers": 1,
+      "b": "VG:DEVATA:SAVITA",
+      "b_containers": 14,
+      "cosine": 0.267261,
+      "example_containers": [
+        "VG:RV:SAK:M01:S022"
+      ],
+      "jaccard": 0.071429,
+      "support": 1,
+      "union_containers": 14
+    },
+    {
+      "a": "VG:DEVATA:INDRANI-VARUNANI-AGNAYI",
+      "a_containers": 1,
+      "b": "VG:DEVATA:VISNUH",
+      "b_containers": 6,
+      "cosine": 0.408248,
+      "example_containers": [
+        "VG:RV:SAK:M01:S022"
+      ],
+      "jaccard": 0.166667,
+      "support": 1,
+      "union_containers": 6
+    },
+    {
+      "a": "VG:DEVATA:INDRAPARVATAU",
+      "a_containers": 1,
+      "b": "VG:DEVATA:RATHANGANI",
+      "b_containers": 1,
+      "cosine": 1.0,
+      "example_containers": [
+        "VG:RV:SAK:M03:S053"
+      ],
+      "jaccard": 1.0,
+      "support": 1,
+      "union_containers": 1
+    },
+    {
+      "a": "VG:DEVATA:INDRAPARVATAU",
+      "a_containers": 1,
+      "b": "VG:DEVATA:SASARPARI-VAK",
+      "b_containers": 1,
+      "cosine": 1.0,
+      "example_containers": [
+        "VG:RV:SAK:M03:S053"
+      ],
+      "jaccard": 1.0,
+      "support": 1,
+      "union_containers": 1
+    },
+    {
+      "a": "VG:DEVATA:INDRASOMAU",
+      "a_containers": 4,
+      "b": "VG:DEVATA:MARUTAH",
+      "b_containers": 42,
+      "cosine": 0.154303,
+      "example_containers": [
+        "VG:RV:SAK:M02:S030",
+        "VG:RV:SAK:M07:S104"
+      ],
+      "jaccard": 0.045455,
+      "support": 2,
+      "union_containers": 44
+    },
+    {
+      "a": "VG:DEVATA:INDRASOMAU",
+      "a_containers": 4,
+      "b": "VG:DEVATA:PRTHIVYANTARIKSE",
+      "b_containers": 1,
+      "cosine": 0.5,
+      "example_containers": [
+        "VG:RV:SAK:M07:S104"
+      ],
+      "jaccard": 0.25,
+      "support": 1,
+      "union_containers": 4
+    },
+    {
+      "a": "VG:DEVATA:INDRASOMAU",
+      "a_containers": 4,
+      "b": "VG:DEVATA:SOMAH",
+      "b_containers": 12,
+      "cosine": 0.144338,
+      "example_containers": [
+        "VG:RV:SAK:M07:S104"
+      ],
+      "jaccard": 0.066667,
+      "support": 1,
+      "union_containers": 15
+    },
+    {
+      "a": "VG:DEVATA:INDRAVARUNAU",
+      "a_containers": 9,
+      "b": "VG:DEVATA:MITRAVARUNAU",
+      "b_containers": 35,
+      "cosine": 0.056344,
+      "example_containers": [
+        "VG:RV:SAK:M03:S062"
+      ],
+      "jaccard": 0.023256,
+      "support": 1,
+      "union_containers": 43
+    },
+    {
+      "a": "VG:DEVATA:INDRAVARUNAU",
+      "a_containers": 9,
+      "b": "VG:DEVATA:PUSA",
+      "b_containers": 13,
+      "cosine": 0.09245,
+      "example_containers": [
+        "VG:RV:SAK:M03:S062"
+      ],
+      "jaccard": 0.047619,
+      "support": 1,
+      "union_containers": 21
+    },
+    {
+      "a": "VG:DEVATA:INDRAVARUNAU",
+      "a_containers": 9,
+      "b": "VG:DEVATA:SAVITA",
+      "b_containers": 14,
+      "cosine": 0.089087,
+      "example_containers": [
+        "VG:RV:SAK:M03:S062"
+      ],
+      "jaccard": 0.045455,
+      "support": 1,
+      "union_containers": 22
+    },
+    {
+      "a": "VG:DEVATA:INDRAVARUNAU",
+      "a_containers": 9,
+      "b": "VG:DEVATA:SOMAH",
+      "b_containers": 12,
+      "cosine": 0.096225,
+      "example_containers": [
+        "VG:RV:SAK:M03:S062"
+      ],
+      "jaccard": 0.05,
+      "support": 1,
+      "union_containers": 20
+    },
+    {
+      "a": "VG:DEVATA:INDRAVAYU",
+      "a_containers": 10,
+      "b": "VG:DEVATA:MITRAVARUNAU",
+      "b_containers": 35,
+      "cosine": 0.160357,
+      "example_containers": [
+        "VG:RV:SAK:M01:S002",
+        "VG:RV:SAK:M01:S023",
+        "VG:RV:SAK:M02:S041"
+      ],
+      "jaccard": 0.071429,
+      "support": 3,
+      "union_containers": 42
+    },
+    {
+      "a": "VG:DEVATA:INDRAVAYU",
+      "a_containers": 10,
+      "b": "VG:DEVATA:PUSA",
+      "b_containers": 13,
+      "cosine": 0.087706,
+      "example_containers": [
+        "VG:RV:SAK:M01:S023"
+      ],
+      "jaccard": 0.045455,
+      "support": 1,
+      "union_containers": 22
+    },
+    {
+      "a": "VG:DEVATA:INDRAVAYU",
+      "a_containers": 10,
+      "b": "VG:DEVATA:SARASVATI",
+      "b_containers": 7,
+      "cosine": 0.119523,
+      "example_containers": [
+        "VG:RV:SAK:M02:S041"
+      ],
+      "jaccard": 0.0625,
+      "support": 1,
+      "union_containers": 16
+    },
+    {
+      "a": "VG:DEVATA:INDRAVAYU",
+      "a_containers": 10,
+      "b": "VG:DEVATA:VAYUH",
+      "b_containers": 17,
+      "cosine": 0.766965,
+      "example_containers": [
+        "VG:RV:SAK:M01:S002",
+        "VG:RV:SAK:M01:S023",
+        "VG:RV:SAK:M01:S135",
+        "VG:RV:SAK:M02:S041",
+        "VG:RV:SAK:M04:S046"
+      ],
+      "jaccard": 0.588235,
+      "support": 10,
+      "union_containers": 17
+    },
+    {
+      "a": "VG:DEVATA:INDRAVAYU",
+      "a_containers": 10,
+      "b": "VG:DEVATA:VISVEDEVAH",
+      "b_containers": 86,
+      "cosine": 0.102299,
+      "example_containers": [
+        "VG:RV:SAK:M01:S023",
+        "VG:RV:SAK:M02:S041",
+        "VG:RV:SAK:M05:S051"
+      ],
+      "jaccard": 0.032258,
+      "support": 3,
+      "union_containers": 93
+    },
+    {
+      "a": "VG:DEVATA:INDRAVISNU",
+      "a_containers": 3,
+      "b": "VG:DEVATA:VISNUH",
+      "b_containers": 6,
+      "cosine": 0.471405,
+      "example_containers": [
+        "VG:RV:SAK:M01:S155",
+        "VG:RV:SAK:M07:S099"
+      ],
+      "jaccard": 0.285714,
+      "support": 2,
+      "union_containers": 7
+    },
+    {
+      "a": "VG:DEVATA:ISAVAH",
+      "a_containers": 1,
+      "b": "VG:DEVATA:ISUDHIH",
+      "b_containers": 1,
+      "cosine": 1.0,
+      "example_containers": [
+        "VG:RV:SAK:M06:S075"
+      ],
+      "jaccard": 1.0,
+      "support": 1,
+      "union_containers": 1
+    },
+    {
+      "a": "VG:DEVATA:ISAVAH",
+      "a_containers": 1,
+      "b": "VG:DEVATA:JYA",
+      "b_containers": 1,
+      "cosine": 1.0,
+      "example_containers": [
+        "VG:RV:SAK:M06:S075"
+      ],
+      "jaccard": 1.0,
+      "support": 1,
+      "union_containers": 1
+    },
+    {
+      "a": "VG:DEVATA:ISAVAH",
+      "a_containers": 1,
+      "b": "VG:DEVATA:PRATODAH",
+      "b_containers": 1,
+      "cosine": 1.0,
+      "example_containers": [
+        "VG:RV:SAK:M06:S075"
+      ],
+      "jaccard": 1.0,
+      "support": 1,
+      "union_containers": 1
+    },
+    {
+      "a": "VG:DEVATA:ISAVAH",
+      "a_containers": 1,
+      "b": "VG:DEVATA:RATHAGOPAH",
+      "b_containers": 1,
+      "cosine": 1.0,
+      "example_containers": [
+        "VG:RV:SAK:M06:S075"
+      ],
+      "jaccard": 1.0,
+      "support": 1,
+      "union_containers": 1
+    },
+    {
+      "a": "VG:DEVATA:ISAVAH",
+      "a_containers": 1,
+      "b": "VG:DEVATA:RATHAH",
+      "b_containers": 2,
+      "cosine": 0.707107,
+      "example_containers": [
+        "VG:RV:SAK:M06:S075"
+      ],
+      "jaccard": 0.5,
+      "support": 1,
+      "union_containers": 2
+    },
+    {
+      "a": "VG:DEVATA:ISAVAH",
+      "a_containers": 1,
+      "b": "VG:DEVATA:SARATHIH-RASMAYAH",
+      "b_containers": 1,
+      "cosine": 1.0,
+      "example_containers": [
+        "VG:RV:SAK:M06:S075"
+      ],
+      "jaccard": 1.0,
+      "support": 1,
+      "union_containers": 1
+    },
+    {
+      "a": "VG:DEVATA:ISAVAH",
+      "a_containers": 1,
+      "b": "VG:DEVATA:SOMAVARUNAU",
+      "b_containers": 1,
+      "cosine": 1.0,
+      "example_containers": [
+        "VG:RV:SAK:M06:S075"
+      ],
+      "jaccard": 1.0,
+      "support": 1,
+      "union_containers": 1
+    },
+    {
+      "a": "VG:DEVATA:ISAVAH",
+      "a_containers": 1,
+      "b": "VG:DEVATA:VARMA",
+      "b_containers": 1,
+      "cosine": 1.0,
+      "example_containers": [
+        "VG:RV:SAK:M06:S075"
+      ],
+      "jaccard": 1.0,
+      "support": 1,
+      "union_containers": 1
+    },
+    {
+      "a": "VG:DEVATA:ISUDHIH",
+      "a_containers": 1,
+      "b": "VG:DEVATA:JYA",
+      "b_containers": 1,
+      "cosine": 1.0,
+      "example_containers": [
+        "VG:RV:SAK:M06:S075"
+      ],
+      "jaccard": 1.0,
+      "support": 1,
+      "union_containers": 1
+    },
+    {
+      "a": "VG:DEVATA:ISUDHIH",
+      "a_containers": 1,
+      "b": "VG:DEVATA:PRATODAH",
+      "b_containers": 1,
+      "cosine": 1.0,
+      "example_containers": [
+        "VG:RV:SAK:M06:S075"
+      ],
+      "jaccard": 1.0,
+      "support": 1,
+      "union_containers": 1
+    },
+    {
+      "a": "VG:DEVATA:ISUDHIH",
+      "a_containers": 1,
+      "b": "VG:DEVATA:RATHAGOPAH",
+      "b_containers": 1,
+      "cosine": 1.0,
+      "example_containers": [
+        "VG:RV:SAK:M06:S075"
+      ],
+      "jaccard": 1.0,
+      "support": 1,
+      "union_containers": 1
+    },
+    {
+      "a": "VG:DEVATA:ISUDHIH",
+      "a_containers": 1,
+      "b": "VG:DEVATA:RATHAH",
+      "b_containers": 2,
+      "cosine": 0.707107,
+      "example_containers": [
+        "VG:RV:SAK:M06:S075"
+      ],
+      "jaccard": 0.5,
+      "support": 1,
+      "union_containers": 2
+    },
+    {
+      "a": "VG:DEVATA:ISUDHIH",
+      "a_containers": 1,
+      "b": "VG:DEVATA:SARATHIH-RASMAYAH",
+      "b_containers": 1,
+      "cosine": 1.0,
+      "example_containers": [
+        "VG:RV:SAK:M06:S075"
+      ],
+      "jaccard": 1.0,
+      "support": 1,
+      "union_containers": 1
+    },
+    {
+      "a": "VG:DEVATA:ISUDHIH",
+      "a_containers": 1,
+      "b": "VG:DEVATA:SOMAVARUNAU",
+      "b_containers": 1,
+      "cosine": 1.0,
+      "example_containers": [
+        "VG:RV:SAK:M06:S075"
+      ],
+      "jaccard": 1.0,
+      "support": 1,
+      "union_containers": 1
+    },
+    {
+      "a": "VG:DEVATA:ISUDHIH",
+      "a_containers": 1,
+      "b": "VG:DEVATA:VARMA",
+      "b_containers": 1,
+      "cosine": 1.0,
+      "example_containers": [
+        "VG:RV:SAK:M06:S075"
+      ],
+      "jaccard": 1.0,
+      "support": 1,
+      "union_containers": 1
+    },
+    {
+      "a": "VG:DEVATA:JYA",
+      "a_containers": 1,
+      "b": "VG:DEVATA:PRATODAH",
+      "b_containers": 1,
+      "cosine": 1.0,
+      "example_containers": [
+        "VG:RV:SAK:M06:S075"
+      ],
+      "jaccard": 1.0,
+      "support": 1,
+      "union_containers": 1
+    },
+    {
+      "a": "VG:DEVATA:JYA",
+      "a_containers": 1,
+      "b": "VG:DEVATA:RATHAGOPAH",
+      "b_containers": 1,
+      "cosine": 1.0,
+      "example_containers": [
+        "VG:RV:SAK:M06:S075"
+      ],
+      "jaccard": 1.0,
+      "support": 1,
+      "union_containers": 1
+    },
+    {
+      "a": "VG:DEVATA:JYA",
+      "a_containers": 1,
+      "b": "VG:DEVATA:RATHAH",
+      "b_containers": 2,
+      "cosine": 0.707107,
+      "example_containers": [
+        "VG:RV:SAK:M06:S075"
+      ],
+      "jaccard": 0.5,
+      "support": 1,
+      "union_containers": 2
+    },
+    {
+      "a": "VG:DEVATA:JYA",
+      "a_containers": 1,
+      "b": "VG:DEVATA:SARATHIH-RASMAYAH",
+      "b_containers": 1,
+      "cosine": 1.0,
+      "example_containers": [
+        "VG:RV:SAK:M06:S075"
+      ],
+      "jaccard": 1.0,
+      "support": 1,
+      "union_containers": 1
+    },
+    {
+      "a": "VG:DEVATA:JYA",
+      "a_containers": 1,
+      "b": "VG:DEVATA:SOMAVARUNAU",
+      "b_containers": 1,
+      "cosine": 1.0,
+      "example_containers": [
+        "VG:RV:SAK:M06:S075"
+      ],
+      "jaccard": 1.0,
+      "support": 1,
+      "union_containers": 1
+    },
+    {
+      "a": "VG:DEVATA:JYA",
+      "a_containers": 1,
+      "b": "VG:DEVATA:VARMA",
+      "b_containers": 1,
+      "cosine": 1.0,
+      "example_containers": [
+        "VG:RV:SAK:M06:S075"
+      ],
+      "jaccard": 1.0,
+      "support": 1,
+      "union_containers": 1
+    },
+    {
+      "a": "VG:DEVATA:KAH",
+      "a_containers": 2,
+      "b": "VG:DEVATA:SAVITA",
+      "b_containers": 14,
+      "cosine": 0.188982,
+      "example_containers": [
+        "VG:RV:SAK:M01:S024"
+      ],
+      "jaccard": 0.066667,
+      "support": 1,
+      "union_containers": 15
+    },
+    {
+      "a": "VG:DEVATA:KAH",
+      "a_containers": 2,
+      "b": "VG:DEVATA:VARUNAH",
+      "b_containers": 13,
+      "cosine": 0.196116,
+      "example_containers": [
+        "VG:RV:SAK:M01:S024"
+      ],
+      "jaccard": 0.071429,
+      "support": 1,
+      "union_containers": 14
+    },
+    {
+      "a": "VG:DEVATA:KSETRAPATIH",
+      "a_containers": 1,
+      "b": "VG:DEVATA:SITA",
+      "b_containers": 1,
+      "cosine": 1.0,
+      "example_containers": [
+        "VG:RV:SAK:M04:S057"
+      ],
+      "jaccard": 1.0,
+      "support": 1,
+      "union_containers": 1
+    },
+    {
+      "a": "VG:DEVATA:KSETRAPATIH",
+      "a_containers": 1,
+      "b": "VG:DEVATA:SUNAH",
+      "b_containers": 1,
+      "cosine": 1.0,
+      "example_containers": [
+        "VG:RV:SAK:M04:S057"
+      ],
+      "jaccard": 1.0,
+      "support": 1,
+      "union_containers": 1
+    },
+    {
+      "a": "VG:DEVATA:KSETRAPATIH",
+      "a_containers": 1,
+      "b": "VG:DEVATA:SUNASIRAU",
+      "b_containers": 1,
+      "cosine": 1.0,
+      "example_containers": [
+        "VG:RV:SAK:M04:S057"
+      ],
+      "jaccard": 1.0,
+      "support": 1,
+      "union_containers": 1
+    },
+    {
+      "a": "VG:DEVATA:MARUTAH",
+      "a_containers": 42,
+      "b": "VG:DEVATA:MARUTVANINDRAH",
+      "b_containers": 2,
+      "cosine": 0.109109,
+      "example_containers": [
+        "VG:RV:SAK:M01:S171"
+      ],
+      "jaccard": 0.023256,
+      "support": 1,
+      "union_containers": 43
+    },
+    {
+      "a": "VG:DEVATA:MARUTAH",
+      "a_containers": 42,
+      "b": "VG:DEVATA:MITRAVARUNAU",
+      "b_containers": 35,
+      "cosine": 0.078246,
+      "example_containers": [
+        "VG:RV:SAK:M01:S015",
+        "VG:RV:SAK:M01:S139",
+        "VG:RV:SAK:M02:S036"
+      ],
+      "jaccard": 0.040541,
+      "support": 3,
+      "union_containers": 74
+    },
+    {
+      "a": "VG:DEVATA:MARUTAH",
+      "a_containers": 42,
+      "b": "VG:DEVATA:PRTHIVYANTARIKSE",
+      "b_containers": 1,
+      "cosine": 0.154303,
+      "example_containers": [
+        "VG:RV:SAK:M07:S104"
+      ],
+      "jaccard": 0.02381,
+      "support": 1,
+      "union_containers": 42
+    },
+    {
+      "a": "VG:DEVATA:MARUTAH",
+      "a_containers": 42,
+      "b": "VG:DEVATA:PUSA",
+      "b_containers": 13,
+      "cosine": 0.042796,
+      "example_containers": [
+        "VG:RV:SAK:M06:S048"
+      ],
+      "jaccard": 0.018519,
+      "support": 1,
+      "union_containers": 54
+    },
+    {
+      "a": "VG:DEVATA:MARUTAH",
+      "a_containers": 42,
+      "b": "VG:DEVATA:RUDRAH",
+      "b_containers": 6,
+      "cosine": 0.062994,
+      "example_containers": [
+        "VG:RV:SAK:M07:S059"
+      ],
+      "jaccard": 0.021277,
+      "support": 1,
+      "union_containers": 47
+    },
+    {
+      "a": "VG:DEVATA:MARUTAH",
+      "a_containers": 42,
+      "b": "VG:DEVATA:SOMAH",
+      "b_containers": 12,
+      "cosine": 0.044544,
+      "example_containers": [
+        "VG:RV:SAK:M07:S104"
+      ],
+      "jaccard": 0.018868,
+      "support": 1,
+      "union_containers": 53
+    },
+    {
+      "a": "VG:DEVATA:MARUTAH",
+      "a_containers": 42,
+      "b": "VG:DEVATA:TVASTA",
+      "b_containers": 13,
+      "cosine": 0.085592,
+      "example_containers": [
+        "VG:RV:SAK:M01:S015",
+        "VG:RV:SAK:M02:S036"
+      ],
+      "jaccard": 0.037736,
+      "support": 2,
+      "union_containers": 53
+    },
+    {
+      "a": "VG:DEVATA:MARUTAH",
+      "a_containers": 42,
+      "b": "VG:DEVATA:VISVEDEVAH",
+      "b_containers": 86,
+      "cosine": 0.016639,
+      "example_containers": [
+        "VG:RV:SAK:M01:S139"
+      ],
+      "jaccard": 0.007874,
+      "support": 1,
+      "union_containers": 127
+    },
+    {
+      "a": "VG:DEVATA:MITRAH",
+      "a_containers": 2,
+      "b": "VG:DEVATA:MITRAVARUNAU",
+      "b_containers": 35,
+      "cosine": 0.119523,
+      "example_containers": [
+        "VG:RV:SAK:M01:S151"
+      ],
+      "jaccard": 0.027778,
+      "support": 1,
+      "union_containers": 36
+    },
+    {
+      "a": "VG:DEVATA:MITRAVARUNAU",
+      "a_containers": 35,
+      "b": "VG:DEVATA:NADYAH",
+      "b_containers": 3,
+      "cosine": 0.09759,
+      "example_containers": [
+        "VG:RV:SAK:M07:S050"
+      ],
+      "jaccard": 0.027027,
+      "support": 1,
+      "union_containers": 37
+    },
+    {
+      "a": "VG:DEVATA:MITRAVARUNAU",
+      "a_containers": 35,
+      "b": "VG:DEVATA:PAVAMANAH",
+      "b_containers": 1,
+      "cosine": 0.169031,
+      "example_containers": [
+        "VG:RV:SAK:M08:S101"
+      ],
+      "jaccard": 0.028571,
+      "support": 1,
+      "union_containers": 35
+    },
+    {
+      "a": "VG:DEVATA:MITRAVARUNAU",
+      "a_containers": 35,
+      "b": "VG:DEVATA:PUSA",
+      "b_containers": 13,
+      "cosine": 0.093761,
+      "example_containers": [
+        "VG:RV:SAK:M01:S023",
+        "VG:RV:SAK:M03:S062"
+      ],
+      "jaccard": 0.043478,
+      "support": 2,
+      "union_containers": 46
+    },
+    {
+      "a": "VG:DEVATA:MITRAVARUNAU",
+      "a_containers": 35,
+      "b": "VG:DEVATA:SARASVATI",
+      "b_containers": 7,
+      "cosine": 0.063888,
+      "example_containers": [
+        "VG:RV:SAK:M02:S041"
+      ],
+      "jaccard": 0.02439,
+      "support": 1,
+      "union_containers": 41
+    },
+    {
+      "a": "VG:DEVATA:MITRAVARUNAU",
+      "a_containers": 35,
+      "b": "VG:DEVATA:SAVITA",
+      "b_containers": 14,
+      "cosine": 0.045175,
+      "example_containers": [
+        "VG:RV:SAK:M03:S062"
+      ],
+      "jaccard": 0.020833,
+      "support": 1,
+      "union_containers": 48
+    },
+    {
+      "a": "VG:DEVATA:MITRAVARUNAU",
+      "a_containers": 35,
+      "b": "VG:DEVATA:SOMAH",
+      "b_containers": 12,
+      "cosine": 0.048795,
+      "example_containers": [
+        "VG:RV:SAK:M03:S062"
+      ],
+      "jaccard": 0.021739,
+      "support": 1,
+      "union_containers": 46
+    },
+    {
+      "a": "VG:DEVATA:MITRAVARUNAU",
+      "a_containers": 35,
+      "b": "VG:DEVATA:SURYAH",
+      "b_containers": 14,
+      "cosine": 0.225877,
+      "example_containers": [
+        "VG:RV:SAK:M07:S060",
+        "VG:RV:SAK:M07:S062",
+        "VG:RV:SAK:M07:S063",
+        "VG:RV:SAK:M07:S066",
+        "VG:RV:SAK:M08:S101"
+      ],
+      "jaccard": 0.113636,
+      "support": 5,
+      "union_containers": 44
+    },
+    {
+      "a": "VG:DEVATA:MITRAVARUNAU",
+      "a_containers": 35,
+      "b": "VG:DEVATA:TVASTA",
+      "b_containers": 13,
+      "cosine": 0.093761,
+      "example_containers": [
+        "VG:RV:SAK:M01:S015",
+        "VG:RV:SAK:M02:S036"
+      ],
+      "jaccard": 0.043478,
+      "support": 2,
+      "union_containers": 46
+    },
+    {
+      "a": "VG:DEVATA:MITRAVARUNAU",
+      "a_containers": 35,
+      "b": "VG:DEVATA:USAH",
+      "b_containers": 23,
+      "cosine": 0.035245,
+      "example_containers": [
+        "VG:RV:SAK:M08:S101"
+      ],
+      "jaccard": 0.017544,
+      "support": 1,
+      "union_containers": 57
+    },
+    {
+      "a": "VG:DEVATA:MITRAVARUNAU",
+      "a_containers": 35,
+      "b": "VG:DEVATA:VAYUH",
+      "b_containers": 17,
+      "cosine": 0.163984,
+      "example_containers": [
+        "VG:RV:SAK:M01:S002",
+        "VG:RV:SAK:M01:S023",
+        "VG:RV:SAK:M02:S041",
+        "VG:RV:SAK:M08:S101"
+      ],
+      "jaccard": 0.083333,
+      "support": 4,
+      "union_containers": 48
+    },
+    {
+      "a": "VG:DEVATA:MITRAVARUNAU",
+      "a_containers": 35,
+      "b": "VG:DEVATA:VISVEDEVAH",
+      "b_containers": 86,
+      "cosine": 0.091135,
+      "example_containers": [
+        "VG:RV:SAK:M01:S023",
+        "VG:RV:SAK:M01:S139",
+        "VG:RV:SAK:M02:S041",
+        "VG:RV:SAK:M07:S050",
+        "VG:RV:SAK:M08:S025"
+      ],
+      "jaccard": 0.043103,
+      "support": 5,
+      "union_containers": 116
+    },
+    {
+      "a": "VG:DEVATA:MRTYUH",
+      "a_containers": 1,
+      "b": "VG:DEVATA:TVASTA",
+      "b_containers": 13,
+      "cosine": 0.27735,
+      "example_containers": [
+        "VG:RV:SAK:M10:S018"
+      ],
+      "jaccard": 0.076923,
+      "support": 1,
+      "union_containers": 13
+    },
+    {
+      "a": "VG:DEVATA:NADYAH",
+      "a_containers": 3,
+      "b": "VG:DEVATA:VISVEDEVAH",
+      "b_containers": 86,
+      "cosine": 0.062257,
+      "example_containers": [
+        "VG:RV:SAK:M07:S050"
+      ],
+      "jaccard": 0.011364,
+      "support": 1,
+      "union_containers": 88
+    },
+    {
+      "a": "VG:DEVATA:PANAYAH",
+      "a_containers": 1,
+      "b": "VG:DEVATA:SARAMA",
+      "b_containers": 1,
+      "cosine": 1.0,
+      "example_containers": [
+        "VG:RV:SAK:M10:S108"
+      ],
+      "jaccard": 1.0,
+      "support": 1,
+      "union_containers": 1
+    },
+    {
+      "a": "VG:DEVATA:PATHYASVASTIH",
+      "a_containers": 1,
+      "b": "VG:DEVATA:VISVEDEVAH",
+      "b_containers": 86,
+      "cosine": 0.107833,
+      "example_containers": [
+        "VG:RV:SAK:M10:S063"
+      ],
+      "jaccard": 0.011628,
+      "support": 1,
+      "union_containers": 86
+    },
+    {
+      "a": "VG:DEVATA:PAVAMANAH",
+      "a_containers": 1,
+      "b": "VG:DEVATA:SURYAH",
+      "b_containers": 14,
+      "cosine": 0.267261,
+      "example_containers": [
+        "VG:RV:SAK:M08:S101"
+      ],
+      "jaccard": 0.071429,
+      "support": 1,
+      "union_containers": 14
+    },
+    {
+      "a": "VG:DEVATA:PAVAMANAH",
+      "a_containers": 1,
+      "b": "VG:DEVATA:USAH",
+      "b_containers": 23,
+      "cosine": 0.208514,
+      "example_containers": [
+        "VG:RV:SAK:M08:S101"
+      ],
+      "jaccard": 0.043478,
+      "support": 1,
+      "union_containers": 23
+    },
+    {
+      "a": "VG:DEVATA:PAVAMANAH",
+      "a_containers": 1,
+      "b": "VG:DEVATA:VAYUH",
+      "b_containers": 17,
+      "cosine": 0.242536,
+      "example_containers": [
+        "VG:RV:SAK:M08:S101"
+      ],
+      "jaccard": 0.058824,
+      "support": 1,
+      "union_containers": 17
+    },
+    {
+      "a": "VG:DEVATA:PAVAMANAH-SOMAH",
+      "a_containers": 113,
+      "b": "VG:DEVATA:PAVAMANO-AGNIH",
+      "b_containers": 2,
+      "cosine": 0.133038,
+      "example_containers": [
+        "VG:RV:SAK:M09:S066",
+        "VG:RV:SAK:M09:S067"
+      ],
+      "jaccard": 0.017699,
+      "support": 2,
+      "union_containers": 113
+    },
+    {
+      "a": "VG:DEVATA:PITARAH",
+      "a_containers": 2,
+      "b": "VG:DEVATA:SARAMEYAU-SVANAU",
+      "b_containers": 1,
+      "cosine": 0.707107,
+      "example_containers": [
+        "VG:RV:SAK:M10:S014"
+      ],
+      "jaccard": 0.5,
+      "support": 1,
+      "union_containers": 2
+    },
+    {
+      "a": "VG:DEVATA:PITARAH",
+      "a_containers": 2,
+      "b": "VG:DEVATA:YAMAH",
+      "b_containers": 3,
+      "cosine": 0.408248,
+      "example_containers": [
+        "VG:RV:SAK:M10:S014"
+      ],
+      "jaccard": 0.25,
+      "support": 1,
+      "union_containers": 4
+    },
+    {
+      "a": "VG:DEVATA:PRATODAH",
+      "a_containers": 1,
+      "b": "VG:DEVATA:RATHAGOPAH",
+      "b_containers": 1,
+      "cosine": 1.0,
+      "example_containers": [
+        "VG:RV:SAK:M06:S075"
+      ],
+      "jaccard": 1.0,
+      "support": 1,
+      "union_containers": 1
+    },
+    {
+      "a": "VG:DEVATA:PRATODAH",
+      "a_containers": 1,
+      "b": "VG:DEVATA:RATHAH",
+      "b_containers": 2,
+      "cosine": 0.707107,
+      "example_containers": [
+        "VG:RV:SAK:M06:S075"
+      ],
+      "jaccard": 0.5,
+      "support": 1,
+      "union_containers": 2
+    },
+    {
+      "a": "VG:DEVATA:PRATODAH",
+      "a_containers": 1,
+      "b": "VG:DEVATA:SARATHIH-RASMAYAH",
+      "b_containers": 1,
+      "cosine": 1.0,
+      "example_containers": [
+        "VG:RV:SAK:M06:S075"
+      ],
+      "jaccard": 1.0,
+      "support": 1,
+      "union_containers": 1
+    },
+    {
+      "a": "VG:DEVATA:PRATODAH",
+      "a_containers": 1,
+      "b": "VG:DEVATA:SOMAVARUNAU",
+      "b_containers": 1,
+      "cosine": 1.0,
+      "example_containers": [
+        "VG:RV:SAK:M06:S075"
+      ],
+      "jaccard": 1.0,
+      "support": 1,
+      "union_containers": 1
+    },
+    {
+      "a": "VG:DEVATA:PRATODAH",
+      "a_containers": 1,
+      "b": "VG:DEVATA:VARMA",
+      "b_containers": 1,
+      "cosine": 1.0,
+      "example_containers": [
+        "VG:RV:SAK:M06:S075"
+      ],
+      "jaccard": 1.0,
+      "support": 1,
+      "union_containers": 1
+    },
+    {
+      "a": "VG:DEVATA:PRTHIVI",
+      "a_containers": 2,
+      "b": "VG:DEVATA:SAVITA",
+      "b_containers": 14,
+      "cosine": 0.188982,
+      "example_containers": [
+        "VG:RV:SAK:M01:S022"
+      ],
+      "jaccard": 0.066667,
+      "support": 1,
+      "union_containers": 15
+    },
+    {
+      "a": "VG:DEVATA:PRTHIVI",
+      "a_containers": 2,
+      "b": "VG:DEVATA:VISNUH",
+      "b_containers": 6,
+      "cosine": 0.288675,
+      "example_containers": [
+        "VG:RV:SAK:M01:S022"
+      ],
+      "jaccard": 0.142857,
+      "support": 1,
+      "union_containers": 7
+    },
+    {
+      "a": "VG:DEVATA:PRTHIVYANTARIKSE",
+      "a_containers": 1,
+      "b": "VG:DEVATA:SOMAH",
+      "b_containers": 12,
+      "cosine": 0.288675,
+      "example_containers": [
+        "VG:RV:SAK:M07:S104"
+      ],
+      "jaccard": 0.083333,
+      "support": 1,
+      "union_containers": 12
+    },
+    {
+      "a": "VG:DEVATA:PUSA",
+      "a_containers": 13,
+      "b": "VG:DEVATA:SARANYUH",
+      "b_containers": 1,
+      "cosine": 0.27735,
+      "example_containers": [
+        "VG:RV:SAK:M10:S017"
+      ],
+      "jaccard": 0.076923,
+      "support": 1,
+      "union_containers": 13
+    },
+    {
+      "a": "VG:DEVATA:PUSA",
+      "a_containers": 13,
+      "b": "VG:DEVATA:SARASVATI",
+      "b_containers": 7,
+      "cosine": 0.104828,
+      "example_containers": [
+        "VG:RV:SAK:M10:S017"
+      ],
+      "jaccard": 0.052632,
+      "support": 1,
+      "union_containers": 19
+    },
+    {
+      "a": "VG:DEVATA:PUSA",
+      "a_containers": 13,
+      "b": "VG:DEVATA:SAVITA",
+      "b_containers": 14,
+      "cosine": 0.074125,
+      "example_containers": [
+        "VG:RV:SAK:M03:S062"
+      ],
+      "jaccard": 0.038462,
+      "support": 1,
+      "union_containers": 26
+    },
+    {
+      "a": "VG:DEVATA:PUSA",
+      "a_containers": 13,
+      "b": "VG:DEVATA:SOMAH",
+      "b_containers": 12,
+      "cosine": 0.080064,
+      "example_containers": [
+        "VG:RV:SAK:M03:S062"
+      ],
+      "jaccard": 0.041667,
+      "support": 1,
+      "union_containers": 24
+    },
+    {
+      "a": "VG:DEVATA:PUSA",
+      "a_containers": 13,
+      "b": "VG:DEVATA:VAYUH",
+      "b_containers": 17,
+      "cosine": 0.067267,
+      "example_containers": [
+        "VG:RV:SAK:M01:S023"
+      ],
+      "jaccard": 0.034483,
+      "support": 1,
+      "union_containers": 29
+    },
+    {
+      "a": "VG:DEVATA:PUSA",
+      "a_containers": 13,
+      "b": "VG:DEVATA:VISVEDEVAH",
+      "b_containers": 86,
+      "cosine": 0.029907,
+      "example_containers": [
+        "VG:RV:SAK:M01:S023"
+      ],
+      "jaccard": 0.010204,
+      "support": 1,
+      "union_containers": 98
+    },
+    {
+      "a": "VG:DEVATA:RAKA",
+      "a_containers": 1,
+      "b": "VG:DEVATA:SINIVALI",
+      "b_containers": 1,
+      "cosine": 1.0,
+      "example_containers": [
+        "VG:RV:SAK:M02:S032"
+      ],
+      "jaccard": 1.0,
+      "support": 1,
+      "union_containers": 1
+    },
+    {
+      "a": "VG:DEVATA:RATHAGOPAH",
+      "a_containers": 1,
+      "b": "VG:DEVATA:RATHAH",
+      "b_containers": 2,
+      "cosine": 0.707107,
+      "example_containers": [
+        "VG:RV:SAK:M06:S075"
+      ],
+      "jaccard": 0.5,
+      "support": 1,
+      "union_containers": 2
+    },
+    {
+      "a": "VG:DEVATA:RATHAGOPAH",
+      "a_containers": 1,
+      "b": "VG:DEVATA:SARATHIH-RASMAYAH",
+      "b_containers": 1,
+      "cosine": 1.0,
+      "example_containers": [
+        "VG:RV:SAK:M06:S075"
+      ],
+      "jaccard": 1.0,
+      "support": 1,
+      "union_containers": 1
+    },
+    {
+      "a": "VG:DEVATA:RATHAGOPAH",
+      "a_containers": 1,
+      "b": "VG:DEVATA:SOMAVARUNAU",
+      "b_containers": 1,
+      "cosine": 1.0,
+      "example_containers": [
+        "VG:RV:SAK:M06:S075"
+      ],
+      "jaccard": 1.0,
+      "support": 1,
+      "union_containers": 1
+    },
+    {
+      "a": "VG:DEVATA:RATHAGOPAH",
+      "a_containers": 1,
+      "b": "VG:DEVATA:VARMA",
+      "b_containers": 1,
+      "cosine": 1.0,
+      "example_containers": [
+        "VG:RV:SAK:M06:S075"
+      ],
+      "jaccard": 1.0,
+      "support": 1,
+      "union_containers": 1
+    },
+    {
+      "a": "VG:DEVATA:RATHAH",
+      "a_containers": 2,
+      "b": "VG:DEVATA:SARATHIH-RASMAYAH",
+      "b_containers": 1,
+      "cosine": 0.707107,
+      "example_containers": [
+        "VG:RV:SAK:M06:S075"
+      ],
+      "jaccard": 0.5,
+      "support": 1,
+      "union_containers": 2
+    },
+    {
+      "a": "VG:DEVATA:RATHAH",
+      "a_containers": 2,
+      "b": "VG:DEVATA:SOMAH",
+      "b_containers": 12,
+      "cosine": 0.204124,
+      "example_containers": [
+        "VG:RV:SAK:M06:S047"
+      ],
+      "jaccard": 0.076923,
+      "support": 1,
+      "union_containers": 13
+    },
+    {
+      "a": "VG:DEVATA:RATHAH",
+      "a_containers": 2,
+      "b": "VG:DEVATA:SOMAVARUNAU",
+      "b_containers": 1,
+      "cosine": 0.707107,
+      "example_containers": [
+        "VG:RV:SAK:M06:S075"
+      ],
+      "jaccard": 0.5,
+      "support": 1,
+      "union_containers": 2
+    },
+    {
+      "a": "VG:DEVATA:RATHAH",
+      "a_containers": 2,
+      "b": "VG:DEVATA:VARMA",
+      "b_containers": 1,
+      "cosine": 0.707107,
+      "example_containers": [
+        "VG:RV:SAK:M06:S075"
+      ],
+      "jaccard": 0.5,
+      "support": 1,
+      "union_containers": 2
+    },
+    {
+      "a": "VG:DEVATA:RATHANGANI",
+      "a_containers": 1,
+      "b": "VG:DEVATA:SASARPARI-VAK",
+      "b_containers": 1,
+      "cosine": 1.0,
+      "example_containers": [
+        "VG:RV:SAK:M03:S053"
+      ],
+      "jaccard": 1.0,
+      "support": 1,
+      "union_containers": 1
+    },
+    {
+      "a": "VG:DEVATA:RBHAVAH",
+      "a_containers": 13,
+      "b": "VG:DEVATA:VISVEDEVAH",
+      "b_containers": 86,
+      "cosine": 0.029907,
+      "example_containers": [
+        "VG:RV:SAK:M07:S048"
+      ],
+      "jaccard": 0.010204,
+      "support": 1,
+      "union_containers": 98
+    },
+    {
+      "a": "VG:DEVATA:RUDRAH",
+      "a_containers": 6,
+      "b": "VG:DEVATA:SOMAH",
+      "b_containers": 12,
+      "cosine": 0.117851,
+      "example_containers": [
+        "VG:RV:SAK:M01:S043"
+      ],
+      "jaccard": 0.058824,
+      "support": 1,
+      "union_containers": 17
+    },
+    {
+      "a": "VG:DEVATA:RUDRAH",
+      "a_containers": 6,
+      "b": "VG:DEVATA:VISVEDEVAH",
+      "b_containers": 86,
+      "cosine": 0.044023,
+      "example_containers": [
+        "VG:RV:SAK:M05:S042"
+      ],
+      "jaccard": 0.010989,
+      "support": 1,
+      "union_containers": 91
+    },
+    {
+      "a": "VG:DEVATA:SADHYAH",
+      "a_containers": 1,
+      "b": "VG:DEVATA:SARASVATI",
+      "b_containers": 7,
+      "cosine": 0.377964,
+      "example_containers": [
+        "VG:RV:SAK:M01:S164"
+      ],
+      "jaccard": 0.142857,
+      "support": 1,
+      "union_containers": 7
+    },
+    {
+      "a": "VG:DEVATA:SADHYAH",
+      "a_containers": 1,
+      "b": "VG:DEVATA:SOMAH",
+      "b_containers": 12,
+      "cosine": 0.288675,
+      "example_containers": [
+        "VG:RV:SAK:M01:S164"
+      ],
+      "jaccard": 0.083333,
+      "support": 1,
+      "union_containers": 12
+    },
+    {
+      "a": "VG:DEVATA:SADHYAH",
+      "a_containers": 1,
+      "b": "VG:DEVATA:SURYAH",
+      "b_containers": 14,
+      "cosine": 0.267261,
+      "example_containers": [
+        "VG:RV:SAK:M01:S164"
+      ],
+      "jaccard": 0.071429,
+      "support": 1,
+      "union_containers": 14
+    },
+    {
+      "a": "VG:DEVATA:SADHYAH",
+      "a_containers": 1,
+      "b": "VG:DEVATA:VAK",
+      "b_containers": 2,
+      "cosine": 0.707107,
+      "example_containers": [
+        "VG:RV:SAK:M01:S164"
+      ],
+      "jaccard": 0.5,
+      "support": 1,
+      "union_containers": 2
+    },
+    {
+      "a": "VG:DEVATA:SADHYAH",
+      "a_containers": 1,
+      "b": "VG:DEVATA:VAK-APAH",
+      "b_containers": 1,
+      "cosine": 1.0,
+      "example_containers": [
+        "VG:RV:SAK:M01:S164"
+      ],
+      "jaccard": 1.0,
+      "support": 1,
+      "union_containers": 1
+    },
+    {
+      "a": "VG:DEVATA:SADHYAH",
+      "a_containers": 1,
+      "b": "VG:DEVATA:VISVEDEVAH",
+      "b_containers": 86,
+      "cosine": 0.107833,
+      "example_containers": [
+        "VG:RV:SAK:M01:S164"
+      ],
+      "jaccard": 0.011628,
+      "support": 1,
+      "union_containers": 86
+    },
+    {
+      "a": "VG:DEVATA:SARAMEYAU-SVANAU",
+      "a_containers": 1,
+      "b": "VG:DEVATA:YAMAH",
+      "b_containers": 3,
+      "cosine": 0.57735,
+      "example_containers": [
+        "VG:RV:SAK:M10:S014"
+      ],
+      "jaccard": 0.333333,
+      "support": 1,
+      "union_containers": 3
+    },
+    {
+      "a": "VG:DEVATA:SARANYUH",
+      "a_containers": 1,
+      "b": "VG:DEVATA:SARASVATI",
+      "b_containers": 7,
+      "cosine": 0.377964,
+      "example_containers": [
+        "VG:RV:SAK:M10:S017"
+      ],
+      "jaccard": 0.142857,
+      "support": 1,
+      "union_containers": 7
+    },
+    {
+      "a": "VG:DEVATA:SARASVAN",
+      "a_containers": 2,
+      "b": "VG:DEVATA:SARASVATI",
+      "b_containers": 7,
+      "cosine": 0.534522,
+      "example_containers": [
+        "VG:RV:SAK:M07:S095",
+        "VG:RV:SAK:M07:S096"
+      ],
+      "jaccard": 0.285714,
+      "support": 2,
+      "union_containers": 7
+    },
+    {
+      "a": "VG:DEVATA:SARASVATI",
+      "a_containers": 7,
+      "b": "VG:DEVATA:SOMAH",
+      "b_containers": 12,
+      "cosine": 0.109109,
+      "example_containers": [
+        "VG:RV:SAK:M01:S164"
+      ],
+      "jaccard": 0.055556,
+      "support": 1,
+      "union_containers": 18
+    },
+    {
+      "a": "VG:DEVATA:SARASVATI",
+      "a_containers": 7,
+      "b": "VG:DEVATA:SURYAH",
+      "b_containers": 14,
+      "cosine": 0.101015,
+      "example_containers": [
+        "VG:RV:SAK:M01:S164"
+      ],
+      "jaccard": 0.05,
+      "support": 1,
+      "union_containers": 20
+    },
+    {
+      "a": "VG:DEVATA:SARASVATI",
+      "a_containers": 7,
+      "b": "VG:DEVATA:VAK",
+      "b_containers": 2,
+      "cosine": 0.267261,
+      "example_containers": [
+        "VG:RV:SAK:M01:S164"
+      ],
+      "jaccard": 0.125,
+      "support": 1,
+      "union_containers": 8
+    },
+    {
+      "a": "VG:DEVATA:SARASVATI",
+      "a_containers": 7,
+      "b": "VG:DEVATA:VAK-APAH",
+      "b_containers": 1,
+      "cosine": 0.377964,
+      "example_containers": [
+        "VG:RV:SAK:M01:S164"
+      ],
+      "jaccard": 0.142857,
+      "support": 1,
+      "union_containers": 7
+    },
+    {
+      "a": "VG:DEVATA:SARASVATI",
+      "a_containers": 7,
+      "b": "VG:DEVATA:VAYUH",
+      "b_containers": 17,
+      "cosine": 0.09167,
+      "example_containers": [
+        "VG:RV:SAK:M02:S041"
+      ],
+      "jaccard": 0.043478,
+      "support": 1,
+      "union_containers": 23
+    },
+    {
+      "a": "VG:DEVATA:SARASVATI",
+      "a_containers": 7,
+      "b": "VG:DEVATA:VISVEDEVAH",
+      "b_containers": 86,
+      "cosine": 0.122271,
+      "example_containers": [
+        "VG:RV:SAK:M01:S003",
+        "VG:RV:SAK:M01:S164",
+        "VG:RV:SAK:M02:S041"
+      ],
+      "jaccard": 0.033333,
+      "support": 3,
+      "union_containers": 90
+    },
+    {
+      "a": "VG:DEVATA:SARASVATI-ILA-BHARATI",
+      "a_containers": 9,
+      "b": "VG:DEVATA:TVASTA",
+      "b_containers": 13,
+      "cosine": 0.83205,
+      "example_containers": [
+        "VG:RV:SAK:M01:S142",
+        "VG:RV:SAK:M01:S188",
+        "VG:RV:SAK:M02:S003",
+        "VG:RV:SAK:M03:S004",
+        "VG:RV:SAK:M05:S005"
+      ],
+      "jaccard": 0.692308,
+      "support": 9,
+      "union_containers": 13
+    },
+    {
+      "a": "VG:DEVATA:SARASVATI-ILA-BHARATI",
+      "a_containers": 9,
+      "b": "VG:DEVATA:USASANAKTA",
+      "b_containers": 10,
+      "cosine": 0.948683,
+      "example_containers": [
+        "VG:RV:SAK:M01:S142",
+        "VG:RV:SAK:M01:S188",
+        "VG:RV:SAK:M02:S003",
+        "VG:RV:SAK:M03:S004",
+        "VG:RV:SAK:M05:S005"
+      ],
+      "jaccard": 0.9,
+      "support": 9,
+      "union_containers": 10
+    },
+    {
+      "a": "VG:DEVATA:SARASVATI-ILA-BHARATI",
+      "a_containers": 9,
+      "b": "VG:DEVATA:VANASPATIH",
+      "b_containers": 10,
+      "cosine": 0.948683,
+      "example_containers": [
+        "VG:RV:SAK:M01:S142",
+        "VG:RV:SAK:M01:S188",
+        "VG:RV:SAK:M02:S003",
+        "VG:RV:SAK:M03:S004",
+        "VG:RV:SAK:M05:S005"
+      ],
+      "jaccard": 0.9,
+      "support": 9,
+      "union_containers": 10
+    },
+    {
+      "a": "VG:DEVATA:SARATHIH-RASMAYAH",
+      "a_containers": 1,
+      "b": "VG:DEVATA:SOMAVARUNAU",
+      "b_containers": 1,
+      "cosine": 1.0,
+      "example_containers": [
+        "VG:RV:SAK:M06:S075"
+      ],
+      "jaccard": 1.0,
+      "support": 1,
+      "union_containers": 1
+    },
+    {
+      "a": "VG:DEVATA:SARATHIH-RASMAYAH",
+      "a_containers": 1,
+      "b": "VG:DEVATA:VARMA",
+      "b_containers": 1,
+      "cosine": 1.0,
+      "example_containers": [
+        "VG:RV:SAK:M06:S075"
+      ],
+      "jaccard": 1.0,
+      "support": 1,
+      "union_containers": 1
+    },
+    {
+      "a": "VG:DEVATA:SAVITA",
+      "a_containers": 14,
+      "b": "VG:DEVATA:SOMAH",
+      "b_containers": 12,
+      "cosine": 0.077152,
+      "example_containers": [
+        "VG:RV:SAK:M03:S062"
+      ],
+      "jaccard": 0.04,
+      "support": 1,
+      "union_containers": 25
+    },
+    {
+      "a": "VG:DEVATA:SAVITA",
+      "a_containers": 14,
+      "b": "VG:DEVATA:VAJINAH",
+      "b_containers": 1,
+      "cosine": 0.267261,
+      "example_containers": [
+        "VG:RV:SAK:M07:S038"
+      ],
+      "jaccard": 0.071429,
+      "support": 1,
+      "union_containers": 14
+    },
+    {
+      "a": "VG:DEVATA:SAVITA",
+      "a_containers": 14,
+      "b": "VG:DEVATA:VARUNAH",
+      "b_containers": 13,
+      "cosine": 0.074125,
+      "example_containers": [
+        "VG:RV:SAK:M01:S024"
+      ],
+      "jaccard": 0.038462,
+      "support": 1,
+      "union_containers": 26
+    },
+    {
+      "a": "VG:DEVATA:SAVITA",
+      "a_containers": 14,
+      "b": "VG:DEVATA:VISNUH",
+      "b_containers": 6,
+      "cosine": 0.109109,
+      "example_containers": [
+        "VG:RV:SAK:M01:S022"
+      ],
+      "jaccard": 0.052632,
+      "support": 1,
+      "union_containers": 19
+    },
+    {
+      "a": "VG:DEVATA:SAVITRI-SURYA",
+      "a_containers": 1,
+      "b": "VG:DEVATA:SOMAH",
+      "b_containers": 12,
+      "cosine": 0.288675,
+      "example_containers": [
+        "VG:RV:SAK:M10:S085"
+      ],
+      "jaccard": 0.083333,
+      "support": 1,
+      "union_containers": 12
+    },
+    {
+      "a": "VG:DEVATA:SAVITRI-SURYA",
+      "a_containers": 1,
+      "b": "VG:DEVATA:SOMARKAU",
+      "b_containers": 1,
+      "cosine": 1.0,
+      "example_containers": [
+        "VG:RV:SAK:M10:S085"
+      ],
+      "jaccard": 1.0,
+      "support": 1,
+      "union_containers": 1
+    },
+    {
+      "a": "VG:DEVATA:SITA",
+      "a_containers": 1,
+      "b": "VG:DEVATA:SUNAH",
+      "b_containers": 1,
+      "cosine": 1.0,
+      "example_containers": [
+        "VG:RV:SAK:M04:S057"
+      ],
+      "jaccard": 1.0,
+      "support": 1,
+      "union_containers": 1
+    },
+    {
+      "a": "VG:DEVATA:SITA",
+      "a_containers": 1,
+      "b": "VG:DEVATA:SUNASIRAU",
+      "b_containers": 1,
+      "cosine": 1.0,
+      "example_containers": [
+        "VG:RV:SAK:M04:S057"
+      ],
+      "jaccard": 1.0,
+      "support": 1,
+      "union_containers": 1
+    },
+    {
+      "a": "VG:DEVATA:SOMAH",
+      "a_containers": 12,
+      "b": "VG:DEVATA:SOMARKAU",
+      "b_containers": 1,
+      "cosine": 0.288675,
+      "example_containers": [
+        "VG:RV:SAK:M10:S085"
+      ],
+      "jaccard": 0.083333,
+      "support": 1,
+      "union_containers": 12
+    },
+    {
+      "a": "VG:DEVATA:SOMAH",
+      "a_containers": 12,
+      "b": "VG:DEVATA:SURYAH",
+      "b_containers": 14,
+      "cosine": 0.077152,
+      "example_containers": [
+        "VG:RV:SAK:M01:S164"
+      ],
+      "jaccard": 0.04,
+      "support": 1,
+      "union_containers": 25
+    },
+    {
+      "a": "VG:DEVATA:SOMAH",
+      "a_containers": 12,
+      "b": "VG:DEVATA:ULUKHALAM",
+      "b_containers": 1,
+      "cosine": 0.288675,
+      "example_containers": [
+        "VG:RV:SAK:M01:S028"
+      ],
+      "jaccard": 0.083333,
+      "support": 1,
+      "union_containers": 12
+    },
+    {
+      "a": "VG:DEVATA:SOMAH",
+      "a_containers": 12,
+      "b": "VG:DEVATA:ULUKHALAMUSALE",
+      "b_containers": 1,
+      "cosine": 0.288675,
+      "example_containers": [
+        "VG:RV:SAK:M01:S028"
+      ],
+      "jaccard": 0.083333,
+      "support": 1,
+      "union_containers": 12
+    },
+    {
+      "a": "VG:DEVATA:SOMAH",
+      "a_containers": 12,
+      "b": "VG:DEVATA:VAK",
+      "b_containers": 2,
+      "cosine": 0.204124,
+      "example_containers": [
+        "VG:RV:SAK:M01:S164"
+      ],
+      "jaccard": 0.076923,
+      "support": 1,
+      "union_containers": 13
+    },
+    {
+      "a": "VG:DEVATA:SOMAH",
+      "a_containers": 12,
+      "b": "VG:DEVATA:VAK-APAH",
+      "b_containers": 1,
+      "cosine": 0.288675,
+      "example_containers": [
+        "VG:RV:SAK:M01:S164"
+      ],
+      "jaccard": 0.083333,
+      "support": 1,
+      "union_containers": 12
+    },
+    {
+      "a": "VG:DEVATA:SOMAH",
+      "a_containers": 12,
+      "b": "VG:DEVATA:VARUNAH",
+      "b_containers": 13,
+      "cosine": 0.080064,
+      "example_containers": [
+        "VG:RV:SAK:M10:S124"
+      ],
+      "jaccard": 0.041667,
+      "support": 1,
+      "union_containers": 24
+    },
+    {
+      "a": "VG:DEVATA:SOMAH",
+      "a_containers": 12,
+      "b": "VG:DEVATA:VISVEDEVAH",
+      "b_containers": 86,
+      "cosine": 0.031129,
+      "example_containers": [
+        "VG:RV:SAK:M01:S164"
+      ],
+      "jaccard": 0.010309,
+      "support": 1,
+      "union_containers": 97
+    },
+    {
+      "a": "VG:DEVATA:SOMAVARUNAU",
+      "a_containers": 1,
+      "b": "VG:DEVATA:VARMA",
+      "b_containers": 1,
+      "cosine": 1.0,
+      "example_containers": [
+        "VG:RV:SAK:M06:S075"
+      ],
+      "jaccard": 1.0,
+      "support": 1,
+      "union_containers": 1
+    },
+    {
+      "a": "VG:DEVATA:SUNAH",
+      "a_containers": 1,
+      "b": "VG:DEVATA:SUNASIRAU",
+      "b_containers": 1,
+      "cosine": 1.0,
+      "example_containers": [
+        "VG:RV:SAK:M04:S057"
+      ],
+      "jaccard": 1.0,
+      "support": 1,
+      "union_containers": 1
+    },
+    {
+      "a": "VG:DEVATA:SURYAH",
+      "a_containers": 14,
+      "b": "VG:DEVATA:USAH",
+      "b_containers": 23,
+      "cosine": 0.055728,
+      "example_containers": [
+        "VG:RV:SAK:M08:S101"
+      ],
+      "jaccard": 0.027778,
+      "support": 1,
+      "union_containers": 36
+    },
+    {
+      "a": "VG:DEVATA:SURYAH",
+      "a_containers": 14,
+      "b": "VG:DEVATA:VAK",
+      "b_containers": 2,
+      "cosine": 0.188982,
+      "example_containers": [
+        "VG:RV:SAK:M01:S164"
+      ],
+      "jaccard": 0.066667,
+      "support": 1,
+      "union_containers": 15
+    },
+    {
+      "a": "VG:DEVATA:SURYAH",
+      "a_containers": 14,
+      "b": "VG:DEVATA:VAK-APAH",
+      "b_containers": 1,
+      "cosine": 0.267261,
+      "example_containers": [
+        "VG:RV:SAK:M01:S164"
+      ],
+      "jaccard": 0.071429,
+      "support": 1,
+      "union_containers": 14
+    },
+    {
+      "a": "VG:DEVATA:SURYAH",
+      "a_containers": 14,
+      "b": "VG:DEVATA:VAYUH",
+      "b_containers": 17,
+      "cosine": 0.06482,
+      "example_containers": [
+        "VG:RV:SAK:M08:S101"
+      ],
+      "jaccard": 0.033333,
+      "support": 1,
+      "union_containers": 30
+    },
+    {
+      "a": "VG:DEVATA:SURYAH",
+      "a_containers": 14,
+      "b": "VG:DEVATA:VISVEDEVAH",
+      "b_containers": 86,
+      "cosine": 0.02882,
+      "example_containers": [
+        "VG:RV:SAK:M01:S164"
+      ],
+      "jaccard": 0.010101,
+      "support": 1,
+      "union_containers": 99
+    },
+    {
+      "a": "VG:DEVATA:TVASTA",
+      "a_containers": 13,
+      "b": "VG:DEVATA:USASANAKTA",
+      "b_containers": 10,
+      "cosine": 0.877058,
+      "example_containers": [
+        "VG:RV:SAK:M01:S013",
+        "VG:RV:SAK:M01:S142",
+        "VG:RV:SAK:M01:S188",
+        "VG:RV:SAK:M02:S003",
+        "VG:RV:SAK:M03:S004"
+      ],
+      "jaccard": 0.769231,
+      "support": 10,
+      "union_containers": 13
+    },
+    {
+      "a": "VG:DEVATA:TVASTA",
+      "a_containers": 13,
+      "b": "VG:DEVATA:VANASPATIH",
+      "b_containers": 10,
+      "cosine": 0.877058,
+      "example_containers": [
+        "VG:RV:SAK:M01:S013",
+        "VG:RV:SAK:M01:S142",
+        "VG:RV:SAK:M01:S188",
+        "VG:RV:SAK:M02:S003",
+        "VG:RV:SAK:M03:S004"
+      ],
+      "jaccard": 0.769231,
+      "support": 10,
+      "union_containers": 13
+    },
+    {
+      "a": "VG:DEVATA:ULUKHALAM",
+      "a_containers": 1,
+      "b": "VG:DEVATA:ULUKHALAMUSALE",
+      "b_containers": 1,
+      "cosine": 1.0,
+      "example_containers": [
+        "VG:RV:SAK:M01:S028"
+      ],
+      "jaccard": 1.0,
+      "support": 1,
+      "union_containers": 1
+    },
+    {
+      "a": "VG:DEVATA:USAH",
+      "a_containers": 23,
+      "b": "VG:DEVATA:VAYUH",
+      "b_containers": 17,
+      "cosine": 0.050572,
+      "example_containers": [
+        "VG:RV:SAK:M08:S101"
+      ],
+      "jaccard": 0.025641,
+      "support": 1,
+      "union_containers": 39
+    },
+    {
+      "a": "VG:DEVATA:USASANAKTA",
+      "a_containers": 10,
+      "b": "VG:DEVATA:VANASPATIH",
+      "b_containers": 10,
+      "cosine": 1.0,
+      "example_containers": [
+        "VG:RV:SAK:M01:S013",
+        "VG:RV:SAK:M01:S142",
+        "VG:RV:SAK:M01:S188",
+        "VG:RV:SAK:M02:S003",
+        "VG:RV:SAK:M03:S004"
+      ],
+      "jaccard": 1.0,
+      "support": 10,
+      "union_containers": 10
+    },
+    {
+      "a": "VG:DEVATA:VAK",
+      "a_containers": 2,
+      "b": "VG:DEVATA:VAK-APAH",
+      "b_containers": 1,
+      "cosine": 0.707107,
+      "example_containers": [
+        "VG:RV:SAK:M01:S164"
+      ],
+      "jaccard": 0.5,
+      "support": 1,
+      "union_containers": 2
+    },
+    {
+      "a": "VG:DEVATA:VAK",
+      "a_containers": 2,
+      "b": "VG:DEVATA:VISVEDEVAH",
+      "b_containers": 86,
+      "cosine": 0.076249,
+      "example_containers": [
+        "VG:RV:SAK:M01:S164"
+      ],
+      "jaccard": 0.011494,
+      "support": 1,
+      "union_containers": 87
+    },
+    {
+      "a": "VG:DEVATA:VAK-APAH",
+      "a_containers": 1,
+      "b": "VG:DEVATA:VISVEDEVAH",
+      "b_containers": 86,
+      "cosine": 0.107833,
+      "example_containers": [
+        "VG:RV:SAK:M01:S164"
+      ],
+      "jaccard": 0.011628,
+      "support": 1,
+      "union_containers": 86
+    },
+    {
+      "a": "VG:DEVATA:VARUNAH",
+      "a_containers": 13,
+      "b": "VG:DEVATA:VISVEDEVAH",
+      "b_containers": 86,
+      "cosine": 0.029907,
+      "example_containers": [
+        "VG:RV:SAK:M08:S069"
+      ],
+      "jaccard": 0.010204,
+      "support": 1,
+      "union_containers": 98
+    },
+    {
+      "a": "VG:DEVATA:VAYUH",
+      "a_containers": 17,
+      "b": "VG:DEVATA:VISVEDEVAH",
+      "b_containers": 86,
+      "cosine": 0.07846,
+      "example_containers": [
+        "VG:RV:SAK:M01:S023",
+        "VG:RV:SAK:M02:S041",
+        "VG:RV:SAK:M05:S051"
+      ],
+      "jaccard": 0.03,
+      "support": 3,
+      "union_containers": 100
+    },
+    {
+      "a": "VG:DEVATA:YAMAH",
+      "a_containers": 3,
+      "b": "VG:DEVATA:YAMI",
+      "b_containers": 1,
+      "cosine": 0.57735,
+      "example_containers": [
+        "VG:RV:SAK:M10:S010"
+      ],
+      "jaccard": 0.333333,
+      "support": 1,
+      "union_containers": 3
+    }
+  ],
+  "edges": 475,
+  "nodes": 157,
+  "population_variant": "V-RULED",
+  "projection": "RV_CODEDICATION_HYMN_V1"
+}

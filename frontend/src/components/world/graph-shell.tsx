@@ -163,6 +163,19 @@ export function GraphShell() {
      * into the part of the canvas a reader can actually see.
      */
     const [safeArea, setSafeArea] = useState({ top: 0, right: 0, bottom: 0, left: 0 });
+    /**
+     * Where the chrome is standing on the stage, in canvas coordinates.
+     *
+     * Separate from `safeArea` above, and the separation is the point. The safe area is what
+     * the *camera* centres inside, and it is deliberately top-and-bottom only: on a wide
+     * screen the panels are rails at the sides, and shifting the camera sideways for them is
+     * worse than leaving it. These are what the *label layer* must not place under, which is
+     * a different question with a different answer - a phrase behind a rail is not
+     * off-centre, it is gone.
+     */
+    const [chromeBoxes, setChromeBoxes] = useState<
+        ReadonlyArray<{ x: number; y: number; w: number; h: number }>
+    >([]);
     /** The stage, measured. Written by the same observer that measures the chrome. */
     const [stageSize, setStageSize] = useState({ width: 0, height: 0 });
     const stageRef = useRef<HTMLDivElement>(null);
@@ -464,6 +477,47 @@ export function GraphShell() {
                     ? current
                     : { width: Math.round(bounds.width), height: Math.round(bounds.height) },
             );
+
+            /*
+             * Where the chrome stands, in canvas coordinates, at every width.
+             *
+             * Unlike the safe area below this is not gated on `narrow`: the defect it fixes is
+             * a *wide*-screen one. At 1440 the control rail is a 368x233 block at the top left
+             * and the subject panel is a 352-wide rail on the right, and the label layer's
+             * only placement bound was the canvas rectangle - so a phrase could be, and was,
+             * laid behind them. Measured over four subjects: one phrase in 102 landed under
+             * the chrome, drawn and composited and completely invisible.
+             */
+            const boxOf = (selector: string) => {
+                const node = stage.querySelector(selector);
+                if (!node) return null;
+                const box = node.getBoundingClientRect();
+                if (box.width === 0 || box.height === 0) return null;
+                return {
+                    x: Math.round(box.x - bounds.x),
+                    y: Math.round(box.y - bounds.y),
+                    w: Math.round(box.width),
+                    h: Math.round(box.height),
+                };
+            };
+            const boxes = [".va-graph-chrome", ".va-world-panel", ".va-relationship"]
+                .map(boxOf)
+                .filter((box): box is { x: number; y: number; w: number; h: number } =>
+                    box !== null,
+                );
+            setChromeBoxes((current) =>
+                current.length === boxes.length &&
+                current.every(
+                    (was, i) =>
+                        was.x === boxes[i].x &&
+                        was.y === boxes[i].y &&
+                        was.w === boxes[i].w &&
+                        was.h === boxes[i].h,
+                )
+                    ? current
+                    : boxes,
+            );
+
             const narrow = bounds.width < 768;
             if (!narrow) {
                 setSafeArea((current) =>
@@ -562,6 +616,7 @@ export function GraphShell() {
                      */
                     onTap={(node) => node !== null && selectNode(node, "reader:select-subject")}
                     selectedIndex={selectedIndex}
+                    chromeBoxes={chromeBoxes}
                     pathHops={pathHops}
                     pathNodes={pathNodes}
                     safeArea={safeArea}
@@ -575,6 +630,7 @@ export function GraphShell() {
                         decided that it is the one drawing. World and Focus are the same two
                         semantic levels here as in the spatial view. */}
                     <PlanarView
+                        chromeBoxes={chromeBoxes}
                         labels={labels}
                         /* The safe area was measured for both renderers and passed to one. So in
                            the planar view a chosen subject was centred in the whole canvas, which
@@ -583,8 +639,27 @@ export function GraphShell() {
                         onInspectEdge={inspectEdge}
                         inspectedEdge={inspectedEdge}
                         onSelect={(node) => selectNode(node, "reader:select-subject")}
+                        path={pathNodes}
+                        pathHops={pathHops}
                         root={selectedIndex}
-                        scope={state.view === "FOCUS" && selectedIndex !== null ? "focus" : "world"}
+                        /*
+                         * Three views, three scopes.
+                         *
+                         * This read `view === "FOCUS" && selected ? "focus" : "world"`, so
+                         * PATH fell through the ternary to the world map: a reader who traced
+                         * Agni to Indra and then switched to 2D was shown the whole corpus,
+                         * with the route nowhere on the canvas and nothing anywhere saying
+                         * so. The spatial renderer had drawn routes since the feature
+                         * shipped, which is exactly why it went unnoticed - the capability
+                         * worked, in one of its two renderers.
+                         */
+                        scope={
+                            state.view === "PATH"
+                                ? "path"
+                                : state.view === "FOCUS" && selectedIndex !== null
+                                  ? "focus"
+                                  : "world"
+                        }
                         world={world}
                     />
                 </div>

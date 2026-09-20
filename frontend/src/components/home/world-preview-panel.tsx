@@ -49,7 +49,7 @@ export function WorldPreviewPanel({ slice }: { slice: HeroSlice | null }) {
                         <p>
                             {slice.nodes.length} subjects from the corpus, drawn as a spatial field
                             with {slice.edges.length} of the relationships between them. This is a
-                            small part of a graph of 35,370 subjects.
+                            small part of the whole graph.
                         </p>
                         <ul>
                             {slice.nodes.map((node) => (

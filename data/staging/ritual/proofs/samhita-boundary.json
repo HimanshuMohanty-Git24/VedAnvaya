@@ -1,0 +1,79 @@
+{
+  "why_this_file_exists": "The campaign's hardest boundary is that supplementary ritual literature must not be folded into the four core Samhita recensions' counts. An assertion that it was not would be worthless, so the four Work nodes and the per-Veda mantra counts are re-read from the live store after the build and compared against the figures Wave 1's closure recorded.",
+  "supplementary_side": {
+    "works": 18,
+    "cited_lines_available": 61393,
+    "loci_actually_cited": 12393,
+    "identity_scheme": "urn:vedagraph:supplementary-work:<slug> and urn:vedagraph:supplementary-passage:<slug>:<citation>, each with a UUIDv5 from namespace 7c8cde94-2bc0-50e2-8819-568ae65a3ec4 via src/vedagraph/identity.py. No random id anywhere.",
+    "keys_share_no_namespace_with_the_samhitas": true,
+    "samhita_key_prefixes": [
+      "VG:RV:",
+      "VG:SV:",
+      "VG:YV:",
+      "VG:AV:"
+    ],
+    "supplementary_key_prefixes": [
+      "VG:SUPPWORK:",
+      "VG:SUPP:",
+      "VG:RITESTEP:"
+    ]
+  },
+  "live_graph": {
+    "checked": true,
+    "graph_nodes": 108779,
+    "graph_relationships": 265295,
+    "mantras_per_veda": {
+      "RV": 10552,
+      "SV": 1844,
+      "YV": 1975,
+      "AV": 5839
+    },
+    "work_nodes": [
+      "VG:WORK:AV:SAU",
+      "VG:WORK:RV:SAK",
+      "VG:WORK:SV:KAU",
+      "VG:WORK:YV:VSM"
+    ],
+    "work_node_count": 4,
+    "core_samhita_invariance": "The graph holds the same four Work nodes and the same per-Veda mantra counts as before this build. Nothing was written: this artifact is staged, and the eighteen supplementary works carry VG:SUPPWORK: keys in a separate file, not Work nodes.",
+    "before_counts_from_wave_1_closure": {
+      "nodes": 108779,
+      "relationships": 265295
+    },
+    "nodes_unchanged": true,
+    "relationships_unchanged": true,
+    "ritual_layer_before": {
+      "Ritual": 8,
+      "RitualRole": 11,
+      "Offering": 8,
+      "Object": 23,
+      "Substance": 15,
+      "Plant": 22,
+      "Action": 12,
+      "SocialRite": 5,
+      "Work": 4
+    },
+    "ritual_edges_before": {
+      "HAS_STEP": 3,
+      "INVOLVES_RITUAL": 9,
+      "USED_FOR_RITE": 529,
+      "USES_OBJECT": 23,
+      "INVOLVES_OFFERING": 11,
+      "USES_OFFERING": 4,
+      "PERFORMED_BY": 16,
+      "PERFORMED_FOR": 9,
+      "INVOKES_DEVATA": 16,
+      "USES_SUBSTANCE": 11
+    },
+    "passages_with_a_ritual_context_before": 0,
+    "gap_ritual_006_key_absent_confirmed": true,
+    "deity_keys_not_found_in_graph": [],
+    "dative_theonyms_with_no_graph_node": {
+      "prajāpataye": "Prajapati. No :Devata node exists under any key containing PRAJA. He is the presiding deity of the Brahmana sacrificial system, so his absence from the Devata layer is a real finding about that layer's Samhita-derived scope, not a defect in this artifact.",
+      "vaiśvānarāya": "Vaisvanara. No :Devata node contains VAISV. Ordinarily read as an epithet of Agni, and the graph has JATAVEDA-AGNIH but no vaisvanara form.",
+      "anumatyai": "Anumati. No node. Named in the Yajurvedic isti literature.",
+      "aryamṇe": "Aryaman. No node, although the Aditya group is present."
+    },
+    "deity_key_note": "A dative theonym whose key does not resolve is reported here rather than written. An unknown type must raise, not default: this project has already had one attribution axis written by three mechanisms that disagreed because an unrecognised value was quietly coerced."
+  }
+}

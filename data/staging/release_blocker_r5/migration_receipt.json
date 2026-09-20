@@ -1,0 +1,207 @@
+{
+  "artifact": "R5_MIGRATION_RECEIPT",
+  "at": "2026-09-18T12:58:34.598249+00:00",
+  "plan_sha256": "ff282d8dda82da5d09c3ad55e51703fc1cd788811c1c8c9f83e2fb1a8895ef9c",
+  "backup": {
+    "nodes.jsonl": "b678f923947b81f83597eac80641b9aec6b3e5996930914ad27633300f05c716",
+    "relationships.jsonl": "ac8d1d5750fd0983604570e8868bb712f779baee057eda2b74e9f783140d1b55"
+  },
+  "census_before": {
+    "nodes": 164597,
+    "relationships": 509486,
+    "RV": 10552,
+    "SV": 1844,
+    "YV": 1975,
+    "AV": 5839,
+    "TOTAL": 20210,
+    "DerivedMetric": 1481,
+    "Devata": 214,
+    "Epithet": 13,
+    "Formula": 4825,
+    "FormulaFamily": 720,
+    "DomainEntity": 384,
+    "SemanticAssertion": 35131,
+    "RoleFiller": 2052,
+    "TextVersion": 58786,
+    "Translation": 18427,
+    "Ritual": 103,
+    "Passage": 22537
+  },
+  "census_after": {
+    "nodes": 164599,
+    "relationships": 509769,
+    "RV": 10552,
+    "SV": 1844,
+    "YV": 1975,
+    "AV": 5839,
+    "TOTAL": 20210,
+    "DerivedMetric": 1483,
+    "Devata": 214,
+    "Epithet": 13,
+    "Formula": 4825,
+    "FormulaFamily": 720,
+    "DomainEntity": 384,
+    "SemanticAssertion": 35131,
+    "RoleFiller": 2052,
+    "TextVersion": 58786,
+    "Translation": 18427,
+    "Ritual": 103,
+    "Passage": 22537
+  },
+  "census_delta": {
+    "nodes": 2,
+    "relationships": 283,
+    "RV": 0,
+    "SV": 0,
+    "YV": 0,
+    "AV": 0,
+    "TOTAL": 0,
+    "DerivedMetric": 2,
+    "Devata": 0,
+    "Epithet": 0,
+    "Formula": 0,
+    "FormulaFamily": 0,
+    "DomainEntity": 0,
+    "SemanticAssertion": 0,
+    "RoleFiller": 0,
+    "TextVersion": 0,
+    "Translation": 0,
+    "Ritual": 0,
+    "Passage": 0
+  },
+  "fingerprint_before": "5b2f0fcfc5257d0771e64733ac67793b17aceaf5f5dc47f47ebbc6f7a8cb312a",
+  "fingerprint_after": "f64503a457df66517343094ab45592855fc83333609d048a14607481079cc12d",
+  "relationship_type_delta": {
+    "ASSERTION_TARGET": 119,
+    "ASSERTION_AGENT": 158,
+    "MENTIONS_ENTITY": 6
+  },
+  "promised": {
+    "nodes_created": 2,
+    "nodes_deleted": 0,
+    "relationships_created": 283,
+    "relationships_deleted": 0,
+    "relationships_updated": 51377,
+    "nodes_updated_property_writes": 43163
+  },
+  "actual": {
+    "nodes_created": 2,
+    "relationships_created": 283,
+    "relationships_updated": 51377,
+    "nodes_updated_property_writes": 43163
+  },
+  "per_operation": [
+    {
+      "op": "CREATE_ASSERTION_SLOT_EDGES",
+      "gap_ids": [
+        "GAP-SEMANTICS-003"
+      ],
+      "touched": 277
+    },
+    {
+      "op": "SET_ENTITY_PROPERTIES",
+      "gap_ids": [
+        "GAP-ENTITY_COVERAGE-006"
+      ],
+      "touched": 384
+    },
+    {
+      "op": "CREATE_PHRASE_MENTIONS",
+      "gap_ids": [
+        "GAP-ENTITY_COVERAGE-007"
+      ],
+      "touched": 6
+    },
+    {
+      "op": "SET_ENTITY_PROPERTIES",
+      "gap_ids": [
+        "GAP-ENTITY_COVERAGE-007"
+      ],
+      "touched": 13
+    },
+    {
+      "op": "SET_ENTITY_PROPERTIES",
+      "gap_ids": [
+        "GAP-ENTITY_COVERAGE-007"
+      ],
+      "touched": 2
+    },
+    {
+      "op": "SET_ENTITY_PROPERTIES",
+      "gap_ids": [
+        "GAP-RITUAL-003",
+        "GAP-RITUAL-005"
+      ],
+      "touched": 108
+    },
+    {
+      "op": "SET_ALL_MANTRA_PROPERTIES",
+      "gap_ids": [
+        "GAP-RITUAL-006"
+      ],
+      "touched": 20210
+    },
+    {
+      "op": "CREATE_DERIVED_METRICS",
+      "gap_ids": [
+        "GAP-RITUAL-006"
+      ],
+      "touched": 2
+    },
+    {
+      "op": "RENAME_CONSTANT_CONFIDENCE",
+      "gap_ids": [
+        "GAP-QUALITY-003"
+      ],
+      "touched": 51364
+    },
+    {
+      "op": "SET_MANTRA_PROPERTIES",
+      "gap_ids": [
+        "GAP-TRANSLATION-004"
+      ],
+      "touched": 20210
+    },
+    {
+      "op": "SET_MANTRA_PROPERTIES",
+      "gap_ids": [
+        "GAP-SAMAVEDA_MUSIC-003"
+      ],
+      "touched": 1844
+    },
+    {
+      "op": "SET_ENTITY_PROPERTIES",
+      "gap_ids": [
+        "GAP-ENTITY_COVERAGE-004"
+      ],
+      "touched": 384
+    },
+    {
+      "op": "SET_TEXT_VERSIONS",
+      "gap_ids": [
+        "GAP-PRODUCT_SURFACE-005"
+      ],
+      "touched": 8
+    },
+    {
+      "op": "SET_PARALLEL_EDGE_PROPERTIES",
+      "gap_ids": [
+        "GAP-PRODUCT_SURFACE-005"
+      ],
+      "touched": 13
+    }
+  ],
+  "checks": {
+    "nodes_created_matches": true,
+    "relationships_created_matches": true,
+    "corpus_invariant_held": true,
+    "no_nodes_deleted": true,
+    "no_relationships_deleted": true,
+    "passage_keys_unchanged": true,
+    "formula_ids_unchanged": true,
+    "assertion_keys_unchanged": true,
+    "entity_keys_unchanged": true,
+    "text_ids_unchanged": true
+  },
+  "all_checks_pass": true
+}

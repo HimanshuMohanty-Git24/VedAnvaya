@@ -1,0 +1,54 @@
+{
+  "artifact": "FINAL_CLOSURE_SPRINT_LEAD_RULINGS",
+  "at": "2026-09-16T17:51:28.725673+00:00",
+  "rulings": [
+    {
+      "id": "R1_SV_216_CROSS_VEDA_TEXT_IDENTITY",
+      "agent": 3,
+      "decision": "IMPORTABLE_AS_DISCLOSED_INHERITED_ANALYSIS",
+      "question": "does mapping_confidence EXACT cover the key or the claim?",
+      "lead_measurement": "all 216 SV target mantras carry a PRE-EXISTING independent REUSES_TEXT_FROM or EXACT_PARALLEL_OF edge in the live graph; 0 rest on a fold computed at staging time",
+      "reasoning": "EXACT is a claim about the KEY and it is independently backed by evidence already in the graph, so these are not PROBABLE and are not staged-out. The row already discloses inheritance via cautions[ANALYSIS_IS_OF_A_LETTER_IDENTICAL_RIGVEDIC_VERSE_NOT_OF_A_SAMAVEDIC_ANNOTATION], human_annotated false, model_assisted false, roles_withheld true.",
+      "condition": "every CROSS_VEDA_TEXT_IDENTITY row must name the specific source Rigvedic canonical_key and the parallel edge type it rests on; derivable-in-principle is not recorded-on-the-row",
+      "standing_constraint": "these 372 assertions over 216 verses may NEVER be counted as Samaveda morphology on any surface; the Samavedic morphological token yield is 0 and must be stated alongside"
+    },
+    {
+      "id": "R2_ASSERTION_ROLE_REANCHOR",
+      "agent": 3,
+      "decision": "APPROVED_WITH_ONTOLOGY_MOVING_IN_THE_SAME_CHANGE",
+      "conflict": "Agent 8 measured that the re-anchor would create 2,052 signature violations: all_endpoint_signatures()[ASSERTION_ROLE] is (Mantra|Passage)->RoleFiller and 0 of 4,865 SemanticAssertion nodes carry :Passage. Verified independently by the lead.",
+      "reasoning": "SCHEMA_MIGRATION_CARDS.md M1 declares (:SemanticAssertion)-[:ASSERTION_ROLE]->(:RoleFiller) with an identity rule, a rollback and a migration test reading 'every :RoleFiller resolves to exactly one :SemanticAssertion'. Live conformance to that test is 0 of 2,052. The import at scripts/wave3_import_plan.py:249 wrote start_label=Passage and the ontology signature was later written to match the defective import rather than the owner-facing card. The signature is what drifted.",
+      "decision_detail": "re-anchor AND update the ASSERTION_ROLE endpoint signature to SemanticAssertion->RoleFiller in ONE change; neither alone is valid because either leaves 2,052 violations. A test must pin the signature against the card."
+    },
+    {
+      "id": "R3_SEMANTICS_002_FIGURE",
+      "agent": 3,
+      "decision": "CORRECTED",
+      "reasoning": "agent measured the live layer only (4,865 UNREVIEWED). Its own delta stages 30,274 further assertions, all UNREVIEWED, so the post-integration value of the declared closure_measure is 35,139.",
+      "recorded_trade": "closing SEMANTICS-001 coverage multiplies SEMANTICS-002's unreviewed population 7.2x and the 28,370 MORPHOLOGY_RULE_PREDICATE_ONLY rows also deepen SEMANTICS-003. Three gaps move in opposite directions under one import; the trade is recorded rather than the headline."
+    },
+    {
+      "id": "R4_WHITNEY_ABSENCE_TYPE",
+      "agent": 5,
+      "decision": "APPROVED",
+      "question": "does a property-only correction violate OWNER_DECISIONS.md s25's 'the graph is not mutated'?",
+      "owner_text_read_by_lead": "s25: 'All 466 stay RETAINED_NON_IMPORTABLE_UNRESOLVED_OBJECT; the graph is not mutated.'",
+      "reasoning": "s25 forbids IMPORTING the 466 unresolved objects, and the proposed mutation imports none: 0 nodes, 0 relationships, 466 property writes on 443 existing :Passage nodes, no attribution created, no object resolved, no join on a normalized string. What it corrects is a FALSE ABSENCE produced BY the withholding: 150 verse-dimension pairs (117 chandas + 33 devata) currently assert ASSESSED_SOURCE_ABSENT, meaning 'a source was consulted and states nothing', while Whitney's bracket demonstrably states a verse-level value. s25's own reasoning DEPENDS on the source having stated something unresolvable, so a property claiming the source is silent contradicts the owner decision's premise rather than honouring it. A reader cannot distinguish this false zero from a real one.",
+      "conditions": [
+        "SOURCE_ASSERTS_UNRESOLVED_OBJECT is added to DECLARED_STATES and explicitly NOT to ABSENCE_STATES",
+        "no attribution imported, no edge created, no object resolved",
+        "census delta must be 0 nodes / 0 relationships, verified at integration",
+        "the registry row's closure_basis wording must be corrected: it currently reads 'the stated precondition is now met and the import has not been run', which invites the import and contradicts s25"
+      ],
+      "precedent": "s20 landed as three properties per passage, 0 nodes and 0 edges",
+      "flagged_to_owner": "this ruling sits adjacent to an owner decision and is reported prominently rather than buried"
+    }
+  ],
+  "carried_to_wave_f": [
+    "tests/domain/test_layer_figures.py::test_declared_figures_match_the_live_graph is RED and was red BEFORE this sprint: HAS_CHANDAS declared 16,331 / measured 16,298 (the authorised s27 withdrawal that never moved the constant), MENTIONS_ENTITY 28,227 / 28,110, ABOUT_CONCEPT 24,969 / 24,861. Agents 1/2/3 are moving these; the lead closes it post-integration with the measured basis.",
+    "SANSKRIT_ASCII_TRIGRAMS / BIGRAMS must be re-measured after Agent 3's SEARCH_DERIVATIVE import (live 2,419 / 308; predicted 2,598 / 321) or the shipped filter silently rejects queries the corpus now contains.",
+    "3 recorded benchmark probes are invalid Cypher and never were valid (Q82, Q93, and Q23 which records two queries on one line): their NOT_ANSWERABLE evidence rests on queries that cannot execute.",
+    "scripts/wave4_registry_closure_audit.py --write must be run at Wave F to publish corrected closure tests; 4 registry drifts currently reported.",
+    "OWNER_DECISIONS.md line ~661 still reads decisions A/C/D as open blockers; they are CLOSED/NARROWED/CLOSED as of b4b1b0b. Annotate, do not rewrite the historical record."
+  ]
+}

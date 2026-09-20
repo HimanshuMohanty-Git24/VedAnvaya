@@ -1,0 +1,74 @@
+{
+  "migration": "M7_RITUAL_STEP_PRODUCT_IDENTITY",
+  "at": "2026-09-16T04:45:27.572321+00:00",
+  "executed": true,
+  "backup": "D:/vedanvaya-backups/wave3-final-baseline-20260916T101224",
+  "display_type": "RITUAL_STEP",
+  "grain": "RITE_SPECIFIC_OCCURRENCE",
+  "grain_evidence": "scripts/ritual_step_identity_probe.py",
+  "census_before": {
+    "nodes": 116825,
+    "relationships": 281290,
+    "core": {
+      "AV": 5839,
+      "RV": 10552,
+      "SV": 1844,
+      "YV": 1975
+    }
+  },
+  "census_after": {
+    "nodes": 116825,
+    "relationships": 281290,
+    "core": {
+      "AV": 5839,
+      "RV": 10552,
+      "SV": 1844,
+      "YV": 1975
+    }
+  },
+  "node_delta": 0,
+  "relationship_delta": 0,
+  "core_corpus_unchanged": true,
+  "nodes_written": 3121,
+  "preconditions": {
+    "nodes": 3121,
+    "with_key": 3121,
+    "with_urn": 3121,
+    "with_uuid": 3121,
+    "distinct_keys": 3121,
+    "distinct_urns": 3121,
+    "distinct_uuids": 3121,
+    "already_typed": 0,
+    "missing_locator": 0,
+    "every_node_carries_a_key": true,
+    "every_node_carries_a_urn": true,
+    "every_node_carries_a_uuid": true,
+    "key_collisions": 0,
+    "urn_collisions": 0,
+    "uuid_collisions": 0,
+    "foreign_display_type": 0,
+    "ok": true
+  },
+  "postconditions": {
+    "nodes": 3121,
+    "with_key": 3121,
+    "with_urn": 3121,
+    "with_uuid": 3121,
+    "distinct_keys": 3121,
+    "distinct_urns": 3121,
+    "distinct_uuids": 3121,
+    "already_typed": 3121,
+    "missing_locator": 0,
+    "every_node_carries_a_key": true,
+    "every_node_carries_a_urn": true,
+    "every_node_carries_a_uuid": true,
+    "key_collisions": 0,
+    "urn_collisions": 0,
+    "uuid_collisions": 0,
+    "foreign_display_type": 0,
+    "ok": true
+  },
+  "additive": true,
+  "complete": true,
+  "receipt_sha256": "0a1ff6ef8fe63f87cd6432146515c6be3f0888eee23ac09f9e82d7357752c5c1"
+}

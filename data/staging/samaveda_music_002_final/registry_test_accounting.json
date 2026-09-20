@@ -1,0 +1,52 @@
+{
+  "artifact": "SAMAVEDA_MUSIC_002_CLOSURE_TEST_ACCOUNTING",
+  "at": "2026-09-18T18:21:01.755314+00:00",
+  "gap_id": "GAP-SAMAVEDA_MUSIC-002",
+  "rule": "A gap closes only when its own closure_test passes, or when a clause of that test is superseded by a recorded owner decision a reader can find. Two of the three clauses here are superseded and the supersession is cited, not asserted.",
+  "clauses": [
+    {
+      "clause": 1,
+      "as_written": "a melodic node label exists",
+      "measure": "CALL db.labels() filtered for saman|gana|stobha|melod",
+      "demands": "at least one label",
+      "measured": [],
+      "passes": false,
+      "superseded_by": "OWNER_DECISION_G_GANA_OBJECT_OUT_OF_V1 (docs/reports/data-completeness/OWNER_DECISIONS.md section 41)",
+      "why_superseded": "A label needs an object to label, and the object side is a canonical Gana or saman identity. Section 41 places that outside Product V1 and forbids minting one to satisfy a denominator. The notation landed on the verse's own text witness instead, which is where the source printed it."
+    },
+    {
+      "clause": 2,
+      "as_written": "MUSICALIZED_AS appears in db.relationshipTypes() with a non-zero count",
+      "measure": "MATCH ()-[r:MUSICALIZED_AS]->() RETURN count(r)",
+      "demands": "> 0",
+      "measured": 0,
+      "passes": false,
+      "superseded_by": "OWNER_DECISION_G_GANA_OBJECT_OUT_OF_V1 (docs/reports/data-completeness/OWNER_DECISIONS.md section 41)",
+      "why_superseded": "Section 41 rules the predicate NOT required for Product V1 unless the object-side Gana identity is independently established and canonical, and forbids minting an edge to reach a count. The 495 staged edges stay staged and re-verified. GAP-SAMAVEDA_MUSIC-003 already closed CLOSED_SCOPE_DECISION on this citation, so gating this entry on the same predicate would make it unclosable by any means except the one act the owner barred."
+    },
+    {
+      "clause": 3,
+      "as_written": "/api/v1/insights/capabilities no longer returns samavedic_melodic_layer as NOT_BUILT",
+      "measure": "GET /api/v1/insights/capabilities?question=82",
+      "demands": "data_status is not NOT_BUILT",
+      "measured": {
+        "verdict": "PARTIALLY_ANSWERABLE",
+        "data_status": "PARTIAL",
+        "benchmark_verdict": "NOT_ANSWERABLE",
+        "benchmark_verdict_note": "Kept as frozen rather than rewritten. The divergence between the live and the frozen grade is the finding; copying the frozen one forward would publish a limitation that no longer holds."
+      },
+      "passes": true,
+      "superseded_by": null,
+      "why_superseded": null
+    }
+  ],
+  "clauses_passing_as_written": 1,
+  "clauses_superseded_by_a_recorded_owner_decision": 2,
+  "condition_actually_met": "Every one of the 1,844 Kauthuma arcika verses carries a typed notation disposition: 1,136 SOURCE_EXPLICIT_PRESENT with the source's own tone marks served as a parallel witness, 708 WITHHELD with a reason class and reason prose on the verse, and 0 carrying no state at all. The sentence this entry was opened for -- 'No melodic layer of any kind exists' -- is false. What remains absent is the SONG, and that is section 41's boundary rather than this entry's gap.",
+  "what_did_not_change": {
+    "musicalized_as_edges": 0,
+    "melodic_node_labels": [],
+    "verses_with_no_notation_disposition": 0,
+    "notation_rows_interpreted_into_pitch": 0
+  }
+}
