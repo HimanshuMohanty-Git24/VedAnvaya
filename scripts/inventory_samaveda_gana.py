@@ -52,7 +52,7 @@ from typing import Any, Final
 
 import httpx
 
-USER_AGENT: Final = "VedaGraph/1.0 (research; h.mohanty@accenture.com)"
+USER_AGENT: Final = "VedaGraph/1.0 (research; +https://github.com/HimanshuMohanty-Git24/VedAnvaya)"
 WIKISOURCE_HOST: Final = "sa.wikisource.org"
 COMMONS_HOST: Final = "commons.wikimedia.org"
 

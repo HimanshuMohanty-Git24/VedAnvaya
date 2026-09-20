@@ -492,8 +492,9 @@ PYTHONIOENCODING=utf-8 .venv/Scripts/python.exe scripts/inventory_samaveda_gana.
 
 Writes both JSONL files and prints every measurement quoted above, including the collection digest.
 ~27 API requests total (11 Wikisource, 16 Commons), 0.4 s apart, User-Agent
-`VedaGraph/1.0 (research; h.mohanty@accenture.com)`. **No audio bytes are fetched.** Rows are sorted
-(by `file_name`; by `page_title`), keys are sorted, line endings are LF.
+`VedaGraph/1.0 (research; +https://github.com/HimanshuMohanty-Git24/VedAnvaya)`.
+**No audio bytes are fetched.** Rows are sorted (by `file_name`; by `page_title`), keys are
+sorted, line endings are LF.
 
 The digest is stable across runs because it depends only on `(file_name, sha1)` — it was reproduced
 identically on two independent runs on 2026-09-07. **If it changes, Commons changed**, which is the

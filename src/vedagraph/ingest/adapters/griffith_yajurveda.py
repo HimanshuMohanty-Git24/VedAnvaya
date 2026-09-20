@@ -961,7 +961,9 @@ def build_stage(
             "snapshot_date": snapshot_id,
             "source_edition": WORK_EDITION,
             "translator": TRANSLATOR,
-            "user_agent": "VedaGraph/1.0 (research; h.mohanty@accenture.com)",
+            "user_agent": (
+                "VedaGraph/1.0 (research; +https://github.com/HimanshuMohanty-Git24/VedAnvaya)"
+            ),
         },
         "books": books,
         "snapshot_ids": digests,

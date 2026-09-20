@@ -52,7 +52,7 @@ SOURCE_ID = "SACRED_TEXTS"
 SNAPSHOT_ID = "2026-09-07"
 BOOK_COUNT = 40
 BASE = "https://sacred-texts.com/hin/wyv"
-USER_AGENT = "VedaGraph/1.0 (research; h.mohanty@accenture.com)"
+USER_AGENT = "VedaGraph/1.0 (research; +https://github.com/HimanshuMohanty-Git24/VedAnvaya)"
 REQUEST_DELAY_SECONDS = 1.5
 
 RAW_DIR = REPO / "data" / "raw" / "sacred_texts" / SNAPSHOT_ID / "wyv"

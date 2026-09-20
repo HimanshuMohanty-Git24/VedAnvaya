@@ -62,7 +62,9 @@ CANVAS_COUNT = 478
 # 2026-09-07 snapshot id; it buys resolution that does not exist.
 IMAGE_WIDTH = 4000
 NATIVE_IIIF_WIDTH = 2024
-USER_AGENT = "VedaGraph/1.0 (canonical corpus research; h.mohanty@accenture.com)"
+USER_AGENT = (
+    "VedaGraph/1.0 (canonical corpus research; +https://github.com/HimanshuMohanty-Git24/VedAnvaya)"
+)
 
 RAW_DIR = REPO / "data" / "raw" / "bsb_mdz" / SNAPSHOT_ID / BSB_ID
 MANIFEST_PATH = REPO / "data" / "source_registry" / "atharvaveda_bsb_leaf_manifest.jsonl"
