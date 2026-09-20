@@ -439,8 +439,28 @@ Read [`SOURCE_POLICY.md`](docs/architecture/SOURCE_POLICY.md),
 [`VEDAWEB_RIGVEDA_SOURCES.md`](docs/architecture/VEDAWEB_RIGVEDA_SOURCES.md) before ingestion or
 redistribution.
 
-Repository source-code licensing is also undecided, so no `LICENSE` is included. Code and corpus
-licensing must be selected independently.
+Repository code licensing is settled independently of corpus licensing: the software is under
+the [PolyForm Noncommercial License 1.0.0](LICENSE), which does not extend to third-party texts,
+translations or recordings. See [License](#license) and [`LICENSE_SCOPE.md`](LICENSE_SCOPE.md).
+
+## License
+
+VedAnvaya's original software is **source-available under the
+[PolyForm Noncommercial License 1.0.0](LICENSE)**.
+
+Noncommercial study, research, experimentation, modification and redistribution are permitted,
+subject to the license terms. **Commercial use requires separate permission** from the copyright
+holder.
+
+This is deliberately *not* an OSI Open Source license. The Open Source Definition forbids a license
+from restricting any field of endeavour, so no OSI-approved license can carry a noncommercial
+condition; "source-available" is the accurate description, and "open source" would not be.
+
+The license covers the original VedAnvaya software and project material. It does **not** relicense
+the Vedic texts, translations, scholarly editions, manuscript scans or recitation recordings this
+project is built from — those remain under their own terms.
+[`LICENSE_SCOPE.md`](LICENSE_SCOPE.md) states the boundary, and the registries under
+[`data/registry/`](data/registry/) record the terms artifact by artifact.
 
 ## Which Sanskrit text is canonical
 

@@ -8,7 +8,7 @@ version = "1.0.0"
 description = "VedaGraph Product V1: a provenance-aware knowledge graph of the four Vedas"
 readme = "README.md"
 requires-python = ">=3.12"
-license = { text = "License undecided; see README.md and docs/architecture/RIGHTS_POLICY.md" }
+license = { text = "PolyForm-Noncommercial-1.0.0; see LICENSE and LICENSE_SCOPE.md" }
 authors = [{ name = "VedaGraph contributors" }]
 dependencies = [
   "beautifulsoup4>=4.12",

@@ -31,5 +31,8 @@ been reviewed and registered; repository visibility is not treated as corpus-wid
 The underlying 1896 Griffith Rigveda translation is marked public domain by Wikisource. Page
 revision provenance must still be retained because the hosted transcription layer can change.
 
-Repository source-code licensing is undecided, so no `LICENSE` file is included. Select a code
-license separately from corpus-data and asset licensing.
+Repository source-code licensing is now settled, and is separate from corpus-data and asset
+licensing. The original VedAnvaya software is under the PolyForm Noncommercial License 1.0.0
+(`LICENSE`). That license covers project-original material only: it does not relicense any
+source artifact registered here, and the statuses above continue to govern every third-party
+text, translation, scan and recording. The boundary is stated in `LICENSE_SCOPE.md`.
