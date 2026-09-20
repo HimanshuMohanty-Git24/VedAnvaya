@@ -1,0 +1,63 @@
+% Hand-authored: this table records a division of responsibility read off the
+% artefacts, which is a judgement about what the artefacts show, not a measurement.
+% Each row is supported by the evidence cited in Appendix C.
+\begin{table}[tb]
+\centering
+\caption{Division of responsibility by construction stage.
+\textbullet\ = performs the work; \textopenbullet\ = participates but cannot decide;
+--- = not involved. The rows that determine what the graph \emph{asserts} ---
+identity, promotion, mutation and certification --- have no filled agent cell.}
+\label{tab:responsibility}
+\small
+\begin{tabularx}{\linewidth}{@{}>{\raggedright\arraybackslash}p{40mm}ccc
+                             >{\raggedright\arraybackslash}X@{}}
+\toprule
+Stage & \rotatebox{0}{Det.\ code} & \rotatebox{0}{Agent} & \rotatebox{0}{Owner}
+      & Where the decision is recorded \\
+\midrule
+
+Source discovery and rights & \textopenbullet & \textbullet & \textbullet
+  & rights registry, per file; owner rules on conflicting statements \\
+
+Snapshot and hashing & \textbullet & --- & ---
+  & content-addressed store, 11 required sidecar fields \\
+
+Canonical parse and identity & \textbullet & --- & ---
+  & \mbox{UUIDv5} over a \mbox{URN}; no model in the path \\
+
+Ontology and vocabulary design & \textopenbullet & \textbullet & \textbullet
+  & decision records; closed enums with named refusals \\
+
+Candidate generation & \textbullet & \textbullet & ---
+  & staging rows; deterministic rules and model proposals both land here \\
+
+Validation of candidates & \textbullet & --- & ---
+  & 20 rejection codes, one code per failure mode \\
+
+Adversarial audit & \textopenbullet & \textbullet & ---
+  & a read-only agent with no gaps assigned; findings are counts, re-runnable \\
+
+Reconciling conflicting proposals & \textopenbullet & \textbullet & \textbullet
+  & lead rulings, each recording its own independent measurement \\
+
+Promotion candidate $\to$ accepted & \textbullet & --- & \textopenbullet
+  & a frozen set of trust classes; the model's class is not in it \\
+
+Graph mutation & \textbullet & --- & \textbullet
+  & plan $\to$ dry run $\to$ owner \textsc{go} $\to$ execute $\to$ readback \\
+
+Readback and invariants & \textbullet & --- & ---
+  & rows sent vs rows landed; 20 invariants, 11 scorecard gates \\
+
+Scope and withholding rulings & --- & \textopenbullet & \textbullet
+  & owner decisions, cited by identifier from the closure tests they license \\
+
+Release certification & \textbullet & \textopenbullet & \textbullet
+  & certification document; withheld once on a single blocker \\
+
+Manuscript drafting & --- & \textbullet & \textbullet
+  & this paper; claims and interpretation are the author's \\
+
+\bottomrule
+\end{tabularx}
+\end{table}

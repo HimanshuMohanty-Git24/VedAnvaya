@@ -1,0 +1,98 @@
+% Figure: the epistemic pipeline -- how a claim acquires, and keeps, its typing.
+% Centre column: the state the claim is in. Left: who acts. Right: what travels with
+% the claim. Bottom: the four terminal dispositions, reached by dedicated routing
+% channels either side of the centre column so no connector crosses annotation text.
+\begin{tikzpicture}[
+  font=\footnotesize,
+  every node/.style={align=center},
+  st/.style={draw=black!50, rounded corners=2.5pt, inner sep=4pt, fill=white,
+             minimum width=30mm, text width=30mm, minimum height=8mm,
+             line width=0.5pt},
+  gate/.style={st, draw=BurntOrange!70!black, fill=BurntOrange!10},
+  term/.style={draw=black!45, rounded corners=2.5pt, inner sep=3.5pt, fill=black!4,
+               minimum width=26mm, text width=26mm, minimum height=8mm,
+               line width=0.45pt},
+  acc/.style={term, fill=SeaGreen!12, draw=SeaGreen!60!black},
+  flow/.style={-{Latex[length=2mm,width=1.6mm]}, draw=black!60, line width=0.6pt},
+  route/.style={-{Latex[length=1.8mm,width=1.4mm]}, draw=black!40, line width=0.5pt},
+  lft/.style={font=\scriptsize, text=black!60, align=right, text width=40mm,
+              anchor=east},
+  rgt/.style={font=\scriptsize, text=black!60, align=left, text width=56mm,
+              anchor=west},
+  hd/.style={font=\scriptsize\bfseries, text=black!55},
+]
+
+\def\L{-2.35}   % right edge of the left annotation column
+\def\R{2.35}    % left edge of the right annotation column
+
+\node[hd] at (-4.3,1.15) {actor};
+\node[hd] at (0,1.15)    {state of the claim};
+\node[hd] at (5.2,1.15)  {what travels with the claim};
+
+\node[st]  (src)  at (0,0)     {\textbf{Source observation}};
+\node[st]  (cand) at (0,-1.95) {\textbf{Candidate}};
+\node[gate](val)  at (0,-3.95) {\textbf{Validation}\\[-1pt]
+                                \scriptsize deterministic; 20 rejection codes};
+\node[gate](adv)  at (0,-6.15) {\textbf{Adversarial gate}\\[-1pt]
+                                \scriptsize independently implemented};
+\node[st]  (grade)at (0,-8.25) {\textbf{Grading}\\[-1pt]
+                                \scriptsize layer $\to$ tier, applied last};
+\node[st]  (imp)  at (0,-10.3) {\textbf{Plan $\to$ dry run}\\[-1pt]
+                                \textbf{$\to$ import $\to$ readback}};
+
+\foreach \a/\b in {src/cand, cand/val, val/adv, adv/grade, grade/imp}
+  \draw[flow] (\a) -- (\b);
+
+% ---- left column: actors ----
+\node[lft] at (\L,0)      {hashed snapshot; rights recorded per file};
+\node[lft] at (\L,-1.95)  {\textbf{agent} or deterministic rule \emph{proposes}};
+\node[lft] at (\L,-3.95)  {\textbf{deterministic code} only};
+\node[lft] at (\L,-6.15)  {\textbf{a second agent} attacks, with a negative control};
+\node[lft] at (\L,-8.25)  {\textbf{one contract}, applied graph-wide};
+\node[lft] at (\L,-10.3)  {\textbf{owner} issues \textsc{go}; code verifies the delta};
+
+% ---- right column: what travels ----
+\node[rgt] at (\R,0)     {\code{source\_id}, \code{source\_artifact\_id},
+                          \code{source\_locator}, \code{content\_sha256},
+                          \code{rights\_status}};
+\node[rgt] at (\R,-1.95) {\code{state=CANDIDATE} --- the only status a model may
+                          write. Every cited token must be present in the packet the
+                          model was shown.};
+\node[rgt] at (\R,-3.95) {one code for one failure mode, e.g.\
+                          \code{EVIDENCE\_TOKEN\_NOT\_IN\_PASSAGE},
+                          \code{PREDICATE\_FORBIDDEN}};
+\node[rgt] at (\R,-6.15) {\code{SURVIVED} or \code{DEFECT\_FOUND}. The failing run is
+                          preserved and pinned by a test, so the finding cannot be
+                          erased by regenerating only the passing run.};
+\node[rgt] at (\R,-8.25) {\code{knowledge\_layer}, \code{quality\_tier},
+                          \code{attribution\_precision}, \code{evidence\_basis},
+                          \code{grade\_basis}};
+\node[rgt] at (\R,-10.3) {rows \emph{sent} vs rows \emph{landed} --- the difference is
+                          where the defects are};
+
+% ---- terminal dispositions ----
+\def\TY{-12.95}
+\node[acc]  (t1) at (-4.35,\TY) {\textbf{Accepted}\\[-1pt]
+                                 \scriptsize in the graph, typed};
+\node[term] (t2) at (-1.45,\TY) {\textbf{Withheld}\\[-1pt]
+                                 \scriptsize kept; reason typed};
+\node[term] (t3) at ( 1.45,\TY) {\textbf{Rejected}\\[-1pt]
+                                 \scriptsize deleted; reason kept};
+\node[term] (t4) at ( 4.35,\TY) {\textbf{Unresolved}\\[-1pt]
+                                 \scriptsize named, not guessed};
+\node[hd, anchor=west] at (-6.6,-11.95) {terminal dispositions};
+
+% routing channels: x=-1.85 / -2.1 on the left, x=1.85 / 2.1 on the right.
+% The annotation columns start at +/-2.35, so nothing crosses text.
+\draw[flow] (imp.south) -- ++(0,-0.7) -| (t1.north);
+\draw[route] (adv.west)  -- (-1.85,-6.15) -- (-1.85,-12.25) -- (t2.north);
+\draw[route] (val.east)  -- ( 1.85,-3.95) -- ( 1.85,-12.25) -- (t3.north);
+\draw[route] (cand.east) -- ( 2.10,-1.95) -- ( 2.10,-12.55) -- (t4.north);
+
+\node[font=\scriptsize\itshape, text=black!55, text width=13.6cm, align=left]
+  at (0,-14.3)
+  {A withheld claim is neither a rejected one nor a statement that the thing does not
+   exist. Each withheld population has a \emph{closed} class space, and the number of
+   rows carrying no disposition at all is itself gated at zero --- an untyped absence
+   is one a reader cannot distinguish from a verified zero.};
+\end{tikzpicture}

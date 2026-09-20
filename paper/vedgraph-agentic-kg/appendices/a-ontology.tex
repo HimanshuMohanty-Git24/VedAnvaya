@@ -1,0 +1,101 @@
+\section{Ontology and Vocabulary Catalogue}
+\label{sec:appendix-ontology}
+
+\subsection{Where the ontology lives}
+
+There is no single ontology file. Authority is composed across four modules, each
+owning a vocabulary, unioned at read time: a frozen semantic seal (node types and
+the closed predicate list), an enrichment layer (textual and structural predicates,
+plus the trust envelope), a domain layer (labels, predicates, endpoint signatures),
+and a grading layer (the per-edge grade and the attribution contract). A fifth
+vocabulary --- the reader-facing one exposed by the \mbox{API} --- is deliberately
+distinct from the writer's (\cref{sec:collision}).
+
+The composition function carries the method's key statement, which we quote because
+it generalises beyond this project:
+
+\begin{quote}\small
+Critically, the graph is not an input. The previous scorecard gate computed
+\code{declared = ontology | everything in the graph} and then asked which graph types
+were missing from \code{declared}; nothing can be, so it reported 0 undeclared for a
+whole wave while eleven predicates went unclassified. \textbf{The data may not
+declare itself valid.}
+\end{quote}
+
+\subsection{The four typing axes}
+
+\begin{description}[leftmargin=1.6em,itemsep=2pt,topsep=3pt,style=nextline]
+\item[\code{KnowledgeLayer}] \code{L1\_SOURCE\_EXPLICIT}, \code{L2\_DETERMINISTIC\_DERIVED},
+\code{L3\_LLM\_EXTRACTED}, \code{L4\_INTERPRETIVE\_CLAIM}. Documented as ``never
+collapsed, never inferred from a score''.
+\item[\code{QualityTier}] \code{TIER\_A} to \code{TIER\_D}, a total bijection from the
+layer. One further transition: an \textsc{l3} claim in state \code{CANDIDATE} is
+\code{TIER\_D}, not \code{TIER\_C}, because \code{TIER\_C} means model-extracted
+evidence that survived review.
+\item[\code{AttributionPrecision}] \code{PER\_PASSAGE},
+\code{CONTAINER\_INHERITED}, \code{TEXTUAL\_MENTION}, \code{NOT\_AN\_ATTRIBUTION}.
+The fourth member is what makes a graph-wide universal-quantifier invariant over this
+property expressible at all.
+\item[Evidence surface] \code{SANSKRIT}, \code{STRUCTURAL}, \code{SOURCE\_METADATA},
+\code{MIXED}, \code{TRANSLATION}, \code{SHARED\_REGISTRY\_ENTITIES}. Stored under
+the property name \code{evidence\_basis}, which collides with an unrelated derivation
+enumeration of the same name (\cref{sec:collision}).
+\end{description}
+
+Two legacy spellings of the layer field survive from an earlier pipeline generation
+(\code{SOURCE\_EXPLICIT} and \code{DETERMINISTIC\_DERIVED} without the
+\code{L}-prefix), on 6{,}236 and 8{,}214 edges respectively. The fact freeze reports
+both raw and folded distributions.
+
+\subsection{Lifecycle vocabularies}
+
+Six lifecycle vocabularies exist, deliberately not unified, each scoped to one layer.
+The two that matter for this paper are the graph-edge state
+(\code{CANDIDATE}/\code{ACCEPTED}/\code{REJECTED}, with the promotion gate encoded as
+a frozen set of trust classes) and the semantic-artifact status
+(\code{CANDIDATE}, \code{AUTO\_ACCEPTED}, \code{HUMAN\_ACCEPTED},
+\code{HUMAN\_REJECTED}, \code{VALIDATION\_REJECTED}, \code{SUPERSEDED},
+\code{NEEDS\_REVIEW}), of which a model may write only the first.
+
+Rejections carry one of twenty codes, one code per failure mode, including
+\code{EVIDENCE\_TOKEN\_NOT\_IN\_PASSAGE}, \code{EVIDENCE\_HASH\_MISMATCH},
+\code{PREDICATE\_FORBIDDEN}, \code{PREDICATE\_NOT\_WHITELISTED},
+\code{EXPLICITNESS\_UNSUPPORTED\_BY\_EVIDENCE} and \code{DUPLICATE\_ASSERTION}.
+
+Review verdicts applied to candidates are \code{ACCEPT\_MODEL\_REVIEWED} (promoted to
+\code{TIER\_C}, \code{review\_state} set to \code{MODEL\_ADJUDICATED} and never to
+\code{HUMAN\_REVIEWED}), \code{REJECT} (the edge is deleted, since a reader running
+the obvious query never sees the tier, and the row stays on disk so the deletion is
+reproducible), and \code{AMBIGUOUS} / \code{NEEDS\_MORE\_EVIDENCE} (kept at
+\code{TIER\_D} and stamped).
+
+There is no \code{WITHDRAWN} state. \code{SUPERSEDED} is the nearest.
+
+\subsection{Withholding mechanisms}
+
+\code{WITHHELD} is not a member of any enumeration. It is four separate typed
+mechanisms, each scoped to a layer: a reason string per unmapped sealed predicate,
+emitted into the load report alongside a count of predicates that are neither mapped
+nor explicitly withheld; a typed node property with a declared class space
+(S\=amavedic notation, three classes); typed non-resolution rows in the lexical layer
+(711 tokens, three linguistic reasons); and edge-type-keyed withholding for
+near-parallel pairs.
+
+\subsection{Node labels and relationship types}
+
+55 labels are in use and 81 relationship types, of a token table declaring 56 labels
+--- \code{SourceArtifact} is declared and carries no nodes. The full distributions
+are in \code{supplementary\vgslash census\_node\_labels.csv} and
+\code{supplementary\vgslash census\_relationship\_types.csv}; the fourteen largest of each
+are in \cref{tab:labels}.
+
+\subsection{Grades the bulk stamper must not touch}
+
+Twenty-one predicates are excluded from the generic grade sweep, each with a recorded
+reason. Three classes of reason recur. A predicate whose grade is the output of an
+independent review cannot be reproduced by any provenance signature --- a post-load
+regrade once silently erased 587 promotions in one pass. A predicate whose grade is
+the grade of the node across the edge cannot be computed by a stamper that cannot see
+across an edge. And a predicate whose tier depends on which derivation produced the
+row must have both directions of its mirror written byte-identically, or a query gets
+a different tier depending on which way it walked.

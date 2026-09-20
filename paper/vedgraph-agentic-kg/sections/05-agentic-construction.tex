@@ -1,0 +1,212 @@
+\section{Agentic Construction}
+\label{sec:agentic}
+
+\subsection{What ``agentic'' means here, and what it does not}
+
+The construction ran in a coding-agent runtime: a language model with filesystem,
+shell and database access, directed by one human owner, writing and executing code as
+well as reading sources. It did \emph{not} use ReAct, AutoGen, LangGraph, CrewAI,
+Reflexion or any comparable orchestration library; we searched the project's
+dependency manifests and found none, and we mention the families only because the
+related-work section discusses them (\cref{sec:related}). Orchestration here is the
+project's own artefact protocol --- briefs, staging directories, proposal files,
+gates, rulings and receipts --- rather than a framework.
+
+Two consequences follow. The workflow is inspectable, because each step left a file.
+And it is not a reusable system: what generalises is the protocol, not an
+implementation.
+
+\begin{figure}[tbp]
+\centering
+\resizebox{0.86\textwidth}{!}{\input{figures-src/fig_pipeline}}
+\caption{The construction pipeline. The left gutter names the actor for each stage;
+the right gutter names what that stage is forbidden to do, which is where the
+method actually lives. Agents propose into staging; deterministic code validates,
+grades and verifies; the owner issues the one decision that lets a mutation run.}
+\label{fig:pipeline}
+\end{figure}
+
+\subsection{The construction pipeline}
+
+\Cref{fig:pipeline} shows the pipeline the artefacts describe. Its spine is the same
+for every layer: a source is snapshotted and hashed; a canonical corpus is built
+deterministically and given identity; a layer is proposed into a \emph{staging}
+directory that is validated and gated before any graph write; the owner issues a
+\textsc{go} against a hashed plan; the import executes; and a readback compares what
+was sent with what landed.
+
+The staging step is the load-bearing one. A layer's proposal is a directory of
+row-level JSONL plus a manifest, validated by a contract that reports \emph{its own
+coverage} --- the validator states how many rows each check evaluated, so a check
+that silently skipped its population is visible as a coverage shortfall rather than
+as a pass. During the completeness campaign the rule was stated flatly: nothing is
+imported until a readback.
+
+\subsection{The import protocol}
+\label{sec:import}
+
+Every graph mutation in the later campaigns followed a five-step protocol, and its
+steps exist because each was once skipped:
+
+\begin{enumerate}[leftmargin=1.9em,itemsep=1pt,topsep=2pt]
+\item \textbf{Plan.} A hashed artefact enumerating the exact nodes, edges and
+property writes, with the expected census delta.
+\item \textbf{Dry run.} The plan re-computed against the live graph, emitting a
+\textsc{go} or the reason it cannot. Dry runs were regenerated whenever the tree
+changed, because a dry run computed against a different state is not a dry run.
+\item \textbf{Owner \textsc{go}.} A recorded human decision against a specific plan
+hash.
+\item \textbf{Execute.}
+\item \textbf{Readback.} An independent re-measurement comparing rows \emph{sent}
+against rows \emph{landed}, with the census delta checked against the promise.
+\end{enumerate}
+
+The protocol's value is measurable in what it caught: a first import that
+over-wrote by 5{,}930 edges, a second that left 12{,}033 nodes unreachable, a third
+that landed 13{,}187 elements the domain rules excluded, and one that silently
+overwrote 102 curated display labels. Roughly nine plan/dry-run/\textsc{go} cycles
+preceded one clean readback in the largest wave.
+
+It also failed in an instructive way. One readback printed \code{READBACK\_CLEAN}
+having compared zero rows against zero rows, and a separate import's own readback
+reported success while two graph-wide contracts were unmet --- the scorecard, not the
+importer, found 1{,}136 edges that were ungraded, unlabelled and unmarked. The
+lesson the repository records is the one we would generalise: \emph{an importer's own
+success report is not evidence}.
+
+\subsection{The multi-agent structure, as the artefacts show it}
+\label{sec:multiagent}
+
+The clearest instance is the final closure sprint, and we describe it using the
+repository's own names rather than inventing roles.
+
+Forty-three remaining gaps were partitioned across \textbf{seven domain agents}, one
+owner each, under a stated rule: every implementation-fixable row has exactly one
+owner agent, and no row is unassigned. The agents are named by domain ---
+\code{AGENT\_1\_FORMULA\_CROSS\_VEDA} (3 gaps),
+\code{AGENT\_2\_ENTITY\_DEVATA\_IDENTITY} (12),
+\code{AGENT\_3\_MORPHOLOGY\_SEMANTICS} (7), \code{AGENT\_4\_RITUAL} (4),
+\code{AGENT\_5\_QUALITY\_REFERENCE} (6), \code{AGENT\_6\_PRODUCT\_SURFACE} (5) and
+\code{AGENT\_7\_TRANSLATION\_SAMAVEDA} (6). Each produced measurements, row-level
+evidence and a file named \code{proposed\_mutations.json}. \emph{None of them wrote
+to the graph.}
+
+An eighth agent had no gaps assigned. Its artefacts are an audit of the other seven,
+its recorded database access is \code{READ\_ONLY}, and it is the adversary in the
+pattern. A \textbf{lead} then reconciled proposals and findings into an integration
+plan, a set of rulings and a receipt.
+
+\Cref{fig:adversarial} shows the resulting cycle. Its most important property is
+visible in one ruling. Agent~3 proposed re-anchoring a relationship so that role
+fillers hang from semantic assertions. Agent~8 measured that the change would create
+2{,}052 endpoint-signature violations, because the declared signature expects a
+passage endpoint and zero of the assertion nodes carry that label. The lead verified
+the measurement independently, and then ruled neither ``approved'' nor ``rejected''
+but \emph{approved with the ontology moving in the same change} --- because the
+migration card had declared the new signature all along, and either half alone would
+leave 2{,}052 violations. A test now pins the signature to the card.
+
+Three features of that ruling recur across the corpus of rulings and are, we think,
+the transferable part:
+
+\begin{itemize}[leftmargin=1.9em,itemsep=1pt,topsep=2pt]
+\item \textbf{The adversary measures rather than opines.} Agent~8's findings are
+counts against the live store, so they can be re-run. One of them --- that a
+registry-status check ``only compared a graph measurement to a pre-declared integer;
+it never read the status field'' --- is a defect in a \emph{check}, not in data.
+\item \textbf{The integrator re-measures before ruling.} The lead's rulings record
+\code{lead\_measurement} separately from the agent's claim, and in one case correct
+the agent's figure: an agent measured the live layer at 4{,}865 unreviewed
+assertions while its own staged delta would take the post-integration value to
+35{,}139 --- a prediction, against the 35{,}131 the layer holds today.
+\item \textbf{Trades are recorded, not netted.} One ruling notes that closing a
+coverage gap multiplies another gap's unreviewed population sevenfold and deepens a
+third, and records the trade instead of reporting the improvement alone.
+\end{itemize}
+
+The adversary also found defects nobody had a gap for. It measured that the exported
+public artefact under-declared its own inputs --- 31 of 36 exported labels
+undeclared, 129{,}691 edges and 32{,}044 node rows invisible to the hash that was
+supposed to cover them, and 4{,}016 public nodes dropped silently. And it found a
+user-visible search defect by querying rather than by reading code: 5{,}123 of 5{,}839
+search derivatives in one corpus carried a private-use sentinel character, so a
+reader searching for \iast{\d{r}tasya} got zero hits while the sentinel form got 94.
+
+\begin{figure}[tbp]
+\centering
+\resizebox{\textwidth}{!}{\input{figures-src/fig_adversarial}}
+\caption{Propose $\to$ attack $\to$ adjudicate, using the repository's own agent
+names and counts. Seven domain agents own 43 gaps between them and write no graph
+mutations; an eighth agent has no gaps and read-only database access, and audits the
+other seven; a lead re-measures before ruling. The boxed example is one ruling
+end to end. The caveat at the foot is not decorative: these agents share a model
+family and are not statistically independent.}
+\label{fig:adversarial}
+\end{figure}
+
+\subsection{Five hostile rounds}
+
+Before release, five further adversarial rounds ran over the candidate
+(\cref{sec:failure}). The pattern to report is that later rounds found defects in
+earlier rounds' work, including one round that closed two critical findings its own
+hostile pass had raised against itself. The first round's finding was structural:
+30{,}266 semantic-assertion nodes carried no assertion identifier and fell through to
+their source passage's canonical key, collapsing two public objects onto one and
+silently dropping assertion-to-passage edges as self-edges.
+
+We are careful about what this shows. It shows that a differently-instructed pass
+finds what an earlier pass missed. It does not show statistical independence: the
+passes share a model family, and a correlated blind spot would be invisible to all
+of them (\cref{sec:threats}).
+
+\subsection{Three gates per domain}
+\label{sec:gates}
+
+Fourteen domains passed through a three-gate structure, adopted after four of four
+domains failed a third gate that had not previously existed. Gate~A verifies the
+artefact's own integrity --- that its manifest checksums hold. Gate~B verifies the
+rows against the live graph: coverage, addressing, provenance, and the central
+importability policy. Gate~C attacks. In the case we treat at length
+(\cref{sec:case-samaveda}) Gate~C was implemented in a separate file from Gate~B
+explicitly ``so the same codepath cannot validate itself'', named the fields it
+refused to read, re-implemented the normalisation from prose rather than reusing the
+pipeline's code, and carried a negative control.
+
+The owner-decision chain that produced Gate~C is itself part of the method. A
+condition required that ``existing validation gates pass''; the eligibility record
+showed one gate unknown and the other not run. The condition was recorded as
+\emph{unmet}, with the reasoning that reading ``gates'' as the one gate that already
+existed would clear the board by narrowing a word, and that the conservative reading
+is the one that cannot manufacture a closure. The owner confirmed the conservative
+reading, the gates were built, and the new gate landed a real defect on its first
+run.
+
+\subsection{Model output is confined by mechanism}
+\label{sec:mechanism}
+
+\Cref{sec:model-policy} states the policy; here we note where it bites. The
+extractor's validator rejects with one code per failure mode, and its central check
+is whether a cited token was present in the packet the model was shown --- a
+fabricated citation is decidable and is discarded. The predicate vocabulary is
+closed, and five predicates a model would naturally reach for are members
+\emph{so that proposing one is refused by name with a recorded reason}. Acceptance
+requires a predicate to have been unlocked by a measured precision against gold; the
+unlocked set is empty by construction and remains empty, so no assertion has ever
+been auto-accepted.
+
+Runtime provenance is recorded rather than assumed, on a rule adopted after a
+concrete failure: earlier pilot output had been recorded as model-generated when it
+was in fact produced by regular expressions. The decision record calls that
+``provenance that looked like evidence and was not'', and notes that a wrong runtime
+string is the same defect in one field. Self-reported model identity is classified as
+unattested, and provider-attested build metadata is marked unavailable because no
+provider supplies it.
+
+\subsection{Who did what}
+
+\input{tables/responsibility}
+
+The distribution in \cref{tab:responsibility} is the answer to RQ2. Agents are
+present in almost every row and decisive in none of the rows that define truth:
+identity, promotion, graph mutation and release certification are deterministic code
+or a human decision, every time.

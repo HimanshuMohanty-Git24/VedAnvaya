@@ -1,0 +1,115 @@
+% Figure: propose -> attack -> adjudicate, as the final closure sprint's artefacts
+% record it. Names and counts are the repository's own (gap_assignment.json,
+% agent8/audit_findings.json, lead/rulings.json); no role is invented to make the
+% diagram symmetrical.
+\begin{tikzpicture}[
+  font=\footnotesize,
+  every node/.style={align=center},
+  ag/.style={draw=SkyBlue!65!black, fill=SkyBlue!13, rounded corners=2.5pt,
+             inner sep=4pt, font=\scriptsize, minimum height=16mm,
+             line width=0.5pt, anchor=north},
+  adv/.style={draw=BurntOrange!72!black, fill=BurntOrange!12, rounded corners=2.5pt,
+              inner sep=5pt, font=\scriptsize, line width=0.6pt},
+  lead/.style={draw=black!60, fill=black!5, rounded corners=2.5pt, inner sep=5pt,
+               font=\scriptsize, line width=0.7pt},
+  det/.style={draw=SeaGreen!60!black, fill=SeaGreen!11, rounded corners=2.5pt,
+              inner sep=5pt, font=\scriptsize, line width=0.55pt},
+  own/.style={draw=RoyalPurple!60!black, fill=RoyalPurple!10, rounded corners=2.5pt,
+              inner sep=5pt, font=\scriptsize, line width=0.55pt},
+  fl/.style={-{Latex[length=2mm,width=1.5mm]}, draw=black!55, line width=0.6pt},
+  atk/.style={-{Latex[length=2mm,width=1.5mm]}, draw=BurntOrange!72!black,
+              line width=0.6pt, dashed},
+  note/.style={font=\scriptsize\itshape, text=black!60},
+  hd/.style={font=\scriptsize\bfseries, text=black!55},
+]
+
+% ---------- the seven domain agents ----------
+\node[hd, anchor=west] at (-7.5,3.5)
+  {\textsc{propose} --- seven domain agents, 43 gaps, one owner each};
+\foreach \i/\name/\n in {
+  0/{\code{AGENT\_1}\\formula, cross-Veda}/3,
+  1/{\code{AGENT\_2}\\entity, deity identity}/12,
+  2/{\code{AGENT\_3}\\morphology, semantics}/7,
+  3/{\code{AGENT\_4}\\ritual}/4,
+  4/{\code{AGENT\_5}\\quality, reference}/6,
+  5/{\code{AGENT\_6}\\product surface}/5,
+  6/{\code{AGENT\_7}\\translation, S\=amaveda}/6} {
+  \node[ag, text width=18mm] (a\i) at ({-7.0+\i*2.35},3.05)
+    {\name\\[-1pt]\tiny \n\ gaps};
+}
+\node[note, anchor=west, text width=152mm, fill=white, inner sep=2pt] at (-7.5,0.16)
+  {Each emits measurements, row-level evidence and a
+   \code{proposed\_mutations.json}. \textbf{None writes to the graph.}};
+
+% ---------- the adversary ----------
+\node[adv, text width=52mm, anchor=north] (ag8) at (-4.15,-0.78)
+  {\textbf{\code{AGENT\_8}} --- no gaps assigned\\[1pt]
+   \tiny database access recorded \code{READ\_ONLY}\\[2pt]
+   \tiny\raggedright
+   Found, among others: a registry check that ``never read the status field'';
+   an export under-declaring 31 of 36 labels, hiding 129{,}691 edges;
+   5{,}123 search rows carrying a private-use sentinel, so a reader's query
+   returned 0 where the sentinel form returned 94.};
+
+\node[hd, anchor=west] at (-7.5,-0.46) {\textsc{attack}};
+
+\foreach \i in {0,...,6} {
+  \draw[atk] (a\i.south) -- ++(0,-0.95) -| ($(ag8.north)+({-1.2+\i*0.4},0)$);
+}
+
+% ---------- the lead ----------
+\node[lead, text width=52mm, anchor=north] (lead) at (3.05,-0.78)
+  {\textbf{\code{lead}} --- integrator\\[2pt]
+   \tiny\raggedright
+   Re-measures before ruling: each ruling records a
+   \code{lead\_measurement} separately from the agent's claim. Four rulings
+   survive; one corrects an agent's own figure (4{,}865 $\to$ 35{,}139 after its
+   own staged delta), and one records a \emph{trade} --- closing one gap deepens
+   two others --- rather than reporting the improvement alone.};
+\node[hd, anchor=west] at (0.55,-0.46) {\textsc{adjudicate}};
+
+\draw[fl] (ag8.east) -- node[note, above, font=\tiny, pos=0.5, align=center]
+  {conflicts,\\measured} (lead.west);
+\draw[fl] (a6.south east) -- ++(0.55,0) |- node[note, above, font=\tiny, pos=0.72]
+  {proposals} ($(lead.north)+(1.1,0)$);
+
+% ---------- worked example ----------
+\node[draw=black!25, rounded corners=3pt, dashed, inner sep=6pt, line width=0.5pt,
+      fill=black!2, text width=152mm, font=\scriptsize, align=left]
+  (ex) at (-0.55,-5.15)
+  {\textbf{One ruling, end to end (\code{R2\_ASSERTION\_ROLE\_REANCHOR}).}\quad
+   \textsc{propose}: Agent~3 asks to re-anchor \code{ASSERTION\_ROLE} so role
+   fillers hang from semantic assertions.\quad
+   \textsc{attack}: Agent~8 measures that this creates \textbf{2{,}052 endpoint
+   signature violations} --- the declared signature expects a passage endpoint and
+   \emph{0} of the assertion nodes carry that label.\quad
+   \textsc{verify}: the lead reproduces the measurement independently.\quad
+   \textsc{rule}: not approved and not rejected, but \emph{approved with the
+   ontology moving in the same change} --- the migration card had declared the new
+   signature all along, and either half alone leaves 2{,}052 violations. A test now
+   pins the signature to the card.};
+
+% ---------- the two things agents cannot do ----------
+\node[det, text width=64mm] (det) at (-4.0,-8.05)
+  {\textbf{deterministic code decides promotion}\\[2pt]
+   \tiny\raggedright a frozen set of trust classes may be written
+   \code{ACCEPTED} without review; the model's class is not in it, and the
+   constructor raises. Acceptance additionally requires a predicate to have been
+   \emph{unlocked} by a measured precision --- the unlocked set is empty by
+   construction.};
+\node[own, text width=64mm] (own) at (3.4,-8.05)
+  {\textbf{the owner decides scope and \textsc{go}}\\[2pt]
+   \tiny\raggedright every mutation runs plan $\to$ dry run $\to$ owner
+   \textsc{go} $\to$ execute $\to$ readback against a hashed plan. Owner rulings
+   are cited by identifier from the closure tests they license, so a test cannot
+   silently redefine what it checks.};
+
+\draw[fl] (ex.south) -- ++(0,-0.35) -| (det.north);
+\draw[fl] (ex.south) -- ++(0,-0.35) -| (own.north);
+
+\node[note, text width=152mm, align=left] at (-0.55,-9.55)
+  {The agents are not statistically independent: they share a model family, so a
+   correlated blind spot would be invisible to the whole arrangement. What the
+   artefacts show is only that a \emph{differently instructed} pass finds what an
+   earlier pass missed --- repeatedly, and including in its own prior work.};
+\end{tikzpicture}

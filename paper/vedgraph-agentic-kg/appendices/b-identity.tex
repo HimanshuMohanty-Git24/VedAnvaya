@@ -1,0 +1,114 @@
+\section{Corpus Identity Scheme}
+\label{sec:appendix-identity}
+
+\subsection{The URN grammars}
+
+Identity is \code{uuid5} over a canonical \mbox{URN}. One grammar per work:
+
+\begin{center}\small
+\begin{tabular}{@{}ll@{}}
+\toprule
+Work & Mantra \mbox{URN} template \\
+\midrule
+\d{R}gveda \'S\=akala &
+  \code{urn:vedagraph:mantra:rigveda:shakala:} \\
+& \quad\code{mandala:\{m\}:sukta:\{s\}:mantra:\{v\}} \\[2pt]
+Yajurveda \textsc{vsm} &
+  \code{urn:vedagraph:mantra:yajurveda:} \\
+& \quad\code{vajasaneyi-madhyandina:adhyaya:\{a\}:mantra:\{v\}} \\[2pt]
+Atharvaveda \'Saunaka &
+  \code{urn:vedagraph:mantra:atharvaveda:shaunaka:} \\
+& \quad\code{kanda:\{k\}:sukta:\{s\}:mantra:\{v\}} \\[2pt]
+S\=amaveda Kauthuma &
+  \code{urn:vedagraph:mantra:samaveda:kauthuma:\{collection\}} \\
+& \quad\code{[:prapathaka:\{p\}][:ardha:\{r\}][:dasati:\{d\}]:verse:\{v\}} \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Note the S\=amavedic grammar names its collection rather than numbering it
+(\cref{sec:corpus}): the first ordinal slot denotes different collections in
+different witnesses, and the blast radius of the rejected reading was measured at
+1{,}280 of 1{,}875 verses before the decision was taken.
+
+Keys are padded for lexical sorting (\code{VG:RV:SAK:M01:S001:V001}); \mbox{URN}s are
+unpadded and are the hash input. Only the \mbox{URN} may never be re-spelled.
+
+\subsection{Verification}
+
+Recomputing every identifier from its \mbox{URN} over all four canonical builds:
+
+\begin{center}\small
+\begin{tabular}{@{}lrrrrr@{}}
+\toprule
+Build & Passages & Dup.\ keys & Dup.\ \mbox{URN}s & Dup.\ \mbox{UUID}s & Mismatches \\
+\midrule
+\d{R}gveda            & 11{,}590 & 0 & 0 & 0 & 0 \\
+S\=amaveda \=Arcika   &  2{,}342 & 0 & 0 & 0 & 0 \\
+V\=ajasaneyi          &  2{,}015 & 0 & 0 & 0 & 0 \\
+Atharvaveda (working) &  6{,}590 & 0 & 0 & 0 & 0 \\
+\midrule
+\textbf{pooled}       & \textbf{22{,}537} & \textbf{0} & \textbf{0} & \textbf{0} & \textbf{0} \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\subsection{The comparison ladder}
+
+Six named comparison forms, from the identity function on stored text to the
+cross-script surface: \code{SOURCE\_ORIGINAL}, \code{NFC},
+\code{ACCENT\_PRESERVING\_NORMALIZED}, \code{ACCENT\_STRIPPED\_COMPARISON},
+\code{SEARCH\_NORMALIZED}, \code{CROSS\_SCRIPT\_COMPARISON}. Stored text is never
+replaced: \code{text\_original} and \code{text\_nfc} are separate fields, and
+\code{SOURCE\_ORIGINAL} is the identity function, verified by test.
+
+Accent stripping removes only Vedic tone marks (U+0951--U+0954, the combining members
+of the Vedic Extensions block, plus U+0300, U+0301, U+030D, U+0331, U+032D), and
+adjudicates ambiguous combining marks per base letter. One consequence is worth
+stating, because it bears on the flagship case study: the S\=amavedic svara marks
+are \emph{not} in those ranges. Every one of the 25{,}542 marks on the 1{,}136
+accented witnesses sits in Devanagari Extended (U+A8E1--U+A8F3 --- combining
+Devanagari digits one, two and three, plus the combining letters), and zero are in
+U+0951--U+0954. The implementation is unaffected, because the S\=amavedic search
+surface is reached by transliteration rather than by this fold; the enumeration
+above is nonetheless not a description of the accents this corpus actually carries: on a vowel base a tone-set
+mark is an accent; on a consonant base carrying exactly one such mark, the mark is
+part of the letter (\iast{\'s} is \emph{s} plus U+0301); on a consonant base carrying
+more than one, the extra is the tone.
+
+\subsection{Deliberate non-folds and one deliberate loss}
+
+Avagraha is a real orthographic sign and is not folded, at a measured cost of 46 of
+116 residual unclassifiable Yajurvedic pairs. A private-use code point occurring 20
+times in one witness is not folded, because reading it as an anusv\=ara from context
+is a transcription judgement rather than a normalisation; it is registered as a
+source defect instead. Conversely the whole lateral series folds onto one sentinel
+because U+1E37 denotes the vocalic \iast{l} in one source convention and the
+retroflex \iast{\d{l}} in another. Splitting it was implemented, measured, and
+reverted.
+
+Case is folded \emph{before} the transcription table, not after: folding the other
+way left upper-case variants unmatched and made the search surface non-idempotent.
+Reordering was measured to change the surface for 0 of 21{,}936 canonical text
+records.
+
+\subsection{The referent-drift guard}
+
+Two digests per key: one over the bytes the source spells, one over a
+normalisation-independent comparison surface. Both are compared against the previous
+release's digests for the same key, and a difference is adjudicated into
+\code{UNCHANGED\_REFERENT}, \code{INTENTIONAL\_REFERENT\_CORRECTION},
+\code{REFERENT\_DRIFT} (blocks release), \code{REMOVED\_INVALID\_PASSAGE} or
+\code{NEWLY\_DISCOVERED\_PASSAGE}.
+
+Text equality alone is insufficient. Of 1{,}844 released S\=amavedic keys only
+1{,}651 have a distinct comparison digest: 192 equivalence classes covering 385 keys
+share one, and 174 of those classes share a byte-identical raw digest. The guard
+therefore requires three fields to agree --- comparison digest, source locator and
+source verse marker --- before calling two observations the same occurrence.
+
+Because the comparison digest runs through the search surface, adding a rule to the
+transcription table changes the digest of already-released keys and the guard reports
+drift where none occurred. This was measured (one rule moves five Yajurvedic keys,
+others four and one more) and resolved by splitting the fold tables: a frozen table
+inside the digest, and a free table for comparison only.

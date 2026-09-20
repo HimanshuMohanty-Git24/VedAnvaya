@@ -1,0 +1,117 @@
+\section{Discussion}
+\label{sec:discussion}
+
+\subsection{What agents were actually good for}
+
+The measurement in \cref{sec:eval-distribution} invites a deflationary reading:
+agents contributed 0.17\,\% of the graph's edges, so they barely mattered. That
+reading is wrong, and the reason is worth stating precisely. Agents were the
+project's instrument for four things that deterministic code could not do and a
+single human could not do at this scale.
+
+\emph{Reading heterogeneous sources into a schema.} Deciding that a particular TEI
+file has no editorial-alternative elements despite its header's boilerplate, or that
+a translator's preface commits him to a different recension, is reading. It is
+error-prone, it is cheap for a model, and it is checkable afterwards.
+
+\emph{Generating candidates cheaply enough to be thrown away.} The project's most
+valuable candidate sets are the ones that were discarded. Discarding 49{,}179 role
+fillers is only a rational move if producing them was cheap; the same is true of the
+semantic-resemblance layer that never landed. Agentic generation changes the
+economics of refusal.
+
+\emph{Cross-file reconciliation.} Several of the most consequential defects ---
+a registry claiming a closure the graph did not hold, a report citing a path whose
+file did not contain the digests described, a gate computing a set that made its own
+question unanswerable --- are inconsistencies between artefacts that no single test
+covered. Finding them is a reading task over hundreds of files.
+
+\emph{Adversarial probing with a stated attack.} The Gate C case
+(\cref{sec:case-samaveda}) is the clearest instance. The attack --- ``if a withheld
+verse's exact normalised text is released on a coreferent twin, the stated reason is
+false'' --- is a hypothesis about the project's own explanations, and it is the kind
+of hypothesis an agent can be asked to generate and then required to test
+mechanically.
+
+What agents were \emph{not} used for is equally definite: they did not decide what
+was true. The promotion gate is a frozen set of trust classes, the candidate status
+is the only status a model may write, and the unlocked-predicate set is empty by
+construction.
+
+\subsection{What should stay deterministic}
+
+Three functions, on the evidence here, should never be delegated.
+
+\textbf{Identity.} A model asked whether two verses are the same verse will answer,
+and its answer will be a similarity judgement wearing an identity claim's clothes.
+Identity in VedGraph is a pure function of declared coordinates, and the one place
+where a normalised label \emph{is} an identity input is scoped to the candidate layer
+and named as such.
+
+\textbf{Promotion.} The transition from candidate to accepted must be a property of
+the pipeline, not of the proposer, and it must be expressed as data so that it can be
+audited. Expressing it as a reviewer's convention would have failed: we observed a
+case where a completed review had simply never been applied, leaving 149 assertions
+live that a reviewer had not accepted, and the graph's count of reviewed edges at
+zero not because nothing had earned it but because the earning was never recorded.
+
+\textbf{Arithmetic over the graph.} Every count in this paper is a query. The
+project's own Q38 failure (\cref{sec:eval-ask}) shows why: a synthesised answer in
+which every figure was real and correctly cited was still misleading, because the
+comparative words around the figures --- ``most widely'', ``largest'' --- asserted a
+ranking the cited rows did not contain. Numbers can be checked mechanically;
+superlatives had to be given their own rule.
+
+\subsection{Epistemic typing as an engineering discipline}
+
+The four-layer model is not novel as an idea --- provenance vocabularies in the
+Semantic Web have expressed comparable distinctions for two decades --- but three
+things about its use here seem worth transferring.
+
+\emph{Type at the edge, not at the dataset.} A dataset-level provenance statement
+cannot express that one predicate carries claims from three different kinds of
+evidence. VedGraph's attribution-precision axis exists because \code{HAS\_DEVATA} is
+simultaneously a per-verse statement and an inherited label, and the split
+(\cref{fig:indra}) is roughly 1:3.
+
+\emph{Give absence a type.} The strongest design decision in the project is that a
+withheld row states a reason drawn from a closed class space, and that the count of
+rows with no disposition at all is gated at zero. This is what made the Gate C
+finding possible: you cannot falsify a reason that was never recorded.
+
+\emph{Make the gate able to fail, and prove it.} Two gates in this project were
+found to be incapable of failing, and a third's remediation shipped with ten mutant
+deletions verified to turn the tests red. A passing gate is evidence only if a
+failing version of the same gate has been demonstrated.
+
+\subsection{Generalisability}
+
+The Vedic corpus is favourable in ways that matter. It is closed and enumerable;
+it carries a traditional metadata apparatus that supplies genuine source-explicit
+attributions; and its recensional structure forces the scope question to be answered
+explicitly. A corpus that is open-ended, or that has no equivalent of the
+Anukrama\d{n}\=\i, would have a much thinner \textsc{l1}.
+
+It is unfavourable in one way that may be more common than it looks: its
+normalisation is contested, so the comparison surface is a research object rather
+than a preprocessing step. Any corpus with competing transliteration conventions ---
+which is most historical corpora outside the Latin alphabet --- inherits the problem
+that a fold inside an identity digest is not free to change
+(\cref{sec:normalisation}).
+
+We would expect the following to transfer: separating identity from normalisation;
+typing absence; expressing the promotion gate as data; requiring a negative control
+in any agreement measurement; and preserving failing gate runs under test. We would
+not expect the specific 0.17\,\% ratio to transfer, since it is a consequence of this
+corpus having a large deterministic layer available to it.
+
+\subsection{Relation to how such systems are usually built}
+
+Two contrasts are worth drawing explicitly. Retrieval-augmented pipelines typically
+treat provenance as a citation attached to an answer; here provenance is attached to
+the claim in the store, so a consumer can filter before an answer exists. And
+agentic extraction pipelines typically use a confidence score to decide what to keep;
+this project refuses that on the stated ground that the score is produced by the same
+process as the claim. The alternative it adopts --- per-predicate unlocking gated on
+a measured precision against an external reference --- has the property that nothing
+was ever unlocked, which is an honest outcome rather than a failure of the mechanism.

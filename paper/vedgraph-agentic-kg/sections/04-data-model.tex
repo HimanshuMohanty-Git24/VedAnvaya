@@ -1,0 +1,203 @@
+\section{The Evidence-Typed Data Model}
+\label{sec:model}
+
+\begin{figure}[tbp]
+\centering
+\resizebox{\textwidth}{!}{\input{figures-src/fig_ontology}}
+\caption{Core graph ontology, grouped by object family. An overview: 55 node labels
+and 81 relationship types are in use, and the full catalogue is
+\cref{sec:appendix-ontology}. The figure shows one labelled edge per family rather
+than every predicate, because the alternative is unreadable. Counts are from the
+fact freeze at \code{6bf220c}.}
+\label{fig:ontology}
+\end{figure}
+
+\subsection{Four axes, deliberately not collapsed}
+
+The object families are shown in \cref{fig:ontology}. Every relationship in
+VedGraph carries, as stored properties, the answers to four different questions. They are orthogonal, and the model's central claim is that
+collapsing any pair makes a well-formed scholarly question unaskable.
+
+\paragraph{(1) How did this claim come to be?} The \emph{knowledge layer} is a
+four-member closed vocabulary, described in the code as ``never collapsed, never
+inferred from a score'':
+
+\input{tables/layers}
+
+\paragraph{(2) How should a reader grade it?} The \emph{quality tier} is a
+reader-facing letter derived from the layer by a total bijection
+($\textsc{l1}\!\to\!\textsc{a}$, $\textsc{l2}\!\to\!\textsc{b}$,
+$\textsc{l3}\!\to\!\textsc{c}$, $\textsc{l4}\!\to\!\textsc{d}$). The module states the
+rule as: tier is how a claim was reached, never how confident it sounds. The tier
+exists separately from the layer because one further transition acts on it --- a
+model-extracted claim that no reviewer has accepted stays in \textsc{l3} but drops to
+\textsc{tier\,d}, since \textsc{tier\,c} is defined as model-extracted evidence that
+survived review and a candidate has not had any.
+
+\paragraph{(3) What is the claim's reach over the passage?} \emph{Attribution
+precision} distinguishes a per-passage statement, a label \emph{inherited} from an
+enclosing container, the passage's own wording, and edges that are not attributions at
+all. This is the axis that matters most for counting. The Anukrama\d{n}\=\i\ names a
+deity for a \iast{s\=ukta}; projecting that label onto each of its mantras is what
+makes ``passages of Indra'' work at all, but a reader who cannot see the difference
+reads tens of thousands of inherited labels as per-verse statements. The model records
+the consequence: ``How many mantras invoke Indra?'' has at least four honest answers
+--- strict source-stated, container-inherited, textual mention, and semantic
+invocation --- and collapsing any pair of them makes one of the four unaskable. The
+live distribution shows how unevenly the corpus behaves: every one of the
+V\=ajasaneyi Sa\d{m}hit\=a's 2{,}240 seer attributions is source-stated per verse,
+while every one of the Atharvaveda's 5{,}084 is a \iast{s\=ukta} label projected
+downward, so a per-verse Atharvavedic seer claim cannot be made from this corpus at
+all.
+
+\paragraph{(4) Off which textual surface was the evidence read?} A rule fired over
+Griffith's 1896 English is exactly as reproducible as a rule fired over the Sanskrit,
+so the tier cannot separate them --- and the difference matters enormously, because
+one measures a Victorian translator's word choice and the other measures the text.
+The project discovered this the expensive way: 21{,}246 of 47{,}542
+\code{ABOUT\_CONCEPT} edges had fired on an English keyword with no Sanskrit evidence
+and carried an identical grade to edges matched on the verse itself. Those edges were
+later withdrawn, and a separate \emph{evidence surface} axis was introduced so the
+distinction is filterable rather than archaeological.
+
+\subsection{A name collision, and what it cost}
+\label{sec:collision}
+
+The fourth axis is instructive as a failure. Two different enumerations in the
+codebase are both called \code{EvidenceBasis}. One describes the textual surface the
+evidence was read off; the other describes the kind of act that produced the claim.
+Their value spaces are disjoint. Reading the stored graph property straight into the
+second enumeration --- the natural thing to do, given the shared name --- mapped
+\emph{every} attribution edge in the corpus to \code{UNKNOWN}: all 17{,}889 seer
+edges, all 16{,}298 metre edges, all 10{,}558 deity edges. The failure was silent,
+because \code{UNKNOWN} is a legitimate value.
+
+The remedy is worth reporting because it generalises. Rather than renaming one
+enumeration, the project added a test that enumerates the property's entire observed
+value space in the live store and asserts it is a subset of the surface vocabulary.
+The test's header records why the check is shaped that way: this project has twice
+certified an absence by asking the wrong question, once against the wrong surface and
+once with the wrong vocabulary. Grepping for the value you expect confirms your
+expectation; enumerating the value space does not.
+
+\subsection{The lifecycle: a model may write exactly one status}
+\label{sec:model-policy}
+
+The constraint that keeps \textsc{l3} small is not a review convention. It is encoded
+as data. Assertion state is a three-member vocabulary --- candidate, accepted,
+rejected --- and the set of trust classes permitted to be written as \emph{accepted}
+without review is a frozen set containing exactly deterministic-derived and
+source-explicit. The comment beside it is explicit that this is the policy expressed
+as data rather than as a convention. The constructor raises if a model-derived record
+is marked accepted, and raises again if a record claims model provenance without
+naming a model.
+
+The governing decision record, \mbox{ADR-014}, states the rule and three consequences
+that are each enforced in code:
+
+\begin{quote}\small
+A model may write exactly one status: \code{CANDIDATE}. Every other status is written
+by a deterministic stage or by a person. \dots{} Evidence is checkable or the claim is
+discarded: a cited token the model was never shown is a fabricated citation, it is
+decidable, and it is rejected. \dots{} The predicate vocabulary is closed, and the
+refusals are named. \dots{} Confidence is a floor inside a predicate's rule and
+nothing else: acceptance requires that the predicate has been \emph{unlocked} by a
+measured gold precision of $\ge 95\,\%$; until then, a confidence of 1.0 is accepted at
+the same rate as 0.4 --- not at all.
+\end{quote}
+
+Its stated rationale is the reason we treat confidence-thresholding as unsound in this
+setting: the confidence score is produced by the same process that produced the claim,
+so it carries no information independent of the claim, and thresholding on it selects
+for fluency rather than for truth. The unlocked-predicate set is empty by
+construction and remains empty; consequently no semantic assertion has ever been
+auto-accepted.
+
+Two refinements are worth noting. First, five predicates that a model might naturally
+want --- \code{SYMBOLIZES}, \code{REPRESENTS}, \code{IS\_GOD\_OF}, \code{MEANS},
+\code{CAUSES} --- are members of the enumeration \emph{so that a proposal naming one
+is rejected as a policy decision with a recorded reason}, rather than failing schema
+validation as an unknown string. The difference matters when reading a rejection
+report. Second, the strongest review state the graph has ever recorded is
+\code{MODEL\_ADJUDICATED}, glossed in the API as ``a model re-read the passage and
+accepted this edge with a stated reason. This is the strongest review state in this
+graph and it is not human review.'' The count of human-reviewed edges is zero, and the
+product says so.
+
+\begin{figure}[tbp]
+\centering
+\resizebox{0.93\textwidth}{!}{\input{figures-src/fig_epistemic}}
+\caption{The epistemic pipeline: how a claim acquires its typing and what it can
+terminally become. The centre column is the state of the claim, the left gutter names
+the actor, and the right gutter names what travels with the claim at that point.
+Only one of the four terminal dispositions puts a claim in the graph; the other three
+are recorded rather than discarded, because an absence a reader cannot distinguish
+from a verified zero is the most misleading thing this graph could publish.}
+\label{fig:epistemic}
+\end{figure}
+
+\subsection{Typed absence}
+\label{sec:typed-absence}
+
+\Cref{fig:epistemic} sets out the whole lifecycle, from a source observation to one
+of four terminal dispositions. The model treats an untyped absence as a defect. Four distinct mechanisms record
+\emph{why} something is not present, each scoped to a layer: a reason string per
+unmapped predicate, emitted into the load report alongside a separate count of
+predicates that are neither mapped nor explicitly withheld (``not mapped'' and
+``nobody looked'' are indistinguishable in a coverage number, and only one of them is
+acceptable); a typed node property with a declared, closed class space, used for
+S\=amavedic notation (\cref{sec:case-samaveda}); typed non-resolution rows in the
+lexical layer, where 711 unresolved tokens each carry a linguistic reason rather than
+a queue state; and edge-type-keyed withholding, where near-parallel pairs are held
+back from a reuse claim with the reason recorded on the type.
+
+The invariant that makes the S\=amavedic case work is published as a measurement
+rather than asserted: the count of verses with no notation disposition at all must be
+zero, because an untyped verse is one a reader cannot tell apart from a verified zero.
+
+\subsection{The public boundary, and a label that does two jobs}
+
+Product and internal knowledge share one database. Diagnostic nodes --- the
+repository's assessments of its own passages --- carry a marker label so that a single
+filter, written once, excludes them. The design note is that sprinkling an exclusion
+across thirty queries would be the same policy enforced thirty times and wrong the
+first time a new diagnostic label appeared.
+
+The marker turns out to mark two different kinds of node, and the distinction is not
+drawn by the label itself. It marks the diagnostic layer, which no researcher should
+traverse into, and it marks \emph{sub-entities} --- text versions, translations,
+lemmas, sources --- which must stay reachable, since a passage that could not reach
+its own text would be useless. The broad form of the obvious leakage check therefore
+reports 70{,}559 ``leaks'', every one of them legitimate, and an auditor running it
+would file a false critical finding. The invariant is consequently written against the
+diagnostic labels by name rather than against the marker.
+
+A related caveat is structural and is worth stating for anyone building on such a
+graph: the separation is query-side, not structural. An unfiltered one-hop traversal
+from any passage returns tens of thousands of text-version and translation nodes. The
+mitigation the project adopts is to serve a catalogue of vetted queries rather than
+the database.
+
+\subsection{Invariants}
+\label{sec:invariants}
+
+Twenty live invariants and twelve integrity gates run against the loaded store. The
+design principle is stated in the invariant suite's header: each check is phrased as
+the defect it detects rather than as the desired state, because each corresponds to a
+defect this repository actually shipped. Representative members include: no edge
+without a quality tier; no edge without a grade rationale; no unlabelled node; no
+product node reaching a diagnostic node; no work without a scope statement; no
+attribution-precision value outside the declared enumeration; no predicate carrying
+more than one run identifier, since that would mean part of the graph is reproducible
+from no committed artefact.
+
+Two features of this suite bear on method. First, one gate had been rewritten twice
+and both earlier versions were untestable --- they computed the set of declared
+relationship types as the union of the ontology \emph{and the graph}, then asked which
+graph types were missing from it. Nothing can be. The gate reported zero undeclared
+types for an entire wave while eleven predicates went unclassified. The code now
+carries the lesson as a comment: the data may not declare itself valid. Second, a
+universal-quantifier invariant over attribution precision could only be written safely
+once the vocabulary had a member meaning ``this edge is not an attribution'' ---
+an invariant asserting that every edge carries a property must first be able to say
+what the property means on every edge.

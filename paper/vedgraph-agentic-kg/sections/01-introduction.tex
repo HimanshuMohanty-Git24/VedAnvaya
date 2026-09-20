@@ -1,0 +1,115 @@
+\section{Introduction}
+\label{sec:introduction}
+
+A knowledge graph built over an ancient corpus has to answer a question that a graph
+built over a product catalogue does not: \emph{who says so}. That a hymn is addressed
+to Indra may be a statement of the traditional index, an inference from the hymn's own
+wording, a modern editor's normalisation, or a language model's reading. All four can
+be written as the same triple. Once they are, the distinction is unrecoverable, and
+every downstream count silently mixes them.
+
+This paper reports the construction of \textbf{VedGraph}, a knowledge graph over the
+four Vedic Sa\d{m}hit\=as, and the method that produced it. The method's defining
+feature is that large language models were used pervasively and were never permitted
+to assert. Agents read sources, proposed candidates, wrote queries, measured
+populations, reconciled disagreeing files, and --- most consequentially --- attacked
+the project's own output. Deterministic code and a human owner decided what became a
+fact. The paper's argument is that this division is not a matter of discipline but of
+mechanism, and that the mechanism is worth describing because it is measurable in the
+artefact it produced.
+
+\subsection{The problem}
+
+Three failure modes recur when models are put to work on historical text, and all
+three are failures of \emph{typing} rather than of accuracy.
+
+\textbf{Fluency passes for evidence.} A model's confidence score is produced by the
+same process that produced the claim; thresholding on it selects for fluency, not for
+truth. The project states this as policy and refuses to use confidence as an
+acceptance criterion at all (\cref{sec:model-policy}).
+
+\textbf{Normalisation passes for identity.} To compare a Rigvedic verse with its
+S\=amavedic counterpart one must fold accents, scripts, punctuation and word division.
+Having folded them, it is one short step to concluding that two verses which fold
+together \emph{are} the same verse. They may not be: \iast{a\'sva\d{h}} and
+\iast{a\'sv\=a\d{h}} share an \mbox{ASCII} fold and are two words.
+
+\textbf{Absence passes for zero.} A query that returns only positive rows invites the
+reader to infer that the unreturned rows are negative. In a corpus where a layer may
+be genuinely absent, deliberately withheld, or simply never assessed, an untyped
+absence is the most misleading thing a graph can publish.
+
+\subsection{Research questions}
+
+\begin{description}[leftmargin=1.9em,itemsep=2pt,topsep=3pt]
+  \item[RQ1] How can a heterogeneous historical corpus be transformed into a large,
+  provenance-aware knowledge graph with substantial \mbox{LLM}-agent involvement,
+  \emph{without} model-generated hypotheses becoming indistinguishable from
+  source-explicit facts?
+  \item[RQ2] What division of labour between deterministic computation, agents, and
+  human decision actually emerges when the constraint in RQ1 is enforced by mechanism
+  rather than by convention --- and what share of the resulting graph do agents in
+  fact author?
+  \item[RQ3] Can adversarial validation by independently implemented gates raise
+  reliability when no comprehensive human gold standard exists, and what, precisely,
+  does it fail to establish?
+\end{description}
+
+\subsection{Contributions}
+
+\begin{enumerate}[leftmargin=1.9em,itemsep=3pt,topsep=3pt]
+\item \textbf{A recension-explicit identity architecture} for a four-Sa\d{m}hit\=a
+corpus (\cref{sec:corpus}). Passage identity is a \mbox{UUIDv5} over a canonical
+\mbox{URN} composed of recension and structural coordinates only; no source, edition,
+text, script or sequence position may enter it. We verified the scheme reproduces all
+22{,}537 shipped passages with zero key, \mbox{URN} or \mbox{UUID} collisions. A
+separate \emph{referent-drift guard}, built after a segmentation change silently moved
+five passages under unchanged identifiers, distinguishes ``the stored text changed''
+from ``what this identifier denotes changed'' --- a distinction identity hashing alone
+cannot make.
+
+\item \textbf{An evidence-typed graph model} (\cref{sec:model}) in which four
+orthogonal axes travel with every edge: the epistemic layer that produced the claim,
+a reader-facing quality tier derived from it, the \emph{attribution precision}
+separating a per-verse statement from a label inherited from its enclosing hymn from
+the verse's own wording, and the \emph{textual surface} the evidence was read off.
+We show why collapsing any pair of these makes a well-formed scholarly question
+unaskable, and we report the collision that arose when two of them were given the
+same name.
+
+\item \textbf{A measured account of agentic contribution} (\cref{sec:agentic},
+\cref{sec:eval}). Model-extracted relationships are 890 of 510{,}905, or 0.17\,\%.
+We describe the mechanism that produced this ratio --- a promotion gate encoded as a
+frozen set of trust classes rather than as a review convention --- and characterise
+what agents did instead of asserting.
+
+\item \textbf{An adversarial validation methodology whose gates attack withholdings}
+(\cref{sec:case-samaveda}). We report a gate, implemented independently of the
+pipeline it audits and equipped with a negative control, that falsified the stated
+reasons of 39 withheld rows using the project's own released data, and we show why
+the correction changed no verse's release status.
+
+\item \textbf{A failure record offered as evidence about method}
+(\cref{sec:failure}). We catalogue the project's withdrawals, refusals and
+self-deletions with the measurement that forced each, including two cases in which a
+refusal's own decisive argument was subsequently found wrong and withdrawn in turn.
+
+\item \textbf{The integrated graph and a research interface over it}
+(\cref{sec:interface}): 165{,}737 nodes and 510{,}905 relationships over 20{,}210
+canonical mantras, exposed through an interface that renders the evidence typing at
+the point of reading.
+\end{enumerate}
+
+\subsection{What this paper does not claim}
+
+The corpus is four recensions, not ``the Vedas'': no Padap\=a\d{t}ha, no
+Br\=ahma\d{n}a, \=Ara\d{n}yaka or Upani\d{s}ad, no Kr\d{s}\d{n}a Yajurveda, no
+Paippal\=ada Atharvaveda, and no S\=amavedic \iast{g\=ana} corpus are held
+(\cref{sec:scope}). No comprehensive human gold standard exists for the semantic
+layer; the reference sets that do exist are model-adjudicated or
+independent-source-adjudicated, and we use those terms strictly
+(\cref{sec:gold}). The construction was carried out by one person, so the
+human-decision arm of the workflow is a single individual's judgement and is not
+independent of the project's goals. Finally, the graph is not bootstrappable from a
+clean clone: we state precisely which parts are and are not
+(\cref{sec:reproducibility}).

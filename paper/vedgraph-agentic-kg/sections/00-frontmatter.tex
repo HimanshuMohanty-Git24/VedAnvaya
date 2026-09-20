@@ -1,0 +1,73 @@
+\title{\vspace{-1.4cm}\bfseries VedGraph: Agentic Construction of an\\
+Evidence-Typed Knowledge Graph for the Vedic Sa\d{m}hit\=as}
+
+\author{%
+  Himanshu Mohanty\\[2pt]
+  \small Independent researcher\\
+  \small \url{https://github.com/HimanshuMohanty-Git24/VedAnvaya}
+}
+\date{\small Preprint. Measurements frozen at commit \code{6bf220c},
+20 September 2026, from a working tree carrying this paper's own untracked
+directory and nothing else (\cref{sec:appendix-repro}).}
+
+\maketitle
+\thispagestyle{fancy}
+
+\begin{abstract}
+\noindent
+Large language models can read a historical corpus far faster than a philologist can,
+and that speed is the problem: a model proposes fluent claims that are indistinguishable,
+once written into a graph, from claims a source actually makes. We report the
+construction of \textbf{VedGraph}, a knowledge graph over the four Vedic Sa\d{m}hit\=as
+in a single named recension each --- \d{R}gveda \'S\=akala, S\=amaveda Kauthuma
+\=Arcika, V\=ajasaneyi M\=adhyandina, and Atharvaveda \'Saunaka, 20{,}210 canonical
+mantras in total --- built over seventeen days by a human owner directing bounded
+\mbox{LLM} agents alongside deterministic pipelines. The graph holds 165{,}737 nodes and
+510{,}905 relationships.
+
+The method rests on two commitments. First, identity is source-independent: a passage's
+identifier is a version-5 \mbox{UUID} over a canonical \mbox{URN} built from recension
+and structural coordinates alone, and every normalisation --- accent folding, script
+transliteration, sandhi-insensitive comparison --- is a comparison instrument that may
+generate candidates but may never establish that two passages are the same. Second,
+every relationship carries the epistemic layer that produced it: source-explicit,
+deterministically derived, model-extracted, or interpretive. Because the layer is a
+stored, indexed property rather than documentation, its distribution is measurable.
+It is the paper's central empirical result: although agents were used throughout
+construction, \textbf{0.17\,\% of relationships are model-extracted} (890 of 510{,}905),
+against 21.39\,\% source-explicit and 77.22\,\% deterministically derived. The ratio
+depends on the population and we give four; over the semantic assertion layer alone,
+where a model is the proposing mechanism, the share is 7.0\,\% --- and none of it was
+promoted. The agentic
+contribution was concentrated in candidate generation, measurement, cross-file
+reconciliation and adversarial refutation --- not in assertion. A policy expressed as
+data rather than as convention enforces this: a model may write exactly one lifecycle
+status, \code{CANDIDATE}, and the promotion gate is a frozen set of trust classes that
+does not contain the model's.
+
+We describe the validation regime that made the ratio hold, in which each layer is
+attacked by an independently implemented gate, and we report its failures as evidence
+about method. The project deleted 41{,}796 of its own relationships in one revision and
+retired 30{,}539 in the next; withdrew 96\,\% of its semantic role fillers rather than
+ship a measured 24.8\,\% error; refused an entire corpus on an inter-reader agreement of
+0.505; and refused a semantic-resemblance layer after a re-implemented lexical control
+outperformed it. In the case we treat at greatest length, a gate built to attack the
+project's own \emph{withholdings} --- not only its assertions --- found 39 withheld
+S\=amavedic verses whose stated reason the repository's own released data disproved;
+the reason was corrected and no verse moved from withheld to released. We state
+plainly what no amount of this machinery establishes: of 35{,}131 semantic assertions,
+zero have been reviewed by a human, and the project's own certification says so.
+We argue that in scholarly knowledge-graph construction the durable contribution of
+agents is not the claims they generate but the refutations they can be made to
+perform, and that this is only safe when the graph can say, per edge, how each claim
+came to be.
+\end{abstract}
+
+\vspace{2pt}
+\noindent\textbf{Keywords:} knowledge graph construction; \mbox{LLM} agents; provenance;
+evidence typing; adversarial validation; digital humanities; computational philology;
+Sanskrit; Vedic corpus; text reuse.
+
+\vspace{4pt}
+\hrule
+\vspace{6pt}

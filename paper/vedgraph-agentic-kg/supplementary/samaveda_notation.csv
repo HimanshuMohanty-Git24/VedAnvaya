@@ -1,0 +1,9 @@
+axis,value,verses
+disposition,SOURCE_EXPLICIT_PRESENT,1136
+disposition,WITHHELD,708
+withheld_class,NEAR_LINE_EXISTS_WITNESS_DISAGREEMENT,565
+withheld_class,NO_NEAR_LINE_PROBABLE_ABSENCE,104
+withheld_class,WITNESS_OCCURRENCE_CONSUMED_BY_A_COREFERENT_REPEAT,39
+text_version_role,SEARCH_DERIVATIVE/accented=False,1844
+text_version_role,PRIMARY_TEXT/accented=False,1844
+text_version_role,PARALLEL_TEXT/accented=True,1136

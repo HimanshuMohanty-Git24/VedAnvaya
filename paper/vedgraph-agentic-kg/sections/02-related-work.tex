@@ -1,0 +1,152 @@
+\section{Background and Related Work}
+\label{sec:related}
+
+\subsection{The Vedic corpus as a computational object}
+
+The four Vedic Sa\d{m}hit\=as are among the oldest continuously transmitted texts in
+any language, preserved orally with a fidelity that makes them unusually good
+material for textual computation and unusually unforgiving of sloppy addressing. Each
+survives in named \iast{\'s\=akh\=a}s whose verse inventories differ; a claim about
+``the Atharvaveda'' that does not say \'Saunaka or Paippal\=ada is not yet a claim
+about a corpus. The standard modern scholarly translation of the \d{R}gveda
+\citep{jamison2014rigveda} is explicit about this, and the nineteenth-century
+translations that remain the only complete English renderings reachable for parts of
+the corpus \citep{griffith1896rigveda,whitney1905atharva} each carry their own
+numbering conventions, which is a recurring source of alignment error
+(\cref{sec:translation}).
+
+One reference work deserves particular mention because it is the direct predecessor
+of a layer reported here. Bloomfield's \emph{Vedic Concordance}
+\citep{bloomfield1906concordance} is an alphabetic index to every line of every
+stanza of the published Vedic literature, with an account of the variations across
+Vedic books --- that is, a manual, exhaustive index of exactly the cross-textual
+repetition that \cref{sec:connections} detects computationally. We did not use it as
+a gold standard, because the project does not hold a machine-readable form of it
+under rights permitting that use; we note the omission as the most obvious missing
+evaluation in this paper (\cref{sec:limitations}).
+
+For the S\=amaveda specifically, the relationship between the \=Arcika verse text
+and its sung realisation is the subject of a substantial musicological literature
+\citep{howard1977samavedic}. That literature is the reason \cref{sec:case-samaveda}
+is careful: the project records svara marks as printed and declines to decode them
+into pitch, and the decipherment authority it would need in order to do so
+responsibly is not held.
+
+\subsection{Sanskrit computational linguistics}
+
+The computational infrastructure for Sanskrit has matured substantially. The Digital
+Corpus of Sanskrit \citep{hellwig2021dcs} supplies morphological and lexical
+annotation at scale; neural segmentation now handles the joint problem of compound
+splitting and sandhi resolution without hand-built features
+\citep{hellwig2018segmentation}; the Treebank of Vedic Sanskrit
+\citep{hellwig2020vedic} supplies human-validated dependency annotation over Vedic
+material specifically; and VedaWeb \citep{kiss2019vedaweb} provides a research
+platform over morphologically and metrically annotated Old Indo-Aryan text. A
+digital Anukrama\d{n}\=\i\ \citep{akavarapu2023anukramani} makes the traditional
+hymn-level index --- seer, deity, metre --- machine-readable for the \d{R}gveda.
+
+VedGraph consumes rather than extends these. The treebank is the external annotation
+against which its reference set is constructed (\cref{sec:gold}); the Anukrama\d{n}\=\i\
+is the source of its \textsc{l1} attribution layer; VedaWeb supplies a parallel
+reading and a linguistic annotation layer. The contribution claimed here is not a new
+language resource but an architecture for holding claims of very different
+epistemic kinds in one queryable structure.
+
+\subsection{Knowledge-graph construction and refinement}
+
+Surveys of knowledge graphs \citep{hogan2021knowledge} and of graph refinement
+\citep{paulheim2017refinement} establish the vocabulary this paper uses and also its
+central gap: refinement is generally framed as improving \emph{correctness} and
+\emph{completeness}, with provenance treated as metadata about a dataset rather than
+as a filterable property of each assertion. Where per-claim provenance is modelled,
+the established mechanisms are reification and its successors --- nanopublications
+\citep{groth2010nanopublication}, which package an assertion with its provenance and
+publication info as named graphs, and PROV-O \citep{lebo2013provo}, which supplies a
+general vocabulary for entities, activities and agents.
+
+VedGraph's model is a considerably less expressive special case of what those
+standards can express, and deliberately so. Rather than a general provenance graph
+it stores four fixed, closed-vocabulary properties on every edge
+(\cref{sec:model}), which buys two things a general model does not: the axes are
+indexed, so ``show me only source-explicit claims'' is cheap rather than a join; and
+a closed vocabulary admits universal-quantifier invariants, so a missing or
+out-of-enum value is a build failure rather than an under-specified record. The
+trade is expressiveness for enforceability. We would expect a PROV-O export to be
+straightforward and have not built one.
+
+\subsection{Language models in extraction, and their failure modes}
+
+The programme of using language models to build and complete knowledge graphs is
+well surveyed \citep{pan2024unifying}. The failure mode this paper is organised
+around is equally well documented: generated text can be fluent, confident and
+unsupported \citep{ji2023hallucination}, and --- crucially for any design that hopes
+to let a model check itself --- models do not reliably self-correct reasoning
+without external feedback, with performance sometimes degrading after a
+self-correction pass \citep{huang2024selfcorrect}.
+
+That last result concerns \emph{intrinsic} self-correction --- a model revising its
+own answer with no external feedback --- which is not the regime described here: the
+attacking agent carries a different instruction and has read access to the store,
+which is the external-feedback condition that work excludes. It is therefore a
+motivation for the division of labour reported here rather than evidence that the
+division works, and we are aware of no result that predicts it will.
+VedGraph does not ask a model to assess its own output; it asks a
+\emph{differently-instructed} agent to attack that output with a stated hypothesis,
+and it requires the attack to be expressed as a measurement against the store rather
+than as a judgement (\cref{sec:multiagent}). We are explicit in
+\cref{sec:threats} that this does not achieve statistical independence, and that a
+correlated failure across a shared model family would be invisible to the whole
+regime.
+
+On agent architectures, interleaving reasoning with tool-use actions
+\citep{yao2023react} is the pattern the construction runtime instantiates, but
+\emph{only} as a pattern: no orchestration framework was used, and we verified that
+by inspecting the dependency manifests (\cref{sec:appendix-agentic}). We mention the
+literature to place the work, not to claim a framework the repository does not
+contain.
+
+\subsection{Text reuse detection}
+
+Detecting reuse in historical corpora is an established line with mature tools:
+scalable passage-cluster detection over large noisy collections
+\citep{smith2013infectious}, intertext detection tuned for classical poetry
+\citep{coffee2013tesserae}, and a general algorithm suite for historical reuse
+\citep{buechler2014tracer}. Our candidate-generation strategy --- banded MinHash over
+character $n$-grams, then a composite score --- is conventional against that
+background, and \cref{sec:near} reports the parameters rather than claiming novelty
+for the method.
+
+Two things here are less conventional. First, the comparison \emph{surface} is
+treated as a research object rather than as preprocessing: six named match levels
+are kept distinct and the code records which one a given edge was matched on,
+because a script-folded match and a byte-identical match assert different things
+(\cref{sec:ladder}). Second, \emph{direction}. The reuse literature generally
+establishes direction from external chronology. Because Vedic relative chronology is
+contested, this project measures a structural signal instead --- compilation
+asymmetry (\cref{sec:reuse}) --- and validates it per scope, accepting it where it
+recovers a tradition's own claim at 0.991 consistency and refusing it where it
+cannot separate the sides.
+
+The corpus's formulaic character connects to oral-formulaic theory
+\citep{lord1960singer}, which supplies the reason a formula layer is worth building
+at all: in an orally composed and orally transmitted corpus, a repeated multi-word
+span is a unit of composition rather than an accident. We use that as motivation and
+make no claim to contribute to the theory.
+
+\subsection{Evaluation without a gold standard}
+
+Reporting agreement figures properly requires care about what the coefficient
+measures and what population it was computed over \citep{artstein2008agreement}. The
+situation in this project is more constrained than the usual one: there is no human
+annotation of any VedGraph claim at all, so no inter-annotator coefficient over its
+assertions is computable even in principle (\cref{sec:gold}). What exists is an
+external, human-validated annotation of the \emph{text} \citep{hellwig2020vedic},
+against which claims can be adjudicated mechanically. The project names that
+arrangement with its own term, and refuses to call it gold. Everything we report
+about the semantic layer's accuracy is bounded by that.
+
+Finally, the data-management principles the project's registries implement --- rights
+and provenance recorded per artefact, identifiers stable and resolvable, machine-
+readable scope --- are those of the FAIR framework \citep{wilkinson2016fair}, with
+the important qualification that reusability here is constrained by third-party
+rights the project does not hold (\cref{sec:data-availability}).

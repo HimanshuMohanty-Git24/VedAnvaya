@@ -1,0 +1,97 @@
+\section{Validation Gates and Invariants}
+\label{sec:appendix-gates}
+
+\subsection{Live invariants}
+
+Twenty invariants run against the loaded store, sixteen at failing severity. Each is
+phrased as the defect it detects rather than as the desired state, because each
+corresponds to a defect the project shipped at some point.
+
+\textbf{Two of them fail at the frozen commit}: \code{edges\_without\_grade\_basis}
+at 165{,}788 and \code{edges\_without\_attribution\_precision} at 19{,}598, with
+\code{assertions\_without\_predicate\_edge} warning at 2{,}193. See
+\cref{sec:eval} for how that correction reached this paper. Representative
+members:
+
+\begin{center}\small
+\begin{tabularx}{\linewidth}{@{}l>{\raggedright\arraybackslash}X@{}}
+\toprule
+Invariant & Contract \\
+\midrule
+\code{ungraded\_edges} & no edge without a quality tier \\
+\code{edges\_without\_grade\_basis} & no edge without a recorded grading rationale \\
+\code{unlabelled\_nodes} & no node with an empty label set \\
+\code{product\_node\_reaching\_diagnostic} & no public node reaches a diagnostic node \\
+\code{works\_without\_scope} & no work without a scope statement \\
+\code{works\_without\_excluded\_corpora} & no work without a declared exclusion list \\
+\code{edges\_without\_attribution\_precision} & graph-wide, no null \\
+\code{attribution\_precision\_outside\_enum} & closed-world on the four values \\
+\code{attribution\_claimed\_with\_no\_passage} & endpoint-level truth, checked independently
+  ``so that the table cannot certify itself'' \\
+\code{mention\_edges\_without\_certainty} & every deity mention carries a referent certainty \\
+\code{mention\_edges\_with\_retired\_value} & closed-world; a \textsc{merge} never forgets
+  a superseded value \\
+\code{predicates\_with\_multiple\_run\_ids} & else part of the graph is reproducible from
+  no committed artefact \\
+\code{passages\_without\_canonical\_citation} & no passage a reader cannot cite \\
+\code{rishi\_family\_without\_evidence} & family is never assigned from name resemblance \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+\subsection{Scorecard gates}
+
+Eleven integrity gates, each of which must read zero, with the process exiting
+non-zero otherwise: internal leakage, ungraded edges, nodes without a label, orphan
+entities, signature violations, undeclared relationship types, interpretive claims
+graded other than the weakest tier, claims pointing at passages, metrics pointing at
+passages, orphan public nodes, and labels falsely declared unpopulated.
+
+Two are worth singling out. \emph{Undeclared relationship types} was rewritten twice;
+both earlier versions were untestable and therefore untested, and both shipped unable
+to fail. The current implementation is a pure function of two arguments so that a
+test can prove it fails. \emph{Orphan public nodes} was added late, because the
+earlier gate was scoped to one label family and read zero while 28 retired metre
+identities sat edgeless and public; its exemptions are per-label with a stated
+reason, on the principle that a numeric threshold would absorb the next real orphan.
+
+\subsection{The three-gate structure}
+
+Adopted across fourteen domains after four of four failed a third gate that did not
+previously exist.
+
+\begin{description}[leftmargin=1.6em,itemsep=2pt,topsep=3pt,style=nextline]
+\item[Gate A --- integrity] the artefact's manifest checksums hold.
+\item[Gate B --- conformance] rows are checked against the live graph for coverage,
+addressing, provenance and the central importability policy. The translation packet's
+Gate B ran 38 checks over 2{,}254 rows at full coverage, with an explicit
+\code{checks\_without\_full\_coverage} list that was empty.
+\item[Gate C --- attack] implemented in a separate file, naming the fields it refuses
+to read, re-implementing the declared normalisation from prose rather than reusing
+the pipeline's code, and carrying a negative control.
+\end{description}
+
+\subsection{Readback}
+
+Every projection step returns rows \emph{sent} alongside rows \emph{landed}, and a
+step is complete only when the two agree and nothing was skipped. The design note is
+that a projection reporting only what it sent cannot tell a successful write from a
+silently unmatched one. The completeness flag was itself corrected once, after being
+always false: ``a completeness flag that is always False is not a gate''.
+
+\subsection{Gates that could not fail}
+
+Three cases are recorded and all three are instructive.
+
+One gate computed its set of declared relationship types as the union of the ontology
+\emph{and the graph}, then asked which graph types were missing from it. Nothing can
+be. It reported zero undeclared types for a whole wave while eleven predicates went
+unclassified.
+
+One readback printed \code{READBACK\_CLEAN} having compared zero rows against zero
+rows.
+
+One audit script opened with an assertion pinning the graph census. When the census
+moved, the assertion aborted the script --- and because nothing wired the script to a
+gate, it failed by never running rather than by going red. It is now backstopped by a
+test that goes red instead.

@@ -1,0 +1,20 @@
+# LaTeX build artefacts. main.pdf is deliberately NOT ignored: the compiled
+# manuscript is a deliverable, and a reader should not need a TeX installation
+# to read what the numbers in it are.
+*.aux
+*.bbl
+*.blg
+*.log
+*.out
+*.toc
+*.lof
+*.lot
+*.fls
+*.fdb_latexmk
+*.synctex.gz
+*.run.xml
+*-blx.bib
+
+# Environments a rebuild may create here.
+.venv-paper/
+__pycache__/

@@ -1,0 +1,10 @@
+agent,gaps,domain,writes_to_graph
+AGENT_1_FORMULA_CROSS_VEDA,3,"formulae, cross-Veda reuse",no
+AGENT_2_ENTITY_DEVATA_IDENTITY,12,entities and deity identity,no
+AGENT_3_MORPHOLOGY_SEMANTICS,7,"morphology, semantic assertions",no
+AGENT_4_RITUAL,4,ritual and material culture,no
+AGENT_5_QUALITY_REFERENCE,6,"quality, reference sets",no
+AGENT_6_PRODUCT_SURFACE,5,product-facing surfaces,no
+AGENT_7_TRANSLATION_SAMAVEDA,6,"translation, Samaveda",no
+AGENT_8,0,audit of the other seven (READ_ONLY),no
+lead,,"integration, rulings, receipt",via owner GO only

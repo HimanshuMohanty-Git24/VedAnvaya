@@ -1,0 +1,630 @@
+{
+  "provenance": {
+    "generated_at_utc": "2026-09-20T12:31:06+00:00",
+    "git_commit": "6bf220cbfb08eb466a2977cb2589b198f50833a6",
+    "git_commit_short": "6bf220c",
+    "git_branch": "main",
+    "git_tree_clean": false,
+    "commit_count": 249,
+    "first_commit_date": "2026-09-04",
+    "head_commit_date": "2026-09-20"
+  },
+  "graph": {
+    "nodes_total": 165737,
+    "relationships_total": 510905,
+    "node_labels_declared": 56,
+    "node_labels_in_use": 55,
+    "node_labels_declared_but_empty": [
+      "SourceArtifact"
+    ],
+    "relationship_types_declared": 81,
+    "relationship_types_in_use": 81,
+    "public_nodes": 71773,
+    "internal_nodes": 93964,
+    "node_labels": {
+      "Internal": 93964,
+      "TextVersion": 59922,
+      "SemanticAssertion": 35131,
+      "Passage": 22537,
+      "Mantra": 20210,
+      "Translation": 18427,
+      "Lemma": 10031,
+      "Formula": 4825,
+      "RitualStep": 3121,
+      "QualityVerdict": 2568,
+      "RoleFiller": 2052,
+      "DerivedMetric": 1485,
+      "PadaParallelGroup": 1434,
+      "QAIssue": 915,
+      "Rishi": 729,
+      "FormulaFamily": 720,
+      "Chandas": 575,
+      "Concept": 384,
+      "DomainEntity": 384,
+      "DevataAscription": 324,
+      "Devata": 214,
+      "ScholarlyDisagreement": 113,
+      "Ritual": 103,
+      "RishiFamily": 87,
+      "Object": 41,
+      "ActionPredicate": 41,
+      "Condition": 36,
+      "Substance": 33,
+      "Action": 26,
+      "Plant": 22,
+      "DeityAxis": 22,
+      "Offering": 21,
+      "RitualRole": 20,
+      "Scholar": 17,
+      "ScholarlyWork": 17,
+      "Animal": 15,
+      "NaturalPhenomenon": 13,
+      "PhilosophicalConcept": 13,
+      "Epithet": 13,
+      "DeityCommunity": 12,
+      "Place": 11,
+      "Source": 9,
+      "River": 8,
+      "Metal": 7,
+      "HumanConcern": 7,
+      "InterpretiveClaim": 6,
+      "Weapon": 5,
+      "Crop": 5,
+      "SocialRite": 5,
+      "Tribe": 5,
+      "Work": 4,
+      "CosmicEntity": 4,
+      "Quality": 3,
+      "State": 3,
+      "DeityGroup": 2
+    },
+    "relationship_types": {
+      "MENTIONS_LEMMA": 154261,
+      "HAS_TEXT_VERSION": 59922,
+      "HAS_SEMANTIC_ASSERTION": 35131,
+      "ASSERTION_PREDICATE": 32938,
+      "MENTIONS_ENTITY": 28122,
+      "ABOUT_CONCEPT": 24861,
+      "USES_FORMULA": 22686,
+      "CONTAINS": 22537,
+      "HAS_TRANSLATION": 18427,
+      "HAS_RISHI": 17889,
+      "MENTIONS_DEVATA": 17165,
+      "HAS_CHANDAS": 16298,
+      "HAS_DEVATA": 10558,
+      "SHARES_FORMULA_WITH": 6148,
+      "HAS_DEVATA_ASCRIPTION": 5385,
+      "HAS_PARALLEL_PADA": 4079,
+      "HAS_RITUAL_STEP": 3121,
+      "NEAR_PARALLEL_OF": 3049,
+      "ASSERTION_AGENT": 2660,
+      "QUALITY_VERDICT_ABOUT": 2568,
+      "SHARES_ENTITY_VOCABULARY_WITH": 2141,
+      "ASSERTION_ROLE": 2052,
+      "HAS_FORMULA": 2037,
+      "MEMBER_OF_FAMILY": 2037,
+      "REUSES_TEXT_FROM": 1995,
+      "ATTESTED_IN": 1267,
+      "MENTIONS_EPITHET": 1035,
+      "EXACT_PARALLEL_OF": 1006,
+      "ASSERTION_TARGET": 918,
+      "QA_ISSUE_ON": 915,
+      "HAS_DEVATA_DERIVED": 882,
+      "VARIANT_OF": 788,
+      "PROTECTS_FROM": 659,
+      "USED_FOR_RITE": 529,
+      "MEASURES": 472,
+      "PERFORMS_ACTION": 441,
+      "REFERS_TO": 387,
+      "ADDRESSES_CONCERN": 326,
+      "CO_OCCURS_WITH": 306,
+      "BELONGS_TO_FAMILY": 305,
+      "HAS_AXIS": 289,
+      "POSITION_ASSERTED_BY": 226,
+      "POSITION_STATED_IN": 226,
+      "IS_ASKED_TO": 224,
+      "INVOKES": 207,
+      "DESCRIBES": 199,
+      "DEVATA_ASSOCIATED_WITH": 160,
+      "TREATS": 160,
+      "SCHOLARLY_CLAIM_ABOUT": 113,
+      "REPORTED_IN": 113,
+      "BROADER_THAN": 97,
+      "REQUESTS": 89,
+      "DESCRIBED_IN": 71,
+      "PARALLEL_TO": 69,
+      "ASCRIBES_TO_DEVATA": 47,
+      "PRAISES": 38,
+      "DESCRIBES_ACTION": 35,
+      "PERFORMED_BY": 32,
+      "COMPOSED_OF": 32,
+      "USES_OBJECT": 24,
+      "INVOKES_DEVATA": 16,
+      "HAS_EPITHET": 13,
+      "MEMBER_OF": 13,
+      "USES_SUBSTANCE": 11,
+      "INVOLVES_OFFERING": 11,
+      "EPITHET_VARIANT_OF": 10,
+      "PERFORMED_FOR": 9,
+      "INVOLVES_RITUAL": 9,
+      "HAS_THEME": 8,
+      "CONTRASTS_WITH": 8,
+      "SUPPORTED_BY": 7,
+      "CONCERNS": 7,
+      "SUPPORTED_BY_STATISTIC": 6,
+      "REFERS_TO_NATURAL_PHENOMENON": 5,
+      "USES_OFFERING": 4,
+      "RECEIVES_OFFERING": 4,
+      "HAS_STEP": 3,
+      "INVOLVES_SUBSTANCE": 3,
+      "CONTRADICTS": 2,
+      "SPECIALIZED_FORM_OF": 1,
+      "REFERS_TO_PLACE": 1
+    }
+  },
+  "corpus": {
+    "mantras_by_work": {
+      "RV": 10552,
+      "SV": 1844,
+      "YV": 1975,
+      "AV": 5839
+    },
+    "mantras_total": 20210,
+    "passages_total": 22537,
+    "works": 4,
+    "text_versions": 59922,
+    "excluded_corpora": {
+      "RV": [
+        "SECOND_RIGVEDIC_RECENSION",
+        "RIGVEDIC_BRAHMANA",
+        "RIGVEDIC_ARANYAKA",
+        "UPANISAD"
+      ],
+      "SV": [
+        "SAMAVEDA_GRAMAGEYA_GANA",
+        "SAMAVEDA_ARANYAKAGEYA_GANA",
+        "SAMAVEDA_UHAGANA",
+        "SAMAVEDA_UHYAGANA",
+        "SECOND_SAMAVEDIC_RECENSION",
+        "SAMAVEDIC_BRAHMANA",
+        "UPANISAD"
+      ],
+      "YV": [
+        "KRISHNA_YAJURVEDA_TAITTIRIYA",
+        "KRISHNA_YAJURVEDA_KATHAKA",
+        "KRISHNA_YAJURVEDA_MAITRAYANI",
+        "KRISHNA_YAJURVEDA_KAPISTHALA",
+        "SHUKLA_YAJURVEDA_KANVA_RECENSION",
+        "SATAPATHA_BRAHMANA",
+        "UPANISAD"
+      ],
+      "AV": [
+        "ATHARVAVEDA_PAIPPALADA_RECENSION",
+        "GOPATHA_BRAHMANA",
+        "UPANISAD"
+      ]
+    }
+  },
+  "epistemic": {
+    "relationship_knowledge_layer_raw": {
+      "L3_LLM_EXTRACTED": 890,
+      "DETERMINISTIC_DERIVED": 8214,
+      "L1_SOURCE_EXPLICIT": 103062,
+      "L2_DETERMINISTIC_DERIVED": 386326,
+      "L4_INTERPRETIVE_CLAIM": 1787,
+      "SOURCE_EXPLICIT": 6236,
+      "None": 4390
+    },
+    "relationship_knowledge_layer_folded": {
+      "L3_LLM_EXTRACTED": 890,
+      "L2_DETERMINISTIC_DERIVED": 394540,
+      "L1_SOURCE_EXPLICIT": 109298,
+      "L4_INTERPRETIVE_CLAIM": 1787,
+      "UNLABELLED": 4390
+    },
+    "relationship_knowledge_layer_pct": {
+      "L3_LLM_EXTRACTED": 0.174,
+      "L2_DETERMINISTIC_DERIVED": 77.224,
+      "L1_SOURCE_EXPLICIT": 21.393,
+      "L4_INTERPRETIVE_CLAIM": 0.35,
+      "UNLABELLED": 0.859
+    },
+    "relationship_quality_tier": {
+      "TIER_C": 598,
+      "TIER_B": 396497,
+      "TIER_A": 109262,
+      "TIER_D": 4548
+    },
+    "quality_tier_coverage_pct": 100.0,
+    "knowledge_layer_coverage_pct": 99.141,
+    "unlabelled_layer_edges_by_type": {
+      "HAS_PARALLEL_PADA": 4079,
+      "REUSES_TEXT_FROM": 311
+    },
+    "attribution_precision": {
+      "TEXTUAL_MENTION": 247089,
+      "NOT_AN_ATTRIBUTION": 185976,
+      "CONTAINER_INHERITED": 40591,
+      "None": 19598,
+      "PER_PASSAGE": 17651
+    },
+    "node_knowledge_layer": {
+      "None": 129510,
+      "L2_DETERMINISTIC_DERIVED": 33768,
+      "L3_LLM_EXTRACTED": 2459
+    }
+  },
+  "semantic": {
+    "assertions_total": 35131,
+    "by_derivation": {
+      "MORPHOLOGY_RULE_PREDICATE_ONLY": 28370,
+      "MODEL_EXTRACTION": 2459,
+      "MORPHOLOGY_RULE": 2406,
+      "TREEBANK_DEPREL": 1532,
+      "CROSS_VEDA_TEXT_IDENTITY": 364
+    },
+    "by_knowledge_layer": {
+      "L2_DETERMINISTIC_DERIVED": 32672,
+      "L3_LLM_EXTRACTED": 2459
+    },
+    "by_predicate_status": {
+      "MAPPED_BY_LEMMA_ID": 22535,
+      "MAPPED_BY_FOLD": 6112,
+      "None": 4865,
+      "MAPPED_BY_DOMINANT_SENSE": 1096,
+      "MAPPED_BY_PREVERB_STRIP": 432,
+      "MAPPED_BY_SECONDARY_STEM": 48,
+      "MAPPED_BY_PREVERB_STRIP_AND_DOMINANT_SENSE": 43
+    },
+    "human_annotated_true": 0,
+    "roles_withheld_true": 28734,
+    "three_slot_complete_true": 341,
+    "role_fillers": 2052,
+    "distinct_predicates": 41
+  },
+  "connections": {
+    "by_type": {
+      "EXACT_PARALLEL_OF": 1006,
+      "NEAR_PARALLEL_OF": 3049,
+      "VARIANT_OF": 788,
+      "REUSES_TEXT_FROM": 1995,
+      "HAS_PARALLEL_PADA": 4079,
+      "PARALLEL_TO": 69
+    },
+    "cross_work_matrix": {
+      "EXACT_PARALLEL_OF": {
+        "AV->RV": 551,
+        "RV->RV": 256,
+        "RV->SV": 89,
+        "SV->YV": 70,
+        "RV->YV": 24,
+        "AV->SV": 9,
+        "AV->YV": 7
+      },
+      "NEAR_PARALLEL_OF": {
+        "RV->SV": 1180,
+        "AV->RV": 752,
+        "RV->YV": 473,
+        "AV->SV": 326,
+        "AV->YV": 162,
+        "SV->YV": 156
+      },
+      "VARIANT_OF": {
+        "RV->SV": 415,
+        "RV->YV": 165,
+        "AV->SV": 132,
+        "AV->YV": 41,
+        "AV->RV": 22,
+        "SV->YV": 13
+      },
+      "REUSES_TEXT_FROM": {
+        "SV->RV": 1684,
+        "AV->RV": 311
+      }
+    },
+    "methods": {
+      "domain-mention-v1:sanskrit-token": 27602,
+      "formula-occurrence-word-aligned-v1": 20577,
+      "concept-alias-v1:english+sanskrit-token": 13053,
+      "concept-alias-v1:sanskrit-token": 11332,
+      "theonym-mention-v1:rv-lemma-annotation": 10284,
+      "theonym-mention-v1:sanskrit-surface-token": 6850,
+      "crossveda-parallels:near:minhash-char4+lcs:SANDHI_INSENSITIVE": 3049,
+      "formula-family-expansion-by-containment-v1": 2238,
+      "entity-co-mention-idf": 2141,
+      "formula-occurrence-sandhi-substring-v1": 2109,
+      "formula-family-core-v1": 1828,
+      "crossveda-parallels:reuse:NEAR_PARALLEL_OF:": 1180,
+      "crossveda-parallels:identity:SANDHI_INSENSITIVE": 788,
+      "semantic-extraction/rigveda-semantic-ontology-v1": 613,
+      "crossveda-parallels:identity:SCRIPT_FOLDED": 600,
+      "domain-mention-v1:sanskrit-sandhi": 514,
+      "concept-alias-v1:sanskrit-sandhi": 476,
+      "crossveda-parallels:reuse:VARIANT_OF:SANDHI_INSENSITIVE": 415,
+      "crossveda-direction:compilation-asymmetry-v1": 311,
+      "devata-cooccurrence-lift-v1": 306,
+      "patronymic-token-equality-v1": 290,
+      "crossveda-parallels:identity:ACCENT_INSENSITIVE": 150,
+      "concept-lexicon-related-devata": 101,
+      "crossveda-parallels:reuse:EXACT_PARALLEL_OF:SCRIPT_FOLDED": 89,
+      "theonym-mention-v1:sanskrit-surface-sandhi": 31,
+      "concept-lexicon-broader": 18,
+      "patronymic-fused-token-split-v1": 14,
+      "devata-variant-registry-v1": 11,
+      "formula-family-variant-by-similarity-v1": 8,
+      "domain-mention-v1:sanskrit-phrase": 6,
+      "explicit-descent-compound-v1": 1
+    },
+    "formulae": 4825,
+    "formula_families": 720,
+    "formula_occurrences": 22686,
+    "pada_parallel_groups": 1434,
+    "lemmas": 10031,
+    "lemma_mentions": 154261
+  },
+  "translation": {
+    "translation_nodes": 18427,
+    "mantras_with_translation_by_work": {
+      "RV": 10516,
+      "SV": 173,
+      "YV": 1950,
+      "AV": 5788
+    },
+    "by_alignment_level": {
+      "MANTRA": 18205,
+      "HYMN": 158,
+      "MANTRA_RANGE": 64
+    },
+    "by_quality_status": {
+      "MACHINE_ALIGNED": 13549,
+      "UNREVIEWED": 4878
+    },
+    "by_translator": {
+      "Ralph T. H. Griffith (1896, en)": 10704,
+      "William Dwight Whitney (revised and edited by Charles Rockwell Lanman) (1905, en)": 4878,
+      "Ralph T. H. Griffith (1899, en)": 1950,
+      "Ralph T. H. Griffith (1895, en)": 871,
+      "Ralph T. H. Griffith (1895, la)": 18,
+      "Ralph T. H. Griffith (1896, la)": 6
+    },
+    "import_batches": {
+      "TRANSLATION_BULK_2026_09_16": 1132,
+      "AGENT7_TRANSLATION_RESIDUALS": 12
+    },
+    "verse_coverage_state": {
+      "DEDICATED_TRANSLATION|RV": 10322,
+      "DEDICATED_TRANSLATION|AV": 5715,
+      "DEDICATED_TRANSLATION|YV": 1950,
+      "UNCOVERED_REUSABLE_PARALLEL_AVAILABLE|SV": 1488,
+      "UNCOVERED_NO_RENDERING_REACHES_IT|SV": 183,
+      "REUSED_RENDERING|SV": 173,
+      "CONTAINER_TRANSLATION|RV": 158,
+      "RANGE_COVERED|AV": 52,
+      "RANGE_COVERED|RV": 36,
+      "RANGE_TRANSLATION_ANCHOR|AV": 34,
+      "RANGE_TRANSLATION_ANCHOR|RV": 30,
+      "UNCOVERED_NO_RENDERING_REACHES_IT|YV": 25,
+      "REUSED_RENDERING|AV": 21,
+      "UNCOVERED_NO_RENDERING_REACHES_IT|AV": 11,
+      "UNCOVERED_NO_RENDERING_REACHES_IT|RV": 6,
+      "UNCOVERED_REUSABLE_PARALLEL_AVAILABLE|AV": 6
+    },
+    "verse_coverage_state_totals": {
+      "DEDICATED_TRANSLATION": 17987,
+      "UNCOVERED_REUSABLE_PARALLEL_AVAILABLE": 1494,
+      "UNCOVERED_NO_RENDERING_REACHES_IT": 225,
+      "REUSED_RENDERING": 194,
+      "CONTAINER_TRANSLATION": 158,
+      "RANGE_COVERED": 88,
+      "RANGE_TRANSLATION_ANCHOR": 64
+    }
+  },
+  "attribution": {
+    "HAS_DEVATA": {
+      "RV:CONTAINER_INHERITED": 8329,
+      "RV:PER_PASSAGE": 2229
+    },
+    "HAS_RISHI": {
+      "RV:CONTAINER_INHERITED": 10093,
+      "AV:CONTAINER_INHERITED": 5084,
+      "YV:PER_PASSAGE": 2240,
+      "RV:PER_PASSAGE": 472
+    },
+    "HAS_CHANDAS": {
+      "RV:CONTAINER_INHERITED": 6276,
+      "RV:PER_PASSAGE": 4247,
+      "AV:CONTAINER_INHERITED": 4123,
+      "AV:PER_PASSAGE": 1652
+    },
+    "MENTIONS_DEVATA": {
+      "RV:TEXTUAL_MENTION": 10284,
+      "AV:TEXTUAL_MENTION": 3582,
+      "YV:TEXTUAL_MENTION": 1964,
+      "SV:TEXTUAL_MENTION": 1335
+    },
+    "entity_counts": {
+      "Devata": 214,
+      "Rishi": 729,
+      "Chandas": 575,
+      "RishiFamily": 87,
+      "DevataAscription": 324,
+      "Concept": 384,
+      "DomainEntity": 384
+    }
+  },
+  "samaveda_notation": {
+    "disposition": {
+      "SOURCE_EXPLICIT_PRESENT": 1136,
+      "WITHHELD": 708
+    },
+    "withheld_classes": {
+      "NEAR_LINE_EXISTS_WITNESS_DISAGREEMENT": 565,
+      "NO_NEAR_LINE_PROBABLE_ABSENCE": 104,
+      "WITNESS_OCCURRENCE_CONSUMED_BY_A_COREFERENT_REPEAT": 39
+    },
+    "text_versions_by_role": {
+      "SEARCH_DERIVATIVE/accented=False": 1844,
+      "PRIMARY_TEXT/accented=False": 1844,
+      "PARALLEL_TEXT/accented=True": 1136
+    },
+    "notation_interpreted_into_pitch": {
+      "False": 1136
+    },
+    "musicalized_as_relationship_exists": false
+  },
+  "ritual": {
+    "node_counts": {
+      "Ritual": 103,
+      "RitualStep": 3121,
+      "RitualRole": 20,
+      "Offering": 21,
+      "Substance": 33,
+      "Object": 41,
+      "Plant": 22,
+      "Animal": 15,
+      "Metal": 7,
+      "Weapon": 5,
+      "Crop": 5,
+      "SocialRite": 5
+    },
+    "edges_by_predicate_and_layer": {
+      "HAS_RITUAL_STEP|SOURCE_EXPLICIT": 3121,
+      "PERFORMS_ACTION|L2_DETERMINISTIC_DERIVED": 441,
+      "USED_FOR_RITE|L4_INTERPRETIVE_CLAIM": 419,
+      "USED_FOR_RITE|L2_DETERMINISTIC_DERIVED": 110,
+      "USES_OBJECT|L4_INTERPRETIVE_CLAIM": 23,
+      "PERFORMED_BY|L4_INTERPRETIVE_CLAIM": 16,
+      "PERFORMED_BY|L1_SOURCE_EXPLICIT": 16,
+      "USES_SUBSTANCE|L4_INTERPRETIVE_CLAIM": 11,
+      "INVOLVES_OFFERING|L3_LLM_EXTRACTED": 11,
+      "PERFORMED_FOR|L4_INTERPRETIVE_CLAIM": 9,
+      "INVOLVES_RITUAL|L3_LLM_EXTRACTED": 9,
+      "USES_OFFERING|L4_INTERPRETIVE_CLAIM": 4,
+      "RECEIVES_OFFERING|L1_SOURCE_EXPLICIT": 4,
+      "HAS_STEP|L4_INTERPRETIVE_CLAIM": 3,
+      "INVOLVES_SUBSTANCE|L3_LLM_EXTRACTED": 3,
+      "USES_OBJECT|L1_SOURCE_EXPLICIT": 1
+    }
+  },
+  "invariants": {
+    "edges_without_grade_basis": 165788,
+    "edges_without_attribution_precision": 19598,
+    "assertions_without_predicate_edge": 2193,
+    "ungraded_edges": 0,
+    "unlabelled_nodes": 0,
+    "untyped_layer_edges_by_tier": {
+      "TIER_B": 4390
+    },
+    "tier_layer_crosstab": {
+      "L2_DETERMINISTIC_DERIVED|TIER_B": 383857,
+      "L1_SOURCE_EXPLICIT|TIER_A": 103026,
+      "DETERMINISTIC_DERIVED|TIER_B": 8214,
+      "SOURCE_EXPLICIT|TIER_A": 6236,
+      "None|TIER_B": 4390,
+      "L2_DETERMINISTIC_DERIVED|TIER_D": 2469,
+      "L4_INTERPRETIVE_CLAIM|TIER_D": 1787,
+      "L3_LLM_EXTRACTED|TIER_C": 598,
+      "L3_LLM_EXTRACTED|TIER_D": 292,
+      "L1_SOURCE_EXPLICIT|TIER_B": 36
+    },
+    "plumbing_edges": 255147,
+    "non_plumbing_edges": 255758
+  },
+  "rankings": {
+    "undirected_parallel_coverage_by_work": [
+      {
+        "work": "SV",
+        "covered": 1677,
+        "total": 1844,
+        "pct": 90.9
+      },
+      {
+        "work": "YV",
+        "covered": 687,
+        "total": 1975,
+        "pct": 34.8
+      },
+      {
+        "work": "RV",
+        "covered": 2814,
+        "total": 10552,
+        "pct": 26.7
+      },
+      {
+        "work": "AV",
+        "covered": 1332,
+        "total": 5839,
+        "pct": 22.8
+      }
+    ],
+    "median_containing_unit_size": {
+      "RV": 9.0,
+      "SV": 3.0,
+      "YV": 44.0,
+      "AV": 4
+    },
+    "samaveda_containing_units": {
+      "total": 458,
+      "holding_exactly_three_verses": 281
+    },
+    "most_dedicated_deity_top5": [
+      {
+        "deity": "Indra",
+        "has_devata_edges": 2869
+      },
+      {
+        "deity": "Agni",
+        "has_devata_edges": 1988
+      },
+      {
+        "deity": "Soma Pavamana",
+        "has_devata_edges": 1087
+      },
+      {
+        "deity": "the All-Gods",
+        "has_devata_edges": 815
+      },
+      {
+        "deity": "the Asvins",
+        "has_devata_edges": 631
+      }
+    ]
+  },
+  "review": {
+    "edge_review_state": {
+      "UNREVIEWED": 7548,
+      "MODEL_ADJUDICATED": 613
+    },
+    "edges_with_human_review_provenance": 0,
+    "nodes_flagged_human_gold": 0,
+    "quality_verdicts_with_not_human_gold_reason": 1166,
+    "samaveda_enrichment_edges": 11380
+  },
+  "gap_registry": {
+    "entries": 85,
+    "by_status": {
+      "CLOSED_DERIVED": 53,
+      "CLOSED_SCOPE_DECISION": 14,
+      "BLOCKED_EXTERNAL_SOURCE_UNAVAILABLE": 7,
+      "CLOSED_VERIFIED_ZERO": 5,
+      "NEEDS_AUDIBLE_REVIEW": 3,
+      "CLOSED_NOT_APPLICABLE": 2,
+      "CLOSED_SOURCE_ACQUIRED": 1
+    },
+    "baseline_commit": "d6e93a92c4e3ff1a5682a17b20bf32c6ce8fa19c"
+  },
+  "registries": {
+    "adr_count": 18,
+    "owner_decision_docs": 1,
+    "schema_files": 51,
+    "scripts": 226,
+    "report_docs": 208,
+    "test_files": 164,
+    "staging_campaigns": 30,
+    "prompt_files": 6,
+    "registry_yaml_files": 22,
+    "sources_entries": 22,
+    "rights_entries": 13,
+    "text_versions_entries": 15
+  }
+}

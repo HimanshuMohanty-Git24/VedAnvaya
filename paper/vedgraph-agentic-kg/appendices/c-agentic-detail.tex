@@ -1,0 +1,112 @@
+\section{Agentic Workflow Details}
+\label{sec:appendix-agentic}
+
+\subsection{No orchestration framework was used}
+
+We searched the project's dependency manifests for agent-orchestration libraries
+(ReAct implementations, AutoGen, LangGraph, CrewAI, Reflexion and comparable
+packages) and found none. The runtime dependencies are a web framework, a graph
+driver, validation and transliteration libraries, and optional vendor \mbox{SDK}s for
+the language-model layer. Orchestration is the project's own artefact protocol.
+
+\subsection{Model and runtime provenance}
+
+Runtime is recorded, never assumed. The runtime vocabulary has two members, both
+meaning ``an agent runtime authored this payload and Python validated it''; neither
+is provider-attested, and provider build metadata is recorded as unavailable for
+both. A validator checks a receipt's runtime against its run contract exactly as it
+checks model and reasoning settings, so a receipt cannot be silently imported into a
+run executed on a different runtime.
+
+The rule exists because of a specific failure: earlier pilot output had been recorded
+as model-generated when it was in fact produced by regular expressions. The decision
+record calls this ``provenance that looked like evidence and was not'', and notes
+that a wrong runtime string is the same defect in one field. A residual is recorded
+rather than fixed speculatively: one full-run module still pins an older model
+identity and will block a non-matching full-corpus run.
+
+Models used, by stage, as recorded in the artefacts: the semantic-extraction pilots
+ran under two coding-agent runtimes across several versions, with the final
+448-passage run recorded against a Claude Opus model; the theonym reference set is
+labelled \code{MODEL\_ADJUDICATED} by the same; and the downstream
+question-answering benchmark was generated through an OpenRouter-hosted open model at
+temperature 0.1 with a 1{,}600-token output cap. These are recorded for
+reproducibility, not as credit (see the disclosure in the back matter).
+
+\subsection{The final closure sprint}
+
+Forty-three implementation-fixable gaps, partitioned across seven domain agents under
+the rule that every row has exactly one owner and none is unassigned:
+
+\begin{center}\small
+\begin{tabular}{@{}lrl@{}}
+\toprule
+Agent & Gaps & Domain \\
+\midrule
+\code{AGENT\_1\_FORMULA\_CROSS\_VEDA}      &  3 & formulae, cross-Veda reuse \\
+\code{AGENT\_2\_ENTITY\_DEVATA\_IDENTITY}  & 12 & entities and deity identity \\
+\code{AGENT\_3\_MORPHOLOGY\_SEMANTICS}     &  7 & morphology, semantic assertions \\
+\code{AGENT\_4\_RITUAL}                    &  4 & ritual and material culture \\
+\code{AGENT\_5\_QUALITY\_REFERENCE}        &  6 & quality, reference sets \\
+\code{AGENT\_6\_PRODUCT\_SURFACE}          &  5 & product-facing surfaces \\
+\code{AGENT\_7\_TRANSLATION\_SAMAVEDA}     &  6 & translation, S\=amaveda \\
+\midrule
+\code{AGENT\_8}                            &  0 & \textbf{audit of the other seven} \\
+\code{lead}                                &  --- & \textbf{integration and rulings} \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Each domain agent produced measurements, row-level evidence and a
+\code{proposed\_mutations.json}. None wrote to the graph. The auditing agent's
+recorded database access is \code{READ\_ONLY}. The lead produced an integration
+plan, four rulings and a receipt.
+
+\subsection{What the auditing agent found}
+
+Beyond the signature conflict described in \cref{sec:multiagent}:
+
+\begin{itemize}[leftmargin=1.6em,itemsep=2pt,topsep=3pt]
+\item A registry-consistency check that reported zero disagreements because it
+``only compared a graph measurement to a pre-declared integer; it never read the
+status field''. Four real disagreements surfaced once it did.
+\item Gate coverage over the registry: 53 entries gated, 32 ungated, and nine
+closures with no live measurement behind them.
+\item The exported public artefact under-declared its own inputs: 31 of 36 exported
+labels and 50 of 55 exported relationship types undeclared, hiding 32{,}044 node rows
+and 129{,}691 edges from the hash meant to cover them, with 4{,}016 public nodes
+dropped silently by the export.
+\item A search defect found by querying rather than by reading code: 5{,}123 of
+5{,}839 search derivatives in one corpus carried a private-use sentinel, so the
+natural query returned 0 hits where the sentinel form returned 94.
+\end{itemize}
+
+\subsection{The four lead rulings}
+
+\begin{description}[leftmargin=1.6em,itemsep=3pt,topsep=3pt,style=nextline]
+\item[R1 --- cross-Veda text identity] Does an \code{EXACT} mapping confidence cover
+the key or the claim? Ruled: the key, and independently backed --- the lead measured
+that all 216 target verses already carry a pre-existing parallel edge in the live
+graph and that none rests on a fold computed at staging time. Admitted as disclosed
+inherited analysis, under a standing constraint that these assertions may never be
+counted as S\=amavedic morphology on any surface.
+\item[R2 --- role re-anchoring] See \cref{sec:multiagent} and \cref{fig:adversarial}.
+\item[R3 --- a corrected figure] The agent measured the live layer at 4{,}865
+unreviewed assertions; its own staged delta takes the post-integration value to
+35{,}139 (a prediction; the layer holds 35{,}131 today). The ruling also records a \emph{trade}: closing one coverage gap multiplies
+another's unreviewed population sevenfold and deepens a third.
+\item[R4 --- a property-only correction] Does writing properties violate an owner
+decision that ``the graph is not mutated''? Ruled no, on a reading of the decision's
+own text: it forbids \emph{importing} the unresolved objects, and the proposed change
+imports none --- 0 nodes, 0 relationships, 466 property writes, no attribution
+created, no object resolved. Conditions attached, including that the census delta be
+verified as zero at integration.
+\end{description}
+
+\subsection{The import protocol in full}
+
+Plan (hashed, enumerating nodes, edges, property writes and the expected census
+delta) $\to$ dry run (re-computed against the live graph, emitting \textsc{go} or a
+reason) $\to$ owner \textsc{go} against a specific plan hash $\to$ execute $\to$
+readback (rows sent against rows landed, census delta against the promise). Dry runs
+are regenerated whenever the working tree changes.

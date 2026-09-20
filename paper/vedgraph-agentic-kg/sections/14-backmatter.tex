@@ -1,0 +1,135 @@
+\section*{Responsible use}
+\label{sec:ethics}
+\addcontentsline{toc}{section}{Responsible use}
+
+This project puts a generative model to work on a body of text that is scripture to
+living communities, and it publishes the result. Four commitments follow, and each is
+implemented rather than merely stated.
+
+\textbf{Hallucination is treated as decidable, not as a risk to be managed.} The
+validator's central check is whether a token the model cited was present in the
+packet the model was shown. A citation to text the model never saw is a fabricated
+citation, it is mechanically decidable, and the assertion is discarded. This does not
+detect a plausible-but-wrong reading of text that \emph{was} shown, which is why
+model output remains a candidate regardless.
+
+\textbf{Uncertainty is preserved rather than resolved.} Where the evidence does not
+decide, the graph says so in a typed way: 28{,}734 assertions carry withheld roles,
+708 S\=amavedic verses carry a withheld notation disposition in one of three declared
+classes, 711 lexical tokens carry a linguistic non-resolution reason, and four
+benchmark questions are expected to be refused. The system is designed so that
+declining is a first-class outcome rather than a failure.
+
+\textbf{Missing evidence is never manufactured.} Where a cue index would have needed
+interpolation between anchors to yield timings, the timings were refused, because
+filling the gaps means inventing a boundary. Where 466 metre rows could be resolved
+into a vocabulary that was itself contaminated, the resolution was computed and still
+not imported. We regard this as the single most important operational discipline in
+the project.
+
+\textbf{Interpretation is bounded, and the boundary is visible.} The predicate
+vocabulary deliberately contains \code{SYMBOLIZES}, \code{REPRESENTS},
+\code{IS\_GOD\_OF}, \code{MEANS} and \code{CAUSES} \emph{so that a model proposing
+one is refused by name with a recorded reason}. Deity modelling is confined to what
+the Sa\d{m}hit\=a verses support: identifications that belong to later exegesis are
+declined individually and in writing. Musical notation is recorded as marks and never
+decoded into pitch, and a test scans the stored properties to enforce it
+(\cref{sec:case-samaveda}). None of this makes the graph neutral --- every
+ontology encodes choices --- but it makes the choices inspectable.
+
+A residual risk we cannot design away is authority laundering: a confident interface
+over a typed graph can still be read as an oracle. The interface's mitigation is to
+render the typing at the point of reading rather than in a methods page, and to
+prefer refusal; whether that is sufficient is not something we can establish from
+inside the project.
+
+\section*{AI assistance disclosure}
+\addcontentsline{toc}{section}{AI assistance disclosure}
+
+AI systems were used extensively and at every stage of the work reported here:
+software development, corpus inspection, candidate generation for the semantic and
+entity layers, query authoring, measurement, test and gate construction, adversarial
+review of the project's own output, and the drafting and editing of this manuscript.
+The construction workflow described in \cref{sec:agentic} is not an incidental use of
+such tools; it is the object of study.
+
+No AI system is an author. Responsibility for the research questions, the
+methodology, the interpretation of results, the claims made here and the decision to
+publish rests entirely with the human author. Where a model's output entered the
+artefact it did so as a typed candidate subject to the controls described in
+\cref{sec:model-policy}, and the resulting population is reported rather than
+absorbed: 890 relationships and 2{,}459 nodes carry the model-extracted layer, and
+the graph can be queried to exclude them.
+
+Model and runtime identities are recorded in the artefacts rather than treated as
+authorship. The project's execution-runtime decision requires that the runtime that
+produced a payload be recorded and never assumed, and it explicitly classifies
+self-reported model identity as unattested: a receipt carries the runtime that wrote
+it, and provider-attested build metadata is marked unavailable because no provider
+supplies it. The reason given is directly relevant to this paper's argument --- an
+earlier pilot's output had been recorded as model-generated when it was in fact
+produced by regular expressions, and the record was ``provenance that looked like
+evidence and was not''. Specific providers and models used for each stage are listed
+in \cref{sec:appendix-agentic} for reproducibility, not as credit.
+
+\section*{Data and code availability}
+\label{sec:data-availability}
+\addcontentsline{toc}{section}{Data and code availability}
+
+The project source is public at
+\url{https://github.com/HimanshuMohanty-Git24/VedAnvaya} under the PolyForm
+Noncommercial~1.0.0 licence. That licence covers project-original material only. It
+is \emph{not} an OSI-approved open-source licence, and the project declines to
+describe itself as open source: the Open Source Definition's sixth criterion forbids
+restricting a field of endeavour, and a noncommercial condition does exactly that.
+
+What is in version control: the canonical corpus builds and their manifests, the
+source, rights and text-version registries, the identity and normalisation code, the
+projection and gate scripts, the staging evidence for each campaign, the decision
+records, the test suite, and --- from the commit that adds them, which is necessarily later
+than the commit the measurements are frozen at --- the materials for this paper
+including the figure and table generators and the fact freeze. At \code{6bf220c}
+itself the paper directory is untracked, so a clone at exactly that commit does not
+contain the reproduction recipe in \cref{sec:appendix-repro}; a clone at the
+paper commit does.
+
+What is not: the loaded graph store itself; several source artefacts whose recorded
+rights do not permit redistribution, including the Atharvavedic text, which is held
+as a reference-only working corpus; the audio, which is referenced rather than
+mirrored; and the generator of at least one checksum-sealed staging artefact, which
+is why a defect in it was corrected by an overlay rather than by editing the
+artefact in place.
+
+One detail about the figures, because the paper's own argument obliges it.
+\Cref{fig:product} reproduces a screenshot in which three Atharvavedic verses appear
+in Sanskrit, drawn from a digital artefact the registry classifies reference-only.
+The verses themselves are ancient and the English beside them is public domain; we
+treat three verses shown to illustrate an interface as scholarly quotation, not as
+redistribution, and the corpus is not published with this paper.
+
+Consequently \textbf{a fresh clone cannot reproduce a certified graph}, and we do not
+claim one-command reproducibility. What a fresh clone can do is rebuild the canonical
+corpora byte-identically from the pinned snapshots it is entitled to fetch, re-derive
+every passage identifier, and re-run the gates against a store it has loaded itself.
+Third-party texts, translations, annotations and recordings retain their own rights
+throughout; the registries record them per file, and the project's own analysis is
+that a combined four-Veda release is not licensable as a single adapted work from the
+current sources.
+
+\section*{Acknowledgments}
+\addcontentsline{toc}{section}{Acknowledgments}
+
+This work depends entirely on scholarship and digitisation carried out by others:
+Aufrecht's edition of the \d{R}gveda and the GRETIL project's TEI encoding of it, the
+VedaWeb platform and the Cologne linguistic annotation, the Treebank of Vedic
+Sanskrit, the Digital Corpus of Sanskrit, the digital Anukrama\d{n}\=\i\ of Akavarapu
+and Bhattacharya, Wikisource's transcriptions, and the nineteenth- and
+twentieth-century translators --- Griffith, and Whitney with Lanman --- whose work
+remains the only complete English rendering reachable for parts of this corpus.
+Errors of method and of interpretation are the author's alone.
+
+The author personally offers this work with gratitude to Lord Vi\'svakarm\=a and to
+Indra, and regards himself as an instrument through which it was built. This is a
+personal devotional acknowledgment. It is not evidence, it is not a claim of any
+kind about the results reported above, and nothing in the scientific sections of this
+paper rests on it.

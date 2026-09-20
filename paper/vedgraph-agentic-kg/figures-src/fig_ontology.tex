@@ -1,0 +1,133 @@
+% Figure: core graph ontology, grouped into object families.
+% Deliberately an OVERVIEW. 55 node labels and 81 relationship types are in use;
+% drawing all of them produces a picture nobody can read, so each family is a group
+% and carries one labelled edge from the textual spine. The full catalogue is
+% Appendix A. Counts are from the fact freeze at 6bf220c.
+\begin{tikzpicture}[
+  font=\footnotesize,
+  every node/.style={align=center},
+  ent/.style={draw=black!45, rounded corners=2pt, inner sep=3.2pt, fill=white,
+              minimum height=6.0mm, line width=0.45pt, font=\scriptsize},
+  spine/.style={ent, fill=SkyBlue!18, draw=SkyBlue!65!black, font=\small},
+  sub/.style={ent, fill=SkyBlue!8, draw=SkyBlue!45!black},
+  attr/.style={ent, fill=BurntOrange!14, draw=BurntOrange!70!black},
+  sem/.style={ent, fill=RoyalPurple!11, draw=RoyalPurple!60!black},
+  reuse/.style={ent, fill=SeaGreen!14, draw=SeaGreen!60!black},
+  rit/.style={ent, fill=Goldenrod!22, draw=Goldenrod!75!black},
+  meta/.style={ent, fill=black!7, draw=black!45},
+  grp/.style={draw=black!25, rounded corners=3pt, inner sep=6pt, dashed,
+              line width=0.5pt},
+  ttl/.style={font=\scriptsize\bfseries, text=black!60, inner sep=1pt},
+  rel/.style={-{Latex[length=1.7mm,width=1.3mm]}, draw=black!55, line width=0.5pt},
+  lbl/.style={font=\scriptsize\itshape, inner sep=1.5pt, fill=white, text=black!65},
+]
+
+% ============ textual spine, centre-left column ============
+\node[spine] (work) at (0,0)      {\textbf{Work}\,\tiny(4)};
+\node[spine] (pass) at (0,-1.6)   {\textbf{Passage}\,\tiny 22{,}537\\[-2pt]
+                                   \tiny\code{:Mantra} 20{,}210};
+\node[sub]   (tv)   at (-2.15,-3.45) {TextVersion\\[-2pt]\tiny 59{,}922};
+\node[sub]   (tr)   at ( 0.45,-3.45) {Translation\\[-2pt]\tiny 18{,}427};
+
+\draw[rel] (work) -- node[lbl] {\code{CONTAINS}} (pass);
+\draw[rel] (pass.south) -- ++(0,-0.42) -| (tv.north);
+\draw[rel] (pass.south) -- ++(0,-0.42) -| (tr.north);
+\node[lbl, anchor=east] at (-0.16,-2.28) {\code{HAS\_TEXT\_VERSION}};
+\node[lbl, anchor=west] at ( 0.16,-2.72) {\code{HAS\_TRANSLATION}};
+
+% self-loop for the four cross-textual predicates
+\draw[rel, dashed] (pass.west) to[out=160,in=200,looseness=5] (pass.south west);
+\node[lbl, anchor=east, text width=28mm, align=right, fill=none] at (-1.45,-0.55)
+  {\code{EXACT\_PARALLEL\_OF},\\[-2pt]\code{NEAR\_PARALLEL\_OF},\\[-2pt]
+   \code{VARIANT\_OF},\\[-2pt]\code{REUSES\_TEXT\_FROM}};
+
+\node[meta] (src) at (0,1.5) {Source \tiny(9)\ \ $+$ rights registry};
+\draw[rel, draw=black!40] (src) -- node[lbl] {\scriptsize per-file rights} (work);
+
+\begin{scope}[on background layer]
+  \node[grp, fill=SkyBlue!5, fit=(work)(pass)(tv)(tr)] (gspine) {};
+\end{scope}
+\node[ttl, anchor=north west] at ($(gspine.north west)+(2pt,-1pt)$) {textual spine};
+
+% ============ attribution family, right, top ============
+\node[attr] (dev) at (5.05,0.35)  {\code{Devata} \tiny 214};
+\node[attr] (rsi) at (7.30,0.35)  {\code{Rishi} \tiny 729};
+\node[attr] (chn) at (4.95,-0.50) {\code{Chandas} \tiny 575};
+\node[attr] (asc) at (8.15,-0.50) {\code{DevataAscription} \tiny 324};
+\begin{scope}[on background layer]
+  \node[grp, fill=BurntOrange!4, fit=(dev)(rsi)(chn)(asc)] (gattr) {};
+\end{scope}
+\node[ttl, anchor=south west] at ($(gattr.north west)+(2pt,1pt)$)
+  {traditional attribution\ \ \scriptsize\mdseries(\code{HAS\_DEVATA},
+   \code{HAS\_RISHI}, \code{HAS\_CHANDAS})};
+
+% ============ textual reuse family ============
+\node[reuse] (form) at (5.45,-2.2) {\code{Formula} \tiny 4{,}825};
+\node[reuse] (fam)  at (7.95,-2.2) {\code{FormulaFamily} \tiny 720};
+\node[reuse] (ppg)  at (6.6,-3.0)  {\code{PadaParallelGroup} \tiny 1{,}434};
+\begin{scope}[on background layer]
+  \node[grp, fill=SeaGreen!4, fit=(form)(fam)(ppg)] (greuse) {};
+\end{scope}
+\node[ttl, anchor=south west] at ($(greuse.north west)+(2pt,1pt)$)
+  {textual reuse\ \ \scriptsize\mdseries(\code{USES\_FORMULA},
+   \code{HAS\_PARALLEL\_PADA})};
+
+% ============ semantic family ============
+\node[sem] (sa)   at (5.70,-5.05) {\code{SemanticAssertion} \tiny 35{,}131};
+\node[sem] (conc) at (4.95,-5.90)  {\code{Concept} \tiny 384};
+\node[sem] (de)   at (7.35,-5.90) {\code{DomainEntity} \tiny 384};
+\node[sem] (rf)   at (8.85,-5.05) {\code{RoleFiller} \tiny 2{,}052};
+\node[sem] (lem)  at (6.6,-6.70)  {\code{Lemma} \tiny 10{,}031
+                                   \ \scriptsize\itshape(internal)};
+\begin{scope}[on background layer]
+  \node[grp, fill=RoyalPurple!4, fit=(sa)(conc)(de)(rf)(lem)] (gsem) {};
+\end{scope}
+\node[ttl, anchor=south west] at ($(gsem.north west)+(2pt,1pt)$)
+  {semantic\ \ \scriptsize\mdseries(\code{HAS\_SEMANTIC\_ASSERTION},
+   \code{ABOUT\_CONCEPT}, \code{MENTIONS\_LEMMA})};
+
+% ============ ritual family ============
+\node[rit] (rite) at (5.15,-8.35) {\code{Ritual} \tiny 103};
+\node[rit] (step) at (7.75,-8.35) {\code{RitualStep} \tiny 3{,}121};
+\node[rit] (offr) at (6.6,-9.15)  {\code{Offering}, \code{Substance},
+                                   \code{Object}, \code{Plant}};
+\begin{scope}[on background layer]
+  \node[grp, fill=Goldenrod!5, fit=(rite)(step)(offr)] (grit) {};
+\end{scope}
+\node[ttl, anchor=south west] at ($(grit.north west)+(2pt,1pt)$)
+  {ritual \& material culture\ \ \scriptsize\mdseries(\code{USED\_FOR\_RITE})};
+
+% ============ diagnostics, bottom left ============
+\node[meta] (qa)  at (-0.95,-7.25) {\code{QAIssue} \tiny 915};
+\node[meta] (qv)  at (-0.95,-8.05) {\code{QualityVerdict} \tiny 2{,}568};
+\node[meta] (sch) at (-0.95,-8.85) {\code{ScholarlyDisagreement} \tiny 113};
+\node[meta] (ic)  at (-0.95,-9.65) {\code{InterpretiveClaim} \tiny 6};
+\begin{scope}[on background layer]
+  \node[grp, fill=black!3, fit=(qa)(qv)(sch)(ic)] (gmeta) {};
+\end{scope}
+\node[ttl, anchor=south west, text width=40mm, align=left]
+  at ($(gmeta.north west)+(2pt,1pt)$)
+  {scholarship \& diagnostics\\[-1pt]
+   \scriptsize\mdseries the first two are \code{:Internal}};
+
+% ============ spine-to-family edges ============
+\draw[rel] (pass.east) -- ($(gattr.west)+(0,0)$);
+\draw[rel] (pass.east) -- ($(greuse.west)+(0,0.25)$);
+\draw[rel] (pass.south east) to[out=-40,in=175] ($(gsem.west)+(0,0.35)$);
+\draw[rel] (pass.south east) to[out=-62,in=172] ($(grit.west)+(0,0.2)$);
+\draw[rel, draw=black!40] (pass.south west) to[out=-115,in=75] (gmeta.north);
+
+% ============ evidence-layer key ============
+\begin{scope}[shift={(-2.9,-10.9)}]
+  \node[ttl, anchor=west] at (0,0) {Epistemic layer carried by \emph{every} edge:};
+  \foreach \i/\c/\t in {0/{SkyBlue!45}/{\textsc{l1} 21.4\%},
+                        1/{SkyBlue!75}/{\textsc{l2} 77.2\%},
+                        2/{RoyalBlue!75}/{\textsc{l3} 0.17\%},
+                        3/{RoyalBlue!60!black}/{\textsc{l4} 0.35\%}} {
+    \node[draw=black!40, fill=\c, minimum width=3mm, minimum height=3mm,
+          inner sep=0pt, line width=0.4pt] at ({5.15+\i*1.55},0) {};
+    \node[font=\scriptsize, text=black!65, anchor=west]
+      at ({5.3+\i*1.55},0) {\t};
+  }
+\end{scope}
+\end{tikzpicture}

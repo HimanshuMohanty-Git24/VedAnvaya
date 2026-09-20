@@ -1,0 +1,99 @@
+\section{Sources and Rights}
+\label{sec:appendix-sources}
+
+\subsection{The three-layer registry}
+
+Rights are recorded at three granularities that are allowed to disagree: the host
+(22 records), the individual file (53 artefacts, each with its own licence field),
+and the text layer (15 records). The governing statement is that rights attach to
+each source file, translation, transcription, image or recording, and that website
+accessibility does not grant reuse.
+
+Thirteen numbered policy rules govern reconciliation. The load-bearing ones: on
+conflict the more restrictive statement controls; a permissive status is never
+inferred, only evidenced; absence of a licence field is not a grant; chain of title
+is followed to its root rather than to the nearest licence; a digitiser's stamp is
+never a grant and a printed notice controls; suitability for one Veda does not
+transfer to another; and audio carries its own rights regardless of the text's.
+
+Status distribution at file level: \code{UNKNOWN} 15, \code{PUBLIC\_DOMAIN} 10,
+\code{APACHE\_2\_0} 10, \code{PERMISSION\_REQUIRED} 6, \code{CC\_BY\_SA} 6,
+\code{REFERENCE\_ONLY} 3, \code{CC\_BY\_NC\_SA} 2, \code{CC\_BY} 1.
+
+\subsection{Text versions actually held}
+
+\begin{center}\small
+\begin{tabularx}{\linewidth}{@{}l>{\raggedright\arraybackslash}Xl@{}}
+\toprule
+Text version & Role & Rights \\
+\midrule
+\code{GRETIL.RV.AUFRECHT} & primary Sanskrit, \d{R}gveda & \code{CC\_BY\_NC\_SA} \\
+\code{VEDAWEB.AUFRECHT} & parallel reading & \code{CC\_BY\_NC\_SA} \\
+\code{VEDAWEB.EICHLER} & parallel, accented Devanagari & \code{CC\_BY\_NC\_SA} \\
+\code{VEDAWEB.VNH} & metrically restored; \emph{never} primary & \code{CC\_BY\_NC\_SA} \\
+\code{VEDAWEB.LUBOTSKY} & comparison only & \code{CC\_BY\_NC\_SA} \\
+\code{VEDAWEB.PADAPATHA} & declared, \textbf{never ingested} & \code{CC\_BY\_NC\_SA} \\
+\code{VEDAWEB.ZURICH} & linguistic annotation & \code{CC\_BY} \\
+\code{WIKISOURCE\_SA.SV.KAU.ARCIKA\_MULA} & primary Sanskrit, S\=amaveda & \code{CC\_BY\_SA} \\
+\code{GRETIL.SV.KAUTHUMA} & primary; \textbf{rejected witness} & \code{PERMISSION\_REQUIRED} \\
+\code{WIKISOURCE\_SA.YV.VSM.ACCENTED} & extracted from container & \code{CC\_BY\_SA} \\
+\code{WIKISOURCE\_SA.YV.VSM.UNACCENTED} & parallel reading & \code{CC\_BY\_SA} \\
+\code{GRETIL.AVS.SAUNAKA.ACCENTED} & primary Sanskrit, Atharvaveda & \code{REFERENCE\_ONLY} \\
+\code{GRETIL.AVS.SAUNAKA.UNACCENTED} & parallel reading & \code{REFERENCE\_ONLY} \\
+\code{VEDAGRAPH.AVS.ROTH\_WHITNEY\_1856.TRANSCRIPTION} & the \textbf{cancelled}
+  independent transcription & \code{CC0} \\
+\code{VEDAGRAPH.AVS.SEARCH\_NORMALIZED} & derived search surface & \code{REFERENCE\_ONLY} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+Three rows in that table are not data the project uses, and they are listed because
+their presence is the point: a declared-but-never-ingested Padap\=a\d{t}ha, a
+rejected S\=amavedic witness retained as the record of a defect family, and a
+cancelled transcription programme.
+
+\subsection{Printed editions behind the digital artefacts}
+
+The \d{R}gvedic primary text descends from Aufrecht's edition
+\citep{aufrecht1877rigveda} through a data-entry, conversion and \mbox{TEI} chain
+that the artefact registry records step by step, with a pinned checksum and a
+publication date for the \mbox{TEI} encoding \citep{gretil}. That file's header does
+not state a recension, so the \'S\=akala identification is recorded as a reviewed
+structural inference rather than as a source statement.
+
+Traditional \d{R}gvedic metadata comes from a digital Anukrama\d{n}\=\i\
+\citep{akavarapu2023anukramani}, commit-pinned, with a four-layer separation recorded
+explicitly: the traditional source is cited and not ingested; the digital
+transcription is ingested; modern editorial normalisation is recorded and never
+undone; and machine-classification labels in the same repository are never ingested
+at all.
+
+English renderings are Griffith for the \d{R}gveda, Yajurveda and Atharvaveda
+\citep{griffith1896rigveda,griffith1899yajurveda,griffith1895atharvaveda} and Whitney
+with Lanman for the Atharvaveda \citep{whitney1905atharva}. Both are public domain;
+the project depends on the public-domain status of the \emph{translation text} and
+deliberately not on the transcription layer carrying it, which is separately
+licensed.
+
+\subsection{The combined-release constraint}
+
+The \d{R}gvedic primary text is CC~BY-NC-SA, the S\=amavedic and Yajurvedic texts are
+CC~BY-SA, and the Atharvavedic text is reference-only. The registry's own analysis is
+that under CC~BY-SA's share-alike clause a combined four-Veda release is not
+licensable as a single adapted work from these sources. This is why the graph is
+buildable and queryable but not redistributable as one artefact
+(\cref{sec:data-availability}).
+
+\subsection{Snapshot provenance}
+
+An independent audit over the raw store verified 1{,}347 metadata records against
+their payloads: 1{,}347 hash-verified, 0 mismatches, 0 missing payloads, 0 orphans,
+0 incomplete provenance records and 0 partial-download residue, across roughly
+249\,MB. Eleven sidecar fields are required per snapshot, including retrieval URL,
+retrieval timestamp, HTTP status, request headers and parser-independent metadata.
+A repository URL without a commit pin raises.
+
+The audit states its own limits, and we adopt them: hash verification proves a
+snapshot is unaltered since retrieval and says nothing about whether retrieval was
+permitted, nor about whether the digest was pinned against the right artefact.
+Integrity and scope are independent properties.

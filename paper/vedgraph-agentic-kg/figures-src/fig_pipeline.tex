@@ -1,0 +1,104 @@
+% Figure: the construction pipeline, with the actor for each stage in the left
+% gutter and what the stage may not do in the right gutter. Reconstructed from the
+% repository's own artefact protocol; every stage names a file family that exists.
+\begin{tikzpicture}[
+  font=\footnotesize,
+  every node/.style={align=center},
+  st/.style={draw=black!50, rounded corners=2.5pt, inner sep=4.5pt, fill=white,
+             text width=44mm, minimum height=7mm, line width=0.55pt},
+  det/.style={st, fill=SeaGreen!10, draw=SeaGreen!60!black},
+  agn/.style={st, fill=SkyBlue!14, draw=SkyBlue!65!black},
+  adv/.style={st, fill=BurntOrange!11, draw=BurntOrange!70!black},
+  own/.style={st, fill=RoyalPurple!9, draw=RoyalPurple!60!black},
+  fin/.style={st, fill=black!6, draw=black!60, line width=0.8pt},
+  fl/.style={-{Latex[length=2.1mm,width=1.6mm]}, draw=black!60, line width=0.7pt},
+  who/.style={font=\scriptsize\bfseries, text=black!58, anchor=east,
+              text width=26mm, align=right},
+  nope/.style={font=\scriptsize, text=black!58, anchor=west, text width=52mm,
+               align=left},
+  hd/.style={font=\scriptsize\bfseries, text=black!52},
+]
+
+\node[hd] at (-5.1,1.15) {actor};
+\node[hd] at (0,1.15) {stage};
+\node[hd] at (5.3,1.15) {what the stage may not do};
+
+\node[det] (s1) at (0,0.25)   {\textbf{Source acquisition}\\[-1pt]
+                               \tiny hashed snapshot; rights recorded per file};
+\node[det] (s2) at (0,-1.45)  {\textbf{Canonical corpus + identity}\\[-1pt]
+                               \tiny \mbox{UUIDv5} over a \mbox{URN};
+                               byte-reproducible build};
+\node[agn] (s3) at (0,-3.55)  {\textbf{Parallel layer proposal}\\[-1pt]
+                               \tiny one staging directory per domain\\[2pt]
+                               \tiny\itshape attribution \textperiodcentered\ textual
+                               reuse \textperiodcentered\ formulae
+                               \textperiodcentered\ entities
+                               \textperiodcentered\ ritual\\[-1pt]
+                               \tiny\itshape translation \textperiodcentered\ notation
+                               \textperiodcentered\ audio\\[2pt]
+                               \tiny eight layers, proposed independently;\\[-1pt]
+                               \tiny each lands in staging, none in the graph};
+\node[det] (s4) at (0,-5.35)  {\textbf{Staging validation}\\[-1pt]
+                               \tiny the contract reports its own coverage};
+\node[adv] (s5) at (0,-7.05)  {\textbf{Gates A / B / C}\\[-1pt]
+                               \tiny integrity, conformance, attack};
+\node[det] (s6) at (0,-8.75)  {\textbf{Grading}\\[-1pt]
+                               \tiny layer, tier, precision, surface ---
+                               applied graph-wide, last};
+\node[own] (s7) at (0,-10.55) {\textbf{Plan $\to$ dry run $\to$ \textsc{go}
+                               $\to$ import $\to$ readback}};
+\node[det] (s8) at (0,-12.45) {\textbf{Invariants and scorecard}\\[-1pt]
+                               \tiny 20 invariants, 11 gates, all at zero};
+\node[fin] (s9) at (0,-14.15) {\textbf{VedGraph}\\[-1pt]
+                               \tiny 165{,}737 nodes, 510{,}905 relationships};
+\node[fin] (s10) at (0,-15.65){\textbf{VedAnvaya}\\[-1pt]
+                               \tiny read-only \mbox{API} and interface};
+
+\foreach \a/\b in {s1/s2, s2/s3, s3/s4, s4/s5, s5/s6, s6/s7, s7/s8, s8/s9, s9/s10}
+  \draw[fl] (\a) -- (\b);
+
+
+% ---- left gutter: actor ----
+\node[who] at (-2.45,0.25)    {deterministic};
+\node[who] at (-2.45,-1.45)   {deterministic};
+\node[who] at (-2.45,-3.35)   {\textbf{agent}\\proposes};
+\node[who] at (-2.45,-5.35)   {deterministic};
+\node[who] at (-2.45,-7.05)   {\textbf{a second agent}\\attacks};
+\node[who] at (-2.45,-8.75)   {deterministic};
+\node[who] at (-2.45,-10.55)  {\textbf{owner} \textsc{go};\\code verifies};
+\node[who] at (-2.45,-12.45)  {deterministic};
+\node[who] at (-2.45,-14.15)  {---};
+\node[who] at (-2.45,-15.65)  {---};
+
+% ---- right gutter: the refusal at each stage ----
+\node[nope] at (2.45,0.25)
+  {a permissive licence is never inferred, only evidenced; absence of a licence
+   field is not a grant};
+\node[nope] at (2.45,-1.45)
+  {no source, text, script, edition, build or sequence position may enter an
+   identifier};
+\node[nope] at (2.45,-3.35)
+  {a model may write exactly one status, \code{CANDIDATE}; the predicate
+   vocabulary is closed and its refusals are named};
+\node[nope] at (2.45,-5.35)
+  {a check that skipped its population must show as a coverage shortfall, not as
+   a pass};
+\node[nope] at (2.45,-7.05)
+  {Gate~C is a separate file from Gate~B, ``so the same codepath cannot validate
+   itself'', and carries a negative control};
+\node[nope] at (2.45,-8.75)
+  {an unlisted relationship type \emph{raises}; the fall-through default is the
+   weakest tier, never the strongest};
+\node[nope] at (2.45,-10.55)
+  {nothing is imported until a readback; an importer's own success report is not
+   evidence};
+\node[nope] at (2.45,-12.45)
+  {the data may not declare itself valid --- a gate whose declared set includes
+   the graph cannot fail};
+\node[nope] at (2.45,-14.15)
+  {every edge carries its epistemic layer, so a consumer can exclude
+   model-derived claims with a predicate};
+\node[nope] at (2.45,-15.65)
+  {typing is rendered where the reader is, not on a methods page};
+
+\end{tikzpicture}

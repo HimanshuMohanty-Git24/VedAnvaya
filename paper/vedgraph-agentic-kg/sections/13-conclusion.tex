@@ -1,0 +1,53 @@
+\section{Conclusion}
+\label{sec:conclusion}
+
+We set out to determine whether a large historical corpus can be turned into a
+provenance-aware knowledge graph with heavy \mbox{LLM}-agent involvement without
+model output becoming indistinguishable from what sources actually say. The answer
+this project supports is yes, but only because the constraint was implemented as
+mechanism rather than as policy: a model may write exactly one lifecycle status, the
+promotion gate is a frozen set of trust classes that does not contain the model's,
+the predicate vocabulary is closed with its refusals named, and a cited token absent
+from the packet the model was shown is a decidable fabrication.
+
+The resulting artefact is a graph of 165{,}737 nodes and 510{,}905 relationships over
+20{,}210 canonical mantras in four named recensions, in which every edge states the
+epistemic layer that produced it, the tier that follows from it, the reach of the
+claim over its passage, and the textual surface the evidence was read off. Because
+the typing is stored rather than documented, the division of labour is measurable:
+21.39\,\% of relationships are what a source states, 77.22\,\% are what a
+reproducible rule derives from that, 0.35\,\% are interpretive, and \textbf{0.17\,\%
+are model-extracted}.
+
+That ratio is the paper's main empirical result, and we want it read correctly. It
+does not say agents were unimportant --- they were used continuously across
+seventeen days and 249 commits. It says that when the promotion path is closed, the
+agentic contribution flows into discovery, measurement, reconciliation and
+refutation instead of into assertion. The clearest instance is a gate built to
+attack the project's own withholdings rather than its claims, which falsified the
+stated reasons of 39 withheld verses using the repository's own released data, and
+changed no verse's release status --- only the recorded reason. A method that can
+find an error in its own explanations is doing something a method that only validates
+its outputs cannot.
+
+The project's failures support the same conclusion more strongly than its successes.
+It deleted 41{,}796 of its own relationships in one revision and retired 30{,}539 in
+the next; withdrew 96\,\% of its semantic role fillers rather than ship a measured
+24.8\,\% error; refused an entire transcription corpus at an inter-reader agreement
+of 0.505; refused a semantic-resemblance layer after a re-implemented lexical control
+outperformed every candidate; and refused a release candidate while every gate was
+green, because completeness turned out to be a property of a registry that had no
+terminal state. Twice a refusal's own decisive argument was subsequently found wrong
+and withdrawn in turn. Cheap generation makes cheap refusal possible, and refusal is
+where the epistemic work happens.
+
+What none of this establishes is the accuracy of the semantic layer. Of 35{,}131
+semantic assertions, zero have been reviewed by a human; the strongest review state
+in the graph is model adjudication; and on the only independent test available,
+single-model adjudication agreed with published human annotation on 75\,\% of
+decidable cases. The project says so in its own certification and on its public
+pages, and we have been careful to say it here in the same terms. An
+evidence-typed graph does not make model output true. It makes model output
+\emph{visible}, and it lets a reader who does not trust it exclude it with a
+predicate --- which, for scholarship over a corpus like this one, is the more useful
+property.

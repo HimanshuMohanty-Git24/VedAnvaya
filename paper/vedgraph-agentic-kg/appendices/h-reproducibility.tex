@@ -1,0 +1,73 @@
+\section{Reproducibility}
+\label{sec:appendix-repro}
+
+\subsection{What reproduces, measured}
+
+\begin{itemize}[leftmargin=1.6em,itemsep=2pt,topsep=3pt]
+\item \textbf{The canonical corpora rebuild byte-identically} from their pinned
+snapshots.
+\item \textbf{Every passage identifier re-derives} from its \mbox{URN}: 22{,}537
+recomputed, zero mismatches (\cref{sec:appendix-identity}).
+\item \textbf{Public identifiers agree across independent routes.} An audit asserts
+that the \mbox{API}'s identifier function and the offline export agree row for row,
+that no two public nodes share an identifier, that the passage and assertion
+identifier spaces are disjoint, and that two independent source builds produce a key
+set identical to the live graph's.
+\item \textbf{Reproducibility was measured by re-running} rather than asserted,
+during the completeness campaign.
+\item \textbf{A run-identity invariant} fails the build if any predicate carries more
+than one run identifier, on the ground that otherwise part of the graph is
+reproducible from no committed artefact.
+\end{itemize}
+
+\subsection{What does not reproduce from a clean clone}
+
+A fresh clone \textbf{cannot} produce a certified graph. Four independent reasons:
+
+\begin{enumerate}[leftmargin=1.6em,itemsep=2pt,topsep=3pt]
+\item The loaded store is not in version control and is not redistributable as a
+dump, for the licensing reason in \cref{sec:appendix-sources}.
+\item Several source artefacts cannot be re-fetched by a third party under their
+recorded rights; the Atharvavedic text in particular is held as a reference-only
+working corpus.
+\item At least one checksum-sealed staging artefact's \emph{generator} is absent from
+the repository, which is why a defect in it had to be corrected by an overlay rather
+than by regeneration.
+\item The audio layer is referenced rather than mirrored.
+\end{enumerate}
+
+\subsection{Rebuilding the paper's numbers}
+
+The manuscript's numeric content is a projection of one file. With the repository and
+a loaded store:
+
+\begin{quote}\small\ttfamily
+python figures-src/fact\_freeze.py\\
+python figures-src/graph\_census.py\\
+python figures-src/make\_tables.py\\
+python figures-src/fig\_corpus\_and\_epistemic.py\\
+python figures-src/fig\_crossveda.py\\
+python figures-src/fig\_samaveda.py\\
+python figures-src/fig\_indra.py\\
+tectonic -X compile main.tex
+\end{quote}
+
+The first, second and seventh require the graph; the rest require only the freeze.
+The freeze records the commit, the branch and whether the tree was clean when it was
+taken, so a reviewer can tell whether a number in the text belongs to the state the
+paper claims for it. It is worth saying what it records here: \textbf{the tree was
+not clean}. \code{git\_tree\_clean} is \emph{false} in the shipped freeze, because
+the paper's own directory was untracked at the moment of measurement. We believe
+that is the whole of the delta --- \code{git status --porcelain} reported only
+\code{?? paper/} --- but the freeze cannot establish that on its own, and a
+measurement taken from a dirty tree is a measurement taken from a dirty tree.
+
+\subsection{Determinism hazards in the paper's own tooling}
+
+Two, both found and fixed while preparing this manuscript, and recorded because they
+are exactly the kind of thing that makes a ``reproducible'' figure irreproducible.
+The subgraph generator originally derived diagram node identifiers from Python's
+built-in \code{hash}, which is salted per process; it now uses positional counters.
+And a thousands-separator substitution was applied to a whole formatted string rather
+than to the number inside it, which silently rewrote a coordinate. Neither would have
+changed a reported figure; both would have changed the output between runs.

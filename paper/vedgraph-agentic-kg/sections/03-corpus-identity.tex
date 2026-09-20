@@ -1,0 +1,192 @@
+\section{Corpus, Sources and Identity}
+\label{sec:corpus}
+
+\subsection{Recension is part of the corpus definition}
+\label{sec:scope}
+
+``The Vedas'' does not name a corpus precisely enough to build on. Each Veda survives
+in multiple \iast{\'s\=akh\=a}s whose verse inventories and orderings differ, and each
+Sa\d{m}hit\=a sits beneath a stratified literature --- Br\=ahma\d{n}a,
+\=Ara\d{n}yaka, Upani\d{s}ad --- that a reader may or may not expect to be included.
+An absence measured in one recension is not an absence from the tradition.
+
+VedGraph therefore defines its corpus as four \code{Work} records, each one recension
+of one Veda, and stores the exclusions as machine-readable properties rather than as
+prose (\cref{tab:corpus}). Each \code{Work} carries \code{scope},
+\code{excluded\_corpora} and \code{completeness} fields; a live invariant fails the
+build if either of the first two is null. The reason the field exists is recorded in
+the model itself: until the scope statement reached the graph, a consumer querying
+\code{work\_name} read ``Samaveda Samhita'' and was misled by what the project calls
+the most misleading string in its own product.
+
+\input{tables/corpus}
+
+The S\=amaveda entry is the sharpest case. The \=Arcika verse collection held here is
+roughly 1{,}875 verses; the \iast{g\=ana} collections --- \iast{gr\=amageya},
+\iast{\=ara\d{n}yakageya}, \iast{\=uhag\=ana}, \iast{\=uhyag\=ana} --- are a parallel
+and larger body of about 2{,}639 chants. The registry states the consequence flatly:
+the sung dimension is not a decoration on the verse skeleton but the reason the
+S\=amaveda is a distinct Veda rather than a \d{R}gvedic excerpt, so any claim to
+``have the S\=amaveda'' while holding only the \=Arcika is false. Fourteen such
+refusals are recorded across the four works.
+
+\subsection{Rights attach to files, not to hosts}
+
+Three registries describe provenance at three different granularities and are
+allowed to disagree: \code{sources.yaml} records the host, \code{source\_artifacts.yaml}
+the individual file and its licence, and \code{text\_versions.yaml} the text layer.
+Thirteen numbered policy rules govern the reconciliation; the load-bearing ones are
+that on conflict the more restrictive statement controls, that absence of a licence
+field is never a grant, that chain of title is followed to its root rather than to the
+nearest licence, and that a permissive status is never inferred but only evidenced.
+The distribution of statuses is itself informative: at file level, 15 of 53 artefacts
+are \code{UNKNOWN}.
+
+One consequence is worth stating because it constrains what this project could ever
+publish. The \d{R}gvedic primary text is CC~BY-NC-SA, the S\=amavedic and Yajurvedic
+texts are CC~BY-SA, and the Atharvavedic text is reference-only; the registry
+concludes that a combined four-Veda release is not licensable as a single adapted
+work from these sources. The graph is buildable and queryable; the corpus is not
+redistributable as one artefact. \Cref{sec:data-availability} states what is and is
+not available.
+
+A separate provenance audit over the raw snapshot store verified 1{,}347 metadata
+records against their payloads with zero hash mismatches, zero missing payloads and
+zero orphans. That audit names its own limits in terms this paper adopts: hash
+verification proves a snapshot is unaltered since retrieval and says nothing about
+whether retrieval was permitted, nor whether the digest was pinned against the right
+artefact. Integrity and scope are independent properties.
+
+\subsection{Identity}
+\label{sec:identity}
+
+\paragraph{The scheme.} Let $\mathcal{N}$ be a fixed namespace \mbox{UUID}, constant
+for the life of the protocol. For a passage $p$, let
+\[
+  \kappa(p) \;=\; \bigl\langle\, \text{veda},\ \text{recension},\
+  \ell_1(p),\ \ell_2(p),\ \dots,\ \ell_k(p) \,\bigr\rangle
+\]
+be the tuple of its work's declared structural coordinates, where $k$ is a property of
+the work rather than of the schema: the \d{R}gveda uses
+$\langle \text{ma\d{n}\d{d}ala}, \text{s\=ukta}, \text{mantra}\rangle$, the
+V\=ajasaneyi Sa\d{m}hit\=a $\langle \text{adhy\=aya}, \text{mantra}\rangle$, and the
+S\=amaveda up to four levels beneath a \emph{named} collection. A total, injective
+serialisation $u$ maps $\kappa(p)$ to a canonical \mbox{URN}, and identity is
+\[
+  \mathrm{id}(p) \;=\; \mathrm{uuid5}\bigl(\mathcal{N},\, u(\kappa(p))\bigr),
+  \qquad
+  u(\kappa(p)) \in \texttt{urn:vedagraph:}\,\Sigma^{*}.
+\]
+Nothing else may enter. The specification enumerates the exclusions: not the source
+artefact, its URL, its revision or its licence; not the \code{TextVersion}, the
+script, the accent notation or the text itself; not the build, the parser version or
+the segmentation policy; not sequence position anywhere. \mbox{ADR-002} states the
+rule as ``citations and source locators never determine identity'', and a companion
+decision makes the corollary testable: because identity derives from the citation
+hierarchy alone, changing the base edition changes which text is displayed and nothing
+else.
+
+We verified the scheme by recomputing $\mathrm{id}(p)$ for every passage in all four
+canonical builds: 22{,}537 passages pooled, with zero duplicate keys, zero duplicate
+\mbox{URN}s, zero duplicate \mbox{UUID}s and zero mismatches against the shipped
+corpus. Human-readable keys (\code{VG:RV:SAK:M01:S001:V001}) are padded for lexical
+sorting and are a join and display surface; \mbox{URN}s are unpadded and are the hash
+input. Only the \mbox{URN} may never be re-spelled.
+
+\paragraph{Why identity excludes content.} Two hash families exist and are
+deliberately disjoint. Content digests --- \code{content\_sha256} on a stored reading,
+\code{checksum\_sha256} on a source artefact --- serve integrity, never identity.
+Putting a content hash into the identifier would make every re-encoding a new entity
+and would couple canonical identity to a mutable upstream wiki.
+
+The interesting consequence is that the obvious identity check is vacuous. Recomputing
+a \mbox{UUID} from its \mbox{URN} is a closed loop: it proves the \mbox{URN} hashes
+consistently and says nothing about what the \mbox{URN} \emph{addresses}. Because a
+\code{Passage} stores no text, when a segmentation change moved five S\=amavedic
+referents under unchanged \mbox{UUID}s, every gate in the build reported success. The
+project's response was a second, separate mechanism: a \emph{referent-drift guard}
+that fingerprints each key's text twice, once over the bytes the source spells and
+once over a normalisation-independent comparison surface, and compares both against
+the previous release's fingerprint for the same key. A difference is adjudicated into
+one of five verdicts --- unchanged, intentional correction, drift, removed invalid
+passage, newly discovered passage --- and drift blocks release.
+
+Even that guard needed hardening. Text equality alone is insufficient, because of
+1{,}844 released S\=amavedic keys only 1{,}651 have a distinct comparison digest:
+192 equivalence classes covering 385 keys share one, and 174 of those classes share a
+byte-identical raw digest too. The guard therefore requires three fields to agree ---
+the comparison digest, the source locator, and the source verse marker --- before it
+will call two observations the same occurrence.
+
+\subsection{Normalisation is a comparison instrument}
+\label{sec:normalisation}
+
+The governing rule is stated as a campaign-wide invariant and appears verbatim in the
+owner decisions, in the code that implements the folds, in the public API's evidence
+vocabulary, and in the project's README:
+
+\begin{quote}\small
+Unicode normalization, accent folding, punctuation folding, whitespace folding, script
+transliteration, sandhi-normalized comparison, case folding and OCR normalization may
+all \textbf{generate candidates}. None of them alone may establish that two things are
+the same canonical passage, the same entity, the same recension, a
+\code{VARIANT\_OF}, or a text reuse, and none may license a canonical merge.
+\end{quote}
+
+Three states are kept apart by name: \emph{normalized equivalence} (the strings fold
+together), \emph{canonical identity} (they are the same thing, on independent
+evidence), and \emph{textual variant} (a real difference in transmission). Same folded
+text at different coordinates is explicitly not the same passage.
+
+Comparison surfaces are therefore named and ordered rather than implicit. Six
+\emph{comparison forms} run from the identity function on stored text through
+\mbox{NFC}, accent-preserving normalisation, accent stripping, a search surface, and a
+cross-script surface. Stored text is never replaced: \code{text\_original} and
+\code{text\_nfc} are separate fields so the original is recoverable, and a comparison
+surface may be lossy where stored text may not.
+
+The folds encode real philological judgements, and the project records the ones it
+refuses to make. Avagraha is a genuine orthographic sign and is deliberately not
+folded away, at a measured cost of 46 of 116 residual unclassifiable Yajurvedic pairs.
+A private-use code point occurring 20 times in one witness is deliberately not folded,
+because reading it as an anusv\=ara from context is a transcription judgement rather
+than a normalisation, and it is registered as a source defect instead. Conversely one
+fold is knowingly lossy: the entire lateral series collapses onto a single sentinel
+because U+1E37 denotes the vocalic \iast{l} in one source convention and the retroflex
+\iast{\d{l}} in another --- the same code point, opposite phonemic class --- so no
+global table can be correct for both. Splitting it was implemented, measured, and
+reverted when it regressed a verse from a classified comparison to an unclassified
+one.
+
+\paragraph{A fold inside a digest is not free.} Because the referent guard's
+comparison digest is computed through the search surface, adding a rule to the
+transcription table changes the digest of already-released keys, and the guard then
+reports drift where none occurred. This was measured --- one rule moves five
+Yajurvedic keys, others four and one more --- and resolved by splitting the fold
+tables in two: a frozen table inside the digest, and a free table for comparison only.
+The code comments the split as the owner's invariant seen from the other side: a
+comparison fold must be free to change while identity is not.
+
+\subsection{Recorded identity defects}
+
+The project's identity work is best characterised by the defects it caught rather than
+by the scheme in the abstract. Three are worth reporting.
+
+\emph{A disputed name kept out of identity.} The S\=amavedic \=Arcika is addressed by
+named collections, never by a bare ordinal, because the first slot's value \code{2}
+denotes the \=Ara\d{n}y\=arcika in one e-text lineage and the Uttar\=arcika in six
+independent witnesses. The blast radius was measured before the decision: 1{,}280 of
+1{,}875 verses are mis-addressed under the rejected reading. The four collection
+extents agree across every witness while the extent of the disputed name
+``P\=urv\=arcika'' does not, so the extents entered identity and the name did not.
+
+\emph{A recorded reason that was backwards.} The stated cause of a S\=amavedic
+withholding was corrected when re-measurement showed that for three of four groups the
+selected witness prints the \iast{da\'sati} heading and the second witness omits it ---
+the opposite of what had been recorded. The data were right; the explanation was not.
+
+\emph{An edition's hymn order is data, not a parser conditional.} Griffith prints the
+V\=alakhilya as \d{R}gveda Book~8 hymns 93--103 where the base edition places them
+inline at 8.49--8.59. Building without that mapping did not produce missing
+translations; it produced wrong ones. The decision record states the principle the
+whole identity layer turns on: a gap is honest, a silent misalignment is not.

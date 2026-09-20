@@ -1,0 +1,83 @@
+\section{Failure Case Ledger}
+\label{sec:appendix-failures}
+
+\Cref{tab:failures} summarises; this appendix records the artefact each case rests
+on, so that a reader with the repository can re-derive it. Paths are relative to the
+repository root.
+
+\begin{description}[leftmargin=1.4em,itemsep=4pt,topsep=3pt,style=nextline]
+
+\item[F1 --- 41{,}796 edges deleted, then 30{,}539 retired]
+\code{docs\vgslash reports\vgslash VEDAGRAPH\_KNOWLEDGE\_MODEL\_V2\_FINAL\_REPORT.md};
+\code{docs\vgslash reports\vgslash KNOWLEDGE\_MODEL\_V3\_FINAL\_REPORT.md}. The larger retirement
+was 21{,}246 concept edges resting on a single English keyword plus 9{,}000 deity
+mention edges proven to duplicate an existing layer fact-for-fact. Agreement between
+the concept layer and the mention layer moved from 55.3\,\% to 94.4\,\%.
+
+\item[F2 --- 96\,\% of role fillers withdrawn]
+\code{data\vgslash staging\vgslash semantic\_roles\vgslash }. Fillers 51{,}231 $\to$ 2{,}052; agent-plus-patient
+triples 5{,}219 $\to$ 341; 28{,}734 assertions stamped with a withholding reason;
+15{,}704 rows staged as a verification queue. Repair was attempted first: widening
+the gate moved the wrong share from 24.8\,\% to 24.3\,\% at a cost of eighteen recall
+points, with per-role residue from 11.4\,\% (goal) to 31.2\,\% (location).
+
+\item[F3 --- a corpus refused, then the refusal's reasoning corrected]
+\code{docs\vgslash reports\vgslash ATHARVAVEDA\_TRANSCRIPTION\_QA.md} and the commits that withdraw
+the monotone-trend claim. Agreement series: 0.00 (22 units), 0.26 (46), 0.485 (167),
+0.505 (204), 0.542 (227), 0.522 (249), later 0.500 (272).
+
+\item[F4 --- a refusal whose decisive argument was wrong]
+\code{data\vgslash staging\vgslash communities\vgslash }. The partition was refused, the refusal's reasoning
+overturned, and the refusal re-founded on a different measurable basis. The
+accompanying figure correction records both populations: tenfold imbalance over all
+214 deities, 7.9-fold over the 157 eligible, peaking in different books.
+
+\item[F5 --- release refused with every gate green]
+\code{docs\vgslash reports\vgslash data-completeness\vgslash WAVE4\_ADVERSARIAL\_QA.md}. Scorecard 11/11,
+dependency state current, all suites passing; verdict
+\code{DATA\_COMPLETENESS\_NOT\_COMPLETE}, release candidate \emph{no}. Registry: 84
+of 85 entries open, no closure vocabulary, no field to hold one. The decisive
+finding was an entry recording a closure of 944 of 961 items against a graph holding
+exactly the pre-closure figure.
+
+\item[F6 --- a correct restoration degraded the product]
+Restoring 30{,}266 nodes took the apparatus share of the public export to roughly
+81\,\%; at a display budget of 40, the Indra neighbourhood spent 21 slots on passages
+and evidence records and 6 on other deities. Repaired with per-class display
+ceilings; the data were not changed.
+
+\item[F7 --- 39 withheld reasons falsified]
+\code{data\vgslash staging\vgslash samaveda\_music\_002\_final\vgslash gate\_c\_run1.json}, preserved as the
+failing run, with a test asserting it still records 39 defects. Class distribution
+moved 599/109/0 $\to$ 565/104/39, sum unchanged at 708; rows moving from withheld to
+released: 0; notation values invented: 0.
+
+\item[F8 --- a layer refused before import]
+\code{data\vgslash staging\vgslash semantic\_resemblance\vgslash }. Outcome
+\code{VERIFIED\_ZERO \vgslash  REFUSED}; 0 assertions imported. The re-implemented lexical
+control reached \mbox{AUC} 0.754 over 279 adjudicated pairs and nothing beat it. The
+prior run's control figure did not reproduce (6 of 370 exact), and the carry-over
+argument was withdrawn entirely rather than reconciled.
+
+\item[F9 --- 33 metre assertions withdrawn]
+The objects were unsegmented bracket fragments rather than metres. Three tests
+bounding the contaminated share of the target vocabulary disagreed --- 17, 28, 39 ---
+and the project's recorded position is that the disagreement is the finding. All 466
+related rows stay unresolved and non-importable.
+
+\item[F10 --- four import defects caught by readback]
+\code{data\vgslash staging\vgslash } wave artefacts: 5{,}930 edges over-written; 12{,}033 nodes left
+unreachable; 13{,}187 elements imported that the domain rules excluded; 102 curated
+display labels overwritten, 75 restored.
+
+\end{description}
+
+\subsection{Two corrections the project made to its own corrections}
+
+Worth separating out, because they are the strongest evidence that the regime
+attacks its own reasoning and not only its data. In F3 a report described an
+agreement series as a monotone climb inside a paragraph written to correct an
+overgeneralisation; the series was not monotone and the claim was withdrawn with that
+observation attached. In F4 a refusal was upheld and its stated ground discarded,
+because the agent had imported the standard scholarly view as the graph's model and
+then graded the graph defective for respecting the project's own curation.

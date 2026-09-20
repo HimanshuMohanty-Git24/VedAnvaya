@@ -1,0 +1,208 @@
+\section{Failure Analysis and Threats to Validity}
+\label{sec:failure}
+
+\subsection{Failure-driven refinement}
+
+The project's most useful output, for the purposes of this paper, is its record of
+being wrong. We report the cases in a uniform shape --- what was produced, what
+detected the defect, why the first method failed, what changed, and the
+methodological rule that followed --- because the rule is the transferable part.
+\Cref{tab:failures} summarises; the text treats the six most instructive.
+
+\input{tables/failures}
+
+\paragraph{F1. A layer deleted 41{,}796 of its own edges, and its successor retired
+30{,}539 more.} The second revision of the knowledge model deleted 41{,}796
+relationships that the same revision had created in error. The third then withdrew
+30{,}539 further edges, of which 21{,}246 were concept-attribution edges that had
+fired on a single keyword in Griffith's 1896 English. The detection was not a test
+but a question: what surface was this evidence read off? Because the answer was not
+recorded anywhere, the edges were indistinguishable from edges matched on the
+Sanskrit, and they carried an identical grade. \emph{Rule:} if two populations
+require different trust and no stored field separates them, the field is missing,
+and its absence is a defect of the same order as a wrong value. The evidence-surface
+axis (\cref{sec:model}) exists because of this case.
+
+\paragraph{F2. Ninety-six per cent of the role layer withdrawn.} A semantic role
+layer had asserted 51{,}231 role fillers. Sampling put the wrong-filler rate at
+24.8\,\%. Repair was attempted first and failed on measurement: widening the gate
+moved the error only to 24.3\,\% at a cost of eighteen recall points, with per-role
+residue ranging from 11.4\,\% on goal to 31.2\,\% on location. The layer was reduced
+to the 2{,}052 fillers resting on a published treebank's own labels; 28{,}734
+assertions were stamped \code{roles\_withheld} with a reason, and 15{,}704 withdrawn
+rows were staged as a verification queue rather than deleted. The project's summary
+is the finding: the \d{R}gveda now has a predicate layer and no role layer at all,
+because it has no parse. \emph{Rule:} when a measured error rate does not respond to
+tuning, the layer is not miscalibrated but unsupported, and withdrawal is the correct
+repair.
+
+\paragraph{F3. A corpus refused on measured fidelity, then the refusal's own
+reasoning corrected.} An independent image transcription of an 1856 Atharvavedic
+edition was built and then refused: exact agreement between two independent readings
+of the same material was 0.505 over 204 units. What makes the case instructive is
+what happened to the \emph{explanation}. A report had described the agreement series
+as a monotone climb that had ``risen every time''; the actual series was 0.00, 0.26,
+0.485, 0.505, 0.542, 0.522, and it later fell again to 0.500 over 272 units. The
+trend claim was withdrawn with the observation that asserting a trend from five
+points is the same overgeneralisation the paragraph was written to correct, committed
+inside the correction itself. A second claim --- that the accent layer was
+unrecoverable --- was also withdrawn, because one worker had captured it with a
+reproducible method; the gap was a convention divergence, not a capability limit.
+\emph{Rule:} a refusal is a claim and needs the same scrutiny as an assertion.
+
+\paragraph{F4. A refusal whose decisive argument was wrong.} A deity-community
+partition was refused on the ground that every method separated two names for one
+deity. Re-examination overturned the refusal's reasoning rather than the refusal: the
+project's registry \emph{deliberately} holds those two names apart, with
+high-confidence curation notes and no variant edge between them. The agent had
+imported the standard scholarly view as the graph's model and then graded the
+partition defective for respecting the project's own curation. The refusal was
+reformalised on a different, measurable basis and the original claim was recorded as
+withdrawn in the required form --- original claim, withdrawal, reason. A related
+figure was corrected in both directions at once: an imbalance is tenfold over all 214
+deities and 7.9-fold over the 157 eligible ones, peaking in different books.
+\emph{Rule:} neither figure is wrong; they differ by population, so a population must
+be named beside any ratio.
+
+\paragraph{F5. Every gate green, and the release still refused.} At the close of a
+completeness campaign the scorecard read 11/11, dependency state was current, and
+every test suite passed --- and the verdict was
+\code{DATA\_COMPLETENESS\_NOT\_COMPLETE}, release candidate \emph{no}. The cause was
+that the gap registry had no closed state: 84 of 85 entries were open, there was no
+closure vocabulary, and no field could hold one. The decisive individual finding was
+a registry entry recording ``closed via the Wayback Machine, 944 of 961'' against a
+graph holding exactly the pre-closure figure, with all 2{,}254 accepted staging rows
+targeting real mantras and none carrying a translation. \emph{Rule:} a gate measures
+a property; completeness is a property of a \emph{registry}, and a registry with no
+terminal state cannot express it. The closure vocabulary in \cref{tab:gaps} was added
+in response.
+
+\paragraph{F6. The completeness campaign made the product worse.} A correct
+restoration of 30{,}266 previously dropped semantic-assertion nodes doubled the size
+of the exported interactive artefact and pushed the share of the public graph that is
+apparatus --- evidence records and passages rather than entities --- to roughly
+81\,\%. Measured at a display budget of 40 neighbours, the entry for Indra spent 21
+seats on passages and evidence records and 6 on other deities. Nothing about the
+curation had changed; the corpus had. \emph{Rule:} completeness and legibility are
+different objectives, and a graph that improves on the first can regress on the
+second without any individual claim becoming false.
+
+\input{tables/gaps}
+
+\subsection{What the adversarial rounds found in each other}
+
+Five hostile rounds ran over the release candidate. The pattern worth reporting is
+that later rounds found defects in earlier rounds' own work: one round closed two
+critical findings that the same round's hostile pass had raised against itself. A
+related case is the public-identity collision, in which 30{,}266 semantic-assertion
+nodes carried no assertion identifier and fell through to their source passage's
+canonical key --- collapsing two public objects onto one and silently dropping
+assertion-to-passage edges as self-edges.
+
+The generalisable observation is that an agent auditing its own output finds less
+than a differently-instructed agent auditing the same output, and that the gap is
+large enough to matter at this scale. We are careful not to overstate this: the
+agents are not independent in the statistical sense. They share a model family, and
+in several cases the same family produced both the artefact and its audit.
+
+\subsection{Threats to validity}
+\label{sec:threats}
+
+\paragraph{Construct: recension scope.} Every absence measured here is an absence
+from four named recensions. The Kr\d{s}\d{n}a Yajurveda, the Paippal\=ada
+Atharvaveda, all four S\=amavedic \iast{g\=ana} collections and every post-Sa\d{m}hit\=a
+layer are absent. A reader who reads ``the Atharvaveda does not say X'' as a claim
+about the Atharvavedic tradition will be wrong.
+
+\paragraph{Construct: the Atharvavedic corpus is a working corpus.} The Atharvavedic
+text is held as a reference-only, working-private digital corpus carrying an explicit
+assertion that its lineage is \emph{not} an independent transcription of the printed
+edition it descends from. Its mantra count, 5{,}839, stands against an attested total
+of roughly 5{,}977, and the divergence is recorded as open research rather than
+resolved.
+
+\paragraph{Internal: agent non-independence and correlated error.} The adversarial
+design assumes that an attacking agent fails differently from the agent it attacks.
+Where both are the same model family, that assumption is weak, and a shared blind
+spot would be invisible to the whole regime. We have no measurement of this. The one
+relevant datum is discouraging: single-model adjudication agreed with published human
+annotation on only 75\,\% of the 72 decidable cases where the two could be compared.
+
+\paragraph{Internal: a single human decision-maker.} The human arm of the workflow is
+one person, who is also the project's author and the author of this paper. Owner
+rulings are recorded with their reasoning, which makes them auditable, but they are
+not independent of the project's goals, and there is no second reader anywhere in the
+pipeline.
+
+\paragraph{Internal: thresholds are chosen, not learned.} The alignment floor of
+0.62, the margin of 0.06, the near-parallel similarity cut, and the formula-length
+bounds are all set by hand. Some were set after inspecting their effects, which is a
+form of fitting to the corpus.
+
+\paragraph{Internal: normalisation is lossy by construction.} The lateral fold merges
+two phonemically distinct letters because two source conventions use the same code
+point for both (\cref{sec:normalisation}). This is documented and was measured, but
+it means a small number of comparisons are structurally incapable of distinguishing
+two words.
+
+\paragraph{Conclusion: what the layer distribution does and does not show.} The
+0.17\,\% figure is a faithful measurement of what is \emph{in} the graph. It is not a
+measurement of how much agents contributed to the project, which was very large, nor
+of how much they contributed to what the graph \emph{says}, since an agent that finds
+and removes a wrong edge shapes the graph without appearing in it. We intend the
+figure to answer only the question of authorship of claims.
+
+\paragraph{Conclusion: no absolute precision for the semantic layer.} The reference
+set cannot decide aboutness or referent, reaches 3{,}072 of 20{,}210 mantras, and
+reaches no S\=amavedic mantra at all. We therefore report no precision figure for the
+semantic assertion layer as a whole, and we regard any such figure derived from
+model adjudication as unsupported.
+
+\paragraph{External: generality.} The method was developed on one corpus by one
+person over seventeen days. The corpus is unusually favourable in one respect --- it
+is closed, small enough to enumerate, and equipped with a traditional metadata
+apparatus --- and unusually hostile in another, in that its normalisation is
+genuinely contested. We discuss what we think transfers in \cref{sec:discussion}.
+
+\paragraph{Internal: two failing invariants, and what they mean for the rest.} Two
+of the twenty live invariants fail (\cref{sec:eval}): 165{,}788 edges carry no grade
+rationale and 19{,}598 carry no attribution precision. The second is the more
+serious for this paper's argument, because \cref{sec:model} presents attribution
+precision as a graph-wide axis and 3.8\,\% of edges do not carry it. Neither
+failure affects the layer distribution --- the quality tier is present on every
+edge and the knowledge layer on 99.14\,\% --- but a reader should treat any
+statement here about a \emph{universal} property as holding for the properties we
+name as verified and not beyond them.
+
+\paragraph{Internal: thresholds were selected on the corpus they are evaluated on.}
+The near-parallel floor is justified by inspecting what a lower floor produces on
+this corpus; the alignment floor and margin are likewise hand-set. There is no
+held-out set anywhere in the project. Every precision figure in \cref{sec:eval} is
+therefore optimistically biased by an amount we have not measured.
+
+\paragraph{Internal: recall of the candidate generator is not zero-loss.} The
+banding is described in the source as tuned so that every pair at 0.44 or better is
+proposed. For 32 bands of 3 rows the standard locality-sensitive-hashing curve puts
+the probability of proposing a pair at similarity 0.44 at roughly 0.94, not 1. We
+report the source's claim as the source's and do not adopt it: the layer's recall
+below the floor is unmeasured.
+
+\paragraph{Construct: a single decider with a stated commitment.} The human arm of
+the workflow is one person, who is the project's author, this paper's author, and
+--- as the acknowledgments record --- someone with a devotional relationship to the
+subject matter. We raise this here and not only there, because it is a conflict of
+a different kind from the goal-alignment problem already noted: a reader is
+entitled to ask whether the owner rulings that decide scope and withholding are
+independent of a commitment to the material. We do not think the record shows them
+distorted --- the rulings that matter most are refusals --- but we cannot establish
+it from inside, and no second reader exists anywhere in the pipeline.
+
+\paragraph{Provenance gaps.} A registry statement and the projected graph can drift.
+We found one live instance while preparing this paper: the S\=amavedic
+\code{Work} node's completeness property still carries a pre-import sentence
+asserting that zero translations are released, where the registry file that is the
+source of truth was updated at the import to state the position precisely --- that
+the 173 renderings are reused \d{R}gvedic English on verified-identical Sanskrit and
+are counted in no S\=amavedic translation figure. The registry is right and the
+projection is stale. The general hazard is that prose-valued properties are not
+covered by the invariants that cover typed ones.

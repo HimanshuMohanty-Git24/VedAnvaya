@@ -1,0 +1,76 @@
+\section{Evaluation Queries}
+\label{sec:appendix-queries}
+
+Every figure in this paper is produced by \code{figures-src\vgslash fact\_freeze.py} and its
+companions; the queries below are the ones whose results are quoted in the running
+text. All are \code{MATCH}/\code{RETURN}.
+
+\paragraph{Graph scale.}
+\begin{quote}\small\ttfamily
+MATCH (n) RETURN count(n)\\
+MATCH ()-[r]->() RETURN count(r)
+\end{quote}
+
+\paragraph{Epistemic layer distribution (the paper's headline).}
+\begin{quote}\small\ttfamily
+MATCH ()-[r]->()\\
+RETURN r.knowledge\_layer AS layer, count(*) AS n ORDER BY n DESC
+\end{quote}
+Legacy unprefixed spellings are folded in reporting; the freeze carries both.
+
+\paragraph{Typing coverage.}
+\begin{quote}\small\ttfamily
+MATCH ()-[r]->() WHERE r.quality\_tier IS NULL RETURN count(r)\\
+MATCH ()-[r]->() WHERE r.knowledge\_layer IS NULL\\
+\ \ RETURN type(r) AS t, count(*) AS n ORDER BY n DESC
+\end{quote}
+
+\paragraph{Corpus composition.}
+\begin{quote}\small\ttfamily
+MATCH (m:Mantra) RETURN m.work\_id AS work, count(*) AS n
+\end{quote}
+
+\paragraph{Attribution precision, the distinction that changes a count.}
+\begin{quote}\small\ttfamily
+MATCH (p)-[r:HAS\_DEVATA]->(d:Devata \{display\_label:'Indra'\})\\
+RETURN r.attribution\_precision AS precision, count(*) AS n
+\end{quote}
+Returns 2{,}214 container-inherited against 655 per-passage: a reader counting
+``Indra's verses'' from this predicate alone reports 2{,}869 where the source states
+655.
+
+\paragraph{Human review, the claim the paper most needs to be able to check.}
+\begin{quote}\small\ttfamily
+MATCH ()-[r]->() WHERE r.provenance\_class = 'HUMAN\_REVIEWED' RETURN count(r)\\
+MATCH (n) WHERE n.is\_human\_gold = true RETURN count(n)\\
+MATCH ()-[r]->() WHERE r.review\_state IS NOT NULL\\
+\ \ RETURN r.review\_state AS state, count(*) AS n ORDER BY n DESC
+\end{quote}
+Return 0, 0, and \{\code{UNREVIEWED} 7{,}548, \code{MODEL\_ADJUDICATED} 613\}.
+
+\paragraph{Withholding in the semantic layer.}
+\begin{quote}\small\ttfamily
+MATCH (a:SemanticAssertion)\\
+RETURN a.roles\_withheld AS withheld, a.three\_slot\_complete AS complete,\\
+\ \ \ \ \ \ \ count(*) AS n ORDER BY n DESC
+\end{quote}
+
+\paragraph{S\=amavedic notation disposition.}
+\begin{quote}\small\ttfamily
+MATCH (m:Mantra \{work\_id:'VG:WORK:SV:KAU'\})\\
+RETURN m.samavedic\_notation\_state AS state,\\
+\ \ \ \ \ \ \ m.samavedic\_notation\_withheld\_class AS class, count(*) AS n
+\end{quote}
+The invariant behind it --- verses carrying no disposition at all --- must read zero.
+
+\paragraph{Typed translation coverage.}
+\begin{quote}\small\ttfamily
+MATCH (m:Mantra)\\
+RETURN m.translation\_coverage\_state AS state, m.work\_id AS work, count(*) AS n
+\end{quote}
+
+\paragraph{Cross-textual reuse by work pair.}
+\begin{quote}\small\ttfamily
+MATCH (a:Mantra)-[r:REUSES\_TEXT\_FROM]->(b:Mantra)\\
+RETURN a.work\_id AS source, b.work\_id AS target, r.method AS method, count(*) AS n
+\end{quote}

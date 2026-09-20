@@ -1,0 +1,65 @@
+\section{Limitations and Future Work}
+\label{sec:limitations}
+
+\Cref{sec:threats} treats threats to the validity of what we report. This section
+treats what the artefact does not yet do, and what we think should be done next.
+
+\paragraph{The gap a single annotator cannot close.} The decisive limitation is the
+absence of human annotation (\cref{sec:gold}). Everything downstream inherits it: no
+predicate can be unlocked, so no semantic assertion can be auto-accepted; no
+calibration curve can exist; and the only independent check on model adjudication we
+have --- 75\,\% agreement with published human annotation on 72 decidable cases ---
+is a warning rather than a measurement of the layer. The useful next step is small
+and specific: commission a stratified sample of a few hundred assertions annotated
+by two Vedicists with an adjudication protocol, report $\kappa$, and use it to
+decide whether any predicate clears the 95\,\% precision bar the policy already
+defines. The machinery to consume such a set exists and is currently idling against
+an empty scaffold.
+
+\paragraph{Layer typing has a measured hole.} 4{,}390 edges carry no knowledge
+layer, concentrated in two predicates (\cref{sec:eval}). This should be closed by
+extending the grading contract rather than by back-filling values, since the reason
+they are untyped is that the contract does not cover them.
+
+\paragraph{Registry-to-projection drift is not gated.} We found a live instance
+while writing this paper: a prose-valued scope property on a \code{Work} node that
+the registry had corrected and the projection had not (\cref{sec:threats}). Typed
+properties are covered by invariants; prose ones are not. A cheap fix is to hash the
+registry's prose fields into the projection and gate on equality.
+
+\paragraph{The S\=amaveda is unscoreable and partly unreachable.} No external
+annotation reaches a single S\=amavedic mantra, so 11{,}380 enrichment edges on that
+corpus cannot be evaluated at all, and no Kauthuma \=Arcika translation was found in
+nine searched avenues. The \iast{g\=ana} corpus --- larger than the \=Arcika and the
+reason the S\=amaveda is a distinct Veda --- is out of scope entirely and would need
+its own work identifier, its own sources and its own rights analysis.
+
+\paragraph{The role layer is absent, not incomplete.} Withdrawing 96\,\% of the role
+fillers left a predicate layer with no argument structure
+(\cref{sec:failure}, F2). Restoring it properly requires a dependency parse of the
+\d{R}gveda that the project does not have; the 15{,}704 withdrawn rows are staged as
+a verification queue against that future parse rather than deleted.
+
+\paragraph{Single-provider, single-sample evaluation.} The downstream benchmark ran
+one model, one sample per question, and one adjudicator. Repeated sampling, a second
+provider and a second adjudicator would each be cheap and would each measure
+something the present figures cannot.
+
+\paragraph{Agent independence is assumed, not measured.} The adversarial regime's
+value rests on attacking agents failing differently from the agents they attack, and
+we have no evidence for that beyond the defects the regime actually found. Running
+one gate under a deliberately different model family, and comparing findings, would
+be a direct test and is the experiment we would most like to see run.
+
+\paragraph{Reproducibility stops short of the store.} A fresh clone rebuilds the
+corpora and re-derives every identifier but cannot produce a certified graph
+(\cref{sec:reproducibility}). Publishing a loadable dump is blocked by source rights
+rather than by engineering; publishing the \emph{derived, project-original} layers
+separately --- the grading, the gap registry, the staging evidence --- may be
+possible and would let a third party re-run the gates.
+
+\paragraph{No cost accounting.} We report what agents produced but not what they
+cost in tokens, wall-clock or money, and a method whose argument is partly economic
+(\cref{sec:discussion}) ought to report that. The run artefacts contain enough to
+reconstruct it for the semantic pilots; they do not for the construction work as a
+whole.
