@@ -1065,8 +1065,9 @@ def timed[T](work: Callable[[], T]) -> tuple[T, float]:
 class SearchService:
     """Runs the ladder in stages, merges them, and declares what it read."""
 
-    def __init__(self, repository: _Repository) -> None:
+    def __init__(self, repository: _Repository, *, lemma_search_enabled: bool = True) -> None:
         self._repository = repository
+        self._lemma_search_enabled = lemma_search_enabled
 
     def search(
         self,
@@ -1194,7 +1195,9 @@ class SearchService:
         """The stages a language filter leaves in play, strongest rung first."""
         stages: list[_Stage] = [_STAGE_IDENTITY, _STAGE_ENTITIES]
         if language is not SearchLanguage.ENGLISH:
-            stages += [_STAGE_SANSKRIT_TEXT, _STAGE_NORMALIZED_TEXT, _STAGE_LEMMA]
+            stages += [_STAGE_SANSKRIT_TEXT, _STAGE_NORMALIZED_TEXT]
+            if self._lemma_search_enabled:
+                stages.append(_STAGE_LEMMA)
         if language is not SearchLanguage.SANSKRIT:
             stages.append(_STAGE_TEXT_ENGLISH)
         return tuple(stages)
@@ -1403,6 +1406,17 @@ class SearchService:
                 source="measured",
             )
         ]
+        if not self._lemma_search_enabled:
+            caveats.append(
+                CaveatView(
+                    text=(
+                        "This free deployment does not include the internal Rigvedic lemma "
+                        "index, so dictionary-headword matching is unavailable. Sanskrit text, "
+                        "translations, passages and knowledge entities are unaffected."
+                    ),
+                    source="deployment_profile",
+                )
+            )
         for surface in surfaces:
             note = SURFACE_NOTES.get(surface)
             coverage = SURFACE_COVERAGE.get(surface)

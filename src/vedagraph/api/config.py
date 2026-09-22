@@ -15,7 +15,7 @@ from __future__ import annotations
 
 from functools import lru_cache
 from pathlib import Path
-from typing import Any, Final
+from typing import Any, Final, Literal
 
 from pydantic import Field, SecretStr
 from pydantic_settings import BaseSettings, SettingsConfigDict
@@ -60,6 +60,11 @@ class ApiSettings(BaseSettings):
     api_host: str = "127.0.0.1"
     api_port: int = Field(default=8000, ge=1, le=65535)
     api_debug: bool = False
+
+    #: ``aura_free`` is a deliberately reduced, public deployment profile.  It omits the
+    #: internal Rigvedic lemma edge index so the graph stays inside AuraDB Free's relationship
+    #: ceiling.  Local and full deployments use the default and retain every graph edge.
+    api_deployment_profile: Literal["full", "aura_free"] = "full"
 
     #: Root of the committed data tree. The API reads exactly two things from it -- the
     #: audio catalog and its optional media cache -- and never the corpus, which reaches

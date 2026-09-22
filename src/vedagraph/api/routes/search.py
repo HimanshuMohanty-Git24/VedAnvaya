@@ -13,7 +13,7 @@ from typing import Annotated
 from fastapi import APIRouter, Query
 
 from vedagraph.api.config import DEFAULT_PAGE_SIZE, MAX_PAGE_SIZE
-from vedagraph.api.dependencies import RepositoryDep
+from vedagraph.api.dependencies import RepositoryDep, SettingsDep
 from vedagraph.api.errors import COMMON_ERROR_RESPONSES
 from vedagraph.api.models.search import (
     MATCH_TYPE_ORDER,
@@ -66,6 +66,7 @@ ascriptions the query matched and where to read them.
 )
 def search_endpoint(
     repository: RepositoryDep,
+    settings: SettingsDep,
     q: Annotated[
         str,
         Query(
@@ -101,7 +102,10 @@ def search_endpoint(
     limit: Annotated[int, Query(ge=1, le=MAX_PAGE_SIZE)] = DEFAULT_PAGE_SIZE,
     offset: Annotated[int, Query(ge=0)] = 0,
 ) -> SearchResponse:
-    return SearchService(repository).search(
+    return SearchService(
+        repository,
+        lemma_search_enabled=settings.api_deployment_profile != "aura_free",
+    ).search(
         q,
         limit=limit,
         offset=offset,
