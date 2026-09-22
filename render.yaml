@@ -1,0 +1,25 @@
+services:
+  - type: web
+    runtime: python
+    name: vedagraph-api
+    region: singapore
+    plan: free
+    buildCommand: pip install .
+    startCommand: uvicorn vedagraph.api.app:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /health
+    autoDeployTrigger: commit
+    envVars:
+      - key: API_DEBUG
+        value: "false"
+      - key: API_DEPLOYMENT_PROFILE
+        value: aura_free
+      - key: DATA_DIR
+        value: data
+      - key: NEO4J_URI
+        sync: false
+      - key: NEO4J_USER
+        value: neo4j
+      - key: NEO4J_PASSWORD
+        sync: false
+      - key: NEO4J_DATABASE
+        sync: false
