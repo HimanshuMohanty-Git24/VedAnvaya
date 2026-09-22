@@ -1,0 +1,15 @@
+name: Render Keep Alive
+
+on:
+  schedule:
+    # Ping every 10 minutes to prevent Render free instance from sleeping
+    - cron: "*/10 * * * *"
+  workflow_dispatch:
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping Render Backend
+        run: |
+          curl -s -f -m 15 https://vedagraph-api.onrender.com/health || echo "Ping failed or timed out"
