@@ -438,7 +438,7 @@ export class ApiError extends Error {
     }
 }
 
-export const API_BASE = process.env.VEDAGRAPH_API_URL ?? "http://127.0.0.1:8000";
+export const API_BASE = (process.env.VEDAGRAPH_API_URL ?? "http://127.0.0.1:8000").replace(/\/+$/, "");
 
 const NOT_FOUND = "This atlas entry is not held in the current corpus.";
 const UNAVAILABLE = "The VedAnvaya knowledge service did not respond.";
@@ -450,7 +450,7 @@ export async function apiGet<T>(
 ): Promise<T> {
     const controller = options.signal ? null : new AbortController();
     const timeout = controller
-        ? setTimeout(() => controller.abort(), options.timeoutMs ?? 15_000)
+        ? setTimeout(() => controller.abort(), options.timeoutMs ?? 30_000)
         : null;
     try {
         const response = await fetch(`${API_BASE}/api/v1${path}`, {

@@ -50,3 +50,5 @@ next-env.d.ts
 # The intermediate world export. Reproduced by `python scripts/export_graph_world.py`
 # from the frozen store; large, and not the artifact the app loads.
 /.world/
+
+.vercel
