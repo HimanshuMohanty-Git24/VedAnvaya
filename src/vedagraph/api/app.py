@@ -239,7 +239,10 @@ class _HeadMethodMiddleware(BaseHTTPMiddleware):
         if request.method != "HEAD":
             return await call_next(request)
         request.scope["method"] = "GET"
-        response = await call_next(request)
+        try:
+            response = await call_next(request)
+        finally:
+            request.scope["method"] = "HEAD"
         return Response(
             status_code=response.status_code,
             headers=response.headers,
