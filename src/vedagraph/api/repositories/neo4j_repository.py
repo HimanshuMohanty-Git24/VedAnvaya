@@ -101,6 +101,8 @@ class Neo4jRepository:
                 self._settings.neo4j_uri,
                 auth=self._settings.auth,
                 connection_timeout=self._settings.neo4j_query_timeout_seconds,
+                max_connection_pool_size=10,
+                max_connection_lifetime=300.0,
             )
         except Exception as exc:
             # The message can carry the URI, so it is logged and not re-raised.
