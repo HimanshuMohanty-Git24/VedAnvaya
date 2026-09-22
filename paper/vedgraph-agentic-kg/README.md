@@ -1,16 +1,33 @@
 # VedGraph: Agentic Construction of an Evidence-Typed Knowledge Graph for the Vedic Saṃhitās
 
-**Author** — Himanshu Mohanty (independent researcher)
-**Status** — PREPRINT. Not submitted to any venue.
-**Fact freeze** — commit `6bf220c`, branch `main`, clean tree, 20 September 2026.
-**Graph measured** — 165,737 nodes / 510,905 relationships / 20,210 canonical mantras.
-**Extent** — 47 pages: main body 1–35, references 36, appendices A–H 38–47.
-9 figures, 9 tables, 28 verified references.
+**Author** — Himanshu Mohanty (independent researcher)  
+**Status** — PREPRINT. Published on Zenodo: [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.22896781.svg)](https://doi.org/10.5281/zenodo.22896781)  
+**DOI** — [10.5281/zenodo.22896781](https://doi.org/10.5281/zenodo.22896781) &middot; Version 1.0: [10.5281/zenodo.22896782](https://doi.org/10.5281/zenodo.22896782)  
+**Fact freeze** — commit `6bf220c`, branch `main`, clean tree, 20 September 2026.  
+**Graph measured** — 165,737 nodes / 510,905 relationships / 20,210 canonical mantras.  
+**Extent** — 47 pages: main body 1–35, references 36, appendices A–H 38–47.  
+9 figures, 9 tables, 28 verified references.  
 
 This directory holds the manuscript and everything needed to re-derive its numbers,
 tables and figures. It is a read-only consumer of the VedaGraph repository: nothing
 here writes to the graph, the corpus, the registries, the API or the frontend. Every
 Cypher statement issued by the scripts in `figures-src/` is `MATCH`/`RETURN`.
+
+---
+
+## Citation
+
+```bibtex
+@article{mohanty2026vedgraph,
+  author    = {Himanshu Mohanty},
+  title     = {VedGraph: Agentic Construction of an Evidence-Typed Knowledge Graph for the Vedic Sa\d{m}hit\=as},
+  year      = {2026},
+  publisher = {Zenodo},
+  version   = {1.0},
+  doi       = {10.5281/zenodo.22896781},
+  url       = {https://doi.org/10.5281/zenodo.22896781}
+}
+```
 
 ---
 

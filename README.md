@@ -14,6 +14,7 @@ every figure it shows.
 </p>
 
 <p>
+<a href="https://doi.org/10.5281/zenodo.22896781"><img src="https://zenodo.org/badge/DOI/10.5281/zenodo.22896781.svg" alt="DOI: 10.5281/zenodo.22896781"></a>
 <img src="https://img.shields.io/badge/Next.js-16-000000?style=flat-square&logo=nextdotjs&logoColor=white" alt="Next.js 16">
 <img src="https://img.shields.io/badge/React-19-20232A?style=flat-square&logo=react&logoColor=61DAFB" alt="React 19">
 <img src="https://img.shields.io/badge/TypeScript-5-3178C6?style=flat-square&logo=typescript&logoColor=white" alt="TypeScript 5">
@@ -33,6 +34,7 @@ every figure it shows.
 
 [Overview](#what-vedanvaya-is) ·
 [The numbers](#the-numbers) ·
+[Research paper](#research-paper--citation) ·
 [Product tour](#product-tour) ·
 [The knowledge graph](#vedagraph-building-the-knowledge-graph) ·
 [Evidence model](#evidence-before-inference) ·
@@ -119,6 +121,31 @@ might see in the product, is in [`PRODUCT_V1_SCOPE.md`](PRODUCT_V1_SCOPE.md).
 > person**; the other 17,760 have not, and the product never describes them as human-verified.
 > The Samaveda has no catalogued recitation at all, because none is published anywhere that
 > maps to individual ārcika verses.
+
+---
+
+## Research paper & citation
+
+The methodology, agentic construction architecture, epistemic evidence typing, and adversarial validation regime behind VedGraph and VedAnvaya are detailed in our scientific paper:
+
+> **VedGraph: Agentic Construction of an Evidence-Typed Knowledge Graph for the Vedic Saṃhitās**  
+> **Himanshu Mohanty** (Independent researcher)  
+> *Published on Zenodo*. DOI: [10.5281/zenodo.22896781](https://doi.org/10.5281/zenodo.22896781) &middot; Version 1.0: [10.5281/zenodo.22896782](https://doi.org/10.5281/zenodo.22896782)  
+> Direct link: [https://doi.org/10.5281/zenodo.22896781](https://doi.org/10.5281/zenodo.22896781) &middot; Full source & scripts: [`paper/vedgraph-agentic-kg/`](paper/vedgraph-agentic-kg/)
+
+If you use VedGraph, VedAnvaya, or its datasets in scholarly work, please cite:
+
+```bibtex
+@article{mohanty2026vedgraph,
+  author    = {Himanshu Mohanty},
+  title     = {VedGraph: Agentic Construction of an Evidence-Typed Knowledge Graph for the Vedic Sa\d{m}hit\=as},
+  year      = {2026},
+  publisher = {Zenodo},
+  version   = {1.0},
+  doi       = {10.5281/zenodo.22896781},
+  url       = {https://doi.org/10.5281/zenodo.22896781}
+}
+```
 
 ---
 

@@ -1,0 +1,20 @@
+cff-version: 1.2.0
+message: "If you use this work or cite the research paper, please cite it as below."
+authors:
+  - family-names: "Mohanty"
+    given-names: "Himanshu"
+title: "VedGraph: Agentic Construction of an Evidence-Typed Knowledge Graph for the Vedic Saṃhitās"
+version: 1.0.0
+doi: 10.5281/zenodo.22896781
+date-released: 2026-09-22
+url: "https://github.com/HimanshuMohanty-Git24/VedAnvaya"
+preferred-citation:
+  type: article
+  authors:
+    - family-names: "Mohanty"
+      given-names: "Himanshu"
+  title: "VedGraph: Agentic Construction of an Evidence-Typed Knowledge Graph for the Vedic Saṃhitās"
+  year: 2026
+  doi: "10.5281/zenodo.22896781"
+  url: "https://doi.org/10.5281/zenodo.22896781"
+  publisher: "Zenodo"
