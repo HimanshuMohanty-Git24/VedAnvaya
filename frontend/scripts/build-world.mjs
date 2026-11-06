@@ -34,7 +34,16 @@ import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { validatePublicGraph, exportHash } from "./public-identity-contract.mjs";
-import { forceCenter, forceLink, forceManyBody, forceSimulation } from "d3-force-3d";
+import {
+    forceCenter,
+    forceCollide,
+    forceLink,
+    forceManyBody,
+    forceSimulation,
+    forceX,
+    forceY,
+    forceZ,
+} from "d3-force-3d";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(HERE, "..");
@@ -128,7 +137,9 @@ const detected = JSON.parse(readFileSync(CONSTELLATIONS, "utf8"));
  * can contain different identities or node order; a length check alone cannot detect that.
  */
 if (detected.inputPublicExportHash !== inputPublicExportHash) {
-    throw new Error("Constellation partition input hash does not match this public export; rebuild it");
+    throw new Error(
+        "Constellation partition input hash does not match this public export; rebuild it",
+    );
 }
 if (detected.community.length !== nodes.length) {
     console.error(
@@ -198,6 +209,23 @@ for (let i = 0; i < nodes.length; i += 1) {
     const own = regionIndex.get(community[i]);
     if (own !== undefined) regionOf[i] = own;
     else if (bestRegion.has(i)) regionOf[i] = bestRegion.get(i).region;
+}
+// Follow real relationships beyond the first hop. A small community can be connected to
+// the corpus through another small community; it must not be mistaken for an isolated one.
+const adjacency = nodes.map(() => []);
+for (const [a, b] of edges) {
+    adjacency[a].push(b);
+    adjacency[b].push(a);
+}
+const attached = [];
+for (let i = 0; i < nodes.length; i += 1) if (regionOf[i] >= 0) attached.push(i);
+for (let cursor = 0; cursor < attached.length; cursor += 1) {
+    const from = attached[cursor];
+    for (const to of adjacency[from]) {
+        if (regionOf[to] >= 0) continue;
+        regionOf[to] = regionOf[from];
+        attached.push(to);
+    }
 }
 const marginal = [];
 for (let i = 0; i < nodes.length; i += 1) if (regionOf[i] < 0) marginal.push(i);
@@ -271,12 +299,14 @@ for (let r = 0; r < regionIds.length; r += 1) {
     /* The radius that matters is not the outermost stray node but where the region actually
        is: the 92nd percentile, so one escaped member does not reserve empty space for the
        whole arrangement. */
-    const distances = localNodes
-        .map((n) => Math.hypot(n.x, n.y, n.z))
-        .sort((a, b) => a - b);
+    const distances = localNodes.map((n) => Math.hypot(n.x, n.y, n.z)).sort((a, b) => a - b);
     const radius = distances[Math.min(distances.length - 1, Math.floor(distances.length * 0.92))];
-    radii.push(Math.max(radius, 40));
-    localPositions[r] = localNodes.map((n) => ({ node: n.node, x: n.x, y: n.y, z: n.z }));
+    // A dense small star needs room for its individual dots, rather than a tiny
+    // radius merely because all its leaves share one hub.
+    const spreadRadius = Math.max(radius, Math.cbrt(members.length) * 16, 40);
+    const spread = spreadRadius / Math.max(radius, 1);
+    radii.push(spreadRadius);
+    localPositions[r] = localNodes.map((n) => ({ node: n.node, x: n.x * spread, y: n.y * spread, z: n.z * spread }));
 
     if ((r + 1) % 10 === 0) {
         process.stdout.write(
@@ -299,7 +329,18 @@ for (const [a, b, weight] of detected.between) {
     regionWeight.set(key, (regionWeight.get(key) ?? 0) + weight);
 }
 
-const regionNodes = regionIds.map((_, i) => ({ index: i }));
+// Start at the scale of the regions. D3's default seeds all centres a few units
+// apart, so the first charge tick launches unlinked regions far outside the map
+// before the restoring forces have a chance to act.
+const arrangementRadius = Math.max(...radii) * Math.cbrt(regionIds.length) * 1.4;
+const regionNodes = regionIds.map((_, index) => {
+    const t = (index + 0.5) / regionIds.length;
+    const z = 1 - 2 * t;
+    const angle = Math.PI * (1 + Math.sqrt(5)) * index;
+    const radius = arrangementRadius * Math.cbrt(t);
+    const xy = Math.sqrt(1 - z * z);
+    return { index, x: radius * xy * Math.cos(angle), y: radius * xy * Math.sin(angle), z: radius * z };
+});
 const regionLinks = [...regionWeight.entries()].map(([key, weight]) => {
     const [source, target] = key.split(":").map(Number);
     return { source, target, weight };
@@ -336,6 +377,13 @@ const regionSim = forceSimulation(regionNodes, 3)
             .theta(0.85),
     )
     .force("centre", forceCenter(0, 0, 0).strength(0.008))
+    // forceCenter only translates the whole cloud; it does not confine an unlinked
+    // region. Without restoring forces, disconnected rites escape thousands of units
+    // and set the normalisation scale for the entire connected corpus.
+    .force("x", forceX(0).strength(0.025))
+    .force("y", forceY(0).strength(0.025))
+    .force("z", forceZ(0).strength(0.025))
+    .force("collision", forceCollide((d) => radii[d.index] * 1.15 + 80).iterations(3))
     .stop();
 for (let i = 0; i < 900; i += 1) regionSim.tick();
 
@@ -349,17 +397,9 @@ for (let r = 0; r < regionIds.length; r += 1) {
     }
 }
 
-const marginalPlaced = marginal;
-
-/*
- * The unattached, on a shell outside everything else.
- *
- * These nodes have no public relationship at all. They are real subjects and dropping them
- * would misreport the corpus, but the structure implies no position for them, so they go on a
- * wide sphere around the whole arrangement - visibly outside the structure, which is exactly
- * what having no connections means. A Fibonacci spiral spreads them evenly rather than
- * clumping them at the poles.
- */
+// Disconnected subjects remain present, but an artificial spherical shell would visually
+// dwarf the connected graph and imply a ring of relationships that does not exist.
+// Settle their actual small components in a bounded volume beside the regions instead.
 let worldRadius = 0;
 for (let r = 0; r < regionNodes.length; r += 1) {
     worldRadius = Math.max(
@@ -367,15 +407,36 @@ for (let r = 0; r < regionNodes.length; r += 1) {
         Math.hypot(regionNodes[r].x, regionNodes[r].y, regionNodes[r].z) + radii[r],
     );
 }
-const shell = worldRadius * 1.22 + 260;
-for (let i = 0; i < marginalPlaced.length; i += 1) {
-    const t = (i + 0.5) / marginalPlaced.length;
-    const phi = Math.acos(1 - 2 * t);
-    const theta = Math.PI * (1 + Math.sqrt(5)) * i;
-    const id = marginalPlaced[i];
-    positions3[id * 3] = shell * Math.sin(phi) * Math.cos(theta);
-    positions3[id * 3 + 1] = shell * Math.sin(phi) * Math.sin(theta);
-    positions3[id * 3 + 2] = shell * Math.cos(phi);
+if (marginal.length > 0) {
+    const local = new Map(marginal.map((id, i) => [id, i]));
+    const looseNodes = marginal.map((id, index) => {
+        const t = (index + 0.5) / marginal.length;
+        const z = 1 - 2 * t;
+        const angle = Math.PI * (1 + Math.sqrt(5)) * index;
+        // Vary radius independently of latitude: a volume, not another shell.
+        const radius = worldRadius * 0.95 * Math.cbrt(((index * 0.61803398875) % 1) * 0.85 + 0.15);
+        const xy = Math.sqrt(1 - z * z);
+        return {
+            index,
+            node: id,
+            x: radius * xy * Math.cos(angle),
+            y: radius * xy * Math.sin(angle),
+            z: radius * z,
+        };
+    });
+    const looseLinks = edges
+        .filter(([a, b]) => local.has(a) && local.has(b))
+        .map(([a, b]) => ({ source: local.get(a), target: local.get(b) }));
+    const sim = forceSimulation(looseNodes, 3)
+        .force("link", forceLink(looseLinks).distance(24))
+        .force("charge", forceManyBody().strength(-26).distanceMax(420))
+        .stop();
+    for (let tick = 0; tick < TICKS; tick += 1) sim.tick();
+    for (const point of looseNodes) {
+        positions3[point.node * 3] = point.x;
+        positions3[point.node * 3 + 1] = point.y;
+        positions3[point.node * 3 + 2] = point.z;
+    }
 }
 
 /* ------------------------------------------------------------- normalise - */
@@ -579,5 +640,7 @@ for (const [name, bytes] of [
 }
 console.log(`\n  ${constellations.length} constellations drawn, ${named} named from metrics`);
 console.log(`  ${semanticEdgeCount.toLocaleString()} semantic edges before the structural tail`);
-console.log(`  ${edgeBridge.reduce((a, b) => a + b, 0).toLocaleString()} bridge edges between regions`);
+console.log(
+    `  ${edgeBridge.reduce((a, b) => a + b, 0).toLocaleString()} bridge edges between regions`,
+);
 console.log(`  bytes per node (geometry only): ${(buffer.byteLength / nodes.length).toFixed(1)}`);

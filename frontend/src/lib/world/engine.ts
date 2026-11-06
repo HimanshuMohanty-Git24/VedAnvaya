@@ -26,6 +26,7 @@ import {
     type SlabSpread,
 } from "./focus-layout";
 import { installGestures } from "./gesture";
+import { worldNodeSize } from "./node-size";
 import {
     createField,
     fieldAtRest,
@@ -81,34 +82,14 @@ const DEG = Math.PI / 180;
  * that held a frame inside the refresh budget on the development machine's integrated GPU
  * with headroom left for a camera move, which is when the scene is at its most expensive.
  */
-const WORLD_EDGE_BUDGET = 24_000;
+// The bounded layout fills the viewport with the connected corpus. A smaller
+// backbone keeps long bridge lines from washing over its colors at this scale.
+const WORLD_EDGE_BUDGET = 8_000;
 
 /**
- * How far the whole world is framed from.
- *
- * ## Why it moved, and why not as far as the composition wanted
- *
- * At 2600 the world filled 42% of the frame height with the camera 2,065 units outside a
- * 535-unit cloud - measured, not estimated - and the result reads as looking at a marble on a
- * table. The manifest's 1000-unit extent is set by the 1,311 *unattached* nodes on their shell
- * rather than by the structure, whose attached radius is 237 at the median and 535 at the 99th
- * percentile, so the frame was being sized by the part of the artifact that carries the least.
- *
- * The composition pass concluded 1200, where the world fills 91%. That was measured for legibility
- * and not for cost, and the cost is the whole argument: this scene is fill-rate bound, coverage
- * goes as 1/d squared, so halving the distance quadruples the pixels 35,370 orbs and the backbone
- * cover. Swept on the development GPU at 1440x900, with the edge budget already scaling:
- *
- *     d=1200  fill 91%  draw 15.4 ms      d=2100  fill 52%  draw  6.4 ms
- *     d=1500  fill 73%  draw 10.5 ms      d=2400  fill 46%  draw  6.3 ms
- *     d=1800  fill 61%  draw  7.5 ms      d=2600  fill 42%  draw  5.2 ms
- *
- * 1200 is a three-fold draw-cost increase on the *default* view to make the marble bigger, and
- * the brief for this phase says in terms not to overspend on World while Focus is unreadable.
- * 1800 takes the world from 42% of the frame to 61% - a median constellation silhouette from 92
- * px to about 61, with 33 px gutters, still a region rather than texture - for 1.44 times the
- * draw. That is the trade, and the sweep is here so that anyone who wants a different point on
- * it can take one without re-deriving the curve.
+ * Default world framing. The offline layout bounds disconnected components and
+ * normalises the corpus to a 1000-unit extent; small world dots keep this overview
+ * legible without turning a close camera into overlapping discs.
  */
 const WORLD_DISTANCE = 1800;
 
@@ -232,11 +213,12 @@ const DRAG_SLACK = 0.12;
  */
 type NodeLevel = { minPx: number; maxPx: number; gamma: number };
 const NODE_LEVELS: Record<"WORLD" | "PATH" | "NEIGHBOUR" | "ROOT", NodeLevel> = {
-    WORLD: { minPx: 1.2, maxPx: 16, gamma: 1 },
+    WORLD: { minPx: 1, maxPx: 6, gamma: 1 },
     PATH: { minPx: 2.4, maxPx: 22, gamma: 1 },
     NEIGHBOUR: { minPx: 9, maxPx: 26, gamma: 0.65 },
     ROOT: { minPx: 16, maxPx: 40, gamma: 0.65 },
 };
+const WORLD_QUIET_MAX_PX = 2.5;
 
 /**
  * The resting alpha of a node. 0.85, and a note about why it is not 0.92.
@@ -458,6 +440,7 @@ const NODE_VERTEX = /* glsl */ `
     attribute float aAlpha;
     /** 1 on the subject of a curated scene, 0 on everything else. Selects the clamp. */
     attribute float aRoot;
+    attribute float aQuiet;
     uniform float uScale;
     /**
      * A whole-object opacity multiplier.
@@ -471,6 +454,7 @@ const NODE_VERTEX = /* glsl */ `
     uniform float uRefDepth;
     uniform vec2 uClamp;
     uniform vec2 uRootClamp;
+    uniform float uQuietMax;
     uniform float uFogNear;
     uniform float uFogFar;
     varying vec3 vColour;
@@ -503,6 +487,7 @@ const NODE_VERTEX = /* glsl */ `
          */
         float size = aSize * uScale * pow(uRefDepth, uGamma - 1.0) / pow(depth, uGamma);
         vec2 limits = mix(uClamp, uRootClamp, aRoot);
+        limits.y = mix(limits.y, min(limits.y, uQuietMax), aQuiet);
         gl_PointSize = clamp(size, limits.x, limits.y);
         vFog = clamp((depth - uFogNear) / max(uFogFar - uFogNear, 1.0), 0.0, 1.0);
         gl_Position = projectionMatrix * mv;
@@ -684,6 +669,7 @@ export class WorldEngine {
     private readonly renderer: WebGLRenderer;
     private readonly scene = new Scene();
     private readonly camera: PerspectiveCamera;
+    private worldFrameDistance = WORLD_DISTANCE;
     private readonly controls: OrbitControls;
     private readonly world: World;
     private readonly events: EngineEvents;
@@ -859,7 +845,8 @@ export class WorldEngine {
             1,
             20000,
         );
-        this.camera.position.set(0, 0, WORLD_DISTANCE);
+        this.worldFrameDistance = this.worldDistance();
+        this.camera.position.set(0, 0, this.worldFrameDistance);
 
         this.controls = new OrbitControls(this.camera, options.canvas);
         this.controls.enableDamping = !options.reducedMotion;
@@ -1001,27 +988,17 @@ export class WorldEngine {
         /* Nothing in the world buffer is ever a curated root; the attribute exists so both node
            objects can share one shader rather than forking it for one `mix`. */
         this.nodeRoot = new Float32Array(count);
+        const quiet = new Float32Array(count);
 
         for (let i = 0; i < count; i += 1) {
             const group = nodeGroup[i];
+            quiet[i] = group >= 8 ? 1 : 0;
             this.nodeColour[i * 3] = this.groupColours[group * 3];
             this.nodeColour[i * 3 + 1] = this.groupColours[group * 3 + 1];
             this.nodeColour[i * 3 + 2] = this.groupColours[group * 3 + 2];
-            /*
-             * Sizes in world units, chosen so the on-screen result is a few pixels.
-             *
-             * `gl_PointSize` is in pixels after the shader divides by view depth, so these
-             * numbers are only meaningful together with the distance the world is viewed
-             * from. The first version used 90 + cbrt(degree) * 105, which at the default
-             * camera distance made an unconnected node 30 pixels across and Indra roughly
-             * 700 - and 35,370 discs of that size cover a 1440-pixel viewport many times
-             * over. It was the whole frame budget, and it was invisible as a cause because
-             * the picture looked approximately right.
-             *
-             * Measured: with those sizes, removing 98.6% of the edges moved the frame
-             * interval from 66.6 ms only to 50.2 ms. Fill from the nodes was the floor.
-             */
-            this.nodeSize[i] = 9 + Math.cbrt(nodeDegree[i]) * 2.6;
+            // Records occupy less area than colored subjects, even when their degrees
+            // match. The WORLD pixel clamp also prevents zooming from merging the dots.
+            this.nodeSize[i] = worldNodeSize(group, nodeDegree[i]);
             this.nodeAlpha[i] = NODE_ALPHA_REST;
         }
         this.drawnNodes = count;
@@ -1032,6 +1009,7 @@ export class WorldEngine {
         geometry.setAttribute("aSize", new BufferAttribute(this.nodeSize, 1));
         geometry.setAttribute("aAlpha", new BufferAttribute(this.nodeAlpha, 1));
         geometry.setAttribute("aRoot", new BufferAttribute(this.nodeRoot, 1));
+        geometry.setAttribute("aQuiet", new BufferAttribute(quiet, 1));
 
         const material = new ShaderMaterial({
             vertexShader: NODE_VERTEX,
@@ -1078,6 +1056,7 @@ export class WorldEngine {
         geometry.setAttribute("aSize", new BufferAttribute(this.curatedSize, 1));
         geometry.setAttribute("aAlpha", new BufferAttribute(this.curatedAlpha, 1));
         geometry.setAttribute("aRoot", new BufferAttribute(this.curatedRoot, 1));
+        geometry.setAttribute("aQuiet", new BufferAttribute(new Float32Array(CURATED_CAPACITY), 1));
         geometry.setDrawRange(0, 0);
 
         const material = new ShaderMaterial({
@@ -1111,6 +1090,7 @@ export class WorldEngine {
             uRefDepth: { value: 1200 },
             uClamp: { value: new Vector2(1, 30) },
             uRootClamp: { value: new Vector2(1, 30) },
+            uQuietMax: { value: WORLD_QUIET_MAX_PX },
             uFogNear: { value: 400 },
             uFogFar: { value: 2600 },
             uFog: { value: new Vector3(1, 1, 1) },
@@ -1550,6 +1530,7 @@ export class WorldEngine {
         u.uGamma.value = world.gamma;
         (u.uClamp.value as Vector2).set(world.minPx * dpr, world.maxPx * dpr);
         (u.uRootClamp.value as Vector2).set(world.minPx * dpr, world.maxPx * dpr);
+        u.uQuietMax.value = (this.mode === "WORLD" ? WORLD_QUIET_MAX_PX : world.maxPx) * dpr;
         const c = (this.curated.material as ShaderMaterial).uniforms;
         c.uGamma.value = NODE_LEVELS.NEIGHBOUR.gamma;
         c.uRefDepth.value = FOCUS_DISTANCE;
@@ -2401,6 +2382,7 @@ export class WorldEngine {
         if (same) return;
         this.safeArea = next;
         this.applySafeArea();
+        this.adjustWorldFraming();
     }
 
     private applySafeArea() {
@@ -2459,9 +2441,27 @@ export class WorldEngine {
         );
     }
 
-    /** Frame the whole world. See `WORLD_DISTANCE` for where the number came from. */
+    /** Fit the overview to the visible band, including narrow screens. */
     fitWorld(ms = 900) {
-        this.flyTo(new Vector3(0, 0, WORLD_DISTANCE), new Vector3(0, 0, 0), ms);
+        this.worldFrameDistance = this.worldDistance();
+        this.flyTo(new Vector3(0, 0, this.worldFrameDistance), new Vector3(0, 0, 0), ms);
+    }
+
+    private worldDistance() {
+        const { clientWidth: width, clientHeight: height } = this.renderer.domElement;
+        const visibleWidth = Math.max(120, width - this.safeArea.left - this.safeArea.right);
+        const visibleHeight = Math.max(120, height - this.safeArea.top - this.safeArea.bottom);
+        return WORLD_DISTANCE * Math.max(1, height / visibleWidth, height / visibleHeight);
+    }
+
+    private adjustWorldFraming() {
+        const distance = this.worldDistance();
+        if (this.mode === "WORLD" && distance !== this.worldFrameDistance) {
+            // Preserve the reader's relative zoom and orbit while the visible band changes.
+            this.camera.position.sub(this.controls.target).multiplyScalar(distance / this.worldFrameDistance).add(this.controls.target);
+            this.pickDirty = true;
+        }
+        this.worldFrameDistance = distance;
     }
 
     /**
@@ -2734,6 +2734,7 @@ export class WorldEngine {
         this.renderer.setSize(width, height, false);
         this.applyLevels();
         this.camera.aspect = width / height;
+        this.adjustWorldFraming();
         /* Re-applied after a resize: the view offset is stored in terms of the full canvas size,
            so `updateProjectionMatrix` would otherwise keep shifting by the old screen's geometry. */
         this.applySafeArea();
@@ -2874,15 +2875,15 @@ export class WorldEngine {
                 )
                 .applyMatrix4(this.camera.matrixWorldInverse);
             const distance = Math.max(-target.z, 1);
-            const size =
-                ((this.world.nodeDegree[node] >= 0
-                    ? 9 + Math.cbrt(this.world.nodeDegree[node]) * 2.6
-                    : 9) *
-                    scale *
-                    reference ** (gamma - 1)) /
-                distance ** gamma;
+            const nodeSize = this.curatedSlot.has(node)
+                ? 9 + Math.cbrt(this.world.nodeDegree[node]) * 2.6
+                : this.nodeSize[node];
+            const size = (nodeSize * scale * reference ** (gamma - 1)) / distance ** gamma;
             const bounds = this.curatedSlot.get(node) === 0 ? rootLimit : limit;
-            const clamped = Math.min(bounds.y, Math.max(bounds.x, size));
+            const max = !this.curatedSlot.has(node) && this.mode === "WORLD" && this.world.nodeGroup[node] >= 8
+                ? Math.min(bounds.y, WORLD_QUIET_MAX_PX * dpr)
+                : bounds.y;
+            const clamped = Math.min(max, Math.max(bounds.x, size));
             out.push({ node, x: at.x, y: at.y, depth: at.z, radius: clamped / (2 * dpr) });
         }
         return out;

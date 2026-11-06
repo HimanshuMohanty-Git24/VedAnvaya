@@ -64,6 +64,12 @@
     pointer-events: auto;
 }
 
+/* Dense world dots can pass behind the controls during a zoom or orbit. */
+.va-graph[data-view="WORLD"] .va-graph-chrome {
+    background: var(--va-graph-canvas);
+    box-shadow: 0 0 0 var(--va-space-md) var(--va-graph-canvas);
+}
+
 .va-graph-kicker {
     margin: 0 0 var(--va-space-2xs);
     font-family: var(--va-font-ui);

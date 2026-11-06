@@ -1,5 +1,6 @@
 import { describe, expect, it, vi, beforeEach, afterEach } from "vitest";
 import {
+    artifactUrl,
     edgesOf,
     loadWorld,
     loadWorldLabels,
@@ -349,5 +350,37 @@ describe("regions and bridges", () => {
            degree counts edges, this counts subjects, and they are different numbers. */
         const neighbours = Array.from(neighboursOf(world, 0));
         expect(new Set(neighbours).size).toBe(neighbours.length);
+    });
+});
+
+describe("artifact addresses", () => {
+    /*
+     * The real case this guards: one export (dee0876...) laid out twice. The rebuild rewrote
+     * every position at the same 4,015,669 bytes, so neither the export hash nor the length
+     * check in `readWorld` changes, and a browser holding the year-long immutable entry for
+     * the old binary would keep drawing it.
+     */
+    const exportHash = "dee0876531490c48939d456b586b2cb0fd66dc487617a4cb44ad20a17326ae40";
+    const before = { inputPublicExportHash: exportHash, worldBinSha256: "8c0375f6fb8e9cf1" };
+    const after = { inputPublicExportHash: exportHash, worldBinSha256: "71220effe57da5b8" };
+
+    it("gives a layout-only rebuild of world.bin a new address", () => {
+        expect(artifactUrl("world.bin", after)).not.toBe(artifactUrl("world.bin", before));
+        expect(artifactUrl("world.bin", after)).toBe("/world/world.bin?v=71220effe57da5b8");
+    });
+
+    it("keeps the labels address on the export, which a layout cannot change", () => {
+        expect(artifactUrl("world.labels.json", after)).toBe(
+            artifactUrl("world.labels.json", before),
+        );
+        expect(artifactUrl("world.labels.json", after)).toBe(
+            `/world/world.labels.json?v=${exportHash}`,
+        );
+    });
+
+    it("falls back to the export hash for a manifest that predates the digest", () => {
+        expect(artifactUrl("world.bin", { inputPublicExportHash: exportHash })).toBe(
+            `/world/world.bin?v=${exportHash}`,
+        );
     });
 });

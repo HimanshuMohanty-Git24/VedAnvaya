@@ -304,9 +304,10 @@ export function loadWorld(signal?: AbortSignal): Promise<World> {
  * confidently the wrong kind of thing.
  *
  * So the manifest is fetched with `cache: "no-cache"` - revalidated every time, 28 KB - and
- * its `inputPublicExportHash` is appended to the addresses of the files that are large enough
- * to be worth caching hard. A rebuilt artifact changes the hash, which changes those URLs,
- * which is a cache miss by construction rather than by header.
+ * a hash from it is appended to the addresses of the files that are large enough to be worth
+ * caching hard: `worldBinSha256` for the binary, `inputPublicExportHash` for the labels. A
+ * rebuilt artifact changes the hash, which changes those URLs, which is a cache miss by
+ * construction rather than by header. See `artifactUrl` for why the binary needs its own.
  */
 async function readManifest(): Promise<WorldManifest> {
     const response = await fetch("/world/world.json", { cache: "no-cache" });
@@ -326,9 +327,23 @@ function sharedManifest(): Promise<WorldManifest> {
     return manifestCache;
 }
 
-/** An artifact file's address, versioned by the export every file was built from. */
-export function artifactUrl(file: string, manifest: Pick<WorldManifest, "inputPublicExportHash">) {
-    const version = manifest.inputPublicExportHash;
+/**
+ * An artifact file's address, versioned by what its bytes depend on.
+ *
+ * The labels file depends only on the export, so the export hash versions it. `world.bin` also
+ * depends on the layout: a layout-only rebuild rewrites every position from the same export,
+ * at the same byte length. Versioned by the export alone, that rebuild keeps the old URL, a
+ * browser keeps last build's geometry for a year, and the length check in `readWorld` cannot
+ * tell. The manifest records the binary's own digest, so the binary is addressed by it.
+ */
+export function artifactUrl(
+    file: string,
+    manifest: Pick<WorldManifest, "inputPublicExportHash" | "worldBinSha256">,
+) {
+    const version =
+        file === "world.bin"
+            ? (manifest.worldBinSha256 ?? manifest.inputPublicExportHash)
+            : manifest.inputPublicExportHash;
     return version ? `/world/${file}?v=${version}` : `/world/${file}`;
 }
 

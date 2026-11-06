@@ -604,7 +604,9 @@ export function PlanarView({
         }> = [
             ...AGGREGATE_WIDTHS.map((width) => ({
                 colour: quietInk,
-                alpha: 1,
+                // Dense region maps accumulate hundreds of bridge strokes. Keep the
+                // resting field quiet; hovering a region still shows its links at full ink.
+                alpha: graph.kind === "world" ? Math.min(1, 180 / Math.max(1, graph.edges.length)) : 1,
                 width,
                 points: [] as number[],
             })),
@@ -749,6 +751,9 @@ export function PlanarView({
         }
         const order = nameOrderRef.current;
         const named = [...order.always];
+        if (scope === "world") {
+            named.sort((a, b) => Number(b.index === hovered) - Number(a.index === hovered) || b.node.degree - a.node.degree);
+        }
         if (hovered !== null && !named.some((entry) => entry.index === hovered)) {
             named.push({ node: graph.nodes[hovered], index: hovered });
         }
@@ -767,10 +772,21 @@ export function PlanarView({
                 ? '500 14px "Charis SIL", Georgia, serif'
                 : '400 11.5px "Charis SIL", Georgia, serif';
             context.textBaseline = "middle";
-            const x = toScreenX(node.x) + markRadius(node, view.scale) + 7;
+            let x = toScreenX(node.x) + markRadius(node, view.scale) + 7;
             const y = toScreenY(node.y);
             const measured = context.measureText(text).width;
             const lineHeight = strong ? 16 : 13;
+            if (scope === "world") {
+                if (x + measured + 6 > width) {
+                    x = toScreenX(node.x) - markRadius(node, view.scale) - measured - 7;
+                }
+                const box = { x: x - 3, y: y - lineHeight / 2 - 1, width: measured + 6, height: lineHeight + 2 };
+                const overlaps = (other: { x: number; y: number; width: number; height: number }) =>
+                    box.x < other.x + other.width + 5 && box.x + box.width + 5 > other.x &&
+                    box.y < other.y + other.height + 3 && box.y + box.height + 3 > other.y;
+                if (box.x < 0 || box.y < 0 || box.x + box.width > width || box.y + box.height > height) continue;
+                if (namedBoxes.some(overlaps) || (chromeBoxes ?? []).some(({ x, y, w, h }) => overlaps({ x, y, width: w, height: h }))) continue;
+            }
             /*
              * A plate, not a halo.
              *
@@ -972,7 +988,7 @@ export function PlanarView({
             picksRef.current = [];
             labelView.setLabels([]);
         }
-    }, [labels, scope, world, markDirty]);
+    }, [labels, scope, world, markDirty, chromeBoxes]);
 
     /*
      * The open explanation, told to the layer that has to keep its phrase on screen.

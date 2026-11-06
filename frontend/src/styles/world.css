@@ -32,9 +32,8 @@
 /*
  * Controls that recede.
  *
- * The chrome is a column in the top-left corner with no background of its own. It sits over
- * paper, so it needs no scrim; giving it one would be the first floating panel, and the
- * second is always easier than the first.
+ * The chrome is a column in the top-left corner. The World view gives it the
+ * canvas background so its controls remain readable when dense nodes pass behind it.
  */
 
 

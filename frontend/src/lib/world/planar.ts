@@ -693,21 +693,13 @@ function discRadius(members: number): number {
 /**
  * A constellation's caption, or null where it has none worth drawing.
  *
- * 17 of this artifact's 33 constellations are named "passage cluster", "Rigvedic · passage
- * cluster" or "Atharvavedic · passage cluster" - the build's own honest description of a group
- * that is genuinely mixed. Drawing that beside a disc asserts a distinction a reader cannot
- * use, three times over on the same screen. Those keep their number, which is available on
- * hover, and carry no label. The 16 that remain are the ones worth a name.
- *
- * 17 is **counted**, by matching every `constellations[].name` in `public/world/world.json`
- * against this predicate, rather than taken from the phase's research summary, which put it at
- * 12. The figures differ by five and the count is the one that decides how many labels reach
- * the declutterer, so it is worth saying which it is.
+ * Generic cluster descriptions are available on hover. Repeating them over
+ * dozens of marks obscures the useful names without distinguishing the regions.
  */
 export function constellationCaption(constellation: Constellation): string | null {
     const name = constellation.name;
     if (!name) return null;
-    return /passage cluster$/i.test(name) ? null : name;
+    return /(?:passage|record|metric|rite) cluster$/i.test(name) ? null : name;
 }
 
 /**
