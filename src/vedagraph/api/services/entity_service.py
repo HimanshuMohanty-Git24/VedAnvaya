@@ -104,7 +104,6 @@ from vedagraph.api.services.deity_population import (
     deity_structure_clause,
     deity_structure_parameters,
     filter_co_deity_labels,
-    is_deity,
     population_caveats,
     subject_disclosure,
 )
@@ -950,6 +949,7 @@ def ritual_coverage_statement(
         f"it is for, not a purpose clause quoted from a passage."
     )
 
+
 def _work_label(work_key: object) -> str | None:
     """The source work's short name, read off its key.
 
@@ -1288,9 +1288,7 @@ class EntityService:
             # GAP-FORMULA-003 clause 2. This is a formula frequency ranking and it stated
             # no nesting policy, so a deity's "top formulas" could be one piece of
             # phraseology listed at four lengths and read as four separate formulas.
-            caveats.append(
-                CaveatView(text=figures.formula_nesting_policy(), source="measured")
-            )
+            caveats.append(CaveatView(text=figures.formula_nesting_policy(), source="measured"))
         if structure == "ABSTRACT":
             caveats.append(
                 CaveatView(text=ABSTRACT_HETEROGENEITY_CAVEAT, source="deity_population_contract")
@@ -1583,9 +1581,7 @@ class EntityService:
 
     # -- deity helpers ----------------------------------------------------------
 
-    def _resolve_devata(
-        self, entity_id: str, population: DeityPopulation
-    ) -> DevataSubject:
+    def _resolve_devata(self, entity_id: str, population: DeityPopulation) -> DevataSubject:
         """THE deity gate. Every deity route passes through it; none can opt out.
 
         Returns the subject's structure AND its recorded eligibility ruling, and raises
@@ -2677,9 +2673,7 @@ class EntityService:
             )
         if procedure:
             listed = [step for source in procedure for step in source.steps]
-            partial = sum(
-                1 for s in listed if s.order_completeness == "PARTIAL_STATED_POSITIONS"
-            )
+            partial = sum(1 for s in listed if s.order_completeness == "PARTIAL_STATED_POSITIONS")
             shown = (
                 f"{len(listed)} of {procedure_total} steps shown. "
                 if procedure_total and procedure_total > len(listed)

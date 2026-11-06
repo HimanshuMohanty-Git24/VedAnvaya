@@ -54,10 +54,10 @@ from __future__ import annotations
 
 import collections
 import re
-
-from vedagraph.domain.tiers import SOURCE_EXPLICIT_TIER_NOTE
 from dataclasses import dataclass, field
 from typing import TYPE_CHECKING, Any, Final
+
+from vedagraph.domain.tiers import SOURCE_EXPLICIT_TIER_NOTE
 
 if TYPE_CHECKING:  # pragma: no cover - typing only
     pass

@@ -195,9 +195,7 @@ def test_the_semantic_assertion_row_does_not_claim_the_layer_was_never_built(
     """
     body = live_client.get("/api/v1/insights/cross-veda").json()
     for pair_row in body["pairs"]:
-        cell = next(
-            c for c in pair_row["cells"] if c["relationship_class"] == "SEMANTIC_ASSERTION"
-        )
+        cell = next(c for c in pair_row["cells"] if c["relationship_class"] == "SEMANTIC_ASSERTION")
         assert cell["status"] == "CLASS_NOT_CROSS_VEDA"
         assert cell["status"] != "NOT_BUILT"
         assert "every one of its assertions is Rigvedic" not in cell["note"]
@@ -209,9 +207,7 @@ def test_the_semantic_assertion_row_does_not_claim_the_layer_was_never_built(
         assert "by derivation" in cell["note"]
 
     view = next(
-        c
-        for c in body["relationship_classes"]
-        if c["relationship_class"] == "SEMANTIC_ASSERTION"
+        c for c in body["relationship_classes"] if c["relationship_class"] == "SEMANTIC_ASSERTION"
     )
     assert view["population_status"] == "CLASS_NOT_CROSS_VEDA"
     assert view["population_status"] != "NOT_BUILT"

@@ -1485,6 +1485,7 @@ def _scalar(session: Any, query: str, **params: Any) -> Any:
     record = session.run(query, **params).single()
     return None if record is None else record["c"]
 
+
 @functools.lru_cache(maxsize=1)
 def _published_pin() -> dict[str, Any]:
     """The pinned census of the graph's *published* formula generation.
@@ -1554,8 +1555,7 @@ def test_live_every_formula_family_has_a_unique_family_id() -> None:
             assert (
                 _scalar(
                     session,
-                    "MATCH (f:Formula) "
-                    'RETURN count(DISTINCT replace(f.normalized, " ", "")) AS c',
+                    'MATCH (f:Formula) RETURN count(DISTINCT replace(f.normalized, " ", "")) AS c',
                 )
                 == formulas
             )
@@ -1581,8 +1581,7 @@ def test_live_every_membership_edge_lands_on_a_real_formula() -> None:
             assert (
                 _scalar(
                     session,
-                    "MATCH (:Formula)-[r:MEMBER_OF_FAMILY]->(:FormulaFamily) "
-                    "RETURN count(r) AS c",
+                    "MATCH (:Formula)-[r:MEMBER_OF_FAMILY]->(:FormulaFamily) RETURN count(r) AS c",
                 )
                 == pin["members"]
             )
@@ -1593,9 +1592,9 @@ def test_live_every_membership_edge_lands_on_a_real_formula() -> None:
                 )
             }
             assert tiers <= {"TIER_B", "TIER_D"}, tiers
-            assert tiers == set(
-                pin["quality_tiers"]
-            ), "the tier vocabulary on landed edges moved away from the pinned one"
+            assert tiers == set(pin["quality_tiers"]), (
+                "the tier vocabulary on landed edges moved away from the pinned one"
+            )
             # One formula joins one family: the layer's whole premise, and something the
             # count equality never checked.
             assert (

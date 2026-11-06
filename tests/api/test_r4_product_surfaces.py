@@ -103,9 +103,7 @@ def test_the_ayas_yajurvedic_cell_is_still_never_a_zero(live_client: TestClient)
     response = live_client.get("/api/v1/insights/metals")
     assert response.status_code == 200
     ayas = next(
-        row
-        for row in response.json()["metals"]
-        if row["entity_key"] == "VG:CONCEPT:AYAS-METAL"
+        row for row in response.json()["metals"] if row["entity_key"] == "VG:CONCEPT:AYAS-METAL"
     )
     yv = next(cell for cell in ayas["by_veda"] if cell["veda"] == "YV")
     assert yv["matched_mantras"] is None, "the ayas/YV cell must be null, never 0"

@@ -64,8 +64,24 @@ line-length = 100
 
 [tool.ruff.lint]
 select = ["E", "F", "I", "B", "UP", "RUF"]
+# The formatter governs line length for code. What it leaves long - prose strings, Cypher,
+# URLs and comments - reads worse wrapped at 100 columns than it does long.
+ignore = ["E501"]
+
+[tool.ruff.format]
+# A declared builder of the Knowledge World in data/staging/integration/dependency_ledger.json,
+# pinned there by sha256. Reformatting it changes no behaviour, but scripts/dependency_state.py
+# compares hashes and would report the published world STALE_INPUT for a cosmetic edit. It is
+# formatted in the same change that rebuilds the world and re-records the ledger, not before.
+exclude = ["src/vedagraph/api/services/graph_service.py"]
 
 [tool.ruff.lint.per-file-ignores]
+# Held byte-identical for the dependency ledger; see [tool.ruff.format] above.
+"src/vedagraph/api/services/graph_service.py" = ["E402", "I001"]
+# Hashed by the sealed semantic freeze (docs/manifests/rigveda_semantic_execution_v3_1_freeze
+# .draft.json). With E501 off its `noqa: E501` directives read as unused, and removing them
+# would edit a sealed file for no behavioural reason.
+"src/vedagraph/semantic/*" = ["RUF100"]
 # The audible-review harness embeds its whole page -- HTML, CSS and the review keyboard
 # handler -- as one module constant, so it has no build step and no second file to keep in
 # sync with the endpoint that enforces the gate. CSS selectors and JS template literals do

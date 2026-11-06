@@ -136,9 +136,7 @@ class CredentialSlots:
     __str__ = __repr__
 
 
-def load_credential_slots(
-    provider: str, environ: dict[str, str] | None = None
-) -> CredentialSlots:
+def load_credential_slots(provider: str, environ: dict[str, str] | None = None) -> CredentialSlots:
     """Enumerate configured credentials for ``provider``, deduplicated, in use order."""
     env = dict(os.environ if environ is None else environ)
     prefixes = _prefixes_for(provider)

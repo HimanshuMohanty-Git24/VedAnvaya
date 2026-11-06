@@ -62,9 +62,7 @@ def _live_census() -> dict[str, int]:
         with driver.session(default_access_mode="READ") as session:
             return {
                 "nodes": session.run("MATCH (n) RETURN count(n) AS n").single()["n"],
-                "relationships": session.run(
-                    "MATCH ()-[r]->() RETURN count(r) AS n"
-                ).single()["n"],
+                "relationships": session.run("MATCH ()-[r]->() RETURN count(r) AS n").single()["n"],
             }
     finally:
         driver.close()

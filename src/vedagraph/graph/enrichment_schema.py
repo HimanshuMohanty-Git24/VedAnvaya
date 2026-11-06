@@ -75,10 +75,10 @@ ENRICHMENT_CONSTRAINTS: Final[list[str]] = [
     # Concept - concept_id is assigned by the concept lexicon, not derived from a label,
     # because two concepts can share an English gloss ("fire" as element and as ritual
     # fire) and constraining on the label would silently merge them.
-    "CREATE CONSTRAINT enrichment_concept_id_unique IF NOT EXISTS FOR (n:Concept) REQUIRE n.concept_id IS UNIQUE",  # noqa: E501
+    "CREATE CONSTRAINT enrichment_concept_id_unique IF NOT EXISTS FOR (n:Concept) REQUIRE n.concept_id IS UNIQUE",
     # Formula - formula_id is derived from the normalized phrase, so the constraint is
     # also what makes a re-run MERGE onto the same node instead of duplicating the layer.
-    "CREATE CONSTRAINT enrichment_formula_id_unique IF NOT EXISTS FOR (n:Formula) REQUIRE n.formula_id IS UNIQUE",  # noqa: E501
+    "CREATE CONSTRAINT enrichment_formula_id_unique IF NOT EXISTS FOR (n:Formula) REQUIRE n.formula_id IS UNIQUE",
 ]
 
 
@@ -94,16 +94,16 @@ _NODE_INDEXES: Final[list[str]] = [
     # Ranking formulas by reach. mantra_count rather than occurrence_count is the ranking
     # the deliverable uses: a phrase repeated twice inside one verse is not as widespread
     # as one appearing in two verses, and occurrence_count cannot tell them apart.
-    "CREATE INDEX enrichment_formula_mantra_count IF NOT EXISTS FOR (n:Formula) ON (n.mantra_count)",  # noqa: E501
-    "CREATE INDEX enrichment_formula_occurrence_count IF NOT EXISTS FOR (n:Formula) ON (n.occurrence_count)",  # noqa: E501
+    "CREATE INDEX enrichment_formula_mantra_count IF NOT EXISTS FOR (n:Formula) ON (n.mantra_count)",
+    "CREATE INDEX enrichment_formula_occurrence_count IF NOT EXISTS FOR (n:Formula) ON (n.occurrence_count)",
     "CREATE INDEX enrichment_formula_word_count IF NOT EXISTS FOR (n:Formula) ON (n.word_count)",
     # Exact-phrase lookup: "is this string already a known formula?"
     "CREATE INDEX enrichment_formula_normalized IF NOT EXISTS FOR (n:Formula) ON (n.normalized)",
     # Concept browsing is almost always scoped by type first (rituals, substances,
     # places), then by label.
     "CREATE INDEX enrichment_concept_node_type IF NOT EXISTS FOR (n:Concept) ON (n.node_type)",
-    "CREATE INDEX enrichment_concept_label_en IF NOT EXISTS FOR (n:Concept) ON (n.preferred_label_en)",  # noqa: E501
-    "CREATE INDEX enrichment_concept_label_sa IF NOT EXISTS FOR (n:Concept) ON (n.preferred_label_sa)",  # noqa: E501
+    "CREATE INDEX enrichment_concept_label_en IF NOT EXISTS FOR (n:Concept) ON (n.preferred_label_en)",
+    "CREATE INDEX enrichment_concept_label_sa IF NOT EXISTS FOR (n:Concept) ON (n.preferred_label_sa)",
 ]
 
 #: Full-text indexes. The range indexes above answer exact lookups; these answer the
@@ -112,8 +112,8 @@ _NODE_INDEXES: Final[list[str]] = [
 #: every element of a string array, so a search for an alias finds the concept through
 #: its alias list without a second query and without an Alias node to join through.
 _FULLTEXT_INDEXES: Final[list[str]] = [
-    "CREATE FULLTEXT INDEX enrichment_concept_text IF NOT EXISTS FOR (n:Concept) ON EACH [n.preferred_label_sa, n.preferred_label_en, n.aliases_sa, n.aliases_en, n.definition]",  # noqa: E501
-    "CREATE FULLTEXT INDEX enrichment_formula_text IF NOT EXISTS FOR (n:Formula) ON EACH [n.normalized, n.display_form]",  # noqa: E501
+    "CREATE FULLTEXT INDEX enrichment_concept_text IF NOT EXISTS FOR (n:Concept) ON EACH [n.preferred_label_sa, n.preferred_label_en, n.aliases_sa, n.aliases_en, n.definition]",
+    "CREATE FULLTEXT INDEX enrichment_formula_text IF NOT EXISTS FOR (n:Formula) ON EACH [n.normalized, n.display_form]",
 ]
 
 

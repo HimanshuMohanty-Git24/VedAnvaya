@@ -267,8 +267,7 @@ def test_q84_no_longer_advertises_the_ritual_context_axis_as_absent(
     assert measured["mantras_with_a_context_assignment"] == measured["mantras"]
     assert measured["mantras_placed_in_a_rite"] > 0
     assert (
-        measured["mantras_placed_in_a_rite"]
-        + measured["mantras_whose_context_is_a_typed_absence"]
+        measured["mantras_placed_in_a_rite"] + measured["mantras_whose_context_is_a_typed_absence"]
         == measured["mantras"]
     )
     assert card["verdict"] == "PARTIALLY_ANSWERABLE"

@@ -172,14 +172,11 @@ def test_the_generic_entity_listing_applies_the_product_filter(
     internal_by_label = {
         str(row["label"]): int(row["n"])
         for row in live_repository.run(
-            f"MATCH (n:{LABEL_INTERNAL}) UNWIND labels(n) AS label "
-            "RETURN label, count(*) AS n"
+            f"MATCH (n:{LABEL_INTERNAL}) UNWIND labels(n) AS label RETURN label, count(*) AS n"
         )
     }
     served = {spec.label for spec in ENTITY_TYPES.values()}
-    overlap = {
-        label: n for label, n in internal_by_label.items() if label in served and n
-    }
+    overlap = {label: n for label, n in internal_by_label.items() if label in served and n}
     # Overlap is allowed -- :Chandas legitimately holds 28 internal nodes -- but only
     # because the filter above excludes them. This records which types the filter is
     # actually load-bearing for, so the pairing is visible rather than assumed.

@@ -48,7 +48,6 @@ from vedagraph.api.services.graph_service import (
     decode_relationship_id,
     encode_relationship_id,
 )
-
 from vedagraph.domain.ontology import LABEL_SEMANTIC_ASSERTION
 
 INDRA = "VG:DEVATA:INDRAH"
@@ -269,9 +268,7 @@ class TestWhitelists:
             is not None
             and int(row["c"]) > 0
         }
-        classified = (
-            TRAVERSABLE_RELATIONSHIPS | set(NON_TRAVERSABLE_REASONS) | {LEMMA_RELATIONSHIP}
-        )
+        classified = TRAVERSABLE_RELATIONSHIPS | set(NON_TRAVERSABLE_REASONS) | {LEMMA_RELATIONSHIP}
         unclassified = sorted(populated - classified)
         assert not unclassified, (
             f"{len(unclassified)} populated relationship type(s) are neither traversable nor "
@@ -615,8 +612,7 @@ class TestLiveInvariants:
         literal, so renaming the label moves this test with it.
         """
         rows = live_repository.run(
-            "MATCH (a:SemanticAssertion) RETURN a.display_type AS display_type, "
-            "count(*) AS n"
+            "MATCH (a:SemanticAssertion) RETURN a.display_type AS display_type, count(*) AS n"
         )
         spellings = {row["display_type"]: row["n"] for row in rows}
         assert list(spellings) == [LABEL_SEMANTIC_ASSERTION], (
@@ -1320,12 +1316,11 @@ class TestNonDeitySubjects:
         """Not a graph-local variant. The same defect has been fixed five times because
         each surface wrote its own half of the contract; this asserts the wording is the
         one producer's."""
+        from vedagraph.api.services.deity_population import DevataSubject
         from vedagraph.api.services.entity_service import (
             NOT_A_DEITY_SUBJECT,
             subject_disclosure,
         )
-
-        from vedagraph.api.services.deity_population import DevataSubject
 
         subject = DevataSubject(
             structure="ABSTRACT",
@@ -1393,9 +1388,7 @@ class TestNonDeitySubjects:
         # Present, not necessarily first: a hub-mediated path puts its own routing caveat
         # ahead of the disclosure. That the disclosure leads on a *root* payload is
         # asserted by test_a_non_deity_root_is_flagged_and_caveated.
-        assert any(
-            "THIS SUBJECT IS NOT A DEITY" in caveat["text"] for caveat in body["caveats"]
-        )
+        assert any("THIS SUBJECT IS NOT A DEITY" in caveat["text"] for caveat in body["caveats"])
 
     def test_a_path_between_two_non_deities_names_both(self, live_client: TestClient) -> None:
         body = live_client.get(
@@ -1502,5 +1495,9 @@ class TestNonDeitySubjects:
             # The disclosure may still appear -- a deity's neighbourhood can contain a
             # ruled non-deity, and naming it is the point. What must never happen is the
             # ROOT being named as one.
-            named = [c["text"] for c in body["caveats"] if "NOT deities" in c["text"] or "NOT a deity" in c["text"]]
+            named = [
+                c["text"]
+                for c in body["caveats"]
+                if "NOT deities" in c["text"] or "NOT a deity" in c["text"]
+            ]
             assert not any(row["key"] in text for text in named), row["key"]

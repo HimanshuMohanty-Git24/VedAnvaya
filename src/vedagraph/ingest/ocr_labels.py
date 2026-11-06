@@ -21,14 +21,14 @@ global optimiser once "recovered" 60 verses while shifting 53 others by one plac
 
 from __future__ import annotations
 
-from typing import Iterable
+from collections.abc import Iterable
 
 #: One glyph, one digit. Measured from the two Griffith OCR layers this project holds:
 #: the Yajurveda pass recorded S for 5 and 8, l and I for 1, O for 0; the section sign for 9
 #: is the Rigvedic case at 8.93.29. The map is intentionally small -- every entry is a
 #: substitution that has actually been observed in these bytes, not a plausible one.
 GLYPH_TO_DIGIT: dict[str, str] = {
-    "§": "9",   # SECTION SIGN
+    "§": "9",  # SECTION SIGN
     "S": "5",
     "s": "5",
     "O": "0",

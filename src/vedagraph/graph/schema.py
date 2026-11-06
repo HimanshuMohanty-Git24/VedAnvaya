@@ -53,29 +53,29 @@ CONSTRAINTS: Final[list[str]] = [
     # Work
     "CREATE CONSTRAINT work_id_unique IF NOT EXISTS FOR (n:Work) REQUIRE n.work_id IS UNIQUE",
     # Passage
-    "CREATE CONSTRAINT passage_canonical_key_unique IF NOT EXISTS FOR (n:Passage) REQUIRE n.canonical_key IS UNIQUE",  # noqa: E501
-    "CREATE CONSTRAINT passage_entity_id_unique IF NOT EXISTS FOR (n:Passage) REQUIRE n.entity_id IS UNIQUE",  # noqa: E501
-    "CREATE CONSTRAINT passage_canonical_urn_unique IF NOT EXISTS FOR (n:Passage) REQUIRE n.canonical_urn IS UNIQUE",  # noqa: E501
+    "CREATE CONSTRAINT passage_canonical_key_unique IF NOT EXISTS FOR (n:Passage) REQUIRE n.canonical_key IS UNIQUE",
+    "CREATE CONSTRAINT passage_entity_id_unique IF NOT EXISTS FOR (n:Passage) REQUIRE n.entity_id IS UNIQUE",
+    "CREATE CONSTRAINT passage_canonical_urn_unique IF NOT EXISTS FOR (n:Passage) REQUIRE n.canonical_urn IS UNIQUE",
     # TextVersion
-    "CREATE CONSTRAINT text_version_id_unique IF NOT EXISTS FOR (n:TextVersion) REQUIRE n.text_id IS UNIQUE",  # noqa: E501
+    "CREATE CONSTRAINT text_version_id_unique IF NOT EXISTS FOR (n:TextVersion) REQUIRE n.text_id IS UNIQUE",
     # Translation
-    "CREATE CONSTRAINT translation_id_unique IF NOT EXISTS FOR (n:Translation) REQUIRE n.translation_id IS UNIQUE",  # noqa: E501
+    "CREATE CONSTRAINT translation_id_unique IF NOT EXISTS FOR (n:Translation) REQUIRE n.translation_id IS UNIQUE",
     # Source
     "CREATE CONSTRAINT source_id_unique IF NOT EXISTS FOR (n:Source) REQUIRE n.source_id IS UNIQUE",
     # SourceArtifact
-    "CREATE CONSTRAINT source_artifact_id_unique IF NOT EXISTS FOR (n:SourceArtifact) REQUIRE n.artifact_id IS UNIQUE",  # noqa: E501
+    "CREATE CONSTRAINT source_artifact_id_unique IF NOT EXISTS FOR (n:SourceArtifact) REQUIRE n.artifact_id IS UNIQUE",
     # Rishi
-    "CREATE CONSTRAINT rishi_entity_key_unique IF NOT EXISTS FOR (n:Rishi) REQUIRE n.entity_key IS UNIQUE",  # noqa: E501
+    "CREATE CONSTRAINT rishi_entity_key_unique IF NOT EXISTS FOR (n:Rishi) REQUIRE n.entity_key IS UNIQUE",
     # Devata
-    "CREATE CONSTRAINT devata_entity_key_unique IF NOT EXISTS FOR (n:Devata) REQUIRE n.entity_key IS UNIQUE",  # noqa: E501
+    "CREATE CONSTRAINT devata_entity_key_unique IF NOT EXISTS FOR (n:Devata) REQUIRE n.entity_key IS UNIQUE",
     # Chandas
-    "CREATE CONSTRAINT chandas_entity_key_unique IF NOT EXISTS FOR (n:Chandas) REQUIRE n.entity_key IS UNIQUE",  # noqa: E501
+    "CREATE CONSTRAINT chandas_entity_key_unique IF NOT EXISTS FOR (n:Chandas) REQUIRE n.entity_key IS UNIQUE",
     # Lemma — the accented citation form is the identity. normalized_lemma is NOT unique:
     # 243 groups collide (e.g. atrá- / ā́tra / ā́tra- all normalize to "atra"), so
     # constraining on it would silently collapse 246 distinct lemmas.
     "CREATE CONSTRAINT lemma_unique IF NOT EXISTS FOR (n:Lemma) REQUIRE n.lemma IS UNIQUE",
     # QAIssue - the corpus's own caveats, so a query can see them without reading a file
-    "CREATE CONSTRAINT qa_issue_id_unique IF NOT EXISTS FOR (n:QAIssue) REQUIRE n.issue_id IS UNIQUE",  # noqa: E501
+    "CREATE CONSTRAINT qa_issue_id_unique IF NOT EXISTS FOR (n:QAIssue) REQUIRE n.issue_id IS UNIQUE",
 ]
 
 

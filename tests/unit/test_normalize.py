@@ -1,6 +1,5 @@
 """Accent handling must never damage a base letter and never hide a real difference."""
 
-
 from vedagraph.normalize import (
     ComparisonForm,
     ComparisonProfile,

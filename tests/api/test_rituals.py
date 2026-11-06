@@ -284,8 +284,7 @@ def test_thin_apparatus_is_reported_as_uncurated_rather_than_absent(
         note = entry["note"]
         if entry["status"] == "PARTIAL":
             assert any(word in note for word in LIMIT_VOCABULARY), (
-                f"the {name} note reports a partial layer without saying what bounds it: "
-                f"{note!r}"
+                f"the {name} note reports a partial layer without saying what bounds it: {note!r}"
             )
             continue
         assert any(word in note for word in GAP_VOCABULARY), (

@@ -211,9 +211,7 @@ def test_a_checkpoint_from_a_different_run_is_refused_and_never_merged(
     identity = make_identity()
     path = benchmark.checkpoint_path(identity)
     path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(
-        json.dumps({"run_id": "some-other-run", "id": "q1"}) + "\n", encoding="utf-8"
-    )
+    path.write_text(json.dumps({"run_id": "some-other-run", "id": "q1"}) + "\n", encoding="utf-8")
 
     with pytest.raises(SystemExit, match="never merged"):
         benchmark.load_checkpoint(identity)

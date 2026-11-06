@@ -242,9 +242,7 @@ def test_the_bad_old_translation_reading_fails_and_the_truthful_one_passes():
     )
 
     # TRUTHFUL reading: the verse is covered, by the span anchored on its odd partner.
-    truthful = verse_coverage_state(
-        "VG:RV:SAK:M01:S065:V002", [], range_covered=True
-    )
+    truthful = verse_coverage_state("VG:RV:SAK:M01:S065:V002", [], range_covered=True)
     assert truthful is VerseCoverageState.RANGE_COVERED
     assert truthful in INDEPENDENT_ENGLISH_STATES
 
@@ -305,10 +303,7 @@ def test_an_uncovered_verse_is_not_erased_to_reach_zero():
 @_LIVE
 def test_live_every_mantra_carries_a_typed_translation_coverage_state():
     assert (
-        _scalar(
-            "MATCH (m:Mantra) WHERE m.translation_coverage_state IS NULL RETURN count(m)"
-        )
-        == 0
+        _scalar("MATCH (m:Mantra) WHERE m.translation_coverage_state IS NULL RETURN count(m)") == 0
     )
     # The Samaveda's independent English coverage is ZERO and must read as zero.
     assert (
@@ -467,12 +462,7 @@ def test_live_the_reference_set_is_not_relabelled_human_gold():
     Relabelling it HUMAN_GOLD would manufacture a review that did not happen, so nothing
     in the graph may claim one.
     """
-    assert (
-        _scalar(
-            "MATCH (n) WHERE n.is_human_gold = true RETURN count(n)"
-        )
-        == 0
-    )
+    assert _scalar("MATCH (n) WHERE n.is_human_gold = true RETURN count(n)") == 0
     assert (
         _scalar(
             "MATCH ()-[r]->() WHERE r.reference_set_available IS NOT NULL "
@@ -540,8 +530,7 @@ def test_live_the_refused_ritual_objects_are_typed_refusals_not_silence():
     for key in ("VG:CONCEPT:DUNDUBHI-DRUM", "VG:CONCEPT:AUDUMBARA-AMULET"):
         assert (
             _scalar(
-                "MATCH (:Ritual)-[:USES_OBJECT]->(e:DomainEntity {entity_key:$k}) "
-                "RETURN count(*)",
+                "MATCH (:Ritual)-[:USES_OBJECT]->(e:DomainEntity {entity_key:$k}) RETURN count(*)",
                 k=key,
             )
             == 0
@@ -553,9 +542,7 @@ def test_live_every_rite_states_its_offering_position_and_no_probable_row_was_im
     assert _scalar("MATCH (r:Ritual) WHERE r.offering_status IS NULL RETURN count(r)") == 0
     dist = {
         row["status"]: row["c"]
-        for row in _rows(
-            "MATCH (r:Ritual) RETURN r.offering_status AS status, count(*) AS c"
-        )
+        for row in _rows("MATCH (r:Ritual) RETURN r.offering_status AS status, count(*) AS c")
     }
     assert sum(dist.values()) == 103
     assert dist["OFFERING_CANDIDATE_REFUSED_AS_CO_OCCURRENCE"] == 51, (
@@ -597,8 +584,7 @@ def test_live_the_sv_running_number_is_not_an_enumerate_over_our_own_ordering():
     """
     assert (
         _scalar(
-            "MATCH (m:Mantra {veda:'SV'}) WHERE m.running_samhita_number IS NULL "
-            "RETURN count(m)"
+            "MATCH (m:Mantra {veda:'SV'}) WHERE m.running_samhita_number IS NULL RETURN count(m)"
         )
         == 0
     )
@@ -645,10 +631,7 @@ def test_live_no_entity_pretends_a_source_predicted_it():
     A closure that populates all 384 is decorative field completion and must be rejected
     on sight, so this test refuses it in both directions.
     """
-    assert (
-        _scalar("MATCH (n:DomainEntity) WHERE n.expectation_origin IS NULL RETURN count(n)")
-        == 0
-    )
+    assert _scalar("MATCH (n:DomainEntity) WHERE n.expectation_origin IS NULL RETURN count(n)") == 0
     assert (
         _scalar(
             """
@@ -668,8 +651,7 @@ def test_live_no_entity_pretends_a_source_predicted_it():
         == 0
     )
     assert (
-        _scalar("MATCH (n:DomainEntity) WHERE n.expected_source IS NULL RETURN count(n)")
-        == 223
+        _scalar("MATCH (n:DomainEntity) WHERE n.expected_source IS NULL RETURN count(n)") == 223
     ), (
         "if this reaches 0 somebody has put a source on every row, which is the one thing "
         "the provenance field exists to prevent"
@@ -830,8 +812,7 @@ def test_live_no_cross_veda_edge_publishes_a_variant_claim_from_the_apparatus():
     # exactly what the cross-veda report's R5 note says it will read.
     assert (
         _scalar(
-            "MATCH ()-[r]->() WHERE r.cross_veda_transformation = 'HEAD_TRUNCATION' "
-            "RETURN count(r)"
+            "MATCH ()-[r]->() WHERE r.cross_veda_transformation = 'HEAD_TRUNCATION' RETURN count(r)"
         )
         == 1
     )
@@ -854,8 +835,7 @@ def test_live_no_cross_veda_edge_publishes_a_variant_claim_from_the_apparatus():
 def test_live_the_recomputed_similarity_metrics_landed():
     assert (
         _scalar(
-            "MATCH ()-[r]->() WHERE r.cross_veda_metrics_recomputed_by IS NOT NULL "
-            "RETURN count(r)"
+            "MATCH ()-[r]->() WHERE r.cross_veda_metrics_recomputed_by IS NOT NULL RETURN count(r)"
         )
         == 13
     )
@@ -869,13 +849,7 @@ def test_text_version_id_is_an_artifact_id_and_must_not_be_used_as_a_node_key():
     is the unique key. This repository has already recorded an unlabelled MATCH creating
     39,461 bogus edges.
     """
-    receipt = (
-        PROJECT_ROOT
-        / "data"
-        / "staging"
-        / "release_blocker_r5"
-        / "migration_plan.json"
-    )
+    receipt = PROJECT_ROOT / "data" / "staging" / "release_blocker_r5" / "migration_plan.json"
     if not receipt.exists():
         pytest.skip("R5 migration plan not present in this checkout")
     import json
@@ -970,7 +944,7 @@ def test_live_the_withdrawn_figures_are_still_reachable_through_the_api_shape():
     )
     assert rows, "the two tiny-population predicates are gone"
     for row in rows:
-        basis, confidence, prior = _confidence(row["predicate"], row["props"])
+        _basis, confidence, prior = _confidence(row["predicate"], row["props"])
         assert confidence is None, "a constant must never be served as a confidence"
         assert prior in (0.85, 0.75), (
             f"{row['predicate']}: the withdrawn figure is unreachable, prior={prior}"

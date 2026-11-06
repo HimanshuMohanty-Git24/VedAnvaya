@@ -86,9 +86,7 @@ def test_every_public_entity_type_resolves_to_its_own_surface(live_client: TestC
 
     failures: list[str] = []
     for entry in index["types"]:
-        response = live_client.get(
-            f"/api/v1/entities/{entry['slug']}", params={"limit": 1}
-        )
+        response = live_client.get(f"/api/v1/entities/{entry['slug']}", params={"limit": 1})
         if response.status_code != 200:
             failures.append(f"{entry['type']} -> HTTP {response.status_code}")
             continue

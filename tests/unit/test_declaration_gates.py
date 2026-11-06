@@ -65,9 +65,9 @@ def test_the_old_tautology_would_have_passed_the_same_input() -> None:
     observed = {"MENTIONS_ENTITY": 28_110, "TOTALLY_INVENTED_PREDICATE": 1}
     tautological = frozenset(all_declared_relationship_types() | set(observed))
     assert scorecard.undeclared_relationship_types(observed, tautological) == []
-    assert scorecard.undeclared_relationship_types(
-        observed, all_declared_relationship_types()
-    ) == ["TOTALLY_INVENTED_PREDICATE"]
+    assert scorecard.undeclared_relationship_types(observed, all_declared_relationship_types()) == [
+        "TOTALLY_INVENTED_PREDICATE"
+    ]
 
 
 # ---------------------------------------------------------------------------
@@ -82,9 +82,10 @@ def test_the_old_tautology_would_have_passed_the_same_input() -> None:
 def test_a_declared_predicate_passes(predicate: str) -> None:
     """One per layer: domain, corpus, campaign, enrichment."""
     assert predicate in all_declared_relationship_types()
-    assert scorecard.undeclared_relationship_types(
-        {predicate: 1}, all_declared_relationship_types()
-    ) == []
+    assert (
+        scorecard.undeclared_relationship_types({predicate: 1}, all_declared_relationship_types())
+        == []
+    )
 
 
 # ---------------------------------------------------------------------------

@@ -75,9 +75,7 @@ def get_llm_provider(settings: LLMSettings | None = None) -> LLMProvider:
     return built[0] if len(built) == 1 else FailoverProvider(built)
 
 
-def _build_one(
-    settings: LLMSettings, provider: str, model: str, api_key: str
-) -> LLMProvider:
+def _build_one(settings: LLMSettings, provider: str, model: str, api_key: str) -> LLMProvider:
     """One adapter for one credential. Everything except the credential is shared."""
     if provider == "gemini":
         from vedagraph.llm.providers.gemini import GeminiProvider

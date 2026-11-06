@@ -83,9 +83,9 @@ from vedagraph.api.models.passage import (
     AgentiveAssertionView,
     AssertionModality,
     AttestedSet,
-    FormulaPhraseView,
     AudioAvailability,
     BreadcrumbView,
+    FormulaPhraseView,
     MentionedDevataSet,
     MentionedDevataView,
     NavigationRelation,
@@ -235,7 +235,9 @@ _DISPLAYABLE_SURFACES: Final[frozenset[str]] = frozenset(
 #: maps above rather than listed, so a role added to one cannot go missing from the other --
 #: which is exactly how the work-level script list came to count the search derivative.
 _DISPLAYABLE_TEXT_ROLES: Final[tuple[str, ...]] = tuple(
-    sorted(role for role, surface in _TEXT_SURFACE_BY_ROLE.items() if surface in _DISPLAYABLE_SURFACES)
+    sorted(
+        role for role, surface in _TEXT_SURFACE_BY_ROLE.items() if surface in _DISPLAYABLE_SURFACES
+    )
 )
 
 #: Preference order when choosing the single witness a reader view renders.
@@ -1617,9 +1619,7 @@ def paged_meaning[T](
     return status, caveats
 
 
-def _formula_set(
-    rows: list[dict[str, Any]] | None, total: Any
-) -> AttestedSet[FormulaPhraseView]:
+def _formula_set(rows: list[dict[str, Any]] | None, total: Any) -> AttestedSet[FormulaPhraseView]:
     """The verse's shared phrases, or an empty set that says why it is empty.
 
     Empty is the common case - 9,636 of the corpus's 20,210 mantras carry no formula edge -
@@ -3106,8 +3106,7 @@ class PassageService:
                     evidence_basis=_nonempty(item.get("evidence_basis")),
                     knowledge_layer=_nonempty(item.get("knowledge_layer")),
                     cautions=[
-                        str(c) for c in (item.get("cautions") or [])
-                        if isinstance(c, str) and c
+                        str(c) for c in (item.get("cautions") or []) if isinstance(c, str) and c
                     ],
                 )
             )
@@ -3231,6 +3230,7 @@ def _caution_sentence(code: str) -> str:
     if prose is None:
         return code
     return f"{prose}: {parameter}." if parameter else prose
+
 
 #: Frozen domain queries whose caveat already states each attribution layer's reach. Reused
 #: rather than retyped: V3.1 and V3.2 both found hand-copied caveat prose that had drifted

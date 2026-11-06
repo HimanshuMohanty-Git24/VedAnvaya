@@ -122,9 +122,7 @@ from vedagraph.api.services.capability_probes import (
     PROBED_LIMIT_SPECS,
     ProbedLimitSpec,
 )
-from vedagraph.api.services.deity_population import is_deity
 from vedagraph.domain import layer_figures as figures
-from vedagraph.domain import profiles
 
 # The layer-scope caveats are module-private in the query catalogue and are imported anyway,
 # deliberately. They are the sentences the 100-question grading was run against; a second
@@ -714,9 +712,7 @@ _CROSS_VEDA_CLASSES: Final[tuple[tuple[str, str], ...]] = (
 #: NOT_BUILT with a note reading "every one of its assertions is Rigvedic" -- false since
 #: the layer reached AV, YV and SV -- beside a measured total that contradicted it in the
 #: same cell. A reader was told the layer does not exist anywhere in this graph.
-_NON_PAIRING_CROSS_VEDA_ROWS: Final[
-    tuple[tuple[str, str, CrossVedaCellStatus, str], ...]
-] = (
+_NON_PAIRING_CROSS_VEDA_ROWS: Final[tuple[tuple[str, str, CrossVedaCellStatus, str], ...]] = (
     (
         "SEMANTIC_RESEMBLANCE",
         "SEMANTIC_RESEMBLANCE",
@@ -1409,9 +1405,7 @@ class InsightService:
         assertion_total = sum(_as_int(row.get("assertions")) or 0 for row in assertion_rows)
         # Counted on the positive predicate. "not UNREVIEWED" would silently promote any
         # review state added later into human review, which is the direction that lies.
-        assertion_reviewed = sum(
-            _as_int(row.get("human_reviewed")) or 0 for row in assertion_rows
-        )
+        assertion_reviewed = sum(_as_int(row.get("human_reviewed")) or 0 for row in assertion_rows)
         # GAP-SEMANTICS-001 clause 3: no surface reports a blended assertion total. The cell
         # published one figure summed across five derivations that are not the same kind of
         # claim -- a morphological rule over a manual annotation and a model extraction read
@@ -3289,7 +3283,6 @@ class InsightService:
 
     def _q52_assertions_outside_the_rigveda(self) -> CapabilityLimit:
         rows = self._repository.run(_ASSERTION_REACH_QUERY)
-        vedas = sorted({_as_str(row.get("veda")) or "" for row in rows} - {""})
         total = sum(_as_int(row.get("assertions")) or 0 for row in rows)
         # Per corpus, and per corpus BY DERIVATION, because that is what makes the
         # comparison unanswerable. This card used to interpolate the live total into a
@@ -3464,9 +3457,7 @@ class InsightService:
                 else CapabilityVerdict.NOT_ANSWERABLE
             ),
             benchmark_verdict=CapabilityVerdict.NOT_ANSWERABLE,
-            data_status=(
-                KnowledgeStatus.PARTIAL if answerable else KnowledgeStatus.NOT_BUILT
-            ),
+            data_status=(KnowledgeStatus.PARTIAL if answerable else KnowledgeStatus.NOT_BUILT),
             why=(
                 "It contains NOTATION and not song, and those are different answers. "
                 f"{notated_text} of {verses_text} Kauthuma arcika verses now carry the "
@@ -3588,7 +3579,6 @@ class InsightService:
         from vedagraph.api.services.entity_service import EntityService, subject_disclosure
 
         subject = EntityService(self._repository)._resolve_devata(devata_id, population)
-        structure = subject.structure
         _is_deity, disclosure = subject_disclosure(subject)
         row = self._repository.run_one(
             "MATCH (d:Devata {entity_key: $key}) RETURN d.display_label AS label", key=devata_id
@@ -3884,9 +3874,7 @@ class InsightService:
         # constant: see _RESOLVED_DEDICATION_PREDICATES.
         scope_row = self._repository.run_one(_DEDICATION_LAYER_SCOPE_QUERY)
         dedication_layer_scope = [
-            veda
-            for veda in VEDA_ORDER
-            if veda in set(_as_str_list((scope_row or {}).get("vedas")))
+            veda for veda in VEDA_ORDER if veda in set(_as_str_list((scope_row or {}).get("vedas")))
         ]
         ascription_routes = _dedication_routes(row.get("ascribed_by_route"))
 
@@ -3952,8 +3940,7 @@ class InsightService:
                             veda for veda in VEDA_ORDER if veda not in dedication_layer_scope
                         ],
                         measured={
-                            veda: ascribed_by_veda.get(veda, 0)
-                            for veda in dedication_layer_scope
+                            veda: ascribed_by_veda.get(veda, 0) for veda in dedication_layer_scope
                         },
                         denominator={
                             veda: figures.CORPUS_MANTRAS[veda] for veda in dedication_layer_scope

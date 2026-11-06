@@ -111,9 +111,7 @@ def test_a_ritual_implement_may_never_be_excluded() -> None:
 def test_an_out_of_vocabulary_ruling_raises() -> None:
     """BAD: a ruling file inventing a fourth verdict. The enum is closed on purpose."""
     payload = {"rulings": [{"key": "VG:DEVATA:SRADDHA", "ruling": "PROBABLY", "reason": "x"}]}
-    path = pathlib.Path(
-        pytest.importorskip("tempfile").mkdtemp(), "rulings.json"
-    )
+    path = pathlib.Path(pytest.importorskip("tempfile").mkdtemp(), "rulings.json")
     path.write_text(json.dumps(payload), encoding="utf-8")
     with pytest.raises(eligibility.RulingCoverageError, match="PROBABLY"):
         eligibility.load_abstract_rulings(path)

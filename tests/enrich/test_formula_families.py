@@ -664,28 +664,26 @@ def test_the_family_builder_refuses_an_unfolded_comparison_surface() -> None:
     in ``normalized`` and a raw U+1CEA in ``display_form``. The builder read it without a
     word. Both spellings must now raise, and the real artifact must not.
     """
-    good = [
-        {"formula_id": "A", "normalized": "agnim īḷe", "display_form": "agnim īḷe"}
-    ]
+    good = [{"formula_id": "A", "normalized": "agnim īḷe", "display_form": "agnim īḷe"}]
     assert_formula_surfaces_are_folded(good)
 
     doubled = [
-        {"formula_id": "B", "normalized": "pāvako asmabhyaṃṃ śivo bhava",
-         "display_form": "pāvako asmabhyaṃ śivo bhava"}
+        {
+            "formula_id": "B",
+            "normalized": "pāvako asmabhyaṃṃ śivo bhava",
+            "display_form": "pāvako asmabhyaṃ śivo bhava",
+        }
     ]
     with pytest.raises(ValueError, match="not a finished transliteration"):
         assert_formula_surfaces_are_folded(doubled)
 
     devanagari = [
-        {"formula_id": "C", "normalized": "apāṃ retāṃsi",
-         "display_form": "apāᳪṃ retāᳪṃsi"}
+        {"formula_id": "C", "normalized": "apāṃ retāṃsi", "display_form": "apāᳪṃ retāᳪṃsi"}
     ]
     with pytest.raises(ValueError, match="not a finished transliteration"):
         assert_formula_surfaces_are_folded(devanagari)
 
-    private_use = [
-        {"formula_id": "D", "normalized": "soma", "display_form": "somaṃ"}
-    ]
+    private_use = [{"formula_id": "D", "normalized": "soma", "display_form": "somaṃ"}]
     with pytest.raises(ValueError, match="not a finished transliteration"):
         assert_formula_surfaces_are_folded(private_use)
 

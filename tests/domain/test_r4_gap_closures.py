@@ -380,9 +380,7 @@ def test_live_the_stored_attribution_scope_note_matches_its_generator() -> None:
     source = (PROJECT_ROOT / "src" / "vedagraph" / "domain" / "taxonomy.py").read_text(
         encoding="utf-8"
     )
-    match = re.search(
-        r'"attribution_scope_note": \(\n(.*?)\n            \),', source, re.DOTALL
-    )
+    match = re.search(r'"attribution_scope_note": \(\n(.*?)\n            \),', source, re.DOTALL)
     assert match is not None, "the overlay no longer writes attribution_scope_note"
     expected = "".join(re.findall(r'^\s*"(.*)"$', match.group(1), re.M))
     assert expected, "the note reconstructed empty, so this test would pass vacuously"
@@ -500,7 +498,9 @@ def test_no_surface_publishes_the_superseded_285_descriptor_split() -> None:
     for path in sorted((PROJECT_ROOT / "src" / "vedagraph").rglob("*.py")):
         for number, sentence in enumerate(_logical_sentences(path.read_text(encoding="utf-8")), 1):
             if pattern.search(sentence):
-                offenders.append(f"{path.relative_to(PROJECT_ROOT)}~{number}: {sentence.strip()[:120]}")
+                offenders.append(
+                    f"{path.relative_to(PROJECT_ROOT)}~{number}: {sentence.strip()[:120]}"
+                )
     assert not offenders, (
         "the superseded 39/285 descriptor split is still published:\n" + "\n".join(offenders)
     )
