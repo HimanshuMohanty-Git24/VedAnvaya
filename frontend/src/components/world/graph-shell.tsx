@@ -520,10 +520,12 @@ export function GraphShell() {
 
             const narrow = bounds.width < 768;
             if (!narrow) {
+                const chrome = boxOf(".va-graph-chrome");
+                const left = state.view === "WORLD" && chrome ? chrome.x + chrome.w + 16 : 0;
                 setSafeArea((current) =>
-                    current.top === 0 && current.bottom === 0
+                    current.top === 0 && current.bottom === 0 && current.left === left
                         ? current
-                        : { top: 0, right: 0, bottom: 0, left: 0 },
+                        : { top: 0, right: 0, bottom: 0, left },
                 );
                 return;
             }
