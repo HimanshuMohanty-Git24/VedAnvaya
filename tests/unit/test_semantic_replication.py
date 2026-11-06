@@ -4,6 +4,7 @@ from pathlib import Path
 
 import pytest
 
+from tests._data import needs_data
 from vedagraph.semantic.object_ontology import SemanticObjectKind, StructuredComparisonCategory
 from vedagraph.semantic.replication import (
     _group,
@@ -19,11 +20,15 @@ from vedagraph.semantic.replication import (
 BASE = Path("data/semantic/vedagraph-rigveda-semantic-luna-v3-120")
 REPLICATION = Path("data/semantic/vedagraph-rigveda-semantic-luna-v3-replication-120")
 
+#: The two sealed runs these tests compare are gitignored; a clean checkout has neither.
+_RUNS = needs_data(BASE, REPLICATION)
+
 
 def metrics() -> dict[str, object]:
     return compare_replications(BASE, REPLICATION)
 
 
+@_RUNS
 def test_input_freeze_and_prompt_schema_equality() -> None:
     freeze = json.loads((REPLICATION / "input_freeze.json").read_text(encoding="utf-8"))
     seal = json.loads((REPLICATION / "v3_replication_output_seal.json").read_text(encoding="utf-8"))
@@ -33,6 +38,7 @@ def test_input_freeze_and_prompt_schema_equality() -> None:
     assert len(freeze["evidence_packet_hashes"]) == 120
 
 
+@_RUNS
 def test_blind_replication_and_seal_before_comparison(tmp_path: Path) -> None:
     assert (
         json.loads((REPLICATION / "input_freeze.json").read_text(encoding="utf-8"))[
@@ -51,6 +57,7 @@ def test_blind_replication_and_seal_before_comparison(tmp_path: Path) -> None:
         validate_replication_seal(seal_path, copied / "input_freeze.json")
 
 
+@_RUNS
 def test_mantra_set_and_predicate_presence_stability() -> None:
     data = metrics()
     assert data["mantra_count"] == 120
@@ -59,6 +66,7 @@ def test_mantra_set_and_predicate_presence_stability() -> None:
     assert all(value["mantras_presence_differs"] == 0 for value in predicate.values())
 
 
+@_RUNS
 def test_canonical_entity_and_typed_object_stability() -> None:
     data = metrics()
     assert data["canonical_entity_contradictions"] == []
@@ -71,6 +79,7 @@ def test_canonical_entity_and_typed_object_stability() -> None:
     )
 
 
+@_RUNS
 def test_request_order_event_and_evidence_stability() -> None:
     data = metrics()
     request = data["request"]
@@ -83,6 +92,7 @@ def test_request_order_event_and_evidence_stability() -> None:
     assert data["evidence"]["same_evidence_references"] == 211
 
 
+@_RUNS
 def test_request_set_comparison_is_order_independent() -> None:
     left = _group(load_assertions(BASE))
     right = {
@@ -94,6 +104,7 @@ def test_request_set_comparison_is_order_independent() -> None:
     assert request["split_merge_disagreements"] == 0
 
 
+@_RUNS
 def test_ontology_gap_explicitness_and_severity_stability() -> None:
     data = metrics()
     assert data["gap_counts"]["a"] == data["gap_counts"]["b"]
@@ -112,6 +123,7 @@ def test_severity_classification_marks_structural_changes_high() -> None:
     assert _severity(row) == "HIGH"
 
 
+@_RUNS
 def test_no_predicate_unlocking_and_comparison_categories_are_diagnostic() -> None:
     seal = json.loads((REPLICATION / "v3_replication_output_seal.json").read_text(encoding="utf-8"))
     assert seal["unlocked_predicates"] == []

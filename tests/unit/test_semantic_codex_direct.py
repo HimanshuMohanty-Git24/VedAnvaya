@@ -15,6 +15,7 @@ from typing import Any
 
 import pytest
 
+from tests._data import require_data
 from vedagraph.models.normalization import (
     SemanticEvidenceAnchor,
     SemanticExtractionV3,
@@ -77,6 +78,9 @@ B01_CASES = (
 
 @lru_cache(maxsize=1)
 def pilot_packets() -> dict[str, EvidencePacket]:
+    # An absent pilot globs to nothing and returns {}, which surfaced as a KeyError far from
+    # the cause. Skip instead; pytest.skip raises, so lru_cache never stores the empty case.
+    require_data(PILOT)
     return {
         packet.citation: packet
         for path in sorted((PILOT / "batches").glob("batch_*/evidence.jsonl"))

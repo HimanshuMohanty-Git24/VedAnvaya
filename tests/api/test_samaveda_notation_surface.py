@@ -64,9 +64,7 @@ def test_live_the_capability_card_moved_and_the_frozen_grade_did_not(
     # verdict: the published count is derived from the FROZEN verdicts, so moving the live
     # one may not shrink it.
     assert body["unpublished_not_answerable"] == []
-    assert (
-        body["benchmark_not_answerable_published"] == body["benchmark_not_answerable_total"]
-    )
+    assert body["benchmark_not_answerable_published"] == body["benchmark_not_answerable_total"]
 
 
 @_LIVE

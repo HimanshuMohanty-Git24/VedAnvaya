@@ -50,20 +50,30 @@ def test_a_declared_range_grades_as_a_range(grade) -> None:
 
 
 def test_an_address_verification_outranks_a_bare_locator(grade) -> None:
-    assert grade({
-        "alignment_level": "MANTRA",
-        "address_verification": "checked against Griffith's own Rigveda rendering",
-        "source_locator": "x",
-        "snapshot_sha256": "deadbeef",
-    }) == "CONTENT_VERIFIED_MANTRA"
+    assert (
+        grade(
+            {
+                "alignment_level": "MANTRA",
+                "address_verification": "checked against Griffith's own Rigveda rendering",
+                "source_locator": "x",
+                "snapshot_sha256": "deadbeef",
+            }
+        )
+        == "CONTENT_VERIFIED_MANTRA"
+    )
 
 
 def test_a_located_and_hashed_row_grades_as_source_labelled(grade) -> None:
-    assert grade({
-        "alignment_level": "MANTRA",
-        "source_locator": "book page wyvbk12.htm, printed label '107'",
-        "snapshot_sha256": "67559e80",
-    }) == "SOURCE_LABELLED_MANTRA"
+    assert (
+        grade(
+            {
+                "alignment_level": "MANTRA",
+                "source_locator": "book page wyvbk12.htm, printed label '107'",
+                "snapshot_sha256": "67559e80",
+            }
+        )
+        == "SOURCE_LABELLED_MANTRA"
+    )
 
 
 def test_a_bulk_aligned_row_says_so_rather_than_claiming_more(grade) -> None:

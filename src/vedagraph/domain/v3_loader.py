@@ -71,6 +71,7 @@ from vedagraph.domain.ontology import (
     REL_MEMBER_OF_FAMILY,
 )
 from vedagraph.domain.sealed_semantics import SealedProjection
+from vedagraph.domain.tiers import SOURCE_EXPLICIT_TIER_NOTE
 from vedagraph.enrich.agentive import (
     FRAME_ASSERTED,
     FRAME_REQUESTED,

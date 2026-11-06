@@ -437,7 +437,7 @@ def check_product_consumers(session: Session) -> dict[str, Any]:
                             IN ['HUMAN','PATRON_PRAISE','UNSPECIFIED']
                         THEN 1 ELSE 0 END) AS source_predicate_population
         """
-    ).single()
+    ).single(strict=True)
     divergent = [
         dict(record)
         for record in session.run(

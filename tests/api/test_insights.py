@@ -43,7 +43,6 @@ from tests.api.test_rituals import (
 )
 from tests.api.test_stats import FORBIDDEN_IN_BODY, _population_row, _works_rows
 from vedagraph.api.models.common import CaveatView, KnowledgeStatus, PaginationMeta
-from vedagraph.api.models.entity import NON_DEITY_STRUCTURES
 from vedagraph.api.models.insight import (
     CapabilityVerdict,
     CivilizationSection,

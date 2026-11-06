@@ -151,9 +151,7 @@ def test_the_regenerated_artifact_carries_no_compound_metre_value() -> None:
     offenders = [
         str(r["value"]) for r in chandas if builder.compound_metre_statement(str(r["value"]))
     ]
-    assert not offenders, (
-        f"{len(offenders)} compound metre value(s) still emitted: {offenders[:3]}"
-    )
+    assert not offenders, f"{len(offenders)} compound metre value(s) still emitted: {offenders[:3]}"
 
 
 def test_the_registry_no_longer_mints_an_identity_from_a_compound() -> None:

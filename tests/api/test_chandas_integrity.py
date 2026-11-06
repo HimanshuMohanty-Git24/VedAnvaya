@@ -123,9 +123,7 @@ def test_the_withdrawn_literals_are_preserved_not_deleted(
         "  OR p.chandas_withheld_scope_origin IS NULL THEN 1 ELSE 0 END) AS untyped"
     )
     assert row is not None
-    assert int(row["records"]) == 33, (
-        f"expected 33 withheld-claim records, found {row['records']}"
-    )
+    assert int(row["records"]) == 33, f"expected 33 withheld-claim records, found {row['records']}"
     assert int(row["untyped"]) == 0, (
         f"{row['untyped']} record(s) lack a reason or their provenance, so a reader cannot "
         "tell why the claim is absent or where it came from"

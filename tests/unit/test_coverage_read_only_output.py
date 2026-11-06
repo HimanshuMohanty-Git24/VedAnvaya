@@ -52,7 +52,7 @@ class FakeSession:
     def __init__(self, log: dict[str, Any]) -> None:
         self.log = log
 
-    def __enter__(self) -> "FakeSession":
+    def __enter__(self) -> FakeSession:
         return self
 
     def __exit__(self, *exc: object) -> None:
@@ -83,16 +83,22 @@ class FakeDriver:
 @pytest.fixture()
 def harness(monkeypatch: pytest.MonkeyPatch, tmp_path):
     """Run ``main()`` against a fake driver, with ``land_metrics`` replaced by a tripwire."""
-    log: dict[str, Any] = {"queries": [], "mutations": [], "access_modes": [],
-                           "land_metrics_calls": 0, "closed": False}
+    log: dict[str, Any] = {
+        "queries": [],
+        "mutations": [],
+        "access_modes": [],
+        "land_metrics_calls": 0,
+        "closed": False,
+    }
 
     def tripwire(session: Any) -> dict[str, Any]:
         log["land_metrics_calls"] += 1
         return {"TRIPWIRE": 0}
 
     monkeypatch.setattr(builder, "land_metrics", tripwire)
-    monkeypatch.setattr(neo4j.GraphDatabase, "driver",
-                        staticmethod(lambda *a, **k: FakeDriver(log)))
+    monkeypatch.setattr(
+        neo4j.GraphDatabase, "driver", staticmethod(lambda *a, **k: FakeDriver(log))
+    )
 
     def run(*argv: str) -> tuple[int, dict[str, Any]]:
         out = tmp_path / "coverage.json"

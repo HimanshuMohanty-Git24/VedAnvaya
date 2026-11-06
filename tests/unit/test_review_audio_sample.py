@@ -180,8 +180,7 @@ def test_a_verdict_lands_on_one_recording_not_all_four(
 ) -> None:
     """The bug itself: one keystroke must not verify three recordings nobody played."""
     shared = [
-        {"review_id": "REV-SHARED", "media_url": f"https://example.invalid/{n}.ogg"}
-        for n in "abcd"
+        {"review_id": "REV-SHARED", "media_url": f"https://example.invalid/{n}.ogg"} for n in "abcd"
     ]
     queue = tmp_path / "queue.jsonl"
     queue.write_text("\n".join(json.dumps(r) for r in shared) + "\n", encoding="utf-8")
@@ -409,9 +408,7 @@ def test_an_accepted_sample_is_never_reported_as_the_whole_queue(
     queue_rows = [
         make_row(f"REV-{n}", f"https://example.invalid/{n}.ogg") for n in range(50)
     ] + rows
-    sampler.QUEUE.write_text(
-        "\n".join(json.dumps(r) for r in queue_rows) + "\n", encoding="utf-8"
-    )
+    sampler.QUEUE.write_text("\n".join(json.dumps(r) for r in queue_rows) + "\n", encoding="utf-8")
     drive(monkeypatch, ["r", "y", "r", "y"], notes=["", ""])
     sampler.review(rows, manifest, "tester", typed=True)
 
@@ -1178,7 +1175,7 @@ def test_a_correction_appends_and_leaves_the_original_line_byte_identical(
 
     assert after.startswith(before), "the correction rewrote what was already in the log"
     assert len(sampler.read_jsonl(sampler.DECISIONS)) == 2
-    assert after[len(before):].count(b"\n") == 1, "more than one line was appended"
+    assert after[len(before) :].count(b"\n") == 1, "more than one line was appended"
 
 
 def test_the_corrected_verdict_is_the_effective_one(
@@ -1389,9 +1386,7 @@ def test_a_correction_promotes_no_other_row(
     queue_rows = [
         make_row(f"REV-{n}", f"https://example.invalid/{n}.ogg") for n in range(50)
     ] + rows
-    sampler.QUEUE.write_text(
-        "\n".join(json.dumps(r) for r in queue_rows) + "\n", encoding="utf-8"
-    )
+    sampler.QUEUE.write_text("\n".join(json.dumps(r) for r in queue_rows) + "\n", encoding="utf-8")
     queue_before = sampler.QUEUE.read_bytes()
     drive(monkeypatch, ["r", "u", "q"], notes=[""])
     sampler.review(rows, manifest, "Himanshu", typed=True)
@@ -1413,8 +1408,7 @@ def test_a_correction_promotes_no_other_row(
     assert summary["audible_review_queue_total"] == 52
     assert summary["NOT_INDIVIDUALLY_HEARD"] == 51
     assert all(
-        r["review_status"] == "NEEDS_AUDIBLE_REVIEW"
-        for r in sampler.read_jsonl(sampler.QUEUE)
+        r["review_status"] == "NEEDS_AUDIBLE_REVIEW" for r in sampler.read_jsonl(sampler.QUEUE)
     )
 
 

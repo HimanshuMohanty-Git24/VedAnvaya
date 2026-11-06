@@ -162,10 +162,7 @@ def test_the_ruling_table_covers_the_registry_exactly() -> None:
         pytest.skip("registry or audit script not present in this checkout")
     module = _audit_module()
     rulings = module.RULINGS  # type: ignore[attr-defined]
-    ids = {
-        str(gap["gap_id"])
-        for gap in json.loads(REGISTRY.read_text(encoding="utf-8"))["gaps"]
-    }
+    ids = {str(gap["gap_id"]) for gap in json.loads(REGISTRY.read_text(encoding="utf-8"))["gaps"]}
     assert set(rulings) == ids, (
         f"entries without a ruling: {sorted(ids - set(rulings))}; "
         f"rulings for no entry: {sorted(set(rulings) - ids)}"
@@ -346,9 +343,7 @@ def test_a_graph_measurement_that_misses_its_expectation_is_reported() -> None:
         module.RULINGS[gid] = module.Ruling(
             "CLOSED_DERIVED", "synthetic", "MATCH (n) RETURN count(n)", 5385
         )
-        report = module.audit(
-            _StubSession(5384), [{"gap_id": gid, "status": "CLOSED_DERIVED"}]
-        )
+        report = module.audit(_StubSession(5384), [{"gap_id": gid, "status": "CLOSED_DERIVED"}])
     finally:
         module.RULINGS.clear()
         module.RULINGS.update(saved)

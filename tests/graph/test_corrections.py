@@ -6,6 +6,7 @@ import pathlib
 
 import pytest
 
+from tests._data import ALL_CORPORA, needs_data
 from vedagraph.graph.corrections import (
     CorrectionApplier,
     VerseNumberCorrection,
@@ -15,6 +16,9 @@ from vedagraph.graph.corrections import (
 )
 
 PROJECT_ROOT = pathlib.Path(__file__).parent.parent.parent
+
+#: These three project the real corpus, which is gitignored and absent on a clean checkout.
+_CORPUS = needs_data(*ALL_CORPORA)
 
 
 def _correction(**overrides: object) -> VerseNumberCorrection:
@@ -96,6 +100,7 @@ def test_a_correction_pointing_at_a_missing_passage_fails_loudly() -> None:
         applier.apply({"passage_id": "uuid-1", "translation_id": "x", "text": "Second verse"})
 
 
+@_CORPUS
 def test_every_corpus_translation_id_is_unique_once_corrections_are_applied() -> None:
     """The whole point: 17,283 corpus rows become 17,283 representable Translation nodes."""
     from vedagraph.graph.projection import build_correction_applier, iter_translation_nodes
@@ -108,6 +113,7 @@ def test_every_corpus_translation_id_is_unique_once_corrections_are_applied() ->
     assert len({row["translation_id"] for row in rows}) == len(rows)
 
 
+@_CORPUS
 def test_the_corrected_rows_land_on_the_passages_that_had_no_translation() -> None:
     """Checked against the rows, not against the applier's own record of what it did."""
     from vedagraph.graph.projection import (
@@ -141,6 +147,7 @@ def test_the_corrected_rows_land_on_the_passages_that_had_no_translation() -> No
     assert all(key.startswith("VG:RV:SAK:M01:S0") for key in spine_class), sorted(spine_class)
 
 
+@_CORPUS
 def test_qa_issues_project_for_every_veda_with_stable_unique_ids() -> None:
     from vedagraph.graph.projection import iter_qa_issue_nodes
 

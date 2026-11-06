@@ -21,7 +21,6 @@ from vedagraph.domain import layer_figures
 from vedagraph.product.audio.catalog import AudioCatalog
 from vedagraph.product.audio.models import PublicationTier
 
-
 #: The date the certified state below describes. A constant rather than ``date.today()``:
 #: this response states when the corpus was certified, not when it was asked about, and a
 #: date that moves every morning is a claim of freshness nothing behind it supports.
@@ -39,7 +38,9 @@ class CompletenessService:
         if path.is_file():
             try:
                 with path.open("r", encoding="utf-8") as f:
-                    return json.load(f)
+                    gates = json.load(f)
+                if isinstance(gates, dict):
+                    return gates
             except Exception:
                 pass
         return {}
@@ -154,9 +155,7 @@ class CompletenessService:
                     "from verified character-identical Rigvedic parallels; 1,671 mantras uncovered."
                 )
             elif v == "YV":
-                notes = (
-                    "1,950 verses carry dedicated English translations; 25 mantras uncovered."
-                )
+                notes = "1,950 verses carry dedicated English translations; 25 mantras uncovered."
             else:
                 notes = (
                     "5,715 dedicated English renderings, 68 range-covered, 21 reused from Rigveda "
@@ -278,9 +277,7 @@ class CompletenessService:
                 f"{total_audio_records:,} recitations are catalogued"
                 + (
                     " ("
-                    + "; ".join(
-                        f"{veda} {count:,}" for veda, count in released_by_veda.items()
-                    )
+                    + "; ".join(f"{veda} {count:,}" for veda, count in released_by_veda.items())
                     + ")"
                     if released_by_veda
                     else ""

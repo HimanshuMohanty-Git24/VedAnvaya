@@ -22,6 +22,7 @@ from typing import Any
 
 import pytest
 
+from tests._data import require_data
 from vedagraph.models.normalization import (
     SemanticEvidenceAnchor,
     SemanticExtractionV3,
@@ -150,6 +151,7 @@ def regression_manifest() -> dict[str, Any]:
 
 @lru_cache(maxsize=1)
 def regression_packets() -> dict[str, EvidencePacket]:
+    require_data(REGRESSION)
     return {
         packet.passage_key: packet
         for line in (REGRESSION / "packets.jsonl").read_text(encoding="utf-8").splitlines()
@@ -161,6 +163,7 @@ def regression_packets() -> dict[str, EvidencePacket]:
 @lru_cache(maxsize=1)
 def sealed_responses() -> dict[str, ModelAuthoredResponse]:
     """Every sealed regression response, keyed by passage. Read only."""
+    require_data(REGRESSION)
     responses: dict[str, ModelAuthoredResponse] = {}
     for task_dir in sorted((REGRESSION / "store" / "tasks").iterdir()):
         for attempt in sorted((task_dir / "attempts").iterdir()):
@@ -304,6 +307,7 @@ def test_the_v3_1_prompt_and_its_frozen_semantic_inputs_are_byte_identical() -> 
 
 def test_the_sealed_v3_1_responses_still_validate_under_the_current_code() -> None:
     """Reproducibility is the sealed bytes still passing, not the validator file's hash."""
+    require_data(REGRESSION)
     contract = RunContract.model_validate_json(
         (REGRESSION / "store" / "run_contract.json").read_text(encoding="utf-8")
     )
@@ -341,6 +345,7 @@ def test_the_sealed_v3_1_responses_still_validate_under_the_current_code() -> No
 
 
 def test_a_contract_stored_before_the_policy_field_existed_still_means_v3_1() -> None:
+    require_data(REGRESSION)
     stored = json.loads((REGRESSION / "store" / "run_contract.json").read_text(encoding="utf-8"))
     stored.pop("prompt_version", None)
     assert RunContract.model_validate(stored).prompt_version == PROMPT_VERSION_V3_1

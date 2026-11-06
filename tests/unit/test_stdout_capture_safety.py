@@ -71,4 +71,6 @@ def test_the_sweep_can_actually_see_an_offender() -> None:
     assert not OWNERSHIP_TAKEN.search(
         'sys.stdout.reconfigure(encoding="utf-8", errors="replace")'
     ), "the remedy must not be flagged as the defect"
-    assert not OWNERSHIP_TAKEN.search("if sys.stdout == other:"), "a comparison is not an assignment"
+    assert not OWNERSHIP_TAKEN.search("if sys.stdout == other:"), (
+        "a comparison is not an assignment"
+    )

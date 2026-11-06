@@ -40,6 +40,7 @@ from typing import Any, cast
 import pytest
 import yaml
 
+from tests._data import require_data
 from vedagraph.domain import v3_loader
 from vedagraph.domain.loader import _RITUAL_EDGES, LoadReport, load_rituals
 from vedagraph.domain.ontology import (
@@ -478,6 +479,7 @@ def test_property_safe_does_not_mutate_its_input() -> None:
 
 def test_property_safe_output_is_storable_for_every_real_family_row() -> None:
     """Run over the whole artifact, because one unflattened map fails the whole write."""
+    require_data(ENRICHMENT_DIR / "formula_families.jsonl")
     rows = _read_jsonl(ENRICHMENT_DIR / "formula_families.jsonl")
     assert rows, "the formula family artifact should be present"
     for row in rows:
@@ -502,11 +504,15 @@ def _read_jsonl(path: pathlib.Path) -> list[dict[str, Any]]:
 
 @functools.cache
 def _families() -> tuple[dict[str, Any], ...]:
+    # _read_jsonl answers [] for an absent file, which let every family test below pass
+    # vacuously on a clean checkout. The enrichment JSONL is gitignored; skip there instead.
+    require_data(ENRICHMENT_DIR / "formula_families.jsonl")
     return tuple(_read_jsonl(ENRICHMENT_DIR / "formula_families.jsonl"))
 
 
 @functools.cache
 def _members() -> tuple[dict[str, Any], ...]:
+    require_data(ENRICHMENT_DIR / "formula_family_members.jsonl")
     return tuple(_read_jsonl(ENRICHMENT_DIR / "formula_family_members.jsonl"))
 
 
@@ -1485,6 +1491,7 @@ def _scalar(session: Any, query: str, **params: Any) -> Any:
     record = session.run(query, **params).single()
     return None if record is None else record["c"]
 
+
 @functools.lru_cache(maxsize=1)
 def _published_pin() -> dict[str, Any]:
     """The pinned census of the graph's *published* formula generation.
@@ -1554,8 +1561,7 @@ def test_live_every_formula_family_has_a_unique_family_id() -> None:
             assert (
                 _scalar(
                     session,
-                    "MATCH (f:Formula) "
-                    'RETURN count(DISTINCT replace(f.normalized, " ", "")) AS c',
+                    'MATCH (f:Formula) RETURN count(DISTINCT replace(f.normalized, " ", "")) AS c',
                 )
                 == formulas
             )
@@ -1581,8 +1587,7 @@ def test_live_every_membership_edge_lands_on_a_real_formula() -> None:
             assert (
                 _scalar(
                     session,
-                    "MATCH (:Formula)-[r:MEMBER_OF_FAMILY]->(:FormulaFamily) "
-                    "RETURN count(r) AS c",
+                    "MATCH (:Formula)-[r:MEMBER_OF_FAMILY]->(:FormulaFamily) RETURN count(r) AS c",
                 )
                 == pin["members"]
             )
@@ -1593,9 +1598,9 @@ def test_live_every_membership_edge_lands_on_a_real_formula() -> None:
                 )
             }
             assert tiers <= {"TIER_B", "TIER_D"}, tiers
-            assert tiers == set(
-                pin["quality_tiers"]
-            ), "the tier vocabulary on landed edges moved away from the pinned one"
+            assert tiers == set(pin["quality_tiers"]), (
+                "the tier vocabulary on landed edges moved away from the pinned one"
+            )
             # One formula joins one family: the layer's whole premise, and something the
             # count equality never checked.
             assert (

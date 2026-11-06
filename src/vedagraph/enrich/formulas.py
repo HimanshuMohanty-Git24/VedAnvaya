@@ -237,9 +237,7 @@ _UNREADABLE_IN_IAST: Final[tuple[tuple[int, int], ...]] = (
 
 def _is_readable_iast(form: str) -> bool:
     """True if every character of ``form`` can be read as IAST by a person."""
-    return not any(
-        low <= ord(char) <= high for char in form for low, high in _UNREADABLE_IN_IAST
-    )
+    return not any(low <= ord(char) <= high for char in form for low, high in _UNREADABLE_IN_IAST)
 
 
 def _pick_display_form(forms: tuple[str, ...], fallback: str) -> str:

@@ -903,6 +903,8 @@ def is_per_passage(properties: Mapping[str, Any]) -> bool:
         PRECISION_BY_SCOPE_ORIGIN.get(scope, AttributionPrecision.PER_PASSAGE)
         is AttributionPrecision.PER_PASSAGE
     )
+
+
 #: The seven predicates whose ``confidence`` was a constant 1.0 on every edge, withdrawn by
 #: GAP-QUALITY-003 and re-landed under a name that says what the value is.
 #:

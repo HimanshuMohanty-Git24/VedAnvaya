@@ -24,6 +24,7 @@ import hashlib
 import importlib
 import json
 import pathlib
+import subprocess
 
 import pytest
 
@@ -212,21 +213,59 @@ def test_the_timestamp_is_never_the_deciding_field() -> None:
 # ---------------------------------------------------------------------------
 
 
+#: Declared for the "ritual aggregates" consumer, which the ledger rules NOT_APPLICABLE, and
+#: never committed: the only copy, in an old stash, does not match the sha256 the ledger
+#: records. Listed so the gap stays visible and nothing else can join it unnoticed. Remove an
+#: entry once its file is rebuilt and committed, or its declaration is retired.
+KNOWN_UNCOMMITTED = frozenset(
+    {
+        "data/staging/final_closure_sprint/agent4/build_agent4_ritual_closure.py",
+        "data/staging/final_closure_sprint/agent4/ritual_context.jsonl",
+    }
+)
+
+
+def _gitignored(paths: set[str]) -> set[str]:
+    """The subset of ``paths`` that .gitignore excludes, asked of git itself."""
+    if not paths:
+        return set()
+    # NUL-separated bytes, not text: on Windows text-mode stdin turns each "\n" into "\r\n",
+    # git then reads every path with a trailing "\r" and echoes it back quoted, and nothing
+    # in the answer matches what was asked.
+    result = subprocess.run(
+        ["git", "check-ignore", "--stdin", "-z"],
+        input=b"\0".join(path.encode("utf-8") for path in sorted(paths)),
+        capture_output=True,
+        check=False,
+    )
+    return {item.decode("utf-8") for item in result.stdout.split(b"\0") if item}
+
+
 def test_every_declared_file_and_builder_input_exists() -> None:
     """A declared input that is absent hashes to "absent", which is a legitimate state --
-    but a typo in a path would also hash to "absent" and look like a real finding."""
-    missing: list[str] = []
+    but a typo in a path would also hash to "absent" and look like a real finding.
+
+    A gitignored input that is absent has simply not been built in this checkout -- a clean
+    clone, which is what CI runs, has none of them -- so only where it is built can its path
+    be checked. Everything else must exist, which still catches a typo in any tracked path.
+    """
+    declared: set[str] = set()
     for relatives in state.CONSUMER_FILES.values():
-        missing += [r for r in relatives if not pathlib.Path(r).exists()]
+        declared.update(relatives)
     for builders in state.CONSUMER_BUILDERS.values():
-        missing += [b for b in builders if not pathlib.Path(b).exists()]
+        declared.update(builders)
     # Declared OUTPUTS get the same treatment, for the same reason and one stronger: Wave 4
     # found two consumers recording the wrong file as their output, and a path typo here would
     # reproduce exactly that -- a consumer judged on a file nobody builds, which never moves
     # and so is never stale.
     for outputs in state.CONSUMER_OUTPUTS.values():
-        missing += [o for o in outputs if not pathlib.Path(o).exists()]
-    assert not missing, f"declared inputs that do not exist: {sorted(set(missing))}"
+        declared.update(outputs)
+    absent = {p for p in declared if not pathlib.Path(p).exists()}
+    missing = absent - _gitignored(absent) - KNOWN_UNCOMMITTED
+    assert not missing, f"declared inputs that do not exist: {sorted(missing)}"
+    assert KNOWN_UNCOMMITTED <= absent, (
+        f"now present, so drop from KNOWN_UNCOMMITTED: {sorted(KNOWN_UNCOMMITTED - absent)}"
+    )
 
 
 def test_no_two_consumers_declare_the_same_output() -> None:

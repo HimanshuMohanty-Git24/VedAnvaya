@@ -33,9 +33,7 @@ from vedagraph.graph.corrections import (
 from vedagraph.models.enums import AlignmentLevel, TranslationAlignment
 
 PROJECT_ROOT = pathlib.Path(__file__).parent.parent.parent
-AUDIT = (
-    PROJECT_ROOT / "data" / "staging" / "translation" / "rv_1_65_1_70_pre_fix_audit.json"
-)
+AUDIT = PROJECT_ROOT / "data" / "staging" / "translation" / "rv_1_65_1_70_pre_fix_audit.json"
 
 #: The span, and the shape the source prints for each hymn. Written out rather than derived,
 #: because a fixture derived from the same measurement the code uses cannot disagree with it.
@@ -191,8 +189,7 @@ def test_a_different_source_revision_is_not_matched() -> None:
 
 def _applier(correction: VerseSpineCorrection) -> tuple[CorrectionApplier, dict[str, str]]:
     keys = [
-        f"{correction.hymn_key}:V{n:03d}"
-        for n in range(1, correction.canonical_verse_count + 1)
+        f"{correction.hymn_key}:V{n:03d}" for n in range(1, correction.canonical_verse_count + 1)
     ]
     key_by_id = {f"id-{k}": k for k in keys}
     id_by_key = {k: f"id-{k}" for k in keys}
@@ -273,9 +270,7 @@ def test_an_unapplied_spine_declaration_is_an_error() -> None:
 def test_the_registry_declares_exactly_the_six_measured_hymns() -> None:
     """The declared set must be the measured set -- no more, and no fewer."""
     declared = load_spine_corrections(PROJECT_ROOT)
-    assert {c.hymn_key for c in declared} == {
-        f"VG:RV:SAK:M01:S{s:03d}" for s in SPAN_SHAPE
-    }
+    assert {c.hymn_key for c in declared} == {f"VG:RV:SAK:M01:S{s:03d}" for s in SPAN_SHAPE}
     for correction in declared:
         sukta = int(correction.hymn_key.split(":")[4][1:])
         units, verses = SPAN_SHAPE[sukta]

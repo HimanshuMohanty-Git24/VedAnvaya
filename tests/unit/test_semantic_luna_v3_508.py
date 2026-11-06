@@ -9,9 +9,13 @@ from pathlib import Path
 import pytest
 import yaml
 
+from tests._data import needs_data
 from vedagraph.semantic.v3 import PREDICATE_CHECKS
 
 ROOT = Path("data/semantic/vedagraph-rigveda-semantic-luna-v3-508")
+
+#: The sealed 508 run is gitignored; a clean checkout does not have it.
+_RUN = needs_data(ROOT)
 REPORTS = Path("docs/reports")
 
 
@@ -44,6 +48,7 @@ def test_508_builder_refuses_full_corpus_scope() -> None:
         _selected({"pilot_mantra_count": 10_552, "mantras": []})
 
 
+@_RUN
 def test_508_batches_and_seal_are_complete() -> None:
     manifest = json.loads((ROOT / "batch_manifest.json").read_text(encoding="utf-8"))
     seal = json.loads((ROOT / "v3_508_output_seal.json").read_text(encoding="utf-8"))
@@ -54,6 +59,7 @@ def test_508_batches_and_seal_are_complete() -> None:
     assert seal["comparison_sources_opened"] is False
 
 
+@_RUN
 def test_frozen_contract_hashes_and_no_predicate_unlocking() -> None:
     freeze = json.loads((ROOT / "input_freeze.json").read_text(encoding="utf-8"))
     seal = json.loads((ROOT / "v3_508_output_seal.json").read_text(encoding="utf-8"))
@@ -65,6 +71,7 @@ def test_frozen_contract_hashes_and_no_predicate_unlocking() -> None:
     assert seal["human_gold_status"] == "UNANNOTATED"
 
 
+@_RUN
 def test_extraction_coverage_and_all_fourteen_checklists() -> None:
     rows = [
         json.loads(line)
@@ -76,6 +83,7 @@ def test_extraction_coverage_and_all_fourteen_checklists() -> None:
     assert all(set(row["families"]) == set(PREDICATE_CHECKS) for row in rows)
 
 
+@_RUN
 def test_aggregate_contracts_and_candidate_only_state() -> None:
     data = stats()
     summary = data["summary"]
@@ -92,6 +100,7 @@ def test_aggregate_contracts_and_candidate_only_state() -> None:
     )
 
 
+@_RUN
 def test_embedded_120_new_388_and_parallel_diagnostics() -> None:
     data = stats()
     overlap = data["embedded_120"]
@@ -104,6 +113,7 @@ def test_embedded_120_new_388_and_parallel_diagnostics() -> None:
     assert data["parallel"]["pair_count"] > 0
 
 
+@_RUN
 def test_requested_aggregation_and_review_artifacts_exist() -> None:
     data = stats()
     assert set(data["mandala"]) == {str(number) for number in range(1, 11)}
@@ -128,6 +138,7 @@ def test_requested_aggregation_and_review_artifacts_exist() -> None:
         assert "NOT CANONICAL TRUTH" in report
 
 
+@_RUN
 def test_exact_candidate_head_groups_do_not_fuzzy_group() -> None:
     data = stats()
     groups = data["duplicate_head_groups"]

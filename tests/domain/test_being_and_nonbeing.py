@@ -28,6 +28,7 @@ import pathlib
 
 import pytest
 
+from tests._data import ALL_CORPORA, require_data
 from vedagraph.domain.mentions import MentionRow, extract_mentions
 from vedagraph.domain.ontology import (
     LABEL_CONCEPT,
@@ -136,6 +137,7 @@ KNOWN_FALSE_POSITIVES: dict[str, set[str]] = {
 
 @functools.cache
 def _corpus() -> Corpus:
+    require_data(*ALL_CORPORA)
     return load_corpus(PROJECT_ROOT)
 
 

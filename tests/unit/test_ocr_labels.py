@@ -6,8 +6,6 @@ project has shipped exactly that once -- a tiling heuristic that fired on eight 
 wrong on all eight because nothing asked it to refuse.
 """
 
-import pytest
-
 from vedagraph.ingest.ocr_labels import (
     GLYPH_TO_DIGIT,
     readings,
@@ -83,13 +81,16 @@ def test_bad_refuses_when_more_than_one_slot_sits_between_the_neighbours() -> No
 
 def test_bad_refuses_a_token_that_does_not_read_as_the_forced_slot() -> None:
     """The neighbours forcing slot 29 is not on its own a licence to write 29 there."""
-    assert resolve_corrupt_label(
-        "4" + SECTION,
-        preceding_label=28,
-        following_label=30,
-        printed_unit_count=34,
-        canonical_verse_count=34,
-    ) is None
+    assert (
+        resolve_corrupt_label(
+            "4" + SECTION,
+            preceding_label=28,
+            following_label=30,
+            printed_unit_count=34,
+            canonical_verse_count=34,
+        )
+        is None
+    )
 
 
 # ------------------------------------------------------------------- sole_free_slot ------

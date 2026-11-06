@@ -318,9 +318,7 @@ def test_no_consumer_outside_the_contract_substitutes_the_source_predicate() -> 
             re.IGNORECASE,
         ),
         # structure = / <> / != a known structure
-        re.compile(
-            r"structure\s*(?:=|==|<>|!=)\s*['\"](?:" + _VALUES + r")['\"]", re.IGNORECASE
-        ),
+        re.compile(r"structure\s*(?:=|==|<>|!=)\s*['\"](?:" + _VALUES + r")['\"]", re.IGNORECASE),
         # structure IN $bound_parameter -- the form that hides the values entirely
         re.compile(r"structure[^\n]{0,40}?\bIN\b\s*\$", re.IGNORECASE),
     )
@@ -381,7 +379,11 @@ def test_no_reader_facing_surface_publishes_a_superseded_deity_population() -> N
         r"\b(?:" + _figures + r")\b(?:[\s\"':,}\]]+\w+){0,3}?[\s\"':,}\]]+(?:" + _noun + r")\b"
         # deities ... 184   (covers `deities: 184`, `"eligible_deities":184`,
         # `{"label":"Deities","value":184}`)
-        r"|\b(?:" + _noun + r")\b(?:[\s\"':,}\[\]{]+\w+){0,4}?[\s\"':,}\[\]{]+(?:" + _figures + r")\b",
+        r"|\b(?:"
+        + _noun
+        + r")\b(?:[\s\"':,}\[\]{]+\w+){0,4}?[\s\"':,}\[\]{]+(?:"
+        + _figures
+        + r")\b",
         re.IGNORECASE,
     )
     hits = [
@@ -460,11 +462,7 @@ def test_the_taxonomy_overlay_no_longer_stores_attribution_scope_as_a_literal() 
     import pathlib
 
     taxonomy = (
-        pathlib.Path(__file__).resolve().parents[2]
-        / "src"
-        / "vedagraph"
-        / "domain"
-        / "taxonomy.py"
+        pathlib.Path(__file__).resolve().parents[2] / "src" / "vedagraph" / "domain" / "taxonomy.py"
     ).read_text(encoding="utf-8")
     assert '"attribution_scope": [' not in taxonomy, (
         "taxonomy.py is storing attribution_scope as a literal again. It must be derived at "

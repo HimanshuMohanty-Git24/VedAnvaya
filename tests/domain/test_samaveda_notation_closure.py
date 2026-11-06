@@ -252,15 +252,12 @@ def test_live_every_samavedic_verse_carries_a_typed_notation_disposition() -> No
         == NOTATED
     )
     assert (
-        _scalar(
-            "MATCH (m:Mantra {veda:'SV', samavedic_notation_state:'WITHHELD'}) RETURN count(m)"
-        )
+        _scalar("MATCH (m:Mantra {veda:'SV', samavedic_notation_state:'WITHHELD'}) RETURN count(m)")
         == WITHHELD
     )
     assert (
         _scalar(
-            "MATCH (m:Mantra {veda:'SV'}) WHERE m.samavedic_notation_state IS NULL "
-            "RETURN count(m)"
+            "MATCH (m:Mantra {veda:'SV'}) WHERE m.samavedic_notation_state IS NULL RETURN count(m)"
         )
         == 0
     )
@@ -391,9 +388,7 @@ def test_live_the_new_layer_keeps_the_two_graph_wide_contracts_it_first_missed()
         "PRODUCT nodes and read as leaked internals with no readable label"
     )
     assert (
-        _scalar(
-            "MATCH ()-[r:HAS_TEXT_VERSION]->() WHERE r.quality_tier IS NULL RETURN count(r)"
-        )
+        _scalar("MATCH ()-[r:HAS_TEXT_VERSION]->() WHERE r.quality_tier IS NULL RETURN count(r)")
         == 0
     )
     contracted = grade_edge("HAS_TEXT_VERSION", {}).as_edge_properties()

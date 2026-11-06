@@ -317,9 +317,7 @@ def _phrase_hits(mantra: MantraRecord, index: MentionIndex) -> dict[str, _Hit]:
         for position in range(len(tokens) - width + 1):
             if tuple(tokens[position : position + width]) != parts:
                 continue
-            window = tokens[
-                max(0, position - _CONTEXT_TOKENS) : position + width + _CONTEXT_TOKENS
-            ]
+            window = tokens[max(0, position - _CONTEXT_TOKENS) : position + width + _CONTEXT_TOKENS]
             found.setdefault(entity_key, _Hit()).add(
                 " ".join(parts), " ".join(window), "script_folded_phrase"
             )

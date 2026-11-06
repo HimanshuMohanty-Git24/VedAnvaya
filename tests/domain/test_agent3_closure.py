@@ -31,11 +31,7 @@ from build_semantic_assertion_delta import assertion_key
 from build_semantic_review_frame import REVIEW_STATES, validate_transition
 
 STAGING = (
-    Path(__file__).resolve().parents[2]
-    / "data"
-    / "staging"
-    / "final_closure_sprint"
-    / "agent3"
+    Path(__file__).resolve().parents[2] / "data" / "staging" / "final_closure_sprint" / "agent3"
 )
 
 

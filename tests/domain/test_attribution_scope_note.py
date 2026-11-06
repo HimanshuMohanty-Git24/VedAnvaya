@@ -249,13 +249,10 @@ def test_the_atharvavedic_dedication_figures_in_the_caveats_are_live() -> None:
                 "MATCH (p:Passage {veda:'AV'})-[:HAS_DEVATA_ASCRIPTION]->() "
                 "RETURN count(DISTINCT p) AS n",
             ),
-            "av_passages": _count(
-                session, "MATCH (p:Passage {veda:'AV'}) RETURN count(p) AS n"
-            ),
+            "av_passages": _count(session, "MATCH (p:Passage {veda:'AV'}) RETURN count(p) AS n"),
             "ascription_mantra_edges": _count(
                 session,
-                "MATCH (m:Mantra {veda:'AV'})-[r:HAS_DEVATA_ASCRIPTION]->() "
-                "RETURN count(r) AS n",
+                "MATCH (m:Mantra {veda:'AV'})-[r:HAS_DEVATA_ASCRIPTION]->() RETURN count(r) AS n",
             ),
             "ascription_mantras": _count(
                 session,
@@ -274,9 +271,7 @@ def test_the_atharvavedic_dedication_figures_in_the_caveats_are_live() -> None:
                 session,
                 "MATCH ()-[:HAS_DEVATA_DERIVED]->(d:Devata) RETURN count(DISTINCT d) AS n",
             ),
-            "descriptors": _count(
-                session, "MATCH (a:DevataAscription) RETURN count(a) AS n"
-            ),
+            "descriptors": _count(session, "MATCH (a:DevataAscription) RETURN count(a) AS n"),
             "resolved": _count(
                 session,
                 "MATCH (a:DevataAscription) WHERE (a)-->(:Devata) RETURN count(a) AS n",

@@ -12,6 +12,7 @@ from pathlib import Path
 
 import pytest
 
+from tests._data import require_data
 from vedagraph.models.normalization import SemanticExtractionV3
 from vedagraph.models.semantic import EvidencePacket
 from vedagraph.semantic.evidence import (
@@ -41,6 +42,7 @@ KNOWN_BAD_HOSTS = ("manifested", "many", "Pavamana", "woman", "Aryaman")
 @lru_cache(maxsize=1)
 def pilot_packets() -> dict[str, EvidencePacket]:
     """Every 508-pilot packet, by citation. Read-only."""
+    require_data(PILOT)
     return {
         packet.citation: packet
         for path in sorted((PILOT / "batches").glob("batch_*/evidence.jsonl"))
@@ -53,6 +55,7 @@ def pilot_packets() -> dict[str, EvidencePacket]:
 @lru_cache(maxsize=1)
 def sealed_payloads() -> dict[str, SemanticExtractionV3]:
     """The sealed 508 payloads, by citation. Never rewritten by any test."""
+    require_data(PILOT)
     return {
         payload.mantra_id: payload
         for line in (PILOT / "v3_extractions.jsonl").read_text(encoding="utf-8").splitlines()

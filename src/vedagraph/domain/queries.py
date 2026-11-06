@@ -1070,8 +1070,7 @@ QUERIES: Final[tuple[DomainQuery, ...]] = (
             "the same count under the one documented predicate `t.is_deity = true`. Both "
             "read 27 today, so the model layer targets no non-deity; they are returned as "
             "two columns rather than one so a future divergence is visible instead of "
-            "silent. "
-            + _ASSERTION_LAYER_CAVEAT
+            "silent. " + _ASSERTION_LAYER_CAVEAT
         ),
         serves=(29, 30),
     ),

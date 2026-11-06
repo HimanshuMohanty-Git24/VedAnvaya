@@ -167,7 +167,9 @@ QUEUE = pathlib.Path("data/staging/audio_review_queue.jsonl")
 def _real_queue() -> list[dict[str, Any]]:
     if not QUEUE.exists():  # pragma: no cover - the queue is a committed artifact
         pytest.skip(f"{QUEUE} not built")
-    return [json.loads(line) for line in QUEUE.read_text(encoding="utf-8").splitlines() if line.strip()]
+    return [
+        json.loads(line) for line in QUEUE.read_text(encoding="utf-8").splitlines() if line.strip()
+    ]
 
 
 def test_every_queued_row_states_its_rights_position() -> None:

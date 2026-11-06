@@ -3,6 +3,7 @@ from pathlib import Path
 
 import pytest
 
+from tests._data import needs_data
 from vedagraph.models.normalization import (
     ActionEvent,
     EventParticipant,
@@ -25,6 +26,9 @@ from vedagraph.semantic.object_ontology import (
     object_kind_is_allowed,
 )
 from vedagraph.semantic.ontology import Explicitness, SemanticPredicate
+
+#: The sealed 120-mantra run is gitignored; a clean checkout does not have it.
+_RUN_120 = needs_data("data/semantic/vedagraph-rigveda-semantic-luna-v3-120")
 
 
 def anchor() -> SemanticEvidenceAnchor:
@@ -86,6 +90,7 @@ def test_all_typed_object_kinds_are_enumerated() -> None:
     assert not object_kind_is_allowed(SemanticPredicate.REQUESTS, SemanticObjectKind.EVENT)
 
 
+@_RUN_120
 def test_packet_extraction_splits_request_outcomes_and_cites_offsets() -> None:
     packet = EvidencePacket.model_validate(
         json.loads(
@@ -105,6 +110,7 @@ def test_packet_extraction_splits_request_outcomes_and_cites_offsets() -> None:
     assert len(trace["families"]) == 14
 
 
+@_RUN_120
 def test_canonical_reuse_uses_supplied_mention_identity() -> None:
     path = Path(
         "data/semantic/vedagraph-rigveda-semantic-luna-v3-120/batches/batch_002/evidence.jsonl"
@@ -137,6 +143,7 @@ def test_canonical_reuse_uses_supplied_mention_identity() -> None:
     )
 
 
+@_RUN_120
 def test_event_has_absent_roles_when_not_directly_evidenced() -> None:
     path = Path(
         "data/semantic/vedagraph-rigveda-semantic-luna-v3-120/batches/batch_001/evidence.jsonl"
@@ -228,6 +235,7 @@ def test_structured_comparator_is_order_independent() -> None:
     assert rows[0].category is StructuredComparisonCategory.EXACT_NORMALIZED_OBJECT
 
 
+@_RUN_120
 def test_seal_blind_gate_and_no_predicate_unlocking() -> None:
     seal_path = Path("data/semantic/vedagraph-rigveda-semantic-luna-v3-120/v3_output_seal.json")
     seal = json.loads(seal_path.read_text(encoding="utf-8"))

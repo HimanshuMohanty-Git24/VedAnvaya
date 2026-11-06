@@ -2,8 +2,6 @@
 
 from __future__ import annotations
 
-from fastapi.testclient import TestClient
-
 from tests.api.conftest import FakeRepository, build_client
 from vedagraph.product.audio.catalog import AudioCatalog
 
@@ -12,7 +10,7 @@ STATS_COMPLETENESS = "/api/v1/stats/completeness"
 
 
 def test_completeness_endpoint_returns_certified_state():
-    app, client = build_client(FakeRepository())
+    _app, client = build_client(FakeRepository())
     with client:
         resp = client.get(COMPLETENESS)
         assert resp.status_code == 200
@@ -106,4 +104,3 @@ def test_completeness_endpoint_returns_certified_state():
         alias_resp = client.get(STATS_COMPLETENESS)
         assert alias_resp.status_code == 200
         assert alias_resp.json() == data
-

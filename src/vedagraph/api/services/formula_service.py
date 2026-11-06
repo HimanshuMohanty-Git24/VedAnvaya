@@ -48,7 +48,6 @@ from vedagraph.api.models.formula import (
     FormulaOccurrenceView,
 )
 from vedagraph.api.repositories.neo4j_repository import Neo4jRepository
-from vedagraph.domain import layer_figures as figures
 from vedagraph.api.services.graph_service import (
     FAMILY_MEMBERSHIP_DIRECTION,
     FAMILY_MEMBERSHIP_MIRROR,
@@ -57,6 +56,7 @@ from vedagraph.api.services.graph_service import (
     evidence_spans,
     layer_method,
 )
+from vedagraph.domain import layer_figures as figures
 
 #: Roles a membership edge may carry. Measured complete over all 2,037 memberships: 914
 #: ``CORE``, 1,119 ``EXPANSION``, 4 ``VARIANT``. ``SECONDARY_CORE`` is deliberately absent

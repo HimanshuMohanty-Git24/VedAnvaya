@@ -83,7 +83,6 @@ from vedagraph.api.models.search import (
     SurfaceCoverageView,
 )
 from vedagraph.api.repositories.neo4j_repository import validated_label
-from vedagraph.api.services.deity_population import is_deity
 from vedagraph.domain.layer_figures import CORPUS_MANTRAS
 from vedagraph.normalize.unicode import ComparisonForm, comparison_form
 
@@ -1287,9 +1286,7 @@ class SearchService:
         rung_index = MATCH_TYPE_ORDER.index(match_type)
 
         if "node_labels" in row:
-            result_type = result_type_for_labels(
-                row.get("node_labels"), row.get("display_type")
-            )
+            result_type = result_type_for_labels(row.get("node_labels"), row.get("display_type"))
             # The recorded ruling, not the structure. Filtering search on structure made
             # search disagree with /devatas about 29 subjects: it hid the dog, whom the
             # ruling admits and the deity route serves, and surfaced the 28 abstractions

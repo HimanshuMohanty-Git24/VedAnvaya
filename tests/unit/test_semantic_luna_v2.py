@@ -8,6 +8,8 @@ sys.path.insert(0, str(Path(__file__).parents[2] / "scripts"))
 
 from author_semantic_luna_v2_payloads import FAMILIES, author_payload
 
+from tests._data import needs_data
+
 
 def packet(text: str, *, mention: bool = True) -> dict[str, object]:
     mentions: list[dict[str, object]] = []
@@ -95,6 +97,7 @@ def test_ontology_gap_is_preserved_for_human_role() -> None:
     assert trace["ontology_gaps"]
 
 
+@needs_data("data/semantic/vedagraph-rigveda-semantic-luna-v2-120")
 def test_sealed_run_records_no_unlock_and_comparison_order() -> None:
     root = Path("data/semantic/vedagraph-rigveda-semantic-luna-v2-120")
     seal = json.loads((root / "v2_output_seal.json").read_text(encoding="utf-8"))

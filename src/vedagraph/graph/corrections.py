@@ -279,9 +279,7 @@ class CorrectionApplier:
         #: the migration and by the readback, so neither has to recompute the mapping.
         self.spine_moves: list[dict[str, Any]] = []
 
-    def _apply_spine(
-        self, record: dict[str, Any], passage_key: str
-    ) -> dict[str, Any] | None:
+    def _apply_spine(self, record: dict[str, Any], passage_key: str) -> dict[str, Any] | None:
         """Re-anchor a row whose source edition uses a different verse spine."""
         revision = int(record.get("source_revision_id") or 0)
         for spine in self._spines:
@@ -293,8 +291,7 @@ class CorrectionApplier:
             anchor_id = self._id_by_key.get(anchor)
             if anchor_id is None:
                 raise ValueError(
-                    f"{spine.correction_id}: anchor passage {anchor} does not exist in the "
-                    "corpus"
+                    f"{spine.correction_id}: anchor passage {anchor} does not exist in the corpus"
                 )
             new_id = corrected_translation_id(
                 anchor_id, spine.source_artifact_id, spine.source_revision_id

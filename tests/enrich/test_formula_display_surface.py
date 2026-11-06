@@ -253,9 +253,7 @@ def test_readability_alone_would_not_have_licensed_the_attested_label() -> None:
     checks legibility, so readability licenses nothing about attestation. Both properties
     are therefore measured, and this pins that they are two claims rather than one.
     """
-    unreadable_but_attested = _pick_display_form(
-        ("apāᳪṃ retāᳪṃsi",), "apāṃ retāṃsi"
-    )
+    unreadable_but_attested = _pick_display_form(("apāᳪṃ retāᳪṃsi",), "apāṃ retāṃsi")
     assert unreadable_but_attested == "apāṃ retāṃsi", (
         "an attested span can be unreadable, which is the whole of the 23"
     )

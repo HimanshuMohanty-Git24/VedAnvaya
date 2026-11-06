@@ -9,6 +9,7 @@ from typing import Any
 import pytest
 from pydantic import ValidationError
 
+from tests._data import require_data
 from vedagraph.models.normalization import SemanticExtractionV3
 from vedagraph.models.semantic import EvidencePacket
 from vedagraph.semantic.full_run import (
@@ -83,6 +84,8 @@ def current_freeze() -> Freeze:
     blocked.
     """
     draft = freeze_draft()
+    # The freeze hashes the corpus and the knowledge layer, which a clean checkout lacks.
+    require_data(*draft.files)
     row = draft.model_dump(mode="json")
     row["files"] = {name: file_hash(Path(name)) for name in draft.files}
     return Freeze.model_validate(row)
@@ -90,6 +93,7 @@ def current_freeze() -> Freeze:
 
 def historical_payloads() -> dict[str, SemanticExtractionV3]:
     """The sealed 508 payloads, by citation. Read only; never rewritten."""
+    require_data(PILOT)
     return {
         p.mantra_id: p
         for line in (PILOT / "v3_extractions.jsonl").read_text(encoding="utf-8").splitlines()
@@ -99,6 +103,7 @@ def historical_payloads() -> dict[str, SemanticExtractionV3]:
 
 
 def batch_packets(batch_id: str) -> list[EvidencePacket]:
+    require_data(PILOT)
     directory = PILOT / "batches" / batch_id
     return [
         EvidencePacket.model_validate_json(line)

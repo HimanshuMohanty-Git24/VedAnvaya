@@ -23,6 +23,7 @@ import pathlib
 import orjson
 import pytest
 
+from tests._data import ALL_CORPORA, require_data
 from vedagraph.enrich.corpus import Corpus, MantraRecord, load_corpus
 from vedagraph.enrich.formulas import (
     OCCURRENCE_METHOD_SANDHI,
@@ -333,8 +334,9 @@ def test_two_runs_over_one_corpus_are_byte_identical() -> None:
 
 @pytest.fixture(scope="module")
 def real() -> tuple[Corpus, list[FormulaRow], list[FormulaOccurrenceRow]]:
-    if not (PROJECT_ROOT / "data" / "canonical").is_dir():
-        pytest.skip("canonical corpora are not present in this checkout")
+    # Not `data/canonical` as a directory: .gitignore keeps each build's manifest.json,
+    # so that directory exists on every clean checkout and the guard never fired.
+    require_data(*ALL_CORPORA)
     corpus = load_corpus(PROJECT_ROOT)
     rows, occurrences, _ = discover_formulas(corpus)
     return corpus, rows, occurrences

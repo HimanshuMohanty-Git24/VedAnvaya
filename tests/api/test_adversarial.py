@@ -44,6 +44,7 @@ from tests.api.test_app_health import (
 from tests.api.test_app_health import (
     FROZEN_RELATIONSHIPS as EXPECTED_RELATIONSHIPS,
 )
+from vedagraph.api.config import ApiSettings
 from vedagraph.api.repositories.neo4j_repository import Neo4jRepository
 
 #: Anukramani devata-slot entries the recorded ruling excludes, one per exclusion class.
@@ -1325,8 +1326,7 @@ def _all_devata_keys(repository: Neo4jRepository) -> list[tuple[str, bool]]:
     the dog, whom the ruling admits, and never asked about the 28 ruled abstractions.
     """
     rows = repository.run(
-        "MATCH (d:Devata) RETURN d.entity_key AS key, d.is_deity AS is_deity "
-        "ORDER BY d.entity_key"
+        "MATCH (d:Devata) RETURN d.entity_key AS key, d.is_deity AS is_deity ORDER BY d.entity_key"
     )
     return [(str(row["key"]), row["is_deity"] is True) for row in rows]
 
@@ -1396,9 +1396,7 @@ def test_g01_the_deity_insight_route_gates_and_discloses_a_non_deity(
     test asserted a single route under a single population and passed while two other
     halves of the same contract were open.
     """
-    non_deities = [
-        (key, ruled) for key, ruled in _all_devata_keys(live_repository) if not ruled
-    ]
+    non_deities = [(key, ruled) for key, ruled in _all_devata_keys(live_repository) if not ruled]
     assert len(non_deities) == 57, f"the non-deity population moved: {len(non_deities)}"
 
     served_by_default: list[str] = []
@@ -1739,7 +1737,10 @@ def test_g08_no_list_row_disagrees_with_its_own_profile(
     )
 
 
-def test_g09_the_query_timeout_actually_stops_a_long_read() -> None:
+@pytest.mark.neo4j
+def test_g09_the_query_timeout_actually_stops_a_long_read(
+    live_repository: Neo4jRepository, live_settings: ApiSettings
+) -> None:
     """F-06 closed, proved by the clock rather than by reading the call site.
 
     The first attempt at this probe reported the timeout unenforced and was wrong: the
@@ -1751,12 +1752,16 @@ def test_g09_the_query_timeout_actually_stops_a_long_read() -> None:
     """
     import time
 
-    from vedagraph.api.config import ApiSettings
     from vedagraph.api.errors import GraphUnavailableError
     from vedagraph.api.repositories.neo4j_repository import Neo4jRepository as Repository
 
     budget = 2.0
-    repository = Repository(ApiSettings(neo4j_query_timeout_seconds=budget))
+    # `live_repository` is requested for its skip, like every other live probe here: without
+    # a reachable, loaded graph there is no long read to stop, and the probe used to fail on
+    # "unavailable" instead. The bounded repository is built from the same settings.
+    repository = Repository(
+        live_settings.model_copy(update={"neo4j_query_timeout_seconds": budget})
+    )
     unfoldable = (
         "MATCH (a:Passage), (b:Passage), (c:Passage) "
         "WHERE a.veda = b.veda AND b.veda = c.veda RETURN count(*) AS c"

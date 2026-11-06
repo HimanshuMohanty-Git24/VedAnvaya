@@ -8,8 +8,8 @@ import uuid
 from collections.abc import Iterator
 from typing import Any
 
-from vedagraph.graph.corrections import CorrectionApplier
 from vedagraph.domain.tiers import SOURCE_EXPLICIT_TIER_NOTE
+from vedagraph.graph.corrections import CorrectionApplier
 
 logger = logging.getLogger(__name__)
 

@@ -38,7 +38,15 @@ def _load(name: str):
     assert spec and spec.loader
     mod = importlib.util.module_from_spec(spec)
     sys.modules[name] = mod
-    spec.loader.exec_module(mod)  # type: ignore[union-attr]
+    try:
+        spec.loader.exec_module(mod)  # type: ignore[union-attr]
+    except ModuleNotFoundError as missing:
+        # The scan-crop scripts import Pillow, which is not a declared dependency: the image
+        # transcription they served was cancelled. Skip rather than fail a clean install.
+        sys.modules.pop(name, None)
+        if missing.name != "PIL":
+            raise
+        pytest.skip(f"scripts/{name}.py needs Pillow, which is not installed")
     return mod
 
 

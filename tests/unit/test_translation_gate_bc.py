@@ -41,7 +41,6 @@ from gate_bc_textfold import (  # noqa: E402
 from gate_bc_yv_source_check import label_candidates, page_units  # noqa: E402
 from validate_staging_artifact import NOT_IMPORTABLE  # noqa: E402
 
-
 # ---------------------------------------------------------------------------------------
 # The central importability policy
 # ---------------------------------------------------------------------------------------
@@ -94,7 +93,6 @@ D = "Devanagari"
 def test_good_devanagari_and_latin_witnesses_of_one_verse_fold_equal() -> None:
     """VS/SV Kauthuma Devanagari against GRETIL Rigveda Latin, same verse, must be identical."""
     sv = "त्वं नो अग्ने महोभिः पाहि विश्वस्या अरातेः । उत द्विषो मर्त्यस्य"
-    rv = "tváṃ no̱ agne̱ mahobhi̍ḥ"
     assert fold_sanskrit(sv, D).startswith("tvaṃ no agne mahobhiḥ")
     # The real pair is asserted in the packet; here the point is that the Devanagari side
     # transliterates to the same tokens rather than to mojibake.
@@ -180,9 +178,9 @@ def test_bad_the_nasal_fold_must_not_be_in_the_strict_form() -> None:
 
 def test_bad_the_permissive_fold_still_separates_phonemes() -> None:
     for a, b in [("sa", "ṣa"), ("viśva", "visva"), ("agni", "agne"), ("kā", "ka")]:
-        assert sandhi_insensitive(fold_sanskrit(a, L)) != sandhi_insensitive(
-            fold_sanskrit(b, L)
-        ), f"{a!r} and {b!r} merged in the permissive form"
+        assert sandhi_insensitive(fold_sanskrit(a, L)) != sandhi_insensitive(fold_sanskrit(b, L)), (
+            f"{a!r} and {b!r} merged in the permissive form"
+        )
 
 
 def test_good_a_printed_verse_number_is_not_a_token() -> None:
@@ -240,9 +238,10 @@ def test_bad_a_target_from_the_wrong_veda_is_detectable_from_the_key() -> None:
     """Same counts, swapped identities: the key carries the Veda, so the swap is visible."""
     assert parse_key("VG:SV:KAU:CHANDA:P01:D01:V05")["veda"] == "SV"
     assert parse_key("VG:RV:SAK:M08:S084:V001")["veda"] == "RV"
-    assert parse_key("VG:SV:KAU:CHANDA:P01:D01:V05")["veda"] != parse_key(
-        "VG:RV:SAK:M08:S084:V001"
-    )["veda"]
+    assert (
+        parse_key("VG:SV:KAU:CHANDA:P01:D01:V05")["veda"]
+        != parse_key("VG:RV:SAK:M08:S084:V001")["veda"]
+    )
 
 
 # ---------------------------------------------------------------------------------------
@@ -448,7 +447,7 @@ def test_good_the_real_duplicate_label_defect_is_reproduced() -> None:
 
 
 def test_bad_an_ambiguous_glyph_must_not_be_repaired_to_a_single_guess() -> None:
-    """"S5" is 85 in VS 20, and an S->5 table turned it into 55 and lost the row.
+    """ "S5" is 85 in VS 20, and an S->5 table turned it into 55 and lost the row.
 
     The candidate set keeps both readings so the printed neighbours, not the repair, decide.
     """
@@ -571,7 +570,9 @@ def test_bad_an_archive_citation_without_a_content_hash_proves_nothing() -> None
 
 
 def test_good_an_archive_citation_with_a_hash_in_the_page_proofs_is_traceable() -> None:
-    page_proofs = {"4410b0a65554f54cc919cbaf7dfd83224ee38d5553003a1e6803945524000530": {"http_status": 200}}
+    page_proofs = {
+        "4410b0a65554f54cc919cbaf7dfd83224ee38d5553003a1e6803945524000530": {"http_status": 200}
+    }
     row = {"payload": {"snapshot_sha256": next(iter(page_proofs))}}
     assert row["payload"]["snapshot_sha256"] in page_proofs
     assert page_proofs[row["payload"]["snapshot_sha256"]]["http_status"] == 200
@@ -589,7 +590,10 @@ def test_bad_a_shift_attack_with_no_neighbour_to_compare_is_vacuous_not_clean() 
     was empty. Coverage has to be reported separately from the defect count, or "nothing
     found" and "nothing looked at" are the same output.
     """
-    neighbours = {"previous": {"carries_translation": False}, "next": {"carries_translation": False}}
+    neighbours = {
+        "previous": {"carries_translation": False},
+        "next": {"carries_translation": False},
+    }
     evaluated = any(v["carries_translation"] for v in neighbours.values())
     assert evaluated is False, "this is the vacuous case, and it must be reported as such"
 

@@ -13,9 +13,14 @@ jobs:
         with:
           python-version: "3.12"
           enable-cache: true
-      - run: uv sync --extra dev --locked
-      - run: uv run ruff format --check .
-      - run: uv run ruff check .
+      # The documented development install (LOCAL_SETUP.md). Without `ask`, the provider
+      # adapters' tests run with no `openai` package and fail on configuration, not behaviour.
+      - run: uv sync --extra dev --extra ask --locked
+      # Style gates cover the product code and its tests. scripts/, data/staging/ and paper/ are
+      # one-off pipeline and research code, much of it pinned by sha256 in manifests and receipts
+      # that a mass reformat would contradict.
+      - run: uv run ruff format --check src tests
+      - run: uv run ruff check src tests
       - run: uv run mypy
       - run: uv run pytest -m "not live"
 
