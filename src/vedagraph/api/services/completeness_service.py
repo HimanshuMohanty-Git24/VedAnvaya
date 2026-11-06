@@ -39,7 +39,9 @@ class CompletenessService:
         if path.is_file():
             try:
                 with path.open("r", encoding="utf-8") as f:
-                    return json.load(f)
+                    gates = json.load(f)
+                if isinstance(gates, dict):
+                    return gates
             except Exception:
                 pass
         return {}
