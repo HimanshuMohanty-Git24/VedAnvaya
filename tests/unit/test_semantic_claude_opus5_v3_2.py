@@ -17,6 +17,7 @@ from typing import Any
 
 import pytest
 
+from tests._data import require_data
 from vedagraph.models.semantic import EvidencePacket
 from vedagraph.semantic import claude_opus5_v3_2 as claude
 from vedagraph.semantic.codex_direct import (
@@ -34,6 +35,7 @@ RUN_DIR = Path("data/semantic/vedagraph-rigveda-semantic-claude-opus5-v3.2-448-n
 
 @pytest.fixture(scope="module")
 def packet() -> EvidencePacket:
+    require_data(ABANDONED)
     line = (ABANDONED / "packets.jsonl").read_text(encoding="utf-8").splitlines()[0]
     return EvidencePacket.model_validate_json(line)
 
@@ -73,6 +75,7 @@ def test_the_run_reuses_the_frozen_v3_2_policy_unchanged(contract: RunContract) 
 
 def test_a_stored_luna_contract_still_loads_as_codex_direct() -> None:
     """The runtime field is defaulted, so a contract written before it existed is unchanged."""
+    require_data(ABANDONED)
     stored = json.loads((ABANDONED / "store/run_contract.json").read_text(encoding="utf-8"))
     assert "runtime" not in stored
     contract = RunContract.model_validate(stored)
@@ -297,12 +300,14 @@ def test_the_abandoned_attempt_is_preserved_and_never_imported() -> None:
     assert record["partial_author_inputs"]["imported_into_any_run"] is False
     assert record["preserved"] is True and record["deleted_files"] == 0
     # The files themselves are still on disk, unmodified.
+    require_data(ABANDONED)
     assert len(list(ABANDONED.glob("author_inputs/*/*.json"))) == 10
     assert len(list((ABANDONED / "store/tasks").glob("TASK_*/task.json"))) == 448
     assert not list(ABANDONED.glob("**/raw_response.json"))
 
 
 def test_the_claude_run_reuses_packets_but_not_semantics() -> None:
+    require_data(RUN_DIR)
     manifest = json.loads((RUN_DIR / "run_selection_manifest.json").read_text(encoding="utf-8"))
     assert manifest["packet_reuse_scope"] == "EVIDENCE_PACKET_PREPARATION_ONLY"
     assert manifest["abandoned_author_inputs_imported"] == 0

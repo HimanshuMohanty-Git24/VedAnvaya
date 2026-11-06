@@ -25,6 +25,8 @@ import sys
 
 import pytest
 
+from tests._data import ALL_CORPORA, require_data
+
 PROJECT_ROOT = pathlib.Path(__file__).resolve().parents[2]
 SCRIPT = PROJECT_ROOT / "scripts" / "snapshot_canonical_release.py"
 
@@ -147,6 +149,7 @@ def test_release_tier_totals_match_the_rows(manifest: dict) -> None:
 
 def test_live_release_still_matches_the_manifest(manifest: dict) -> None:
     """The real, untracked corpus on disk, re-hashed against its recorded identity."""
+    require_data(*ALL_CORPORA)
     result = snapshot_canonical_release.verify(
         manifest, tiers=frozenset({snapshot_canonical_release.TIER_RELEASE})
     )

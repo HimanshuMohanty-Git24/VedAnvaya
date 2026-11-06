@@ -35,6 +35,7 @@ from typing import Any
 import pytest
 import yaml
 
+from tests._data import require_data
 from vedagraph.domain.ontology import (
     DOMAIN_RELATIONSHIP_TYPES,
     LABEL_FORMULA,
@@ -44,7 +45,7 @@ from vedagraph.domain.ontology import (
     RELATIONSHIP_SIGNATURES,
 )
 from vedagraph.domain.schema import DOMAIN_REL_INDEXES
-from vedagraph.domain.sealed_semantics import iter_sealed_assertions
+from vedagraph.domain.sealed_semantics import SEALED_RUN_DIR, iter_sealed_assertions
 from vedagraph.domain.tiers import LAYER_OWNED_GRADES
 from vedagraph.domain.v3_loader import (
     _FAMILY_OUTWARD_QUERY,
@@ -194,6 +195,7 @@ def test_every_sealed_predicate_is_either_mapped_or_refused_with_a_reason() -> N
     "unmapped". Nothing here writes: ``iter_sealed_assertions`` is a read of the frozen
     responses.
     """
+    require_data(SEALED_RUN_DIR / "responses")
     used = {row.predicate for row in iter_sealed_assertions(PROJECT_ROOT) if row.predicate}
     assert used, "the sealed run produced no predicates -- artifact missing?"
     adjudicated = set(_SEALED_PREDICATE_MAP) | set(_SEALED_PREDICATE_WITHHELD)

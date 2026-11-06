@@ -6,9 +6,17 @@ import pathlib
 
 import pytest
 
+from tests._data import ALL_CORPORA, needs_data
+
 PROJECT_ROOT = pathlib.Path(__file__).parent.parent.parent
 
+#: Every test below except the schema guard reads the built corpus or the lexical layer,
+#: and without them would pass vacuously over an empty iterator or fail on a zero count.
+_CORPUS = needs_data(*ALL_CORPORA)
+_LEXICAL = needs_data("data/knowledge/rigveda_lexical_v1")
 
+
+@_CORPUS
 def test_iter_work_nodes_returns_four_works() -> None:
     from vedagraph.graph.projection import iter_work_nodes
 
@@ -21,6 +29,7 @@ def test_iter_work_nodes_returns_four_works() -> None:
     assert "VG:WORK:AV:SAU" in work_ids
 
 
+@_CORPUS
 def test_iter_passage_nodes_rv_count() -> None:
     from vedagraph.graph.projection import iter_passage_nodes, manifest_passage_count
 
@@ -28,6 +37,7 @@ def test_iter_passage_nodes_rv_count() -> None:
     assert len(rv_passages) == manifest_passage_count("RV")
 
 
+@_CORPUS
 def test_iter_passage_nodes_sv_count() -> None:
     from vedagraph.graph.projection import iter_passage_nodes, manifest_passage_count
 
@@ -35,6 +45,7 @@ def test_iter_passage_nodes_sv_count() -> None:
     assert len(sv_passages) == manifest_passage_count("SV")
 
 
+@_CORPUS
 def test_iter_passage_nodes_yv_count() -> None:
     from vedagraph.graph.projection import iter_passage_nodes, manifest_passage_count
 
@@ -42,6 +53,7 @@ def test_iter_passage_nodes_yv_count() -> None:
     assert len(yv_passages) == manifest_passage_count("YV")
 
 
+@_CORPUS
 def test_iter_passage_nodes_av_count() -> None:
     from vedagraph.graph.projection import iter_passage_nodes, manifest_passage_count
 
@@ -49,6 +61,7 @@ def test_iter_passage_nodes_av_count() -> None:
     assert len(av_passages) == manifest_passage_count("AV")
 
 
+@_CORPUS
 def test_rv_mantra_has_parent_key() -> None:
     from vedagraph.graph.projection import iter_passage_nodes
 
@@ -58,6 +71,7 @@ def test_rv_mantra_has_parent_key() -> None:
             break
 
 
+@_CORPUS
 def test_all_passages_have_required_fields() -> None:
     from vedagraph.graph.projection import iter_passage_nodes
 
@@ -67,6 +81,7 @@ def test_all_passages_have_required_fields() -> None:
             assert field in p, f"Missing field {field!r} in {p.get('canonical_key')}"
 
 
+@_CORPUS
 def test_no_duplicate_canonical_keys() -> None:
     from vedagraph.graph.projection import iter_passage_nodes
 
@@ -74,6 +89,7 @@ def test_no_duplicate_canonical_keys() -> None:
     assert len(keys) == len(set(keys)), "Duplicate canonical_keys found in projection"
 
 
+@_CORPUS
 def test_no_duplicate_entity_ids() -> None:
     from vedagraph.graph.projection import iter_passage_nodes
 
@@ -81,6 +97,7 @@ def test_no_duplicate_entity_ids() -> None:
     assert len(ids) == len(set(ids)), "Duplicate entity_ids found in projection"
 
 
+@_CORPUS
 def test_rv_111_is_present() -> None:
     from vedagraph.graph.projection import iter_passage_nodes
 
@@ -88,6 +105,7 @@ def test_rv_111_is_present() -> None:
     assert "VG:RV:SAK:M01:S001:V001" in keys
 
 
+@_CORPUS
 def test_av_k20_is_present() -> None:
     from vedagraph.graph.projection import iter_passage_nodes
 
@@ -95,6 +113,7 @@ def test_av_k20_is_present() -> None:
     assert "VG:AV:SAU:K20" in keys
 
 
+@_CORPUS
 def test_contains_rels_cover_all_passages() -> None:
     from vedagraph.graph.projection import iter_contains_rels, iter_passage_nodes
 
@@ -104,6 +123,7 @@ def test_contains_rels_cover_all_passages() -> None:
     assert contains_count == passage_count
 
 
+@_CORPUS
 def test_sv_passage_derives_parent_key() -> None:
     """SV records carry no parent_key field; it must be derived from the key structure."""
     from vedagraph.graph.projection import iter_passage_nodes
@@ -121,6 +141,7 @@ def test_sv_passage_derives_parent_key() -> None:
     assert checked > 0, "no SV mantras found — projection or entity_type changed"
 
 
+@_CORPUS
 def test_top_level_passages_have_no_parent() -> None:
     """The four top-level structural nodes per Veda hang off the Work, not a Passage."""
     from vedagraph.graph.projection import iter_passage_nodes
@@ -133,6 +154,7 @@ def test_top_level_passages_have_no_parent() -> None:
             )
 
 
+@_LEXICAL
 def test_lemma_is_unique_but_normalized_lemma_is_not() -> None:
     """Lemma identity must be the accented citation form, not the normalized form.
 
@@ -152,6 +174,7 @@ def test_lemma_is_unique_but_normalized_lemma_is_not() -> None:
     )
 
 
+@_LEXICAL
 def test_parallels_carry_two_distinct_predicates() -> None:
     """Near parallels must stay distinguishable from verbatim matches.
 
@@ -172,6 +195,7 @@ def test_parallels_carry_two_distinct_predicates() -> None:
     assert all(r["status"] == "HIGH_CONFIDENCE_NEAR_PARALLEL" for r in near)
 
 
+@_LEXICAL
 def test_mentions_lemma_targets_resolvable_lemmas() -> None:
     """Every MENTIONS_LEMMA edge must point at a Lemma node that exists."""
     from vedagraph.graph.lexical import iter_lemma_nodes, iter_mentions_lemma_rels
@@ -194,6 +218,7 @@ def test_lemma_constraint_targets_the_unique_field() -> None:
     assert "normalized_lemma" not in lemma_constraints[0]
 
 
+@_CORPUS
 @pytest.mark.parametrize(
     "veda,expected_mantra_type",
     [

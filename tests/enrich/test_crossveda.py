@@ -25,6 +25,7 @@ from difflib import SequenceMatcher
 import orjson
 import pytest
 
+from tests._data import ALL_CORPORA, require_data
 from vedagraph.enrich.corpus import Corpus, MantraRecord, load_corpus
 from vedagraph.enrich.crossveda import (
     MIN_LENGTH_RATIO_FOR_FLOOR,
@@ -464,8 +465,9 @@ def test_the_synthetic_run_is_byte_identical_when_repeated() -> None:
 
 @pytest.fixture(scope="module")
 def corpus() -> Corpus:
-    if not (PROJECT_ROOT / "data" / "canonical").is_dir():
-        pytest.skip("canonical corpora are not present in this checkout")
+    # Not `data/canonical` as a directory: .gitignore keeps each build's manifest.json,
+    # so that directory exists on every clean checkout and the guard never fired.
+    require_data(*ALL_CORPORA)
     return load_corpus(PROJECT_ROOT)
 
 

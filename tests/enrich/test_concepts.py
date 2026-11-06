@@ -22,6 +22,7 @@ from typing import Any
 import pytest
 import yaml
 
+from tests._data import ALL_CORPORA, require_data
 from vedagraph.enrich.concepts import (
     CONCEPT_ID_PATTERN,
     MAX_CONCEPT_NODES,
@@ -406,6 +407,7 @@ def test_folding_an_alias_matches_the_corpus_search_surface() -> None:
 
 @pytest.fixture(scope="module")
 def corpus() -> Corpus:
+    require_data(*ALL_CORPORA)
     return load_corpus(PROJECT_ROOT)
 
 

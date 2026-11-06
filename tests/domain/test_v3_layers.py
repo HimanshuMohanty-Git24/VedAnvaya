@@ -40,6 +40,7 @@ from typing import Any, cast
 import pytest
 import yaml
 
+from tests._data import require_data
 from vedagraph.domain import v3_loader
 from vedagraph.domain.loader import _RITUAL_EDGES, LoadReport, load_rituals
 from vedagraph.domain.ontology import (
@@ -478,6 +479,7 @@ def test_property_safe_does_not_mutate_its_input() -> None:
 
 def test_property_safe_output_is_storable_for_every_real_family_row() -> None:
     """Run over the whole artifact, because one unflattened map fails the whole write."""
+    require_data(ENRICHMENT_DIR / "formula_families.jsonl")
     rows = _read_jsonl(ENRICHMENT_DIR / "formula_families.jsonl")
     assert rows, "the formula family artifact should be present"
     for row in rows:
@@ -502,11 +504,15 @@ def _read_jsonl(path: pathlib.Path) -> list[dict[str, Any]]:
 
 @functools.cache
 def _families() -> tuple[dict[str, Any], ...]:
+    # _read_jsonl answers [] for an absent file, which let every family test below pass
+    # vacuously on a clean checkout. The enrichment JSONL is gitignored; skip there instead.
+    require_data(ENRICHMENT_DIR / "formula_families.jsonl")
     return tuple(_read_jsonl(ENRICHMENT_DIR / "formula_families.jsonl"))
 
 
 @functools.cache
 def _members() -> tuple[dict[str, Any], ...]:
+    require_data(ENRICHMENT_DIR / "formula_family_members.jsonl")
     return tuple(_read_jsonl(ENRICHMENT_DIR / "formula_family_members.jsonl"))
 
 
