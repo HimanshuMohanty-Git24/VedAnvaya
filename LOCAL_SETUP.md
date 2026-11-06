@@ -189,13 +189,12 @@ fresh clone therefore arrives **without the corpus records**, and
 `scripts/build_neo4j_projection.py` — which loads Neo4j from those records — has nothing to
 read.
 
-So a working VedAnvaya currently requires one of:
+So a working VedAnvaya requires one of:
 
-1. **A preloaded local Neo4j volume** — the situation this machine is in, and the one the
-   product assumes. The graph already lives in `infra_neo4j_data`.
-2. **A Neo4j dump restored into the container.** This machine holds
-   `data/backup/pre_translation_bulk_import_neo4j.dump`; only its `.sha256` is tracked in
-   git, so the dump itself must be transferred out of band.
+1. **The published graph dump, restored into the container** — the route for a fresh
+   clone. See [Restoring the published dump](#restoring-the-published-dump) below.
+2. **A preloaded local Neo4j volume** — the maintainer's machine, where the graph already
+   lives in `infra_neo4j_data`.
 3. **Rebuilding the corpus from sources**, then projecting it:
 
    ```powershell
@@ -207,9 +206,47 @@ So a working VedAnvaya currently requires one of:
    "Corpus-building environment" and "CLI" sections document it. It is not part of ordinary
    local setup.
 
-If you have been handed this repository without a populated Neo4j volume or a dump, say so
-before starting — `doctor.ps1` will report `neo4j-loaded FAIL`, and every count the product
-shows would otherwise be a false zero.
+Until one of these is done, `doctor.ps1` reports `neo4j-loaded FAIL` and every count the
+product shows is a false zero.
+
+`data/backup/pre_translation_bulk_import_neo4j.dump.sha256` is the checksum of an older
+snapshot taken before the translation import. The maintainer keeps it for their own records.
+It is not the dump to restore, and the file it describes is not published.
+
+### Restoring the published dump
+
+Release [`graph-2026-11-06`](https://github.com/HimanshuMohanty-Git24/VedAnvaya/releases/tag/graph-2026-11-06)
+carries `vedanvaya-graph-neo4j-5.26.dump`. This is the certified graph (165,737 nodes,
+510,905 relationships, 4 works) that this revision of the backend and frontend runs
+against. The release also has its SHA-256 file and `GRAPH_DUMP_NOTICE.md`, which records
+the licence of each text layer. **Read the notice before reusing any of the text.**
+
+The frontend needs no other graph files: its `world.*` exports are committed under
+`frontend/public/world/` and were built from this graph.
+
+`--overwrite-destination=true` replaces the `neo4j` database in `infra_neo4j_data`. If
+that volume already holds a graph you want to keep, dump it first.
+
+```powershell
+New-Item -ItemType Directory -Force .tmp\neo4j-dump | Out-Null
+curl.exe -L --fail -o .tmp\neo4j-dump\neo4j.dump https://github.com/HimanshuMohanty-Git24/VedAnvaya/releases/download/graph-2026-11-06/vedanvaya-graph-neo4j-5.26.dump
+(Get-FileHash .tmp\neo4j-dump\neo4j.dump -Algorithm SHA256).Hash
+# expect C2AF1D8265AE44101670C555C52BC87A8C7B1627258D00E3265E455DA58240AE
+
+# Create the container and volume once so Neo4j initialises its credentials, then stop it.
+docker compose -f infra\docker-compose.neo4j.yml up -d
+while ((docker inspect --format "{{.State.Health.Status}}" vedagraph-neo4j) -ne "healthy") { Start-Sleep 5 }
+docker compose -f infra\docker-compose.neo4j.yml stop
+
+docker run --rm -v infra_neo4j_data:/data -v "${PWD}\.tmp\neo4j-dump:/backups" neo4j:5.26-community neo4j-admin database load neo4j --from-path=/backups --overwrite-destination=true
+docker compose -f infra\docker-compose.neo4j.yml start
+```
+
+`neo4j-admin database load neo4j` reads the file named `neo4j.dump` from `--from-path`,
+which is why the download is saved under that name. The dump contains no database users,
+so the password stays the one in the compose file (`vedagraph_dev`). Put that value in
+`.env` as `NEO4J_PASSWORD`, then run `doctor.ps1`. `GRAPH_DUMP_NOTICE.md` has the same
+steps for Linux and macOS.
 
 ---
 

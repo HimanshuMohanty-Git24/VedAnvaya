@@ -474,10 +474,12 @@ ports — and names whichever one is wrong. It never prints a secret value.
 > **A fresh clone does not arrive with the graph.** There is no automatic bootstrap and this
 > repository does not pretend otherwise. `.gitignore` excludes the canonical, knowledge, derived,
 > staged and raw corpus records — deliberately, because individual assets carry different
-> rights — so `scripts/build_neo4j_projection.py` has nothing to read on a new machine. A working
-> VedAnvaya needs a preloaded Neo4j volume, a Neo4j dump restored into the container, or a full
-> rebuild of the corpus from pinned sources. Without one of those, `doctor.ps1` reports
-> `neo4j-loaded FAIL` and every count the product shows would be a false zero.
+> rights — so `scripts/build_neo4j_projection.py` has nothing to read on a new machine. Restore
+> the published graph dump from release
+> [`graph-2026-11-06`](https://github.com/HimanshuMohanty-Git24/VedAnvaya/releases/tag/graph-2026-11-06)
+> as described in [`LOCAL_SETUP.md`](LOCAL_SETUP.md#restoring-the-published-dump), or rebuild
+> the corpus from pinned sources. Without one of those, `doctor.ps1` reports `neo4j-loaded FAIL`
+> and every count the product shows would be a false zero.
 
 **[`LOCAL_SETUP.md`](LOCAL_SETUP.md) is the canonical guide** — prerequisites, every environment
 variable, the three services and their start order, health checks that distinguish "it started"
